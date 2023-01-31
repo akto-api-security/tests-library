@@ -1,0 +1,24 @@
+id: Misconfiguration-random-files
+  
+info:
+  name: Unprotected file detection
+  author: Akto
+  reference:
+     - Seclist
+     - https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/version-detection.md
+  severity: info
+  description: Obtain unprotected files
+  tags: tech,files,api
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/{{locations}}"
+    payloads:
+       locations: https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/Web-Content/Randomfiles.fuzz.txt
+
+    matchers-condition: and
+    matchers:
+     - type: status
+       status:
+         - 200
