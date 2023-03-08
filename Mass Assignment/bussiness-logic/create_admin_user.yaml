@@ -1,0 +1,44 @@
+id: create_admin_user
+info:
+  name: Create admin user via mass assignment
+  author: akto
+  severity: high
+
+requests:
+  - method: "{{Method}}"
+    path:
+      - "{{BaseURL}}"
+    body: "{{Body}}"
+
+    payloads:
+      role:
+        - "admin"
+        - "administrator"
+        - "superuser"
+        - "super"
+        - "root"
+        - "god"
+        - "sysadmin"
+        - "sysop"
+        - "moderator"
+        - "mod"
+
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 200
+      - type: word
+        part: body
+        words:
+          - "admin"
+          - "administrator"
+          - "superuser"
+          - "super"
+          - "root"
+          - "god"
+          - "sysadmin"
+          - "sysop"
+          - "moderator"
+          - "mod"
+        condition: or
