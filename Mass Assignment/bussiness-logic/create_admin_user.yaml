@@ -33,7 +33,9 @@ requests:
     matchers:
       - type: status
         status:
-          - 2xx
+          - 200
+          - 201
+        condition: or
       - type: word
         part: body
         words:
