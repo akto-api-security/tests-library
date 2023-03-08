@@ -11,7 +11,12 @@ requests:
     body: "{{Body}}"
 
     payloads:
-      role:
+      role_key:
+        - "role"
+        - "Role"
+        - "user_role"
+        - "user_type"
+      role_value:
         - "admin"
         - "administrator"
         - "superuser"
@@ -22,7 +27,8 @@ requests:
         - "sysop"
         - "moderator"
         - "mod"
-
+    attack: clusterbomb
+    stop-at-first-match: true
     matchers-condition: and
     matchers:
       - type: status
