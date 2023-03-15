@@ -1,0 +1,26 @@
+id: port_scanning
+info:
+  name: Scan ports
+  author: akto
+  severity: high
+
+requests:
+  - method: "{{Method}}"
+    path:
+      - "{{BaseURL}}"
+    body: "{{Body}}"
+
+    payloads:
+      port:
+        - "22"
+        - "80"
+        - "443"
+        - "8080"
+
+    matchers:
+      - type: regex
+        regex:
+          - '(?i)rejected'
+          - '(?i)refused'
+          - '(?i)timeout'
+        operator: not
