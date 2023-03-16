@@ -15,12 +15,17 @@ info:
   tags: graphql,schema,introspection,config
 
 requests:
-  - raw:
-    - |
-        POST /graphql HTTP/1.1
-        Host: {{Hostname}}
-        Content-Type: application/json
-        {"query":"{__schema{queryType{fields{name}}}}"}
+  - method: POST
+
+    headers:
+
+      Content-Type: application/json
+
+    path:
+      - "{{BaseURL}}/graphql"
+
+    body: '{"query":"{__schema{queryType{fields{name}}}}"}'
+
     matchers-condition: and
     matchers:
       - type: word
