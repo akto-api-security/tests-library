@@ -1,0 +1,34 @@
+id: graphql-schema
+
+info:
+  name: GraphQL Introspection Enabled
+  author: marksowell
+  severity: low
+  reference:
+    - https://graphql.org/learn/introspection/
+    - https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html
+    - https://www.apollographql.com/blog/graphql/security/why-you-should-disable-graphql-introspection-in-production/
+  classification:
+    cvss-metrics: CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+    cvss-score: 5.3
+    cwe-id: CWE-16
+  tags: graphql,schema,introspection,config
+
+requests:
+  - raw:
+    - |
+        POST /graphql HTTP/1.1
+        Host: {{Hostname}}
+        Content-Type: application/json
+        {"query":"{__schema{queryType{fields{name}}}}"}
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - 'data'
+          - '__schema'
+        condition: or
+
+      - type: status
+        status:
+          - 200
