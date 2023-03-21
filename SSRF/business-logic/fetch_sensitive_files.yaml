@@ -22,3 +22,10 @@ requests:
         - "/proc/self/cwd/application.py" 
         - "/proc/self/cwd/main.py"
         - "/proc/self/exe"
+      
+    stop-at-first-match: false
+    
+    matchers:
+      - type: status
+        status:
+          - 200
