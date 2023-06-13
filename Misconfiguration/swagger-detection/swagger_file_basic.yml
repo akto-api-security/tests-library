@@ -19,13 +19,7 @@ requests:
 
     matchers-condition: and
     matchers:
-     - type: status
-       status:
-         - 200
-
-    extractors:
      - type: regex
-       part: body
-       group: 1
        regex:
-         - " @version (v[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3})"
+           - \""swagger":|"openapi":\"|Swagger UI
+       part: body

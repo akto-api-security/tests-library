@@ -19,13 +19,7 @@ requests:
       locations: https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/Web-Content/swagger.txt
     matchers-condition: and
     matchers:
-     - type: status
-       status:
-         - 200
-
-    extractors:
      - type: regex
-       part: body
-       group: 1
        regex:
-         - \""swagger":|"openapi":\"
+          - \""swagger":|"openapi":\"|Swagger UI
+       part: body
