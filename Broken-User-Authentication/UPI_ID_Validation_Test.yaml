@@ -1,0 +1,78 @@
+---
+id: INVALID_UPI_ID
+info:
+  name: Invalid UPI ID Test
+  description: test against invalid UPI id
+  details: null
+    name: UPI_ID_VALIDATION
+    displayName: UPI ID Validation
+  severity: MEDIUM
+  tags:
+  - UPI ID
+  - Data Validation
+
+  
+api_selection_filters:
+  url:
+    contains_either: upi_id
+  request_payload:
+    for_one:
+      key:
+        contains_either:
+        - upi_id
+execute:
+  type: multi
+  requests:
+  - req:
+    - modify_query_param:
+        upi_id: "@!#$%^&*(){}[]"
+  - req:
+    - modify_query_param:
+        upi_id: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  - req:
+    - modify_query_param:
+        upi_id: '    '
+  - req:
+    - modify_query_param:
+        upi_id: islfjowiufw23e@afskfasf
+  - req:
+    - modify_query_param:
+        upi_id: -1
+  - req:
+    - modify_query_param:
+        upi_id: 99999999999999999999
+  - req:
+    - modify_query_param:
+        upi_id: 0
+  - req:
+    - modify_query_param:
+        upi_id: ""
+  - req:
+    - modify_body_param:
+        upi_id: "@!#$%^&*(){}[]"
+  - req:
+    - modify_body_param:
+        upi_id: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  - req:
+    - modify_body_param:
+        upi_id: '    '
+  - req:
+    - modify_body_param:
+        upi_id: aslfjowiufw23e@afskfasf
+  - req:
+    - modify_body_param:
+        upi_id: -1
+  - req:
+    - modify_body_param:
+        upi_id: 99999999999999999999
+  - req:
+    - modify_body_param:
+        upi_id: 0
+  - req:
+    - modify_body_param:
+        upi_id: ""
+validate:
+  response_payload:
+    for_one:
+      value:
+        contains_either: exception
