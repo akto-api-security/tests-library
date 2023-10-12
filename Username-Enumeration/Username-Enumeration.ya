@@ -1,3 +1,4 @@
+id: USERNAME_ENUMERATION
 wordLists:
   usernames:
     - admin
@@ -12,20 +13,22 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
-  and:
+  url:
+    contains_either:
+      - login
+  or:
     - request_payload:
         for_one:
           key:
             contains_either:
               - username
-              - user
             extract: usernameKey
-    - request_payload:
+    - query_param:
         for_one:
           key:
             contains_either:
-              - password
-            extract: passwordKey
+              - username
+            extract: usernameKey
 
 execute:
   type: single
