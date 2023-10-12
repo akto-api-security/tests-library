@@ -22,23 +22,22 @@ api_selection_filters:
           key:
             contains_either:
               - username
-            extract: usernameKey
+            extract: bodyUsernameKey
     - query_param:
         for_one:
           key:
             contains_either:
               - username
-            extract: usernameKey
+            extract: queryUsernameKey
 
 execute:
   type: single
   requests:
     - req:
       - modify_body_param:
-          usernameKey: ${usernames}
-      - modify_body_param:
-          passwordKey: admin
+          bodyUsernameKey: ${usernames}
+      - modify_query_param:
+          queryUsernameKey: ${usernames}
 validate:
-  response_code:
-    gte: 200
-    lte: 205
+  response_payload
+    contains_either: .*limit.*
