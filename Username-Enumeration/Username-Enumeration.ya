@@ -1,0 +1,41 @@
+wordLists:
+  usernames:
+    - admin
+    - user
+    - Administrator
+    - root
+    - user
+    - system
+    - SYSTEM
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  and:
+    - request_payload:
+        for_one:
+          key:
+            contains_either:
+              - username
+              - user
+            extract: usernameKey
+    - request_payload:
+        for_one:
+          key:
+            contains_either:
+              - password
+            extract: passwordKey
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_body_param:
+          usernameKey: ${usernames}
+      - modify_body_param:
+          passwordKey: admin
+validate:
+  response_code:
+    gte: 200
+    lte: 205
