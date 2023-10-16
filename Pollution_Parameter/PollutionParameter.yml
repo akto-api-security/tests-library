@@ -1,0 +1,55 @@
+id: HPP
+
+info:
+  name: "HTTP_Pollution_Parameter"
+  description: "Hackers manipulate how a website treats parameter it recieves during HTTP requests."
+  details: "HTTP pollution refers to the inadvertent or malicious injection of unwanted data or parameters into HTTP requests, potentially leading to security vulnerabilities and unexpected behavior in web applications. Mitigating HTTP pollution is crucial for maintaining the integrity and security of web services."
+  impact: "It can lead to data corruption, application errors, and security breaches. It can cause performance degradation by overwhelming servers."
+  subCategory: "HTTP_Pollution_Parameter"
+  severity: LOW
+  tags: 
+		- Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://www.imperva.com/learn/application-security/http-parameter-pollution/"
+    - "https://shahjerry33.medium.com/parameter-pollution-zero-day-3feb86ee8a02"
+    - "https://docs.akto.io/test-editor/test-yaml-syntax-detailed"
+
+api_selection_filters:
+  and:
+    - response_code:
+        gte: 200
+        lt: 300
+    - method:
+        contains_either:
+          - "POST"
+    - response_payload:
+        length:
+          gte: 2
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: firstkey
+          value:
+            extract: firstvalue
+            # same value must be extracted 
+            # extract another key value pair as well 
+execute: 
+  type: single
+  requests:
+    - req:
+        - delete_body_param: ${firstkey}
+        - modify_query_param: 
+            ${newKey}=${newValue}+"&"+${firstKey}+"="+${firstValue}
+validate: 
+   response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    percentage_match: 
+      gt: 80
+    length:
+      gt: 0
