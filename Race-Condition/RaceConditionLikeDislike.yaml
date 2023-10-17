@@ -3,8 +3,8 @@ info:
   name: Race condition in like/dislike API
   description: Attacker can like/dislike a video multiple times by exploiting race condition vulnerability
   details: > 
-      In a normal scenario, the user will arrive at the billing stage on which payment details are sent to the application, only after the order was concluded by the user, and all other data was received.
-      However, re-submitting the "update" request right after the "billing" request, might end up with paying for less than what we managed to order.
+      In a normal scenario, the user will be able to like or dislike video or comment, only after all other data was received.
+      However, re-submitting the same request right after the original request, might end up in like or dislike for comment or video multiple time.
   impact: A typical TOCTOU vulnerability, allowing an attacker to steal from the DVSA by submitting out-of-order requests
   tags:
     - DVSA
