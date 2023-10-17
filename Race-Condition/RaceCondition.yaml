@@ -1,0 +1,18 @@
+id: RACE_CONDITION
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  - query_param:
+      for_one:
+        key:
+          contains_either:
+            - coupon
+execute:
+  type: single
+
+validate:
+  response_payload:
+    percentage_match:
+		  gt: 90
+    
