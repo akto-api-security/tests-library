@@ -6,6 +6,16 @@ info:
           Permits credential stuffing whereby the attacker has a list of valid usernames and passwords.
           Permits attackers to perform a brute force attack on the same user account, without presenting captcha/account lockout mechanism.
   impact: Attackers can gain control to other users’ accounts in the system, read their personal data, and perform sensitive actions on their behalf, like money transactions and sending personal messages
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: USERNAME_ENUMERATION
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
   references: 
     - https://github.com/OWASP/API-Security/blob/develop/editions/2019/en/0xa2-broken-user-authentication.md
     - https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html
@@ -129,12 +139,14 @@ api_selection_filters:
           key:
             contains_either:
               - username
+              - email
             extract: bodyUsernameKey
     - query_param:
         for_one:
           key:
             contains_either:
               - username
+              - email
             extract: queryUsernameKey
 
 execute:
