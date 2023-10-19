@@ -1,4 +1,4 @@
-id: RACE_CONDITION_LIKE_DISLIKE
+id: LIKE_DISLIKE_MULTIPLE_TIME
 info:
   name: Race condition in like/dislike API
   description: Attacker can like/dislike a video multiple times by exploiting race condition vulnerability
@@ -6,6 +6,12 @@ info:
       In a normal scenario, the user will be able to like or dislike video or comment, only after all other data was received.
       However, re-submitting the same request right after the original request, might end up in like or dislike for comment or video multiple time.
   impact: A typical TOCTOU vulnerability, allowing an attacker to steal from the DVSA by submitting out-of-order requests
+  category:
+    name: RACE_CONDITION
+    shortName: Race Condition
+    displayName: Race Condition (TOCTOU)
+  subCategory: LIKE_DISLIKE_MULTIPLE_TIME
+  severity: MEDIUM
   tags:
     - DVSA
     - TOCTOU
