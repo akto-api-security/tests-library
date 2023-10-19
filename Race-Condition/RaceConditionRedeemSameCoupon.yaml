@@ -1,4 +1,4 @@
-id: RACE_CONDITION_REDEEM_SAME_COUPON
+id: REDEEM_SAME_COUPON
 info:
   name: Race condition in redeem coupon code API
   description: Attacker can redeem coupon code multiple times by exploiting race condition vulnerability
@@ -6,6 +6,12 @@ info:
       In a normal scenario, the user will arrive at the redeem stage on which details are sent to the application, only after all other data was received and coupon code is verified.
       However, re-submitting the request right after the original request, might end up with redeeming same coupon again.
   impact: A typical TOCTOU vulnerability, allowing an attacker to steal from the DVSA by submitting out-of-order requests
+  category:
+    name: RACE_CONDITION
+    shortName: Race Condition
+    displayName: Race Condition (TOCTOU)
+  subCategory: REDEEM_SAME_COUPON
+  severity: MEDIUM
   tags:
     - DVSA
     - TOCTOU
