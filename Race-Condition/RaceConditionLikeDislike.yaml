@@ -25,9 +25,7 @@ api_selection_filters:
   url:
     extract: urlVar
     and:
-      or:
-        regex: .*like.*
-        regex: .*vote.*
+      regex: .*(like|vote).*
       contains_either:
         - comment
         - comments
