@@ -22,6 +22,8 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  url:
+    extract: urlVar
   query_param:
     for_one:
       key:
@@ -29,6 +31,9 @@ api_selection_filters:
           - coupon
 execute:
   type: single
+  requests:
+    - req:
+      - modify_url: ${urlVar}
 
 validate:
   response_payload:
