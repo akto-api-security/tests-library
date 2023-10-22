@@ -24,11 +24,17 @@ api_selection_filters:
     lt: 300
   url:
     extract: urlVar
-  query_param:
-    for_one:
-      key:
-        contains_either:
-          - coupon
+  or:
+    query_param:
+      for_one:
+        key:
+          contains_either:
+            - coupon
+    - request_payload:
+        for_one:
+          key:
+            contains_either:
+              - coupon
 execute:
   type: single
   requests:
