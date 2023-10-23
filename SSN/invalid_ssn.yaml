@@ -18,16 +18,21 @@ info:
 
 
 api_selection_filters:
-  args:
+  query_param:
     for_one:
       key:
-      regex: .*UPI_ID.*
-      extract: upi-id
+        regex: .*UPI_ID.*
+        extract: upi_id_key
       value:
-        extract: upi_id
-    headers:
-    ssn:
-      extract: ssn_value
+        extract: upi_id_value
+    request_headers:
+      for_one:
+      key:
+        contains_either: ssn
+        extract: ssn_key
+      value:
+        extract: ssn_value
+    
 
 
 ssnLists:
@@ -36,7 +41,7 @@ ssnLists:
     - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Integer vehicula maximus tortor, vel finibus mi. Maecenas egestas justo vel sagittis vulputate. Sed ac odio eu odio elementum cursus. Vivamus pretium vel elit at ultricies. Vivamus rhoncus ultrices urna, id suscipit nulla sagittis eu. Quisque egestas vulputate odio. Curabitur cursus mi nec massa venenatis, vitae volutpat turpis suscipit. Duis aliquet hendrerit massa, a malesuada felis dignissim ac.
     - " "
     - 111-11-1111
-    - (-69)
+    - -69
     - 9223372036854775807
     - 0
     - NULL
@@ -46,12 +51,11 @@ execute:
   type: single
   requests:
     - req:
-        modify_headers:
-          ssn_value:  ${ssn_values}  
+      - modify_header:
+          ssn_key:  ${ssn_values}  
 
 validate:
   response_code:
-    and:
-      gte: 200
-      lt: 300
- 
+    gte: 200
+    lt: 300
+   
