@@ -33,9 +33,8 @@ api_selection_filters:
       key:
         regex: "[a-zA-Z0-9]{4,}"
         extract: key_var
-  param_context:
-    param: ${key_var}
-    extract: key_context
+      value:
+        extract: value_var
 
 execute:
   type: single
@@ -43,7 +42,7 @@ execute:
     - req:
       - delete_body_param: ${key_var}
       - add_body_param:
-        key_context.key: ${key_context.value}
+          key_var: ${value_var}
           
 validate:
   response_payload:
