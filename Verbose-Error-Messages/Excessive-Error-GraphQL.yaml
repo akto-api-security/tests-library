@@ -31,7 +31,7 @@ api_selection_filters:
   request_payload:
     for_one:
       key:
-        regex: [a-zA-Z0-9]{4,}
+        regex: "[a-zA-Z0-9]{4,}"
         extract: keyVar
       value:
         extract: valueVar
@@ -40,10 +40,9 @@ execute:
   type: single
   requests:
     - req:
-      - replace_body:
-        regex_replace:
-          regex: ${keyVar}
-          replace_with: ${keyVar}
+      - delete_body_param: ${keyVar}
+      - add_body_param:
+        ${keyVar}: ${valueVar}
           
 validate:
   response_payload:
