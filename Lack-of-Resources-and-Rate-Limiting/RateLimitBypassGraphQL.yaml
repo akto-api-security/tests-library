@@ -35,7 +35,7 @@ execute:
   type: single
   requests:
     - req:
-        replace_body: ${reqPayloadVar} ${reqPayloadVar} ${reqPayloadVar} ${reqPayloadVar} ${reqPayloadVar}
+        replace_body: "mutation {${reqPayloadVar}, ${reqPayloadVar}, ${reqPayloadVar}, ${reqPayloadVar}, ${reqPayloadVar} }"
 
 validate:
   response_code:
