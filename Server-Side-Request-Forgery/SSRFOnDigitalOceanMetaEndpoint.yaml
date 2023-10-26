@@ -49,23 +49,23 @@ api_selection_filters:
             contains_either:
                 - http
           key:
-            extract: url_key
+            extract: body_url_key
     - query_param:
         for_one:
           value:
             contains_either:
                 - http
           key:
-            extract: query_key
+            extract: query_url_key
 
 execute:
   type: single
   requests:
     - req:
       - modify_query_param:
-          url_key: ${urls}
+          query_url_key: ${urls}
       - modify_body_param:
-          query_key: ${urls}
+          body_url_key: ${urls}
 
 validate:
   response_code:
