@@ -25,8 +25,15 @@ api_selection_filters:
         extract: upi_id_key
       value:
         extract: upi_id_value
-    request_headers:
-      for_one:
+  request_headers:
+    for_one:
+      key:
+        contains_either: ssn
+        extract: ssn_key
+      value:
+        extract: ssn_value
+  request_payload:
+    for_one:
       key:
         contains_either: ssn
         extract: ssn_key
@@ -44,7 +51,7 @@ ssnLists:
     - -69
     - 9223372036854775807
     - 0
-    - NULL
+    - null
     
     
 execute:
@@ -52,6 +59,8 @@ execute:
   requests:
     - req:
       - modify_header:
+          ssn_key:  ${ssn_values}
+      - modify_body_param:
           ssn_key:  ${ssn_values}  
 
 validate:
