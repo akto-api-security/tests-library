@@ -45,19 +45,13 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
-  or:
-    - request_payload:
-        for_one:
-          key:
-            extract: keyVar
-          value:
-            regex: \d+
-    - query_param:
-        for_one:
-          key:
-            extract: keyVar
-          value:
-            regex: \d+
+  request_payload:
+    for_one:
+      key:
+        extract: keyVar
+      value:
+        regex: \d+
+
 execute:
   type: single
   requests:
