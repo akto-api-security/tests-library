@@ -46,9 +46,15 @@ execute:
   requests:
     - req:
       - add_body_param:
-          ${keyVar}: "testInvalidFile"
+          is_admin: true
+          is_administrator: true
+          isAdmin: true
+          approved: true
       - add_query_param:
-          ${keyVar}: "testInvalidFile"
+          is_admin: true
+          is_administrator: true
+          isAdmin: true
+          approved: true
 validate:
   response_code:
     gte: 400
