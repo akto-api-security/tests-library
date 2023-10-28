@@ -51,13 +51,13 @@ api_selection_filters:
           key:
             extract: keyVar
           value:
-            regex: "/\d+/"
+            regex: \d+
     - query_param:
         for_one:
           key:
             extract: keyVar
           value:
-            regex: "/\d+/"
+            regex: \d+
 execute:
   type: single
   requests:
