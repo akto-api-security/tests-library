@@ -47,10 +47,10 @@ api_selection_filters:
     lt: 300
   request_payload:
     for_one:
-      key:
-        extract: keyVar
       value:
         regex: \d+
+      key:
+        extract: keyVar
 
 execute:
   type: single
