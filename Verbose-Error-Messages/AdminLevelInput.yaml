@@ -36,11 +36,13 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
-            extract: keyVar
+            regex: .*
+            extract: reqKeyVar
     - query_param:
         for_one:
           key:
-            extract: keyVar
+            regex: .*
+            extract: queryKeyVar
 execute:
   type: single
   requests:
