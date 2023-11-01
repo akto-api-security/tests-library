@@ -1,20 +1,5 @@
 # Akto.io API Security
 
-# Akto Tests Library
-
-## Nuclei Templates
-Currently tests-library supports [Nuclei test templates](https://github.com/projectdiscovery/nuclei-templates). 
-
-## Java Templates
-The Java templates present in the directory are copied directly from Akto's in-built tests [here](https://github.com/akto-api-security/community-edition/tree/master/apps/testing/src/main/java/com/akto/rules). 
-They have been added just for completeness purposes. If you wish to contribute to these tests, we suggest you contribute in the [community-edition](https://github.com/akto-api-security/community-edition) repo directly.
-
-## Wordlists
-The wordlists in this repo might or might not be used by templates here. 
-If you find a good wordlist, you can easily make your own template by following [this example](https://github.com/akto-api-security/tests-library/blob/master/Misconfiguration/unprotected-files/random-files.yaml)
-
-## References
-We request yout o mention any references that helped you in creating that template - test logic, wordlist, idea etc.
 
 # What is Akto?
 

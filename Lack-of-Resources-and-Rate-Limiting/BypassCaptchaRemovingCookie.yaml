@@ -1,0 +1,63 @@
+id: BYPASS_CAPTCHA_REMOVING_COOKIE
+info:
+  name: "Bypass captcha based protection by removing cookie"
+  description: "Attackers can circumvent captcha protection by removing cookies compromising the system's security."
+  details: >
+            "The removal of cookies enables attackers to bypass captcha protection mechanisms, posing a substantial security risk."
+            "Servers often implement rate limiting based on cookie values, allowing them to identify and restrict users who misuse their resources, subsequently prompting them to solve captchas for verification."
+  impact: "Bypassing CAPTCHA protection enables hackers to automate malicious activities, such as unauthorized account access, spamming, data harvesting, and DDoS attacks."
+  category:
+    name: RL
+    shortName: Lack of Resources & Rate Limiting
+    displayName: Lack of Resources & Rate Limiting (RL)
+  subCategory: BYPASS_CAPTCHA_REMOVING_COOKIE
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+  cwe:
+    - CWE-307
+  cve:
+    - CVE-2023-0085
+    - CVE-2021-37417
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  request_headers:
+    for_one:
+      key:
+        eq: cookie
+  or:
+    - request_payload:
+        for_one:
+          key:
+            contains_either: captcha
+            extract: captcha_key
+    - query_param:
+        for_one:
+          key:
+            contains_either: captcha
+            extract: captcha_key
+
+execute:
+  type: single
+  requests:
+    - req:
+        - delete_header: cookie
+        - delete_header: ${captcha_key}
+        - delete_body_param: ${captcha_key}
+        - delete_query_param: ${captcha_key}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    percentage_match: 
+      gt: 80
+    length:
+      gt: 0
