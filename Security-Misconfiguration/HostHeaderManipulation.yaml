@@ -1,0 +1,77 @@
+id: HOST_HEADER_MANIPULATION
+info:
+  name: Host Header Manipulation
+  description: "Test for Host Header Manipulation vulnerability to create/update entities."
+  details: >
+    "This test aims to identify potential security vulnerabilities related to Host Header Manipulation. It checks if an attacker can create/update entities by manipulating the HTTP headers. The test focuses on adding or replacing values such as 'host' with 'localhost' or '127.0.0.1' in HTTP headers. Additionally, it sets various header values related to the attacker's domain. The presence of these manipulated headers can indicate a security vulnerability. The test will be considered successful if the application responds with exception traces or error response strings."
+
+  impact: "Host Header Manipulation can lead to unauthorized entity creation or updates, compromising the application's security."
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: HOST_HEADER_MANIPULATION
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers"
+    - "https://portswigger.net/web-security/host-header/exploiting"
+
+  cwe:
+    - CWE-123
+
+api_selection_filters:
+  or:
+    - request_method:
+        eq: POST
+    - request_method:
+        eq: PUT
+  request_headers:
+    for_one:
+      key:
+        eq: Host
+      value: 
+        contains_either:
+          - localhost
+          - 127.0.0.1
+    query_param:
+      for_one:
+        key:
+          eq: create
+        value: 
+          eq: true
+
+execute:
+  type: single
+  requests:
+    - req:
+      - add_header:
+          Host: localhost
+      - add_header:
+          Host: 127.0.0.1
+      - add_header:
+          X-Forwarded-For: evil-website.com
+      - add_header:
+          X-Forwarded-Host: evil-website.com
+      - add_header:
+          X-Client-IP: evil-website.com
+      - add_header:
+          X-Remote-IP: evil-website.com
+      - add_header:
+          X-Remote-Addr: evil-website.com
+      - add_header:
+          X-Host: evil-website.com
+
+validate:
+  response_payload:
+    not_contains_either:
+      - "Exception Trace"
+      - "Error Response"
+  response_code:
+    not_contains_either:
+      - 500
+      - 503
