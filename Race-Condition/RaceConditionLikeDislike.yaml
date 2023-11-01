@@ -1,0 +1,49 @@
+id: LIKE_DISLIKE_MULTIPLE_TIME
+info:
+  name: Race condition in like/dislike API
+  description: Attacker can like/dislike a video multiple times by exploiting race condition vulnerability
+  details: > 
+      In a normal scenario, the user will be able to like or dislike video or comment, only after all other data was received.
+      However, re-submitting the same request right after the original request, might end up in like or dislike for comment or video multiple time.
+  impact: A typical TOCTOU vulnerability, allowing an attacker to steal from the DVSA by submitting out-of-order requests
+  category:
+    name: RACE_CONDITION
+    shortName: Race Condition
+    displayName: Race Condition (TOCTOU)
+  subCategory: LIKE_DISLIKE_MULTIPLE_TIME
+  severity: MEDIUM
+  tags:
+    - DVSA
+    - TOCTOU
+  references:
+    - "https://github.com/OWASP/DVSA/blob/c04e0a536ac54db8f732144be92b5f208169f8c4/CONTENT/AWS/LESSONS/LESSON_08.md#81-race-condition"
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  url:
+    extract: urlVar
+    and:
+      regex: .*(like|vote).*
+      contains_either:
+        - comment
+        - comments
+        - video
+        - videos
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: ${urlVar}
+      
+validate:
+  response_code:
+    and:
+      gte: 200
+      lt: 300
+  response_payload:
+    percentage_match:
+      gt: 90
+  
