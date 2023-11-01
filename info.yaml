@@ -1,0 +1,34 @@
+Objective: To ensure the system handles invalid URLs appropriately when attempting to create or update objects.
+
+Preconditions:
+
+Access to the system under test.
+Valid credentials and permissions for creating/updating objects.
+Test environment set up, including necessary test data.
+Test Steps:
+
+Positive Test Case: Create/Update object with a valid URL.
+
+Input: A valid URL (e.g., "https://example.com/image.jpg").
+Action: Attempt to create/update an object with the valid URL.
+Expected Result: The object should be created/updated successfully without any errors.
+Negative Test Case 1: Create/Update object with an empty URL.
+
+Input: An empty URL ("" or null).
+Action: Attempt to create/update an object with an empty URL.
+Expected Result: The system should reject the request and return an appropriate error message (e.g., "Invalid URL").
+Negative Test Case 2: Create/Update object with a completely invalid URL.
+
+Input: An invalid URL format (e.g., "invalid-url").
+Action: Attempt to create/update an object with the invalid URL.
+Expected Result: The system should reject the request and return an appropriate error message (e.g., "Invalid URL format").
+Negative Test Case 3: Create/Update object with a URL missing the protocol (e.g., "example.com/image.jpg").
+
+Input: URL missing the protocol (e.g., "example.com/image.jpg").
+Action: Attempt to create/update an object with the URL missing the protocol.
+Expected Result: The system should reject the request and return an appropriate error message (e.g., "URL must include a valid protocol (e.g., http:// or https://)").
+Negative Test Case 4: Create/Update object with a URL containing special characters or spaces.
+
+Input: URL with special characters or spaces (e.g., "https://example.com/my image.jpg").
+Action: Attempt to create/update an object with the URL containing special characters or spaces.
+Expected Result
