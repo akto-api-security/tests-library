@@ -1,0 +1,61 @@
+id: SQLI_ERROR_BASED_JSON_BODY_PARAM_RAIMA_DB
+info:
+  name: "Error Based SQL Injection test for JSON Body Parameters for Raima DB Manager"
+  description: >
+    "Some API endpoints expecting JSON Body parameter values might be directly exposed to Raima DB manager. 
+    Attackers can trigger an error by breaking the structure of the functions\' parameters used 
+    for communicating with the database. "
+  details: >
+    "Some API endpoints expecting JSON Body parameter values might be directly exposed to Raima DB Manager.
+    Causing an error in SQL query syntax can expose the underlying query or DB data."
+  impact: >
+    "Possible data leakage due to illegal DB access. Successful SQL injection attacks 
+    may completely compromise or destroy a system."
+  category:
+    name: SQL
+    shortName: Injection Attack
+    displayName: Injection Attacks (SQL)
+  subCategory: SQLI_ERROR_BASED_JSON_BODY_PARAM_RAIMA_DB
+  severity: HIGH
+  tags:
+    - Injection Attack
+    - OWASP Top 10
+    - HackerOne Top 10
+  references:
+    - "https://github.com/sqlmapproject/sqlmap/blob/master/data/xml/errors.xml"
+    - "https://brightsec.com/blog/error-based-sql-injection/"
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    contains_either:
+      - POST
+      - GET
+      - PUT
+      - PATCH
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extract: changed_query_key
+wordLists:
+  specialCharacters:
+    - "\""
+    - "'"
+    - ")"
+    - "()"
+    - ","
+    - "."
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param: 
+            changed_query_key: ${specialCharacters}
+validate:
+  or:
+    - response_payload:
+        regex: "-10048: Syntax error"
+    - response_payload:
+        regex: "rdmStmtPrepare\\(.+?\\) returned"

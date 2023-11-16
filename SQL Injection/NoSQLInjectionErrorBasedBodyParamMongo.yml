@@ -1,0 +1,61 @@
+id: NOSQLI_ERROR_BASED_BODY_PARAM_MONGO
+info:
+  name: "Error Based NoSQL Injection test for JSON Body Parameters for Mongo Error"
+  description: >
+    "Some API endpoints expecting JSON Body parameter values might be directly exposed to MongoDB. 
+    Attackers can trigger an error by breaking the structure of the functions\' parameters used 
+    for communicating with the database. "
+  details: >
+    "Some API endpoints expecting JSON Body parameter values might be directly exposed to MongoDB.
+    MongoDB uses NoSQL. Causing an error in NoSQL query syntax can expose the underlying query or DB data."
+  impact: >
+    "Possible data leakage due to illegal DB access. Successful NoSQL injection attacks 
+    may completely compromise or destroy a system."
+  category:
+    name: SQL
+    shortName: Injection Attack
+    displayName: Injection Attacks (SQL)
+  subCategory: NOSQLI_ERROR_BASED_BODY_PARAM_MONGO
+  severity: HIGH
+  tags:
+    - Injection Attack
+    - OWASP Top 10
+    - HackerOne Top 10
+  references:
+    - "https://github.com/Charlie-belmer/nosqli"
+    - "https://owasp.org/www-community/Injection_Flaws"
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    contains_either:
+      - POST
+      - GET
+      - PUT
+      - PATCH
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extract: changed_body_key
+wordLists:
+  specialCharacters:
+    - "'"
+    - "\""
+    - "$"
+    - "."
+    - ">"
+    - "[\",\"]"
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param: 
+            changed_body_key: ${specialCharacters}
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    regex: "Uncaught MongoDB\\\\Driver\\\\Exception\\\\CommandException: unknown operator|(?i)MongoError|(?i)unterminated string literal"
