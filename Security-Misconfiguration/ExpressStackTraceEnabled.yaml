@@ -23,7 +23,7 @@ info:
   references:
     - "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/"
   cwe:
-    - CWE-16
+    - CWE-209
 
 api_selection_filters:
   response_code:
@@ -31,6 +31,10 @@ api_selection_filters:
     lt: 300
   url:
     extract: urlVar
+  response_payload:
+    not_contains_either:
+      - "NotFoundError: Not Found"
+      - "at Function.handle"
 
 execute:
   type: single

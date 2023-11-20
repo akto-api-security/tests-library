@@ -15,6 +15,8 @@ info:
     - https://linux.die.net/man/5/esmtprc
   cwe:
     - CWE-16
+    - CWE-200
+    - CWE-538
 
 api_selection_filters:
   response_code:
@@ -22,6 +24,11 @@ api_selection_filters:
     lt: 300
   url:
     extract: urlVar
+  response_payload:
+    not_contains_either:
+      - "hostname"
+      - "username"
+      - "password"
   
 execute:
   type: single
@@ -31,7 +38,8 @@ execute:
       
 validate:
   response_code:
-    eq: 200
+    gte: 200
+    lt: 300
   response_payload:
     contains_all:
       - "hostname"
