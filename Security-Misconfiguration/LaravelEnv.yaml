@@ -15,8 +15,8 @@ info:
     - https://laravel.com/docs/master/configuration#environment-configuration
     - https://stackoverflow.com/questions/38331397/how-to-protect-env-file-in-laravel
   cwe:
-    - CWE-16
     - CWE-200
+    - CWE-16
   cve:
     - CVE-2017-16894
 
@@ -24,6 +24,16 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  response_payload:
+    not_contains_either:
+      - 'APP_NAME'
+      - 'APP_ENV'
+      - 'APP_KEY'
+      - 'APP_DEBUG'
+      - 'APP_URL'
+      - 'DB_HOST'
+      - 'DB_PASSWORD'
+      - 'DB_DATABASE'
   url:
     extract: urlVar
 
@@ -60,7 +70,8 @@ execute:
       
 validate:
   response_code:
-    eq: 200
+    gte: 200
+    lt: 300
   response_payload:
     contains_either:
       - 'APP_NAME'
@@ -71,4 +82,3 @@ validate:
       - 'DB_HOST'
       - 'DB_PASSWORD'
       - 'DB_DATABASE'
-

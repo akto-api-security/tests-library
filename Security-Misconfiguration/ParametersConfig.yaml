@@ -14,15 +14,20 @@ info:
   references:
     - https://www.exploit-db.com/ghdb/5986
   cwe:
-    - CWE-16  
+    - CWE-16 
     - CWE-200
   cve:
-    - CVE-2015-4050  
+    - CVE-2015-4050   
 
 api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  response_payload:
+    not_contains_either:
+      - 'parameters:'
+      - 'database_user'
+      - 'database_password'
   url:
     extract: urlVar
 
@@ -41,7 +46,8 @@ execute:
       
 validate:
   response_code:
-    eq: 200
+    gte: 200
+    lt: 300
   response_payload:
     contains_all:
       - 'parameters:'

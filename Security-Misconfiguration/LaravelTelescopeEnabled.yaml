@@ -34,6 +34,12 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  response_payload:
+    not_contains_either:
+      - "<title>Telescope - Laravel</title>"
+      - "Requests"
+      - "Commands"
+      - "Schedule"
   url:
     extract: urlVar
 
@@ -41,7 +47,7 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}telescope/requests
+      - modify_url: ${urlVar}/telescope/requests
 
 validate:
   response_payload:
@@ -50,4 +56,3 @@ validate:
       - "Requests"
       - "Commands"
       - "Schedule"
-    
