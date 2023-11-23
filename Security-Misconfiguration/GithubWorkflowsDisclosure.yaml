@@ -27,7 +27,7 @@ api_selection_filters:
   url:
     extract: urlVar
   response_payload:
-    not_contains_either:
+    not_contains:
       - ".github/workflows"
       - "workflow_dispatch"
       - "on: [push, pull_request]"

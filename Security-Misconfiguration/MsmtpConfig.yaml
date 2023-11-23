@@ -23,11 +23,11 @@ api_selection_filters:
     gte: 200
     lt: 300
   response_header:
-    not_contains_either:
+    not_contains:
       - 'text/plain'
       - 'octet-stream'
   response_payload:
-    not_contains_either:
+    not_contains:
       - 'account'
       - 'host'
       - 'from'
