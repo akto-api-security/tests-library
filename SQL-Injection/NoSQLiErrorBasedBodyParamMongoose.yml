@@ -1,0 +1,61 @@
+id: NOSQLI_ERROR_BASED_BODY_PARAM_MONGOOSE
+info:
+  name: "Error Based NoSQL Injection test for JSON Body Parameters for Mongoose Error"
+  description: >
+    "Some API endpoints expecting JSON body parameter values might be directly exposed to MongoDB. 
+    Attackers can trigger an error by breaking the structure of the functions\' parameters used 
+    for communicating with the database. "
+  details: >
+    "Some API endpoints expecting JSON body parameter values might be directly exposed to MongoDB.
+    MongoDB uses NoSQL. Causing an error in NoSQL query syntax can expose the underlying query or DB data."
+  impact: >
+    "Possible data leakage due to illegal DB access. Successful NoSQL injection attacks 
+    may completely compromise or destroy a system."
+  category:
+    name: SQL
+    shortName: Injection Attack
+    displayName: Injection Attacks (SQL)
+  subCategory: NOSQLI_ERROR_BASED_BODY_PARAM_MONGOOSE
+  severity: HIGH
+  tags:
+    - Injection Attack
+    - OWASP Top 10
+    - HackerOne Top 10
+  references:
+    - "https://github.com/Charlie-belmer/nosqli"
+    - "https://owasp.org/www-community/Injection_Flaws"
+  cwe:
+    - CWE-943
+    - CWE-89
+  cve:
+    - CVE-2020-35847
+    - CVE-2021-22911
+    - CVE-2023-28359
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    contains_either:
+      - POST
+      - PUT
+      - PATCH
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extract: changed_body_key
+      value:
+        regex: .*
+        extract: changed_body_value
+execute:
+  type: single
+  requests:
+    - req:
+        - delete_body_param: changed_body_key
+        - add_body_param: 
+            !!str ${changed_body_key} [$]: changed_body_value
+validate:
+  response_payload:
+    regex: "(?i)Cast to string failed for value"
