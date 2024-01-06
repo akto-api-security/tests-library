@@ -53,6 +53,6 @@ execute:
 
 validate:
   response_payload:
-    contains_either: "<script>alert(document.domain)</script>"
-  response_payload:
-    contains_either: <!doctype html>
+    contains_all:
+      - "<script>alert(document.domain)</script>"
+      - <!doctype html>
