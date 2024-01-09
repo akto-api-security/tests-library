@@ -55,18 +55,18 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
-            regex: file|document|attachment|saveAsName
+            regex: file|document|attachment|saveAsName|File|Document|Attachment
             extract: userKey
     - query_param:
         for_one:
           key:
-            regex: file|document|attachment|saveAsName
+            regex: file|document|attachment|saveAsName|File|Document|Attachment
             extract: userKey   
 wordLists:
   random_ids:
     source: sample_data
     key: 
-      regex: file|document|attachment|saveAsName 
+      regex: file|document|attachment|saveAsName|File|Document|Attachment
     all_apis: true
 execute:
   type: single

@@ -51,18 +51,18 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
-            regex: user|id
+            regex: user|id|User|ID
             extract: userKey
     - query_param:
         for_one:
           key:
-            regex: user|id
+            regex: user|id|User|ID
             extract: userKey   
 wordLists:
   random_ids:
     source: sample_data
     key: 
-      regex: user|id 
+      regex: user|id|User|ID
     all_apis: true
 execute:
   type: single

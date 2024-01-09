@@ -54,14 +54,14 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
-            regex: user|id
+            regex: user|id|User|ID
             extract: userKey
           value:
             extract: userVal
     - query_param:
         for_one:
           key:
-            regex: user|id
+            regex: user|id|User|ID
             extract: userKey
           value:
             extract: userVal
