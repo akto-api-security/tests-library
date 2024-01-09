@@ -1,0 +1,87 @@
+id: BOLA_FILE_ACCESS
+info:
+  name: "BOLA by Accessing Files of other Users"
+  description: > 
+    "This specific test of Broken object level authorization occurs when a user gains unauthorized 
+    access to files belonging to other users within a system. This security vulnerability allows 
+    an attacker to exploit weaknesses in the object-level permissions, bypassing proper access 
+    controls. By doing so, the attacker can compromise the confidentiality and integrity of 
+    sensitive information stored in files, potentially leading to unauthorized data disclosure 
+    or manipulation."
+  details: >
+    "This type of Broken object level authorization refers to a security flaw where an attacker 
+    gains unauthorized access to files belonging to different users within a system. This 
+    typically happens when object-level permissions are inadequately enforced, allowing an 
+    attacker to bypass access controls and access files they shouldn't. Exploiting this 
+    vulnerability can result in unauthorized data access, potentially compromising sensitive 
+    information and violating data confidentiality and integrity."
+  impact: >
+    "The impact of broken object level authorization can be severe, leading to unauthorized 
+    access and exposure of sensitive information stored in files. Attackers exploiting this 
+    vulnerability can compromise data confidentiality, potentially leading to privacy breaches 
+    and unauthorized disclosure of personal or confidential data. Additionally, the integrity 
+    of the data may be at risk, as attackers could manipulate or corrupt files, posing a threat 
+    to the overall reliability and trustworthiness of the affected system."
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: BOLA_FILE_ACCESS
+  severity: HIGH
+  tags: 
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://www.akto.io/blog/bola-exploitation-using-unauthorized-uuid-on-api-endpoint"
+    - "https://www.akto.io/blog/what-is-broken-object-level-authorization-bola"
+    - "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md"
+    - "https://cwe.mitre.org/data/definitions/284.html"
+    - "https://cwe.mitre.org/data/definitions/285.html"
+    - "https://cwe.mitre.org/data/definitions/639.html"
+  cwe:
+    - CWE-284
+    - CWE-285
+    - CWE-639
+  cve:
+    - CVE-2023-39349
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: file|document|attachment|saveAsName
+            extract: userKey
+    - query_param:
+        for_one:
+          key:
+            regex: file|document|attachment|saveAsName
+            extract: userKey   
+wordLists:
+  random_ids:
+    source: sample_data
+    key: 
+      regex: file|document|attachment|saveAsName 
+    all_apis: true
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            userKey: ${random_ids}
+        - modify_query_param:
+            userKey: ${random_ids}
+validate:
+  response_code:
+    gte: 200
+    lt: 205
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      lt: 10

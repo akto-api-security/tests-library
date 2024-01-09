@@ -51,6 +51,7 @@ api_selection_filters:
     gte: 200
     lt: 300
   or:
+
     - request_payload:
         for_one:
           value:
@@ -62,11 +63,13 @@ api_selection_filters:
             contains_either:
                 - .jpg
 execute:
-  - req:
+  type: single
+  requests:
+    - req:
       - replace_body:
           regex_replace:
             regex: jpg
-            replace_With: png
+            replace_with: png
 validate:
   response_code:
     gte: 200

@@ -51,12 +51,20 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  request_header:
+    contains_either:
+      - X-User-ID
+      - X-Customer-ID
+      - X-Member-ID
+      - X-Client-ID
+      - X-Account-ID
+      - X-Subscriber-ID
+      - X-User-Hash
 wordLists:
   specialHeaders:
     source: sample_data
     key: 
       regex: X-User-ID|X-Customer-ID|X-Member-ID|X-Client-ID|X-Account-ID|X-Subscriber-ID|X-User-Hash
-      extract: headerKey
     location: header
     all_apis: true
 execute:
@@ -64,7 +72,25 @@ execute:
   requests:
   - req:
     - modify_header:
-         headerKey: "${specialHeaders}"
+         X-User-ID: "${specialHeaders}"
+  - req:
+    - modify_header:
+         X-Customer-ID: "${specialHeaders}"
+  - req:
+    - modify_header:
+         X-Member-ID: "${specialHeaders}"
+  - req:
+    - modify_header:
+         X-Client-ID: "${specialHeaders}"
+  - req:
+    - modify_header:
+         X-Account-ID: "${specialHeaders}"
+  - req:
+    - modify_header:
+         X-Subscriber-ID: "${specialHeaders}"
+  - req:
+    - modify_header:
+         X-User-Hash: "${specialHeaders}"  
 validate:
   response_code:
     gte: 200
@@ -73,4 +99,4 @@ validate:
     length:
       gt: 0
     percentage_match:
-      gte: 90
+      lt: 10
