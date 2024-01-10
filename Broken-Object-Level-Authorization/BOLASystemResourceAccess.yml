@@ -57,17 +57,16 @@ api_selection_filters:
           value:
             contains_either:
                 - .jpg
-                - .pdf
     - query_param:
         for_one:
           value:
             contains_either:
                 - .jpg
-                - .pdf
 execute:
   type: single
   requests:
     - req:
+      - replace_auth_header: true
       - replace_body:
           regex_replace:
             regex: jpg
