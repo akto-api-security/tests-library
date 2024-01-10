@@ -29,14 +29,11 @@ api_selection_filters:
       - "jose.JWS.createSign("
       - "JWTSimple.encode("
       - "jwt.encode("
-  url:
-    extract: urlVar
 
 execute:
   type: single
   requests:
-    - req:
-      - modify_url: ${urlVar}
+    - req: []
 
 validate:
   response_payload:
