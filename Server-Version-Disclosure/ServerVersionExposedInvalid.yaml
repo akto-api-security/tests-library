@@ -36,11 +36,14 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  url:
+    extract: urlVar
 
 execute:
   type: single
   requests:
-    - req: []
+    - req:
+      - modify_url: ${urlVar}invalidTestUrl
 
 validate:
   response_code:
