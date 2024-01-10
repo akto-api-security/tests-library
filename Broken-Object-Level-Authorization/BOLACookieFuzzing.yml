@@ -53,6 +53,8 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  private_variable_context:
+    gt: 0
 wordLists:
   cookiesList:
     source: sample_data
@@ -73,4 +75,16 @@ validate:
     length:
       gt: 0
     percentage_match:
-      lt: 10
+      gte: 90
+    not_contains_either:
+      - Access Denied
+      - Error
+      - Unauthorized
+      - Forbidden
+      - Invalid
+      - Token Expired
+      - Not found
+      - Bad Request
+      - Internal server error
+      - Service Unavailable
+      - Rate limit exceeded

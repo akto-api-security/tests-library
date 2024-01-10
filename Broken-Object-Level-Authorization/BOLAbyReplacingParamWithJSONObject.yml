@@ -52,16 +52,20 @@ api_selection_filters:
   request_payload:
     for_one:
       key:
-        regex: user|id|User|ID
+        regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|^username$|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
         extract: userKey
-      value:
-        extract: userVal
+wordLists:
+  random_ids:
+    source: sample_data
+    key: 
+      regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|^username$|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
+    all_apis: true
 execute:
   type: single
   requests:
     - req:
         modify_body_param:
-          userKey: "{\"${userKey}\":\"${userVal}\"}"
+          userKey: "{\"${userKey}\":\"${random_ids}\"}"
 validate:
   response_code:
     gte: 200
@@ -71,3 +75,5 @@ validate:
       gt: 0
     percentage_match:
       lt: 10
+    percentage_match_schema:
+      gte: 90

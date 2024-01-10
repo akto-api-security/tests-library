@@ -1,9 +1,9 @@
-id: BOLA_ADD_CUSTOM_HEADER
+id: BOLA_ADD_CUSTOM_HEADER_INTEGER_ID
 info:
-  name: "Exploiting BOLA by adding Custom Header for Unauthorized Access."
+  name: "Exploiting BOLA by adding Custom Header with Integer IDs for Unauthorized Access."
   description: > 
     "In this exploitation scenario, attackers target Broken Object Level Authorization (BOLA) 
-    by adding custom headers to their requests, attempting to gain unauthorized access. 
+    by adding custom headers with Integer IDs to their requests, attempting to gain unauthorized access. 
     By manipulating request headers, adversaries seek to exploit weaknesses in authorization 
     mechanisms, potentially bypassing security controls. This method underscores the need 
     for thorough security assessments, emphasizing the importance of secure header handling 
@@ -27,7 +27,7 @@ info:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
-  subCategory: BOLA_ADD_CUSTOM_HEADER
+  subCategory: BOLA_ADD_CUSTOM_HEADER_INTEGER_ID
   severity: HIGH
   tags: 
     - Business logic
@@ -53,28 +53,34 @@ api_selection_filters:
     gte: 200
     lt: 300
 wordLists:
-  headerValues:
-    source: sample_data
-    key: 
-      regex: X-User-ID|X-Customer-ID|X-Member-ID|X-Client-ID|X-Account-ID|X-Subscriber-ID|X-User-Hash
-    location: header
-    all_apis: true
+  specialHeaders:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
 execute:
   type: multiple
   requests:
   - req:
     - add_header:
          X-User-ID: "${headerValues}"
+  - req:
     - add_header:
          X-Customer-ID: "${headerValues}"
+  - req:
     - add_header:
          X-Member-ID: "${headerValues}"
+  - req:
     - add_header:
          X-Client-ID: "${headerValues}"
+  - req:
     - add_header:
          X-Account-ID: "${headerValues}"
+  - req:
     - add_header:
          X-Subscriber-ID: "${headerValues}"
+  - req:
     - add_header:
          X-User-Hash: "${headerValues}"
 validate:

@@ -48,6 +48,8 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  private_variable_context:
+    gt: 0
 wordlists:
   jwts:
     source: sample_data
@@ -68,3 +70,5 @@ validate:
       gt: 0
     percentage_match:
       lt: 10
+    percentage_match_schema:
+      gte: 90

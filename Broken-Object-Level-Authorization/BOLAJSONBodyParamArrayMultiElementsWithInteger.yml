@@ -1,15 +1,15 @@
-id: ID_WRAP_ARRAY_JSON_BODY
+id: ID_WRAP_ARRAY_OF_PARAMS_JSON_BODY_INTEGER_VAL
 info:
-  name: "BOLA: Turning JSON Param into Array for Unauthorized Access"
+  name: "BOLA: Turning JSON Param into Array of Params with Integer for Unauthorized Access"
   description: > 
-    "This manipulation involves converting JSON parameter into array of single element to potentially
+    "This manipulation involves converting JSON parameter into array of multiple elements with Integer to potentially
      circumvent security measures and gain unauthorized entry. Such actions underscore 
      the importance of securing input validation and emphasize the risks associated with 
      broken object-level authorization, necessitating robust security practices to thwart 
      unauthorized access attempts."
   details: >
     "Attackers exploit vulnerabilities by manipulating the system through this test. This involves 
-    converting JSON parameter into array of single element, aiming to exploit weaknesses in 
+    converting JSON parameter into array of multiple elements with Integer, aiming to exploit weaknesses in 
     object-level authorization and gain unauthorized entry. This method highlights the 
     critical need for secure input validation and emphasizes the risks associated with unauthorized 
     access, reinforcing the importance of robust security measures to prevent and mitigate 
@@ -25,7 +25,7 @@ info:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
-  subCategory: ID_WRAP_ARRAY_JSON_BODY
+  subCategory: ID_WRAP_ARRAY_OF_PARAMS_JSON_BODY_INTEGER_VAL
   severity: HIGH
   tags: 
     - Business logic
@@ -56,17 +56,22 @@ api_selection_filters:
           key:
             regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|^username$|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
             extract: userKey
+          value:
+            extract: userVal
     - query_param:
         for_one:
           key:
             regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|^username$|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
             extract: userKey
+          value:
+            extract: userVal
 wordLists:
   random_ids:
-    source: sample_data
-    key: 
-      regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|^username$|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
-    all_apis: true
+    - 1
+    - 2
+    - 3
+    - 4 
+    - 5
 execute:
   type: single
   requests:
@@ -74,9 +79,11 @@ execute:
         modify_body_param:
           userKey: 
             - ${random_ids}
+            - ${userVal}
         modify_query_param:
           userKey:
             - ${random_ids}
+            - ${userVal}
 validate:
   response_code:
     gte: 200
@@ -84,7 +91,7 @@ validate:
   response_payload:
     length:
       gt: 0
-    percentage_match:
-      lt: 10
     percentage_match_schema:
       gte: 90
+    percentage_match:
+      lt: 10

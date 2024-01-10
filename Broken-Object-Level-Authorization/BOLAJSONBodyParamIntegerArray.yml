@@ -1,15 +1,15 @@
-id: ID_WRAP_ARRAY_JSON_BODY
+id: ID_WRAP_ARRAY_JSON_BODY_INTEGER_ID
 info:
-  name: "BOLA: Turning JSON Param into Array for Unauthorized Access"
+  name: "BOLA: Turning JSON Param into Integer Array for Unauthorized Access"
   description: > 
-    "This manipulation involves converting JSON parameter into array of single element to potentially
+    "This manipulation involves converting JSON parameter into array of single Integer element to potentially
      circumvent security measures and gain unauthorized entry. Such actions underscore 
      the importance of securing input validation and emphasize the risks associated with 
      broken object-level authorization, necessitating robust security practices to thwart 
      unauthorized access attempts."
   details: >
     "Attackers exploit vulnerabilities by manipulating the system through this test. This involves 
-    converting JSON parameter into array of single element, aiming to exploit weaknesses in 
+    converting JSON parameter into array of single Integer element, aiming to exploit weaknesses in 
     object-level authorization and gain unauthorized entry. This method highlights the 
     critical need for secure input validation and emphasizes the risks associated with unauthorized 
     access, reinforcing the importance of robust security measures to prevent and mitigate 
@@ -25,7 +25,7 @@ info:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
-  subCategory: ID_WRAP_ARRAY_JSON_BODY
+  subCategory: ID_WRAP_ARRAY_JSON_BODY_INTEGER_ID
   severity: HIGH
   tags: 
     - Business logic
@@ -63,10 +63,11 @@ api_selection_filters:
             extract: userKey
 wordLists:
   random_ids:
-    source: sample_data
-    key: 
-      regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|^username$|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
-    all_apis: true
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
 execute:
   type: single
   requests:

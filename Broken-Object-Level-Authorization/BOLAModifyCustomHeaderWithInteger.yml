@@ -1,18 +1,18 @@
-id: BOLA_MODIFY_CUSTOM_HEADER
+id: BOLA_MODIFY_CUSTOM_HEADER_INTEGER_VAL
 info:
-  name: "Exploiting BOLA by fuzzing Custom Header for Unauthorized Access."
+  name: "Exploiting BOLA by fuzzing Custom Header with Integer for Unauthorized Access."
   description: > 
     "Attackers exploit Broken Object Level Authorization (BOLA) by employing header fuzzing 
-    techniques, systematically testing variations to gain unauthorized access. This method 
+    techniques with Integer, systematically testing variations to gain unauthorized access. This method 
     highlights vulnerabilities in the system's authorization mechanisms, underscoring the 
-    importance of robust security assessments, secure header handling, and comprehensive 
+    importance of robust security assessments, secure header handling with Integer, and comprehensive 
     testing to mitigate the risks associated with unauthorized access and BOLA vulnerabilities 
     introduced through custom header manipulation."
   details: >
-    "Attackers exploit Broken Object Level Authorization (BOLA) by fuzzing custom headers, 
+    "Attackers exploit Broken Object Level Authorization (BOLA) by fuzzing custom headers with Integer, 
     systematically testing variations to gain unauthorized access. This method exposes 
     vulnerabilities in the system's authorization mechanisms, highlighting the crucial need 
-    for robust security assessments and secure header handling to mitigate the risks associated 
+    for robust security assessments and secure header handling with Integer to mitigate the risks associated 
     with unauthorized access and BOLA vulnerabilities introduced through custom header fuzzing."
   impact: >
     "The impact of exploiting Broken Object Level Authorization through custom header fuzzing can 
@@ -26,7 +26,7 @@ info:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
-  subCategory: BOLA_MODIFY_CUSTOM_HEADER
+  subCategory: BOLA_MODIFY_CUSTOM_HEADER_INTEGER_VAL
   severity: HIGH
   tags: 
     - Business logic
@@ -62,11 +62,11 @@ api_selection_filters:
       - X-User-Hash
 wordLists:
   specialHeaders:
-    source: sample_data
-    key: 
-      regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|^username$|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
-    location: header
-    all_apis: true
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
 execute:
   type: single
   requests:

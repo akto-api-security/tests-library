@@ -57,6 +57,7 @@ api_selection_filters:
     gt: 0
     regex: "[a-zA-Z]+-?\\d+"
     extract: private_var  # (alphanumeric)
+
 execute:
   type: single
   requests:
@@ -75,3 +76,5 @@ validate:
       gt: 0
     percentage_match:
       lt: 10
+    percentage_match_schema:
+      gte: 90
