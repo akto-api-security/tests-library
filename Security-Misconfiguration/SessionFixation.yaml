@@ -41,13 +41,11 @@ api_selection_filters:
       - signin
       - sign-in
       - log-in
-    extract: urlVar
 
 execute:
   type: single
   requests:
-    - req:
-      - modify_url: ${urlVar}
+    - req: []
 
 validate:
   or:

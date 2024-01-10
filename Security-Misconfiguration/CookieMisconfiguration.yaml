@@ -35,14 +35,11 @@ api_selection_filters:
         eq: Set-Cookie
       value: 
         regex: ^(?!.*\bsecure\b).*
-  url:
-    extract: urlVar
 
 execute:
   type: single
   requests:
-    - req:
-      - modify_url: ${urlVar}
+    - req: []
 
 validate:
   response_headers:
