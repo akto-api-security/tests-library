@@ -53,7 +53,7 @@ api_selection_filters:
     gte: 200
     lt: 300
 wordLists:
-  specialHeaders:
+  headerValues:
     - 1
     - 2
     - 3
@@ -65,22 +65,16 @@ execute:
   - req:
     - add_header:
          X-User-ID: "${headerValues}"
-  - req:
     - add_header:
          X-Customer-ID: "${headerValues}"
-  - req:
     - add_header:
          X-Member-ID: "${headerValues}"
-  - req:
     - add_header:
          X-Client-ID: "${headerValues}"
-  - req:
     - add_header:
          X-Account-ID: "${headerValues}"
-  - req:
     - add_header:
          X-Subscriber-ID: "${headerValues}"
-  - req:
     - add_header:
          X-User-Hash: "${headerValues}"
 validate:
