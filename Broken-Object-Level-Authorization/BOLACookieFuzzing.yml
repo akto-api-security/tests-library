@@ -65,6 +65,7 @@ execute:
   type: single
   requests:
   - req:
+    - remove_auth_header: true
     - modify_header:
         cookie: "${cookiesList}"
 validate:
