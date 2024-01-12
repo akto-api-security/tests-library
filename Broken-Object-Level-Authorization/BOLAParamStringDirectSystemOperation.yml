@@ -64,13 +64,12 @@ execute:
     - req:
         - add_query_param:
             private_var.key: ${private_var.value}
-        # or
         - add_body_param:
             private_var.key: ${private_var.value}
 validate:
   response_code:
     gte: 200
-    lt: 205
+    lt: 300
   response_payload:
     length:
       gt: 0

@@ -56,17 +56,11 @@ api_selection_filters:
         eq: Content-Type
       value: 
         extract: headerValue
-  or:
-    - request_payload:
-        for_one:
-          value:
-            contains_either:
-                - .jpg
-    - query_param:
-        for_one:
-          value:
-            contains_either:
-                - .jpg
+  request_payload:
+    for_one:
+      value:
+        contains_either:
+          - .jpg
 execute:
   type: single
   requests:
@@ -79,7 +73,7 @@ execute:
 validate:
   response_code:
     gte: 200
-    lt: 205
+    lt: 300
   response_headers:
     for_one:
       key:

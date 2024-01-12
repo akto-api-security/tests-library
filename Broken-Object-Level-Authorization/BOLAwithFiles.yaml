@@ -55,18 +55,18 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
-            regex: file|document|attachment|saveAsName|File|Document|Attachment
+            regex: file|document|attachment|saveAsName|File|Document|Attachment|path
             extract: userKey
     - query_param:
         for_one:
           key:
-            regex: file|document|attachment|saveAsName|File|Document|Attachment
+            regex: file|document|attachment|saveAsName|File|Document|Attachment|path
             extract: userKey   
 wordLists:
   random_ids:
     source: sample_data
     key: 
-      regex: file|document|attachment|saveAsName|File|Document|Attachment
+      regex: file|document|attachment|saveAsName|File|Document|Attachment|path
     all_apis: true
 execute:
   type: single
@@ -79,7 +79,7 @@ execute:
 validate:
   response_code:
     gte: 200
-    lt: 205
+    lt: 300
   response_payload:
     length:
       gt: 0
@@ -87,3 +87,15 @@ validate:
       lt: 10
     percentage_match_schema:
       gte: 90
+    not_contains_either:
+      - Access Denied
+      - Error
+      - Unauthorized
+      - Forbidden
+      - Invalid
+      - Token Expired
+      - Not found
+      - Bad Request
+      - Internal server error
+      - Service Unavailable
+      - Rate limit exceeded
