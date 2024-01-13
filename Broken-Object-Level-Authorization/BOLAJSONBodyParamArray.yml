@@ -1,30 +1,31 @@
-id: ID_REPLACE_JSON_OBJECT
+id: ID_WRAP_ARRAY_JSON_BODY
 info:
-  name: "BOLA: Turning Parameters into JSON Objects for Unauthorized Access"
+  name: "BOLA: Turning JSON Param into Array for Unauthorized Access"
   description: > 
-    "This test entails transforming parameters into JSON objects to potentially circumvent 
-    security measures and gain unauthorized entry, emphasizing the critical need for securing 
-    input validation and addressing BOLA risks. This underscores the importance of robust 
-    security practices to prevent unauthorized access and protect against exploitation of 
-    broken object-level authorization."
+    "This manipulation involves converting JSON parameter into array of single element to potentially
+     circumvent security measures and gain unauthorized entry. Such actions underscore 
+     the importance of securing input validation and emphasize the risks associated with 
+     broken object-level authorization, necessitating robust security practices to thwart 
+     unauthorized access attempts."
   details: >
-    "In this test, manipulation involves transforming parameters into JSON objects, aiming 
-    to exploit broken object-level authorization and gain unauthorized entry. Such actions 
-    highlight the critical importance of robust security practices, emphasizing the need 
-    for stringent input validation to mitigate the risks associated with unauthorized 
-    access and potential data breaches."
+    "Attackers exploit vulnerabilities by manipulating the system through this test. This involves 
+    converting JSON parameter into array of single element, aiming to exploit weaknesses in 
+    object-level authorization and gain unauthorized entry. This method highlights the 
+    critical need for secure input validation and emphasizes the risks associated with unauthorized 
+    access, reinforcing the importance of robust security measures to prevent and mitigate 
+    potential exploitation."
   impact: >
-    "The impact of this test can be severe, introducing the risk of unauthorized entry and 
-    compromising sensitive data. Exploiting broken object-level authorization through parameter 
-    manipulation may lead to unauthorized access, potential data breaches, and a compromise 
-    of overall system security. Timely mitigation of these vulnerabilities is crucial to 
-    prevent unauthorized access and protect the system from the consequences of broken 
-    object-level authorization exploitation."
+    "The impact of this test can be significant, posing a risk of unauthorized entry and potential 
+    compromise of sensitive data. By exploiting broken object-level authorization through 
+    JSON parameter manipulation, attackers may gain unauthorized access, leading to data 
+    breaches and compromising the overall integrity of the system. Promptly addressing and 
+    mitigating these vulnerabilities is crucial to prevent unauthorized access and safeguard 
+    against the potential consequences of broken object-level authorization exploitation."
   category:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
-  subCategory: ID_REPLACE_JSON_OBJECT
+  subCategory: ID_WRAP_ARRAY_JSON_BODY
   severity: HIGH
   tags: 
     - Business logic
@@ -54,6 +55,7 @@ api_selection_filters:
       key:
         regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|^username$|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
         extract: userKey
+
 wordLists:
   random_ids:
     source: sample_data
@@ -65,7 +67,8 @@ execute:
   requests:
     - req:
         modify_body_param:
-          userKey: "{\"${userKey}\":\"${random_ids}\"}"
+          userKey: 
+            - "${random_ids}"
 validate:
   response_code:
     gte: 200
