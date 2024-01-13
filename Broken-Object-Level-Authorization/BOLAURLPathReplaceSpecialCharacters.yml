@@ -1,0 +1,108 @@
+id: BOLA_URL_REPLACE_SPECIAL_CHAR
+info:
+  name: "Exploiting BOLA by replacing URL path with Special Characters for Unauthorized Access."
+  description: > 
+    "This BOLA test focuses on manipulating URL paths with special characters to exploit 
+    vulnerabilities. This tactic aims to achieve unauthorized access by tricking the system 
+    into accepting unconventional input, compromising object-level authorization controls. 
+    Attackers, by replacing standard URL components, seek to breach security measures, 
+    potentially leading to unauthorized entry and exposure of sensitive resources within 
+    the application."
+  details: >
+    "This BOLA test exploits vulnerabilities in an application's authorization by 
+    substituting special characters in the URL path. This manipulation aims at 
+    gaining unauthorized access by circumventing object-level authorization controls. 
+    Attackers employ this technique to trick the system, potentially compromising security 
+    and enabling access to restricted resources, posing a threat of unauthorized exposure 
+    of sensitive data within the application."
+  impact: >
+    "The impact of a successful BOLA attack can be severe, as it allows unauthorized 
+    access to sensitive resources within the application. This breach compromises the 
+    confidentiality and integrity of data, potentially leading to data leaks or 
+    manipulation. Moreover, it undermines the overall security posture of the system, 
+    exposing vulnerabilities that can be exploited for further malicious activities, 
+    putting both the application and its users at significant risk."
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: BOLA_URL_REPLACE_SPECIAL_CHAR
+  severity: HIGH
+  tags: 
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://www.akto.io/blog/bola-exploitation-using-unauthorized-uuid-on-api-endpoint"
+    - "https://www.akto.io/blog/what-is-broken-object-level-authorization-bola"
+    - "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md"
+    - "https://cwe.mitre.org/data/definitions/284.html"
+    - "https://cwe.mitre.org/data/definitions/285.html"
+    - "https://cwe.mitre.org/data/definitions/639.html"
+  cwe:
+    - CWE-284
+    - CWE-285
+    - CWE-639
+  cve:
+    - CVE-2022-34770
+
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+
+wordLists:
+  specialCharacters:
+    - "\"*\""
+    - "\"#\""
+    - "\"'\""
+    - "\"!\""
+    - "\"@\""
+    - "\"^\""
+    - "\"&\""
+    - "\"%\""
+    - "\"$\""
+    - "\"?\""
+
+execute:
+  type: multiple
+  requests:
+    - req:
+      - modify_url:
+          token_replace:
+            location: 1
+            replace_with: ${specialCharacters}
+      - success: vulnerable
+      - failure: x2
+    - req:
+      - modify_url:
+          token_replace:
+            location: 2
+            replace_with: ${specialCharacters}
+      - success: vulnerable
+      - failure: x3
+    - req:
+      - modify_url:
+          token_replace:
+            location: 3
+            replace_with: ${specialCharacters}
+      - success: vulnerable
+      - failure: x4
+    - req:
+      - modify_url:
+          token_replace:
+            location: 4
+            replace_with: ${specialCharacters}
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      lt: 10
+    percentage_match_schema:
+      gte: 90

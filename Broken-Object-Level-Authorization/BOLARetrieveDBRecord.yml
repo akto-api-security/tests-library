@@ -1,9 +1,9 @@
-id: BOLA_STRING_PARAM
+id: BOLA_INTEGER_PARAM
 info:
-  name: "Exploiting BOLA: Direct System Operation Using String Parameter Values"
+  name: "Exploiting BOLA: Direct System Operation Using Integer Parameter Values"
   description: > 
     "In this instance of Broken Object Level Authorization (BOLA), attackers exploit system 
-    vulnerabilities by directly utilizing string parameter values to perform operations. This 
+    vulnerabilities by directly utilizing integer parameter values to perform operations. This 
     manipulation poses a significant risk, potentially bypassing authorization controls and 
     compromising the system's integrity. It underscores the imperative for stringent input 
     validation and secure object-level authorization practices to mitigate these risks 
@@ -11,14 +11,14 @@ info:
     unauthorized system operations and ensuring robust security measures."
   details: >
     "In the context of Broken Object Level Authorization (BOLA), this scenario involves 
-    attackers exploiting vulnerabilities by directly employing string parameter values 
+    attackers exploiting vulnerabilities by directly employing integer parameter values 
     to execute operations within the system. By manipulating these parameters, adversaries 
     may bypass authorization controls, posing a substantial risk to the system's integrity. 
     Robust input validation and secure object-level authorization practices are imperative 
     to mitigate these vulnerabilities effectively and prevent unauthorized system operations."
   impact: >
     "The impact of exploiting Broken Object Level Authorization (BOLA) through direct 
-    utilization of string parameter values for system operations can be severe. Successful 
+    utilization of integer parameter values for system operations can be severe. Successful 
     manipulation may lead to unauthorized access, compromising sensitive data and potentially 
     causing system disruptions. Addressing these vulnerabilities promptly is essential to 
     prevent unauthorized operations, safeguard against data breaches, and uphold the overall 
@@ -27,7 +27,7 @@ info:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
-  subCategory: BOLA_STRING_PARAM
+  subCategory: BOLA_INTEGER_PARAM
   severity: HIGH
   tags: 
     - Business logic
@@ -55,9 +55,8 @@ api_selection_filters:
     lt: 300
   private_variable_context:
     gt: 0
-    regex: "\\b[a-zA-Z]+[-_]?\\d+\\b"
+    regex: "^\\d+$"
     extract: private_var
-
 execute:
   type: single
   requests:
