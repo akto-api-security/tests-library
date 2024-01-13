@@ -52,6 +52,8 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  private_variable_context:
+    gt: 0
 
 wordLists:
   apiVersions:
@@ -66,6 +68,7 @@ execute:
   type: multiple
   requests:
     - req:
+      - replace_auth_header: true
       - modify_url:
           token_insert:
             location: 1
@@ -73,6 +76,7 @@ execute:
       - success: vulnerable
       - failure: x2
     - req:
+      - replace_auth_header: true
       - modify_url:
           token_insert:
             location: 2
@@ -80,6 +84,7 @@ execute:
       - success: vulnerable
       - failure: x3
     - req:
+      - replace_auth_header: true
       - modify_url:
           token_insert:
             location: 3
@@ -87,6 +92,7 @@ execute:
       - success: vulnerable
       - failure: x4
     - req:
+      - replace_auth_header: true
       - modify_url:
           token_insert:
             location: 4
@@ -94,6 +100,7 @@ execute:
       - success: vulnerable
       - failure: x5
     - req:
+      - replace_auth_header: true
       - modify_url:
           token_insert:
             location: 5
@@ -102,10 +109,12 @@ validate:
   response_code:
     gte: 200
     lt: 300
+  url:
+    endpoint_in_traffic_context: false 
   response_payload:
     length:
       gt: 0
     percentage_match:
-      lt: 10
-    percentage_match_schema:
-      gte: 90
+      lt: 90
+
+  

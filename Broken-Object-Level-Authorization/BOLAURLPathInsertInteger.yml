@@ -102,6 +102,8 @@ validate:
   response_code:
     gte: 200
     lt: 300
+  url:
+    endpoint_in_traffic_context: false 
   response_payload:
     length:
       gt: 0
