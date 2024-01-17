@@ -62,6 +62,10 @@ api_selection_filters:
           key:
             regex: "^password$|^pass$|^pwd$|^user_password$|^userpass$|^passwd$|^user_pwd$|^password1$|^userPass$|^login_password$|^loginpassword$|^user_pass$|^access_password$|^secret$|^user_secret$"
             extract: passKey
+wordLists:
+  dummyUsernames:
+    - dummy
+    - "dummymail@dummy.com"
 execute:
   type: multiple
   requests:
@@ -71,11 +75,12 @@ execute:
     - validate:
         response_code:
           gte: 400
+          lt: 410
     - success: x2
     - failure: exit
   - req:
     - modify_body_param:
-        email: dummymail@mail.com
+        email: ${dummyUsernames}
         password: Default1!
     - validate:
         response_code:
