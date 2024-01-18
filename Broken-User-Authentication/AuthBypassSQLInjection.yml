@@ -1,0 +1,97 @@
+id: AUTH_BYPASS_SQL_INJECTION
+info:
+  name: "Authentication Bypass using SQL Injection"
+  description: > 
+    "Authentication Bypass via SQL Injection involves exploiting vulnerabilities in 
+    poorly sanitized user inputs to inject malicious SQL code. By manipulating authentication 
+    queries, attackers can gain unauthorized access to systems, circumventing login mechanisms 
+    and potentially compromising sensitive data. Prevention requires robust input validation 
+    and secure coding practices to thwart SQL Injection attempts and safeguard system integrity."
+  details: >
+    "Authentication Bypass via SQL Injection is a security vulnerability wherein attackers 
+    manipulate input fields to inject malicious SQL code into authentication queries. By 
+    exploiting poorly sanitized inputs, unauthorized access is granted, enabling attackers 
+    to bypass login mechanisms and potentially compromise sensitive data. Mitigation 
+    involves implementing strict input validation and utilizing parameterized queries 
+    to fortify against SQL Injection attacks."
+  impact: >
+    "Authentication Bypass via SQL Injection can result in significant consequences, such 
+    as unauthorized access to sensitive systems and potential data breaches. The impact 
+    includes compromised confidentiality, integrity, and the risk of malicious manipulation 
+    of critical information. Organizations may face reputational damage, financial losses, 
+    and legal repercussions. Mitigation involves implementing strong input validation, 
+    utilizing parameterized queries, and conducting regular security assessments to 
+    prevent and detect SQL Injection vulnerabilities."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: AUTH_BYPASS_SQL_INJECTION
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa2-broken-user-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  url:
+    contains_either:
+      - login
+      - signin
+      - authenticate
+      - auth
+  request_payload:
+    for_one:
+      key:
+        regex: "^username$|^user$|^userid$|^user_id$|^login$|^login_id$|^email$|^account$|^account_id$|^member$|^member_id$|^id$|^user_name$|^uname$|^identifier$|^user_identifier$|^admin$|^nick$|^nickname$|^handle$|^alias$|^principal$|^profile$|^profile_id$|^name$|^signin$|^auth$|^credential$|^user_login$|^user_account$|^user_email$|^employee$|^employee_id$|^operator$|^customer_id$|^client_id$|^subscriber$|^subscriber_id$|^participant$|^participant_id$|^client_id$|^userLoginID$|^client-name$"
+        extract: userKey
+
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: "'"
+        
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - SQL syntax
+      - MySQL
+      - mysqli
+      - MySQLSyntaxErrorException
+      - Mysqli_Exception
+      - MySqlException
+      - SQLSTATE
+      - PostgreSQL
+      - valid PostgreSQL result
+      - Npgsql
+      - PSQLException
+      - SQL Server
+      - SQLServer JDBC Driver
+      - SqlConnection
+      - SqlException
+      - Oracle error
+      - quoted string not properly terminated
+      - OracleException
+      - SQLite
+      - SQLITE_ERROR
+      - "sqlite3.OperationalError:"
+      - "SQLite3::SQLException"
+      - "SQLiteException"
+      - "SQLITE_CONSTRAINT"
