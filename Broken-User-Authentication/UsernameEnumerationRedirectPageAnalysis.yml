@@ -1,0 +1,104 @@
+id: USER_ENUM_REDIRECT_PAGE
+info:
+  name: "Username Enumeration using Redirect Page Analysis"
+  description: > 
+    "In username enumeration through URL redirection analysis in login endpoints, attackers 
+    exploit subtle differences in system responses to distinguish valid and invalid usernames. 
+    By observing distinct redirection patterns, they attempt to deduce the existence of 
+    valid user accounts. Mitigating this risk involves implementing consistent redirection 
+    responses and reinforcing username validation mechanisms to prevent such enumeration 
+    tactics."
+  details: >
+    "Username enumeration through URL redirection analysis occurs when attackers exploit 
+    variations in system responses during login attempts. By observing differences in 
+    redirection patterns for valid and invalid usernames, attackers may discern the 
+    existence of valid accounts. To prevent this, it is crucial to implement consistent 
+    redirection responses and enhance username validation mechanisms in the 
+    authentication process."
+  impact: >
+    "The impact of username enumeration through URL redirection analysis lies in the 
+    potential exposure of valid user accounts, providing attackers with valuable 
+    information for targeted exploits. This technique enables malicious actors to 
+    identify and focus on valid usernames, increasing the risk of unauthorized access 
+    or targeted attacks. Mitigating this impact involves strengthening security 
+    measures, such as implementing consistent error responses and validating usernames 
+    without revealing sensitive information during the authentication process."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: USER_ENUM_REDIRECT_PAGE
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa2-broken-user-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+    - "https://cwe.mitre.org/data/definitions/798.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2023-3897
+    - CVE-2023-40758
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  url:
+    contains_either:
+      - login
+      - signin
+      - authenticate
+      - auth
+  and:
+    - request_payload:
+        for_one:
+          key:
+            regex: "^username$|^user$|^userid$|^user_id$|^login$|^login_id$|^email$|^account$|^account_id$|^member$|^member_id$|^id$|^user_name$|^uname$|^identifier$|^user_identifier$|^admin$|^nick$|^nickname$|^handle$|^alias$|^principal$|^profile$|^profile_id$|^name$|^signin$|^auth$|^credential$|^user_login$|^user_account$|^user_email$|^employee$|^employee_id$|^operator$|^customer_id$|^client_id$|^subscriber$|^subscriber_id$|^participant$|^participant_id$|^client_id$|^userLoginID$|^client-name$"
+            extract: userKey
+    - request_payload:
+        for_one:
+          key:
+            regex: "^password$|^pass$|^pwd$|^user_password$|^userpass$|^passwd$|^user_pwd$|^password1$|^userPass$|^login_password$|^loginpassword$|^user_pass$|^access_password$|^secret$|^user_secret$"
+            extract: passKey
+wordLists:
+  dummyUsernames:
+    - dummy
+    - "dummymail@dummy.com"
+execute:
+  type: multiple
+  requests:
+  - req:
+    - modify_body_param:
+        passKey: Default1!
+    - modify_url:
+        regex_replace:
+          regex: https
+          replace_with: http
+    - follow_redirect: true
+    - validate:
+        response_code:
+          gte: 400
+          lt: 410
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${dummyUsernames}
+        passKey: Default1!
+    - modify_url:
+        regex_replace:
+          regex: https
+          replace_with: http
+    - follow_redirect: true
+    - validate:
+        or: 
+          - response_payload:
+              neq: "${x1.response.body}"
+          - response_code:
+              eq: "${x1.response.status_code}"
+    - success: vulnerable
