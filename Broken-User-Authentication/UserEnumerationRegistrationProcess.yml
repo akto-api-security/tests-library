@@ -48,13 +48,9 @@ api_selection_filters:
     contains_either:
       - register
       - signup
-      - forgot-password
       - "users/create"
       - "account/create"
       - "create_account"
-      - "/join"
-      - "users/enroll"
-      - "/user/new"
   and:
     - request_payload:
         for_one:

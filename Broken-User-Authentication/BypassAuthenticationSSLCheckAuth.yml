@@ -1,22 +1,22 @@
-id: SSL_ENABLE_CHECK
+id: SSL_ENABLE_CHECK_AUTH
 info:
-  name: "Bypass Authentication by modifying URL to HTTP only"
+  name: "Bypass Authentication by modifying authenticated URL to HTTP only"
   description: > 
-    "Bypassing authentication by modifying the URL to HTTP is a security exploit where 
+    "Bypassing authentication by modifying the authenticated URL to HTTP is a security exploit where 
     attackers manipulate the URL protocol, often downgrading from HTTPS to HTTP. This 
     manipulation can compromise the integrity of secure authentication processes, 
     enabling unauthorized access to sensitive systems. Preventive measures include
     enforcing HTTPS, implementing secure session management, and conducting regular 
     security assessments to identify and mitigate such vulnerabilities."
   details: >
-    "Bypassing authentication by modifying the URL to HTTP is a security vulnerability 
+    "Bypassing authentication by modifying the authenticated URL to HTTP is a security vulnerability 
     where attackers manipulate the web address, often downgrading from HTTPS to HTTP. 
     This manipulation can compromise secure authentication, allowing unauthorized 
     access to sensitive systems. Mitigation involves enforcing HTTPS, implementing 
     robust session management, and conducting regular security audits to detect and 
     remediate such vulnerabilities."
   impact: >
-    "The impact of bypassing authentication by modifying the URL to HTTP can be severe, 
+    "The impact of bypassing authentication by modifying the authenticated URL to HTTP can be severe, 
     potentially leading to unauthorized access to sensitive information or systems. 
     This manipulation compromises the confidentiality and integrity of data exchanged 
     during authentication. Organizations may face reputational damage, regulatory 
@@ -28,7 +28,7 @@ info:
     name: NO_AUTH
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
-  subCategory: SSL_ENABLE_CHECK
+  subCategory: SSL_ENABLE_CHECK_AUTH
   severity: HIGH
   tags:
     - Business logic
@@ -43,26 +43,12 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
+auth:
+  authenticated: true
 api_selection_filters:
   response_code:
     gte: 200
     lt: 300
-  url:
-    contains_either:
-      - login
-      - signin
-      - authenticate
-      - auth
-      - password-reset
-      - reset-password
-      - forgot-password
-      - "user/reset"
-      - "account/recover"
-      - "api/password_reset"
-      - "password/reset"
-      - "account/reset-password-request"
-      - "password_reset_request"
-      - "account_recovery"
 
 execute:
   type: single
