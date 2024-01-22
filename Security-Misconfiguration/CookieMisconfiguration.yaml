@@ -34,7 +34,9 @@ api_selection_filters:
       key:
         eq: Set-Cookie
       value: 
-        regex: ^(?!.*\bsecure\b).*
+        contains_all:
+          - secure;
+          - httponly;
 
 execute:
   type: single
@@ -47,5 +49,7 @@ validate:
       key:
         eq: Set-Cookie
       value: 
-        regex: ^(?!.*\bsecure\b).*
+        contains_all:
+          - secure;
+          - httponly;
 

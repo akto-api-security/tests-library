@@ -1,0 +1,86 @@
+id: BYPASS_2FA_BRUTE_FORCE
+info:
+  name: "2FA Bypass with brute-force attack"
+  description: > 
+    "Authentication Bypass via Password Reset Endpoint Replay is a security vulnerability 
+    where attackers intercept and replay previously captured password reset requests. 
+    Exploiting this flaw enables unauthorized access to user accounts without valid 
+    credentials. This underscores the importance of implementing robust security 
+    measures to prevent and detect replay attacks in password reset processes, crucial 
+    for maintaining overall system security."
+  details: >
+    "Authentication Bypass via Password Reset Endpoint Replay is a security vulnerability 
+    where attackers intercept and replay captured password reset requests, enabling 
+    unauthorized access to user accounts without valid credentials. This exploitation 
+    poses a significant threat to system security, emphasizing the need for robust 
+    measures in password reset processes to detect and prevent replay attacks effectively. 
+    Implementing dynamic and secure authentication controls is crucial for safeguarding 
+    user accounts and maintaining overall system integrity."
+  impact: >
+    "The impact of Authentication Bypass via Password Reset Endpoint Replay is profound, 
+    as it allows malicious actors to gain unauthorized access to user accounts without 
+    valid credentials. This exploitation can lead to compromised user privacy, 
+    unauthorized data access, and potential account takeovers. Organizations may 
+    face severe consequences, including reputational damage and regulatory issues, 
+    highlighting the critical importance of implementing stringent security measures 
+    to thwart replay attacks in password reset processes."
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: BYPASS_2FA_BRUTE_FORCE
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa2-broken-user-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+auth:
+  authenticated: true
+api_selection_filters:
+  method:
+    not_contains_either:
+      - GET
+  response_code:
+    gte: 200
+    lte: 300
+    extract: resp_code
+  request_payload:
+    for_one:
+      key:
+        regex: "(?i)(captcha|2fa[-_]?code|mfa[-_]?code|auth[-_]?code|verification[-_]?code|security[-_]?code)"
+        extract:  captchaKey
+      value:
+        regex: "^\\d+$"
+wordLists:
+  randomCaptcha:
+    - "123455"
+    - "123435"
+    - "123456"
+    - "123457"
+    - "123459"
+    - "12345"
+    - "12344"
+    - "12347"
+    - "12321"
+    - "12999"
+execute:
+  type: single
+  requests:
+  - req:
+      modify_body_param:
+        captchaKey: ${randomCaptcha}
+validate:
+  response_code:
+    eq: ${resp_code}
+  response_payload:
+    percentage_match_schema:
+      gt: 90
