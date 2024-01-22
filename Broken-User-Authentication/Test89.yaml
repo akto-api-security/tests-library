@@ -1,0 +1,26 @@
+# check keys and secret are different between env
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lte: 300
+    extract: resp_code
+  url:
+    contains_either:
+      - login
+      ... arjun to add wordlist for identifying login urls
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_url:
+        token_replace:
+          regex: https://
+          replace_with: https://staging.
+
+validate:
+  response_code:
+    eq: ${resp_code}
+  response_payload:
+    percentage_match:
+      gt: 90

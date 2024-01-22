@@ -1,0 +1,48 @@
+# Password brute-force via password change
+
+wordLists:
+  random_header_val:
+  - a
+  - b
+  - c
+  - d
+  - e
+  - f
+  - g
+  - h
+  - i
+  - j
+api_selection_filters:
+  response_code:
+    gte: 200
+    lte: 300
+    extract: resp_code
+  url:
+    contains_either:
+      ... arjun to add wordlist for identifying password change urls
+execute:
+  type: multiple
+  requests:
+  - req:
+    - remove_auth_header: true
+    - validate:
+        response_code:
+          eq: "${resp_code}"
+        response_payload:
+          percentage_match:
+            gt: 90
+    - success: x2
+    - failure: exit
+  - req:
+    - add_header:
+        dummy_header_key: random_header_val
+    - validate:
+        or:
+        - response_code:
+            eq: 429
+        - response_payload:
+            contains_either:
+            - rate_limit
+            - rate-limit
+    - success: vulnerable
+    - failure: exit

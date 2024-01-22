@@ -1,0 +1,23 @@
+# Cross Site Request Forgery
+
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lte: 300
+    extract: resp_code
+  request_headers:
+    not_contains:
+    - csrf
+    - xsrf
+execute:
+  type: single
+  requests:
+  - req: []
+validate:
+  response_code:
+    eq: "${resp_code}"
+  response_payload:
+    percentage_match_schema:
+      gt: 90

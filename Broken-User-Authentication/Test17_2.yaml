@@ -1,0 +1,31 @@
+# Broken brute-force protection, multiple credentials per request
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lte: 300
+  url:
+    contains_either:
+    - login
+    ... arjun to add wordlist for identifying login endpoints
+  request_payload:
+    for_one:
+      key:
+        regex: ... arjun to add password key regex
+        extract: passwordKey
+      value:
+        extract: passwordVal
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        passwordKey:
+        - "${passwordVal}"
+        - random
+        - 123456
+        - qwerty
+validate:
+  response_code:
+    gte: 200
+    lt: 300

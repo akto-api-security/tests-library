@@ -1,0 +1,32 @@
+# Password reset poisoning via middleware
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lte: 300
+    extract: resp_code
+  url:
+    contains_either:
+      - password_reset
+      ... arjun to add wordlist for identifying password reset urls
+  request_headers:
+    for_one:
+      key:
+        eq: host
+execute:
+  type: single
+  requests:
+  - req:
+      - modify_header:
+          host: evil.com
+
+validate:
+  response_code:
+    eq: ${resp_code}
+  response_headers:
+    for_one:
+      value:
+        contains_either: evil.com
+  response_payload:
+    percentage_match_schema:
+      gt: 90
