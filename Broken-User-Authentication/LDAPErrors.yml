@@ -1,0 +1,100 @@
+id: LDAP_ERRORS
+info:
+  name: "Generating LDAP errors via input for Login endpoints"
+  description: > 
+    "Generating LDAP errors via input for login endpoints is a manipulation tactic 
+    where attackers intentionally trigger Lightweight Directory Access Protocol 
+    (LDAP) errors by inputting malicious data. By exploiting these errors, attackers 
+    gain insights into the authentication system's configuration, potentially 
+    identifying vulnerabilities for further exploitation. This technique highlights 
+    the importance of robust input validation and error-handling mechanisms to 
+    prevent unauthorized access and protect system integrity."
+  details: >
+    "Generating LDAP errors via input in login endpoints involves deliberately 
+    submitting malformed or malicious data to trigger specific Lightweight 
+    Directory Access Protocol (LDAP) errors. Attackers leverage these errors 
+    to gain insights into the authentication system, potentially identifying 
+    weaknesses for exploitation. This technique helps adversaries probe and 
+    gather information about the underlying infrastructure, emphasizing the 
+    need for stringent input validation to mitigate such security risks."
+  impact: >
+    "Generating LDAP errors via input for login endpoints can have significant 
+    impacts on security. Attackers exploiting this technique gain insights 
+    into system vulnerabilities, potentially leading to unauthorized access 
+    and data compromise. The impact extends to potential service disruptions, 
+    loss of sensitive information, and reputational damage, underscoring 
+    the critical need for robust input validation to mitigate the risk of 
+    such attacks and safeguard authentication processes."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: LDAP_ERRORS
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa2-broken-user-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+    extract: resp_code
+  method:
+    not_contains_either:
+      - GET
+  url:
+    contains_either:
+      - login
+      - signin
+      - authenticate
+      - auth
+  request_payload:
+    for_one:
+      key:
+        regex: "^username$|^user$|^userid$|^user_id$|^login$|^login_id$|^email$|^account$|^account_id$|^member$|^member_id$|^id$|^user_name$|^uname$|^identifier$|^user_identifier$|^admin$|^nick$|^nickname$|^handle$|^alias$|^principal$|^profile$|^profile_id$|^name$|^signin$|^auth$|^credential$|^user_login$|^user_account$|^user_email$|^employee$|^employee_id$|^operator$|^customer_id$|^client_id$|^subscriber$|^subscriber_id$|^participant$|^participant_id$|^client_id$|^userLoginID$|^client-name$"
+        extract: userKey
+wordLists:
+  specialCharacters:
+    - "*"
+    - " "
+    - "#"
+    - ","
+    - ";"
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_body_param:
+          userKey: ${specialCharacters}
+validate:
+  response_code:
+    gte: 400
+    lt : 500
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - "Invalid DN syntax"
+      - "Unrecognized search filter"
+      - "Unexpected '(', ')', or '*' in query"
+      - "LDAP query syntax error"
+      - "Syntax error in DN"
+      - "Improperly formatted filter"
+      - "No matching records found"
+      - "Filter assertion failed"
+      - "Unrecognized attribute or value in filter"
+      - "Non-existent DN"
+      - "Invalid base DN"
+      - "Reference outside of the directory tree"
