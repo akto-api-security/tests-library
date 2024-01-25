@@ -1,0 +1,92 @@
+id: AUTH_BYPASS_STAGING_URL
+info:
+  name: "Authentication Bypass by hitting Staging URLs for Login endpoints"
+  description: > 
+    "Authentication Bypass by hitting Staging URLs for Login endpoints is a security 
+    vulnerability where attackers exploit misconfigurations in a web application's 
+    staging environment. By targeting staging URLs associated with login endpoints, 
+    attackers may uncover weaknesses, leading to unauthorized access without proper 
+    authentication. Addressing this vulnerability requires thorough security assessments 
+    and the implementation of robust measures to secure the staging environment, 
+    preventing potential authentication bypass issues and enhancing overall web 
+    application security."
+  details: >
+    "Authentication Bypass by hitting Staging URLs for Login endpoints involves 
+    attackers exploiting misconfigurations in a web application's staging environment. 
+    By accessing staging URLs related to login endpoints, they may discover 
+    vulnerabilities that allow unauthorized access without proper authentication. 
+    Mitigating this risk requires comprehensive security assessments and the 
+    implementation of stringent measures to secure the staging environment, preventing 
+    potential authentication bypass scenarios and bolstering the overall security 
+    of the web application."
+  impact: >
+    "The impact of Authentication Bypass by hitting Staging URLs for Login endpoints 
+    can be significant, allowing unauthorized access to sensitive areas of a web 
+    application. Exploiting misconfigurations in the staging environment may 
+    lead to compromised user accounts, unauthorized data exposure, and potential 
+    security breaches. Addressing this vulnerability is crucial to maintain 
+    the confidentiality and integrity of user data, emphasizing the need for 
+    robust security measures in both production and staging environments."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: AUTH_BYPASS_STAGING_URL
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa2-broken-user-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lte: 300
+    extract: resp_code
+  url:
+    contains_either:
+      - login
+      - signin
+      - authenticate
+      - auth
+wordLists:
+  subPaths:
+    - "https://staging."
+    - "https://dev."
+    - "https://test."
+    - "https://testdev."
+    - "https://qa."
+    - "https://uat."
+    - "https://beta."
+    - "https://test1."
+    - "https://test2."
+    - "https://stage."
+    - "https://preprod."
+    - "https://preview."
+    - "https://demo."
+    - "https://development."
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_url:
+        token_replace:
+          regex: "https://"
+          replace_with: ${subPaths}
+
+validate:
+  response_code:
+    eq: ${resp_code}
+  response_payload:
+    percentage_match:
+      gt: 90
