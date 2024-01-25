@@ -72,14 +72,37 @@ api_selection_filters:
               - KHTML
               - Edg
               - Googlebot
+    - request_headers:
+        for_one:
+          key:
+            eq: Cookie
+            extract: cookieKey
       
 execute:
-  type: single
+  type: multiple
   requests:
-  - req: []
-validate:
-  response_code:
-    eq: "${resp_code}"
-  response_payload:
-    percentage_match_schema:
-      gt: 90
+  - req: 
+    - delete_header: $(cookieKey)
+    - validate:
+        response_code:
+          eq: ${resp_code}
+        response_payload:
+          length:
+            gt: 0
+          percentage_match:
+            gte: 90
+    - success: x2
+    - failure: exit
+  - req:
+    - add_header: 
+        dummyHeader: "dummyData"
+    - validate:
+        response_code:
+          eq: ${resp_code}
+        response_payload:
+          length:
+            gt: 0
+          percentage_match:
+            gte: 90
+strategy:
+  run_once: /
