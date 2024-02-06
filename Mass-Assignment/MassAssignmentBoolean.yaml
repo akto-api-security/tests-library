@@ -1,3 +1,43 @@
+id: MASS_ASSIGNMENT_BOOLEAN
+info:
+  name: "Mass Assignment vulnerability test using Boolean values"
+  description: > 
+    "Mass Assignment vulnerability test using Boolean values involves examining whether 
+    a web application's security is susceptible to unauthorized modification of sensitive 
+    data through boolean parameters. This assessment typically involves manipulating boolean 
+    inputs during form submissions to check if privileged fields can be altered. By 
+    exploiting this vulnerability, attackers may gain unauthorized access or manipulate 
+    data within the application."
+  details: >
+    "In this test, testers manipulate boolean parameters in form submissions to probe for 
+    security weaknesses. By toggling boolean inputs, testers assess if privileged fields 
+    can be modified without proper authorization. This assessment helps uncover potential 
+    vulnerabilities where attackers could gain unauthorized access or tamper with sensitive 
+    data within the application."
+  impact: >
+    "The impact of a Mass Assignment vulnerability, when exploited using Boolean values, can 
+    be severe. Attackers could gain unauthorized access to sensitive data or manipulate 
+    system functionality. This can lead to breaches of confidentiality, integrity, and 
+    availability, potentially causing financial loss, reputational damage, and regulatory 
+    penalties for affected organizations. Additionally, it can undermine user trust and 
+    compromise the overall security posture of the application."
+  category:
+    name: MA
+    shortName: Mass Assignment
+    displayName: Mass Assignment (MA)
+  subCategory: MASS_ASSIGNMENT_BOOLEAN
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa6-mass-assignment.md"
+  cwe:
+    - CWE-915
+  cve:
+    - CVE-2023-32079
+    - CVE-2023-42768
 wordLists:
   booleanValues:
     - true
