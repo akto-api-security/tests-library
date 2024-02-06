@@ -1,0 +1,42 @@
+wordLists:
+  numberValues:
+    - 1
+    - 2
+    - 111
+    - 22
+    - 98239
+    - 928389238
+    - 2344
+    - 56
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+    extract: resp_code
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extractMultiple: payloadKeys
+  response_payload:
+    for_one:
+      key:
+        not_contains: "${payloadKeys}"
+        extractMultiple: extraKeys
+      value:
+        datatype: number
+execute:
+  type: single
+  requests:
+  - req:
+    - add_body_param:
+        ${extraKeys}: "${numberValues}"
+validate:
+  response_code:
+    eq: ${resp_code}
+  response_payload:
+    for_one:
+      key:
+        contains_either: ${extraKeys}
+      value:
+        contains_either: ${numberValues}
