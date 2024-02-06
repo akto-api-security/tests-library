@@ -1,0 +1,84 @@
+id: INTEGER_MASS_ASSIGN_EXPLOIT
+info:
+  name: "Mass Assignment vulnerability test using Integer values"
+  description: > 
+    "Mass Assignment vulnerability test using Integer values involves examining whether 
+    a web application's security is susceptible to unauthorized modification of sensitive 
+    data through integer parameters. This assessment typically involves manipulating integer 
+    inputs during form submissions to check if privileged fields can be altered. By 
+    exploiting this vulnerability, attackers may gain unauthorized access or manipulate 
+    data within the application."
+  details: >
+    "In this test, testers manipulate integer parameters in form submissions to probe for 
+    security weaknesses. By toggling integer inputs, testers assess if privileged fields 
+    can be modified without proper authorization. This assessment helps uncover potential 
+    vulnerabilities where attackers could gain unauthorized access or tamper with sensitive 
+    data within the application."
+  impact: >
+    "The impact of a Mass Assignment vulnerability, when exploited using Integer values, can 
+    be severe. Attackers could gain unauthorized access to sensitive data or manipulate 
+    system functionality. This can lead to breaches of confidentiality, integrity, and 
+    availability, potentially causing financial loss, reputational damage, and regulatory 
+    penalties for affected organizations. Additionally, it can undermine user trust and 
+    compromise the overall security posture of the application."
+  category:
+    name: MA
+    shortName: Mass Assignment
+    displayName: Mass Assignment (MA)
+  subCategory: INTEGER_MASS_ASSIGN_EXPLOIT
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa6-mass-assignment.md"
+  cwe:
+    - CWE-915
+  cve:
+    - CVE-2023-32079
+    - CVE-2023-42768
+wordLists:
+  numberValues:
+    - 1
+    - 2
+    - 111
+    - 22
+    - 98239
+    - 928389238
+    - 2344
+    - 56
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+    extract: resp_code
+  method:
+    neq: GET
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extractMultiple: payloadKeys
+  response_payload:
+    for_one:
+      key:
+        not_contains: "${payloadKeys}"
+        extractMultiple: extraKeys
+      value:
+        datatype: number
+execute:
+  type: single
+  requests:
+  - req:
+    - add_body_param:
+        ${extraKeys}: "${numberValues}"
+validate:
+  response_code:
+    eq: ${resp_code}
+  response_payload:
+    for_one:
+      key:
+        contains_either: ${extraKeys}
+      value:
+        contains_either: ${numberValues}
