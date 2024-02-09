@@ -29,25 +29,38 @@ info:
     - CVE-2022-26180
 
 api_selection_filters:
-  response_code:
-    gte: 200
-    lt: 300
-  or:
-    - request_headers:
-        for_one:
-          key:
-            contains_either: csrf
-            extract: csrf_key
-    - request_payload:
-        for_one:
-          key:
-            contains_either: csrf
-            extract: csrf_key
-    - query_param:
-        for_one:
-          key:
-            contains_either: csrf
-            extract: csrf_key
+  and:
+    - response_code:
+        gte: 200
+        lt: 300
+    - or:
+      - method:
+          neq: GET
+      - or:
+          - request_payload:
+              for_one:
+                key:
+                  regex: .*
+          - query_param:
+              for_one:
+                key:
+                  regex: .*
+    - or:
+      - request_headers:
+          for_one:
+            key:
+              contains_either: csrf
+              extract: csrf_key
+      - request_payload:
+          for_one:
+            key:
+              contains_either: csrf
+              extract: csrf_key
+      - query_param:
+          for_one:
+            key:
+              contains_either: csrf
+              extract: csrf_key
 
 execute:
   type: single
