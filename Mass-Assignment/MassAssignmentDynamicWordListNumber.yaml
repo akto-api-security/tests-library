@@ -1,0 +1,43 @@
+
+wordLists:
+  ${extraKeys}:
+    for_all:
+      ${iteratorKey}.wordList:
+        all_apis: false
+        sample_data: true
+        key: "${iteratorKey}"
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+    extract: resp_code
+  method:
+    neq: GET
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extractMultiple: payloadKeys
+  response_payload:
+    for_one:
+      key:
+        not_contains: "${payloadKeys}"
+        extractMultiple: extraKeys
+      value:
+        datatype: number
+execute:
+  type: single
+  requests:
+  - req:
+    - add_body_param:
+        ${extraKeys}: "${numberValues}"
+validate:
+  response_code:
+    eq: ${resp_code}
+  response_payload:
+    for_one:
+      key:
+        contains_either: ${extraKeys}
+      value:
+        contains_either: ${numberValues}
