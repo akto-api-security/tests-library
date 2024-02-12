@@ -69,8 +69,10 @@ execute:
   type: single
   requests:
   - req:
-    - add_body_param:
-        ${extraKeys}: "${numberValues}"
+    - ${extraKeys}:
+        for_all:
+        - add_body_param:
+            ${iteratorKey}: "${iteratorKey}.wordList"
 validate:
   response_code:
     eq: ${resp_code}
@@ -78,5 +80,3 @@ validate:
     for_one:
       key:
         contains_either: ${extraKeys}
-      value:
-        contains_either: ${numberValues}

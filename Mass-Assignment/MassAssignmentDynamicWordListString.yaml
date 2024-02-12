@@ -69,8 +69,10 @@ execute:
   type: single
   requests:
   - req:
-    - add_body_param:
-        ${extraKeys}: "${stringvalues}"
+    - ${extraKeys}:
+        for_all:
+        - add_body_param:
+            ${iteratorKey}: "${iteratorKey}.wordList"
 validate:
   response_code:
     eq: ${resp_code}
