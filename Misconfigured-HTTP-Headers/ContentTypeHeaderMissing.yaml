@@ -48,6 +48,6 @@ validate:
     gte: 200
     lt: 300
   response_headers:
-    for_one:
+    for_all:
       key:
-        not_contains: Content-Type
+        neq: Content-Type
