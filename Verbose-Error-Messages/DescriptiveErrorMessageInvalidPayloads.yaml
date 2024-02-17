@@ -31,6 +31,14 @@ api_selection_filters:
       - "PUT"
       - "POST"
       - "PATCH"
+  response_payload:
+    not_contains:
+      - column
+      - row
+      - line
+      - function
+      - class
+      - stacktrace
 
 execute:
   type: single
@@ -38,12 +46,37 @@ execute:
     - req:
       - replace_body: "random payload containing 5s3c1@al characters and emojis😊"
 validate:
-  response_payload:
-    - contains_either:
-      - column
-      - row
-      - line
-      - function
-      - class
-      - stacktrace
-      - NullPointerException
+  or:
+      - response_payload: # Javascript / Node.js errors
+          - contains_either:
+              - "TypeError: Cannot"
+              - "SyntaxError: Unexpected"
+              - "ReferenceError:"
+      - response_payload: # Python errors
+          - contains_either:
+              - "ValueError: invalid"
+              - "TypeError: unsupported"
+              - "KeyError: "
+      - response_payload: # Java errors
+          - contains_either:
+              - "java.lang.NullPointerException"
+              - "java.lang.ArrayIndexOutOfBoundsException"
+              - "java.lang.IllegalArgumentException"
+      - response_payload: # C# errors
+          - contains_either:
+              - "System.NullReferenceException"
+              - "System.IndexOutOfRangeException"
+              - "System.InvalidOperationException"
+      - response_payload: # PHP errors
+          - contains_either:
+              - "Fatal error: Call"
+              - "Parse error: syntax error"
+              - "Exception: "
+      - response_payload: # Ruby errors
+          - contains_either:
+              - "RuntimeError: "
+              - "NoMethodError: "
+              - "ArgumentError: "
+      - response_payload: # Go errors
+          - contains_either:
+              - "panic: runtime error"
