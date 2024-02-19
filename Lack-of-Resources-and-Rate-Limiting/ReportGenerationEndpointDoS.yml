@@ -1,0 +1,95 @@
+id: REPORT_GENERATION_DOS
+info:
+  name: "Denial of Service Test on Report Generation Endpoint"
+  description: "A Denial of Service (DoS) test on a report generation endpoint involves 
+  overwhelming the system with a high volume of requests to assess its 
+  resilience under heavy load. By bombarding the endpoint with 
+  numerous simultaneous requests for report generation, testers 
+  evaluate how well the system handles the load and whether it 
+  remains responsive. This testing helps identify potential bottlenecks 
+  or vulnerabilities in the report generation process, enabling 
+  proactive measures to fortify the system's defenses against 
+  DoS attacks targeting this endpoint."
+  details: "In this test, the report generation endpoint is bombarded with an 
+  excessive number of requests, aiming to simulate real-world peak 
+  loads and stress the system. Testers assess how the endpoint 
+  responds to this influx of requests, evaluating its ability 
+  to maintain responsiveness and generate reports efficiently. 
+  Through this process, potential weaknesses in scalability 
+  and performance are identified, enabling organizations to 
+  fortify their systems against Denial of Service (DoS) attacks 
+  on report generation functionalities."
+  impact: "A successful Denial of Service (DoS) test on a report generation endpoint 
+  can have significant consequences. It may lead to system slowdowns, 
+  unavailability, or crashes, hindering users' access to vital reports 
+  and disrupting business operations. Additionally, prolonged 
+  service disruptions can tarnish the organization's reputation, 
+  eroding user trust and potentially resulting in financial 
+  losses. Identifying and addressing vulnerabilities in the 
+  report generation process is crucial for maintaining system 
+  reliability and resilience against DoS attacks."
+  category:
+    name: RL
+    shortName: Lack of Resources & Rate Limiting
+    displayName: Lack of Resources & Rate Limiting (RL)
+  subCategory: REPORT_GENERATION_DOS
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa4-lack-of-resources-and-rate-limiting.md#scenario-2"
+  cwe:
+    - CWE-400
+  cve:
+    - CVE-2023-4647
+    - CVE-2023-38254
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  url:
+    contains_either:
+      - report
+      - data-export
+      - log
+      - download
+      - pdf
+      - csv
+      - xlsx
+      - docx
+      - batch
+      - summary
+      - statistics
+      - archive
+wordLists:
+  dummyHeaders:
+    - a
+    - b
+    - c
+    - d
+    - e
+execute:
+  type: multiple
+  requests:
+  - req:
+    - add_header:
+        dummy_Header_Key: "dummyValue"
+    - validate:
+        percentage_match:
+          gte: 90
+    - success: x2
+    - failure: exit
+  - req:
+    - add_header:
+        dummy_Header_Key: ${dummyHeaders}
+    - validate:
+        response_code:
+          gte: 500
+validate:
+  compare_greater:
+    - ${x2.response.stats.median_response_time}
+    - ${x1.response.stats.median_response_time} * 3

@@ -1,0 +1,84 @@
+id: DOS_JSON_BODY_KEY
+info:
+  name: "Denial of Service test by entering long and random strings in 
+  JSON Body Keys"
+  description: "In this Denial of Service (DoS) test, lengthy and randomized strings 
+  are injected into the keys of JSON Body Parameters. By overwhelming the system with 
+  such inputs, testers assess how the application handles excessive data loads 
+  in key-value pairs. This evaluation helps uncover potential vulnerabilities 
+  and weaknesses in the system's parsing and processing capabilities, aiding 
+  in the fortification against DoS attacks."
+  details: "In this testing scenario, the focus lies on manipulating the keys of 
+  JSON Body parameters by injecting lengthy and random strings. By inundating the 
+  system with such inputs, testers analyze how the application manages the 
+  parsing and processing of these parameters. This method aims to uncover 
+  vulnerabilities in key handling mechanisms, providing insights into potential 
+  weaknesses that malicious actors could exploit to disrupt the system's 
+  functionality through Denial of Service (DoS) attacks."
+  impact: "The impact of successful Denial of Service (DoS) attacks via manipulation 
+  of JSON Body Parameter keys can be significant. It may result in system slowdowns, 
+  unresponsiveness, or complete service outages, disrupting normal operations. 
+  Additionally, such attacks could compromise the availability and reliability 
+  of the system, leading to financial losses and reputational damage due to the 
+  perception of inadequate security measures."
+  category:
+    name: RL
+    shortName: Lack of Resources & Rate Limiting
+    displayName: Lack of Resources & Rate Limiting (RL)
+  subCategory: DOS_JSON_BODY_KEY
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa4-lack-of-resources-and-rate-limiting.md#scenario-2"
+  cwe:
+    - CWE-400
+  cve:
+    - CVE-2023-4647
+    - CVE-2023-38254
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    for_one:
+      key:
+        regex: ".*"
+        extract: userKey
+      value:
+        extract: userValue
+wordLists:
+  bodyParamKeys:
+    - "999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"
+    - "; : ! @ # $ % ^ & * ( ) < > ? | { } [ ] ~"
+    - "%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s"
+    - "你好你好你好你好你好你好你好你好你好你好你好"
+    - "\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0"
+    - "😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇"
+    - "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+execute:
+  type: multiple
+  requests:
+  - req:
+    - add_header:
+        dummy_Header_Key: "dummyValue"
+    - validate:
+        percentage_match:
+          gte: 90
+    - success: x2
+    - failure: exit
+  - req:
+    - delete_body_param: ${userKey}
+    - add_body_param:
+         ${bodyParamKeys}: userValue
+    - validate:
+        response_code:
+          gte: 500
+validate:
+  compare_greater:
+    - ${x2.response.stats.median_response_time}
+    - ${x1.response.stats.median_response_time} * 3
