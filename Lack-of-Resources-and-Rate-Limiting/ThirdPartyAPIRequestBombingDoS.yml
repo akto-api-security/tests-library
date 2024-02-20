@@ -84,8 +84,12 @@ execute:
         dummy_Header_Key: ${dummyHeaders}
     - validate:
         response_code:
-          gte: 500
+          gt: 505
 validate:
-  compare_greater:
-    - ${x2.response.stats.median_response_time}
-    - ${x1.response.stats.median_response_time} * 3
+  and:
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - 3001
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 3
