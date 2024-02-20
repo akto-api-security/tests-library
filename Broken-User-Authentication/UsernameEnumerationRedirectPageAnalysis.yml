@@ -89,6 +89,7 @@ execute:
   - req:
     - modify_body_param:
         userKey: ${dummyUsernames}
+    - modify_body_param:
         passKey: Default1!
     - modify_url:
         regex_replace:
@@ -96,9 +97,6 @@ execute:
           replace_with: http
     - follow_redirect: true
     - validate:
-        or: 
-          - response_payload:
-              neq: "${x1.response.body}"
-          - response_code:
-              eq: "${x1.response.status_code}"
+        response_payload:
+            neq: "${x1.response.body}"
     - success: vulnerable

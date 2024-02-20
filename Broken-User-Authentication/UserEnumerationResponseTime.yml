@@ -84,6 +84,7 @@ execute:
   - req:
     - modify_body_param:
         userKey: dummyemail@mail.com
+    - modify_body_param:
         passKey: ${invalidPasswords}
     - validate:
         response_code:
