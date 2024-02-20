@@ -1,0 +1,179 @@
+id: DATE_FIELD_DOS
+info:
+  name: "Denial of Service Test on Date Type Fields in API endpoint using extreme values"
+  description: "In a Denial of Service (DoS) test on date type fields in API 
+  endpoints, extreme values are inputted to assess system resilience. Testers 
+  manipulate date inputs with values far beyond typical ranges to evaluate 
+  how the API handles such outliers. This test helps uncover potential 
+  vulnerabilities or performance issues in date parsing and processing, 
+  guiding efforts to fortify the system's defenses against DoS attacks 
+  targeting date-related functionalities."
+  details: "In this test, date type fields within API endpoints are 
+  subjected to extreme values, far beyond typical ranges. Testers 
+  input dates at the extremes of permissible ranges, potentially 
+  overwhelming the system's processing capabilities. By evaluating 
+  the API's response to these extreme inputs, vulnerabilities 
+  in date parsing and processing can be identified, enabling 
+  the implementation of safeguards against potential Denial 
+  of Service (DoS) attacks targeting date-related functionalities."
+  impact: "The impact of a successful Denial of Service (DoS) test on 
+  date type fields in API endpoints using extreme values can be 
+  substantial. It may lead to system instability or crashes as 
+  the API struggles to process or validate the extreme date 
+  inputs. Consequently, users may experience service disruptions, 
+  impacting productivity and potentially causing reputational damage 
+  to the organization due to perceived system instability or 
+  unreliability. Strengthening defenses against such attacks 
+  is vital to ensure the resilience and reliability of the API infrastructure."
+  category:
+    name: RL
+    shortName: Lack of Resources & Rate Limiting
+    displayName: Lack of Resources & Rate Limiting (RL)
+  subCategory: DATE_FIELD_DOS
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa4-lack-of-resources-and-rate-limiting.md#scenario-2"
+  cwe:
+    - CWE-400
+  cve:
+    - CVE-2023-4647
+    - CVE-2023-38254
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  or:
+    - request_payload:
+        for_one:
+          key:
+            contains_either:
+              - startDate
+              - endDate
+              - start_date
+              - end_date
+              - fromDate
+              - toDate
+              - from_date
+              - to_date
+              - beginDate
+              - finishDate
+              - begin_date
+              - finish_date
+              - dateStart
+              - dateEnd
+              - date_start
+              - date_end
+              - periodStart
+              - periodEnd
+              - period_start
+              - period_end
+              - rangeStart
+              - rangeEnd
+              - range_start 
+              - range_end
+              - startTime
+              - endTime
+              - start_time
+              - end_time
+              - reportStart
+              - reportEnd
+              - report_start
+              - report_end
+          extract: userKey
+    - query_param:
+        for_one:
+          key:
+            contains_either:
+              - startDate
+              - endDate
+              - start_date
+              - end_date
+              - fromDate
+              - toDate
+              - from_date
+              - to_date
+              - beginDate
+              - finishDate
+              - begin_date
+              - finish_date
+              - dateStart
+              - dateEnd
+              - date_start
+              - date_end
+              - periodStart
+              - periodEnd
+              - period_start
+              - period_end
+              - rangeStart
+              - rangeEnd
+              - range_start 
+              - range_end
+              - startTime
+              - endTime
+              - start_time
+              - end_time
+              - reportStart
+              - reportEnd
+              - report_start
+              - report_end
+          extract: userKey
+wordLists:
+  explodingDates:
+    - "0000-01-01"
+    - "9999-12-31"
+    - "2020-02-29"
+    - "1900-02-29"
+    - "2020-00-00"
+    - "2020-01-32"
+    - "2020-13-01"
+    - "12/31/9999"
+    - "02/29/2020"
+    - "02/29/1900"
+    - "00/00/2020"
+    - "01/32/2020"
+    - "13/01/2020"
+    - "31/12/9999"
+    - "29/02/2020"
+    - "29/02/1900"
+    - "00/00/2020"
+    - "32/01/2020"
+    - "01/13/2020"
+    - "-62135596800"
+    - "253402300799"
+    - "2020-02-29T23:59:60Z"
+    - "2020-02-29T24:01:00Z"
+    - "2020-13-01T00:00:00Z"
+    - "2020-01-32T00:00:00Z"
+execute:
+  type: multiple
+  requests:
+  - req:
+    - add_header:
+        dummy_Header_Key: "dummyValue"
+    - validate:
+        percentage_match:
+          gte: 90
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_query_param:
+         userKey: "${explodingDates}"
+    - modify_body_param:
+         userKey: "${explodingDates}"
+    - validate:
+        response_code:
+          gt: 505
+validate:
+  and:
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - 3001
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 3
