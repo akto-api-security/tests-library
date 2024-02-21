@@ -95,7 +95,7 @@ execute:
       - failure: exit
     - req:
       - modify_url: ${urlVar}/${folderPaths}
-      - replace_auth_header: ${auth_context.invalid_signature_token}
+      - replace_auth_header: true
       - validate:
           response_code:
             neq: 404
