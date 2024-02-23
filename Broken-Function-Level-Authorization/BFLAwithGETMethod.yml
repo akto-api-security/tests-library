@@ -48,17 +48,11 @@ api_selection_filters:
     gte: 200
     lt: 300
   method:
-    not_contains_either:
-      - "GET"
+    neq: "GET"
   include_roles_access:
     param: ADMIN
   exclude_roles_access:
     param: MEMBER
-  request_payload:
-    for_one:
-      key:
-        regex: ".*"
-        extractMultiple: payloadKeys
 execute:
   type: single
   requests:
