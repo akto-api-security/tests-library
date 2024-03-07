@@ -62,3 +62,14 @@ validate:
     lt: 300
   response_payload:
     regex: "root:.*:0:0:"
+    not_contains_either:
+      - Access Denied
+      - Error
+      - SSRF
+      - Blocked
+      - WAF
+      - Rejected
+      - Security Exception
+      - Invalid Request
+      - Connection Refused
+      - Failed
