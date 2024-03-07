@@ -77,8 +77,7 @@ validate:
   response_code:
     gte: 200
     lt: 300
-  ssrf_url_hit: 
-    random_uuid: ${random_uuid}
+  ssrf_url_hit: ${random_uuid}
    response_payload:
     contains_either:
       - "azEnvironment"
