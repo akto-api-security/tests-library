@@ -65,14 +65,32 @@ validate:
     lt: 300
   response_payload:
     contains_either:
-      - "admin"
-      - localhost
+      - admin_menu
+      - wp-json/wp
+      - "Django administration"
+      - "staff_member_required"
+      - "Flask-Admin"
+      - "flask_admin"
+      - "ActiveAdmin"
+      - "rails_admin"
+      - "Express Admin"
+      - "express_admin"
+      - "laravel_admin"
+      - wp-admin
       - loopback
       - HTTP/
       - "Server:"
       - "SSH-"
       - "mongod"
       - "handshake"
+      - "Spring Boot Admin"
+      - "Spring Security"
+      - "@Controller"
+      - "@RequestMapping"
+      - "Spring Actuator"
+      - "gorilla/mux"
+      - "net/http"
+      - "gin-gonic/gin"
     not_contains_either:
       - Access Denied
       - Error

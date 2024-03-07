@@ -67,16 +67,16 @@ execute:
     	  - send_ssrf_req:
        		  url: "http://ssrf.akto.io/store_uuid/${random_uuid}"
         - modify_query_param:
-            file_key: "<script> window.location=\"https://ssrf.akto.io/$random_uuid\";</script>"
+            file_key: "<script> window.location=\"https://ssrf.akto.io/${random_uuid}\";</script>"
         - modify_body_param:
-            file_key: "<script> window.location=\"https://ssrf.akto.io/$random_uuid\";</script>"
+            file_key: "<script> window.location=\"https://ssrf.akto.io/${random_uuid}\";</script>"
 
 validate:
   response_code:
     gte: 200
     lt: 300
   ssrf_url_hit: 
-    random_uuid: $random_uuid
+    random_uuid: ${random_uuid}
   response_payload:
     not_contains_either:
       - Access Denied
