@@ -1,0 +1,80 @@
+id: SQLI_ERROR_BASED_PARAM_VERTICA_DB
+info:
+  name: "Error Based SQL Injection test for Parameters for Vertica DB"
+  description: >
+    "Some API endpoints expecting parameter values might be directly exposed to Vertica DB. 
+    Attackers can trigger an error by breaking the structure of the functions\' parameters used 
+    for communicating with the database."
+  details: >
+    "Some API endpoints expecting parameter values might be directly exposed to Vertica DB.
+    Causing an error in SQL query syntax can expose the underlying query or DB data."
+  impact: >
+    "Possible data leakage due to illegal DB access. Successful SQL injection attacks 
+    may completely compromise or destroy a system."
+  category:
+    name: SQL
+    shortName: Injection Attack
+    displayName: Injection Attacks (SQL)
+  subCategory: SQLI_ERROR_BASED_PARAM_VERTICA_DB
+  severity: HIGH
+  tags:
+    - Injection Attack
+    - OWASP Top 10
+    - HackerOne Top 10
+  references:
+    - "https://github.com/sqlmapproject/sqlmap/blob/master/data/xml/errors.xml"
+    - "https://brightsec.com/blog/error-based-sql-injection/"
+  cwe:
+    - CWE-943
+    - CWE-89
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    contains_either:
+      - POST
+      - GET
+      - PUT
+      - PATCH
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+wordLists:
+  specialCharacters:
+    - "'"
+    - "\""
+    - "$"
+    - "."
+    - ">"
+    - "--"
+    - ";"
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param: 
+            changed_body_key: ${specialCharacters}
+        - modify_query_param:
+            changed_query_key: ${specialCharacters}
+validate:
+  or:
+    - response_payload:
+        regex: ", Sqlstate: (3F|42).{3}, (Routine|Hint|Position):"
+    - response_payload:
+        regex: "/vertica/Parser/scan"
+    - response_payload:
+        regex: "com\\.vertica\\.jdbc"
+    - response_payload:
+        regex: "org\\.jkiss\\.dbeaver\\.ext\\.vertica"
+    - response_payload:
+        regex: "com\\.vertica\\.dsi\\.dataengine"
