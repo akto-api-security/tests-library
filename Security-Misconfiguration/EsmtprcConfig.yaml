@@ -35,10 +35,15 @@ validate:
   response_code:
     eq: 200
   response_payload:
-    contains_all:
-      - "hostname"
-      - "username"
-      - "password"
+    or:
+      - contains_all:
+          - "hostname"
+          - "username"
+          - "password"
+      - regex: "hostname\\s*=\\s*([^\\s]+)"
+      - regex: "starttls\\s*=\\s*"
+      - regex: "identity\\s*=\\s*"
+
   response_headers:
     for_one:
       value:
