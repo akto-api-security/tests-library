@@ -71,14 +71,14 @@ execute:
   type: single
   requests:
     - req:
-    	  - send_ssrf_req:
-       		  url: "http://ssrf.akto.io/store_uuid/${random_uuid}.csv"
-       		  redirect_url: ${redirect_urls}
+        - send_ssrf_req:
+            url: "https://test-services.akto.io/store_uuid/${random_uuid}.csv"
+            redirect_url: ${redirect_urls}
         - follow_redirect: true
         - modify_query_param:
-            csv_key: http://ssrf.akto.io/store_uuid/${random_uuid}.csv
+            csv_key: https://test-services.akto.io/store_uuid/${random_uuid}.csv
         - modify_body_param:
-            csv_key: http://ssrf.akto.io/store_uuid/${random_uuid}.csv
+            csv_key: https://test-services.akto.io/store_uuid/${random_uuid}.csv
 
 validate:
   response_code:

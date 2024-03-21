@@ -66,14 +66,14 @@ execute:
     - req:
         - add_header:
             Metadata: true
-    	  - send_ssrf_req:
-       		  url: "http://ssrf.akto.io/store_uuid/${random_uuid}.jpg"
-       		  redirect_url: ${redirect_urls}
+        - send_ssrf_req:
+            url: "https://test-services.akto.io/store_uuid/${random_uuid}.jpg"
+            redirect_url: ${redirect_urls}
         - follow_redirect: true
         - modify_query_param:
-            image_key: http://ssrf.akto.io/store_uuid/${random_uuid}.jpg
+            image_key: https://test-services.akto.io/store_uuid/${random_uuid}.jpg
         - modify_body_param:
-            image_key: http://ssrf.akto.io/store_uuid/${random_uuid}.jpg
+            image_key: https://test-services.akto.io/store_uuid/${random_uuid}.jpg
 
 validate:
   response_code:

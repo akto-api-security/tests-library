@@ -52,24 +52,26 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
-            regex: .*
             extract: param_key
+          value:
+            datatype: string
     - query_param:
         for_one:
           key:
-            regex: .*
             extract: param_key
+          value:
+            datatype: string
 
 execute:
   type: single
   requests:
     - req:
-    	  - send_ssrf_req:
-       		  url: "http://ssrf.akto.io/store_uuid/${random_uuid}"
+        - send_ssrf_req:
+            url: "https://test-services.akto.io/store_uuid/${random_uuid}"
         - modify_query_param:
-            file_key: "<script> window.location=\"https://ssrf.akto.io/${random_uuid}\";</script>"
+            param_key: "<script> window.location=\"https://test-services.akto.io/store_uuid/${random_uuid}\";</script>"
         - modify_body_param:
-            file_key: "<script> window.location=\"https://ssrf.akto.io/${random_uuid}\";</script>"
+            param_key: "<script> window.location=\"https://test-services.akto.io/store_uuid/${random_uuid}\";</script>"
 
 validate:
   response_code:
