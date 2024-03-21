@@ -32,19 +32,24 @@ execute:
       - modify_url: ${urlVar}/this-sub-url-path-will-never-exist-123456
       - validate:
           response_payload:
-            not_contains_either:
-              - "hostname"
-              - "username"
-              - "password"
-              - "starttls"
-              - "identity"
-      - success: x2
-      - failure: exit
+            or:
+              - contains_all:
+                  - "hostname"
+                  - "username"
+                  - "password"
+              - regex: "hostname\\s*=\\s*([^\\s]+)"
+              - regex: "starttls\\s*=\\s*"
+              - regex: "identity\\s*=\\s*"
+          response_headers:
+            for_one:
+              value:
+                contains_all:
+                  - text/html
+      - success: exit
+      - failure: x2
     - req:
       - modify_url: ${urlVar}/.esmtprc
       - validate:
-          response_code:
-            eq: 200
           response_payload:
             or:
               - contains_all:
