@@ -48,8 +48,6 @@ wordLists:
     - ${urlVar}/.env.www
     - ${urlVar}/.env_1
     - ${urlVar}/.env_sample
-    - ${urlVar}/.env.{{DN}}
-    - ${urlVar}/.env.{{SD}}
     - ${urlVar}/api/.env
 
 execute:
@@ -101,4 +99,5 @@ execute:
             - regex: "REDIS_HOST=([^\\s#]+)"
     - success: vulnerable
     - failure: exit
-
+strategy:
+  run_once: /
