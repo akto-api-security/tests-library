@@ -48,27 +48,56 @@ wordLists:
     - ${urlVar}/.env.www
     - ${urlVar}/.env_1
     - ${urlVar}/.env_sample
-    - ${urlVar}/.env.{{DN}}
-    - ${urlVar}/.env.{{SD}}
     - ${urlVar}/api/.env
 
 execute:
-  type: single
+  type: multiple
   requests:
-    - req:
-      - modify_url: ${urlPaths}
-      
-validate:
-  response_code:
-    eq: 200
-  response_payload:
-    contains_either:
-      - 'APP_NAME'
-      - 'APP_ENV'
-      - 'APP_KEY'
-      - 'APP_DEBUG'
-      - 'APP_URL'
-      - 'DB_HOST'
-      - 'DB_PASSWORD'
-      - 'DB_DATABASE'
-
+  - req:
+    - modify_url: ${urlVar}/this-sub-url-path-will-never-exist-123456
+    - validate:
+        response_payload:
+          or:
+            - contains_either:
+                - 'APP_NAME'
+                - 'APP_ENV'
+                - 'APP_KEY'
+                - 'APP_DEBUG'
+                - 'APP_URL'
+                - 'DB_HOST'
+                - 'DB_PASSWORD'
+                - 'DB_DATABASE'
+                - "DB_CONNECTION"
+                - "LOG_CHANNEL"
+                - "LOG_DEPRECATIONS_CHANNEL"
+                - "LOG_LEVEL"
+            - regex: "DB_HOST=([^\\s#]+)"
+            - regex: "MAIL_HOST=([^\\s#]+)"
+            - regex: "REDIS_HOST=([^\\s#]+)"
+    - success: exit
+    - failure: x2
+  - req:
+    - modify_url: ${urlPaths}
+    - validate:
+        response_payload:
+          or:
+            - contains_either:
+                - 'APP_NAME'
+                - 'APP_ENV'
+                - 'APP_KEY'
+                - 'APP_DEBUG'
+                - 'APP_URL'
+                - 'DB_HOST'
+                - 'DB_PASSWORD'
+                - 'DB_DATABASE'
+                - "DB_CONNECTION"
+                - "LOG_CHANNEL"
+                - "LOG_DEPRECATIONS_CHANNEL"
+                - "LOG_LEVEL"
+            - regex: "DB_HOST=([^\\s#]+)"
+            - regex: "MAIL_HOST=([^\\s#]+)"
+            - regex: "REDIS_HOST=([^\\s#]+)"
+    - success: vulnerable
+    - failure: exit
+strategy:
+  run_once: /
