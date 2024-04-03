@@ -1,4 +1,3 @@
-#APIs accepting <script> with AWS internal URL as input with redirect
 id: SSRF_SCRIPT_TAG_AWS_REDIRECT
 info:
   name: "SSRF test via replacing parameters with script tags containing redirect URLs for AWS internal URL"
@@ -52,12 +51,14 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
+            regex: .*
             extract: param_key
           value:
             datatype: string
     - query_param:
         for_one:
           key:
+            regex: .*
             extract: param_key
           value:
             datatype: string
@@ -66,7 +67,6 @@ wordLists:
     - http://169.254.169.254/latest/meta-data/
     - http://[fd00:ec2::254]/latest/meta-data/
     - http://169.254.169.254/latest/meta-data/local-ipv4
-    - http://⑯⑨。②⑤④。⑯⑨｡②⑤④/latest/meta-data/local-ipv4
 execute:
   type: single
   requests:

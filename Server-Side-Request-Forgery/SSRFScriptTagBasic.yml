@@ -1,4 +1,3 @@
-# APIs accepting <script> with external URL as input
 id: SSRF_SCRIPT_TAG_BASIC
 info:
   name: "SSRF test via replacing parameters with script tags containing malicious URL"
@@ -52,12 +51,14 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
+            regex: .*
             extract: param_key
           value:
             datatype: string
     - query_param:
         for_one:
           key:
+            regex: .*
             extract: param_key
           value:
             datatype: string

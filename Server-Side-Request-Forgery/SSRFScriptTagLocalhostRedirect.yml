@@ -1,4 +1,3 @@
-#APIs accepting <script> with localhost URL as input with redirect
 id: SSRF_SCRIPT_TAG_LOCALHOST_REDIRECT
 info:
   name: "SSRF test via replacing parameters with script tags containing redirect URLs for localhost URL"
@@ -52,12 +51,14 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
+            regex: .*
             extract: param_key
           value:
             datatype: string
     - query_param:
         for_one:
           key:
+            regex: .*
             extract: param_key
           value:
             datatype: string

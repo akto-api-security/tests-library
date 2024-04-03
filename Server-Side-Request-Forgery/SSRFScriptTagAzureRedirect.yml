@@ -1,4 +1,3 @@
-#APIs accepting <script> with Azure internal URL as input with redirect
 id: SSRF_SCRIPT_TAG_AZURE_REDIRECT
 info:
   name: "SSRF test via replacing parameters with script tags containing redirect URLs for Azure internal URL"
@@ -55,12 +54,14 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
+            regex: .*
             extract: param_key
           value:
             datatype: string
     - query_param:
         for_one:
           key:
+            regex: .*
             extract: param_key
           value:
             datatype: string

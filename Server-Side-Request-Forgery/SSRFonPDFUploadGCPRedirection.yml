@@ -58,6 +58,7 @@ wordLists:
 execute:
   type: single
   requests:
+    - req:
         - add_header:
             Metadata-Flavor: Google
         - send_ssrf_req:
