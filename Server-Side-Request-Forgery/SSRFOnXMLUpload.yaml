@@ -75,3 +75,14 @@ validate:
       - "ami-manifest-path"
       - "block-device-mapping"
       - "instance-action"
+    not_contains_either:
+      - Access Denied
+      - Error
+      - SSRF
+      - Blocked
+      - WAF
+      - Rejected
+      - Security Exception
+      - Invalid Request
+      - Connection Refused
+      - Failed
