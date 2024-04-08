@@ -54,7 +54,13 @@ wordLists:
 api_selection_filters:
   response_code:
     gte: 200
-    lt: 305
+    lt: 300
+  request_headers:
+    for_one:
+      value:
+        contains_either:
+          - multipart
+          - form-data
 execute:
   type: multiple
   requests:

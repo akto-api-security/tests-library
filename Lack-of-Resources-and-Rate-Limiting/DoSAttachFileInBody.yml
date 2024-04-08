@@ -47,7 +47,7 @@ wordLists:
 api_selection_filters:
   response_code:
     gte: 200
-    lt: 305
+    lt: 300
 execute:
   type: multiple
   requests:
@@ -73,3 +73,5 @@ validate:
     - compare_greater:
         - ${x2.response.stats.median_response_time}
         - ${x1.response.stats.median_response_time} * 3
+strategy:
+  run_once: /
