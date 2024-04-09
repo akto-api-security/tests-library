@@ -48,6 +48,7 @@ execute:
       - modify_url: ${urlVar}/%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E
 
 validate:
-  contains_all:
-      - "<script>alert(document.domain)</script>"
-      - <!doctype html>
+  response_payload:
+    contains_all:
+        - "<script>alert(document.domain)</script>"
+        - <!doctype html>
