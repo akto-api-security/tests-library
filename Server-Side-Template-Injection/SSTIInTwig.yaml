@@ -26,6 +26,11 @@ info:
     - CVE-2023-34448
 
 api_selection_filters:
+  response_payload:
+    not_contains_either:
+      - error
+      - invalid
+      - failed
   or:
     - request_payload:
         for_one:
@@ -48,5 +53,11 @@ execute:
             payloadKey: '{{89 * 91}}'
 
 validate:
-  response_payload:
-    contains_either: '8099'
+  and:
+    - response_payload:
+        regex: "(?<![\\w-])8099(?![\\w-])"
+    - response_payload:
+        not_contains_either:
+          - error
+          - invalid
+          - expired

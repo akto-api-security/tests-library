@@ -26,6 +26,11 @@ info:
     - CVE-2022-34625
 
 api_selection_filters:
+  response_payload:
+    not_contains_either:
+      - error
+      - invalid
+      - failed
   or:
     - request_payload:
         for_one:
@@ -48,5 +53,11 @@ execute:
             payloadKey: ${'7'*7}
 
 validate:
-  response_payload:
-    contains_either: '7777777'
+  and:
+    - response_payload:
+        regex: "(?<![\\w-])7777777(?![\\w-])"
+    - response_payload:
+        not_contains_either:
+          - error
+          - invalid
+          - expired

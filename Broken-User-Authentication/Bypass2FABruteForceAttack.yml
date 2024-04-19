@@ -2,28 +2,24 @@ id: BYPASS_2FA_BRUTE_FORCE
 info:
   name: "2FA Bypass with brute-force attack"
   description: > 
-    "Authentication Bypass via Password Reset Endpoint Replay is a security vulnerability 
-    where attackers intercept and replay previously captured password reset requests. 
-    Exploiting this flaw enables unauthorized access to user accounts without valid 
-    credentials. This underscores the importance of implementing robust security 
-    measures to prevent and detect replay attacks in password reset processes, crucial 
-    for maintaining overall system security."
+    "This test examines vulnerabilities in multi-factor authentication (2FA) systems. It 
+    simulates a scenario where attackers exploit weaknesses to bypass the additional 
+    security layer through brute-force methods, potentially gaining unauthorized access 
+    to sensitive accounts or systems. This test helps identify gaps in authentication 
+    mechanisms and fortify defenses against sophisticated attacks."
   details: >
-    "Authentication Bypass via Password Reset Endpoint Replay is a security vulnerability 
-    where attackers intercept and replay captured password reset requests, enabling 
-    unauthorized access to user accounts without valid credentials. This exploitation 
-    poses a significant threat to system security, emphasizing the need for robust 
-    measures in password reset processes to detect and prevent replay attacks effectively. 
-    Implementing dynamic and secure authentication controls is crucial for safeguarding 
-    user accounts and maintaining overall system integrity."
+    "In this test, security analysts scrutinize the effectiveness of multi-factor 
+    authentication (MFA) setups. They simulate scenarios where attackers attempt to 
+    circumvent 2FA protections using brute-force techniques, such as systematically 
+    guessing combinations until successful. By assessing these vulnerabilities, 
+    organizations can refine their authentication protocols, reinforce security measures, 
+    and thwart potential breaches before they occur."
   impact: >
-    "The impact of Authentication Bypass via Password Reset Endpoint Replay is profound, 
-    as it allows malicious actors to gain unauthorized access to user accounts without 
-    valid credentials. This exploitation can lead to compromised user privacy, 
-    unauthorized data access, and potential account takeovers. Organizations may 
-    face severe consequences, including reputational damage and regulatory issues, 
-    highlighting the critical importance of implementing stringent security measures 
-    to thwart replay attacks in password reset processes."
+    "The impact of this test could be severe. It may lead to unauthorized access to 
+    critical systems or sensitive data, compromising confidentiality, integrity, 
+    and possibly compliance requirements. Such breaches can damage reputation, incur 
+    financial losses, and disrupt operations, highlighting the critical need for 
+    robust authentication mechanisms to thwart sophisticated cyber threats effectively."
   category:
     name: NO_AUTH
     shortName: Broken Authentication
@@ -36,7 +32,7 @@ info:
     - HackerOne top 10
   references:
     - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
-    - "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa2-broken-user-authentication.md"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
     - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
   cwe:
     - CWE-287

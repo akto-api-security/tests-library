@@ -99,5 +99,11 @@ execute:
       - validate:
           response_code:
             neq: 404
+          response_payload:
+            regex: "root:.*:0:0:"
+            not_contains_either:
+              - invalid
+              - expired
+              - failed
 strategy:
   run_once: /
