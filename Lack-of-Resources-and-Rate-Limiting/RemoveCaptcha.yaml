@@ -28,6 +28,11 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  response_payload:
+    not_contains_either:
+      - invalid
+      - error
+      - failed
   or:
     - request_payload:
         for_one:
@@ -56,3 +61,7 @@ validate:
       gt: 80
     length:
       gt: 0
+    not_contains_either:
+      - invalid
+      - error
+      - failed
