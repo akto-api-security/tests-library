@@ -1,0 +1,70 @@
+id: IDENTIFY_PUBLIC_ACCESS_API
+info:
+  name: Improper Inventory Management Test by identifying Publicly Accessible APIs in a private environment
+  description: |
+    "This test detects publicly accessible APIs within a supposedly private environment. By  intentionally mismanaging inventory data or transactions, testers can unveil APIs that  might inadvertently be exposed to the public. This method helps bolster security  protocols by identifying potential vulnerabilities and ensuring that sensitive  APIs remain private."
+  details: |
+    "This test involves intentionally manipulating inventory data or transactions within a  supposedly private system to uncover APIs that are inadvertently accessible to the  public. This process helps identify security gaps where sensitive APIs are  unintentionally exposed, enabling organizations to fortify their defenses and  safeguard sensitive information. By proactively detecting and addressing these  vulnerabilities, businesses can mitigate the risk of unauthorized access and  potential data breaches."
+  impact: |
+    "Identifying publicly accessible APIs through this test in a private environment can  have a significant impact. It helps prevent unauthorized access to sensitive data,  reducing the risk of data breaches and protecting customer privacy. Additionally,  it demonstrates a commitment to robust security practices, enhancing trust  among stakeholders and upholding compliance standards. Ultimately, mitigating  these risks safeguards the organization's integrity, reputation, and finances."
+  category:
+    name: IIM
+    shortName: Improper Inventory Management
+    displayName: Improper Inventory Management (IIM)
+  subCategory: IDENTIFY_PUBLIC_ACCESS_API
+  severity: HIGH
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/API-Security/editions/2023/en/0xa9-improper-inventory-management/
+  - https://www.akto.io/blog/3-new-ways-to-detect-improper-api-inventory-owasp-api9-2023
+  - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa9-improper-inventory-management.md
+  cwe:
+  - CWE-1059
+  cve:
+  - CVE-2022-3203
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  api_access_type:
+    eq: private
+  query_param:
+    extract: queryVal
+  request_headers:
+    extract: headersVal
+  url:
+    extract: urlVal
+  method:
+    extract: methodVal
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_url: https://test-services.akto.io/validate-urls
+    - modify_method: POST
+    - add_header:
+        x-akto-key: "${akto_header}"
+    - replace_body: "{}"
+    - add_body_param:
+        queryParam: "${queryVal}"
+    - add_body_param:
+        headers: "${headersVal}"
+    - add_body_param:
+        url: "${urlVal}"
+    - add_body_param:
+        method: "${methodVal}"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    for_one:
+      key:
+        contains_either: isPublicAccess
+      value:
+        eq: true
