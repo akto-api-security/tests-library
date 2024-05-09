@@ -67,6 +67,9 @@ api_selection_filters:
       - unable to process request
       - bad request
       - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   url:
     regex: v([2-9]\d*|\d{2,})/
 execute:
@@ -108,6 +111,9 @@ validate:
       - unable to process request
       - bad request
       - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   url:
     endpoint_in_traffic_context: false
 
