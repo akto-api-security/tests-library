@@ -76,6 +76,9 @@ api_selection_filters:
       - unable to process request
       - bad request
       - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   url:
     extract: urlVar
 
@@ -118,6 +121,14 @@ execute:
       - validate:
           response_code:
             eq: 404
+          response_payload:
+            not_contains_either:
+              - rate-limit
+              - rate_limit
+              - rate limit
+              - account is locked
+              - account is blocked
+              - multiple failed attempt
       - success: x2
       - failure: exit
     - req:
@@ -132,5 +143,11 @@ execute:
               - invalid
               - expired
               - failed
+              - rate-limit
+              - rate_limit
+              - rate limit
+              - account is locked
+              - account is blocked
+              - multiple failed attempt
 strategy:
   run_once: /

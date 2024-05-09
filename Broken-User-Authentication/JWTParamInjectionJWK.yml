@@ -81,6 +81,9 @@ api_selection_filters:
       - unable to process request
       - bad request
       - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
 execute:
   type: single
   requests:
@@ -95,8 +98,6 @@ validate:
       gt: 0
     percentage_match_schema:
       gte : 90
-    length:
-      gt: 0
     not_contains_either:
       - Error
       - Internal Server 
@@ -121,6 +122,8 @@ validate:
       - unable to process request
       - bad request
       - service unavailable
-      - account blocked
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
 strategy:
   run_once: /

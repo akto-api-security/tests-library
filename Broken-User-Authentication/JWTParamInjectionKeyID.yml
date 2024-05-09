@@ -84,7 +84,9 @@ api_selection_filters:
       - unable to process request
       - bad request
       - service unavailable
-      - account blocked
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
 execute:
   type: single
   requests:
@@ -125,6 +127,8 @@ validate:
       - unable to process request
       - bad request
       - service unavailable
-      - account blocked
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
 strategy:
   run_once: /

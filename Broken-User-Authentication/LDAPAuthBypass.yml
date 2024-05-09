@@ -77,7 +77,9 @@ api_selection_filters:
       - unable to process request
       - bad request
       - service unavailable
-      - account blocked
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   method:
     not_contains_either:
       - GET
@@ -149,4 +151,6 @@ validate:
       - unable to process request
       - bad request
       - service unavailable
-      - account blocked
+      - account is locked
+      - account is blocked
+      - multiple failed attempts

@@ -79,6 +79,9 @@ api_selection_filters:
       - unable to process request
       - bad request
       - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   request_payload:
     for_one:
       key:
@@ -94,6 +97,14 @@ execute:
             response_code:
               gte: 400
               lt: 410
+            response_payload:
+              not_contains_either:
+                - rate-limit
+                - rate_limit
+                - rate limit
+                - multiple failed attempts
+                - account is locked
+                - account is blocked
         - success: x2
         - failure: exit
     - req:
@@ -104,6 +115,13 @@ execute:
         - validate:
             response_payload:
               neq: "${x1.response.body}"
+              not_contains_either:
+                - rate-limit
+                - rate_limit
+                - rate limit
+                - multiple failed attempts
+                - account is locked
+                - account is blocked
             response_code:
               eq: "${x1.response.status_code}"
         - success: vulnerable

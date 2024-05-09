@@ -72,6 +72,9 @@ api_selection_filters:
       - unable to process request
       - bad request
       - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   url:
     contains_either:
       - login
@@ -103,6 +106,14 @@ execute:
         response_code:
           gte: 400
           lt: 410
+        response_payload:
+          not_contains_either:
+            - rate limit
+            - rate_limit
+            - rate-limit
+            - multiple failed attempt
+            - account is locked
+            - account is blocked
     - success: x2
     - failure: exit
   - req:
