@@ -48,6 +48,33 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains_either:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
   url:
     contains_either:
       - login

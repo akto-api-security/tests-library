@@ -54,6 +54,33 @@ api_selection_filters:
     for_one:
       value:
         contains_jwt: true
+  response_payload:
+    length:
+      gt: 0
+    not_contains_either:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
 execute:
   type: single
   requests:
@@ -68,5 +95,32 @@ validate:
       gt: 0
     percentage_match_schema:
       gte : 90
+    length:
+      gt: 0
+    not_contains_either:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account blocked
 strategy:
   run_once: /
