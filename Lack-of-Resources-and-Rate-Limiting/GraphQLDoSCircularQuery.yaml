@@ -27,6 +27,8 @@ api_selection_filters:
   url:
     regex: graphql
   response_payload:
+    length:
+      gt: 0
     not_contains_either:
       - error
       - issue
@@ -36,6 +38,7 @@ api_selection_filters:
       - "graphQL syntax error"
       - "Syntax Error: Expected Name, found <EOF>."
       - "GRAPHQL_PARSE_FAILED"
+      - "Bad Request"
 
 execute:
   type: multiple
