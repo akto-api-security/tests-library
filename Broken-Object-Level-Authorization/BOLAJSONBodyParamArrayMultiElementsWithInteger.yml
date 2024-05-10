@@ -75,6 +75,11 @@ api_selection_filters:
       - session timeout
       - unexpected error
       - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   request_payload:
     for_one:
       key:
@@ -130,3 +135,8 @@ validate:
       - session timeout
       - unexpected error
       - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts

@@ -76,6 +76,9 @@ api_selection_filters:
       - unable to process request
       - bad request
       - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   request_payload:
     for_one:
       key:
@@ -124,6 +127,9 @@ validate:
       - unable to process request
       - bad request
       - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
     percentage_match:
       lt: 10
     percentage_match_schema:

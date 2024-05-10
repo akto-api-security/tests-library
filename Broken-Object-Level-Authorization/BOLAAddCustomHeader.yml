@@ -53,6 +53,8 @@ api_selection_filters:
     gte: 200
     lt: 300
   response_payload:
+    length:
+      gt: 0
     not_contains_either:
       - Error
       - Internal Server 
@@ -77,6 +79,9 @@ api_selection_filters:
       - unable to process request
       - bad request
       - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
 wordLists:
   headerValues:
     source: sample_data
@@ -137,3 +142,6 @@ validate:
       - unable to process request
       - bad request
       - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts

@@ -79,7 +79,10 @@ api_selection_filters:
       - unexpected error
       - unable to process request
       - bad request
-      - service unavailable   
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts 
   private_variable_context:
     gt: 0
 wordLists:
@@ -128,3 +131,6 @@ validate:
       - unable to process request
       - bad request
       - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
