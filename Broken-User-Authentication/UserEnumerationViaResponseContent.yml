@@ -46,6 +46,36 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains_either:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   url:
     contains_either:
       - login
@@ -84,6 +114,13 @@ execute:
                 - fail
                 - invalid
                 - expired
+                - not found
+                - account is locked
+                - account is blocked
+                - rate-limit
+                - rate_limit
+                - rate limit
+                - multiple failed attempt
     - success: x2
     - failure: exit
   - req:
@@ -94,6 +131,13 @@ execute:
     - validate:
         response_payload:
           neq: "${x1.response.body}"
+          not_contains_either:
+            - rate-limit
+            - rate limit
+            - rate_limit
+            - account is locked
+            - account is blocked
+            - multiple failed attempt
         response_code:
           eq: "${x1.response.status_code}"
     - success: vulnerable
