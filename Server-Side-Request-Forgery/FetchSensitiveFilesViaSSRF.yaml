@@ -77,7 +77,18 @@ validate:
       - daemon
       - Linux
       - Ubuntu
-      - /proc/self/cmdline
+      - "root:"
+      - "localhost"
+      - "127.0.0.1"
+      - "USER="
+      - "HOME="
+      - "PATH="
+      - "/bin"
+      - "/usr/bin/python3"
+      - "<?php"
+      - "__main__"
+      - "sys.argv"
+      - "/bin/bash"
     not_contains_either:
       - Access Denied
       - Error
