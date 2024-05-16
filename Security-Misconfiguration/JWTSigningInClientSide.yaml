@@ -6,6 +6,7 @@ info:
             "Client-side JWT signing test: verifies if the code includes JWT signing functions.
             This ensures the implementation of secure token signing mechanisms within the client-side application."
   impact: "An attacker could potentially exploit the client-side JWT signing vulnerability to manipulate or forge JWT tokens, leading to unauthorized access, privilege escalation, session hijacking, or impersonation attacks. It is crucial to address this vulnerability promptly to protect the integrity and security of the system."
+  remediation: "To remediate JWT signing on the client-side, shift the responsibility of generating and signing JWT tokens to the server-side. Implement secure authentication mechanisms such as OAuth or OpenID Connect to obtain JWT tokens securely from a trusted authorization server. Ensure that sensitive operations and data access are restricted on the server-side based on the validity and integrity of the JWT tokens. Educate developers on the risks associated with client-side JWT signing and promote best practices for securely handling authentication and authorization in web applications."
   category:
     name: SM
     shortName: Misconfiguration

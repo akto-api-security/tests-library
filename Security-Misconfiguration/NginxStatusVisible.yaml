@@ -6,6 +6,7 @@ info:
             "By appending "nginx-status" to the URL, this test determines if the NGINX status module is accessible.
             A successful access exposes sensitive server information, such as performance metrics, configurations, and potentially aiding attackers in identifying vulnerabilities for further exploitation."
   impact: "The NGINX status disclosure vulnerability allows unauthorized access to server information, aiding attackers in profiling the system and potentially identifying weaknesses for targeted exploitation or unauthorized modifications."
+  remediation: "To mitigate NGINX status disclosure, disable the status module in production environments and configure access controls to restrict unauthorized access. Utilize IP whitelisting or HTTP basic authentication to limit access to the status endpoint, ensuring only authorized users can view server status information. Additionally, review and remove any default configuration settings that enable the status module by default, maintaining a secure NGINX configuration."
   category:
     name: SM
     shortName: Security Misconfiguration

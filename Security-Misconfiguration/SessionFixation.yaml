@@ -5,6 +5,7 @@ info:
   details: >
             "The session fixation test focuses on identifying vulnerabilities associated with session fixation attacks. In this type of attack, token and cookie values remain unchanged for a user before and after logging into the application, making their cookies consistent. Attackers can replay the attack by injecting the same vector values before login, allowing them access after login. To mitigate session fixation, it is crucial to utilize distinct parameter values for enhanced security."
   impact: "The impact of the session fixation vulnerability can be significant, leading to unauthorized access and account compromise. Attackers can exploit fixed tokens and cookies, gaining control over user sessions and potentially manipulating sensitive data."
+  remediation: "Session fixation vulnerabilities occur when an attacker sets a user's session identifier (SID) before the user logs in, thereby fixing the session to a predetermined value. Remediate this by employing session regeneration upon authentication, ensuring each user receives a new SID. Implement secure session management practices, such as using HTTPS and setting the "HttpOnly" and "Secure" flags for session cookies to prevent client-side access and transmission over insecure channels. Regularly monitor and log session activity to detect and mitigate any suspicious behavior."
   category:
     name: SM
     shortName: Misconfiguration

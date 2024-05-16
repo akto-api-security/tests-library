@@ -5,6 +5,7 @@ info:
   details: >
               "CircleCI Config.yml Exposure refers to the vulnerability where the CircleCI config.yml file is exposed due to misconfiguration. Unauthorized access to this file can reveal critical information about the CI/CD pipeline, including version details and job specifications. Attackers can exploit this exposure to gain insights into the pipeline's structure and settings, potentially leading to unauthorized access, modifications, or disruptions to the build process. It is essential to address this vulnerability promptly to prevent unauthorized access and protect the integrity of the CI/CD pipeline."
   impact: "Exposing the CircleCI config.yml file enables unauthorized access and potential disruptions to the CI/CD pipeline, compromising its integrity and security."
+  remediation: "To prevent exposure of CircleCI config.yml, ensure that sensitive information such as API keys, credentials, and other secrets are not directly stored within the config.yml file. Instead, utilize CircleCI environment variables or the built-in secrets management system to securely store and inject these values into your CI/CD pipeline. Additionally, restrict access to the config.yml file within your version control system and ensure that it is not publicly accessible. Regularly review and audit your CI/CD configurations to detect any inadvertent exposure of sensitive information and update permissions as necessary to prevent unauthorized access."
   category:
     name: SM
     shortName: Misconfiguration
