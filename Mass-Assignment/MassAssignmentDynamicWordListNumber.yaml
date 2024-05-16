@@ -20,6 +20,7 @@ info:
     more effectively, reducing the risk of unauthorized data tampering and bolstering 
     overall data security. By proactively addressing potential weaknesses, businesses can 
     safeguard sensitive information and maintain trust with their stakeholders."
+  remediation: "To mitigate mass assignment vulnerabilities leveraging integer values extracted from API data, implement strict parameterization and input validation in your application. Ensure that integer values extracted from API data are properly sanitized and validated against expected ranges or allowed values. Restrict mass assignment to only specific attributes and validate user inputs rigorously to prevent unauthorized modifications. Regularly review and update your codebase to address any potential vulnerabilities, and conduct security testing using both sample and dynamic API data to identify and remediate any mass assignment issues. Additionally, consider implementing automated security testing tools to detect and prevent such vulnerabilities proactively."
   category:
     name: MA
     shortName: Mass Assignment

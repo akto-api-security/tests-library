@@ -10,6 +10,7 @@ info:
     "A misconfigured CORS can have significant impact on web application security."
     "If invalid origin values are not properly handled, it may allow unauthorized access to sensitive resources, leading to"
     "data breaches, cross-site scripting (XSS) attacks, or unauthorized data manipulation, compromising the integrity and confidentiality of the system."
+  remediation: "To remediate invalid Origin CORS misconfigurations, it's crucial to establish strict CORS policies that allow only trusted origins by configuring the Access-Control-Allow-Origin header properly. Validate Origin headers on the server side to reject requests from untrusted sources, preventing potential security risks. Additionally, implementing a Content Security Policy (CSP) adds an extra layer of protection by restricting the sources from which content can be loaded. Regularly auditing CORS configurations and monitoring for any unauthorized access attempts are essential to ensure ongoing security of the web application."
   category:
     name: CORS
     shortName: CORS Misconfiguration

@@ -16,6 +16,7 @@ info:
   impact: "Broken User authentication is a serious vulnerability. Attackers can gain control to other user's 
           accounts in the system, read their personal data, and perform sensitive actions on their behalf, like 
           money transactions and sending personal messages."
+  remediation: "To prevent access control bypass by changing the request method to HEAD, ensure proper validation of request methods to disallow sensitive operations through HEAD requests. Additionally, maintain consistent authorization mechanisms across all HTTP methods and sanitize user inputs to mitigate potential security risks. Regular security testing and assessments should be conducted to identify and address any vulnerabilities related to request methods, including HEAD, effectively safeguarding the application against access control bypass attacks."
   category:
     name: UHM
     shortName: Unnecessary HTTP Methods
