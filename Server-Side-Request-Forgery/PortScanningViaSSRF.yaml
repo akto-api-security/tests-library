@@ -10,6 +10,7 @@ info:
             It is also more challenging to limit outbound traffic from your application, because of the connected nature of modern applications.
             The SSRF risk can not always be completely eliminated. While choosing a protection mechanism, it is important to consider the business risks and needs."
   impact: "Successful exploitation can lead to access control bypass, sensitive data leak, or even compromise the application."
+  remediation: "To prevent port scanning via SSRF, enforce strict input validation to block malicious URLs and only allow access to whitelisted resources. Implement server-side validation to restrict requests to trusted domains and IP ranges. Utilize network-level security measures such as firewalls and Intrusion Detection Systems (IDS) to detect and block suspicious port scanning activities. Regularly audit and monitor server logs for unusual behavior and consider using Web Application Firewalls (WAFs) to filter and block SSRF attempts."
   category:
     name: SSRF
     shortName: Server Side Request Forgery
