@@ -11,6 +11,7 @@ info:
             "<b>Background:</b> Old API versions are usually unpatched and are vulnerable to attacks such as BOLA. Object level authorization is an access control mechanism that is usually
             implemented at the code level to validate that one user can only access objects that they should have access to."
   impact: "Unauthorized access can result in data disclosure to unauthorized parties, data loss, or data manipulation. Unauthorized access to objects can also lead to full account takeover."
+  remediation: "To mitigate the risk of attackers accessing resources by changing the auth token and using older API versions, implement strict authentication and authorization mechanisms. Ensure tokens are securely generated, transmitted, and validated to prevent tampering. Enforce version control and maintain support only for secure API versions, preventing access through outdated endpoints. Regularly update security measures to maintain the integrity of user resources and prevent unauthorized access attempts."
   category:
     name: BOLA
     shortName: BOLA

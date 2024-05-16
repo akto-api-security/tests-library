@@ -50,5 +50,8 @@ execute:
 
 
 validate:
-  response_payload:
-    contains_either: akto
+  response_headers:
+    key:
+      eq: test-header
+    value:
+      eq: akto
