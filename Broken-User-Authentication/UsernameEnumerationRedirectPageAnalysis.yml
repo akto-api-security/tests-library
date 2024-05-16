@@ -23,6 +23,7 @@ info:
     or targeted attacks. Mitigating this impact involves strengthening security 
     measures, such as implementing consistent error responses and validating usernames 
     without revealing sensitive information during the authentication process."
+  remediation: "To mitigate username enumeration using redirect page analysis, ensure that the redirection behavior is consistent for both existing and non-existing usernames. Avoid providing different redirection responses that could indicate the existence of a username. Implement rate limiting and account lockout mechanisms to prevent brute force attacks. Regularly review and update security measures to address any identified vulnerabilities and enhance overall system security."
 
   category:
     name: NO_AUTH

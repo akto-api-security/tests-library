@@ -18,6 +18,7 @@ info:
     targeted attacks for unauthorized access. This vulnerability poses a risk of compromised user 
     accounts, potential data breaches, and increased security threats. Swift mitigation is crucial 
     to fortify authentication security and prevent unauthorized access."
+  remediation: "To mitigate username enumeration via the registration endpoint, ensure that the response for both existing and non-existing usernames is the same. Avoid providing different responses that reveal whether a username exists in the system or not. Implement rate limiting and account lockout mechanisms to prevent brute force attacks. Regularly review and update security measures to address any identified vulnerabilities and enhance overall system security."
 
   category:
     name: NO_AUTH
