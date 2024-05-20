@@ -1,18 +1,16 @@
-id: REMOVE_TOKENS
+id: REMOVE_XSRF
 info:
-  name: "Broken Authentication by removing auth token"
-  description: "API doesn't validate the authenticity of token. Attacker can remove the auth token and access the endpoint."
+  name: "Broken Authentication test by removing XSRF token"
+  description: "This test involves checking if a web application properly validates XSRF (CSRF) tokens. XSRF (CSRF) tokens prevent unauthorized actions by ensuring requests originate from the legitimate user. By removing the token from requests, testers can see if the application rejects these requests, thereby identifying potential vulnerabilities in CSRF protection."
   details: >
-            "The endpoint appears to be vulnerable to broken authentication attack. The original request was replayed by removing victim's <b>auth</b> token. The server responded with 2XX success codes.<br>"
-            "<b>Background:</b> Authentication is the process of attempting to verify the digital identity of the sender of a communication. Testing the authentication schema means understanding how the authentication process works and using that information to
-            circumvent the authentication mechanism. While most applications require authentication to gain access to private information or to execute tasks, not every authentication method is able to provide adequate security. Negligence, ignorance, or simple
-            understatement of security threats often result in authentication schemes that can be bypassed by simply skipping the log in page and directly calling an internal page that is supposed to be accessed only after authentication has been performed."
-  impact: "Broken User authentication is a serious vulnerability. Attackers can gain control to other users’ accounts in the system, read their personal data, and perform sensitive actions on their behalf, like money transactions and sending personal messages."
+            "This test involves testing a web application’s security by omitting the Cross-Site Request Forgery (XSRF/CSRF) token from requests. XSRF tokens protect against unauthorized actions by verifying the source of requests. By removing the token, testers check if the application still processes the request, which would indicate a vulnerability in CSRF protection mechanisms."
+  impact: "The impact of a successful XSRF/CSRF attack can be severe, allowing attackers to perform unauthorized actions on behalf of authenticated users without their knowledge. This can lead to unauthorized fund transfers, password changes, or data theft, compromising user accounts and potentially causing significant financial and reputational damage to both users and organizations."
+  remediation: "To remediate XSRF/CSRF vulnerabilities, implement anti-CSRF tokens for all state-changing requests, ensuring they are unique per session and validated server-side. Use the SameSite attribute on cookies to restrict cross-origin requests. Additionally, enforce user authentication and authorization checks on the server for all sensitive actions to ensure requests are legitimate."
   category:
     name: NO_AUTH
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
-  subCategory: REMOVE_TOKENS
+  subCategory: REMOVE_XSRF
   severity: HIGH
   tags:
     - Business logic
@@ -35,13 +33,20 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  request_headers:
+    for_one:
+      key:
+        regex: "(?i)xsrf"
+        extract: xsrfHeaderKey
+
   method:
     neq: GET
 execute:
   type: single
   requests:
   - req:
-    - delete_header: x-front-xsrf
+    - delete_header: ${xsrfHeaderKey}
+        
 validate:
   response_code:
     gte: 200
