@@ -12,6 +12,7 @@ info:
        configuration of the Actuator endpoints are necessary to prevent unauthorized access to HTTP 
        tracing information.
   impact: Exposing Spring Boot Http Trace Actuator can disclose sensitive HTTP request information, potentially aiding attackers in exploiting vulnerabilities.
+  remediation: "To secure Spring Boot's HTTP Trace Actuator, disable it in production configurations, utilize authentication/authorization for Actuator endpoints, and restrict sensitive trace data access. Regularly audit Actuator configurations to prevent inadvertent exposure and consider encryption or secure vault solutions for protecting sensitive trace information."
   category:
       name: SM
       shortName: Misconfiguration

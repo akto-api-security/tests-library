@@ -26,6 +26,7 @@ info:
     gain control over sensitive information. Implementing effective anti-CSRF protections 
     is imperative to mitigate this risk, ensuring the resilience of authentication 
     mechanisms and safeguarding against unauthorized replay attacks."
+  remediation: "To mitigate Authentication Bypass using API replay with no CSRF/XSRF tokens, ensure that all API requests are protected with CSRF/XSRF tokens. Implement strict validation on the server-side to reject requests that do not include valid tokens. Additionally, consider implementing other security measures such as rate limiting and monitoring for suspicious activity to detect and prevent unauthorized access attempts. Regularly review and update your security mechanisms to address any identified vulnerabilities and enhance overall system security."
   category:
     name: NO_AUTH
     shortName: Broken Authentication

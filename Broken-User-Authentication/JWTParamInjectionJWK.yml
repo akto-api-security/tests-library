@@ -23,6 +23,7 @@ info:
     compromised security may result in unauthorized data access, system 
     manipulation, and potential privacy breaches, underscoring the critical 
     importance of promptly addressing and patching such vulnerabilities."
+  remediation: "To mitigate Authentication Bypass using JWT Header Param Injection with JWK, implement proper validation of JWT signatures and safeguard JSON Web Keys (JWKs). Ensure that JWT signatures are validated using trusted keys and algorithms, and that only authorized JWKs are accepted by the authentication process. Regularly review and update the authentication mechanisms to address any identified vulnerabilities and enhance security measures. Additionally, consider implementing additional security controls such as rate limiting and monitoring for suspicious activity to detect and prevent unauthorized access attempts."
 
   category:
     name: NO_AUTH

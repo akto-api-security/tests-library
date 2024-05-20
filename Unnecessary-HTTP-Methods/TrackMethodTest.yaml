@@ -9,6 +9,7 @@ info:
             the request message. TRACK allows the client to see what is being received at the other end of the 
             request chain and use that data for testing or diagnostic information.
   impact: "TRACK method can be used for debugging purposes. It repeats the content of a request, and an attacker could steal credentials by using a client-side attack."
+  remediation: "To mitigate the TRACK method vulnerability, disable the HTTP TRACK method at the server level to prevent potential information disclosure. This can be accomplished by configuring web server settings or utilizing security middleware to block TRACK requests. Additionally, ensure thorough input validation and sanitization to prevent injection attacks, as attackers may attempt to exploit the TRACK method for script injection or data theft. Regular security assessments should be conducted to detect and address any vulnerabilities related to the TRACK method effectively, ensuring the overall security of the application."
   category:
     name: UHM
     shortName: Unnecessary HTTP Methods

@@ -5,6 +5,7 @@ info:
   details: >
               "Git Config Disclosure refers to the vulnerability where the existence of the /.git/config file and log files is checked on provided URLs. The Git config file contains sensitive information such as repository configurations, URLs, and credentials, while log files may contain valuable data. Promptly addressing this vulnerability is crucial to prevent unauthorized access, protect source code integrity, and safeguard sensitive information."
   impact: "Disclosing the Git config file and log files exposes sensitive information, allowing attackers to gain unauthorized access, manipulate code, and potentially compromise the integrity of the source code."
+  remediation: "To prevent Git config disclosure, avoid committing sensitive configuration files like `.gitconfig` to your repository. Use `.gitignore` to exclude these files. Instead, manage sensitive information such as passwords and API keys using environment variables or a secure secrets management system. Regularly review repository access permissions to prevent unauthorized users from accessing sensitive files."
   category:
     name: SM
     shortName: Misconfiguration

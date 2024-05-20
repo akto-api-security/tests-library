@@ -11,6 +11,7 @@ info:
           obtain sensitive configuration details. This misconfiguration has a low severity level and 
           falls under the Security Misconfiguration category.
   impact: Enabling Flask debug mode in a production environment exposes sensitive information and introduces security vulnerabilities to potential unauthorized access and code execution.
+  remediation: "To mitigate the risk of Flask debug mode being enabled, ensure it's disabled in production by setting the `debug` attribute to `False` in your Flask application configuration. This prevents detailed error messages from being exposed to users. Regularly review your application's settings to confirm debug mode remains disabled, as it can inadvertently expose sensitive information. Additionally, enforce strong input validation and error handling to enhance security even when debug mode is disabled."
   category:
       name: SM
       shortName: Misconfiguration

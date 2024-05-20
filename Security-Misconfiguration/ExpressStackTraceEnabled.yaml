@@ -9,6 +9,7 @@ info:
           potential vulnerabilities and crafting targeted attacks. It is crucial to disable stack trace information in 
           production environments to prevent the exposure of sensitive details and enhance security posture.
   impact:  Enabling stack traces in Express responses exposes sensitive code information, assisting attackers in pinpointing vulnerabilities and launching targeted attacks.
+  remediation: "To prevent the exposure of stack traces in Express.js, set the NODE_ENV environment variable to 'production' to disable stack traces in error responses. Implement custom error handling middleware to format error responses without revealing stack traces. Ensure error logs are securely managed and accessible only to authorized personnel, thus reducing the risk of information disclosure."
   category:
       name: SM
       shortName: Misconfiguration
