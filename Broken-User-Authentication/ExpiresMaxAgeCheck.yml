@@ -25,6 +25,7 @@ info:
     unauthorized transactions, and potential breaches of sensitive information, 
     underscoring the critical need for secure session management to safeguard 
     user authentication and privacy."
+  remediation: "To mitigate the security risk posed by storing session tokens as persistent cookies, implement secure session management practices. Use short-lived session tokens instead of persistent ones to reduce the window of vulnerability. Implement measures such as HTTPS-only cookies and HTTP Strict Transport Security (HSTS) to protect session data in transit. Additionally, consider implementing additional security controls such as token rotation or multi-factor authentication to further protect against unauthorized access. Regularly review and update session management practices to address emerging threats and maintain the security of user authentication."
 
   category:
     name: NO_AUTH

@@ -11,6 +11,7 @@ info:
         of the Actuator endpoints are essential to prevent unauthorized access and protect sensitive configuration 
         details.
   impact: Exposing Spring Boot Configuration Properties Actuator can lead to unauthorized access and exposure of sensitive application configuration properties.
+  remediation: "To prevent Spring Boot configuration properties exposure via Actuator, restrict sensitive properties' visibility, utilize authentication/authorization for Actuator endpoints, and regularly audit configurations for inadvertent exposure. Encrypt sensitive properties or use secure vault solutions to safeguard secrets effectively."
   category:
       name: SM
       shortName: Misconfiguration

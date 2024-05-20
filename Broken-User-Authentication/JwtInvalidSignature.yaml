@@ -12,6 +12,7 @@ info:
             "They can also exploit this vulnerability by supplying an arbitrary claim in the JWT
             payload to escalate their privileges or impersonate other users. For example, if the token
             contains a \"username\": \"joe\" claim, they could change this to \"username\": \"admin\"."
+  remediation: "To mitigate this vulnerability, the server should implement proper validation of the JWT signature. It should verify that the JWT signature is valid and matches the expected signing key before granting access to protected resources. Additionally, ensure that the JWT payload is not tampered with by implementing integrity checks such as hashing or using digital signatures. Regularly update and monitor the JWT validation process to prevent unauthorized access to protected resources."
   category:
     name: NO_AUTH
     shortName: Broken User Authentication

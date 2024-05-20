@@ -16,6 +16,7 @@ info:
   impact: "Broken User authentication is a serious vulnerability. Attackers can gain control to other user's 
           accounts in the system, read their personal data, and perform sensitive actions on their behalf, like 
           money transactions and sending personal messages."
+  remediation: "To mitigate access control bypass by changing the request method to an arbitrary value, implement strict validation of incoming requests to ensure that only allowed HTTP methods are accepted. Enforce a whitelist of permitted methods and reject requests with unrecognized or unauthorized methods. Additionally, employ comprehensive access control mechanisms to verify user permissions regardless of the request method used, and conduct regular security audits to detect and address any potential vulnerabilities in the application's access control logic."
   category:
     name: UHM
     shortName: Unnecessary HTTP Methods

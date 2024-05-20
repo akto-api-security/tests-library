@@ -8,6 +8,7 @@ info:
     Attackers can also set cookies which could be exploited by logging the victim into the attacker’s account or used to exploit otherwise unexploitable cross-site scripting vulnerabilities."
   impact: "The impact of CRLF injections varies depending on the attack context, but will typically cover all the consequences of cross-site scripting and information disclosure that the injection allowed.
           The technique can also be used to deactivate certain security restrictions like XSS filters and same-origin policy in the victim’s browser, paving the way for other malicious attacks."
+  remediation: "To mitigate HTTP Header Abuse using CRLF Injection, ensure strict input validation and sanitize user inputs to remove any CRLF characters. Implement encoding mechanisms to properly handle user-supplied data in HTTP headers. Additionally, employ HTTP header validation to reject requests containing illegal characters, and consider implementing Content Security Policy (CSP) to restrict content sources. Utilizing trusted HTTP header libraries or frameworks can also help automatically handle input sanitization, reducing the risk of CRLF injection vulnerabilities."
   category:
     name: CRLF
     shortName: CRLF Injection

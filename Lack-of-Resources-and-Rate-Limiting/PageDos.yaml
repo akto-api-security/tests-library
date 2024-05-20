@@ -4,6 +4,7 @@ info:
   description: "Quite often, APIs do not impose any restrictions on the size or number of resources that can be requested by the user."
   details: "Such vulnerabilities arise when there is no max limit imposed on the number of resources returned. Typically, the number of objects to be returned is provided by a parameter in the API call. An attacker can set it as a large number. "
   impact: "This can impact the API server performance, leading to  Denial of Service (DoS). It also leaves the door open to authentication flaws such as brute force."
+  remediation: "A Pagination misconfiguration can potentially lead to a Denial of Service (DoS) attack by allowing an attacker to manipulate the pagination parameters to request a large number of records at once, overwhelming the server's resources and causing it to become unresponsive. To mitigate this risk, it's essential to implement proper pagination controls such as limiting the maximum number of records returned per request and enforcing reasonable pagination boundaries. Additionally, implementing rate limiting and monitoring for abnormal pagination patterns can help detect and mitigate potential DoS attacks."
   category:
     name: RL
     shortName: Lack of Resources & Rate Limiting

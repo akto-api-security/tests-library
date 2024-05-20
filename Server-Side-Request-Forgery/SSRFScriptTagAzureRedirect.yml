@@ -25,6 +25,7 @@ info:
   attackers to pivot and escalate privileges, amplifying the scope and severity 
   of the breach. Without proper mitigation, these exploits pose significant 
   risks to data integrity, confidentiality, and overall system security."
+  remediation: "Conduct SSRF tests by substituting parameters with script tags containing redirect URLs targeting Azure internal URLs. Analyze server responses to ascertain if redirection occurs, indicating a possible SSRF vulnerability. Implement stringent input validation and whitelist trusted domains to limit external requests, mitigating SSRF risks. Regularly scrutinize server logs for anomalies like SSRF attempts, promptly addressing any potential vulnerabilities discovered."
   category:
     name: SSRF
     shortName: Server Side Request Forgery

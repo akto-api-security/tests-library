@@ -26,7 +26,7 @@ info:
     phishing. Mitigation measures involve strengthening account lockout policies, 
     implementing robust user verification processes, and conducting regular security 
     assessments to identify and address vulnerabilities in the authentication system."
-
+  remediation: "To mitigate user enumeration using a locked account role, ensure that responses for locked account roles do not reveal sensitive information. Return generic error messages instead of indicating whether an account is locked. Implement rate limiting to prevent attackers from brute-forcing user enumeration. Regularly review and update security measures to address any identified vulnerabilities."
   category:
     name: NO_AUTH
     shortName: Broken Authentication
