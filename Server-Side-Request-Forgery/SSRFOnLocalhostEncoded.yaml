@@ -10,7 +10,7 @@ info:
             It is also more challenging to limit outbound traffic from your application, because of the connected nature of modern applications.
             The SSRF risk can not always be completely eliminated. While choosing a protection mechanism, it is important to consider the business risks and needs."
   impact: "Successful exploitation can lead to access control bypass, sensitive data leak, or even compromise the application."
-  remediation: "To address the exposure of sensitive localhost details via SSRF by replacing the URI parameter with an encoded \"localhost/admin,\" enforce thorough input validation to block any attempts to manipulate the URL. Implement server-side checks to detect and reject requests targeting sensitive localhost endpoints, regardless of encoding. Utilize network-level protections like firewalls to restrict outbound traffic, preventing SSRF attacks from reaching local services. Regularly monitor server logs for suspicious activities, including SSRF attempts, and promptly respond to mitigate any potential risks."
+  remediation: "To address the exposure of sensitive localhost details via SSRF by replacing the URI parameter with an encoded "localhost/admin," enforce thorough input validation to block any attempts to manipulate the URL. Implement server-side checks to detect and reject requests targeting sensitive localhost endpoints, regardless of encoding. Utilize network-level protections like firewalls to restrict outbound traffic, preventing SSRF attacks from reaching local services. Regularly monitor server logs for suspicious activities, including SSRF attempts, and promptly respond to mitigate any potential risks."
   category:
     name: SSRF
     shortName: Server Side Request Forgery
