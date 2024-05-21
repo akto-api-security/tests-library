@@ -14,7 +14,6 @@ info:
   impact: "Knowing the specific version of a web server software can help an attacker identify publicly known 
           vulnerabilities associated with that version and exploit them to gain unauthorized access to the 
           server or compromise its integrity"
-  remediation: "To mitigate the exposure of server versions via response headers in invalid requests, first, remove server version information from response headers for invalid requests. Next, consider custom error responses that provide generic messages instead of revealing server details. Finally, apply security hardening measures such as WAFs or IDS to monitor and filter incoming requests, minimizing the risk of exploitation."
   category:
     name: SVD
     shortName: Server Version Disclosure

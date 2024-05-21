@@ -6,7 +6,6 @@ info:
             "The inclusion of specific headers, such as x-forwarded-for, empowers attackers to bypass captcha protection mechanisms, posing a significant threat to the system's security."
             "By manipulating these headers, malicious actors can undermine the intended security measures, potentially leading to data breaches and other detrimental consequences that compromise the overall system integrity."
   impact: "Bypassing CAPTCHA protection enables hackers to automate malicious activities, such as unauthorized account access, spamming, data harvesting, and DDoS attacks."
-  remediation: "To mitigate bypassing captcha-based protection by adding headers, enforce server-side validation for captcha responses and ensure that the captcha verification process is not solely dependent on client-side headers. Implement additional validation checks on the server to verify the legitimacy of captcha submissions and consider using techniques like rate limiting to prevent automated attacks. Regularly monitor and update captcha mechanisms to stay ahead of emerging threats."
   category:
     name: RL
     shortName: Lack of Resources & Rate Limiting

@@ -5,7 +5,6 @@ info:
   details: >
               "This template searches for the presence of the wp-config.php file and checks for the presence of AWS S3 keys, database access credentials, and other sensitive information within the file."
   impact: "Exposing AWS S3 keys and database credentials can result in unauthorized access, data breaches, and potential compromise of the entire system's security."
-  remediation: "To mitigate AWS S3 keys leaks, avoid hardcoding credentials in code or configuration files, opting for IAM roles with least privilege instead. Implement robust access controls and bucket policies to limit access to authorized entities. Regularly rotate access keys and audit access logs for suspicious activity. Consider using AWS services like AWS Secrets Manager for secure storage and retrieval of sensitive credentials."
   category:
     name: SM
     shortName: Misconfiguration

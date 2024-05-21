@@ -20,7 +20,6 @@ info:
   if left unaddressed, such vulnerabilities could be exploited by malicious actors 
   to orchestrate more severe attacks, jeopardizing data integrity and compromising 
   sensitive information."
-  remediation: "To mitigate the risk of Denial of Service (DoS) attacks from large CSV file URLs, implement input validation to restrict the size of the URL that can be processed by the server. This can be achieved by setting a maximum allowed length for the URL parameter and rejecting requests that exceed this limit. Additionally, consider implementing rate limiting to prevent abuse of the server by sending a large number of requests with large CSV file URLs. Regularly monitor server performance and adjust limits as needed to maintain optimal service availability and performance."
   category:
     name: RL
     shortName: Lack of Resources & Rate Limiting

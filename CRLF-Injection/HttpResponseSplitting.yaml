@@ -7,7 +7,6 @@ info:
     By manipulating the header structure, attackers can deceive web browsers and bypass server content, potentially leading to phishing attempts or defacement of websites."
   impact: "The impact of CRLF injections varies depending on the attack context, but will typically cover all the consequences of cross-site scripting and information disclosure that the injection allowed.
           The technique can also be used to deactivate certain security restrictions like XSS filters and same-origin policy in the victim’s browser, paving the way for other malicious attacks."
-  remediation: "To mitigate HTTP Response Splitting using CRLF, ensure strict input validation and sanitize user inputs to remove any CRLF characters before generating HTTP responses. Implement encoding mechanisms to properly handle user-supplied data in HTTP headers and body content. Additionally, employ output encoding to prevent injection of CRLF sequences into response headers or body. Regularly update web server and application frameworks to the latest versions to patch any known vulnerabilities related to HTTP response splitting."
   category:
     name: CRLF
     shortName: CRLF Injection

@@ -25,7 +25,6 @@ info:
   attackers to pivot and escalate privileges, amplifying the scope and severity 
   of the breach. Without proper mitigation, these exploits pose significant 
   risks to data integrity, confidentiality, and overall system security."
-  remediation: "Conduct SSRF tests by replacing parameters with script tags containing redirect URLs directed towards localhost URLs. Evaluate server responses to identify any unauthorized redirections, indicating a potential SSRF vulnerability. Strengthen input validation and implement strict whitelisting to confine external requests to trusted domains, mitigating the SSRF risk. Regularly monitor server logs for suspicious activities, including SSRF attempts, and promptly address any identified vulnerabilities."
   category:
     name: SSRF
     shortName: Server Side Request Forgery

@@ -11,7 +11,6 @@ info:
   impact: >
             "If JWT none algorithm works, attacker can do a full account takeover.
             They can also exploit this vulnerability by supplying an arbitrary claim in the JWT payload to escalate their privileges or impersonate other users. For example, if the token contains a \"username\": \"joe\" claim, they could change this to \"username\": \"admin\"."
-  remediation: "To mitigate this vulnerability, the server should disallow the use of the \"NONE\" algorithm for JWTs. The server should only accept JWTs with secure algorithms such as HMAC or RSA for signature verification. Additionally, implement proper input validation and sanity checks to ensure that the JWT payload is not tampered with. Regularly update and monitor the JWT validation process to prevent unauthorized access to protected resources."
   category:
     name: NO_AUTH
     shortName: Broken User Authentication

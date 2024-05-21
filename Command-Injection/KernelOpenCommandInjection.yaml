@@ -7,7 +7,6 @@ info:
             This allows an attacker to exploit the design flaw by sending a pipe character followed by a shell command. The impact of successful command injection includes unauthorized access, data leakage, system compromise, and potential disruption of services,
             making it a critical security concern that needs immediate attention."
   impact: "Command injection allows an attacker to execute arbitrary commands on a vulnerable system, leading to unauthorized access, data theft, system compromise, and potential disruption of services, making it a severe security risk."
-  remediation: "To mitigate kernel open command injection in Ruby, avoid using user-controlled input directly in the Kernel.open method. Instead, sanitize and validate input thoroughly before using it in file operations. Prefer using safe alternatives such as File.open with absolute paths or sanitizing user input to prevent malicious commands. Regularly update your Ruby environment and libraries to patch any known vulnerabilities. Additionally, consider implementing security measures such as input validation and whitelisting to further mitigate risks."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection

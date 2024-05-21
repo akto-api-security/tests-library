@@ -7,7 +7,6 @@ info:
             The ability to use an authentic application URL, targeting the correct domain and with a valid SSL certificate (if SSL is used), lends credibility 
             to the phishing attack because many users, even if they verify these features, will not notice the subsequent redirection to a different domain"
   impact: "This behavior can be leveraged to facilitate phishing attacks against users of the application."
-  remediation: "To address open redirects with subdomain whitelists, ensure rigorous validation of redirect URLs against the allowed subdomains whitelist. Reject any redirects attempting to navigate outside of these trusted domains to prevent malicious redirection. Regularly review and update the whitelist to include only trusted domains, minimizing the attack surface. Additionally, consider implementing HTTP Strict Transport Security (HSTS) to enforce secure connections and further mitigate the risk of redirect-based attacks."
   category:
     name: SM
     shortName: Misconfiguration

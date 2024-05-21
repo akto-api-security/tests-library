@@ -7,7 +7,6 @@ info:
             Open redirects can enable attackers to trick users into visiting malicious websites, leading to various risks such as phishing, malware distribution, and unauthorized access.
             Ensuring robust protection against this vulnerability is crucial for preserving user trust, data integrity, and overall system security.
   impact: "This behavior can be leveraged to facilitate phishing attacks against users of the application."
-  remediation: "To mitigate open redirects through host header injection, rigorously sanitize and validate incoming host headers to prevent malicious injection of redirect URLs. Employ whitelists for allowed redirect destinations and avoid using user input directly in redirect logic. Additionally, consider implementing HTTP Strict Transport Security (HSTS) to enforce secure connections and reduce the risk of interception or manipulation of host headers. Regular security audits and testing are crucial to maintain robust protection against such vulnerabilities."
   category:
     name: SM
     shortName: Misconfiguration

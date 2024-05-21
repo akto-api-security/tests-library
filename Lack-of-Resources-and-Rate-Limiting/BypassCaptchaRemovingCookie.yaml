@@ -6,7 +6,6 @@ info:
             "The removal of cookies enables attackers to bypass captcha protection mechanisms, posing a substantial security risk."
             "Servers often implement rate limiting based on cookie values, allowing them to identify and restrict users who misuse their resources, subsequently prompting them to solve captchas for verification."
   impact: "Bypassing CAPTCHA protection enables hackers to automate malicious activities, such as unauthorized account access, spamming, data harvesting, and DDoS attacks."
-  remediation: "To prevent bypassing captcha-based protection by removing cookies, implement server-side validation for captcha responses. Additionally, enforce session management to verify the presence and integrity of cookies, and employ rate limiting to prevent multiple attempts within a short time frame. Regularly update captcha mechanisms and monitor for suspicious activity to enhance overall security."
   category:
     name: RL
     shortName: Lack of Resources & Rate Limiting

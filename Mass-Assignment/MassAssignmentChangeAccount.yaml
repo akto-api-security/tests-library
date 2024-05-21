@@ -12,7 +12,6 @@ info:
     Process-dependent properties: user.cash should only be set internally after payment verification.
     Internal properties: article.created_time should only be set internally by the application."
   impact: "Exploitation can lead to privilege escalation."
-  remediation: "To mitigate mass assignment vulnerabilities leading to the modification of user accounts, implement strong parameterization techniques in your application. Only allow specific attributes to be updated through mass assignment and validate user inputs thoroughly to prevent unauthorized modifications. Additionally, consider implementing role-based access controls to limit the attributes that different user roles can modify. Regularly review and update your codebase to address any potential vulnerabilities and conduct security testing to identify and remediate any mass assignment issues. Finally, consider using frameworks or libraries that provide built-in protection against mass assignment vulnerabilities."
   category:
     name: MA
     shortName: Mass Assignment

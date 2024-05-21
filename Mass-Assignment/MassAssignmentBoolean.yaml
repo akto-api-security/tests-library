@@ -21,7 +21,6 @@ info:
     availability, potentially causing financial loss, reputational damage, and regulatory 
     penalties for affected organizations. Additionally, it can undermine user trust and 
     compromise the overall security posture of the application."
-  remediation: "To mitigate mass assignment vulnerabilities using boolean values, ensure that your application implements proper input validation and sanitization. Verify that boolean values received from client requests are properly validated against a whitelist of allowed values, rather than directly applied to model attributes. Additionally, consider implementing a strong parameterization approach where only specific attributes are permitted to be updated via mass assignment. Regularly review and update your codebase to address any potential vulnerabilities, and consider implementing automated security testing to detect and prevent mass assignment issues."
   category:
     name: MA
     shortName: Mass Assignment

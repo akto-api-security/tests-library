@@ -10,7 +10,6 @@ info:
         Misconfiguration category with a low severity level. Disabling the default Nginx page and customizing
         error pages helps protect sensitive server information and enhance security.
   impact: Enabling Nginx default page exposes sensitive server information, potentially aiding attackers in crafting targeted attacks and exploiting vulnerabilities.
-  remediation: "To mitigate the risk of having the Nginx default page enabled, customize a default landing page to provide minimal information about the server and application, avoiding sensitive disclosures. Disable the default Nginx page in production environments by removing or renaming the default configuration file. Implement access controls to restrict access to sensitive resources and directories, enhancing the overall security of the Nginx server."
   category:
       name: SM
       shortName: Misconfiguration

@@ -10,7 +10,6 @@ info:
             It is also more challenging to limit outbound traffic from your application, because of the connected nature of modern applications.
             The SSRF risk can not always be completely eliminated. While choosing a protection mechanism, it is important to consider the business risks and needs."
   impact: "Successful exploitation might compromise sensitive data such as passwords, source-code, confidential files etc."
-  remediation: "To address sensitive file exposure due to SSRF vulnerabilities, enforce strict input validation and sanitization to prevent SSRF attacks. Implement server-side access controls and file permissions to restrict access to sensitive files based on user privileges. Utilize network segmentation and firewalls to limit outbound connections to trusted resources only. Additionally, educate developers on secure coding practices and regularly scan applications for SSRF vulnerabilities using specialized tools."
   category:
     name: SSRF
     shortName: Server Side Request Forgery

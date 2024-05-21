@@ -14,7 +14,6 @@ info:
             "Using this vulnerability an attacker can do a full account takeover. <br><br>"
             "They can also exploit this vulnerability by supplying an arbitrary claim in the JWT payload to escalate their privileges or impersonate other users. For example,
             if the token contains a \"username\": \"joe\" claim, they could change this to \"username\": \"admin\"."
-  remediation: "To mitigate this vulnerability, the host server should implement proper validation of the \"jku\" field in the JWT. The server should only accept JWT tokens with trusted \"jku\" URLs, or preferably, avoid relying on the \"jku\" header altogether if it's not necessary. Additionally, the server should ensure that the JWT signature is verified using a trusted set of keys and not simply accept keys obtained from external URLs. Regularly monitor and update security measures to stay protected against potential attacks."
   category:
     name: NO_AUTH
     shortName: Broken User Authentication

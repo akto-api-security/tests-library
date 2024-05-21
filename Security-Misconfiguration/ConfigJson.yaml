@@ -5,7 +5,6 @@ info:
   details: >
               "JSON Config Exposure refers to the vulnerability where JSON configuration files, such as default.json, config.json, and credentials/config.json, are exposed due to misconfiguration. Unauthorized access to these files can lead to the exposure of sensitive information like API keys, AWS credentials, and server configurations. Attackers can exploit this exposure to misuse API keys, gain unauthorized access to AWS services, or exploit server vulnerabilities. Addressing this vulnerability promptly is crucial to prevent unauthorized access and protect the confidentiality of sensitive data and the security of the system."
   impact: "Enables attackers to misuse API keys, gain unauthorized access, and exploit server vulnerabilities, posing a significant risk to data and system security."
-  remediation: "To prevent unauthorized access to JSON configuration files, ensure that proper access controls are in place. Utilize server-side authentication and authorization mechanisms to restrict access to these files based on user roles and permissions. Additionally, implement encryption for sensitive data within the JSON files and use HTTPS to protect data transmission. Regularly audit and review file permissions to detect any misconfigurations or unauthorized access attempts. Finally, consider using a secure storage solution such as a secrets manager to store sensitive information separately from the JSON files."
   category:
     name: SM
     shortName: Misconfiguration

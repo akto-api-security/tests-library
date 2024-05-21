@@ -7,7 +7,6 @@ info:
           "The test executes a single request, modifying the URL to ensure it includes 'graphql.' Additionally, it replaces the request body with a GraphQL introspection query to retrieve schema details. The response payload is then validated to check if it contains either the phrases 'Did you mean' or 'Expected value of type.'"
           "Tags associated with this test include Business logic, OWASP top 10, and HackerOne top 10. For more information, reference the provided link on why disabling GraphQL introspection in production is recommended."" 
   impact: "Enabling GraphQL field suggestions exposes the GraphQL schema, allowing attackers to gain insight into the API structure, potentially leading to targeted attacks and unauthorized access to sensitive data."
-  remediation: "To remediate the enabling of GraphQL field suggestions, promptly disable this feature to prevent potential information disclosure and improve security posture. Review GraphQL server configurations to ensure field suggestion functionality is turned off by default in production environments. Implement strict access controls and authentication mechanisms to limit access to sensitive GraphQL endpoints and operations. Regularly audit server configurations and monitor for any unauthorized changes to ensure ongoing security compliance."
   category:
     name: SM
     shortName: Misconfiguration

@@ -9,7 +9,6 @@ info:
             "<b>Background:</b> The Content-Type header specifies the type of data contained in the request or
             response body, allowing the receiving party to interpret and handle the data correctly."
   impact: "When the Content-Type header is missing, it can lead to various security risks, data integrity issues and possible DOS attacks"
-  remediation: "To mitigate the risk of missing Content-Type headers, ensure that your application consistently sets the Content-Type header for all responses. Implement a validation mechanism to enforce the presence of the Content-Type header in all requests and responses. Additionally, configure your web server or application framework to automatically set appropriate Content-Type headers when serving different types of content. Regularly audit your codebase to ensure that Content-Type headers are correctly set in all parts of your application. By enforcing proper header handling, you can prevent potential security vulnerabilities and ensure compatibility with various client applications."
   category:
     name: MHH
     shortName: Misconfigured HTTP Headers

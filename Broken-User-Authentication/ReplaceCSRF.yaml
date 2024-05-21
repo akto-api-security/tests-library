@@ -9,7 +9,6 @@ info:
     "Successful execution of unauthorized actions due to the absence of CSRF token may result in severe consequences,"
     "such as unauthorized data modification, account hijacking, or sensitive information disclosure,"
     "highlighting critical vulnerabilities and emphasizing the need for robust CSRF protection measures."
-  remediation: "To mitigate the risk of CSRF test by replacing with invalid CSRF tokens, enforce strict validation on the server-side to ensure that only valid CSRF tokens are accepted. Reject requests with invalid tokens and consider implementing additional security measures such as double-submit cookies or token-binding techniques to further protect against CSRF attacks. Regularly review and update your CSRF protection mechanisms to address any identified vulnerabilities."
   category:
     name: NO_AUTH
     shortName: Broken Authentication
