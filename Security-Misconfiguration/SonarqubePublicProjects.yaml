@@ -5,7 +5,6 @@ info:
   details: >
               "Checks for SonarQube instances where project suggestions are publicly available. It looks for API endpoints like "/api/components/suggestions?recentlyBrowsed=" that reveal project-related information."
   impact: "Publicly accessible SonarQube projects expose sensitive code quality and security information, increasing the risk of unauthorized access and targeted attacks."
-  remediation: "When using SonarQube with public projects, it's crucial to carefully manage sensitive information and ensure that no confidential data is exposed. Configure SonarQube to exclude any sensitive files or directories containing proprietary or confidential information from analysis. Implement access controls to restrict access to the SonarQube dashboard and project data only to authorized users. Regularly monitor and review project configurations to identify and remediate any inadvertent exposures. Additionally, consider implementing static code analysis tools or plugins within your continuous integration pipeline to detect and address security vulnerabilities and code quality issues before they are pushed to public repositories."
   category:
     name: SM
     shortName: Misconfiguration

@@ -1,6 +1,6 @@
 id: LARAVEL_DEFAULT_HOMEPAGE_ENABLED
 info:
-  name: Laravel Default Homepage Enabled 
+  name: Laravel DEfault Homepage Enabled 
   description: Laravel Default Homepage Enabled Misconfiguration.
   details: >
       The Laravel Default Homepage Enabled misconfiguration occurs when the default homepage is enabled in a production 
@@ -9,7 +9,6 @@ info:
       be valuable for attackers looking for vulnerabilities and weaknesses in the system. To reduce the attack surface and
       protect sensitive details, it is recommended to disable or customize the default homepage in production environments.
   impact: Enabling the Laravel default homepage exposes sensitive information about the framework and underlying technology, increasing the risk of targeted attacks and exploitation.
-  remediation: "To mitigate the risk of having the Laravel default homepage enabled, create a custom homepage that provides minimal information about the application. Disable debug mode in production environments to prevent sensitive information disclosure. Implement security measures such as authentication, authorization, and security headers to enhance the overall security posture of the application. Regularly review and update these configurations to ensure ongoing protection against potential vulnerabilities."
   category:
       name: SM
       shortName: Misconfiguration

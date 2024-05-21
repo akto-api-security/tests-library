@@ -5,7 +5,6 @@ info:
   details: >
               "Appspec Yml Disclosure refers to the vulnerability where the appspec.yml file, crucial for application deployments, is exposed due to misconfiguration. Unauthorized access to this file reveals sensitive deployment information, including version details, operating system specifications, and file information. Attackers can exploit this exposure to gain insights into the deployment process, identify potential vulnerabilities, and execute unauthorized modifications or disruptions to the application. Promptly addressing this issue is essential to prevent unauthorized access and protect the application's integrity and availability."
   impact: "Unauthorized access reveals deployment details, enabling potential exploitation, unauthorized modifications, and disruptions to the application."
-  remediation: "To prevent Appspec.yml disclosure, ensure that sensitive information such as credentials, API keys, and other secrets are not stored directly within the Appspec.yml file. Instead, use environment variables or a secure secrets management system to store and retrieve this information during deployment. Additionally, restrict access to the Appspec.yml file within your source code repository and ensure that it is not exposed publicly. Regularly review and audit your deployment processes to detect any inadvertent exposure of sensitive information and update permissions as necessary to prevent unauthorized access."
   category:
     name: SM
     shortName: Misconfiguration

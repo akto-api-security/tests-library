@@ -5,7 +5,6 @@ info:
   details: >
             "Validates presence of 'secure' attribute in HTTP response headers' 'set-cookie' field. If not found, sensitive cookie data may be transmitted over insecure connections, exposing it to potential interception and compromising the security and privacy of user information."
   impact: "Without the secure flag in the set-cookie header, sensitive cookie data can be intercepted, potentially leading to unauthorized access, session hijacking, and compromise of user privacy and security."
-  remediation: "To mitigate cookie misconfiguration, ensure that sensitive information is not stored in cookies. Only include essential data in cookies and avoid storing personally identifiable information or sensitive data such as passwords or credit card numbers. Use secure flags and set the 'HttpOnly' attribute to prevent client-side scripts from accessing cookies, reducing the risk of cross-site scripting (XSS) attacks. Implement secure cookie settings like 'SameSite' attribute to control when cookies are sent in cross-origin requests, and 'Secure' attribute to ensure cookies are only sent over HTTPS connections. Regularly review and audit your application's cookie settings to detect and remediate any misconfigurations."
   category:
     name: SM
     shortName: Misconfiguration

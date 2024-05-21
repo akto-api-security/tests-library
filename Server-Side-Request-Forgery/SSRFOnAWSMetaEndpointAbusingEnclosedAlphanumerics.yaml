@@ -10,7 +10,6 @@ info:
     "It is also more challenging to limit outbound traffic from your application, because of the connected nature of modern applications.\n" +
     "The SSRF risk can not always be completely eliminated. While choosing a protection mechanism, it is important to consider the business risks and needs."
   impact: "Successful exploitation might compromise sensitive AWS information which attacker can use to get unauthorized access to AWS."
-  remediation: "To mitigate sensitive AWS details exposure via URL parameter manipulation and SSRF, enforce rigorous input validation to block encoded URLs and unexpected characters. Implement strict access controls and network security measures like firewalls to limit outbound traffic. Regularly monitor server logs for signs of SSRF activity and consider deploying AWS WAF for additional protection."
   category:
     name: SSRF
     shortName: Server Side Request Forgery

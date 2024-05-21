@@ -8,7 +8,6 @@ info:
             used to override the default behaviour of the application and give debug information or skip 
             authentication."
   impact: "This information can be used to facilitate more sophisticated attacks on your application."
-  remediation: "To mitigate the risk of unwanted response headers, perform a comprehensive review of your application's response headers and remove any unnecessary or sensitive information. Ensure that only essential headers are included in responses to reduce the attack surface and limit potential information disclosure. Implement strict controls over the generation and transmission of response headers, removing any default headers that may reveal sensitive details about your server or application. Regularly audit your codebase and configure your web server to suppress unwanted headers, reducing the risk of security vulnerabilities and unauthorized information disclosure."
   category:
     name: MHH
     shortName: Misconfigured HTTP Headers

@@ -5,7 +5,6 @@ info:
   details: >
               "Scans the specified URLs for files containing private keys commonly used for SSH, TLS, and JWT authentication. The presence of these keys could indicate a misconfiguration or insecure handling of sensitive cryptographic material."
   impact: "Exposing private keys can lead to unauthorized access and compromise the security and integrity of the server and associated services."
-  remediation: "To detect private SSH, TLS, and JWT keys, utilize automated scanning tools like TruffleHog or GitLeaks to search for sensitive information within repositories. Additionally, implement strict access controls to limit who can view or modify key files. Regularly audit repositories and server configurations to identify any accidental exposures of private keys. Finally, consider encrypting sensitive files and using hardware security modules (HSMs) to safeguard keys at rest."
   category:
     name: SM
     shortName: Misconfiguration

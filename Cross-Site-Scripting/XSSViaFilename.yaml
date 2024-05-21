@@ -6,7 +6,6 @@ info:
             "Security test that aims to identify vulnerabilities in web applications. By injecting malicious scripts into file names, attackers can bypass security measures and execute unauthorized code on the victim's browser."
             "This test helps developers uncover and address potential XSS (Cross-Site Scripting) vulnerabilities, ensuring robust protection against malicious attacks."
   impact: "An XSS vulnerability can have significant impacts, including the potential for data theft, unauthorized access, session hijacking, defacement of web pages, and the injection of malicious content."
-  remediation: "To mitigate XSS by changing file names, implement strict input validation and output encoding. Sanitize user inputs to remove any potentially malicious characters, especially those that could lead to script injection. Use proper encoding mechanisms when generating file names to prevent XSS attacks. Additionally, ensure that file names are treated as opaque data and are not interpreted as HTML or script code. Regularly update and patch your web application and server to address any known vulnerabilities in your code or dependencies that could be exploited for XSS attacks."
   category:
     name: XSS
     shortName: XSS

@@ -7,7 +7,6 @@ info:
     The server responded with 2XX success codes and less than <b>{{percentageMatch}}%</b> of the response body matched with original response body. <br>"
     "<b>Background:</b> Object level authorization is an access control mechanism that is usually implemented at the code level to validate that one user can only access objects that they should have access to."
   impact: "Unauthorized access can result in data disclosure to unauthorized parties, data loss, or data manipulation. Unauthorized access to objects can also lead to full account takeover."
-  remediation: "To remediate vulnerabilities where attackers can access resources by adding user_id in the URL, implement strict server-side authorization checks. Ensure that users can only access resources they are permitted to view, regardless of the user_id specified in the URL."
   category:
     name: BOLA
     shortName: BOLA

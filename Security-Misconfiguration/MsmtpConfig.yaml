@@ -5,7 +5,6 @@ info:
   details: >
               "The Msmtp Config Exposure vulnerability occurs when Msmtp configuration files (.msmtprc) are accessible to unauthorized users. These files store email account settings, including the email host, credentials, and TLS configurations. If exposed, attackers can gain access to email accounts, potentially leading to unauthorized email sending and compromising sensitive information. It is essential to secure these configuration files to prevent unauthorized access and protect email account integrity."
   impact: "Exposure of Msmtp configuration files can lead to unauthorized access and compromise of email accounts."
-  remediation: "To address Msmtp configuration exposure, ensure sensitive information such as credentials or server details are not stored in plaintext within configuration files. Utilize environment variables or external secrets management solutions to securely store and access configuration data. Implement strict file permissions to restrict access to configuration files, allowing only authorized users or processes to read them. Regularly audit and review configurations to detect any inadvertent exposures or unauthorized changes. Additionally, consider encrypting sensitive data at rest within the configuration files for an added layer of security."
   category:
     name: SM
     shortName: Misconfiguration

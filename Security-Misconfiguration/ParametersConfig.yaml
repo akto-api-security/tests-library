@@ -5,7 +5,6 @@ info:
   details: >
               "The parameters.yml file is a configuration file used in Symfony-based applications to store sensitive information like database credentials, API keys, and encryption settings. Its exposure can lead to unauthorized access, data leaks, and potential security vulnerabilities if not properly protected or restricted.The parameters.yml file often contains critical information required for the functioning of the application, making it a prime target for attackers seeking to exploit misconfigurations or gain unauthorized access to sensitive resources."
   impact: "Exposing parameters.yml can result in the compromise of sensitive information, including database credentials, jeopardizing the security and integrity of the application or system."
-  remediation: "To address Parameters.yml file discovery, avoid storing sensitive information directly in these files. Instead, opt for secure storage methods like environment variables. Implement strict file permissions and avoid storing Parameters.yml files in publicly accessible locations. Regularly audit file permissions to ensure proper protection against unauthorized access."
   category:
     name: SM
     shortName: Misconfiguration

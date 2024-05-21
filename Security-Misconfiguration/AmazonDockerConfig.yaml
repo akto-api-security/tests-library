@@ -5,7 +5,6 @@ info:
   details: >
               "Dockerrun AWS Configuration Exposure refers to the vulnerability arising from misconfigured AWS Dockerrun configuration files. This misconfiguration allows unauthorized access to sensitive files, potentially exposing critical information and compromising system security. Attackers can exploit this vulnerability to manipulate container definitions, leading to potential disruptions in system integrity and availability. It is crucial to address this issue promptly to prevent unauthorized access and protect the system from potential risks."
   impact: "Unauthorized access enables manipulation of container definitions, risking system integrity and availability."
-  remediation: "To address Docker AWS configuration exposure, ensure that sensitive information such as AWS access keys, secret keys, and credentials are not hardcoded within Dockerfiles or Docker Compose files. Instead, utilize environment variables or AWS IAM roles for secure access to AWS resources. Implement proper access controls and permissions within your AWS environment to limit access to resources based on the principle of least privilege. Regularly review and audit Docker configurations and AWS permissions to detect and mitigate any potential security risks. Additionally, consider using AWS Systems Manager Parameter Store or AWS Secrets Manager to securely store and manage sensitive configuration data."
   category:
     name: SM
     shortName: Misconfiguration

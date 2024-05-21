@@ -12,7 +12,6 @@ info:
             Process-dependent properties: user.cash should only be set internally after payment verification.
             Internal properties: article.created_time should only be set internally by the application."
   impact: "Exploitation can lead to privilege escalation."
-  remediation: "To mitigate mass assignment vulnerabilities leading to the creation of admin roles, implement strict parameterization and access controls in your application. Only allow authorized users to create or modify roles, especially admin roles. Use role-based access controls to limit the ability to create admin roles to trusted administrators or superusers. Validate user inputs rigorously to prevent unauthorized creation or modification of roles through mass assignment. Regularly review and update your codebase to address any potential vulnerabilities, and conduct security testing to identify and remediate any mass assignment issues. Additionally, consider implementing multi-step verification processes for role creation, such as requiring additional authentication or approval from higher-level administrators."
   category:
     name: MA
     shortName: Mass Assignment

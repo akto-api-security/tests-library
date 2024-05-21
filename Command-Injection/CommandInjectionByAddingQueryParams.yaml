@@ -7,7 +7,6 @@ info:
     For example, parameters like "cmd," "exec," or "command" may be susceptible. If the application fails to properly sanitize or validate these inputs, an attacker could inject arbitrary commands.
     Successful exploitation could lead to unauthorized command execution, data manipulation, and potential system compromise."
   impact: "Command injection allows an attacker to execute arbitrary commands on a vulnerable system, leading to unauthorized access, data theft, system compromise, and potential disruption of services, making it a severe security risk."
-  remediation: "To mitigate command injection by adding query parameters, validate and sanitize all input received through query parameters to prevent injection attacks. Use parameterized queries or prepared statements to ensure that user input is treated as data rather than executable code. Implement strict input validation and filtering to reject any malicious characters or commands. Regularly review and update security measures to address any identified vulnerabilities and enhance overall system security."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection

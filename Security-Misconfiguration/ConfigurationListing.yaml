@@ -5,7 +5,6 @@ info:
   details: >
               "Sensitive Configuration Files Listing refers to the vulnerability where the misconfiguration allows the listing of sensitive configuration files located in the "config" directory. This exposure can disclose critical information like database credentials and API keys, posing a significant risk to the application's security. Promptly addressing this vulnerability is essential to prevent unauthorized access and protect sensitive data from exploitation."
   impact: "Listing sensitive configuration files exposes critical information, such as database credentials and API keys, enabling targeted attacks and unauthorized access."
-  remediation: "To prevent sensitive configuration files from being listed, ensure that directory indexing is disabled on your web server to prevent the server from listing the contents of directories by default. Additionally, configure proper file permissions to restrict access to sensitive files and directories. Regularly review and audit your web server's configuration to ensure that no sensitive files are inadvertently exposed. Utilize techniques such as placing sensitive files outside of the web root directory or using .htaccess rules to block access to specific files or directories. Finally, consider implementing security measures such as Web Application Firewalls (WAFs) to protect against directory traversal attacks."
   category:
     name: SM
     shortName: Misconfiguration
