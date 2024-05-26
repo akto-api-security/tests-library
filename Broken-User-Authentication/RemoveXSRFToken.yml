@@ -5,7 +5,6 @@ info:
   details: >
             "This test involves testing a web application’s security by omitting the Cross-Site Request Forgery (XSRF/CSRF) token from requests. XSRF tokens protect against unauthorized actions by verifying the source of requests. By removing the token, testers check if the application still processes the request, which would indicate a vulnerability in CSRF protection mechanisms."
   impact: "The impact of a successful XSRF/CSRF attack can be severe, allowing attackers to perform unauthorized actions on behalf of authenticated users without their knowledge. This can lead to unauthorized fund transfers, password changes, or data theft, compromising user accounts and potentially causing significant financial and reputational damage to both users and organizations."
-  remediation: "To remediate XSRF/CSRF vulnerabilities, implement anti-CSRF tokens for all state-changing requests, ensuring they are unique per session and validated server-side. Use the SameSite attribute on cookies to restrict cross-origin requests. Additionally, enforce user authentication and authorization checks on the server for all sensitive actions to ensure requests are legitimate."
   category:
     name: NO_AUTH
     shortName: Broken Authentication
@@ -33,6 +32,9 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  response_payload:
+    length:
+      gt: 0
   request_headers:
     for_one:
       key:
@@ -79,3 +81,7 @@ validate:
       - account is locked
       - account is blocked
       - multiple failed attempts
+    percentage_match:
+      gt: 90
+    length
+      gt: 0
