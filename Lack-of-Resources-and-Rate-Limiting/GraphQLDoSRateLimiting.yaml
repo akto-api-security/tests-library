@@ -1,4 +1,3 @@
-# api rate limiting #solve eq x1.response in x3 block
 id: GRAPHQL_DOS_RATE_LIMITING
 info:
   name: "Denial of Service Test on GraphQL API by replaying same request for rate limiting"
@@ -70,12 +69,13 @@ execute:
       - validate:
           response_code:
             gt: 505
-    - req:
-      - add_header:
-          dummyKey: k
-      - validate:
-          response_payload:
-            eq: "${x1.response.body}"
-      - success: vulnerable
+validate:
+  and:
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - 3001
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 3
 strategy:
   run_once: /
