@@ -52,6 +52,13 @@ validate:
     contains_either:
       - "stack" 
       - "exception"
+      - "GraphQLError"
+      - "node_modules/graphql"
+      - "apollo-server-core"
+      - "processGraphQLRequest"
+      - "graphql_error"
+      - "graphene"
+      - "graphql_controller"
 
 strategy:
   run_once: /
