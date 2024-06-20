@@ -21,6 +21,7 @@ info:
   intricate data structures. Consequently, users may experience service 
   disruptions, impacting productivity and potentially causing reputational 
   damage to the organization due to perceived system instability."
+  remediation: "To mitigate the risk of Denial of Service (DoS) attacks from deeply nested JSON bodies, implement depth limits on the JSON parsing mechanism. Server-side validation should be applied to reject requests with excessively nested JSON structures, preventing the server from consuming excessive memory or CPU resources. Additionally, consider implementing request throttling or rate limiting to prevent multiple requests with deeply nested JSON bodies from overwhelming the server. Regularly monitor server performance and adjust limits as needed to maintain optimal service availability and performance."
   category:
     name: RL
     shortName: Lack of Resources & Rate Limiting

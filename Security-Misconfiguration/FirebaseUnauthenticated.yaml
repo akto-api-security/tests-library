@@ -6,6 +6,7 @@ info:
             "Conducting a critical security test to evaluate the potential risk of appending '.json' to the API path, allowing unauthorized access to retrieve and view the entire data of a Firebase collection. 
              This vulnerability poses a serious threat as it exposes sensitive information, potentially leading to unauthorized data exposure and privacy breaches."
   impact: "Unrestricted access to Firebase collection data by simply adding '.json' to the API path, causing alarming data exposure and privacy nightmares."
+  remediation: "To prevent Firebase collection data exposure, configure strict security rules limiting access to authorized users only. Ensure sensitive information is not stored within collections, and regularly audit and sanitize data to remove any unnecessary or sensitive information. By implementing these measures, you can protect user privacy and minimize the risk of unauthorized access to Firebase data."
   category:
     name: SM
     shortName: Security Misconfiguration

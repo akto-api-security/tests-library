@@ -5,6 +5,7 @@ info:
   details: >
             "Successful replaying of captchas presents a significant problem for companies, as it enables malicious actors to bypass security measures, potentially leading to spamming, data breaches, and reputation damage."
   impact: "Bypassing CAPTCHA protection enables hackers to automate malicious activities, such as unauthorized account access, spamming, data harvesting, and DDoS attacks."
+  remediation: "Replaying a request with the same CAPTCHA response can pose a security risk, especially if the request involves sensitive actions such as user authentication or transaction processing. To remediate this issue, it's crucial to implement anti-replay mechanisms on the server-side to prevent attackers from reusing CAPTCHA responses. One approach is to generate unique tokens for each CAPTCHA challenge-response pair and validate them on the server side to ensure they are used only once. Additionally, implementing session-based or time-based expiry for CAPTCHA responses can further mitigate the risk of replay attacks. Regularly monitoring and logging CAPTCHA usage can also help detect and mitigate suspicious or malicious activity."
   category:
     name: RL
     shortName: Lack of Resources & Rate Limiting

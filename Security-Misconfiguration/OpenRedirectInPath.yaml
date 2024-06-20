@@ -7,6 +7,7 @@ info:
             Open redirects can enable attackers to trick users into visiting malicious websites, leading to various risks such as phishing, malware distribution, and unauthorized access.
             Ensuring robust protection against this vulnerability is crucial for preserving user trust, data integrity, and overall system security.
   impact: "This behavior can be leveraged to facilitate phishing attacks against users of the application."
+  remediation: "To address open redirects occurring in paths, implement input validation and strict URL parsing to ensure that redirect URLs originate from trusted sources and stay within the intended domain. Utilize framework-specific URL validation libraries or sanitize user input before processing redirect URLs to prevent malicious redirects. Employ server-side checks to validate and restrict redirect destinations to trusted domains or specific paths. Regularly audit codebases and conduct security testing to identify and remediate any potential open redirect vulnerabilities within path parameters."
   category:
     name: SM
     shortName: Misconfiguration

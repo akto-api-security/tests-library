@@ -6,6 +6,7 @@ info:
     "By fuzzing vulnerable payloads in request bodies and query parameters, it aims to identify and exploit Server-Side Template Injection vulnerabilities specific to Twig templates.
     This test assesses the risk of arbitrary code execution, data exposure, and server compromise within the Twig templating engine, ensuring comprehensive security assessment."
   impact: "Successful exploitation might compromise sensitive AWS information which attacker can use to get unauthorized access to AWS."
+  remediation: "To mitigate SSTI vulnerabilities in Twig, it's crucial to implement strict input validation and sanitization procedures for user inputs before they are passed to templates. Enabling Twig's strict mode can enforce more rigorous rendering rules, reducing the risk of unintended variable access and potential injection attacks. Additionally, utilizing safe filters such as `raw` or `escape` can help render content securely, especially when dealing with user-generated input. By following these practices, you can enhance the security of your Twig templates and minimize the risk of SSTI vulnerabilities."
   category:
     name: SSTI
     shortName: Server Side Template Injection

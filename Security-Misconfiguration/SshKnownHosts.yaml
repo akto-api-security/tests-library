@@ -5,6 +5,7 @@ info:
   details: >
               "Identifies publicly accessible SSH known_hosts files, which store fingerprints of SSH servers. Unintentionally exposing these files can disclose information about previously accessed SSH servers."
   impact: "Exposing SSH known_hosts files enables attackers to gather information about previously accessed SSH servers, increasing the risk of unauthorized access and potential compromise."
+  remediation: "To secure SSH known hosts, enforce strict permissions on the `known_hosts` file and its parent directories to prevent unauthorized access. Regularly review and validate the entries in the `known_hosts` file to remove outdated or unauthorized host keys. Utilize host key verification mechanisms to detect and mitigate potential man-in-the-middle attacks. Consider implementing centralized SSH key management solutions and automated host key rotation to enhance security and simplify administration."
   category:
     name: SM
     shortName: Misconfiguration

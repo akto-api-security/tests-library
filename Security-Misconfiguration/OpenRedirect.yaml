@@ -7,6 +7,7 @@ info:
             The ability to use an authentic application URL, targeting the correct domain and with a valid SSL certificate (if SSL is used), lends credibility 
             to the phishing attack because many users, even if they verify these features, will not notice the subsequent redirection to a different domain"
   impact: "This behavior can be leveraged to facilitate phishing attacks against users of the application."
+  remediation: "To mitigate open redirect vulnerabilities, validate and sanitize all input parameters used in redirect URLs to ensure they point to trusted destinations within the same domain. Implement server-side checks to verify that redirect URLs belong to the same domain or a whitelist of trusted domains. Utilize framework-specific security features, such as Laravel's `validateRedirect()` method, to validate redirect URLs against a list of trusted URLs. Regularly audit codebase and conduct security testing to identify and remediate any potential open redirect vulnerabilities."
   category:
     name: SM
     shortName: Security Misconfiguration

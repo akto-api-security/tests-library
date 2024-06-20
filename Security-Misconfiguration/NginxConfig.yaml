@@ -5,6 +5,7 @@ info:
   details: >
               "The Nginx Config File Disclosure check is performed to detect the exposure of Nginx configuration files. These files contain crucial server settings, including listening ports and server names. If accessible, they can provide valuable information to attackers and potentially compromise the security of the web server. It is important to ensure that Nginx configuration files are properly secured and not publicly accessible."
   impact: "Exposing Nginx configuration files can provide valuable information to attackers, compromising the security of the web server."
+  remediation: "To mitigate Nginx config file disclosure, restrict access permissions to configuration files to prevent unauthorized access. Utilize file system permissions and access control mechanisms to limit read access to configuration files only to privileged users or processes. Implement server-level security measures such as HTTP headers to prevent directory listing and disclose sensitive file paths. Regularly audit server configurations and monitor for any unauthorized changes or access attempts. Encrypt sensitive data within configuration files and avoid hardcoding credentials or sensitive information directly into them. Additionally, consider implementing network-level security controls such as firewalls to further protect against potential disclosure."
   category:
     name: SM
     shortName: Misconfiguration

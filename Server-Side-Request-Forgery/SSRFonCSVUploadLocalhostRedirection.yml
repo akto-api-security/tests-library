@@ -10,6 +10,7 @@ info:
     "It is also more challenging to limit outbound traffic from your application, because of the connected nature of modern applications.\n" +
     "The SSRF risk can not always be completely eliminated. While choosing a protection mechanism, it is important to consider the business risks and needs."
   impact: "Successful exploitation might compromise sensitive localhost information which attacker can use to get unauthorized access to localhost."
+  remediation: "To mitigate the exposure of sensitive localhost details resulting from SSRF via CSV parameter manipulation, rigorously validate and sanitize all user inputs, particularly those used to construct URLs. Implement strict whitelisting for allowed URLs to prevent unauthorized access to localhost endpoints. Additionally, configure the application to respond with error codes or custom error messages instead of leaking sensitive information. Regularly audit server logs for signs of SSRF activity and promptly address any suspicious behavior."
   category:
     name: SSRF
     shortName: Server Side Request Forgery

@@ -11,6 +11,7 @@ info:
             headers that tell your browser how to behave when handling your website's content. For example, 
             by using the Strict-Transport-Security you can force the browser to communicate solely over HTTPS."
   impact: "This information can be used to facilitate more sophisticated attacks on your application."
+  remediation: "To mitigate the risk of missing HTTP response headers, implement a comprehensive security policy that includes the inclusion of essential headers in all responses. Define a set of required headers such as Content-Security-Policy, X-Content-Type-Options, X-Frame-Options, and Strict-Transport-Security, and enforce their inclusion in every HTTP response. Utilize security middleware or frameworks to automatically append these headers to all outgoing responses. Regularly review your application's response headers to ensure they are correctly set and meet security best practices. Additionally, consider implementing automated security testing to detect and address any missing headers proactively."
   category:
     name: MHH
     shortName: Misconfigured HTTP Headers

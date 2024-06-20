@@ -5,6 +5,7 @@ info:
   details: >
               "Golang expvar Information Disclosure refers to the vulnerability where unauthorized access to Golang expvar information is possible through the /debug/vars endpoint. This exposure can reveal sensitive details like memory statistics and command-line arguments, providing insights into the application's internal state. Attackers can leverage this information to identify vulnerabilities or gather sensitive data. Promptly addressing this vulnerability is crucial to prevent unauthorized access and protect the security of the application."
   impact: "Disclosing Golang expvar information enables attackers to gain insights into the application's internal state, potentially aiding in identifying vulnerabilities or extracting sensitive data."
+  remediation: "To mitigate Golang expvar information disclosure, restrict access to the expvar endpoint to trusted users or internal networks only. You can achieve this by configuring access controls in your web server or by implementing custom middleware in your Go application. Additionally, avoid exposing sensitive information through expvar, such as database connection strings or authentication tokens. Ensure that only necessary variables are exposed and consider implementing obfuscation or encryption for sensitive data. Regularly review and audit your application's expvar endpoint to detect and remediate any inadvertent exposure of sensitive information."
   category:
     name: SM
     shortName: Misconfiguration

@@ -5,6 +5,7 @@ info:
   details: >
               "Searches for the presence of SFTP configuration files, typically stored in "sftp-config.json". These files may contain sensitive information such as host, username, password, and remote paths."
   impact: "Exposing SFTP configuration files can compromise the security of file transfer operations, leading to unauthorized access and potential data breaches."
+  remediation: "To address SFTP config file disclosure vulnerabilities, limit access permissions on configuration files to prevent unauthorized reading. Ensure that sensitive information such as usernames, passwords, and private keys are not stored in plaintext within configuration files. Encrypt sensitive data or use secure key management solutions. Regularly audit file permissions and configurations to detect any inadvertent exposures. Additionally, consider implementing network segmentation and intrusion detection systems to monitor and prevent unauthorized access attempts."
   category:
     name: SM
     shortName: Misconfiguration

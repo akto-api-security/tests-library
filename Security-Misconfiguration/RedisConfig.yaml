@@ -5,6 +5,7 @@ info:
   details: >
               "The Redis configuration file (redis.conf) was found at the specified URL. This file contains sensitive information such as server binding, protected mode settings, and port configuration."
   impact: "The exposure of the Redis configuration file can potentially lead to unauthorized access, modification, or exploitation of the Redis server and its data."
+  remediation: "To address Redis configuration file exposure, restrict access with strict file permissions and avoid hardcoding sensitive data. Encrypt sensitive information within the files and regularly audit permissions to prevent unauthorized access. These measures bolster security and safeguard against potential disclosure of confidential data."
   category:
     name: SM
     shortName: Misconfiguration

@@ -5,6 +5,7 @@ info:
   details: >
               "Dockerfile Hidden Disclosure refers to the vulnerability where hidden Dockerfile(s), such as .dockerfile and .Dockerfile, are exposed due to misconfiguration. Unauthorized access to these files can reveal sensitive information about the application's image build process, including build instructions, environment variables, and exposed ports. Attackers can exploit this exposure to identify vulnerabilities, gain insights into the application's inner workings, or launch targeted attacks. Promptly addressing this vulnerability is essential to prevent unauthorized access, protect sensitive data, and maintain the security of the application."
   impact: "Exposing hidden Dockerfile(s) reveals sensitive information about the application's image build process, enabling attackers to identify vulnerabilities and launch targeted attacks."
+  remediation: "To mitigate Dockerfile disclosure, avoid including sensitive information such as credentials or API keys directly within the Dockerfile. Utilize environment variables or Docker secrets to inject these values at runtime. Additionally, ensure that the Dockerfile is not publicly accessible and restrict access to it within your version control system. Regularly review and audit your Dockerfile to detect any inadvertent exposure of sensitive information and update permissions as necessary to prevent unauthorized access."
   category:
     name: SM
     shortName: Misconfiguration

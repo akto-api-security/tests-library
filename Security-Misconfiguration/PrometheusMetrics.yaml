@@ -5,6 +5,7 @@ info:
   details: >
               "The Prometheus metrics endpoint is publicly accessible, allowing anyone to access and view detailed system and application metrics, potentially revealing sensitive information."
   impact: "Exposing Prometheus metrics can provide insights into the system, potentially aiding attackers in identifying vulnerabilities and exploiting them."
+  remediation: "To address exposed Prometheus metrics, restrict access to Prometheus endpoints using firewall rules or network policies. Implement authentication mechanisms like Basic Auth or OAuth and utilize IP whitelisting to control access. Additionally, enable TLS encryption for Prometheus endpoints to secure data transmission. These measures enhance the security of Prometheus metrics and reduce the risk of unauthorized access or exposure."
   category:
     name: SM
     shortName: Misconfiguration

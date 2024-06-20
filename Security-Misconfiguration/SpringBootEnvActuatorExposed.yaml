@@ -11,6 +11,7 @@ info:
        category with a low severity level. Proper access control and secure configuration of the Actuator 
        endpoints are crucial to protect sensitive environment details.
   impact: Exposing Spring Boot Environment Actuator can expose sensitive environment information, leading to potential security vulnerabilities and unauthorized access.
+  remediation: "To prevent exposure of Spring Boot environment details via Actuator, restrict Actuator's sensitive endpoint access, enable authentication/authorization, and regularly audit configurations for inadvertent exposure. Encrypt sensitive environment data or utilize secure vault solutions for comprehensive protection."
   category:
       name: SM
       shortName: Misconfiguration

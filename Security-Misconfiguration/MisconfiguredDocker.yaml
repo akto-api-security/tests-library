@@ -5,6 +5,7 @@ info:
   details: >
               "This vulnerability identifies misconfigured Docker containers by scanning the "/images/json" endpoint. Misconfigurations can include exposed parent IDs, container information, and labels. Such misconfigurations can lead to unauthorized access, data leaks, and potential compromise of the Docker environment."
   impact: "Misconfigured Docker containers can lead to unauthorized access, data leaks, and compromise of the Docker environment, posing significant security risks to applications and sensitive data."
+  remediation: "To mitigate Docker container misconfiguration exposure, start by securing Docker configurations to follow the principle of least privilege, granting only necessary permissions. Utilize Docker's security features such as user namespaces, AppArmor, or SELinux to restrict container capabilities and access to the host system. Regularly scan container images for vulnerabilities using tools like Clair or Trivy, and ensure they're kept up to date. Implement network segmentation and firewall rules to limit container access to only necessary resources. Lastly, educate developers and administrators on Docker best practices to minimize the risk of misconfigurations."
   category:
     name: SM
     shortName: Misconfiguration

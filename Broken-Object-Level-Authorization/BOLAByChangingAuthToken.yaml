@@ -11,6 +11,7 @@ info:
              validate that one user can only access objects that they should have access to.
             Unauthorized access can result in data disclosure to unauthorized parties, data loss, or data manipulation. Unauthorized access to objects can also lead to full account takeover."
   impact: "Unauthorized access can result in data disclosure to unauthorized parties, data loss, or data manipulation. Unauthorized access to objects can also lead to full account takeover."
+  remediation: "To remediate vulnerabilities where attackers can access resources by changing the auth token in the request, implement secure authentication mechanisms and enforce strict server-side authorization checks. Use techniques like token expiration, token binding, and encryption to prevent token tampering and ensure that only authorized users can access resources."
   category:
     name: BOLA
     shortName: BOLA

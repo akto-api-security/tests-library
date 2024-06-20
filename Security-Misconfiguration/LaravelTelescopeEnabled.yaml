@@ -12,6 +12,7 @@ info:
         information about the application's internal workings and can aid potential attackers in understanding its structure 
         and vulnerabilities. It is recommended to disable or restrict access to Laravel Telescope in production to mitigate the risk of information leakage.
   impact: Allowing access to Laravel Telescope exposes sensitive internal information about the application, aiding potential attackers in understanding its structure and vulnerabilities.
+  remediation: "To address the vulnerability of having Laravel Telescope enabled, disable it in production environments to prevent sensitive application data exposure. Implement strict access controls to restrict access to Telescope's debugging features, allowing only authorized personnel to use them. Conduct regular security audits to ensure Telescope's configuration aligns with best practices and doesn't inadvertently expose sensitive information."
   category:
       name: SM
       shortName: Misconfiguration

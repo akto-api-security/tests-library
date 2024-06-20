@@ -6,6 +6,7 @@ info:
             "By adding a random header to a request for a non-existent page, we check if the response is reflecting all headers, including http-only cookies.
              If (when) an XSS is found on the domain, this page can be used to fetch all cookies for an administrator and take over their session on the site."
   impact: "If XSS is found on the website then hacker can steal http-only cookies and can gain unauthorized access to the system"
+  remediation: "To address the vulnerability of header reflection in invalid URLs, promptly implement input validation mechanisms to sanitize user-supplied input, preventing malicious headers from being injected. Configure web server settings to reject requests with invalid URLs, effectively blocking attempts to exploit the vulnerability. Regularly update server-side code and libraries to patch any potential security vulnerabilities. Additionally, implement strict content security policies to mitigate the impact of any successful exploitation attempts."
   category:
     name: SM
     shortName: Security Misconfiguration

@@ -9,6 +9,7 @@ info:
             the request message. TRACE allows the client to see what is being received at the other end of the 
             request chain and use that data for testing or diagnostic information.
   impact: "TRACE method can be used for debugging purposes. It repeats the content of a request, and an attacker could steal credentials by using a client-side attack."
+  remediation: "To address the TRACE method vulnerability, disable the HTTP TRACE method at the server level to prevent potential information leakage. This can be achieved by configuring web server settings or using security middleware that blocks TRACE requests. Additionally, ensure that input validation and sanitization are robust to prevent injection attacks, as attackers may attempt to exploit the TRACE method to inject malicious scripts or extract sensitive information. Regular security testing and monitoring should be conducted to detect and mitigate any vulnerabilities related to the TRACE method effectively."
   category:
     name: UHM
     shortName: Unnecessary HTTP Methods

@@ -21,6 +21,7 @@ info:
   service outage, disrupting operations and causing financial losses. Furthermore, 
   such attacks can tarnish the organization's reputation, eroding trust among 
   users and stakeholders due to the perceived lack of robustness in their systems."
+  remediation: "To mitigate Denial of Service (DoS) attacks caused by entering long and random strings in query or JSON body parameter values, it's essential to implement input validation and sanitization on the server-side. This includes limiting the length of input strings and ensuring that only valid characters are accepted. Additionally, consider implementing rate limiting to prevent excessive requests from overwhelming the server. Regularly monitor and analyze server logs to detect unusual patterns of traffic that may indicate a DoS attack, and implement automated mechanisms to block or throttle suspicious requests."
   category:
     name: RL
     shortName: Lack of Resources & Rate Limiting

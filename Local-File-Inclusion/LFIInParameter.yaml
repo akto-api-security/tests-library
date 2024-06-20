@@ -6,6 +6,7 @@ info:
             "This test examines the presence of file path names in query parameters or request bodies, fuzzing them to identify potential Local File Inclusion vulnerabilities."
             "If exploited, LFI can lead to unauthorized access, information disclosure, server compromise, and execution of malicious code, posing significant risks to the application and its users."
   impact: "Successful exploitation allows an attacker to read arbitrary files on a web server, potentially leading to unauthorized access, information disclosure, server compromise, and execution of malicious code."
+  remediation: "To mitigate LFI (Local File Inclusion) in parameters, implement stringent input validation and sanitize user inputs effectively. Ensure that parameters are validated against a whitelist of allowed values or paths to prevent attackers from injecting malicious file paths. Additionally, consider using a virtual chroot environment or sandboxing techniques to restrict file system access to only necessary directories. Regularly review and update your application's codebase to address any potential security vulnerabilities, and consider implementing file system access controls to further limit the impact of LFI attacks."
   category:
     name: LFI
     shortName: Local File Inclusion
