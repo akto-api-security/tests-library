@@ -7,6 +7,7 @@ info:
             "When this mode is enabled without proper access controls, it exposes sensitive information about the GraphQL schema, potentially leading to data exposure and security breaches. Attackers can leverage this vulnerability to gain insights into the data model, identify valuable fields, and craft targeted queries to extract sensitive data or perform unauthorized operations." 
             "Mitigation involves disabling or securing type introspection to prevent unauthorized access to schema details."
   impact: "Data exposure and security risks from GraphQL type introspection vulnerability."
+  remediation: "To mitigate the security risk associated with allowing GraphQL type introspection, ensure that `GRAPHQL_TYPE_INTROSPECTION_ALLOWED` is disabled in production environments. Restrict introspection access to authorized users or services only, implementing strict access controls and authentication mechanisms. Regularly review and audit GraphQL configurations to ensure compliance with security best practices, and monitor for any unauthorized changes or access attempts."
   category:
     name: SM
     shortName: Misconfiguration

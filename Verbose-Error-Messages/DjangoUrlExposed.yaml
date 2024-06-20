@@ -8,6 +8,7 @@ info:
             "<b>Background:</b> Inconsistencies in error messages can reveal important clues on how a site works, 
             and what information is present under the covers.
   impact: "This information can be used to facilitate more sophisticated attacks on your application"
+  remediation: "To remediate the exposure of Django URLs due to debug mode being enabled, ensure that debug mode is disabled in production environments. This can be achieved by setting the DEBUG variable to False in the Django settings.py file. Additionally, remove any sensitive information from error pages and responses, as debug mode can expose stack traces and other debugging information to attackers. Regularly review and test your application's configuration to ensure debug mode is disabled in production environments, reducing the risk of exposing sensitive information and enhancing overall security."
   category:
     name: VEM
     shortName: Verbose Error Messages

@@ -21,6 +21,7 @@ info:
   Additionally, such attacks could compromise the availability and reliability 
   of the system, leading to financial losses and reputational damage due to the 
   perception of inadequate security measures."
+  remediation: "To prevent Denial of Service (DoS) attacks by entering long and random strings in header parameter keys, implement input validation to limit the length of header parameter keys accepted by the server. Additionally, enforce strict validation rules to only allow alphanumeric characters or specific characters as per your application's requirements. Rate limiting can also be implemented to mitigate the impact of DoS attacks by limiting the number of requests processed within a certain time frame. Regularly monitor server performance and adjust validation rules and rate limits as needed to maintain optimal service availability and performance."
   category:
     name: RL
     shortName: Lack of Resources & Rate Limiting

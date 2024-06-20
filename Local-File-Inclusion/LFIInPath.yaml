@@ -6,6 +6,7 @@ info:
             "Assesses the vulnerability of a web application to Local File Inclusion vulnerabilities by appending vulnerable payloads at the end of the URL."
             "By manipulating file path references, this test helps identify potential security weaknesses that could lead to unauthorized access, information disclosure, and server compromise"
   impact: "Successful exploitation allows an attacker to read arbitrary files on a web server, potentially leading to unauthorized access, information disclosure, server compromise, and execution of malicious code."
+  remediation: "To mitigate LFI (Local File Inclusion) in paths, validate and sanitize all user-supplied input thoroughly to prevent attackers from injecting malicious file paths. Implement strict input validation to only allow access to intended files or directories and reject any attempts to navigate outside of the designated paths. Utilize proper file system access controls to restrict access to sensitive files and directories. Regularly monitor and review your application's codebase for vulnerabilities, and apply patches and updates promptly to address any security issues. Additionally, consider implementing application-level logging and monitoring to detect and respond to suspicious file access attempts."
   category:
     name: LFI
     shortName: Local File Inclusion
