@@ -3,19 +3,16 @@ info:
   name: "Error Based SQL Injection test for Parameters by appending payloads for Microsoft SQL Server"
   description: >
     "Some API endpoints expecting parameter values might be directly exposed to MS-SQL. 
-    Attackers can trigger an error by breaking the structure of the functions\' parameters used 
-    for communicating with the database.  "
+    Attackers can trigger an error by breaking the structure of the functions\' parameters used for communicating with the database.  "
   details: >
-    "Some API endpoints expecting parameter values might be directly exposed to MS-SQL.
-    Causing an error in SQL query syntax can expose the underlying query or DB data."
+    "Some API endpoints expecting parameter values might be directly exposed to MS-SQL. Causing an error in SQL query syntax can expose the underlying query or DB data."
   impact: >
-    "Possible data leakage due to illegal DB access. Successful SQL injection attacks 
-    may completely compromise or destroy a system."
+    "Possible data leakage due to illegal DB access. Successful SQL injection attacks may completely compromise or destroy a system."
   category:
-    name: SQL
-    shortName: Injection Attack
-    displayName: Injection Attacks (SQL)
-  subCategory: SQLI_ERROR_BASED_PARAM_MSSQL
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: SQLI_ERROR_BASED_PARAM_APPEND_PAYLOAD_MSSQL
   severity: HIGH
   tags:
     - Injection Attack

@@ -2,19 +2,15 @@ id: SQLI_ERROR_BASED_PARAM_ORACLE
 info:
   name: "Error Based SQL Injection test for Parameters for Oracle"
   description: >
-    "Some API endpoints expecting parameter values might be directly exposed to Oracle. 
-    Attackers can trigger an error by breaking the structure of the functions\' parameters used 
-    for communicating with the database."
+    "Some API endpoints expecting parameter values might be directly exposed to Oracle. Attackers can trigger an error by breaking the structure of the functions\' parameters used for communicating with the database."
   details: >
-    "Some API endpoints expecting parameter values might be directly exposed to Oracle.
-    Causing an error in SQL query syntax can expose the underlying query or DB data."
+    "Some API endpoints expecting parameter values might be directly exposed to Oracle. Causing an error in SQL query syntax can expose the underlying query or DB data."
   impact: >
-    "Possible data leakage due to illegal DB access. Successful SQL injection attacks 
-    may completely compromise or destroy a system."
+    "Possible data leakage due to illegal DB access. Successful SQL injection attacks may completely compromise or destroy a system."
   category:
-    name: SQL
-    shortName: Injection Attack
-    displayName: Injection Attacks (SQL)
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
   subCategory: SQLI_ERROR_BASED_PARAM_ORACLE
   severity: HIGH
   tags:
