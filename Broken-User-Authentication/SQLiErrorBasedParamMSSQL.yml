@@ -1,0 +1,106 @@
+id: SQLI_ERROR_BASED_PARAM_MSSQL
+info:
+  name: "Error Based SQL Injection test for Parameters for Microsoft SQL Server"
+  description: >
+    "Some API endpoints expecting parameter values might be directly exposed to MS-SQL. Attackers can trigger an error by breaking the structure of the functions\' parameters used for communicating with the database.  "
+  details: >
+    "Some API endpoints expecting parameter values might be directly exposed to MS-SQL. Causing an error in SQL query syntax can expose the underlying query or DB data."
+  impact: >
+    "Possible data leakage due to illegal DB access. Successful SQL injection attacks may completely compromise or destroy a system."
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: SQLI_ERROR_BASED_PARAM_MSSQL
+  severity: HIGH
+  tags:
+    - Injection Attack
+    - OWASP Top 10
+    - HackerOne Top 10
+  references:
+    - "https://github.com/sqlmapproject/sqlmap/blob/master/data/xml/errors.xml"
+    - "https://brightsec.com/blog/error-based-sql-injection/"
+  cwe:
+    - CWE-943
+    - CWE-89
+  cve:
+    - CVE-2021-1636
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    contains_either:
+      - POST
+      - GET
+      - PUT
+      - PATCH
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+wordLists:
+  specialCharacters:
+    - "'"
+    - "\""
+    - "$"
+    - "."
+    - ">"
+    - "--"
+    - ";"
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param: 
+            changed_body_key: ${specialCharacters}
+        - modify_query_param:
+            changed_query_key: ${specialCharacters}
+validate:
+  or:
+    - response_payload:
+        regex: "Driver.*? SQL[\\-\\_\\ ]*Server"
+    - response_payload:
+        regex: "OLE DB.*? SQL Server"
+    - response_payload:
+        regex: "\\bSQL Server[^&lt;&quot;]+Driver"
+    - response_payload:
+        regex: "Warning.*?\\W(mssql|sqlsrv)_"
+    - response_payload:
+        regex: "\\bSQL Server[^&lt;&quot;]+[0-9a-fA-F]{8}"
+    - response_payload:
+        regex: "System\\.Data\\.SqlClient\\.(SqlException|SqlConnection\\.OnError)"
+    - response_payload:
+        regex: "(?s)Exception.*?\\bRoadhouse\\.Cms\\."
+    - response_payload:
+        regex: "Microsoft SQL Native Client error '[0-9a-fA-F]{8}"
+    - response_payload:
+        regex: "\\[SQL Server\\]"
+    - response_payload:
+        regex: "ODBC SQL Server Driver"
+    - response_payload:
+        regex: "ODBC Driver \\d+ for SQL Server"
+    - response_payload:
+        regex: "SQLServer JDBC Driver"
+    - response_payload:
+        regex: "com\\.jnetdirect\\.jsql"
+    - response_payload:
+        regex: "macromedia\\.jdbc\\.sqlserver"
+    - response_payload:
+        regex: "Zend_Db_(Adapter|Statement)_Sqlsrv_Exception"
+    - response_payload:
+        regex: "com\\.microsoft\\.sqlserver\\.jdbc"
+    - response_payload:
+        regex: "Pdo[./_\\](Mssql|SqlSrv)"
+    - response_payload:
+        regex: "SQL(Srv|Server)Exception"
+    - response_payload:
+        regex: "Unclosed quotation mark after the character string"
