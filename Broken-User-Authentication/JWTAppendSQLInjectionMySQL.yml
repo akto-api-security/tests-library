@@ -62,6 +62,14 @@ api_selection_filters:
       - account is locked
       - account is blocked
       - multiple failed attempts
+  request_headers:
+    for_one:
+      key:
+        contains_either:
+          - authorization
+          - auth-token
+          - access-token
+        extract: headerKey
 wordLists:
   JWTPayloads:
     - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCAnaW5qZWN0ZWRfdmFsdWUiLCJyb2xlIjoiYWRtaW4ifQ."
@@ -76,7 +84,7 @@ execute:
   requests:
   - req:
     - modify_header:
-        authorization: "Bearer ${JWTPayloads}"
+        headerKey: "Bearer ${JWTPayloads}"
         
 validate:
   response_code:
