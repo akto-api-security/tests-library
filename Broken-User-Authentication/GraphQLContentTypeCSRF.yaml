@@ -43,6 +43,8 @@ wordLists:
     - text/plain    
     - text/xml    
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   url:
     regex: graphql
   request_headers:

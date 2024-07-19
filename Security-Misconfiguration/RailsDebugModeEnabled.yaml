@@ -33,6 +33,8 @@ info:
     - CVE-2019-5420
 
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   response_code:
     gte: 200
     lt: 300

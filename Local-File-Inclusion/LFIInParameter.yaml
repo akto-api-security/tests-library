@@ -26,6 +26,8 @@ info:
     - CVE-2022-29597
 
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   or:
     - request_payload:
         for_one:

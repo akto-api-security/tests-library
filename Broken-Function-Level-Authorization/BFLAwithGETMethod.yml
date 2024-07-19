@@ -48,7 +48,9 @@ api_selection_filters:
     gte: 200
     lt: 300
   method:
-    neq: "GET"
+    not_contains_either:
+      - GET
+      - OPTIONS
   include_roles_access:
     param: ADMIN
   exclude_roles_access:

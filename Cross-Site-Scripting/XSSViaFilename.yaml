@@ -26,6 +26,8 @@ info:
     - CVE-2021-38143
 
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   and:
     response_code:
       gte: 200

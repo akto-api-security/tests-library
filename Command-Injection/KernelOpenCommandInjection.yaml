@@ -23,6 +23,8 @@ info:
     - CVE-2021-31799
 
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   or:
     - request_payload:
         for_one:

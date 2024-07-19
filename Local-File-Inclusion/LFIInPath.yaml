@@ -26,6 +26,8 @@ info:
     - CVE-2023-2453
 
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   url:
     extract: urlVar
   response_payload:

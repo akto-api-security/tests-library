@@ -54,7 +54,9 @@ api_selection_filters:
     lt: 300
     extract: resp_code
   method:
-    neq: GET
+    not_contains_either:
+      - GET
+      - OPTIONS
   request_payload:
     for_one:
       key:

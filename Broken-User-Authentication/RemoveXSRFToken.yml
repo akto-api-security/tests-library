@@ -42,7 +42,9 @@ api_selection_filters:
         extract: xsrfHeaderKey
 
   method:
-    neq: GET
+    not_contains_either:
+      - GET
+      - OPTIONS
 execute:
   type: single
   requests:

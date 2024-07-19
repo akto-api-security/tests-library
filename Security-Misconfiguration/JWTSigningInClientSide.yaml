@@ -23,6 +23,8 @@ info:
     - CWE-347
 
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   response_payload:
     contains_either: 
       - "jwt.sign("
