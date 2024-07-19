@@ -43,6 +43,8 @@ info:
   cve:
     - CVE-2022-4725
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   response_code:
     and:
       gte: 200

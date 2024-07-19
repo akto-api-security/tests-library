@@ -30,6 +30,8 @@ info:
     - CVE-2023-27163
 
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   or:
     - request_payload:
         for_one:

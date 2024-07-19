@@ -39,6 +39,8 @@ info:
     - CVE-2023-4647
     - CVE-2023-38254
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   response_code:
     gte: 200
     lt: 300

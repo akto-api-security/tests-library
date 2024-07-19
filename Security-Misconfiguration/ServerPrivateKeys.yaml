@@ -22,6 +22,8 @@ info:
     - CVE-2022-23529
 
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   response_code:
     gte: 200
     lt: 300

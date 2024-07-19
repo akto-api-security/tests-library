@@ -46,6 +46,8 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  method:
+    neq: "OPTIONS"
   response_payload:
     length:
       gt: 0

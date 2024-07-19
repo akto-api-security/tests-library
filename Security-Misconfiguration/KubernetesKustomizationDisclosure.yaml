@@ -21,6 +21,8 @@ info:
     - CVE-2021-41254
 
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   response_code:
     gte: 200
     lt: 300

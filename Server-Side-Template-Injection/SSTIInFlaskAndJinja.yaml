@@ -26,6 +26,8 @@ info:
     - CVE-2022-34625
 
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   response_payload:
     not_contains_either:
       - error

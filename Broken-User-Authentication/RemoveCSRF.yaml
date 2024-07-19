@@ -30,6 +30,8 @@ info:
     - CVE-2022-26180
 
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   response_payload:
     length:
       gt: 0

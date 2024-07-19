@@ -20,6 +20,8 @@ info:
     - CVE-2005-2666
 
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   response_code:
     gte: 200
     lt: 300

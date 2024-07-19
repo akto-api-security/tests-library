@@ -1,4 +1,3 @@
-# BFLA test by escalating privilege with concatenating admin keywords with URL subpaths for new path identification
 id: BFLA_REPLACE_ADMIN_IN_URL_PATHS
 info:
   name: "Broken Function Level Authorization - Vertical Privilege Escalation test 
@@ -48,6 +47,8 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  method:
+    neq: "OPTIONS"
   response_payload:
     length:
       gt: 0

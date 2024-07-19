@@ -55,6 +55,8 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  method:
+    neq: "OPTIONS"
   url:
     regex: "^(?!.*v([0-9]\\d*|\\d{0,})/).*"
   response_payload:

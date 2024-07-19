@@ -25,6 +25,8 @@ info:
     - CVE-2023-0085
 
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   response_code:
     gte: 200
     lt: 300

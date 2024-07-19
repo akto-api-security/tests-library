@@ -38,6 +38,7 @@ info:
   cve:
     - CVE-2023-32079
     - CVE-2023-42768
+inactive: true
 wordLists:
   stringvalues:
     - admin
@@ -51,7 +52,9 @@ api_selection_filters:
     lt: 300
     extract: resp_code
   method:
-    neq: GET
+    not_contains_either:
+      - GET
+      - OPTIONS
   request_payload:
     for_one:
       key:
