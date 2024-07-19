@@ -33,6 +33,8 @@ info:
     - CVE-2017-4013
 
 api_selection_filters:
+  method:
+    neq: "OPTIONS"
   response_code:
     gte: 200
     lt: 300
