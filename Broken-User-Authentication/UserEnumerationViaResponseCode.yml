@@ -26,7 +26,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: USER_ENUM_HTTP_CODES
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Business logic
     - OWASP top 10
@@ -89,15 +89,13 @@ api_selection_filters:
           key:
             regex: "^username$|^user$|^userid$|^user_id$|^login$|^login_id$|^email$|^account$|^account_id$|^member$|^member_id$|^id$|^user_name$|^uname$|^identifier$|^user_identifier$|^admin$|^nick$|^nickname$|^handle$|^alias$|^principal$|^profile$|^profile_id$|^name$|^signin$|^auth$|^credential$|^user_login$|^user_account$|^user_email$|^employee$|^employee_id$|^operator$|^customer_id$|^client_id$|^subscriber$|^subscriber_id$|^participant$|^participant_id$|^client_id$|^userLoginID$|^client-name$"
             extract: userKey
+          value:
+            regex: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
     - request_payload:
         for_one:
           key:
             regex: "^password$|^pass$|^pwd$|^user_password$|^userpass$|^passwd$|^user_pwd$|^password1$|^userPass$|^login_password$|^loginpassword$|^user_pass$|^access_password$|^secret$|^user_secret$"
             extract: passKey
-wordLists:
-  dummyUsernames:
-    - dummy
-    - "dummymail@dummy.com"
 execute:
   type: multiple
   requests:
@@ -120,7 +118,7 @@ execute:
     - failure: exit
   - req:
     - modify_body_param:
-        email: ${dummyUsernames}
+        email: dummymail@dummy.com
         password: Default1!
     - validate:
         response_code:
