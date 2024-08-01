@@ -30,7 +30,7 @@ api_selection_filters:
     gte: 200
     lt: 300
   response_payload:
-    not_contains_either:
+    not_contains:
       - invalid
       - error
       - failed
@@ -68,7 +68,7 @@ validate:
       gt: 80
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - error
       - invalid
       - failed

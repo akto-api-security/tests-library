@@ -33,6 +33,9 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  response_payload:
+    length:
+      gt: 0
 
 execute:
   type: single
@@ -46,6 +49,9 @@ validate:
   response_code:
     gte: 200
     lt: 300
+  response_payload:
+    length:
+      gt: 0
   response_headers:
     for_one:
       key:
