@@ -1,15 +1,15 @@
-id: COMMAND_INJECTION_MATH_COMPUTE
+id: COMMAND_INJECTION_DNS_EXFILTRATION_CHAINED
 info:
-  name: "Command injection via arithmetic expression execution with echo"
-  description: "Command injection via arithmetic expression execution with `echo` involves exploiting an application's handling of arithmetic inputs to execute arbitrary commands. By injecting mathematical expressions into input fields, attackers can manipulate the command line to execute unintended commands, which are then displayed using `echo`. This vulnerability can lead to unauthorized command execution and requires stringent input validation to prevent exploitation."
+  name: "Command injection for DNS Exfiltration with chained system instruction in HTTP request parameters"
+  description: "Command injection for DNS exfiltration with chained system instructions in HTTP request parameters involves exploiting vulnerabilities to leak sensitive data through DNS queries. Attackers inject malicious commands into HTTP request parameters, which are then processed to perform DNS lookups that encode and transmit data. By chaining these commands, attackers can exfiltrate information by embedding it in DNS requests, bypassing traditional security measures and enabling data theft or unauthorized access."
   details: >
-    "Command injection via arithmetic expression execution with `echo` allows attackers to insert malicious arithmetic expressions into input fields. When these expressions are evaluated and the results are displayed using `echo`, it can reveal or execute unintended commands. This occurs because the application improperly processes or sanitizes the input, leading to potential security breaches. Implementing robust input validation and sanitization is essential to mitigate such vulnerabilities."
-  impact: "The impact of command injection via arithmetic expression execution with `echo` can be severe, as it allows attackers to execute arbitrary commands on the system. This can lead to unauthorized access, data exposure, and system compromise. The ability to manipulate or view sensitive information can result in significant security breaches and operational disruptions. Promptly addressing such vulnerabilities is crucial to protecting system integrity and data security."
+    "Command injection for DNS exfiltration with chained system instructions in HTTP request parameters involves injecting commands into HTTP parameters to execute DNS queries that exfiltrate data. Attackers embed sensitive information into DNS requests by chaining commands that perform lookups to a malicious server. This technique exploits vulnerabilities in how the application handles HTTP parameters, enabling attackers to covertly transmit data in DNS queries and bypass traditional security controls designed to protect against data leakage."
+  impact: "The impact of command injection for DNS exfiltration with chained system instructions in HTTP request parameters can be significant, as it allows attackers to covertly transmit sensitive data through DNS queries. This method can bypass conventional security measures and data loss prevention systems, leading to unauthorized data access and exfiltration. By embedding data in DNS requests, attackers can achieve stealthy data theft, potentially exposing critical information and compromising the confidentiality and integrity of the affected systems."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
     displayName: Command Injection
-  subCategory: COMMAND_INJECTION_MATH_COMPUTE
+  subCategory: COMMAND_INJECTION_DNS_EXFILTRATION_CHAINED
   severity: HIGH
   tags:
     - Business logic
@@ -77,7 +77,7 @@ api_selection_filters:
             extract: changed_query_value
 wordLists:
   specialOSPayloads:
-    - "echo $((99 * 996123))"
+    - "nslookup akto.io && id"
 execute:
   type: single
   requests:
@@ -91,7 +91,12 @@ validate:
     length:
       gt: 0
     contains_either:
-      - "98616177"
+      - "Server:"
+      - "Address:"
+      - "Name:"
+      - "uid="
+      - "gid="
+      - "groups="
     not_contains:
       - Error
       - Internal Server 

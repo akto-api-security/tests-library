@@ -1,0 +1,112 @@
+id: COMMAND_INJECTION_COOKIE_HEADER
+info:
+  name: "Command injection in Cookie Header"
+  description: "Command injection in the Cookie header is a security vulnerability where an attacker includes malicious commands within the Cookie field of an HTTP request header. When the server processes this header without proper validation or sanitization, it may execute the embedded commands. This can lead to unauthorized access, data breaches, and control over the server, posing a significant security risk."
+  details: >
+    "Command injection in the Cookie header involves an attacker embedding malicious commands within the Cookie field of an HTTP request. When the server processes this header without adequate input validation or sanitization, it may execute the malicious commands. This can exploit web applications that use cookie data in system commands or scripts, allowing attackers to compromise the server, access sensitive data, or disrupt services. Ensuring proper security measures is crucial to prevent such vulnerabilities."
+  impact: "The impact of command injection in the Cookie header can be severe, leading to unauthorized command execution on the server. Attackers can exploit this vulnerability to access sensitive information, alter server configurations, or gain control of the server. This can result in data breaches, operational disruptions, financial losses, and significant harm to an organization's reputation. Implementing robust input validation and sanitization practices is essential to mitigate these risks."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_COOKIE_HEADER
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_headers:
+    for_one:
+      key:
+        regex: "^Cookie$|^cookie$"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  specialOSPayloads:
+    - "; id"
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_header:
+        userKey: ${userVal}${specialOSPayloads}
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - "uid="
+      - "gid="
+      - "groups="
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts        

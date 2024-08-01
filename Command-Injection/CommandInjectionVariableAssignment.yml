@@ -1,15 +1,15 @@
-id: COMMAND_INJECTION_WITH_REDIRECTION_AND_VAR_MANIPULATION
+id: COMMAND_INJECTION_VARIABLE_ASSIGN
 info:
-  name: "Command injection by using Redirection and Variable Manipulation"
-  description: "Command injection by using redirection and variable manipulation involves exploiting input vulnerabilities to redirect command outputs or alter environment variables. This can allow attackers to execute unintended commands or access sensitive information by manipulating how commands are executed or how their results are handled. Effective input validation and secure handling of environment variables are crucial to prevent such exploits."
+  name: "Command injection by variable assignment"
+  description: "Command injection by variable assignment is a security vulnerability where an attacker manipulates environment variables to execute arbitrary commands. By injecting malicious input into variables used by a system command, the attacker can gain unauthorized access or control over the system. This type of injection exploits insufficient input validation and can lead to severe security breaches if not properly mitigated."
   details: >
-    "Command injection via redirection and variable manipulation involves injecting malicious commands that use redirection operators or modify environment variables. Attackers can redirect outputs to files or other commands, or alter variables to change command behavior. This manipulation can lead to unauthorized command execution or exposure of sensitive data. Properly sanitizing inputs and securely managing environment variables are essential to mitigate these risks."
-  impact: "The impact of command injection via redirection and variable manipulation can be severe, enabling attackers to execute arbitrary commands or redirect sensitive data. This can result in unauthorized access, data breaches, and system compromise. The manipulation of environment variables or command outputs can lead to significant security vulnerabilities and operational disruptions, making robust input validation and secure variable handling crucial."
+    "Command injection by variable assignment occurs when an attacker exploits a vulnerability in how a program assigns values to environment variables. By injecting malicious commands into these variables, the attacker can manipulate the system to execute unintended commands. This often happens due to improper input validation or sanitization, allowing unauthorized command execution and potentially compromising system security. Properly validating and sanitizing user input can prevent this type of attack."
+  impact: "The impact of command injection by variable assignment can be severe, leading to unauthorized command execution and system compromise. Attackers may gain access to sensitive data, modify system configurations, or disrupt operations. This can result in data breaches, financial losses, and damage to an organization's reputation. Ensuring robust input validation and sanitization is crucial to mitigate such risks."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
     displayName: Command Injection
-  subCategory: COMMAND_INJECTION_WITH_REDIRECTION_AND_VAR_MANIPULATION
+  subCategory: COMMAND_INJECTION_VARIABLE_ASSIGN
   severity: HIGH
   tags:
     - Business logic
@@ -77,8 +77,7 @@ api_selection_filters:
             extract: changed_query_value
 wordLists:
   specialOSPayloads:
-    - "id > output.txt"
-    - "id >> output.txt"
+    - "VAR=$(id)"
 execute:
   type: multiple
   requests:
@@ -111,9 +110,9 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            changed_body_key: "cat output.txt"
+            changed_body_key: "echo $VAR"
         - modify_query_param:
-            changed_query_key:  "cat output.txt"
+            changed_query_key:  "echo $VAR"
         - validate:
             response_payload:
               length:

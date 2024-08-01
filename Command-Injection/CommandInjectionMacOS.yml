@@ -1,15 +1,15 @@
-id: COMMAND_INJECTION_MATH_COMPUTE
+id: COMMAND_INJECTION_MACOS
 info:
-  name: "Command injection via arithmetic expression execution with echo"
-  description: "Command injection via arithmetic expression execution with `echo` involves exploiting an application's handling of arithmetic inputs to execute arbitrary commands. By injecting mathematical expressions into input fields, attackers can manipulate the command line to execute unintended commands, which are then displayed using `echo`. This vulnerability can lead to unauthorized command execution and requires stringent input validation to prevent exploitation."
+  name: "Command injection for identifying MacOS using system specific operations"
+  description: "Command injection for identifying macOS involves exploiting vulnerabilities to execute arbitrary commands that reveal system-specific information. By injecting commands that leverage macOS-specific operations, such as querying system details or checking environment variables unique to macOS, attackers can determine the operating system in use. This technique helps attackers tailor their exploits to the target's system architecture and capabilities."
   details: >
-    "Command injection via arithmetic expression execution with `echo` allows attackers to insert malicious arithmetic expressions into input fields. When these expressions are evaluated and the results are displayed using `echo`, it can reveal or execute unintended commands. This occurs because the application improperly processes or sanitizes the input, leading to potential security breaches. Implementing robust input validation and sanitization is essential to mitigate such vulnerabilities."
-  impact: "The impact of command injection via arithmetic expression execution with `echo` can be severe, as it allows attackers to execute arbitrary commands on the system. This can lead to unauthorized access, data exposure, and system compromise. The ability to manipulate or view sensitive information can result in significant security breaches and operational disruptions. Promptly addressing such vulnerabilities is crucial to protecting system integrity and data security."
+    "Command injection for identifying macOS can involve using injected commands to execute macOS-specific operations and reveal system details. For example, an attacker might use commands like `uname -s` or `sw_vers` to check for macOS-specific responses. These commands return system-specific information that can confirm the target's operating system. Identifying macOS allows attackers to adjust their techniques based on the unique characteristics and security mechanisms of the platform."
+  impact: "The impact of command injection for identifying macOS includes the potential exposure of system-specific information that can be exploited to tailor attacks more effectively. By determining that a target is running macOS, attackers can craft exploits or malware designed specifically for macOS vulnerabilities, increasing the likelihood of successful breaches. This can lead to more effective privilege escalation, data theft, or system compromise, as the attack is customized to the system's architecture and security features."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
     displayName: Command Injection
-  subCategory: COMMAND_INJECTION_MATH_COMPUTE
+  subCategory: COMMAND_INJECTION_MACOS
   severity: HIGH
   tags:
     - Business logic
@@ -77,7 +77,10 @@ api_selection_filters:
             extract: changed_query_value
 wordLists:
   specialOSPayloads:
-    - "echo $((99 * 996123))"
+    - "system_profiler SPSoftwareDataType"
+    - "ifconfig -a"
+    - "sw_vers"
+
 execute:
   type: single
   requests:
@@ -91,7 +94,17 @@ validate:
     length:
       gt: 0
     contains_either:
-      - "98616177"
+      - "System Software Overview:"
+      - "Software:"
+      - "System Version: macOS"
+      - "Kernel Version: Darwin"
+      - "Boot Volume: Macintosh"
+      - "en0: flags="
+      - "<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST>"
+      - "prefixlen"
+      - "ProductName:"
+      - "ProductVersion:"
+      - "BuildVersion:"
     not_contains:
       - Error
       - Internal Server 

@@ -1,15 +1,15 @@
-id: COMMAND_INJECTION_WITH_REDIRECTION_AND_VAR_MANIPULATION
+id: COMMAND_INJECTION_CENTOS
 info:
-  name: "Command injection by using Redirection and Variable Manipulation"
-  description: "Command injection by using redirection and variable manipulation involves exploiting input vulnerabilities to redirect command outputs or alter environment variables. This can allow attackers to execute unintended commands or access sensitive information by manipulating how commands are executed or how their results are handled. Effective input validation and secure handling of environment variables are crucial to prevent such exploits."
+  name: "Command injection for identifying CentOS using system specific operations"
+  description: "Command injection for identifying CentOS using system-specific operations involves exploiting vulnerabilities to execute commands that reveal details about the CentOS operating system. Attackers inject commands that run CentOS-specific queries or utilities, such as `cat /etc/centos-release` or `uname -r`, to obtain information about the OS version and configuration. This allows attackers to confirm the presence of CentOS and gather essential details to tailor further attacks or exploits based on the specific characteristics and vulnerabilities of CentOS."
   details: >
-    "Command injection via redirection and variable manipulation involves injecting malicious commands that use redirection operators or modify environment variables. Attackers can redirect outputs to files or other commands, or alter variables to change command behavior. This manipulation can lead to unauthorized command execution or exposure of sensitive data. Properly sanitizing inputs and securely managing environment variables are essential to mitigate these risks."
-  impact: "The impact of command injection via redirection and variable manipulation can be severe, enabling attackers to execute arbitrary commands or redirect sensitive data. This can result in unauthorized access, data breaches, and system compromise. The manipulation of environment variables or command outputs can lead to significant security vulnerabilities and operational disruptions, making robust input validation and secure variable handling crucial."
+    "Command injection for identifying CentOS using system-specific operations involves injecting malicious commands into an application to run CentOS-specific system queries. For example, attackers might use `cat /etc/centos-release` to display the CentOS version or `uname -r` to reveal the kernel version. By exploiting vulnerabilities to execute these commands, attackers can determine that the system is running CentOS and obtain version and configuration details. This information helps in customizing further attacks or exploiting known vulnerabilities specific to CentOS."
+  impact: "The impact of command injection for identifying CentOS using system-specific operations can be significant. By revealing the CentOS version and system details, attackers can tailor their exploits to target specific CentOS vulnerabilities. This targeted approach increases the risk of successful attacks, such as unauthorized access or system compromise, by exploiting known issues and configurations unique to CentOS. Accurate identification allows attackers to craft more effective and focused attacks, potentially leading to greater damage and security breaches."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
     displayName: Command Injection
-  subCategory: COMMAND_INJECTION_WITH_REDIRECTION_AND_VAR_MANIPULATION
+  subCategory: COMMAND_INJECTION_CENTOS
   severity: HIGH
   tags:
     - Business logic
@@ -77,8 +77,7 @@ api_selection_filters:
             extract: changed_query_value
 wordLists:
   specialOSPayloads:
-    - "id > output.txt"
-    - "id >> output.txt"
+    - "uname -a"
 execute:
   type: multiple
   requests:
@@ -95,6 +94,9 @@ execute:
               - response_payload:
                   length:
                     gt: 0
+                  contains_all:
+                    - centos
+                    - linux
                   not_contains:
                     - Error
                     - fail
@@ -111,17 +113,17 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            changed_body_key: "cat output.txt"
+            changed_body_key: "cat /etc/centos-release"
         - modify_query_param:
-            changed_query_key:  "cat output.txt"
+            changed_query_key:  "cat /etc/centos-release"
         - validate:
             response_payload:
               length:
                 gt: 0
-              contains_either:
-                - "uid="
-                - "gid="
-                - "groups="
+              contains_all:
+                - "CentOS"
+                - "Linux"
+                - "release"
               not_contains:
                 - Error
                 - Internal Server 

@@ -1,15 +1,15 @@
-id: COMMAND_INJECTION_MATH_COMPUTE
+id: COMMAND_INJECTION_SYS_INFO_RETRIEVAL
 info:
-  name: "Command injection via arithmetic expression execution with echo"
-  description: "Command injection via arithmetic expression execution with `echo` involves exploiting an application's handling of arithmetic inputs to execute arbitrary commands. By injecting mathematical expressions into input fields, attackers can manipulate the command line to execute unintended commands, which are then displayed using `echo`. This vulnerability can lead to unauthorized command execution and requires stringent input validation to prevent exploitation."
+  name: "Command injection for system info retrieval"
+  description: "Command injection for system information retrieval involves exploiting vulnerabilities to execute arbitrary commands that extract detailed system data. By injecting commands into vulnerable applications, attackers can gain insights into the operating system, hardware, network configuration, and installed software. This information can be crucial for planning further targeted attacks, identifying potential weaknesses, and compromising the system."
   details: >
-    "Command injection via arithmetic expression execution with `echo` allows attackers to insert malicious arithmetic expressions into input fields. When these expressions are evaluated and the results are displayed using `echo`, it can reveal or execute unintended commands. This occurs because the application improperly processes or sanitizes the input, leading to potential security breaches. Implementing robust input validation and sanitization is essential to mitigate such vulnerabilities."
-  impact: "The impact of command injection via arithmetic expression execution with `echo` can be severe, as it allows attackers to execute arbitrary commands on the system. This can lead to unauthorized access, data exposure, and system compromise. The ability to manipulate or view sensitive information can result in significant security breaches and operational disruptions. Promptly addressing such vulnerabilities is crucial to protecting system integrity and data security."
+    "Command injection for system information retrieval leverages vulnerabilities in applications to run arbitrary system commands. Through this method, attackers can execute commands like uname -a, whoami, or ifconfig to gather detailed information about the operating system, user privileges, and network interfaces. This extracted data helps attackers understand the system's configuration and environment, enabling them to plan more effective and targeted attacks."
+  impact: "The impact of command injection for system information retrieval can be significant, as it allows attackers to gather critical details about the target system. With this information, attackers can identify potential vulnerabilities, tailor their attacks to exploit specific system weaknesses, and gain unauthorized access or escalate privileges. This can lead to data breaches, system compromise, and a broader attack surface, ultimately jeopardizing the security and integrity of the affected system."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
     displayName: Command Injection
-  subCategory: COMMAND_INJECTION_MATH_COMPUTE
+  subCategory: COMMAND_INJECTION_SYS_INFO_RETRIEVAL
   severity: HIGH
   tags:
     - Business logic
@@ -77,7 +77,12 @@ api_selection_filters:
             extract: changed_query_value
 wordLists:
   specialOSPayloads:
-    - "echo $((99 * 996123))"
+    - "uname -a"
+    - "ifconfig"
+    - "ps aux"
+    - "df -h"
+    - "free -m"
+
 execute:
   type: single
   requests:
@@ -91,7 +96,21 @@ validate:
     length:
       gt: 0
     contains_either:
-      - "98616177"
+      - "Linux"
+      - "Kernel"
+      - "root"
+      - "en0: flags="
+      - "<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST>"
+      - "prefixlen"
+      - "root"
+      - "usr"
+      - "filesystem"
+      - "avail"
+      - "capacity"
+      - "/dev"
+      - "mem"
+      - "swap"
+      - "buff/cache"
     not_contains:
       - Error
       - Internal Server 

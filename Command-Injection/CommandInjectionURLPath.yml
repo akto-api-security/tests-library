@@ -1,0 +1,130 @@
+id: COMMAND_INJECTION_URL_PATH
+info:
+  name: "Command injection in URL Path"
+  description: "Command injection in a URL path is a security vulnerability where an attacker manipulates a web application's URL to execute arbitrary commands on the server. This can occur when user input is improperly sanitized, allowing the insertion of malicious commands. Exploiting this flaw can lead to unauthorized access, data breaches, and full control over the compromised server, posing significant risks to the application's security."
+  details: >
+    "Command injection in a URL path occurs when an attacker alters the URL to include malicious commands that the server executes. This happens due to improper input validation and sanitization, allowing arbitrary command execution. The consequences can be severe, including unauthorized data access, server compromise, and potential control over the entire application environment."
+  impact: "The impact of command injection in a URL path can be severe, leading to unauthorized data access, data loss, and system compromise. Attackers can execute arbitrary commands, potentially gaining full control of the server and accessing sensitive information. This vulnerability can also result in service disruptions, financial loss, and damage to the organization's reputation."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_URL_PATH
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+wordLists:
+  specialOSPayloads:
+    - "id && id"
+execute:
+  type: multiple
+  requests:
+    - req:
+      - modify_url:
+          token_replace:
+            location: 1
+            replace_with: ${specialOSPayloads}
+      - success: vulnerable
+      - failure: x2
+    - req:
+      - modify_url:
+          token_replace:
+            location: 2
+            replace_with: ${specialOSPayloads}
+      - success: vulnerable
+      - failure: x3
+    - req:
+      - modify_url:
+          token_replace:
+            location: 3
+            replace_with: ${specialOSPayloads}
+      - success: vulnerable
+      - failure: x4
+    - req:
+      - modify_url:
+          token_replace:
+            location: 4
+            replace_with: ${specialOSPayloads}
+
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - "uid="
+      - "gid="
+      - "groups="
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts

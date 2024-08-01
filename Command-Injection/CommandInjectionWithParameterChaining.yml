@@ -1,15 +1,15 @@
-id: COMMAND_INJECTION_MATH_COMPUTE
+id: COMMAND_INJECTION_WITH_OPERATORS_ADVANCED
 info:
-  name: "Command injection via arithmetic expression execution with echo"
-  description: "Command injection via arithmetic expression execution with `echo` involves exploiting an application's handling of arithmetic inputs to execute arbitrary commands. By injecting mathematical expressions into input fields, attackers can manipulate the command line to execute unintended commands, which are then displayed using `echo`. This vulnerability can lead to unauthorized command execution and requires stringent input validation to prevent exploitation."
+  name: "Command injection by using operators and chained system instructions"
+  description: "Command injection using operators and chained system instructions involves exploiting vulnerabilities to execute multiple commands in sequence. Attackers can use operators like `;`, `&&`, or `||` to chain commands together, allowing them to execute a series of system instructions. This technique can be used to bypass security measures, escalate privileges, and perform a variety of malicious actions, ultimately compromising the target system's integrity and security."
   details: >
-    "Command injection via arithmetic expression execution with `echo` allows attackers to insert malicious arithmetic expressions into input fields. When these expressions are evaluated and the results are displayed using `echo`, it can reveal or execute unintended commands. This occurs because the application improperly processes or sanitizes the input, leading to potential security breaches. Implementing robust input validation and sanitization is essential to mitigate such vulnerabilities."
-  impact: "The impact of command injection via arithmetic expression execution with `echo` can be severe, as it allows attackers to execute arbitrary commands on the system. This can lead to unauthorized access, data exposure, and system compromise. The ability to manipulate or view sensitive information can result in significant security breaches and operational disruptions. Promptly addressing such vulnerabilities is crucial to protecting system integrity and data security."
+    "Command injection by using operators and chained system instructions exploits vulnerabilities to execute multiple commands in a sequence. Attackers utilize operators such as `;` to run commands consecutively, `&&` to execute subsequent commands only if the preceding one succeeds, and `||` to run the next command only if the previous one fails. This method allows attackers to perform complex operations, manipulate system behavior, and achieve their objectives more effectively by combining multiple commands in a single injection."
+  impact: "The impact of command injection using operators and chained system instructions can be severe, as it allows attackers to execute multiple, potentially harmful commands on the target system. This can lead to unauthorized data access, data loss, or system modification. By chaining commands, attackers can perform complex operations like installing malware, creating backdoors, or exfiltrating sensitive information, significantly compromising the security and functionality of the affected system."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
     displayName: Command Injection
-  subCategory: COMMAND_INJECTION_MATH_COMPUTE
+  subCategory: COMMAND_INJECTION_WITH_OPERATORS_ADVANCED
   severity: HIGH
   tags:
     - Business logic
@@ -32,7 +32,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains:
+    not_contains_either:
       - Error
       - Internal Server 
       - Failed
@@ -77,7 +77,9 @@ api_selection_filters:
             extract: changed_query_value
 wordLists:
   specialOSPayloads:
-    - "echo $((99 * 996123))"
+    - "id && (id && date +\"%d-%B-%Y\")"
+    - "id && date +\"%d-%B-%Y\""
+    - "id; date +\"%d-%B-%Y\";"
 execute:
   type: single
   requests:
@@ -91,8 +93,22 @@ validate:
     length:
       gt: 0
     contains_either:
-      - "98616177"
-    not_contains:
+      - "uid="
+      - "gid="
+      - "groups="
+      - "-January-"
+      - "-February-"
+      - "-March-"
+      - "-April-"
+      - "-May-"
+      - "-June-"
+      - "-July-"
+      - "-August-"
+      - "-September-"
+      - "-October-"
+      - "-November-"
+      - "-December-"
+    not_contains_either:
       - Error
       - Internal Server 
       - Failed

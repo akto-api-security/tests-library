@@ -1,15 +1,15 @@
-id: COMMAND_INJECTION_MATH_COMPUTE
+id: COMMAND_INJECTION_WINDOWS
 info:
-  name: "Command injection via arithmetic expression execution with echo"
-  description: "Command injection via arithmetic expression execution with `echo` involves exploiting an application's handling of arithmetic inputs to execute arbitrary commands. By injecting mathematical expressions into input fields, attackers can manipulate the command line to execute unintended commands, which are then displayed using `echo`. This vulnerability can lead to unauthorized command execution and requires stringent input validation to prevent exploitation."
+  name: "Command injection for identifying Windows using system specific operations"
+  description: "Command injection for identifying Windows using system-specific operations involves exploiting vulnerabilities to execute commands that reveal information about the operating system. Attackers inject malicious commands to run system-specific operations or queries that are unique to Windows. By doing so, they can confirm the presence of a Windows environment and gather details about its configuration or version, which can be used to tailor further attacks or exploit specific Windows-related vulnerabilities."
   details: >
-    "Command injection via arithmetic expression execution with `echo` allows attackers to insert malicious arithmetic expressions into input fields. When these expressions are evaluated and the results are displayed using `echo`, it can reveal or execute unintended commands. This occurs because the application improperly processes or sanitizes the input, leading to potential security breaches. Implementing robust input validation and sanitization is essential to mitigate such vulnerabilities."
-  impact: "The impact of command injection via arithmetic expression execution with `echo` can be severe, as it allows attackers to execute arbitrary commands on the system. This can lead to unauthorized access, data exposure, and system compromise. The ability to manipulate or view sensitive information can result in significant security breaches and operational disruptions. Promptly addressing such vulnerabilities is crucial to protecting system integrity and data security."
+    "Command injection for identifying Windows using system-specific operations involves injecting commands that leverage Windows-specific system queries or operations. Attackers might use commands like `systeminfo` or `ver` to retrieve detailed information about the operating system's version and configuration. By executing these commands through command injection vulnerabilities, attackers can confirm the target is running Windows and collect valuable system details. This information helps in customizing attacks based on Windows-specific vulnerabilities and system characteristics."
+  impact: "The impact of command injection for identifying Windows using system-specific operations can be significant, as it allows attackers to gather critical details about the operating system. By confirming that the target is running Windows and retrieving system information, attackers can tailor their attacks to exploit Windows-specific vulnerabilities or misconfigurations. This targeted approach increases the effectiveness of further exploits, potentially leading to unauthorized access, data breaches, or system compromise."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
     displayName: Command Injection
-  subCategory: COMMAND_INJECTION_MATH_COMPUTE
+  subCategory: COMMAND_INJECTION_WINDOWS
   severity: HIGH
   tags:
     - Business logic
@@ -77,7 +77,9 @@ api_selection_filters:
             extract: changed_query_value
 wordLists:
   specialOSPayloads:
-    - "echo $((99 * 996123))"
+    - "systeminfo"
+    - "ipconfig"
+
 execute:
   type: single
   requests:
@@ -91,7 +93,11 @@ validate:
     length:
       gt: 0
     contains_either:
-      - "98616177"
+      - "Microsoft"
+      - "System Manufacturer"
+      - "Connection-specific DNS Suffix"
+      - "Wireless LAN adapter Wi-Fi"
+      - "Ethernet adapter Local Area Connection"
     not_contains:
       - Error
       - Internal Server 

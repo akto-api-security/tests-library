@@ -1,15 +1,15 @@
-id: COMMAND_INJECTION_WITH_OPERATORS
+id: COMMAND_INJECTION_CURL_HTTP_REQUEST_CHAINED_COMMANDS
 info:
-  name: "Command injection by using operators"
-  description: "Command injection by using operators involves exploiting vulnerabilities in applications to execute unauthorized commands. Attackers manipulate input fields to introduce command operators, enabling them to chain commands or execute multiple commands simultaneously. This can lead to unauthorized access, data breaches, or system compromise if user inputs are not properly sanitized, highlighting the need for robust input validation and security measures."
+  name: "Command injection for information gathering with HTTP requests with curl and chained system commands"
+  description: "Command injection for information gathering using HTTP requests with `curl` and chained system commands involves exploiting vulnerabilities to execute commands that collect system or network data. Attackers can use `curl` to send HTTP requests and chain these commands with additional system commands to extract valuable information or interact with web services. By combining HTTP requests with command injection, attackers can gather detailed system or application data, perform reconnaissance, and potentially expose sensitive information or system configurations."
   details: >
-    "Command injection using operators exploits vulnerabilities where user inputs are improperly sanitized, allowing attackers to insert command operators into application inputs. This can result in unauthorized command execution, enabling attackers to chain multiple commands or run background processes. Such exploits can lead to significant security breaches, unauthorized access, and data compromise, emphasizing the importance of thorough input validation and secure coding practices."
-  impact: "The impact of command injection using operators can be severe, leading to unauthorized system access, data theft, and complete system compromise. Attackers can execute arbitrary commands, potentially gaining control over the server, manipulating or deleting data, and disrupting services. This can result in significant financial losses, reputational damage, and legal consequences for affected organizations."
+    "Command injection for information gathering with HTTP requests and `curl` involves exploiting vulnerabilities to send HTTP requests and execute additional commands to collect information. Attackers might use `curl` to query web services and chain these requests with commands that extract system details or manipulate outputs. For example, they could use `curl` to fetch data from a remote service and then chain commands to parse or analyze this data, revealing sensitive information about the system or application configuration. This technique facilitates comprehensive reconnaissance and data collection."
+  impact: "The impact of command injection for information gathering with HTTP requests and `curl` can be considerable, as it allows attackers to extract sensitive system or application data through combined HTTP requests and system commands. By leveraging this technique, attackers can obtain detailed information about the target's environment, configuration, or vulnerabilities, which can be used for further exploitation. This can lead to unauthorized access, data breaches, and a comprehensive understanding of the target system, increasing the risk of successful attacks and security compromises."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
     displayName: Command Injection
-  subCategory: COMMAND_INJECTION_WITH_OPERATORS
+  subCategory: COMMAND_INJECTION_CURL_HTTP_REQUEST_CHAINED_COMMANDS
   severity: HIGH
   tags:
     - Business logic
@@ -77,16 +77,7 @@ api_selection_filters:
             extract: changed_query_value
 wordLists:
   specialOSPayloads:
-    - "id"
-    - "id; id"
-    - "id | id"
-    - "id && id"
-    - "id || id"
-    - "`id`"
-    - "\"id\""
-    - "'id'"
-    - "$(id)"
-    - "id && id || echo \"failed\""
+    - "curl -s -w 'Response Time: %{time_total}s\nResponse Size: %{size_download} bytes\n' -o /dev/null https://www.akto.io && id && date +\"%d-%B-%Y\""
 execute:
   type: single
   requests:
@@ -100,9 +91,23 @@ validate:
     length:
       gt: 0
     contains_either:
+      - "Response Time:"
+      - "Response Size:"
       - "uid="
       - "gid="
       - "groups="
+      - "-January-"
+      - "-February-"
+      - "-March-"
+      - "-April-"
+      - "-May-"
+      - "-June-"
+      - "-July-"
+      - "-August-"
+      - "-September-"
+      - "-October-"
+      - "-November-"
+      - "-December-"
     not_contains:
       - Error
       - Internal Server 
