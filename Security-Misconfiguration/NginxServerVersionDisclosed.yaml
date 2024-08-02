@@ -10,6 +10,7 @@ info:
        under the Security Misconfiguration category with a low severity level. Concealing the server version in the
        response headers enhances security by reducing the exposure of potentially sensitive information.
   impact: Disclosing Nginx server version exposes potentially vulnerable versions, aiding attackers in identifying exploits and targeting specific vulnerabilities.
+  remediation: "To address the disclosure of the Nginx server version, configure Nginx to hide server tokens by setting the server_tokens directive to off. This prevents the server version from being disclosed in HTTP response headers. Additionally, customize error pages to replace default Nginx error messages and avoid revealing server details. Implementing security headers such as Server and X-Powered-By can further obfuscate server information, enhancing overall security."
   category:
       name: SM
       shortName: Misconfiguration

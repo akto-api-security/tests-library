@@ -21,6 +21,7 @@ info:
   of data. Additionally, service disruptions can frustrate users, 
   resulting in diminished trust and potential reputational damage 
   for the organization, highlighting vulnerabilities in its request handling mechanisms."
+  remediation: "In Denial of Service (DoS) tests by bombarding multiple JSON body parameters in a request, attackers overwhelm the system by sending a large number of parameters, potentially causing the server to consume excessive resources or crash. This can lead to service disruption and impact the availability of the application. To mitigate this risk, input validation should be enforced to limit the number of parameters accepted in a request, and rate limiting mechanisms should be implemented to prevent abuse and maintain system stability. Additionally, efficient handling of JSON parsing and processing should be ensured to minimize the impact of such attacks."
   category:
     name: RL
     shortName: Lack of Resources & Rate Limiting

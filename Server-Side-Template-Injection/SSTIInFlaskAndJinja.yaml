@@ -6,6 +6,7 @@ info:
     "By fuzzing vulnerable payloads in request bodies and query parameters, it aims to identify and exploit Server-Side Template Injection vulnerabilities specific to Flask and Jinja templates.
     This test assesses the risk of arbitrary code execution, data exposure, and server compromise within the Jinja templating engine, ensuring comprehensive security assessment."
   impact: "Successful exploitation might compromise sensitive AWS information which attacker can use to get unauthorized access to AWS."
+  remediation: "To mitigate SSTI vulnerabilities in Flask and Jinja, ensure strict input validation and sanitation of user inputs. Avoid using dangerous functions like `eval()` and `exec()`, and enable autoescaping in Jinja to prevent code execution. Regularly update dependencies and conduct security audits to detect and address any potential vulnerabilities."
   category:
     name: SSTI
     shortName: Server Side Template Injection

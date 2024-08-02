@@ -6,6 +6,7 @@ info:
             "Security test that aims to identify vulnerabilities in web applications. By injecting malicious scripts into url paths, attackers can bypass security measures and execute unauthorized code on the victim's browser."
             "This test helps developers uncover and address potential XSS (Cross-Site Scripting) vulnerabilities, ensuring robust protection against malicious attacks."
   impact: "An XSS vulnerability can have significant impacts, including the potential for data theft, unauthorized access, session hijacking, defacement of web pages, and the injection of malicious content."
+  remediation: "To mitigate XSS by changing the path, ensure strict input validation and output encoding. Sanitize user inputs to remove any potentially malicious characters, especially those that could be used to inject scripts. Use proper encoding mechanisms when generating URLs and paths to prevent XSS attacks. Implement Content Security Policy (CSP) to restrict the sources from which scripts can be loaded, minimizing the risk of XSS exploits. Regularly update and patch your web application and server to address any known vulnerabilities in your code or dependencies."
   category:
     name: XSS
     shortName: XSS

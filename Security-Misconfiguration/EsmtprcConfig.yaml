@@ -5,6 +5,7 @@ info:
   details: >
               "eSMTP - Config Discovery refers to the vulnerability where the eSMTP configuration file, .esmtprc, is discovered due to misconfiguration. This file contains sensitive information like the hostname, username, and password, which can be exploited by attackers for unauthorized access, email impersonation, and spam/phishing campaigns. Promptly addressing this vulnerability is critical to protect the integrity and confidentiality of email communications."
   impact: "Discovering the eSMTP configuration file exposes sensitive information, allowing attackers to impersonate users, send spam/phishing emails, and gain unauthorized access to email accounts."
+  remediation: "To prevent eSMTP configuration discovery, ensure that sensitive information such as email server credentials and SMTP configurations are not exposed. Configure proper access controls to restrict access to configuration files containing sensitive information. Regularly audit and review your email server's configuration to detect and remediate any potential vulnerabilities or misconfigurations. Additionally, consider implementing encryption for sensitive data transmission and limiting access to SMTP services from trusted networks only."
   category:
     name: SM
     shortName: Misconfiguration

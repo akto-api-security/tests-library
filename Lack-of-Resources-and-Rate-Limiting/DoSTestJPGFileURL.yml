@@ -20,6 +20,7 @@ info:
   if left unaddressed, such vulnerabilities could be exploited by malicious actors 
   to orchestrate more severe attacks, jeopardizing data integrity and compromising 
   sensitive information."
+  remediation: "To mitigate Denial of Service (DoS) attacks by providing a large JPG file URL as input, implement proper input validation on the server-side to restrict the size of URLs accepted by the application. Additionally, consider implementing rate limiting mechanisms to prevent abuse of the application's resources by limiting the number of requests processed within a certain time frame. Regularly monitor server performance and adjust validation rules and rate limits as needed to maintain optimal service availability and performance."
   category:
     name: RL
     shortName: Lack of Resources & Rate Limiting

@@ -6,6 +6,7 @@ info:
     "By fuzzing vulnerable payloads in request bodies and query parameters, it aims to identify and exploit Server-Side Template Injection vulnerabilities specific to FreeMarker templates.
     This test assesses the risk of arbitrary code execution, data exposure, and server compromise within the FreeMarker templating engine, ensuring comprehensive security assessment."
   impact: "Server-Side Template Injection (SSTI) allows attackers to execute arbitrary code on a server, leading to data exposure, remote code execution, and potential server compromise, posing severe security and privacy risks."
+  remediation: "To mitigate SSTI vulnerabilities in Freemarker, ensure strict validation of user inputs before passing them to templates. Limit the use of dynamic variables and restrict access to sensitive server-side data. Regularly update Freemarker and conduct security reviews to detect and address potential vulnerabilities."
   category:
     name: SSTI
     shortName: Server Side Template Injection

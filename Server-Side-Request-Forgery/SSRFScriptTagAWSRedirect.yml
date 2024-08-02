@@ -25,6 +25,7 @@ info:
   attackers to pivot and escalate privileges, amplifying the scope and severity 
   of the breach. Without proper mitigation, these exploits pose significant 
   risks to data integrity, confidentiality, and overall system security."
+  remediation: "Perform SSRF tests by replacing parameters with script tags containing redirect URLs for AWS internal URLs. Evaluate server responses to assess if the redirection occurs, potentially indicating an SSRF vulnerability. Implement input validation and whitelisting to restrict external requests to trusted domains, mitigating the risk of SSRF attacks. Regularly audit and monitor server logs for unusual activities, including SSRF attempts, and promptly address any potential vulnerabilities."
   category:
     name: SSRF
     shortName: Server Side Request Forgery

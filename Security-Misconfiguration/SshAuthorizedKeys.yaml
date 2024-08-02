@@ -5,6 +5,7 @@ info:
   details: >
               "searches for publicly accessible SSH authorized_keys files, which contain SSH public keys used for authentication. Unauthorized access to these keys can lead to unauthorized SSH access to the system."
   impact: "Exposing SSH authorized keys increases the risk of unauthorized SSH access, potentially leading to unauthorized system access and compromised security."
+  remediation: "To safeguard SSH authorized keys, enforce strict permissions on the `authorized_keys` file and its parent directories, ensuring only the owner has write permissions. Regularly review and remove unauthorized or obsolete keys from the file. Implement multi-factor authentication (MFA) and SSH key rotation policies to enhance security. Additionally, consider using SSH certificate-based authentication for centralized key management and improved auditing capabilities."
   category:
     name: SM
     shortName: Misconfiguration

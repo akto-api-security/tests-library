@@ -25,6 +25,7 @@ info:
   to the organization due to perceived system instability or 
   unreliability. Strengthening defenses against such attacks 
   is vital to ensure the resilience and reliability of the API infrastructure."
+  remediation: "To mitigate Denial of Service (DoS) attacks targeting date type fields in API endpoints using extreme values, implement input validation to restrict the range of acceptable dates and handle invalid inputs gracefully. Additionally, apply rate limiting to prevent excessive requests and consider using timeouts to limit the processing time for requests. Regularly monitor API usage and performance to detect and respond to any anomalies that may indicate DoS attempts."
   category:
     name: RL
     shortName: Lack of Resources & Rate Limiting

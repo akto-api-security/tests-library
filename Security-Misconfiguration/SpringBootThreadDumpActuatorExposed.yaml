@@ -12,6 +12,7 @@ info:
         severity level. Proper access control and secure configuration of the Actuator endpoints are
         necessary to prevent unauthorized access to thread dump information.
   impact: Exposing Spring Boot Thread Dump Actuator can disclose sensitive information about running threads, aiding attackers in understanding the application's execution environment.
+  remediation: "To secure Spring Boot's Thread Dump Actuator, disable it in production configurations, use authentication/authorization for Actuator endpoints, and limit access to authorized users. Regularly audit Actuator configurations to prevent inadvertent exposure and consider encryption or secure vault solutions for protecting sensitive thread dump information."
   category:
       name: SM
       shortName: Misconfiguration

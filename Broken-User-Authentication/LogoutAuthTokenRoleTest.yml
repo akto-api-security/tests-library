@@ -24,6 +24,7 @@ info:
     underscores the importance of promptly addressing token validation issues to 
     prevent post-logout unauthorized access and ensuring the overall security of 
     the authentication mechanism."
+  remediation: "To mitigate Authentication Bypass with Logged Out Token, ensure that tokens are properly invalidated after a user logs out. Implement robust token management practices, such as setting short expiration times for tokens and actively revoking tokens upon logout. Additionally, strengthen token validation mechanisms to detect and reject expired or revoked tokens. Regularly review and update the authentication system to address any identified vulnerabilities and enhance security measures. Conduct security assessments to identify potential weaknesses in token management and validation processes."
 
   category:
     name: NO_AUTH

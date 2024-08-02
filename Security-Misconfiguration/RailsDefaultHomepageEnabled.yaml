@@ -11,6 +11,7 @@ info:
         targeted attacks. This misconfiguration has a low severity level and falls under the Security 
         Misconfiguration category.
   impact: Allowing access to the default Rails homepage exposes sensitive information about the application, aiding potential attackers in understanding its technology stack and vulnerabilities.
+  remediation: "To mitigate the risk of having the Rails default homepage enabled, disable it in production environments by configuring the web server or application routing. Develop a custom homepage to provide minimal information about the application, avoiding disclosure of sensitive details. Regularly review application configurations to ensure that default homepages are properly disabled and sensitive information is not inadvertently exposed."
   category:
       name: SM
       shortName: Misconfiguration

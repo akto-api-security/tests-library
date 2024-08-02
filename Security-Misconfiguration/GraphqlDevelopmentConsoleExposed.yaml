@@ -10,6 +10,7 @@ info:
           includes an increased risk of unauthorized access and potential data exposure through the exposed GraphQL development console,
           necessitating proper configuration and access control measures.
   impact: "Increased risk of unauthorized access and potential data exposure through the exposed GraphQL development console."
+  remediation: "To address the exposure of the GraphQL development console, immediately restrict access to it in production environments to prevent unauthorized access to sensitive data and operations. Utilize authentication mechanisms such as API keys or OAuth to control access to the console. Implement IP whitelisting or firewall rules to limit access to trusted networks or individuals. Regularly review access logs and monitor for suspicious activity to promptly detect and respond to any unauthorized access attempts."
   category:
     name: SM
     shortName: Misconfiguration
