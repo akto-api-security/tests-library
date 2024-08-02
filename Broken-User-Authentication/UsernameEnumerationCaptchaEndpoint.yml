@@ -51,7 +51,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -108,7 +108,7 @@ execute:
           gte: 400
           lt: 410
         response_payload:
-          not_contains_either:
+          not_contains:
             - acccount is locked
             - account is blocked
             - multiple failed attempt
@@ -124,7 +124,7 @@ execute:
     - validate:
         response_payload:
           neq: "${x1.response.body}"
-          not_contains_either:
+          not_contains:
             - account is locked
             - account is blocked
             - multiple failed attempt

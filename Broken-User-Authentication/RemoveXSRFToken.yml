@@ -42,7 +42,7 @@ api_selection_filters:
         extract: xsrfHeaderKey
 
   method:
-    not_contains_either:
+    not_contains:
       - GET
       - OPTIONS
 execute:
@@ -56,7 +56,7 @@ validate:
     gte: 200
     lte: 304
   response_payload:
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed

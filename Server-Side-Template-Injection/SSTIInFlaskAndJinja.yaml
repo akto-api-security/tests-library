@@ -29,7 +29,7 @@ api_selection_filters:
   method:
     neq: "OPTIONS"
   response_payload:
-    not_contains_either:
+    not_contains:
       - error
       - invalid
       - failed
@@ -59,7 +59,7 @@ validate:
     - response_payload:
         regex: "(?<![\\w-])7777777(?![\\w-])"
     - response_payload:
-        not_contains_either:
+        not_contains:
           - error
           - invalid
           - expired
