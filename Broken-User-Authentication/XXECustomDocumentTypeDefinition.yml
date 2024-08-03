@@ -1,0 +1,101 @@
+id: XXE_CUSTOM_DOCUMENT_TYPE_DEFINITION
+info:
+  name: "XML External Entity (XXE) Vulnerability test with Custom Document Type Definition in API Endpoints"
+  description: >
+    "This test can be used to focus on detecting XXE risks in API endpoints arising from the 
+    use of user-defined Document Type Definitions."
+  details: >
+    "This test methodically evaluates the handling of custom Document Type Definitions 
+    in APIs to uncover potential XML External Entity vulnerabilities."
+  impact: >
+    "Exploiting XXE vulnerabilities via custom DTDs in APIs can lead to severe data leakage, 
+    unauthorized system access, and compromise of application integrity and confidentiality."
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: XXE_CUSTOM_DOCUMENT_TYPE_DEFINITION
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_headers:
+    for_one:
+      key:
+        contains_either:
+          - content-type
+          - Content-Type
+        extract: headerKey
+  method:
+    contains_either:
+      - POST
+      - PUT
+      - PATCH
+
+wordLists:
+  payloads:
+    - "<!DOCTYPE test [<!ENTITY % custom SYSTEM \"file:///custom.dtd\"> %custom;]>"
+execute:
+  type: single
+  requests:
+    - req:
+        - replace_body:  ${payloads}
+        - modify_header:
+            ${headerKey}: "application/xml"
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - "File not found"
+      - "Error in processing entity"
+      - "Entity not found"
+      - "Unable to open"
+      - "Cannot find the file"
+      - "Failed to load external entity"
