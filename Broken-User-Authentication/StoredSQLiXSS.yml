@@ -87,6 +87,9 @@ execute:
         userKey: ${userVal}${storedXSSPayloads}
         
 validate:
+  response_code:
+    gte: 200
+    lt: 300
   response_payload:
     length:
       gt: 0
