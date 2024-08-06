@@ -72,6 +72,8 @@ api_selection_filters:
           - auth-token
           - access-token
         extract: headerKey
+      value: 
+        contains_jwt: true
 wordLists:
   JWTPayloads:
     - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBOVUxMLCBzcWwgRlJPTSBzcWxpdGVfbWFzdGVyLS0iLCJyb2xlIjoiYWRtaW4ifQ."
