@@ -90,12 +90,13 @@ validate:
   response_payload:
     length:
       gt: 0
-    contains_either:
+    contains_all:
       - "Response Time:"
       - "Response Size:"
       - "uid="
       - "gid="
       - "groups="
+    contains_either:
       - "-January-"
       - "-February-"
       - "-March-"

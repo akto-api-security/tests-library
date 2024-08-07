@@ -131,10 +131,11 @@ execute:
           eq: 429        
 validate:
   response_payload:
-    contains_either:
+    contains_all:
       - "uid="
       - "gid="
       - "groups="
+    contains_either:
       - "-January-"
       - "-February-"
       - "-March-"
