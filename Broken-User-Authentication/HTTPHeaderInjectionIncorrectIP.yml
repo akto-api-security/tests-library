@@ -1,0 +1,116 @@
+id: HTTP_HEADER_IP_INJECTION_INCORRECT_IP
+info:
+  name: "Incorrect IP Injection in HTTP headers containing IP address"
+  description: > 
+    "This test refers to a vulnerability where an attacker injects improper or malicious IP addresses into HTTP headers, such as `X-Forwarded-For`. This misconfiguration can lead to security issues, including unauthorized access or bypassing of IP-based restrictions. The injected IP addresses might be improperly validated or processed, allowing attackers to manipulate internal routing or authentication mechanisms."
+  details: >
+    "In this scenario, attackers inject invalid or malicious IP addresses into HTTP headers like `X-Forwarded-For` or `X-Real-IP`. This can disrupt the intended IP validation and processing logic within web applications or services. The system might incorrectly trust the injected IP address, potentially bypassing security controls, affecting access permissions, or leading to misrouted traffic. Such vulnerabilities can compromise the integrity of IP-based security mechanisms and expose internal systems to attacks."
+  impact: >
+    "The impact of incorrect IP injection can be significant, including unauthorized access to internal systems or bypassing IP-based security controls. It can lead to exposure of sensitive data or unauthorized actions if the system mistakenly trusts the injected IP address. Additionally, it can disrupt traffic routing and affect the reliability of network security measures, potentially compromising overall system integrity."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: HTTP_HEADER_IP_INJECTION_INCORRECT_IP
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains_either:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_headers:
+    for_one:
+      key:
+        regex: "^X-Forwarded-For$|^X-Real-IP$|^X-Forwarded-Host$|^X-Cluster-Client-IP$|^Forwarded$|^CF-Connecting-IP$|^True-Client-IP$|^X-Original-Forwarded-For$|^X-Client-IP$|^Client-IP$|^X-Azure-Client-IP$|^X-Azure-ClientIP$|^X-Akamai-Client-IP$|^X-Originating-IP$|^X-Remote-IP$|^X-Appengine-User-IP$|^Via$|^X-Host$|^X-ProxyUser-Ip$|^X-Forwarded$|^X-Real-IP-From$|^CF-Connecting-IPv6$|^Remote-Addr$|^X-Client-Public-IP$|^X-Forwarded-For-IP$|^X-Cloudflare-CDN-Loop$|^X-Coming-From$|^X-Originating-URL$|^X-Client-Connection-IP$"
+        extract: userKey
+      value:
+        regex: "\b(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b"
+        extract: userVal
+wordLists:
+  IPPayloads:
+    - "999.999.999.999"
+    - "1.1.1.1."
+    - ".1.1.1.1"
+    - "001.001.001.001"
+    - "1.1.1.10"
+    - "0x000000C0A80001"
+    - "192.168.1.1%2500"
+    - "192%2E168%2E1%2E1"
+    - "::ffff:7f00:1"
+
+
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_header:
+        userKey: ${IPPayloads}
+        
+validate:
+  or:
+    - response_payload:
+        length:
+          gt: 0
+        percentage_match:
+          gte: 90
+    - response_headers:
+        for_one:
+          key:
+            regex: .*
+          value:
+            contains_either:
+            - "999.999.999.999"
+            - "1.1.1.1."
+            - ".1.1.1.1"
+            - "001.001.001.001"
+            - "1.1.1.10"
+            - "0x000000C0A80001"
+            - "192.168.1.1%2500"
+            - "192%2E168%2E1%2E1"
+            - "::ffff:7f00:1"
