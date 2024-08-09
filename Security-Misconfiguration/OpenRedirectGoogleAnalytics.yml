@@ -1,0 +1,111 @@
+id: OPEN_REDIRECT_GOOGLE_ANALYTICS
+info:
+  name: "Open Redirect Vulnerability in Analytics Insights plugin for Google Analytics 4"
+  description: > 
+    "This vulnerability allows attackers to redirect users to malicious websites through the plugin’s URL handling mechanism. This occurs when the plugin fails to properly validate or sanitize redirect URLs. Exploiting this vulnerability can lead to phishing attacks or exposure to malicious content, compromising user security and trust. It emphasizes the need for rigorous validation in URL redirection mechanisms to protect against such threats."
+  details: >
+    "This vulnerability is caused by inadequate validation of redirect URLs in the plugin. When users interact with the plugin, it allows for the inclusion of unvalidated external URLs, which can lead to unintended redirections. Attackers can exploit this flaw to redirect users to malicious sites, potentially facilitating phishing attacks or malware distribution. This vulnerability highlights the importance of secure URL handling practices to prevent unauthorized redirections."
+  impact: >
+    "The impact of this vulnerability is significant, as it can facilitate phishing attacks by redirecting users to malicious websites. This can lead to unauthorized data collection, credential theft, or exposure to malware. Additionally, it undermines user trust and could damage the reputation of organizations relying on the plugin for analytics. The vulnerability stresses the need for improved security measures in URL validation and redirection processes."
+
+  category:
+    name: SM
+    shortName: Security Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: OPEN_REDIRECT_GOOGLE_ANALYTICS
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://portswigger.net/kb/issues/00500100_open-redirection-reflected"
+
+  cwe:
+    - CWE-601
+    - CWE-610
+  cve:
+    - CVE-2024-0250
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lte: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  url:
+    extract: urlVar
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_method: GET
+    - replace_body: '{}'
+    - modify_url: ${urlVar}/wp-content/plugins/analytics-insights/tools/oauth2callback.php?state=https://test-services.akto.io/store_uuid/${random_uuid}
+validate:
+  response_payload:
+    length:
+      gt: 0   
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  response_headers:
+    for_one:
+      key:
+        eq: Location
+      value:
+        regex: "^https://test-services\\.akto\\.io/store_uuid.*"
