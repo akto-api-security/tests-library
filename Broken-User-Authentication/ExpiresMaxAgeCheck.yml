@@ -31,7 +31,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: EXPIRES_MAX_AGE_CHECK
-  severity: HIGH
+  severity: LOW
   tags:
     - Business logic
     - OWASP top 10
@@ -54,7 +54,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -102,7 +102,7 @@ validate:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed

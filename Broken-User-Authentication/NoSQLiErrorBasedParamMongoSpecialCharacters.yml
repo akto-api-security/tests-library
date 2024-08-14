@@ -12,7 +12,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: NOSQLI_ERROR_BASED_PARAM_MONGO_SPECIAL_CHARACTERS
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Injection Attack
     - OWASP Top 10
@@ -32,6 +32,36 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   method:
     contains_either:
       - POST
@@ -82,3 +112,33 @@ validate:
         regex: "(?i)unterminated string literal"
     - response_payload:
         regex: "Cast to string failed for value"
+  response_payload:
+    not_contains:
+      - failed
+      - Internal Server
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+    length:
+      gt: 0

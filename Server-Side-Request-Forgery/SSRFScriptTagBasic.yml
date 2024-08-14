@@ -82,7 +82,7 @@ validate:
     lt: 300
   ssrf_url_hit: ${random_uuid}
   response_payload:
-    not_contains_either:
+    not_contains:
       - Access Denied
       - Error
       - SSRF
