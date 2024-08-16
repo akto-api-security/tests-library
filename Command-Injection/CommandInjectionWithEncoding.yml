@@ -1,0 +1,128 @@
+id: COMMAND_INJECTION_WITH_ENCODING
+info:
+  name: "Command injection by using Encoding and Character Manipulation"
+  description: "Command injection by using encoding and character manipulation involves exploiting vulnerabilities in input handling by encoding or altering characters to bypass security filters. Attackers use techniques like URL encoding, or character obfuscation to inject malicious commands into an application. This method circumvents basic input validation and allows the execution of unintended commands, highlighting the need for comprehensive input sanitization and robust security measures."
+  details: >
+    "Command injection by using encoding and character manipulation involves crafting inputs with encoded or altered characters to evade detection and input validation mechanisms. Techniques such as URL encoding, hexadecimal encoding, or replacing characters with their encoded equivalents can obscure malicious payloads. This allows attackers to inject and execute unauthorized commands by bypassing security filters that are not properly configured to handle such manipulations. Proper decoding and thorough input validation are essential to mitigate these vulnerabilities."
+  impact: "The impact of command injection through encoding and character manipulation can be substantial, as it allows attackers to bypass security filters and execute arbitrary commands. This can lead to unauthorized access, data breaches, and system compromise. Sensitive information may be exposed, and system stability can be undermined, resulting in significant security and operational risks. Addressing these vulnerabilities is crucial for maintaining the integrity and security of the system."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_WITH_ENCODING
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+          value:
+            extract: changed_body_value
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+          value:
+            regex: .*
+            extract: changed_query_value
+wordLists:
+  specialOSPayloads:
+    - "id %26%26 id"
+    - "id%20&&%20id"
+    - "id\nid"
+    - "id\rid"
+    - "id\t&&\tid"
+    - "id%00id"
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param: 
+            changed_body_key:  ${specialOSPayloads}
+        - modify_query_param:
+            changed_query_key:  ${specialOSPayloads}
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "uid="
+      - "gid="
+      - "groups="
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
