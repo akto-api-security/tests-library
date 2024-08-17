@@ -12,7 +12,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: NOSQLI_BOOLEAN_BASED_REPLACE_BODY_OBJECT
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Injection Attack
     - OWASP Top 10
@@ -104,4 +104,20 @@ execute:
                 - account is locked
                 - account is blocked
                 - multiple failed attempt
-        - success: vulnerable            
+        - success: x3
+        - failure: exit         
+    - req:
+        - add_header:
+            dummyHeader: dummyValue
+        - replace_body: "{ \"$where\" : \"return true\" }"
+        - validate:
+            response_payload:
+              eq: "${x2.response.body}"
+              not_contains:
+                - rate-limit
+                - rate limit
+                - rate_limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+        - success: vulnerable     

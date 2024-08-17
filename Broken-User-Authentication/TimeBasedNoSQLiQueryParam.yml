@@ -12,7 +12,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: TIME_BASED_NOSQLI_QUERY_PARAM
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Injection Attack
     - OWASP Top 10
@@ -35,7 +35,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -64,8 +64,7 @@ api_selection_filters:
       - multiple failed attempts
 
   method:
-    contains_either:
-      - GET
+    eq: "GET"
   query_param:
     for_one:
       key:
@@ -91,7 +90,7 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains_either:
+          not_contains:
             - Error
             - Internal Server 
             - Failed

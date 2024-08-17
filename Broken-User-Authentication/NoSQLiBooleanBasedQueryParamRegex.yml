@@ -12,7 +12,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: NOSQLI_BOOLEAN_BASED_QUERY_PARAM_REGEX
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Injection Attack
     - OWASP Top 10
@@ -35,7 +35,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -64,8 +64,7 @@ api_selection_filters:
       - multiple failed attempts
 
   method:
-    contains_either:
-      - GET
+    eq: "GET"
   query_param:
     for_one:
       key:
@@ -87,7 +86,7 @@ execute:
                   gte: 400
                   lt: 410
               - response_payload:
-                  not_contains_either:
+                  not_contains:
                     - Error
                     - fail
                     - invalid
@@ -108,7 +107,25 @@ execute:
         - validate:
             response_payload:
               neq: "${x1.response.body}"
-              not_contains_either:
+              not_contains:
+                - rate-limit
+                - rate limit
+                - rate_limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+        - success: x3
+        - failure: exit
+    - req:
+        - add_header:
+            dummyHeader: dummyValue
+        - delete_query_param: ${changed_query_key}
+        - add_query_param: 
+            !!str ${changed_query_key}[$regex]: ".*"
+        - validate:
+            response_payload:
+              eq: "${x2.response.body}"
+              not_contains:
                 - rate-limit
                 - rate limit
                 - rate_limit

@@ -12,7 +12,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: NOSQLI_BOOLEAN_BASED_JSON_PARAM_JS
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Injection Attack
     - OWASP Top 10
@@ -64,15 +64,13 @@ api_selection_filters:
       - multiple failed attempts
 
   method:
-    contains_either:
-      - POST
+    eq: "POST"
   request_payload:
     for_one:
       key:
         regex: .*
         extract: changed_body_key
       value:
-        regex: .*
         extract: changed_body_value
 execute:
   type: multiple
@@ -114,5 +112,21 @@ execute:
                 - account is locked
                 - account is blocked
                 - multiple failed attempt
-                - "'a' == 'a'"
-        - success: vulnerable            
+        - success: x3
+        - failure: exit  
+    - req:
+        - add_header:
+            dummyHeader: dummyValue
+        - modify_body_param: 
+            changed_body_key: !!str ${changed_body_value} || 'a' == 'a' || 'a 
+        - validate:
+            response_payload:
+              eq: "${x2.response.body}"
+              not_contains:
+                - rate-limit
+                - rate limit
+                - rate_limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+        - success: vulnerable          

@@ -12,7 +12,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: NOSQLI_BOOLEAN_BASED_REPLACE_BODY
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Injection Attack
     - OWASP Top 10
@@ -35,7 +35,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -64,7 +64,7 @@ api_selection_filters:
       - multiple failed attempts
 
   method:
-    not_contains_either:
+    not_contains:
       - OPTIONS
       - GET
 execute:
@@ -78,7 +78,9 @@ execute:
                   gte: 400
                   lt: 410
               - response_payload:
-                  not_contains_either:
+                  length:
+                    gt: 0
+                  not_contains:
                     - Error
                     - fail
                     - invalid
@@ -96,12 +98,32 @@ execute:
         - replace_body: "{\"$regex\" : \".*\" }"
         - validate:
             response_payload:
+              length:
+                gt: 0
               neq: "${x1.response.body}"
-              not_contains_either:
+              not_contains:
                 - rate-limit
                 - rate limit
                 - rate_limit
                 - account is locked
                 - account is blocked
                 - multiple failed attempt
-        - success: vulnerable            
+        - success: x3
+        - failure: exit        
+    - req:
+        - add_header:
+            dummyHeader: dummyValue
+        - replace_body: "{\"$regex\" : \".*\" }"
+        - validate:
+            response_payload:
+              length:
+                gt: 0
+              eq: "${x2.response.body}"
+              not_contains:
+                - rate-limit
+                - rate limit
+                - rate_limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+        - success: vulnerable  
