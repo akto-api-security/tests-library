@@ -144,4 +144,27 @@ execute:
               - rate_limit
               - rate-limit
               - multiple failed attempt
+    - success: x3
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: dummymail@dummy.com
+    - modify_body_param:
+        passKey: Default2!
+    - modify_url:
+        regex_replace:
+          regex: https
+          replace_with: http
+    - follow_redirect: true
+    - validate:
+        response_payload:
+            eq: "${x2.response.body}"
+            not_contains:
+              - account is locked
+              - account is blocked
+              - rate limit
+              - rate_limit
+              - rate-limit
+              - multiple failed attempt
     - success: vulnerable
+    - failure: exit

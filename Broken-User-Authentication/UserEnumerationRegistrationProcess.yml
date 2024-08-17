@@ -134,4 +134,24 @@ execute:
                 - multiple failed attempt
           - response_code:
               neq: "${x1.response.status_code}"
+    
+    - success: x3
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: dummymail@dummy.com
+    - modify_body_param:
+        passKey: Default2!
+    - validate:
+        or:
+          - response_payload:
+              eq: "${x2.response.body}"
+              not_contains:
+                - rate limit
+                - rate_limit
+                - rate limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+    
     - success: vulnerable

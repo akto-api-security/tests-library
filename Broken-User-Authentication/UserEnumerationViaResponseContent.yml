@@ -138,4 +138,22 @@ execute:
             - account is locked
             - account is blocked
             - multiple failed attempt
+    - success: x3
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: "dummymail@dummy.com"
+    - modify_body_param:
+        passKey: Default2!
+    - validate:
+        response_payload:
+          eq: "${x2.response.body}"
+          not_contains:
+            - rate-limit
+            - rate limit
+            - rate_limit
+            - account is locked
+            - account is blocked
+            - multiple failed attempt
     - success: vulnerable
+       
