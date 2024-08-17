@@ -54,7 +54,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -124,7 +124,7 @@ execute:
           response_code:
             eq: 404
           response_payload:
-            not_contains_either:
+            not_contains:
               - rate-limit
               - rate_limit
               - rate limit
@@ -141,7 +141,7 @@ execute:
             neq: 404
           response_payload:
             regex: "root:.*:0:0:"
-            not_contains_either:
+            not_contains:
               - invalid
               - expired
               - failed

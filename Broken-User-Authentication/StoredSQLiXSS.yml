@@ -13,7 +13,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: STORED_SQLI_XSS
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Business logic
     - OWASP top 10
@@ -37,7 +37,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -87,10 +87,13 @@ execute:
         userKey: ${userVal}${storedXSSPayloads}
         
 validate:
+  response_code:
+    gte: 200
+    lt: 300
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Internal Server 
       - Failed
       - Unauthorized

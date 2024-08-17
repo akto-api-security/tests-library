@@ -13,7 +13,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: ADVANCED_UNION_BASED_SQLI
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Business logic
     - OWASP top 10
@@ -37,7 +37,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -103,13 +103,11 @@ validate:
       gt: 0
     contains_either:
       - "table_name"
-      - "null"
       - "column_name"
       - "database"
-      - "version"
       - "schema_name"
       - "root:"
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed

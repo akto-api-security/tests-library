@@ -51,7 +51,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -88,7 +88,7 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
-            regex: "^username$|^user$|^userid$|^user_id$|^login$|^login_id$|^email$|^account$|^account_id$|^member$|^member_id$|^id$|^user_name$|^uname$|^identifier$|^user_identifier$|^admin$|^nick$|^nickname$|^handle$|^alias$|^principal$|^profile$|^profile_id$|^name$|^signin$|^auth$|^credential$|^user_login$|^user_account$|^user_email$|^employee$|^employee_id$|^operator$|^customer_id$|^client_id$|^subscriber$|^subscriber_id$|^participant$|^participant_id$|^client_id$|^userLoginID$|^client-name$|^UserId$"
+            regex: "username|^user$|^userid$|^user_id$|^login$|^login_id$|email|^account$|^account_id$|^member$|^member_id$|^id$|^user_name$|^uname$|^identifier$|^user_identifier$|^admin$|^nickname$|^handle$|^alias$|^principal$|^profile$|^profile_id$|^name$|^signin$|^auth$|^credential$|^user_login$|^user_account$|^user_email$|^employee$|^employee_id$|^operator$|^customer_id$|^subscriber$|^subscriber_id$|^participant$|^participant_id$|client_id|^userLoginID$|^client-name$"
             extract: userKey
           value:
             regex: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
@@ -108,7 +108,7 @@ execute:
           gte: 400
           lt: 410
         response_payload:
-          not_contains_either:
+          not_contains:
             - acccount is locked
             - account is blocked
             - multiple failed attempt
@@ -124,7 +124,7 @@ execute:
     - validate:
         response_payload:
           neq: "${x1.response.body}"
-          not_contains_either:
+          not_contains:
             - account is locked
             - account is blocked
             - multiple failed attempt

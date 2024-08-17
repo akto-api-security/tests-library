@@ -28,7 +28,7 @@ info:
     - CWE-235
   cve:
     - CVE-2019-13143
-
+inactive: true
 auth:
   authenticated: true
 api_selection_filters:
@@ -40,7 +40,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -87,7 +87,7 @@ validate:
       gte: 70
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed

