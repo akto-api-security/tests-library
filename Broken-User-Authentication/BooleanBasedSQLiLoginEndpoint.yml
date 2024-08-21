@@ -128,6 +128,12 @@ execute:
                 - rate_limit
                 - rate limit
                 - multiple failed attempt
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " AND "
+                - "="
+                - "--"
     - success: x2
     - failure: exit
   - req:
@@ -145,6 +151,12 @@ execute:
             - account is locked
             - account is blocked
             - multiple failed attempt
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked
+            - " OR "
+            - "="
+            - "--"
     - success: x3
     - failure: exit
   - req:
@@ -164,4 +176,10 @@ execute:
             - account is locked
             - account is blocked
             - multiple failed attempt
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked
+            - " OR "
+            - "="
+            - "--"
     - success: vulnerable
