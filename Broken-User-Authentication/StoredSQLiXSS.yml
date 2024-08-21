@@ -119,10 +119,14 @@ validate:
       - account is locked
       - account is blocked
       - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - Sorry, you have been blocked
+      - " INSERT INTO "
+      - " VALUES "
     contains_either:
       - "<script>alert(\"XSS\")</script>"
       - "<svg/onload=alert(\"XSS\")>"
-      - "XSS"
       - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
       - "<script>alert(\"Stored XSS\")</script>"
       - "<svg/onload=alert(\"Stored XSS\")>"

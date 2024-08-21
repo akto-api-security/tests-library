@@ -140,6 +140,11 @@ execute:
             - account is locked
             - account is blocked
             - multiple failed attempts
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked
+            - UNION
+            - SELECT
     - success: x2
     - failure: exit
   - req:
@@ -178,7 +183,13 @@ execute:
             - service unavailable
             - account is locked
             - account is blocked
-            - multiple failed attempts    
+            - multiple failed attempts
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked 
+            - UNION
+            - SELECT
+            - " WHERE "   
           neq: "${x1.response.body}"
     - success: vulnerable
         

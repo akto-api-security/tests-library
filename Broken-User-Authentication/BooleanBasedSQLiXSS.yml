@@ -125,6 +125,10 @@ validate:
       - account is locked
       - account is blocked
       - multiple failed attempts
+      - " UNION "
+      - " SELECT "
+      - " 1=1 "
+      - "&#61;"
     contains_either:
       - "<script>alert(\"XSS\");</script>"
       - "<svg/onload=alert(\"XSS\")>"
