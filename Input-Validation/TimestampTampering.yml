@@ -1,0 +1,127 @@
+id: TIMESTAMP_TAMPERING
+info:
+  name: "Input Validation test using TimeStamp Tampering"
+  description: > 
+    "Input Validation testing using Timestamp Tampering involves altering the timestamp in a request or form submission to test how the system handles manipulated or outdated time data. This ensures the application properly validates time-related inputs, preventing issues like replay attacks, expired session misuse, or unauthorized access to time-sensitive resources."
+  details: >
+    "Timestamp Tampering in Input Validation testing focuses on modifying time-related fields, such as timestamps or expiration dates, to evaluate how the application processes these altered inputs. Testers may attempt to use expired timestamps, future dates, or invalid time formats to identify flaws in the system's validation logic. Proper handling of timestamps is crucial for maintaining the integrity of time-sensitive operations, such as authentication, access control, and transaction processing."
+  impact: >
+    "The impact of inadequate validation in Timestamp Tampering tests can be severe, potentially leading to security vulnerabilities like replay attacks, unauthorized access, or data manipulation. Exploiting these weaknesses could allow attackers to bypass time-based restrictions, misuse expired sessions, or gain illegitimate access to resources. Ensuring strong timestamp validation is critical for protecting time-sensitive operations and maintaining overall system security."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: TIMESTAMP_TAMPERING
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html"
+    - "https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/"
+  cwe:
+    - CWE-20
+  cve:
+    - CVE-2018-20679
+    - CVE-2019-14271
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_payload:
+    for_one:
+      key:
+        extract: userKey
+      value:
+        regex: "\\b(\\d{1,2}[:\\.\\-\/]?\\d{1,2}[:\\.\\-\/]?\\d{1,2}?(?:\\s*[APMapm]{2})?)\\b|\\b(\\d{4}[-\/]\\d{2}[-\/]\\d{2}[ \\sT]\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?(?:[+-]\\d{2}:\\d{2}|Z)?)\\b"
+        extract: userVal
+
+wordLists:
+  timeValues:
+    - "1970-01-01T00:00:00Z"
+    - "9999-12-31T23:59:59Z"
+    - "2023-02-28T23:59:59Z"
+    - "1969-12-31T23:59:59Z"
+    - "0001-01-01T00:00:00Z"
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: ${timeValues}
+        
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - Sorry, you have been blocked
+    percentage_match:
+      gte: 90
