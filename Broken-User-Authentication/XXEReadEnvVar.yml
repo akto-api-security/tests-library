@@ -8,24 +8,24 @@ info:
   impact: >
     "Successful XML External Entity (XXE) test for reading Environment Variables can result in the unauthorized retrieval of sensitive system information, potentially exposing confidential data and creating avenues for subsequent security threats."
   category:
-    name: NO_AUTH
-    shortName: Broken Authentication
-    displayName: Broken User Authentication (BUA)
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
   subCategory: XXE_READ_ENV_VAR
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
   references:
-    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
-    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
-    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+    - "https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing"
+    - "https://www.akto.io/blog/xml-external-entity-attack"
+    - "https://www.akto.io/blog/xml-injection-vulnerability-examples-cheatsheet-and-prevention"
   cwe:
-    - CWE-287
+    - CWE-611
+    - CWE-827
   cve:
-    - CVE-2020-24008
-    - CVE-2021-45901
+    - CVE-2022-42745
 
 
 api_selection_filters:
@@ -62,6 +62,7 @@ api_selection_filters:
       - account is locked
       - account is blocked
       - multiple failed attempts
+
   method:
     contains_either:
       - POST
@@ -121,4 +122,6 @@ validate:
       - account is locked
       - account is blocked
       - multiple failed attempts
-
+      - Attention Required!
+      - CloudFlare
+      - Sorry, you have been blocked
