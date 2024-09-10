@@ -1,40 +1,27 @@
-id: REPLACE_AUTH_TOKEN_OLD_VERSION
+id: OLD_VERSION_API_TEST
 info:
-  name: BOLA in old api versions
-  description: "Attacker can access resources of any user by changing the auth token in request and using older version of an API"
-  details: >   
-            "Unpatched old api versions were found for this endpoint. The original request was replayed by changing the version of the endpoint
-            (For example: the request url was changed from <b>www.example.com/dfsh/v5/fd</b> to <b>www.example.com/dfsh/v1/fd</b>). The server responded with 2XX success codes.<br><br>"
-            "The old API versions found appears to be vulnerable to broken object level authorization attack. The original
-            request was replayed with attacker's auth token. The server responded with 2XX success codes and greater than <b>{{percentageMatch}}%</b> of the response body matched with original
-            response body. Also, the endpoint had atleast one private resources in request payload.<br><br>"
-            "<b>Background:</b> Old API versions are usually unpatched and are vulnerable to attacks such as BOLA. Object level authorization is an access control mechanism that is usually
-            implemented at the code level to validate that one user can only access objects that they should have access to."
-  impact: "Unauthorized access can result in data disclosure to unauthorized parties, data loss, or data manipulation. Unauthorized access to objects can also lead to full account takeover."
+  name: "Old API Version Test for detecting shadow APIs"
+  description: "This test involves evaluating legacy API versions to identify and address any shadow APIs—those that are not documented or officially sanctioned but still in use. This test helps ensure that deprecated or unauthorized APIs do not pose security risks or cause inconsistencies within the system. By detecting and managing shadow APIs, organizations can maintain better control over their API landscape and improve overall security and compliance."
+  details: "This test is a process where outdated API versions are examined to uncover shadow APIs—unauthorized or undocumented endpoints that may be in use within a system. This testing typically involves scanning for old API endpoints and analyzing their usage patterns to ensure they don't bypass current security measures or introduce vulnerabilities. By identifying these hidden APIs, organizations can take corrective actions to secure their systems and maintain accurate API documentation and control."
+  impact: "The impact of this test is significant for system security and compliance. Detecting and managing shadow APIs helps prevent unauthorized access, reduce security risks, and ensure that outdated endpoints do not compromise the integrity of the system. By addressing these hidden APIs, organizations can enhance their security posture, improve data protection, and ensure that all APIs adhere to current policies and standards."
   category:
-    name: BOLA
-    shortName: BOLA
-    displayName: Broken Object Level Authorization (BOLA)
-  subCategory: REPLACE_AUTH_TOKEN_OLD_VERSION
+    name: IIM
+    shortName: Improper Inventory Management
+    displayName: Improper Inventory Management (IIM)
+  subCategory: OLD_VERSION_API_TEST
   severity: HIGH
   tags:
-    - Business logic
-    - OWASP top 10
-    - HackerOne top 10
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
   references:
-    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa9-improper-inventory-management.md"
-    - "https://www.akto.io/blog/bola-exploitation-using-unauthorized-uuid-on-api-endpoint"
-    - "https://www.akto.io/blog/what-is-broken-object-level-authorization-bola"
-    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md"
-    - "https://cwe.mitre.org/data/definitions/284.html"
-    - "https://cwe.mitre.org/data/definitions/285.html"
-    - "https://cwe.mitre.org/data/definitions/639.html"
+  - https://owasp.org/API-Security/editions/2023/en/0xa9-improper-inventory-management/
+  - https://www.akto.io/blog/3-new-ways-to-detect-improper-api-inventory-owasp-api9-2023
+  - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa9-improper-inventory-management.md
   cwe:
-    - CWE-937
-    - CWE-285
-    - CWE-862
+  - CWE-1059
   cve:
-    - CVE-2022-31690
+  - CVE-2022-3203
 
 api_selection_filters:
   response_code:

@@ -13,7 +13,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: PAYMENT_GATEWAY_SQL_INJECTION_SQLITE
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Business logic
     - OWASP top 10
@@ -136,12 +136,14 @@ validate:
       - account is locked
       - account is blocked
       - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - Sorry, you have been blocked
+      - " UNION SELECT "
+      - " OR "
     contains_either:
-      - user
       - syntax
       - query
-      - SELECT
-      - UNION
       - SQLite
       - sqlite_version
       - sqlite_master
