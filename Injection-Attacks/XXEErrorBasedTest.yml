@@ -118,7 +118,8 @@ validate:
           - Attention Required!
           - CloudFlare
           - Sorry, you have been blocked
-      or: 
+          - "Invalid access"
+      and: 
         - response_payload:
             regex: "(cannot|could not|unable to|no such|failed to)"
         - response_payload:
