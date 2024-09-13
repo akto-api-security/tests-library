@@ -9,11 +9,11 @@ info:
     "The impact of internal IP injection can be significant, potentially allowing attackers to bypass IP-based security controls and access internal resources without proper authorization. This vulnerability can lead to unauthorized access to sensitive systems, data breaches, and exposure of internal network configurations. Additionally, it can undermine trust in the security of internal services and affect the integrity of access controls."
 
   category:
-    name: NO_AUTH
-    shortName: Broken Authentication
-    displayName: Broken User Authentication (BUA)
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
   subCategory: HTTP_HEADER_IP_INJECTION_INTERNAL_IP
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Business logic
     - OWASP top 10
@@ -37,7 +37,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -87,7 +87,6 @@ wordLists:
     - "192.168.1.1/32"
     - "1.1.1.1:80"
     - "1.1.1.1"
-    - "0x7f000001"
     - "0177.0000.0000.0001"
     - "2130706433"
     - "192.168.1.1"
@@ -108,7 +107,7 @@ validate:
           gt: 0
         percentage_match:
           gte: 90
-        not_contains_either:
+        not_contains:
           - Error
           - Internal Server 
           - Failed
@@ -154,7 +153,6 @@ validate:
               - "192.168.1.1/32"
               - "1.1.1.1:80"
               - "1.1.1.1"
-              - "0x7f000001"
               - "0177.0000.0000.0001"
               - "2130706433"
               - "192.168.1.1"

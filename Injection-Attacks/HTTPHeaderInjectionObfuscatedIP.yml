@@ -9,9 +9,9 @@ info:
     "The impact of obfuscated IP injection can be severe, as it may allow attackers to bypass IP-based security filters and gain unauthorized access to internal systems. By disguising their true IP address, attackers can evade detection and exploit vulnerabilities that are reliant on IP address validation. This can lead to security breaches, unauthorized data access, and compromise of internal network integrity."
 
   category:
-    name: NO_AUTH
-    shortName: Broken Authentication
-    displayName: Broken User Authentication (BUA)
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
   subCategory: HTTP_HEADER_IP_INJECTION_OBFUSCATED_IP
   severity: HIGH
   tags:
@@ -37,7 +37,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -74,13 +74,10 @@ api_selection_filters:
         extract: userVal
 wordLists:
   IPPayloads:
-    - "0x7f000001"
     - "0177.0000.0000.0001"
     - "2130706433"
     - "&#49;.&#49;.&#49;.&#49;"
     - "MQ==.MQ==.MQ==.MQ=="
-    - "0xC0A80001"
-    - "0x000000C0A80001"
     - "192%2E168%2E1%2E1"
     - "::ffff:192.168.1.1"
     - "::192.168.0.1"
@@ -100,7 +97,7 @@ validate:
           gt: 0
         percentage_match:
           gte: 90
-        not_contains_either:
+        not_contains:
           - Error
           - Internal Server 
           - Failed
@@ -133,13 +130,10 @@ validate:
             regex: .*
           value:
             contains_either:
-              - "0x7f000001"
               - "0177.0000.0000.0001"
               - "2130706433"
               - "&#49;.&#49;.&#49;.&#49;"
               - "MQ==.MQ==.MQ==.MQ=="
-              - "0xC0A80001"
-              - "0x000000C0A80001"
               - "192%2E168%2E1%2E1"
               - "::ffff:192.168.1.1"
               - "::192.168.0.1"

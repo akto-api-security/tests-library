@@ -9,11 +9,11 @@ info:
     "The impact of incorrect IP injection can be significant, including unauthorized access to internal systems or bypassing IP-based security controls. It can lead to exposure of sensitive data or unauthorized actions if the system mistakenly trusts the injected IP address. Additionally, it can disrupt traffic routing and affect the reliability of network security measures, potentially compromising overall system integrity."
 
   category:
-    name: NO_AUTH
-    shortName: Broken Authentication
-    displayName: Broken User Authentication (BUA)
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
   subCategory: HTTP_HEADER_IP_INJECTION_INCORRECT_IP
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Business logic
     - OWASP top 10
@@ -37,7 +37,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -79,7 +79,6 @@ wordLists:
     - ".1.1.1.1"
     - "001.001.001.001"
     - "1.1.1.10"
-    - "0x000000C0A80001"
     - "192.168.1.1%2500"
     - "192%2E168%2E1%2E1"
     - "::ffff:7f00:1"
@@ -99,6 +98,34 @@ validate:
           gt: 0
         percentage_match:
           gte: 90
+        not_contains:
+          - Error
+          - Internal Server 
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+
     - response_headers:
         for_one:
           key:
@@ -110,7 +137,6 @@ validate:
             - ".1.1.1.1"
             - "001.001.001.001"
             - "1.1.1.10"
-            - "0x000000C0A80001"
             - "192.168.1.1%2500"
             - "192%2E168%2E1%2E1"
             - "::ffff:7f00:1"

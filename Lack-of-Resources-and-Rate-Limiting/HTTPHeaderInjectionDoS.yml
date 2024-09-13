@@ -9,7 +9,7 @@ info:
     shortName: Lack of Resources & Rate Limiting
     displayName: Lack of Resources & Rate Limiting (RL)
   subCategory: HTTP_HEADER_IP_INJECTION_DOS
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Business logic
     - OWASP top 10
@@ -30,7 +30,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed

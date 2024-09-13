@@ -9,11 +9,11 @@ info:
     "The impact of XSS in HTTP headers can be severe, leading to the execution of malicious scripts in users' browsers. This can result in unauthorized access to sensitive data, such as cookies or session tokens, and enable attackers to perform actions on behalf of the user. Additionally, it can compromise user accounts, facilitate phishing attacks, and undermine the overall security and trustworthiness of the application."
 
   category:
-    name: NO_AUTH
-    shortName: Broken Authentication
-    displayName: Broken User Authentication (BUA)
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
   subCategory: HTTP_HEADER_IP_INJECTION_XSS
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Business logic
     - OWASP top 10
@@ -37,7 +37,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -94,7 +94,7 @@ validate:
           gt: 0
         percentage_match:
           gte: 90
-        not_contains_either:
+        not_contains:
           - Error
           - Internal Server 
           - Failed
