@@ -1,0 +1,134 @@
+id: HTTP_HEADER_IP_INJECTION_XSS
+info:
+  name: "XSS in HTTP headers containing IP address"
+  description: > 
+    "This test involves exploiting a Cross-Site Scripting (XSS) vulnerability by injecting malicious scripts into HTTP headers like `X-Forwarded-For` or `X-Real-IP`. When these headers are reflected or processed by web applications, the injected scripts can execute in the context of the user's browser. This can lead to unauthorized data access, session hijacking, or other malicious activities targeting users interacting with the compromised application."
+  details: >
+    "In this vulnerability, attackers inject malicious JavaScript into HTTP headers that include IP address fields, such as `X-Forwarded-For`. When the application reflects or processes these headers without proper sanitization, the malicious script can execute in the user's browser. This can lead to a range of attacks, including stealing cookies, capturing sensitive information, or manipulating the user experience. Proper validation and sanitization of header inputs are crucial to prevent such exploits."
+  impact: >
+    "The impact of XSS in HTTP headers can be severe, leading to the execution of malicious scripts in users' browsers. This can result in unauthorized access to sensitive data, such as cookies or session tokens, and enable attackers to perform actions on behalf of the user. Additionally, it can compromise user accounts, facilitate phishing attacks, and undermine the overall security and trustworthiness of the application."
+
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: HTTP_HEADER_IP_INJECTION_XSS
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_headers:
+    for_one:
+      key:
+        regex: "^X-Forwarded-For$|^X-Real-IP$|^X-Forwarded-Host$|^X-Cluster-Client-IP$|^Forwarded$|^CF-Connecting-IP$|^True-Client-IP$|^X-Original-Forwarded-For$|^X-Client-IP$|^Client-IP$|^X-Azure-Client-IP$|^X-Azure-ClientIP$|^X-Akamai-Client-IP$|^X-Originating-IP$|^X-Remote-IP$|^X-Appengine-User-IP$|^Via$|^X-Host$|^X-ProxyUser-Ip$|^X-Forwarded$|^X-Real-IP-From$|^CF-Connecting-IPv6$|^Remote-Addr$|^X-Client-Public-IP$|^X-Forwarded-For-IP$|^X-Cloudflare-CDN-Loop$|^X-Coming-From$|^X-Originating-URL$|^X-Client-Connection-IP$"
+        extract: userKey
+      value:
+        regex: "\b(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b"
+        extract: userVal
+wordLists:
+  XSSPayloads:
+    - "<script>alert(1)</script>"
+    - "<img src=x onerror=alert(1)>"
+    - "<svg onload=alert(1)>"
+    - "<div onmouseover=alert(1)>x</div>"
+    - "<input onfocus=alert(1)>"
+
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_header:
+        userKey: ${XSSPayloads}
+        
+validate:
+  or:
+    - response_payload:
+        length:
+          gt: 0
+        percentage_match:
+          gte: 90
+        not_contains:
+          - Error
+          - Internal Server 
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+    - response_headers:
+        for_one:
+          key:
+            regex: .*
+          value:
+            contains_either:
+              - "<script>alert(1)</script>"
+              - "<img src=x onerror=alert(1)>"
+              - "<svg onload=alert(1)>"
+              - "<div onmouseover=alert(1)>x</div>"
+              - "<input onfocus=alert(1)>"
