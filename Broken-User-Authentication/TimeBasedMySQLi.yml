@@ -13,7 +13,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: TIME_BASED_MYSQLI
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Business logic
     - OWASP top 10
@@ -37,7 +37,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -73,7 +73,7 @@ api_selection_filters:
   request_payload:
     for_one:
       key:
-        regex: "^username$|^user$|^userid$|^user_id$|^login$|^login_id$|^email$|^account$|^account_id$|^member$|^member_id$|^id$|^user_name$|^uname$|^identifier$|^user_identifier$|^admin$|^nick$|^nickname$|^handle$|^alias$|^principal$|^profile$|^profile_id$|^name$|^signin$|^auth$|^credential$|^user_login$|^user_account$|^user_email$|^employee$|^employee_id$|^operator$|^customer_id$|^client_id$|^subscriber$|^subscriber_id$|^participant$|^participant_id$|^client_id$|^userLoginID$|^client-name$"
+        regex: "username|^user$|^userid$|^user_id$|^login$|^login_id$|email|^account$|^account_id$|^member$|^member_id$|^id$|^user_name$|^uname$|^identifier$|^user_identifier$|^admin$|^nick$|^nickname$|^handle$|^alias$|^principal$|^profile$|^profile_id$|^name$|^signin$|^auth$|^credential$|^user_login$|^user_account$|^user_email$|^employee$|^employee_id$|^operator$|^customer_id$|^client_id$|^subscriber$|^subscriber_id$|^participant$|^participant_id$|^client_id$|^userLoginID$|^client-name$"
         extract: userKey
       value:
         extract: userVal
@@ -96,7 +96,7 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains_either:
+          not_contains:
             - Error
             - Internal Server 
             - Failed
@@ -123,6 +123,10 @@ execute:
             - account is locked
             - account is blocked
             - multiple failed attempts
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked
+            - " OR "
     - success: x2
     - failure: exit
   - req:

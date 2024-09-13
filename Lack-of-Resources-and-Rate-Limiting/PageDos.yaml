@@ -9,7 +9,7 @@ info:
     shortName: Lack of Resources & Rate Limiting
     displayName: Lack of Resources & Rate Limiting (RL)
   subCategory: PAGINATION_MISCONFIGURATION
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Business logic
     - OWASP top 10
@@ -28,14 +28,11 @@ api_selection_filters:
   query_param:
     for_one:
       key:
-        or:
-          - regex: .*limit.*
-          - regex: .*size.*
-          - regex: .*page.*
+        regex: "(?i)(page[_-]?size|per[_-]?page|limit|items[_-]?per[_-]?page|max[_-]?results|page[_-]?limit)"
         extract: limitKey
       value:
         extract: limitValue
-        datatype: number
+        regex: "^\\d+$"
   response_payload:
     length:
       extract: original_length

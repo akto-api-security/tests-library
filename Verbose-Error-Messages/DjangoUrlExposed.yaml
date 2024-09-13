@@ -35,6 +35,8 @@ api_selection_filters:
   url:
     extract: urlVar
   response_payload:
+    length:
+      gt: 0
     not_contains:
       - "Django tried these url patterns"
       - "Django version"
@@ -55,6 +57,8 @@ execute:
 
 validate:
   response_payload:
+    length:
+      gt: 0
     contains_either: 
       - "Django tried these url patterns"
       - "Django version"

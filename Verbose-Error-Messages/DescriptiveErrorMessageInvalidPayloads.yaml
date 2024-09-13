@@ -8,7 +8,7 @@ info:
   impact: "This information can be used to facilitate more sophisticated attacks on your application"
   category:
     name: VEM
-    shortName: VEM
+    shortName: Verbose Error Messages
     displayName: Verbose Error Messages (VEM)
   subCategory: DESCRIPTIVE_ERROR_MESSAGE_INVALID_PAYLOAD
   severity: LOW
@@ -39,6 +39,8 @@ api_selection_filters:
       - function
       - class
       - stacktrace
+    length:
+      gt: 0
 
 execute:
   type: single

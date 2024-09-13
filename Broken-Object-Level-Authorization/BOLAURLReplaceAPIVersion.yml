@@ -62,7 +62,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -89,6 +89,9 @@ api_selection_filters:
       - account is locked
       - account is blocked
       - multiple failed attempts
+      - not found
+      - not available
+      - failure
   private_variable_context:
     gt: 0
 
@@ -146,7 +149,7 @@ validate:
       gt: 0
     percentage_match:
       gte: 90
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -173,3 +176,6 @@ validate:
       - account is locked
       - account is blocked
       - multiple failed attempts
+      - not found
+      - not available
+      - failure

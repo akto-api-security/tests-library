@@ -1,0 +1,135 @@
+id: COMMAND_INJECTION_MACOS
+info:
+  name: "Command injection for identifying MacOS using system specific operations"
+  description: "Command injection for identifying macOS involves exploiting vulnerabilities to execute arbitrary commands that reveal system-specific information. By injecting commands that leverage macOS-specific operations, such as querying system details or checking environment variables unique to macOS, attackers can determine the operating system in use. This technique helps attackers tailor their exploits to the target's system architecture and capabilities."
+  details: >
+    "Command injection for identifying macOS can involve using injected commands to execute macOS-specific operations and reveal system details. For example, an attacker might use commands like `uname -s` or `sw_vers` to check for macOS-specific responses. These commands return system-specific information that can confirm the target's operating system. Identifying macOS allows attackers to adjust their techniques based on the unique characteristics and security mechanisms of the platform."
+  impact: "The impact of command injection for identifying macOS includes the potential exposure of system-specific information that can be exploited to tailor attacks more effectively. By determining that a target is running macOS, attackers can craft exploits or malware designed specifically for macOS vulnerabilities, increasing the likelihood of successful breaches. This can lead to more effective privilege escalation, data theft, or system compromise, as the attack is customized to the system's architecture and security features."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_MACOS
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - "Software"
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+          value:
+            extract: changed_body_value
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+          value:
+            regex: .*
+            extract: changed_query_value
+wordLists:
+  specialOSPayloads:
+    - "system_profiler SPSoftwareDataType"
+    - "ifconfig -a"
+    - "sw_vers"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param: 
+            changed_body_key:  ${specialOSPayloads}
+        - modify_query_param:
+            changed_query_key:  ${specialOSPayloads}
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - "System Software Overview:"
+      - "Software:"
+      - "System Version: macOS"
+      - "Kernel Version: Darwin"
+      - "Boot Volume: Macintosh"
+      - "en0: flags="
+      - "<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST>"
+      - "prefixlen"
+      - "ProductName:"
+      - "ProductVersion:"
+      - "BuildVersion:"
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts

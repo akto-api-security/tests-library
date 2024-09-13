@@ -12,7 +12,7 @@ info:
     shortName: Command Injection
     displayName: Command Injection
   subCategory: COMMAND_INJECTION_BY_ADDING_QUERY_PARAM
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Business logic
     - OWASP top 10
@@ -34,6 +34,34 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - "hello world"
 execute:
   type: single
   requests:
@@ -61,6 +89,39 @@ execute:
         - add_query_param:
             run: "echo 'hello world'"
 validate:
+  response_code:
+    gte: 200
+    lt: 300
   response_payload:
+    length:
+      gt: 0
     contains_either: hello world
-    not_contains_either: "echo 'hello world'"
+    not_contains:
+      - "echo 'hello world'"
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - "echo &#39;hello world&#39;"

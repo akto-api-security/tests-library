@@ -14,7 +14,7 @@ info:
             contains a \"username\": \"joe\" claim, they could change this to \"username\": \"admin\"."
   category:
     name: NO_AUTH
-    shortName: Broken User Authentication
+    shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: JWT_INVALID_SIGNATURE
   severity: HIGH
@@ -44,7 +44,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
@@ -87,7 +87,7 @@ validate:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
       - Error
       - Internal Server 
       - Failed
