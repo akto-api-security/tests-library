@@ -8,9 +8,9 @@ info:
   impact: >
     "The impact of time-based NoSQL injection on JSON body parameters can lead to severe security issues, such as unauthorized access or manipulation of data. Attackers might exploit response delays to infer sensitive information or disrupt application performance. This vulnerability can compromise data integrity, reveal internal logic, and potentially allow for broader exploitation or denial-of-service attacks."
   category:
-    name: NO_AUTH
-    shortName: Broken Authentication
-    displayName: Broken User Authentication (BUA)
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
   subCategory: TIME_BASED_NOSQLI_JSON_PARAM
   severity: MEDIUM
   tags:
@@ -119,6 +119,8 @@ execute:
             - account is locked
             - account is blocked
             - multiple failed attempts
+            - failure
+            - cloudflare
     - success: x2
     - failure: exit
   - req:

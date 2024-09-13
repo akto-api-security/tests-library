@@ -1,17 +1,17 @@
-id: NOSQLI_BOOLEAN_BASED_QUERY_PARAM_REGEX
+id: NOSQLI_BOOLEAN_BASED_REPLACE_BODY
 info:
-  name: "Boolean Based NoSQL Injection test for Query Parameters with Regex Function"
+  name: "Boolean Based NoSQL Injection test by replacing JSON body with Regex function parameter"
   description: >
-    "A Boolean-based NoSQL injection test for query parameters with the Regex function involves manipulating query parameters to inject Boolean expressions and using regular expressions to evaluate server responses. This technique aims to identify vulnerabilities in NoSQL databases by observing true or false responses based on the injected queries, indicating whether the database is susceptible to injection attacks. The method relies on analyzing server behavior to determine if malicious queries can bypass security measures."
+    "This test involves exploiting a vulnerability in NoSQL databases by manipulating the JSON payload sent in a query. By substituting parts of the JSON body with a regular expression function parameter, an attacker can craft queries that alter the logic of the database query execution. This technique can reveal information or bypass security controls by leveraging how NoSQL databases handle and interpret regex patterns within their queries."
   details: >
-    "Boolean-based NoSQL injection tests with the Regex function involve injecting Boolean expressions into query parameters and using regular expressions to interpret server responses. By observing changes in server behavior—true or false outcomes—these tests can identify vulnerabilities in NoSQL databases. The goal is to determine if the database improperly processes injected queries, revealing potential security flaws."
+    "In this test, attackers replace sections of a JSON payload with regex function parameters to exploit Boolean-based NoSQL injection vulnerabilities. This involves injecting malicious regex patterns into queries, potentially bypassing authentication or data validation mechanisms. By observing changes in the query's Boolean logic or response behavior, attackers can identify and manipulate the underlying database logic, leading to unauthorized access or data retrieval."
   impact: >
-    "The impact of Boolean-based NoSQL injection using the Regex function can be significant, potentially allowing attackers to bypass authentication, access unauthorized data, and manipulate database contents. Exploiting these vulnerabilities can lead to data breaches, loss of sensitive information, and compromised system integrity, ultimately damaging an organization's reputation and financial standing."
+    "The impact of this NoSQL injection technique can be severe, as it may allow attackers to bypass authentication, gain unauthorized access to sensitive data, or manipulate database queries. By exploiting Boolean logic vulnerabilities, they can execute arbitrary queries, potentially leading to data breaches or corruption. Additionally, such vulnerabilities can compromise the overall security and integrity of the NoSQL database and its applications."
   category:
-    name: NO_AUTH
-    shortName: Broken Authentication
-    displayName: Broken User Authentication (BUA)
-  subCategory: NOSQLI_BOOLEAN_BASED_QUERY_PARAM_REGEX
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: NOSQLI_BOOLEAN_BASED_REPLACE_BODY
   severity: MEDIUM
   tags:
     - Injection Attack
@@ -64,28 +64,22 @@ api_selection_filters:
       - multiple failed attempts
 
   method:
-    eq: "GET"
-  query_param:
-    for_one:
-      key:
-        regex: .*
-        extract: changed_query_key
-      value:
-        regex: .*
-        extract: changed_query_value
+    not_contains:
+      - OPTIONS
+      - GET
 execute:
   type: multiple
   requests:
     - req:
-        - delete_query_param: ${changed_query_key}
-        - add_query_param: 
-            !!str ${changed_query_key}[$regex]: "a^"
+        - replace_body: "{\"$regex\" : \"a^\" }"
         - validate:
             or:
               - response_code:
                   gte: 400
                   lt: 410
               - response_payload:
+                  length:
+                    gt: 0
                   not_contains:
                     - Error
                     - fail
@@ -98,14 +92,15 @@ execute:
                     - rate_limit
                     - rate limit
                     - multiple failed attempt
+                    - cloudflare
         - success: x2
         - failure: exit
     - req:
-        - delete_query_param: ${changed_query_key}
-        - add_query_param: 
-            !!str ${changed_query_key}[$regex]: ".*"
+        - replace_body: "{\"$regex\" : \".*\" }"
         - validate:
             response_payload:
+              length:
+                gt: 0
               neq: "${x1.response.body}"
               not_contains:
                 - rate-limit
@@ -114,16 +109,17 @@ execute:
                 - account is locked
                 - account is blocked
                 - multiple failed attempt
+                - cloudflare
         - success: x3
-        - failure: exit
+        - failure: exit        
     - req:
         - add_header:
             dummyHeader: dummyValue
-        - delete_query_param: ${changed_query_key}
-        - add_query_param: 
-            !!str ${changed_query_key}[$regex]: ".*"
+        - replace_body: "{\"$regex\" : \".*\" }"
         - validate:
             response_payload:
+              length:
+                gt: 0
               eq: "${x2.response.body}"
               not_contains:
                 - rate-limit
@@ -132,4 +128,6 @@ execute:
                 - account is locked
                 - account is blocked
                 - multiple failed attempt
-        - success: vulnerable            
+                - cloudflare
+        - success: vulnerable  
+        - failure: exit

@@ -1,17 +1,17 @@
-id: TIME_BASED_NOSQLI_JSON_BODY_REPLACE
+id: TIME_BASED_NOSQLI_QUERY_PARAM
 info:
-  name: "Time based NoSQL Injection test by replacing JSON body completely with sleep function parameter"
+  name: "Time based NoSQL Injection test for Query Parameters with Javascript"
   description: >
-    "Time-based NoSQL injection testing involves manipulating a NoSQL database query to include a time delay function, such as `sleep`, to assess the system's vulnerability to injection attacks. By completely replacing or modifying the JSON body of a request with a sleep function parameter, testers can determine if the system is vulnerable to execution of arbitrary commands. This technique helps identify potential security weaknesses where time-based delays indicate successful injection, revealing the presence of vulnerabilities that could be exploited for further attacks."
+    "Time-based NoSQL injection testing involves manipulating query parameters to include time delays in the responses. By injecting conditions that cause the database to pause before responding, attackers can infer whether the application is vulnerable based on the delay. This technique helps identify weaknesses in how the application handles query execution and can reveal potential security risks in NoSQL databases."
   details: >
-    "Time-based NoSQL injection testing by replacing the JSON body with a sleep function parameter involves crafting a malicious request where the entire JSON payload is replaced with a command that introduces a delay. When the request is processed, the database query includes this sleep function, causing the server to pause for the specified duration. This delay confirms that the injected command was executed, indicating a vulnerability to NoSQL injection. This method helps identify systems susceptible to executing arbitrary code through injection, highlighting potential security risks."
+    "Time-based NoSQL injection involves inserting payloads into query parameters that trigger intentional delays or time-based operations in the database response. Testers use this method to determine if the application's response time changes based on the injected conditions, indicating potential vulnerabilities. By analyzing these delays, testers can assess how the application handles and processes queries, revealing weaknesses in input validation and query logic."
   impact: >
-    "The impact of time-based NoSQL injection testing by replacing the JSON body with a sleep function parameter is significant. It reveals that the system is vulnerable to arbitrary code execution through injection attacks, which can lead to unauthorized access or manipulation of the database. Successful exploitation could allow attackers to execute custom commands, potentially compromising the integrity, confidentiality, and availability of the application. Additionally, it exposes weaknesses that could be further exploited to perform more severe attacks, including data breaches and system disruptions"
+    "The impact of time-based NoSQL injection can be severe, potentially allowing attackers to infer sensitive data or manipulate the application's behavior through response delays. This method can lead to performance degradation, unauthorized access, or exposure of internal system workings. It also poses risks of data breaches and system compromise if attackers exploit these vulnerabilities to bypass security controls or disrupt normal operations."
   category:
-    name: NO_AUTH
-    shortName: Broken Authentication
-    displayName: Broken User Authentication (BUA)
-  subCategory: TIME_BASED_NOSQLI_JSON_BODY_REPLACE
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: TIME_BASED_NOSQLI_QUERY_PARAM
   severity: MEDIUM
   tags:
     - Injection Attack
@@ -64,13 +64,19 @@ api_selection_filters:
       - multiple failed attempts
 
   method:
-    not_contains:
-      - GET
-      - OPTIONS
+    eq: "GET"
+  query_param:
+    for_one:
+      key:
+        regex: .*
+        extract: changed_query_key
+      value:
+        regex: .*
+        extract: changed_query_value
 
 wordLists:
   timeBasedPayloads:
-    - "{\"$where\" : \"sleep(4000)\" }"
+    - ";sleep(5000);"
 execute:
   type: multiple
   requests:
@@ -111,10 +117,13 @@ execute:
             - account is locked
             - account is blocked
             - multiple failed attempts
+            - cloudflare
+            - failure
     - success: x2
     - failure: exit
   - req:
-    - replace_body: ${timeBasedPayloads}
+    - modify_query_param:
+        changed_query_key: ${changed_query_value}${timeBasedPayloads}
     - validate:
         response_code:
           eq: 429        

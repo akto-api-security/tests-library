@@ -8,9 +8,9 @@ info:
   impact: >
     "The impact of Boolean-based NoSQL injection can be significant, leading to unauthorized access or manipulation of sensitive data. Successful exploitation can allow attackers to bypass authentication, view or alter data, and potentially compromise the entire NoSQL database. This vulnerability undermines data integrity and application security, posing risks to both user information and overall system reliability."
   category:
-    name: NO_AUTH
-    shortName: Broken Authentication
-    displayName: Broken User Authentication (BUA)
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
   subCategory: NOSQLI_BOOLEAN_BASED_QUERY_PARAM_JS
   severity: MEDIUM
   tags:
@@ -100,6 +100,7 @@ execute:
                     - rate_limit
                     - rate limit
                     - multiple failed attempt
+                    - cloudflare
         - success: x2
         - failure: exit
     - req:
@@ -110,7 +111,6 @@ execute:
             response_payload:
               neq: "${x1.response.body}"
               not_contains:
-              not_contains:
                 - rate-limit
                 - rate limit
                 - rate_limit
@@ -119,6 +119,8 @@ execute:
                 - multiple failed attempt
                 - "The server cannot process the request because it is malformed. It should not be retried"
                 - "That’s an error"
+                - "cloudflare"
+
         - success: x3
         - failure: exit            
     - req:
@@ -141,4 +143,6 @@ execute:
                 - multiple failed attempt
                 - "The server cannot process the request because it is malformed. It should not be retried"
                 - "That’s an error"
+                - cloudflare
         - success: vulnerable
+        - failure: exit
