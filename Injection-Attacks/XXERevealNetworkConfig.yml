@@ -90,7 +90,15 @@ execute:
             changed_query_key:  ${payloads}
 validate:
   response_payload:
-    regex: "(iface\\s+\\w+\\s+inet\\s+\\w+)|(auto\\s+\\w+)|(allow-hotplug\\s+\\w+)|(source\\s+/etc/network/interfaces.d/\\*)"
+    contains_all:
+      - inet
+      - iface
+      - auto
+      - allow-hotplug
+      - source
+      - network
+      - interfaces
+      - etc
     length:
       gt: 0
     not_contains:
