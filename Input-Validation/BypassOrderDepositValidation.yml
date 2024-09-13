@@ -1,0 +1,157 @@
+---
+id: BYPASS_ORDER_DEPOSIT_VALIDATION
+info:
+  name: "Bypass Deposit Validation for Orders and Pre-Orders"
+  description: |
+    "This test examines the ability to bypass the deposit validation mechanism for orders and pre-orders. The objective is to determine whether users can manipulate the deposit amount to secure a reservation or pre-order a product without meeting the required deposit criteria."
+  details: |
+    "The test involves sending API requests with different `depositAmount` values to check if the system accurately validates the deposit requirement before confirming an order or reservation. For example, a product that requires a deposit of `50` should only confirm the reservation if the correct deposit amount is provided. The test checks if the system can detect and reject attempts to provide a lower deposit amount (e.g., `10`) while still obtaining a reservation confirmation. This ensures the deposit validation process is robust and prevents users from bypassing the required payment conditions."
+  impact: |
+    "Bypassing deposit validation can lead to potential financial losses and inventory management issues. If users are able to secure reservations or pre-orders without providing the correct deposit, it could result in unpaid or incomplete transactions, reduced inventory control, and abuse of the ordering system. Ensuring proper validation and enforcement of deposit requirements is crucial to maintaining financial integrity, protecting against fraudulent activity, and ensuring fair business practices."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_ORDER_DEPOSIT_VALIDATION
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+  or:
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey
+        value:
+          extract: userVal
+wordLists:
+  probableInputParameters:
+    - depositAmount
+    - initialPayment
+    - downPayment
+    - upfrontAmount
+    - bookingDeposit
+    - preOrderAmount
+    - reservationFee
+    - advancePayment
+    - securityDeposit
+    - partialPayment
+    - initialDeposit
+    - holdingDeposit
+    - advanceAmount
+    - minimumDeposit
+    - amountDue
+
+  probableOutputPassParameters:
+    - reserved
+    - confirmed
+    - success
+    - reservationConfirmed
+    - bookingSuccess
+    - depositAccepted
+    - orderPlaced
+    - preOrderConfirmed
+    - reservationSuccess
+    - paymentReceived
+    - validationPassed
+    - orderConfirmed
+    - bookingConfirmed
+    - holdPlaced
+    - secured
+
+  attemptValues:
+    - 0
+    - 1
+    - 5
+    - 10
+
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues}
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+    contains_either: ${probableOutputPassParameters}

@@ -1,0 +1,182 @@
+---
+id: IMPROPER_GIFT_HANDLING
+info:
+  name: "Improper Gift Code Handling for Transactions"
+  description: |
+    "This test evaluates the system's ability to handle gift codes correctly in transactions. The objective is to identify vulnerabilities that might allow users to include gifts in their orders without meeting the required conditions, such as a minimum purchase amount."
+  details: |
+    "The test involves sending API requests that include gift item codes to check if the system properly validates the conditions under which a gift should be included in the order. For example, a gift might only be eligible when a certain purchase amount is met. This test checks whether the application enforces the proper validation rules to ensure that gifts are only included when all conditions are satisfied, preventing unauthorized use of gift codes."
+  impact: |
+    "Improper handling of gift codes can lead to financial losses and diminish the effectiveness of promotional strategies. If users can exploit gift handling by bypassing purchase conditions or manipulating transaction details, it can result in undue costs and an increased burden on inventory. Ensuring proper validation of gift code usage is crucial to maintain fair promotional practices, protect revenue, and uphold the integrity of marketing campaigns."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: IMPROPER_GIFT_HANDLING
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+  and:
+  - or:
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters1}"
+            extract: userKey1
+          value:
+            extract: userVal1
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters2}"
+            extract: userKey2
+          value:
+            extract: userVal2
+  - request_payload:
+      contains_either: "${probableInputVerificationParameters}"
+wordLists:
+  probableInputVerificationParameters:
+    - gift
+    - giftCode
+    - giftItemId
+    - giftCard
+    - giftVoucher
+    - giftToken
+    - giftID
+    - giftReference
+    - promotionalGift
+    - giftCertificate
+
+  probableInputParameters1:
+    - purchaseAmount
+    - totalAmount
+    - finalAmount
+    - itemTotal
+    - items
+    - cartValue
+    - orderValue
+    - checkoutTotal
+    - subtotal
+    - paymentAmount
+    - orderAmount
+    - basketTotal
+
+  probableInputParameters2:
+    - addGift
+    - includeGift
+    - applyGift
+    - useGift
+    - activateGift
+    - selectGift
+    - redeemGift
+    - enableGift
+    - attachGift
+    - giftOption
+
+  probableOutputParameters:
+    - success
+    - giftRedeemed
+    - giftIncluded
+    - giftApplied
+    - giftAdded
+    - giftProcessed
+    - giftConfirmed
+    - giftApproved
+    - giftActivated
+    - giftGranted
+    - giftValidated
+
+
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        userKey1: 1
+    - modify_body_param:
+        userKey2: true
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+    contains_either: ${probableOutputParameters}
