@@ -85,12 +85,15 @@ api_selection_filters:
       - account is locked
       - account is blocked
       - multiple failed attempts
+      - failure
+      - not available
+      - not found
 
 wordLists:
   random_ids:
     source: sample_data
     key: 
-      regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|^username$|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
+      regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|username|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
     all_apis: true
 
 execute:
@@ -160,3 +163,6 @@ validate:
       - account is locked
       - account is blocked
       - multiple failed attempts
+      - failure
+      - not available
+      - not found
