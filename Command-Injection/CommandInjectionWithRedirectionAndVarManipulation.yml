@@ -1,0 +1,152 @@
+id: COMMAND_INJECTION_WITH_REDIRECTION_AND_VAR_MANIPULATION
+info:
+  name: "Command injection by using Redirection and Variable Manipulation"
+  description: "Command injection by using redirection and variable manipulation involves exploiting input vulnerabilities to redirect command outputs or alter environment variables. This can allow attackers to execute unintended commands or access sensitive information by manipulating how commands are executed or how their results are handled. Effective input validation and secure handling of environment variables are crucial to prevent such exploits."
+  details: >
+    "Command injection via redirection and variable manipulation involves injecting malicious commands that use redirection operators or modify environment variables. Attackers can redirect outputs to files or other commands, or alter variables to change command behavior. This manipulation can lead to unauthorized command execution or exposure of sensitive data. Properly sanitizing inputs and securely managing environment variables are essential to mitigate these risks."
+  impact: "The impact of command injection via redirection and variable manipulation can be severe, enabling attackers to execute arbitrary commands or redirect sensitive data. This can result in unauthorized access, data breaches, and system compromise. The manipulation of environment variables or command outputs can lead to significant security vulnerabilities and operational disruptions, making robust input validation and secure variable handling crucial."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_WITH_REDIRECTION_AND_VAR_MANIPULATION
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+          value:
+            extract: changed_body_value
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+          value:
+            regex: .*
+            extract: changed_query_value
+wordLists:
+  specialOSPayloads:
+    - "id > output.txt"
+    - "id >> output.txt"
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param: 
+            changed_body_key:  ${specialOSPayloads}
+        - modify_query_param:
+            changed_query_key:  ${specialOSPayloads}
+        - validate:
+            and:
+              - response_code:
+                  gte: 200
+                  lt: 300
+              - response_payload:
+                  length:
+                    gt: 0
+                  not_contains:
+                    - Error
+                    - fail
+                    - invalid
+                    - expired
+                    - not found
+                    - account is locked
+                    - account is blocked
+                    - rate-limit
+                    - rate_limit
+                    - rate limit
+                    - multiple failed attempt
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            changed_body_key: "cat output.txt"
+        - modify_query_param:
+            changed_query_key:  "cat output.txt"
+        - validate:
+            response_payload:
+              length:
+                gt: 0
+              contains_all:
+                - "uid="
+                - "gid="
+                - "groups="
+              not_contains:
+                - Error
+                - Internal Server 
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+        - success: vulnerable          

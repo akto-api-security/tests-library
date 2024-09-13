@@ -1,0 +1,126 @@
+id: COMMAND_INJECTION_USER_AGENT_HEADER_CHAINED
+info:
+  name: "Command injection in User-Agent Header with Chained system instructions"
+  description: "Command injection in the User-Agent header with chained system instructions involves exploiting vulnerabilities in how an application processes HTTP headers. Attackers inject malicious commands into the User-Agent header, which are then executed in conjunction with other system instructions. By chaining these commands, attackers can execute complex operations, manipulate system behavior, or gain unauthorized access, exploiting improper handling of HTTP headers to compromise system security."
+  details: >
+    "Command injection in the User-Agent header with chained system instructions exploits vulnerabilities in the processing of HTTP headers. Attackers inject malicious payloads into the User-Agent header, which the application processes and executes alongside additional chained commands. This can involve manipulating header values to bypass security checks or execute harmful commands. The chaining of commands allows attackers to perform a series of operations, potentially leading to unauthorized access, data breaches, or system compromise."
+  impact: "The impact of command injection in the User-Agent header with chained system instructions can be significant, as it allows attackers to execute arbitrary commands by exploiting HTTP header vulnerabilities. This can lead to unauthorized access, data breaches, or system compromise by executing a sequence of malicious commands. The ability to chain commands through the User-Agent header enhances the attack’s complexity and potential severity, increasing risks to system integrity, confidentiality, and availability."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_USER_AGENT_HEADER_CHAINED
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_headers:
+    for_one:
+      key:
+        regex: "^User-Agent$|^user-agent$"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  specialOSPayloads:
+    - " && id && date"
+    - " || id && date"
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_header:
+        userKey: ${userVal}${specialOSPayloads}
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "uid="
+      - "gid="
+      - "groups="
+    contains_either:
+      - "-January-"
+      - "-February-"
+      - "-March-"
+      - "-April-"
+      - "-May-"
+      - "-June-"
+      - "-July-"
+      - "-August-"
+      - "-September-"
+      - "-October-"
+      - "-November-"
+      - "-December-"
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts        

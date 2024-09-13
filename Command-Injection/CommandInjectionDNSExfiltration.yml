@@ -1,0 +1,123 @@
+id: COMMAND_INJECTION_DNS_EXFILTRATION
+info:
+  name: "Command injection for DNS Exfiltration in HTTP request parameters"
+  description: "Command injection for DNS exfiltration in HTTP request parameters involves an attacker inserting malicious commands into HTTP parameters to trigger DNS requests. These requests can exfiltrate sensitive data to attacker-controlled domains. By leveraging this technique, attackers can stealthily transmit information outside the target network, bypassing conventional security measures and firewalls."
+  details: >
+    "Command injection for DNS exfiltration in HTTP request parameters allows attackers to inject commands that initiate DNS queries, embedding sensitive data within them. These DNS requests are sent to attacker-controlled domains, effectively exfiltrating information. This technique exploits improper input validation in web applications, enabling attackers to covertly transfer data and bypass traditional security defenses."
+  impact: "The impact of command injection for DNS exfiltration in HTTP request parameters includes the covert transfer of sensitive data to external attacker-controlled domains. This can lead to significant data breaches, compromising confidential information and potentially causing financial and reputational damage. Additionally, the stealthy nature of DNS exfiltration makes it challenging to detect, allowing prolonged exploitation of the vulnerability."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_DNS_EXFILTRATION
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+          value:
+            extract: changed_body_value
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+          value:
+            regex: .*
+            extract: changed_query_value
+wordLists:
+  specialOSPayloads:
+    - "nslookup akto.io"
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param: 
+            changed_body_key:  ${specialOSPayloads}
+        - modify_query_param:
+            changed_query_key:  ${specialOSPayloads}
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "Server:"
+      - "Address:"
+      - "Name:"
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
