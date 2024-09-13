@@ -9,6 +9,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: PYLOAD_FLASK_CONFIG_ACCESS_CONTROL
+  severity: HIGH
   tags:
     - Business logic
     - OWASP top 10
@@ -102,4 +103,6 @@ validate:
       - account is locked
       - account is blocked
       - multiple failed attempts
+      - failure
+      - cloudflare
    
