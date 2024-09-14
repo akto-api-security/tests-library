@@ -34,6 +34,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -82,18 +84,6 @@ wordLists:
     - ageRestriction
     - requiredAge
     - ageValidation
-
-  probableFailOutputParameters:
-    - fail
-    - not allowed
-    - access denied
-    - restricted
-    - underage
-    - permission denied
-    - invalid age
-    - age not met
-    - age verification failed
-    - prohibited
 
   probablePassOutputParameters:
     - allowed
@@ -170,7 +160,7 @@ execute:
           - Attention Required!
           - CloudFlare
           - "Sorry, you have been blocked"
-          contains_either: ${probableFailOutputParameters}
+          contains_either: ${probablePassOutputParameters}
     - success: x2
     - failure: exit
   - req:
@@ -213,5 +203,9 @@ execute:
           - Attention Required!
           - CloudFlare
           - "Sorry, you have been blocked"
-          contains_either: "${probablePassOutputParameters}"
+        or:
+        - response_payload:
+            contains_either: "${probablePassOutputParameters}"
+        - response_payload:
+            eq: "${x1.response.body}"
     - success: vulnerable

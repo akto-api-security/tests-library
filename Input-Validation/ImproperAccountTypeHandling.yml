@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -69,14 +71,13 @@ api_selection_filters:
         extract: outputUserKey
       value:
         extract: outputUserValue
-  or:
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          extract: userVal
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        extract: userVal
 wordLists:
   probableInputParameters:
     - accountType
@@ -162,4 +163,4 @@ validate:
       key:
         eq: "${outputUserKey}"
       value:
-        neq: "${attemptDowngradeEnums}"
+        neq: "${outputUserValue}"

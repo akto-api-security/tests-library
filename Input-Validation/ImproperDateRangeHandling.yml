@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -161,3 +163,5 @@ validate:
     - Attention Required!
     - CloudFlare
     - "Sorry, you have been blocked"
+    - "failure"
+    - "not found"
