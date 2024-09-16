@@ -1,0 +1,131 @@
+---
+id: MANIPULATING_TRANSACTION_REVERSAL
+info:
+  name: "Manipulating Transaction Reversal"
+  description: |
+    "This test evaluates the system's ability to properly handle and validate transaction reversal requests, ensuring that reversals are executed only under valid conditions and do not allow unauthorized or repeated attempts. The objective is to identify vulnerabilities that could allow users to manipulate transaction reversal processes to gain unauthorized refunds or rollback transactions multiple times."
+  details: |
+    "The test involves sending API requests with various reasons or headers to reverse a transaction, checking if the system correctly validates the reversal request's legitimacy. For example, users might attempt to reverse a transaction multiple times using different reasons or retrying a previously successful reversal request with a dummy header, potentially leading to unauthorized refunds or repeated rollbacks. The test checks whether the application consistently enforces reversal validation rules, preventing abuse of the transaction reversal process."
+  impact: |
+    "Manipulating transaction reversal can lead to unauthorized refunds, financial losses, and abuse of the transaction management system. If users can manipulate reversal requests to execute multiple rollbacks or gain unauthorized refunds, it can compromise the system's integrity, lead to fraudulent activities, and impact overall trust in the financial processes. Ensuring robust validation and control over transaction reversal processes is crucial to prevent exploitation and maintain a secure transaction environment."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: MANIPULATING_TRANSACTION_REVERSAL
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts  
+    contains_either: ${probableOutputParameters}
+
+wordLists:
+  probableOutputParameters:
+    - transaction reversed
+    - reversal successful
+    - transaction canceled
+    - refund processed
+    - reversal complete
+    - transaction voided
+    - reversal confirmed
+    - amount refunded
+    - transaction undone
+    - transaction void
+    - reversal approved
+    - reversal executed
+    - refund successful
+    - transaction nullified
+    - refund issued
+    - reversal authorized
+    - transaction reversal completed
+    - refund granted
+    - reversal acknowledged
+
+execute:
+  type: single
+  requests:
+  - req: []
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+    contains_either: ${probableOutputParameters}

@@ -1,19 +1,19 @@
 ---
-id: MANIPULATE_FEES
+id: BYPASS_MINIMUM_ORDER_QUANTITY
 info:
-  name: "Manipulate Fees or Price in Transactions"
+  name: "Bypass Minimum Order Quantity Requirements to Exploit Free Add-Ons"
   description: >
-    "This test evaluates whether the system correctly handles and validates transaction fees or product prices. The objective is to identify potential vulnerabilities that could allow users to manipulate the price of items or associated fees during a transaction, potentially resulting in financial loss or fraud."
+    "This test evaluates the system's ability to properly enforce minimum order quantity requirements for discounts, free add-ons, or promotional offers. The objective is to identify vulnerabilities that could allow users to manipulate order quantities to gain unauthorized benefits, such as free shipping or discounted items, without meeting the minimum required conditions."
   details: >
-    "The test involves sending API requests with modified fee or price values to check if the system properly validates and enforces the correct amounts. For example, manipulating the price of an item to a significantly lower value than intended or altering the fees associated with a payment method (like setting a fee to zero) could bypass the normal transaction validation checks. The test ensures that the application correctly calculates total costs, validates fees, and prevents unauthorized changes to prices or fees."
+    "The test involves sending API requests with manipulated product quantities and total amounts to check if the system accurately validates the minimum order requirements. For example, users may attempt to add low-cost items to artificially inflate the total order amount and qualify for free add-ons or discounts. The test checks whether the application enforces the rules correctly to prevent users from exploiting minimum order quantity thresholds to access promotional benefits without meeting the genuine requirements."
   impact: >
-    "Manipulating fees or prices in transactions can lead to significant financial losses and undermine trust in the payment system. If users are able to alter prices or fees to their advantage, it could result in fraudulent transactions, reduced revenue, and potential damage to the business's reputation. Ensuring robust validation of all price and fee parameters is essential to maintain financial integrity, protect against fraud, and uphold fair business practices."
+    "Bypassing minimum order quantity requirements can lead to financial losses, abuse of promotional offers, and unfair advantages for certain users. If users can manipulate order quantities to gain unauthorized discounts or free add-ons, it undermines the integrity of the promotions and impacts the business's profitability. Ensuring robust validation of minimum order requirements is crucial to maintain fair pricing strategies, protect revenue, and prevent exploitation of promotional offers."
 
   category:
     name: INPUT
     shortName: Input Validation
     displayName: Input Validation (INPUT)
-  subCategory: MANIPULATE_FEES
+  subCategory: BYPASS_MINIMUM_ORDER_QUANTITY
   severity: LOW
   tags:
   - Business logic
@@ -63,13 +63,6 @@ api_selection_filters:
     - account is blocked
     - multiple failed attempts
 
-    # Here we check for the modified values of contextual keys in response.
-    for_one:
-      key:
-        regex: "${probableOutputParameters}"
-        extract: outputUserKey
-      value:
-        extract: outputUserValue
   or:
   # In case the amount is being sent as a number
   - request_payload:
@@ -91,71 +84,51 @@ api_selection_filters:
           extract: userVal2
 wordLists:
   probableInputParameters:
-  # Fees-related parameters
-    - fees
-    - fee
-    - charge
-    - serviceFee
-    - processingFee
-    - handlingFee
-    - surcharge
-    - additionalCharge
-    - transactionFee
-    - extraCost
-    - cost
-    - convenienceFee
-    - paymentFee
-    - commission
-    - gatewayFee
-    - platformFee
-    - deliveryFee
-    - shippingCharge
-    - administrativeFee
-    - reservationFee
-    - bookingFee
-    - checkoutFee
-    - financeCharge
-
-  # Price-related parameters
-    - price
-    - basePrice
-    - unitPrice
-    - itemCost
-    - productPrice
-    - salePrice
-    - listPrice
-    - discountedPrice
-    - retailPrice
-    - catalogPrice
-    - netPrice
-    - subtotal
-    - totalPrice
-    - quotedPrice
-    - finalPrice
-    - adjustedPrice
+    - totalProducts
+    - productQuantity
+    - quantity
+    - itemCount
+    - orderQuantity
+    - numberOfItems
+    - unitsOrdered
+    - cartQuantity
+    - productCount
+    - totalItems
+    - orderTotalItems
+    - itemsInCart
+    - quantityOrdered
+    - purchasedItems
+    - itemsCount
 
   probableOutputParameters:
-    - transactionAmount
-    - amount
-    - finalAmount
-    - balance
-    - paid
-    - bill
-    - totalAmount
-    - totalPaid
-    - payableAmount
-    - netAmount
-    - invoiceAmount
-    - dueAmount
+    - free shipping
+    - discount applied
+    - promotion applied
+    - special offer
+    - reduced price
+    - free item added
+    - bonus included
+    - free delivery
+    - discount granted
+    - free gift
+    - price reduced
+    - offer valid
+    - shipping waived
+    - order qualified for discount
+    - no shipping charge
+
+  attemptValues:
+    - 0
+    - 1
 
 execute:
   type: single
   requests:
   - req:
     - modify_body_param:
-        userKey: 0
+        userKey: ${attemptValues}*1
     - modify_body_param:
-        userKey2: "0"
+        userKey2: ${attemptValues}
 
 validate:
   response_code:
@@ -194,9 +167,5 @@ validate:
     - Attention Required!
     - CloudFlare
     - "Sorry, you have been blocked"
-    for_one:
-      key:
-        eq: "${outputUserKey}"
-      value:
-        neq: "${outputUserValue}"
+    contains_either: ${probableOutputParameters}
 

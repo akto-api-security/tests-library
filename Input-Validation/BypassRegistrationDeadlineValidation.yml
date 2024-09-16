@@ -1,0 +1,268 @@
+---
+id: BYPASS_REGISTRATION_AND_BOOKING_DATE_HANDLING
+info:
+  name: "Bypass Registration and Booking Date Handling"
+  description: |
+    "This test evaluates the system's ability to correctly handle and enforce deadlines for registrations and bookings for events or services. The objective is to identify vulnerabilities that could allow users to bypass registration or booking deadlines and gain access or confirm participation after the cutoff date."
+  details: |
+    "The test involves sending API requests with modified registration or booking dates to check if the system properly validates and enforces the deadlines. For example, an attempt to register for an event after the registration deadline should be rejected, but changing the date to one before the deadline might be accepted if validation is inadequate. Similarly, booking for an event that is fully booked should fail, but modifying the booking date might bypass this restriction. The test checks whether the application correctly applies rules for both registration and booking deadlines, including handling various date formats like standard dates and epoch timestamps."
+  impact: |
+    "Bypassing registration and booking date handling can lead to various issues, including overbooked events, logistical challenges, unfair access, and dissatisfaction among legitimate users who comply with deadlines. If users can manipulate dates to register or book past deadlines, it compromises the integrity and planning of events or services. Ensuring robust validation for both registration and booking dates, including different date formats, is essential to maintain fairness, orderly processes, and prevent unauthorized access or participation."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_REGISTRATION_DEADLINE_HANDLING
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+  or:
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey
+        value:
+          regex: "\b\\d{4}-\\d{2}-\\d{2}\b"
+          extract: userVal
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey2
+        value:
+          datatype: number
+          extract: userVal2
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey3
+        value:
+          regex: "\b\\d{10}\b"
+          extract: userVal3
+
+wordLists:
+  probableInputParameters:
+    - registrationDate
+    - signUpDate
+    - registrationTimestamp
+    - enrollmentDate
+    - dateOfRegistration
+    - joinDate
+    - dateRegistered
+    - applicationDate
+    - registrationEpoch
+    - deadlineDate
+    - eventRegistrationDate
+    - registrationTime
+    - signupEpoch
+    - bookingDate
+    - reservationDate
+    - eventBookingDate
+    - scheduleDate
+    - accessDate
+    - entryDate
+    - bookingTimestamp
+    - checkInDate
+    - eventDate
+    - appointmentDate
+
+  probableFailOutputParameters:
+    - registrationFailed
+    - registration failed
+    - failed
+    - deadlineExceeded
+    - pastDeadline
+    - registrationClosed
+    - notRegistered
+    - submissionFailed
+    - registrationDenied
+    - registrationNotAllowed
+    - registrationInvalid
+    - deadlinePassed
+    - enrollmentFailed
+    - closedForRegistration
+    - bookingFailed
+    - bookingFull
+    - bookingClosed
+    - eventFull
+    - accessDenied
+    - bookingUnavailable
+    - reservationRejected
+
+  probablePassOutputParameters:
+    - success
+    - confirmed
+    - registrationConfirmed
+    - registrationSuccess
+    - registrationAccepted
+    - enrolled
+    - participationConfirmed
+    - signUpSuccessful
+    - registrationComplete
+    - validRegistration
+    - enrollmentConfirmed
+    - applicationAccepted
+    - successfullyRegistered
+    - bookingConfirmed
+    - reservationConfirmed
+    - bookingSuccess
+    - eventAccessGranted
+    - entryAllowed
+    - spotReserved
+    - appointmentConfirmed
+    - accessApproved
+
+  attemptValues1:
+    - "2024-01-01"
+    - "2023-01-01"
+    - "2022-01-01"
+  
+  attemptValues2:
+    - 1704067200
+    - 1672531200
+    - 1640995200
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - modify_body_param:
+        userKey1: ${userVal1}
+    - modify_body_param:
+        userKey2: ${userVal2}
+    - modify_body_param:
+        userKey3: ${userVal3}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - "Sorry, you have been blocked"
+          contains_either: ${probableFailOutputParameters}
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey1: ${attemptValues1}
+    - modify_body_param:
+        userKey2: "1*${attemptValues2}"
+    - modify_body_param:
+        userKey3: "${attemptValues2}"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - "Sorry, you have been blocked"
+          contains_either: "${probablePassOutputParameters}"
+    - success: vulnerable
