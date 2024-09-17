@@ -1,0 +1,242 @@
+---
+id: BYPASS_SUBSCRIPTION_CANCELLATION_HANDLING
+info:
+  name: "Bypass Subscription Cancellation Handling"
+  description: |
+    "This test evaluates the system's ability to handle and enforce subscription cancellation policies correctly. The objective is to identify vulnerabilities that could allow users to manipulate the cancellation process to avoid payments while retaining access to subscription services."
+  details: |
+    "The test involves sending API requests with manipulated cancellation dates to check if the system properly validates and enforces cancellation rules. For example, users might attempt to set a future cancellation date that allows them to avoid payment for the next billing cycle while still retaining access to the service. The test checks whether the application consistently applies subscription cancellation policies, preventing users from bypassing payment obligations while maintaining service access."
+  impact: |
+    "Bypassing subscription cancellation handling can lead to revenue loss, abuse of subscription services, and unfair advantages for certain users. If users can manipulate cancellation dates to extend access without making payments, it undermines the business model and affects profitability. Ensuring robust validation of subscription cancellations is crucial to maintaining fair subscription practices, protecting revenue, and preventing exploitation of cancellation policies."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_SUBSCRIPTION_CANCELLATION_HANDLING
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+  or:
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey
+        value:
+          regex: "\b\\d{4}-\\d{2}-\\d{2}\b"
+          extract: userVal
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey2
+        value:
+          datatype: number
+          extract: userVal2
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey3
+        value:
+          regex: "\b\\d{10}\b"
+          extract: userVal3
+
+wordLists:
+  probableInputParameters:
+    - cancelDate
+    - subscriptionCancelDate
+    - subscriptionEndDate
+    - terminationDate
+    - endSubscriptionDate
+    - cancelationDate
+    - serviceEndDate
+    - stopSubscriptionDate
+    - subscriptionTerminationDate
+    - deactivationDate
+    - accessEndDate
+    - lastActiveDate
+    - endingDate
+    - serviceCutoffDate
+    - dateToCancel
+    - subscriptionExpiryDate
+
+  probableOutputParameters:
+    - accessUntil
+    - allowedTill
+    - activeUntil
+    - validThrough
+    - serviceAccessEnd
+    - serviceEndsOn
+    - accessExpires
+    - availableUntil
+    - subscriptionValidTill
+    - canAccessUntil
+    - serviceExpiryDate
+    - usableUntil
+    - terminationEffective
+    - accessCutoffDate
+    - subscriptionAccessDate
+    - serviceAllowedTill
+
+  attemptValues1:
+    - "2026-12-12"
+    - "2027-12-12"
+    - "2028-12-12"
+  
+  attemptValues2:
+    - 1797033600
+    - 1828569600
+    - 1860192000
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - modify_body_param:
+        userKey1: ${userVal1}
+    - modify_body_param:
+        userKey2: ${userVal2}
+    - modify_body_param:
+        userKey3: ${userVal3}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - "Sorry, you have been blocked"
+          for_one:
+            key:
+              regex: "${probableOutputParameters}"
+              extract: outputUserKey1
+            value:
+              extract: outputUserValue1
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey1: ${attemptValues1}
+    - modify_body_param:
+        userKey2: "1*${attemptValues2}"
+    - modify_body_param:
+        userKey3: "${attemptValues2}"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - "Sorry, you have been blocked"
+          for_one:
+            key:
+              eq: "${outputUserKey1}"
+            value:
+              neq: "${outputUserValue1}"
+    - success: vulnerable

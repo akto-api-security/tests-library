@@ -1,0 +1,160 @@
+---
+id: MANIPULATING_ORDER_COMPOSITION_VALIDATION
+info:
+  name: "Manipulating Order Composition Validation"
+  description: |
+    "This test evaluates the system's ability to correctly handle and validate the composition of an order, especially in scenarios involving partial returns or modifications to the order items. The objective is to identify vulnerabilities that could allow users to manipulate the order composition to gain unauthorized refunds or retain promotional pricing benefits."
+  details: |
+    "The test involves sending API requests with modified order item lists to check if the system accurately validates the original composition of the order. For example, a user may attempt to partially return items from a bundled purchase while retaining the discounted pricing or promotional benefits associated with the original order. The test checks whether the application properly enforces order validation rules, preventing users from exploiting the system by altering the order composition or selectively returning items."
+  impact: |
+    "Manipulating order composition validation can lead to financial losses, abuse of return policies, and exploitation of promotional pricing. If users can alter the order items and obtain refunds without returning all qualifying products, it undermines the integrity of pricing strategies and affects profitability. Ensuring robust validation of order composition, particularly during returns or modifications, is essential to maintain fair pricing, protect revenue, and prevent abuse of promotional offers."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: MANIPULATING_ORDER_COMPOSITION_VALIDATION
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts  
+  and:
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey
+        value:
+          extract: userVal
+  - request_payload:
+      contains_either: ${probableInputValidationParameters}
+
+wordLists:
+  probableInputParameters:
+    - items
+    - products
+    - orderItems
+    - purchasedItems
+    - cartItems
+    - itemList
+    - productList
+    - orderedProducts
+    - goods
+    - merchandise
+    - articleList
+    - purchaseDetails
+    - itemDetails
+    - bundleItems
+    - lineItems
+
+  probableInputValidationParameters:
+    - orderId
+    - transactionId
+    - purchaseId
+    - saleId
+    - invoiceId
+    - checkoutId
+    - receiptNumber
+    - orderReference
+    - orderNumber
+    - purchaseReference
+    - paymentId
+    - orderCode
+    - transactionReference
+
+  productValues:
+    source: sample_data
+    key:
+      regex: items|products|orderItems|purchasedItems|cartItems|productList|orderedProducts
+    location: payload
+
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: ${productValues}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      gte: 90
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"

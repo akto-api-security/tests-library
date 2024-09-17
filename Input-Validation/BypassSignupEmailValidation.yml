@@ -1,0 +1,195 @@
+---
+id: BYPASS_SIGNUP_EMAIL_VALIDATION
+info:
+  name: "Bypass Signup Email Validation"
+  description: >
+    "This test evaluates the system's ability to properly handle and validate email addresses during the signup process, particularly when users attempt to exploit the system by creating multiple accounts to continuously access free trials or other promotional offers. The objective is to identify vulnerabilities that could allow users to bypass email validation and reuse similar email addresses to gain repeated access."
+  details: >
+    "The test involves sending API requests with variations of the same email address, such as using 'user+1@example.com' or 'user+2@example.com,' to check if the system accurately detects and prevents multiple accounts from being created with essentially the same email. The test checks whether the application implements effective email validation and filtering mechanisms, including support for detecting patterns like aliasing or sub-addressing (e.g., using '+' symbol in emails) that could be exploited to create numerous accounts with minimal variations."
+  impact: >
+    "Bypassing signup email validation can lead to abuse of free trials, promotional offers, and other limited-access services. If users can manipulate email addresses to create multiple accounts, it undermines the effectiveness of promotional strategies, leads to revenue loss, and unfairly burdens resources. Ensuring robust validation and deduplication of email addresses during signup is essential to protect against exploitation, maintain the integrity of offers, and ensure fair access for all users."
+  
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_SIGNUP_EMAIL_VALIDATION
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+
+  url:
+    contains_either: ${probableInputValidationParameters}    
+  and:
+    - request_payload:
+        for_one:
+          key:
+            regex: "username|^user$|^userid$|^user_id$|^login$|^login_id$|email|^account$|^account_id$|^member$|^member_id$|^id$|^user_name$|^uname$|^identifier$|^user_identifier$|^admin$|^nickname$|^handle$|^alias$|^principal$|^profile$|^profile_id$|^name$|^signin$|^auth$|^credential$|^user_login$|^user_account$|^user_email$|^employee$|^employee_id$|^operator$|^customer_id$|^subscriber$|^subscriber_id$|^participant$|^participant_id$|client_id|^userLoginID$|^client-name$"
+            extract: userKey
+          value:
+            regex: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+    - request_payload:
+        for_one:
+          key:
+            regex: "password|^pass$|^pwd$|^user_password$|^userpass$|passwd|^user_pwd$|^password1$|^userPass$|^login_password$|^loginpassword$|^user_pass$|^access_password$|^secret$|^user_secret$"
+            extract: passKey    
+
+wordLists:
+  probableInputParameters:
+    - includePendingTransactions
+    - pending
+    - includeAll
+  probableInputValidationParameters:
+      - register
+      - signup
+      - "users/create"
+      - "account/create"
+      - "create_account"
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: dummymail@dummy.com
+    - modify_body_param:
+        passKey: Default1!
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - "Sorry, you have been blocked"
+          - rate limit
+          - rate_limit
+          - rate limit
+          - account is locked
+          - account is blocked
+          - multiple failed attempt    
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: dummymail+1@dummy.com
+    - modify_body_param:
+        passKey: Default1!
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - "Sorry, you have been blocked"
+          - rate limit
+          - rate_limit
+          - rate limit
+          - account is locked
+          - account is blocked
+          - multiple failed attempt    
+    - success: vulnerable
