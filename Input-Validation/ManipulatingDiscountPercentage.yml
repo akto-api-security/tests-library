@@ -1,0 +1,156 @@
+---
+id: MANIPULATING_DISCOUNT_PERCENTAGE
+info:
+  name: "Manipulating Discount Percentage"
+  description: |
+    "This test evaluates the system's ability to handle and validate discount percentages correctly, ensuring that discounts applied to transactions are within allowable limits. The objective is to identify vulnerabilities that could allow users to manipulate discount percentages beyond permitted values, potentially leading to unauthorized discounts or financial losses."
+  details: |
+    "The test involves sending API requests with manipulated discount percentages to determine whether the application properly validates and enforces discount limits. For example, a user might attempt to set a discount percentage to an extreme value like '100.00' to check if the server accepts it. The test checks whether the application properly validates discount percentages against a list of allowable ranges or predefined rules."
+  impact: |
+    "Improper handling of discount percentages can result in unauthorized discounts, financial losses, and potential exploitation by malicious users. If the server allows clients to set excessive discount percentages without validation, it may lead to substantial financial losses and undermine the integrity of promotional pricing. Ensuring robust validation of discount percentages is essential to prevent abuse and maintain the application's financial stability."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: MANIPULATING_DISCOUNT_PERCENTAGE
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    for_one:
+      key:
+        regex: "${probableOutputParameters}"
+        extract: outputUserKey
+      value:
+        extract: outputUserValue
+
+  request_payload:
+    contains_either: ${probableInputValidationParameters}
+
+wordLists:
+  probableInputValidationParameters:
+    - discount_code
+    - coupon_code
+    - promo_code
+    - voucher_code
+    - discount
+    - discountType
+    - promotionCode
+    - dealCode
+
+  probableOutputParameters:
+    - discount_amount
+    - discountValue
+    - discountPrice
+    - discountApplied
+    - totalDiscount
+    - reducedAmount
+    - adjustedAmount
+    - discountTotal
+    - newTotal
+    - priceAfterDiscount
+
+  attemptValues:
+    - discount_percentage
+    - discountPercent
+    - discountRate
+    - discountValuePercentage
+    - percentDiscount
+    - promoPercentage
+    - voucherPercentage
+    - appliedDiscountPercentage
+
+execute:
+  type: single
+  requests:
+  - req:
+    - add_body_param:
+        userKey: ${attemptValues} 
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+    for_one:
+      key:
+        eq: "${outputUserKey}"
+      value:
+        neq: "${outputUserValue}"

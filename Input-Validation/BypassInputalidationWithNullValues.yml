@@ -1,0 +1,137 @@
+---
+id: BYPASS_INPUT_VALIDATION_WITH_NULL_VALUES
+info:
+  name: "Bypass Input Validation with Null Values"
+  description: >
+    "This test evaluates the system's ability to handle and validate inputs correctly when null characters or null values are included. The objective is to identify vulnerabilities that could allow users to bypass input validation checks by inserting null characters or submitting null values, potentially leading to security breaches or unexpected application behavior."
+  details: >
+    "The test involves sending API requests with null characters (`\u0000`) or null values included within the input data, such as in fields for passwords, usernames, or other sensitive information. For example, a user might insert a null character after a valid string (e.g., 'oldpassword\u0000') to manipulate how the application interprets the input or to bypass validation checks. The test checks whether the application properly sanitizes and handles inputs containing null characters or null values, ensuring that input validation cannot be bypassed."
+  impact: >
+    "Bypassing input validation with null values can lead to security vulnerabilities, unauthorized access, data corruption, or other unexpected behaviors. If users can manipulate input validation by inserting null characters, they could potentially gain access to restricted areas, bypass authentication mechanisms, or exploit other weaknesses in the application. Ensuring robust validation and sanitization of all input data, including null characters, is crucial to maintaining the security and integrity of the application."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_INPUT_VALIDATION_WITH_NULL_VALUES
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extract: userKey
+      value:
+        extract: userVal
+
+wordLists:
+  nullValues:
+    - \u0000
+    - \0
+    - "NULL"
+    - "null"
+    - "0000"
+    - \x00
+    - "\0"
+    - "\x00"
+    - NUL
+    - "NUL"
+    - "\u0000"
+    - "\000"
+    - 0x00
+    - "\u0000null"
+
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}${nullValues}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      gte: 90
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
