@@ -1,0 +1,69 @@
+id: X_FRAME_OPTIONS_DEFINED_VIA_META_TAG
+info:
+  name: X-Frame-Options Defined Via Meta Tag
+  description: "The response contains an X-Frame-Options header defined via a meta tag."
+  details: >
+    ""
+  impact: >
+    ""
+  category:
+    name: MHH
+    shortName: Misconfigured HTTP Headers
+    displayName: Misconfigured HTTP Headers (MHH)
+  subCategory: X_FRAME_OPTIONS_DEFINED_VIA_META_TAG
+  severity: LOW
+  tags: 
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+    # TODO: Fix references, cve, cwe
+  references:
+    - "https://web.dev/security-headers/"
+    - "https://www.keycdn.com/blog/http-security-headers"
+    - "https://www.invicti.com/white-papers/whitepaper-http-security-headers"
+  cwe:
+    - CWE-693
+  cve:
+    - CVE-2022-41915
+    - CVE-2022-37436
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  request_payload:
+    regex: "<meta[^>]*http-equiv=['\"]X-Frame-Options['\"][^>]*>"
+
+execute:
+  type: single
+  requests:
+    - req: []
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_headers:
+    - for_one:
+        key:
+          not_contains:
+            - Cache-Control
+            - Clear-Site-Data
+            - Content-Security-Policy
+            - Cross-Origin-Embedder-Policy
+            - Cross-Origin-Opener-Policy
+            - Cross-Origin-Resource-Policy
+            - Permissions-Policy
+            - Pragma
+            - Referrer-Policy
+            - Strict-Transport-Security
+            - X-Content-Type-Options
+            - X-Permitted-Cross-Domain-Policies
+
+  request_payload:
+    regex: "<meta[^>]*http-equiv=['\"]X-Frame-Options['\"][^>]*>"
+
+strategy:
+  run_once: /
