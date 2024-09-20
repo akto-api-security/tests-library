@@ -5,7 +5,7 @@ info:
   description: >
     "This test evaluates how well the application handles and validates weight input parameters in shipping or logistics-related APIs. The objective is to identify potential vulnerabilities or flaws that may arise from manipulating weight values, which could affect shipping costs and other logistics functions."
   details: >
-    "The test involves modifying weight parameters in API requests to observe how the system calculates and responds to changes in weight. For instance, the test checks whether altering the weight from `5kg` to `1kg` correctly adjusts the shipping cost from `20` to `5`. By testing various weight values, the aim is to ensure that the system accurately computes shipping costs and handles weight parameters without errors or inconsistencies. The test also verifies that the system enforces proper validation to prevent manipulation of weight values."
+    "The test involves modifying weight parameters in API requests to observe how the system calculates and responds to changes in weight."
   impact: >
     "Improper handling of weight input parameters can lead to significant issues, such as incorrect shipping costs, financial losses, or logistical errors. If an attacker or user can manipulate weight values, they may exploit the system to reduce shipping costs fraudulently or cause discrepancies in logistics operations. This could result in financial losses for the company, customer dissatisfaction, and potential damage to the company's reputation. Ensuring accurate and secure weight handling is crucial for maintaining proper billing, operational efficiency, and customer trust."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -77,6 +79,7 @@ api_selection_filters:
         extract: userKey
       value:
         extract: userVal
+
 wordLists:
   probableInputParameters:
     - weight

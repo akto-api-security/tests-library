@@ -5,7 +5,7 @@ info:
   description: >
     "This test evaluates how the application calculates and displays the account balance, particularly when including or excluding pending transactions. The objective is to identify flaws or inconsistencies in balance calculations that could lead to incorrect financial information being presented to the user."
   details: >
-    "The test focuses on scenarios where users may request an account balance with or without including pending transactions. It involves submitting requests with different parameters, such as `includePendingTransactions: true` or `includePendingTransactions: false`, to see how the system calculates the balance. The test checks for consistency in the balance returned, ensuring that the application accurately includes or excludes pending transactions based on the request. For example, when pending transactions are included, the balance should reflect the updated total; when they are excluded, it should show the balance before those transactions."
+    "The test focuses on scenarios where users may request an account balance with or without including pending transactions."
   impact: >
     "Improper handling of account balance calculations can lead to significant issues, such as presenting incorrect financial information to users, causing confusion, or leading to financial disputes. Inaccurate balances could affect decision-making for users and result in unauthorized transactions or overdrafts. Ensuring accurate and consistent balance calculation is critical to maintain trust, prevent potential legal issues, and safeguard both the user's and the organization's financial integrity."
   
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -70,30 +72,20 @@ api_selection_filters:
         extract: outputUserKey
       value:
         extract: outputUserValue
-  or:
-  # In case the amount is being sent as a number
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          datatype: boolean
-          extract: userVal
-  # In case the amount is being sent as a string
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey2
-        value:
-          regex: "^(?i)(true|false)$"
-          extract: userVal2
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        extract: userVal
+
 wordLists:
   probableInputParameters:
     - includePendingTransactions
     - pending
     - includeAll
+
   probableOutputParameters:
     - balance
     - amountLeft
@@ -124,6 +116,37 @@ wordLists:
 
   failValues:
     - false
+  
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
 
 execute:
   type: multiple
@@ -138,36 +161,7 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
+          not_contains: ${responseErrorList}
           for_one:
             key:
               regex: "${probableOutputParameters}"
@@ -186,36 +180,7 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
+          not_contains: ${responseErrorList}
           for_one:
             key:
               eq: "${outputUserKey1}"
