@@ -1,0 +1,217 @@
+---
+id: BYPASS_AGE_RESTRICTION
+info:
+  name: Bypass Age Restrictions
+  description: |
+    "This test involves attempting to bypass age restrictions implemented in an application or website by manipulating input parameters, such as date of birth or age fields, to gain unauthorized access to age-restricted content or services. The objective is to ensure that the system accurately verifies and enforces age-related access controls."
+  details: |
+    "The test focuses on altering age-related parameters, such as changing the date of birth or directly modifying age fields in requests, to determine if the application properly validates and restricts access based on the user's actual age. Techniques may include submitting a date of birth that is older than the current date, using negative or unrealistic values, or manipulating the client-side code to bypass checks. The test also checks if the system cross-references user-provided data with other verification methods, such as government IDs or third-party services, to ensure accuracy."
+  impact: |
+    "Failure to properly enforce age restrictions can have serious legal, regulatory, and reputational consequences. If an application allows unauthorized access to age-restricted content or services, it could result in exposure to inappropriate material, violation of privacy laws, or penalties for non-compliance with regulations. Robust validation mechanisms are essential to prevent such bypasses, ensuring compliance with legal requirements and protecting both the business and its users."
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_AGE_RESTRICTION
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+
+wordLists:
+  probableInputParameters:
+    - age
+    - limit
+    - birthDate
+    - dob
+    - dateOfBirth
+    - userAge
+    - ageCheck
+    - accessAge
+    - minAge
+    - maxAge
+    - ageRestriction
+    - requiredAge
+    - ageValidation
+
+  probableFailOutputParameters:
+    - fail
+    - not allowed
+    - access denied
+    - restricted
+    - underage
+    - permission denied
+    - invalid age
+    - age not met
+    - age verification failed
+    - prohibited
+
+  probablePassOutputParameters:
+    - allowed
+    - access granted
+    - verified
+    - approved
+    - unrestricted
+    - access permitted
+    - eligible
+    - authorized
+    - age verified
+    - access confirmed
+
+  passAge:
+    - 18
+    - 21
+    - 25
+    - 30
+    - 35
+    - 40
+    - 50
+    - 60
+
+  failAge:
+    - 10
+    - 12
+    - 13
+    - 15
+    - 16
+    - 17
+    - 5
+    - 8
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: "${failAge}"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - "Sorry, you have been blocked"
+          contains_either: ${probableFailOutputParameters}
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: "${passAge}"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - "Sorry, you have been blocked"
+          contains_either: "${probablePassOutputParameters}"
+    - success: vulnerable
