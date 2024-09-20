@@ -1,0 +1,148 @@
+id: NOSQLI_BOOLEAN_BASED_QUERY_PARAM_JS
+info:
+  name: "Boolean Based NoSQL Injection test for Query Parameters with Javascript"
+  description: >
+    "Boolean-based NoSQL injection involves manipulating query parameters in JavaScript to test for vulnerabilities. By injecting boolean conditions, an attacker can observe application responses to determine if the database query logic is exposed and exploitable. This testing method helps identify flaws in input validation and query handling within NoSQL databases. It is crucial for ensuring the security and integrity of applications relying on NoSQL databases."
+  details: >
+    "Boolean-based NoSQL injection testing involves crafting query parameters with boolean logic to check how an application processes and responds to these inputs. For example, inserting conditions like `true` or `false` in parameters can reveal whether the application is vulnerable to unauthorized data access or manipulation. This approach helps identify weaknesses in how the application validates and handles input queries, ensuring robust security against potential attacks."
+  impact: >
+    "The impact of Boolean-based NoSQL injection can be significant, leading to unauthorized access or manipulation of sensitive data. Successful exploitation can allow attackers to bypass authentication, view or alter data, and potentially compromise the entire NoSQL database. This vulnerability undermines data integrity and application security, posing risks to both user information and overall system reliability."
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: NOSQLI_BOOLEAN_BASED_QUERY_PARAM_JS
+  severity: MEDIUM
+  tags:
+    - Injection Attack
+    - OWASP Top 10
+    - HackerOne Top 10
+  references:
+    - "https://github.com/Charlie-belmer/nosqli"
+    - "https://owasp.org/www-community/Injection_Flaws"
+  cwe:
+    - CWE-943
+    - CWE-89
+  cve:
+    - CVE-2020-35847
+    - CVE-2021-22911
+    - CVE-2023-28359
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+  method:
+    eq: "GET"
+  query_param:
+    for_one:
+      key:
+        regex: .*
+        extract: changed_query_key
+      value:
+        regex: .*
+        extract: changed_query_value
+execute:
+  type: multiple
+  requests:
+    - req:
+        - delete_query_param: ${changed_query_key}
+        - add_query_param: 
+            ${changed_query_key}: !!str ${changed_query_value};return false;
+        - validate:
+            or:
+              - response_code:
+                  gte: 400
+                  lt: 410
+              - response_payload:
+                  length:
+                    gt: 0
+                  not_contains:
+                    - Error
+                    - fail
+                    - invalid
+                    - expired
+                    - not found
+                    - account is locked
+                    - account is blocked
+                    - rate-limit
+                    - rate_limit
+                    - rate limit
+                    - multiple failed attempt
+                    - cloudflare
+        - success: x2
+        - failure: exit
+    - req:
+        - delete_query_param: ${changed_query_key}
+        - add_query_param: 
+            ${changed_query_key}: !!str ${changed_query_value} || 'a' == 'a' || 'a' == 'a' 
+        - validate:
+            response_payload:
+              neq: "${x1.response.body}"
+              not_contains:
+                - rate-limit
+                - rate limit
+                - rate_limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+                - "The server cannot process the request because it is malformed. It should not be retried"
+                - "That’s an error"
+                - "cloudflare"
+
+        - success: x3
+        - failure: exit            
+    - req:
+        - add_header:
+            dummyHeader: dummyValue
+        - delete_query_param: ${changed_query_key}
+        - add_query_param: 
+            ${changed_query_key}: !!str ${changed_query_value} || '1' == '1' || '1' == '1' 
+        - validate:
+            response_payload:
+              length:
+                gt: 0
+              eq: "${x2.response.body}"
+              not_contains:
+                - rate-limit
+                - rate limit
+                - rate_limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+                - "The server cannot process the request because it is malformed. It should not be retried"
+                - "That’s an error"
+                - cloudflare
+        - success: vulnerable
+        - failure: exit

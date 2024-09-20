@@ -1,0 +1,55 @@
+---
+id: WSDL_File_Misconfiguration
+info:
+  name: "WSDL File Misconfiguration"
+  description: >
+    "WSDL (Web Services Description Language) files provide details about web services, including their operations, parameters, and communication methods. If a WSDL file is misconfigured or exposed, it can reveal sensitive information about the web services, allowing attackers to discover hidden endpoints, operations, or even vulnerabilities within the service."
+  details: >
+    "WSDL files are used to describe web services, outlining how clients can interact with the service, including the operations it supports and the required parameters. Misconfiguration occurs when WSDL files are unintentionally exposed or contain overly detailed information, potentially disclosing sensitive internal service details. This scan checks for publicly accessible WSDL files and evaluates whether they expose sensitive information that could aid attackers in discovering exploitable endpoints or operations."
+  impact: >
+    "Exposed or misconfigured WSDL files can lead to serious security risks. Attackers may use this information to map out the web service's functionality, identify sensitive or unprotected operations, and exploit vulnerabilities in the service. This could result in unauthorized access, data leakage, or even remote code execution if certain endpoints are vulnerable. Ensuring that WSDL files are properly secured and do not expose sensitive internal service details is crucial to prevent such attacks."
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: WSDL_File_Misconfiguration
+  severity: LOW
+  # TODO: fix references, cve, cwe.
+  references:
+    - https://www.zaproxy.org/docs/alerts/10044-2/
+  cwe:
+    - CWE-200
+    - CWE-213
+  cve:
+    - CVE-2018-10245
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  url:
+    regex: ".*wsdl.*"
+  request_headers:
+    for_one:
+      key: content-type
+      value: application/wsdl+xml
+
+execute:
+  type: single
+  requests:
+    - req: []
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  request_headers:
+    for_one:
+      key: content-type
+      value: application/wsdl+xml
+
+strategy:
+  run_once: /

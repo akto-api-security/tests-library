@@ -52,8 +52,15 @@ validate:
       key:
         eq: Set-Cookie
       value: 
-        contains_all:
+        and: 
+        - contains_all:
           - secure;
           - httponly;
+        - contains_either:
           - samesite;
-
+          - SameSite;
+        - not_contains:
+          - samesite=None
+          - samesite=none
+          - SameSite=none
+          - SameSite=None

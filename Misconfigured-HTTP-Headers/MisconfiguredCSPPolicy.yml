@@ -1,0 +1,168 @@
+id: MISCONFIGURED_CSP_POLICY
+info:
+  name: Misconfigured Content Security Policy
+  description: "This test identifies misconfigurations in the Content Security Policy (CSP) header, which may weaken the security of the application."
+  details: >
+    "The Content Security Policy header is a security measure that helps prevent various types of attacks, including Cross-Site Scripting (XSS) and data injection attacks. This test checks for common misconfigurations such as allowing unsafe inline scripts, unsafe eval, unsafe hashes, or overly permissive wildcard sources. These misconfigurations can potentially expose the application to security vulnerabilities."
+  impact: >
+    "A misconfigured CSP can significantly weaken the security of an application by allowing potentially malicious scripts to execute. This can lead to various attacks, including data theft, session hijacking, and defacement of the website."
+  category:
+    name: MHH
+    shortName: Misconfigured HTTP Headers
+    displayName: Misconfigured HTTP Headers (MHH)
+  subCategory: MISCONFIGURED_CSP_POLICY
+  severity: LOW
+  tags: 
+    - csp
+    - security
+    - misconfig
+    - owasp-top10
+
+    # cross-check.
+  references:
+    - https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+    - https://content-security-policy.com/
+  cwe:
+    - CWE-693
+  cve:
+    - CVE-2024-21255
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  or: 
+  - response_headers:
+      for_one:
+        key: Content-Security-Policy
+        value:
+          or: 
+          - regex:
+              - "(?i)script-src.*'unsafe-inline'"
+              - "(?i)style-src.*'unsafe-inline'"
+              - "(?i)script-src.*'unsafe-eval'"
+              - "(?i)script-src.*'unsafe-hashes'"
+              - "(?i)style-src.*'unsafe-hashes'"
+          contains_either: ${non_ascii_characters}
+  # for meta tags.
+  - response_payload:
+      regex: 
+        - "(?i)script-src.*'unsafe-inline'"
+        - "(?i)style-src.*'unsafe-inline'"
+        - "(?i)script-src.*'unsafe-eval'"
+        - "(?i)script-src.*'unsafe-hashes'"
+        - "(?i)style-src.*'unsafe-hashes'"
+
+execute:
+  type: single
+  requests:
+    - req: []
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  or: 
+  - response_headers:
+      for_one:
+        key: Content-Security-Policy
+        value:
+          or: 
+          - regex:
+              - "(?i)script-src.*'unsafe-inline'"
+              - "(?i)style-src.*'unsafe-inline'"
+              - "(?i)script-src.*'unsafe-eval'"
+              - "(?i)script-src.*'unsafe-hashes'"
+              - "(?i)style-src.*'unsafe-hashes'"
+          contains_either: ${non_ascii_characters}
+  # for meta tags.
+  - response_payload:
+      regex: 
+        - "(?i)script-src.*'unsafe-inline'"
+        - "(?i)style-src.*'unsafe-inline'"
+        - "(?i)script-src.*'unsafe-eval'"
+        - "(?i)script-src.*'unsafe-hashes'"
+        - "(?i)style-src.*'unsafe-hashes'"
+
+strategy:
+  run_once: /
+
+wordLists:
+  non_ascii_characters:
+    - À
+    - Á
+    - Â
+    - Ã
+    - Ä
+    - Å
+    - Æ
+    - Ç
+    - È
+    - É
+    - Ê
+    - Ë
+    - Ì
+    - Í
+    - Î
+    - Ï
+    - Ð
+    - Ñ
+    - Ò
+    - Ó
+    - Ô
+    - Õ
+    - Ö
+    - Ø
+    - Ù
+    - Ú
+    - Û
+    - Ü
+    - Ý
+    - Þ
+    - ß
+    - à
+    - á
+    - â
+    - ã
+    - ä
+    - å
+    - æ
+    - ç
+    - è
+    - é
+    - ê
+    - ë
+    - ì
+    - í
+    - î
+    - ï
+    - ð
+    - ñ
+    - ò
+    - ó
+    - ô
+    - õ
+    - ö
+    - ø
+    - ù
+    - ú
+    - û
+    - ü
+    - ý
+    - þ
+    - ÿ
+    - Ω
+    - π
+    - α
+    - β
+    - ∑
+    - ∞
+    - ∫
+    - ≤
+    - ≥
+    - ≠
+    - ±
+    - ÷
+    - ×

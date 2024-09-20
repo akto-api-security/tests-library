@@ -1,0 +1,48 @@
+id: BIG_REDIRECTS_SCAN
+info:
+  name: "Big Redirects Scan"
+  description: >
+    "This scan identifies instances where large URLs or multiple chained redirects are encountered during web requests. Excessively long redirects or numerous redirect chains can indicate inefficiencies, potential vulnerabilities, or misconfigurations within the server. These issues may degrade performance or even be used maliciously to trick users or evade security controls."
+  details: >
+    "The scan looks for HTTP responses that result in large or repetitive redirects. Large URLs in redirects can cause performance problems by increasing the load time of web pages. Additionally, an excessive number of chained redirects can lead to infinite loops or resource exhaustion, resulting in a denial-of-service condition. Attackers may exploit these large or repeated redirects to evade detection or trick users into visiting malicious sites."
+  impact: >
+    "Improperly handled redirects can negatively impact user experience and degrade the performance of web applications. Excessive redirects may also make a site more vulnerable to phishing attacks, where attackers redirect users to malicious sites without their knowledge. Furthermore, some web application firewalls and security tools may not handle long URLs or multiple redirects effectively, making the site more susceptible to evasion techniques by attackers. Monitoring and minimizing the number of redirects, as well as ensuring that URLs are kept concise, helps improve performance and security."
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: BIG_REDIRECTS_SCAN
+  severity: LOW
+  # TODO: fix references, cve, cwe.
+  references:
+    - https://www.zaproxy.org/docs/alerts/10044-2/
+  cwe:
+    - CWE-200
+    - CWE-213
+  cve:
+    - CVE-2018-10245
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 300
+    lt: 400
+    neq: 304
+  # IMPROVEMENT: add condition to check (location header value + some buffer, say 300) > response payload length
+  response_payload:
+    regex: ".*href.*href.*"
+  
+execute:
+  type: single
+  requests:
+    - req: []
+
+validate:
+  response_code:
+    gte: 300
+    lt: 400
+    neq: 304
+  response_payload:
+    regex: ".*href.*href.*"
