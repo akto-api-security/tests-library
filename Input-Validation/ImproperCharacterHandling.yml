@@ -34,6 +34,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -70,9 +72,49 @@ api_selection_filters:
         extract: userVal
 wordLists:
   probableInputParameters:
-  - name
+  - name 
   - username
   - login
+  - user
+  - userid
+  - user_id
+  - login_id
+  - email
+  - account
+  - account_id
+  - member
+  - member_id
+  - id
+  - user_name
+  - uname
+  - identifier
+  - user_identifier
+  - admin
+  - nickname
+  - handle
+  - alias
+  - principal
+  - profile
+  - profile_id
+  - name
+  - signin
+  - auth
+  - credential
+  - user_login
+  - user_account
+  - user_email
+  - employee
+  - employee_id
+  - operator
+  - customer_id
+  - subscriber
+  - subscriber_id
+  - participant
+  - participant_id
+  - client_id
+  - userLoginID
+  - client-name
+   
   invalidCharacters:
   - '&'
   - =
@@ -97,8 +139,8 @@ validate:
     length:
       gt: 0
     percentage_match:
-    - gte: 90
-    - neq: 100
+      gte: 90
+      neq: 100
     not_contains:
     - Error
     - Internal Server
@@ -129,3 +171,5 @@ validate:
     - Attention Required!
     - CloudFlare
     - "Sorry, you have been blocked"
+    - "failure"
+    - "not found"
