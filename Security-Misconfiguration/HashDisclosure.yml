@@ -1,0 +1,92 @@
+---
+id: HASH_DISCLOSURE
+info:
+  name: "Hash Disclosure"
+  description: >
+    "This scan identifies instances where cryptographic hashes are disclosed in HTTP responses or other areas of the application. Hash values, especially when generated from sensitive data, can reveal information to attackers, leading to potential exploitation or reverse engineering of the hashed content."
+  details: >
+    "Hash disclosure occurs when cryptographic hash values, such as MD5, SHA-1, or SHA-256, are included in server responses or publicly accessible files. Although hashes are meant to be one-way transformations, they can still pose a security risk, especially if weak or outdated hashing algorithms are used. Attackers may attempt to crack weak hashes using precomputed tables (rainbow tables) or brute-force methods to recover the original data. The exposure of hashes, particularly those generated from sensitive data like passwords or session tokens, can compromise the security of the application and its users."
+  impact: >
+    "The disclosure of cryptographic hashes can lead to serious security risks. If an attacker can reverse a hash to its original value, it may result in data leakage, credential theft, or session hijacking. Weak hashing algorithms, such as MD5 or SHA-1, are especially vulnerable to brute-force or collision attacks, making them unsuitable for protecting sensitive information. To mitigate this risk, ensure that sensitive data is not unnecessarily hashed and exposed, and use modern, secure hashing algorithms with appropriate salting."
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: HASH_DISCLOSURE
+  severity: HIGH
+  tags:
+    - GraphQL
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+    # cross-check references
+  references:
+    - https://www.zaproxy.org/docs/alerts/10097/
+  cwe:
+    - CWE-16
+    - CWE-200
+  cve:
+    - CVE-2023-5192
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  or:
+    - response_headers:
+        regex: ${hashRegex}
+    - request_headers:
+        regex: ${hashRegex}
+    - response_payload:
+        regex: ${hashRegex}
+    - response_payload:
+        regex: ${hashRegex}
+
+wordLists:
+  hashRegex:
+    - "\\$LM\\$[a-f0-9]{16}"
+    - "\\$K4\\$[a-f0-9]{16},"
+    - "\\$2a\\$05\\$[a-z0-9\\+\\-_./=]{53}"
+    - "\\$2y\\$05\\$[a-z0-9\\+\\-_./=]{53}"
+    - "\\$1\\$[./0-9A-Za-z]{0,8}\\$[./0-9A-Za-z]{22}"
+    - "\\$5\\$[./0-9A-Za-z]{0,16}\\$[./0-9A-Za-z]{43}"
+    - "\\$5\\$rounds=[0-9]+\\$[./0-9A-Za-z]{0,16}\\$[./0-9A-Za-z]{43}"
+    - "\\$6\\$[./0-9A-Za-z]{0,16}\\$[./0-9A-Za-z]{86}"
+    - "\\$6\\$rounds=[0-9]+\\$[./0-9A-Za-z]{0,16}\\$[./0-9A-Za-z]{86}"
+    - "\\$2\\$[0-9]{2}\\$[./0-9A-Za-z]{53}"
+    - "\\$2a\\$[0-9]{2}\\$[./0-9A-Za-z]{53}"
+    - "\\$3\\$\\$[0-9a-f]{32}"
+    - "\\$NT\\$[0-9a-f]{32}"
+    - "\\b[0-9A-F]{48}\\b"
+    - "\\b[0-9a-f]{128}\\b"
+    - "\\b[0-9a-f]{96}\\b"
+    - "\\b[0-9a-f]{64}\\b"
+    - "\\b[0-9a-f]{56}\\b"
+    - "\\b[0-9a-f]{40}\\b"
+    - "\\b\\[0-9a-f]{32}\\b"
+    - "(?<!jsessionid=)\\b[0-9a-f]{32}\\b"
+
+execute:
+  type: single
+  requests:
+    - req: []
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  or:
+    - response_headers:
+        regex: ${hashRegex}
+    - request_headers:
+        regex: ${hashRegex}
+    - response_payload:
+        regex: ${hashRegex}
+    - response_payload:
+        regex: ${hashRegex}
+
+strategy:
+  run_once: /
