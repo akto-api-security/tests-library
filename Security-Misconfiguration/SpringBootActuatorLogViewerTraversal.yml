@@ -1,5 +1,5 @@
 id: SPRING_BOOT_ACTUATOR_LOGVIEW_TRAVERSAL
-info:.
+info:
   name: "Spring Boot Actuator Logview Directory Traversal"
   description: "This vulnerability allows attackers to exploit the Logview component by accessing files outside the intended directories. By manipulating file paths, attackers can view sensitive files on the server, which may include configuration files, log data, or other critical system information. This vulnerability exposes sensitive data and can lead to further attacks or system compromise."
   details:  "This vulnerability arises when the Logview component fails to properly validate and sanitize user-supplied file paths. Attackers can exploit this flaw by injecting directory traversal sequences (e.g., `../`) to access files outside of the intended directory. This can lead to unauthorized exposure of sensitive files such as configuration settings or logs, potentially revealing critical system information and increasing the risk of further exploitation."
