@@ -1,0 +1,58 @@
+id: SPLUNK_INFO_DISCLOSURE
+info:
+  name: "Splunk Information Disclosure"
+  description: "The Splunk Information Disclosure vulnerability occurs when sensitive information is unintentionally exposed through improper access controls or misconfigurations in Splunk deployments. Attackers can exploit this flaw to gain unauthorized access to confidential data, including search queries, logs, and configuration settings. This exposure can lead to significant security risks, such as data leaks and unauthorized monitoring of sensitive activities. Proper configuration and access controls are essential to safeguard against this vulnerability."
+  details:  "The Splunk Information Disclosure vulnerability typically arises from misconfigured permissions, allowing unauthorized users to access sensitive data within Splunk instances. This can happen in scenarios where user roles and access controls are not correctly defined or when default settings are left unchanged. Attackers can exploit this vulnerability to view confidential logs, search queries, and even sensitive configuration information. To mitigate this risk, organizations should regularly review and update their access control policies and ensure that sensitive data is adequately protected."
+  impact: "The impact of the Splunk Information Disclosure vulnerability can be substantial, as it may allow unauthorized users to access sensitive logs and configuration details. This exposure can lead to data leaks, enabling attackers to gather intelligence on system operations and security measures. Additionally, unauthorized access to search queries may reveal critical insights into organizational activities, increasing the risk of further attacks. Protecting against this vulnerability is vital to maintaining the confidentiality and integrity of sensitive information within Splunk deployments."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: SPLUNK_INFO_DISCLOSURE
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2018-11409
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+wordLists:
+  paths:
+    - '/en-US/splunkd/__raw/services/server/info/server-info'
+    - '/__raw/services/server/info/server-info'
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "${paths}"
+      - modify_method: GET
+      - replace_body: '{}'
+      - add_query_param:
+          output_mode: json
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      -  "licenseKeys"
