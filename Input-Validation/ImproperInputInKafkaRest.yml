@@ -1,0 +1,97 @@
+---
+id: IMPROPER_INPUT_IN_KAFKA_REST
+info:
+  name: "Improper Input in Kafka-REST"
+  description: >
+    "Improper input handling in Kafka REST Proxy occurs when input data is not adequately validated, allowing attackers to inject malicious payloads or malformed data into Kafka topics through REST APIs. This vulnerability can be exploited to bypass data integrity checks, cause unexpected behavior, or inject harmful data into the system."
+  details: >
+    "Kafka REST Proxy provides a way to interact with Kafka clusters through HTTP requests. If input validation is inadequate, attackers can craft special input to manipulate the records being posted. For instance, injecting special characters, invalid JSON structures, or key-value pairs that include unexpected formats can lead to injection attacks or system malfunctions. Proper validation of inputs like JSON keys, values, and record structures should be enforced to prevent such vulnerabilities."
+  impact: >
+    "Improper input validation in Kafka REST APIs could allow an attacker to inject malicious data into Kafka topics, disrupt the integrity of the message queue, or even perform denial-of-service attacks by overwhelming the system with malformed records. This could lead to data corruption, unauthorized access to sensitive information, or potential exploitation of downstream services consuming data from Kafka."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: IMPROPER_INPUT_IN_KAFKA_REST
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  # check ref.
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  request_headers:
+    for_one:
+      key: content-type
+      value: 
+        regex: ".*kafka.*"
+  request_payload:
+    extract: userPayload
+
+wordLists:
+  attemptValues:
+    - \u0000
+    - "null"
+    - NaN
+
+execute:
+  type: single
+  requests:
+  - req:
+    - replace_body: ${userPayload}${attemptValues}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      gte: 90
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"

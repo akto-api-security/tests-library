@@ -1,0 +1,57 @@
+---
+id: DIRECTORY_LISTING_ENABLED
+info:
+  name: "Directory Listing Enabled"
+  description: >
+    "This vulnerability occurs when the web server is configured to allow directory listing, exposing the file structure and contents of directories to unauthorized users."
+  details: >
+    "When directory listing is enabled, users can access and view the contents of directories on the server. This can include sensitive files, scripts, and application resources that should not be publicly accessible. An attacker can exploit this to discover valuable information about the application structure, potentially leading to further attacks."
+  impact: >
+    "Exposing directory listings can lead to information disclosure, allowing attackers to gather intelligence about the server environment and potentially access sensitive files. This can facilitate other attacks, such as path traversal or unauthorized access to application resources. Proper configuration of the web server is crucial to prevent such vulnerabilities."
+
+  category:
+      name: SM
+      shortName: Misconfiguration
+      displayName: Security Misconfiguration (SM)
+  subCategory: DIRECTORY_LISTING_ENABLED
+  severity: LOW
+  tags: 
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+    # TODO: Fix references, cve, cwe
+  references:
+    - "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-16
+    - CWE-200
+  cve:
+    - CVE-2017-7529
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+
+execute:
+  type: single
+  requests:
+    - req: 
+      - modify_method: GET
+      - modify_url:
+          regex_replace:
+            regex: "\/[^\/]+\/(.*)"
+            replace_with: ""
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    contains_all:
+      - html
+      - Index of
+
+strategy:
+  run_once: /
