@@ -1,0 +1,54 @@
+id: ECLIPSE_BIRT_PANEL_EXPOSURE
+info:
+  name: "Eclipse BIRT panel Exposure"
+  description: "This test refers to the unprotected access of the Eclipse BIRT (Business Intelligence and Reporting Tools) panel over the internet. If improperly secured, this exposure allows unauthorized users to interact with the reporting dashboard, potentially viewing or altering sensitive reports and data. Ensuring proper authentication and network restrictions is essential to prevent unauthorized access to the BIRT panel."
+  details:  "Eclipse BIRT Panel Exposure occurs when the reporting panel of Eclipse BIRT is accessible over the internet without adequate security controls, such as authentication or IP restrictions. This can allow unauthorized users to view, generate, or manipulate reports containing sensitive business data. To protect against this, administrators should enforce strong authentication mechanisms, secure the panel behind firewalls, and limit access to trusted networks only."
+  impact: "The impact of Eclipse BIRT Panel Exposure can be significant, as unauthorized users could gain access to sensitive business reports and analytics. This can result in data leaks, manipulation of critical business insights, and even alteration of financial or operational reports. If exploited, it may lead to reputational damage, financial loss, and compromised decision-making due to tampered or stolen data."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: ECLIPSE_BIRT_PANEL_EXPOSURE
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2021-43798
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "/reportviewer/"
+      - modify_method: GET
+      - replace_body: '{}'
+      - follow_redirect: true
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - 'alt="Eclipse Logo'
+      - 'Eclipse BIRT Home'
