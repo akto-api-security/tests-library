@@ -1,0 +1,71 @@
+id: APACHE_TOMCAT_INSTANCE_EXPOSURE
+info:
+  name: "Apache Tomcat Instance Exposure Detection"
+  description: "The Apache Tomcat Instance Exposure Detection refers to identifying misconfigured or exposed Tomcat servers that are accessible to unauthorized users. This exposure typically occurs when security settings are left in their default state, leaving administrative interfaces or sensitive resources unprotected. Attackers can exploit these exposed instances to gain control over the server, deploy malicious applications, or access confidential data. Proper configuration and access restrictions are crucial to prevent unauthorized exposure of Tomcat instances."
+  details:  "Apache Tomcat Instance Exposure Detection focuses on identifying publicly accessible Tomcat servers that lack proper security configurations, such as default credentials or unprotected administrative interfaces. When these instances are exposed, attackers can exploit them to upload malicious files, modify server settings, or view sensitive information. Common issues include unsecured Manager and Host Manager applications, or weak authentication mechanisms. To mitigate this risk, administrators must apply strong access controls, change default settings, and ensure Tomcat is securely configured before deployment."
+  impact: "The impact of Apache Tomcat Instance Exposure can be significant, as attackers who gain access to an exposed Tomcat server can manipulate applications, deploy malicious code, or steal sensitive data. This can lead to data breaches, service disruptions, and unauthorized system control. Additionally, compromised servers can be used as launchpads for further attacks within the organization's network. Ensuring secure configurations and access restrictions is essential to protect against these risks."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: APACHE_TOMCAT_INSTANCE_EXPOSURE
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2021-43798
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+wordLists:
+  paths:
+    - '/host-manager/html'
+    - '/manager/status'
+    - '/manager/html'
+    - '/docs/'
+    - '/examples/'
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "${paths}"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  or:
+    - response_code:
+        eq: 200
+    - response_code:
+        eq: 401
+  or:
+    - response_payload:
+        length:
+          gt: 0
+        contains_either:
+          - "apache tomcat"
+          - "tomcat-users.xml"
+    - response_payload:
+        length:
+          gt: 0
+        regex:
+          - 'Version\s+([0-9.]+),'
+          - '(?i)/lib/([a-z0-9.]+)/webapps'
+          - '(?i)<h3>Apache\s+Tomcat/([0-9.]+)'
