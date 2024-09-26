@@ -1,0 +1,59 @@
+id: RUBY_ON_RAILS_WEB_RCE
+info:
+  name: "Ruby on Rails Web Console Remote Code Execution"
+  description: "Ruby on Rails Web Console Remote Code Execution vulnerabilities occur when the web console feature is improperly configured, allowing attackers to execute arbitrary Ruby code on the server. This vulnerability typically arises from insufficient access controls or insecure settings that expose the web console to unauthorized users. By exploiting this flaw, attackers can gain full control of the application environment, manipulate data, or deploy malicious payloads. To mitigate these risks, it's essential to restrict access to the web console and implement strong authentication mechanisms." 
+  details: "Ruby on Rails Web Console Remote Code Execution vulnerabilities often arise when the web console is enabled in production environments without proper security measures. Attackers can exploit this vulnerability by accessing the console through crafted requests, which may allow them to execute arbitrary Ruby code on the server. This can lead to unauthorized access, data manipulation, or complete control over the application. To prevent such vulnerabilities, it's crucial to disable the web console in production, enforce strict access controls, and implement robust authentication practices."
+  impact: "The impact of Ruby on Rails Web Console Remote Code Execution vulnerabilities can be significant, enabling attackers to execute arbitrary Ruby code and potentially gain full control over the server. This may lead to unauthorized access to sensitive data, modification or deletion of application resources, and the deployment of malicious code. Additionally, such exploits can compromise the integrity and availability of the application, resulting in reputational damage, legal liabilities, and financial losses for the organization."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: RUBY_ON_RAILS_WEB_RCE
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  cwe:
+    - CWE-78
+  cve:
+    - CVE-2015-3224
+
+api_selection_filters:
+  response_payload:
+    length:
+      gt: 0
+  method:
+    neq: "OPTIONS"
+  url:
+    extract: urlVar
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_method: GET
+        - replace_body: '{}'
+        - modify_url: "/abcdefgh"
+        - add_header:
+            x-forwarded-for: "::1"
+
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "Rails.root:"
+      - "Action Controller: Exception caught"
+    contains_either:
+      - X-Web-Console-Session-Id
+      - data-remote-path=
+      - data-session-id=
+  response_headers:
+    for_one:
+      key:
+        regex: ".*"
+      value:
+        contains_either:
+          - X-Web-Console-Session-Id
+          - data-remote-path=
+          - data-session-id=
