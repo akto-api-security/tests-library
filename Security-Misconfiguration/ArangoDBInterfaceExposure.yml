@@ -1,0 +1,52 @@
+id: ARANGODB_INTERFACE_EXPOSURE
+info:
+  name: "ArangoDB Web Interface Exposure"
+  description: "This test refers to the unintended exposure of the database’s web interface to unauthorized access, often due to misconfigurations or lack of proper security controls. This can allow attackers to interact with the ArangoDB web UI, potentially accessing, modifying, or deleting data. Ensuring proper authentication, firewalls, and network restrictions is crucial to mitigating such vulnerabilities."
+  details:  "ArangoDB Web Interface Exposure occurs when the database's web interface is accessible over the internet without adequate security, such as proper authentication or IP whitelisting. This exposure allows attackers to interact with the database’s user interface, potentially leading to unauthorized access, data leaks, or system compromise. To prevent this, administrators should secure access through network restrictions, strong credentials, and encryption mechanisms."
+  impact: "The impact of ArangoDB Web Interface Exposure can be severe, as attackers may gain unauthorized access to sensitive data or administrative functions. This could lead to data breaches, unauthorized data modification, or complete system compromise. In worst-case scenarios, attackers can exploit this exposure to escalate privileges, disrupt services, or even delete critical data, resulting in significant operational and financial losses."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: ARANGODB_INTERFACE_EXPOSURE
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2021-43798
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "/_db/_system/_admin/aardvark/index.html"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - "<title>ArangoDB Web Interface</title>"
