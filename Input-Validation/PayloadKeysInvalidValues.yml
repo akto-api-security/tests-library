@@ -85,7 +85,7 @@ execute:
     - success: x2
     - failure: exit
   - req:
-    - add_body_param:
+    - modify_body_param:
         userKey: "${userVal}${attemptValues}"
     - validate:
         response_code:
@@ -100,7 +100,7 @@ execute:
     - success: vulnerable
     - failure: x3
   - req:
-    - add_body_param:
+    - modify_body_param:
         userKey: "${attemptValues}"
     - validate:
         response_code:
@@ -115,7 +115,7 @@ execute:
     - success: vulnerable
     - failure: x4
   - req:
-    - add_body_param:
+    - modify_body_param:
         userKey: "${attemptValues}${userVal}"
     - validate:
         response_code:
@@ -130,7 +130,7 @@ execute:
     - success: vulnerable
     - failure: x5
   - req:
-    - add_body_param:
+    - modify_body_param:
         userKey: "${attemptValues2}"
     - validate:
         response_code:

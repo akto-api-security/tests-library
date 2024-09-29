@@ -1,0 +1,92 @@
+---
+id: SQUID_PROXY_LOG_EXPOSED
+info:
+  name: Squid Proxy Log Exposed
+  description: >
+    Exposure of Squid proxy logs can lead to significant privacy and security risks. These logs often contain sensitive information about user activity, including URLs accessed, client IP addresses, and timestamps.
+  details: >
+    This vulnerability occurs when Squid proxy logs are improperly secured and accessible over the web or through unauthorized channels. Attackers or malicious insiders can view these logs to gather information about user behavior, which can lead to targeted attacks or data leakage.
+  impact: >
+    Exposed logs may result in privacy violations, unauthorized access to sensitive data, and increased risk of phishing or social engineering attacks. Proper access controls should be implemented to protect log files and ensure that only authorized personnel can view them.
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: SQUID_PROXY_LOG_EXPOSED
+  severity: LOW
+  # check ref.
+  references:
+    - https://wiki.squid-cache.org/SquidFaq/ConfiguringSquid
+    - https://wiki.squid-cache.org/SquidFaq/SquidLogs
+  cwe:
+    - CWE-16
+    - CWE-200
+  cve:
+    - CVE-2020-11959
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length: 
+      gt: 0
+
+wordLists:
+  attemptList:
+    - /var/log/squid/access.log
+    - /var/log/squid/error.log
+    - /usr/local/squid/bin/squid/access.log
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: ${attemptList}
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - http
+      - server
+      - location
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+strategy:
+  run_once: /

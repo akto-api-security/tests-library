@@ -1,19 +1,19 @@
 ---
-id: HEADER_INVALID_VALUES
+id: HEADER_ALL_KEYS_INVALID_VALUES
 info:
-  name: Header Invalid Values
+  name: "Header All Keys Invalid Values"
   description: >
-    This test focuses on the handling of invalid values in HTTP headers. It aims to identify vulnerabilities arising from the server's inability to properly handle various types of unexpected input in header fields, such as control characters, emojis, and whitespace.
+    This test examines how the application handles requests with all keys containing invalid values in the header.
   details: >
-    The test involves sending HTTP requests with headers containing invalid or malformed values. This includes leading control characters, leading whitespace, null values, and various types of emojis. The goal is to observe how the server responds to these inputs and whether it can handle them gracefully without exposing any vulnerabilities.
+    The test involves sending requests where every key in the header is replaced with invalid or unexpected values, such as control characters, special characters, or completely non-alphanumeric strings. The purpose is to assess the application's ability to properly validate and respond to such inputs.
   impact: >
-    Failure to properly handle invalid header values can lead to security risks such as denial of service, information leakage, or incorrect processing of requests. Servers that do not sanitize or validate header input may be susceptible to attacks that exploit these weaknesses, potentially allowing unauthorized access or disruption of service.
+    Failing to validate keys appropriately can lead to security vulnerabilities, such as denial of service, data corruption, or unintended application behavior. It may also expose the application to injection attacks or other forms of exploitation.
 
   category:
     name: INPUT
     shortName: Input Validation
     displayName: Input Validation (INPUT)
-  subCategory: HEADER_INVALID_VALUES
+  subCategory: HEADER_ALL_KEYS_INVALID_VALUES
   severity: LOW
   tags:
   - Business logic
@@ -69,24 +69,16 @@ api_selection_filters:
     for_one:
       key:
         regex: .*
-        extract: userKey
-      value:
-        extract: userVal
+        extractMultiple: headerKeys
 
 execute:
-  type: multiple
+  type: single
   requests:
   - req:
-    # checking if the header is actually important, if it is only then continue with attack.
-    - delete_header: ${userKey}
-    - validate:
-        response_code:
-          gte: 400
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_header:
-        userKey: "${userVal}${attemptValues}"
+    - ${headerKeys}:
+        for_all:
+        - modify_header: 
+            ${iteratorKey}: ${attemptValues}
     - validate:
         response_code:
           gte: 200
@@ -98,10 +90,12 @@ execute:
             gte: 90
           not_contains: ${badList}
     - success: vulnerable
-    - failure: x3
+    - failure: x2
   - req:
-    - modify_header:
-        userKey: "${attemptValues}"
+    - ${headerKeys}:
+        for_all:
+        - modify_header: 
+            ${iteratorKey}: ${attemptValues}${iteratorKey}.wordList
     - validate:
         response_code:
           gte: 200
@@ -113,10 +107,12 @@ execute:
             gte: 90
           not_contains: ${badList}
     - success: vulnerable
-    - failure: x4
+    - failure: x2
   - req:
-    - modify_header:
-        userKey: "${attemptValues}${userVal}"
+    - ${headerKeys}:
+        for_all:
+        - modify_header: 
+            ${iteratorKey}: ${iteratorKey}.wordList${attemptValues}
     - validate:
         response_code:
           gte: 200
@@ -128,9 +124,62 @@ execute:
             gte: 90
           not_contains: ${badList}
     - success: vulnerable
+    - failure: x2
+
+# validate:
+#   response_code:
+#     gte: 200
+#     lt: 300
+#   response_payload:
+#     length:
+#       gt: 0
+#     percentage_match:
+#       gt: 90
+#     percentage_match_schema:
+#       eq: 100
+#     not_contains:
+#     - Error
+#     - Internal Server
+#     - Failed
+#     - Unauthorized
+#     - access denied
+#     - Forbidden
+#     - Method Not allowed
+#     - Gateway timeout
+#     - request timeout
+#     - server error
+#     - server busy
+#     - authentication error
+#     - authorization error
+#     - validation error
+#     - Permission Denied
+#     - invalid token
+#     - token expired
+#     - session expired
+#     - session timeout
+#     - unexpected error
+#     - unable to process request
+#     - bad request
+#     - service unavailable
+#     - account is locked
+#     - account is blocked
+#     - multiple failed attempts
+#     - Attention Required!
+#     - CloudFlare
+#     - "Sorry, you have been blocked"
+
+
 
 wordLists:
+  ${headerKeys}:
+    for_all:
+      ${iteratorKey}.wordList:
+        all_apis: true
+        sample_data: true
+        key: "${iteratorKey}"
+
   attemptValues:
+    - ""
     # null values
     - \u0000
     - \0
@@ -153,7 +202,6 @@ wordLists:
     # abugidas chars
     - "జ్ఞ‌ా"
     - "স্র‌ু"
-
   badList: 
     - Error
     - Internal Server

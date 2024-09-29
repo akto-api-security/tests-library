@@ -1,19 +1,19 @@
 ---
-id: HEADER_INVALID_VALUES
+id: INPUT_VALIDATION_FOR_BOOLEAN
 info:
-  name: Header Invalid Values
+  name: Input Validation for Boolean
   description: >
-    This test focuses on the handling of invalid values in HTTP headers. It aims to identify vulnerabilities arising from the server's inability to properly handle various types of unexpected input in header fields, such as control characters, emojis, and whitespace.
+    This test evaluates the application's handling of boolean inputs to ensure that only valid boolean values are accepted.
   details: >
-    The test involves sending HTTP requests with headers containing invalid or malformed values. This includes leading control characters, leading whitespace, null values, and various types of emojis. The goal is to observe how the server responds to these inputs and whether it can handle them gracefully without exposing any vulnerabilities.
+    The test involves sending requests where boolean fields are populated with various data types, such as strings, numbers, or null values, to observe how the application processes these inputs. It checks whether the application correctly validates and rejects invalid boolean values.
   impact: >
-    Failure to properly handle invalid header values can lead to security risks such as denial of service, information leakage, or incorrect processing of requests. Servers that do not sanitize or validate header input may be susceptible to attacks that exploit these weaknesses, potentially allowing unauthorized access or disruption of service.
+    Insufficient validation of boolean inputs can lead to unexpected behavior, data corruption, or security vulnerabilities, such as bypassing access controls or triggering unintended application logic.
 
   category:
     name: INPUT
     shortName: Input Validation
     displayName: Input Validation (INPUT)
-  subCategory: HEADER_INVALID_VALUES
+  subCategory: INPUT_VALIDATION_FOR_BOOLEAN
   severity: LOW
   tags:
   - Business logic
@@ -65,28 +65,29 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-  request_headers:
+  request_payload:
     for_one:
       key:
         regex: .*
         extract: userKey
       value:
+        datatype: boolean
         extract: userVal
 
 execute:
   type: multiple
   requests:
   - req:
-    # checking if the header is actually important, if it is only then continue with attack.
-    - delete_header: ${userKey}
+    # checking if the value is actually important, if it is only then continue with attack.
+    - delete_body_param: ${userKey}
     - validate:
         response_code:
           gte: 400
     - success: x2
     - failure: exit
   - req:
-    - modify_header:
-        userKey: "${userVal}${attemptValues}"
+    - modify_body_param:
+        userKey: ${attemptValues}
     - validate:
         response_code:
           gte: 200
@@ -96,63 +97,15 @@ execute:
             gt: 0
           percentage_match:
             gte: 90
-          not_contains: ${badList}
-    - success: vulnerable
-    - failure: x3
-  - req:
-    - modify_header:
-        userKey: "${attemptValues}"
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          percentage_match:
-            gte: 90
-          not_contains: ${badList}
-    - success: vulnerable
-    - failure: x4
-  - req:
-    - modify_header:
-        userKey: "${attemptValues}${userVal}"
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          percentage_match:
-            gte: 90
+          percentage_match_schema:
+            eq: 100
           not_contains: ${badList}
     - success: vulnerable
 
 wordLists:
   attemptValues:
-    # null values
-    - \u0000
-    - \0
-    - "NULL"
-    - "null"
-    - "0000"
-    - \x00
-    - "\0"
-    - "\x00"
-    - NUL
-    - "NUL"
-    - "\u0000"
-    - "\000"
-    - 0x00
-    - "\u0000null"
-    # whitespace
-    - "      "
-    # emojis
-    - ":)"
-    # abugidas chars
-    - "జ్ఞ‌ా"
-    - "স্র‌ু"
+    - "this is a string"
+    - "hello world"
 
   badList: 
     - Error
@@ -184,4 +137,3 @@ wordLists:
     - Attention Required!
     - CloudFlare
     - "Sorry, you have been blocked"
-
