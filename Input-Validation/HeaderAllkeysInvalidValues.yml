@@ -79,105 +79,50 @@ execute:
         for_all:
         - modify_header: 
             ${iteratorKey}: ${attemptValues}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          percentage_match:
-            gte: 90
-          not_contains: ${badList}
-    - success: vulnerable
-    - failure: x2
-  - req:
-    - ${headerKeys}:
-        for_all:
-        - modify_header: 
-            ${iteratorKey}: ${attemptValues}${iteratorKey}.wordList
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          percentage_match:
-            gte: 90
-          not_contains: ${badList}
-    - success: vulnerable
-    - failure: x2
-  - req:
-    - ${headerKeys}:
-        for_all:
-        - modify_header: 
-            ${iteratorKey}: ${iteratorKey}.wordList${attemptValues}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          percentage_match:
-            gte: 90
-          not_contains: ${badList}
-    - success: vulnerable
-    - failure: x2
 
-# validate:
-#   response_code:
-#     gte: 200
-#     lt: 300
-#   response_payload:
-#     length:
-#       gt: 0
-#     percentage_match:
-#       gt: 90
-#     percentage_match_schema:
-#       eq: 100
-#     not_contains:
-#     - Error
-#     - Internal Server
-#     - Failed
-#     - Unauthorized
-#     - access denied
-#     - Forbidden
-#     - Method Not allowed
-#     - Gateway timeout
-#     - request timeout
-#     - server error
-#     - server busy
-#     - authentication error
-#     - authorization error
-#     - validation error
-#     - Permission Denied
-#     - invalid token
-#     - token expired
-#     - session expired
-#     - session timeout
-#     - unexpected error
-#     - unable to process request
-#     - bad request
-#     - service unavailable
-#     - account is locked
-#     - account is blocked
-#     - multiple failed attempts
-#     - Attention Required!
-#     - CloudFlare
-#     - "Sorry, you have been blocked"
-
-
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      gt: 90
+    percentage_match_schema:
+      eq: 100
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
 
 wordLists:
-  ${headerKeys}:
-    for_all:
-      ${iteratorKey}.wordList:
-        all_apis: true
-        sample_data: true
-        key: "${iteratorKey}"
-
   attemptValues:
     - ""
     # null values
