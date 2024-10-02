@@ -1,0 +1,112 @@
+---
+id: AMAZONMQ_EXPOSED
+info:
+  name: Exposed AmazonMQ
+  description: >
+    Exposure of AmazonMQ can lead to unauthorized access to message brokers and sensitive messaging data. This vulnerability arises when AmazonMQ instances are improperly configured, allowing public access without adequate security measures.
+  details: >
+    When AmazonMQ is exposed, unauthorized users can potentially connect to message brokers, allowing them to publish, consume, or modify messages. This access can compromise the integrity and confidentiality of the messaging system. It is crucial to configure access control policies and secure endpoints to prevent unauthorized access to message brokers.
+  impact: >
+    Unauthorized access to AmazonMQ can result in data leaks, unauthorized message modifications, and potential disruption of services. Proper security measures, including using IAM roles, VPC restrictions, and secure communication protocols, should be implemented to protect AmazonMQ instances from exposure.
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: AMAZONMQ_EXPOSED
+  severity: LOW
+  # check ref.
+  references:
+    - https://docs.aws.amazon.com/amazon-mq/latest/api-reference/welcome.html
+    - https://redis.io/docs/latest/operate/rc/api/get-started/
+    - https://redis.io/docs/latest/operate/rc/api/get-started/use-rest-api/
+
+  cwe:
+    - CWE-16
+    - CWE-200
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length: 
+      gt: 0
+    and:
+     - not_contains: ${probableOutputParams1}
+     - not_contains: ${probableOutputParams2}
+  url:
+    not_contains: ${attemptPaths}
+  request_headers:
+    contains_either:
+      - "X-Amz-Date"
+  
+wordLists:
+  attemptPaths:
+    - "/v1/configurations"
+    - "/v1/brokers"
+
+  probableOutputParams1:
+    - "configurations"
+    - "engineVersion"
+    - "authenticationStrategy"
+
+  probableOutputParams2:
+    - "brokerSummaries"
+    - "brokerState"
+    - "authenticationStrategy"
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_method: GET
+      - remove_auth_header: true
+      - replace_body: "{}"
+      - modify_url: ${attemptPaths}
+      - delete_header: authorization
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length: 
+      gt: 0
+    or:
+      - contains_either: ${probableOutputParams1}
+      - contains_either: ${probableOutputParams2}
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+strategy:
+  run_once: /

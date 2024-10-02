@@ -1,0 +1,44 @@
+id: ACTIVEMQ_SERVER_VERSION_DISCLOSED
+info:
+  name: ActiveMQ Server Version Disclosed 
+  description: Detection of ActiveMQ server version disclosure misconfiguration, potentially aiding attackers in identifying vulnerable versions.
+  details: >
+       The ActiveMQ Server Version Disclosed test identifies a security misconfiguration where the ActiveMQ server 
+       version is disclosed in the response headers.
+  impact: Disclosing ActiveMQ server version exposes potentially vulnerable versions, aiding attackers in identifying exploits and targeting specific vulnerabilities.
+  category:
+      name: SM
+      shortName: Misconfiguration
+      displayName: Security Misconfiguration (SM)
+  subCategory: ACTIVEMQ_SERVER_VERSION_DISCLOSED
+  severity: LOW
+  tags: 
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-16
+    - CWE-200
+  cve:
+    - CVE-2017-7529
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+
+execute:
+  type: single
+  requests:
+    - req: []
+
+validate:
+  response_code:
+    eq: 200
+  response_headers:
+      regex: ActiveMQ/[0-9.]+

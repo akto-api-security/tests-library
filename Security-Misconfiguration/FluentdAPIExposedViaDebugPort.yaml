@@ -1,0 +1,100 @@
+---
+id: FLUENTD_API_EXPOSED_VIA_DEBUG_PORT
+info:
+  name: Fluentd Monitoring API Exposed via Debug Port
+  description: >
+    Exposure of the Fluentd monitoring API through an unsecured debug port can lead to unauthorized access to sensitive logging and monitoring data.
+  details: >
+    When the Fluentd monitoring API is accessible via a debug port without proper authentication and authorization, it can allow malicious actors to view and manipulate log data, monitor events, and potentially disrupt logging services. This exposure can compromise the integrity and confidentiality of the logging information collected by Fluentd.
+  impact: >
+    Unauthorized access to the Fluentd monitoring API can lead to significant security risks, including data leakage, unauthorized log manipulation, and disruptions in log management. Implementing stringent security measures, such as access controls and secure communication protocols, is crucial to protect the Fluentd environment from exposure.
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: FLUENTD_API_EXPOSED_VIA_DEBUG_PORT
+  severity: LOW
+  # check ref.
+  references:
+    - https://docs.fluentd.org/monitoring-fluentd/overview
+    - https://docs.fluentd.org/monitoring-fluentd/monitoring-rest-api
+
+  cwe:
+    - CWE-16
+    - CWE-200
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length: 
+      gt: 0
+  request_headers:
+    for_one:
+      key:
+        eq: Host
+      value:
+        extract: hostVal
+  
+wordLists:
+  attemptPaths:
+    - "http://${hostVal}:24220/api/plugins.json"
+
+  probableOutputParams:
+    - "plugins"
+    - "plugin_id"
+    - "config"
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_method: GET
+      - remove_auth_header: true
+      - replace_body: "{}"
+      - modify_url: ${attemptPaths}
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length: 
+      gt: 0
+    contains_all: ${probableOutputParams}
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+strategy:
+  run_once: /
