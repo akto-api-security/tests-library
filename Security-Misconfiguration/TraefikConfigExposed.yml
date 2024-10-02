@@ -1,0 +1,91 @@
+---
+id: TRAEFIK_CONFIG_EXPOSED
+info:
+  name: Traefik Config Exposed
+  description: >
+    The Traefik configuration file contains sensitive information about routing and service management. If exposed, it can lead to security vulnerabilities.
+  details: >
+    This vulnerability occurs when the Traefik configuration file is accessible over the web, allowing unauthorized users to view or manipulate the routing rules and service configurations. Exposure of the configuration can reveal details about backend services, endpoints, and potentially sensitive authentication data.
+  impact: >
+    Exposing the Traefik configuration can result in significant security risks, including unauthorized access to internal services, data leaks, and disruption of application routing. Attackers may exploit the exposed configuration to redirect traffic, impersonate services, or gain insights into the infrastructure, potentially leading to a full compromise of the services managed by Traefik.
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: TRAEFIK_CONFIG_EXPOSED
+  severity: LOW
+  # check ref.
+  references:
+    - https://doc.traefik.io/traefik/getting-started/configuration-overview/
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-16
+    - CWE-200
+  cve:
+    - CVE-2020-11959
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length: 
+      gt: 0
+
+wordLists:
+  attemptList:
+    - "/etc/traefik/traefik.yml"
+    - "/etc/traefik/traefik.yaml"
+    - "/etc/traefik/traefik.toml"
+    - traefik.yml
+    - traefik.yaml
+    - traefik.toml
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: ${attemptList}
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+strategy:
+  run_once: /

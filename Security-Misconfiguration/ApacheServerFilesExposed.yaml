@@ -1,0 +1,86 @@
+id: APACHE_SERVER_FILES_EXPOSED
+info:
+  name: Apache Server Files Exposed
+  description: "Attackers can gain access to sensitive Apache server files, potentially exposing configuration and authentication data."
+  details: >
+    This vulnerability occurs when the Apache server is misconfigured, allowing unauthorized access to critical files such as configuration files, logs, and other sensitive information. Exposed files may include `httpd.conf`, `.htaccess`, or any other file that should remain private.
+  impact: >
+    Exposing these files can lead to serious security breaches, including unauthorized access to server configurations, potential credential leaks, and information disclosure. Attackers can exploit this information to compromise the server or launch further attacks. Proper security measures and file permissions should be enforced to prevent unauthorized access.
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: APACHE_SERVER_FILES_EXPOSED
+  severity: LOW
+  references:
+    - https://httpd.apache.org/docs/2.4/en/misc/security_tips.html
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-213
+  cve:
+    - CVE-2018-10245
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length: 
+      gt: 0
+
+wordLists:
+  attemptList:
+    - "/usr/local/apache/bin"
+    - "/usr/local/apache/bin/httpd"
+    - "/usr/local/apache2/htdocs"
+    - "/etc/apache2/sites-enabled/000-default.conf"
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: ${attemptList}
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+strategy:
+  run_once: /

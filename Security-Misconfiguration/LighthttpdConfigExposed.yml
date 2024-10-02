@@ -1,0 +1,88 @@
+---
+id: LIGHTHTTPD_CONFIG_EXPOSED
+info:
+  name: LightHttpd Config Exposed
+  description: >
+    The configuration files of LightHttpd can be sensitive, containing information about server settings, paths, and potentially credentials. Exposure of these files can lead to security vulnerabilities.
+  details: >
+    This issue occurs when the LightHttpd configuration files are accessible via the web server. If an attacker gains access to these files, they may discover critical information, such as server configurations, enabled modules, and directory structures, which can aid in planning further attacks.
+  impact: >
+    Exposing the LightHttpd configuration can lead to unauthorized access, misconfiguration exploitation, and potential attacks on the server. Attackers may leverage this information to compromise the server or other services hosted on it.
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: LIGHTHTTPD_CONFIG_EXPOSED
+  severity: LOW
+  # check ref.
+  references:
+    - https://redmine.lighttpd.net/projects/1/wiki/docs
+    - https://blog.lighttpd.net/articles/2006/04/02/log-condition-handling-the-hidden-feature-for-debuging/
+  cwe:
+    - CWE-16
+    - CWE-200
+  cve:
+    - CVE-2020-11959
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length: 
+      gt: 0
+
+wordLists:
+  attemptList:
+    - "/lighttpd.conf"
+    - "/sbin/lighttpd"
+    - "/etc/lighthttpd/lighttpd.conf"
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: ${attemptList}
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+strategy:
+  run_once: /
