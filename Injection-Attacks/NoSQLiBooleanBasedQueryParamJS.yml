@@ -114,7 +114,12 @@ execute:
         - add_query_param: 
             ${changed_query_key}: !!str ${changed_query_value} || 'a' == 'a' || 'a' == 'a' 
         - validate:
+            response_code:
+              gte: 200
+              lt: 300
             response_payload:
+              length:
+                gt: 0
               neq: "${x1.response.body}"
               not_contains:
                 - rate-limit
@@ -138,6 +143,9 @@ execute:
         - add_query_param: 
             ${changed_query_key}: !!str ${changed_query_value} || '1' == '1' || '1' == '1' 
         - validate:
+            response_code:
+              gte: 200
+              lt: 300
             response_payload:
               length:
                 gt: 0
