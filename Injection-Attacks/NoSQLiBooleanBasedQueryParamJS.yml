@@ -82,9 +82,13 @@ execute:
             ${changed_query_key}: !!str ${changed_query_value};return false;
         - validate:
             or:
-              - response_code:
-                  gte: 400
-                  lt: 410
+              - and:
+                  response_payload:
+                    length:
+                      gt: 0
+                  response_code:
+                    gte: 400
+                    lt: 410
               - response_payload:
                   length:
                     gt: 0
@@ -101,6 +105,8 @@ execute:
                     - rate limit
                     - multiple failed attempt
                     - cloudflare
+                    - "HTTP Status 400"
+                    - "Bad Request"
         - success: x2
         - failure: exit
     - req:
@@ -120,6 +126,8 @@ execute:
                 - "The server cannot process the request because it is malformed. It should not be retried"
                 - "That’s an error"
                 - "cloudflare"
+                - "HTTP Status 400"
+                - "Bad Request"
 
         - success: x3
         - failure: exit            
@@ -144,5 +152,7 @@ execute:
                 - "The server cannot process the request because it is malformed. It should not be retried"
                 - "That’s an error"
                 - cloudflare
+                - "HTTP Status 400"
+                - "Bad Request"
         - success: vulnerable
         - failure: exit
