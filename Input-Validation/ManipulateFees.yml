@@ -5,7 +5,7 @@ info:
   description: >
     "This test assesses how the application handles fee parameters in transaction requests, such as processing fees or service charges, to identify potential vulnerabilities that could allow fee manipulation. The objective is to determine whether the system correctly validates and calculates fees based on predefined rules, preventing unauthorized fee alterations."
   details: >
-    "The test focuses on scenarios where users or attackers attempt to modify fee values in transaction requests, such as setting the fee to zero or an incorrect amount. By submitting different requests with varied fee values, such as `fee: 30` or `fee: 0`, the test checks if the application properly enforces fee requirements and calculates the total amount paid accordingly. The goal is to ensure that the system consistently applies the correct fees based on the payment method, transaction type, or other predefined criteria and prevents any unauthorized changes."
+    "The test focuses on scenarios where users or attackers attempt to modify fee values in transaction requests, such as setting the fee to zero or an incorrect amount."
   impact: >
     "Improper handling of fees can lead to financial losses for the business, as attackers or users may bypass fee requirements, resulting in reduced revenue. If the application does not enforce accurate fee calculations, it could lead to discrepancies in billing, loss of trust from customers, and potential regulatory issues. Ensuring robust validation and handling of fees is crucial to maintain financial integrity, prevent revenue leakage, and protect the organization's financial interests."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
