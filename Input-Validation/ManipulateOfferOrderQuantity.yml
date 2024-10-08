@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -70,7 +72,6 @@ api_selection_filters:
       - response_payload:
           contains_either: ${probableReferenceParameters}
     - or:
-      # In case the amount is being sent as a number
       - request_payload:
           for_one:
             key:
@@ -79,7 +80,6 @@ api_selection_filters:
             value:
               datatype: number
               extract: userVal
-      # In case the amount is being sent as a string
       - request_payload:
           for_one:
             key:
@@ -129,7 +129,7 @@ execute:
     - modify_body_param:
         userKey: ${userVal}*10
     - modify_body_param:
-        userKey2: "${userVal}0"
+        userKey2: "${userVal2}0"
 
 validate:
   response_code:

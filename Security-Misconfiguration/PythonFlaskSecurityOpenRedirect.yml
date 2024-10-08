@@ -1,0 +1,62 @@
+id: PYTHON_FLASK_SEC_OPEN_REDIRECT
+info:
+  name: "Python Flask-Security Open Redirect"
+  description: "This vulnerability found in the Flask-Security library, which can allow attackers to manipulate redirect URLs. When a web application fails to properly validate user input for redirection, it can redirect users to malicious sites. This can lead to phishing attacks or the exposure of sensitive information, as unsuspecting users may be misled into entering their credentials on a fraudulent site. Proper input validation and sanitization are crucial to mitigate this risk."
+  details:  "This vulnerability arises from improper handling of user-provided URLs in redirection logic. An attacker can craft a malicious link that, when clicked, redirects users to a site of the attacker's choice instead of the intended destination. This can be exploited in phishing schemes or to steal sensitive data, particularly if users are led to believe they are interacting with a legitimate application. Applications using Flask-Security should implement strict validation checks for redirection URLs to prevent such attacks."
+  impact: "The impact of this vulnerability can lead to significant security risks, including phishing attacks and the theft of sensitive user information. By redirecting users to malicious sites, attackers can manipulate users into entering credentials or personal data, compromising their accounts. Additionally, this vulnerability may damage the reputation of the affected application, eroding user trust and potentially leading to loss of business. Organizations must address this issue to protect users and maintain the integrity of their applications."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: PYTHON_FLASK_SEC_OPEN_REDIRECT
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2021-29622
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "/login"
+      - modify_method: GET
+      - replace_body: '{}'
+      - add_query_param:
+          next: "\\\\akto.io"
+      
+
+
+validate:
+  response_payload:
+    length:
+      gt: 0
+  response_headers:
+    for_one:
+      key:
+        eq: "location"
+      value:
+        contains_all:
+          - akto
+          - io

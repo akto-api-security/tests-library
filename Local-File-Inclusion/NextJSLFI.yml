@@ -1,0 +1,53 @@
+id: NEXTJS_LFI
+info:
+  name: "Next.js Local File Inclusion"
+  description: "This vulnerability allows attackers to manipulate file paths to access sensitive files on the server. By exploiting this flaw, an attacker can potentially read arbitrary files, including configuration files or environment variables, leading to information disclosure. This can compromise the application's security and expose sensitive data. Proper input validation and sanitization are essential to mitigate this risk."
+  details:  "This vulnerability arises from improper handling of user input when file paths are constructed. Attackers can exploit this weakness by crafting requests that include directory traversal sequences, such as `../`, to access files outside the intended directories. This could allow access to critical files like environment configurations, logs, or user data stored on the server. Developers should implement strict input validation and utilize safe methods for file handling to prevent such attacks."
+  impact: "Successful exploitation of the Next.js Local File Inclusion vulnerability can lead to unauthorized access to sensitive files on the server, including configuration files, credentials, or user data. This could result in data leakage, information disclosure, or even further attacks on the application or underlying infrastructure. The impact can compromise the integrity and confidentiality of the system, potentially leading to a full system compromise if critical files are accessed."
+  category:
+    name: LFI
+    shortName: Local File Inclusion
+    displayName: Local File Inclusion (LFI)
+  subCategory: NEXTJS_LFI
+  severity: MEDIUM
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion"
+    - "https://raw.githubusercontent.com/emadshanab/LFI-Payload-List/master/LFI%20payloads.txt"
+  cwe:
+    - CWE-98
+    - CWE-22
+  cve:
+    -  CVE-2020-5284
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_method: GET
+      - modify_url: "/_next/static/../server/pages-manifest.json"
+      - replace_body: '{}'
+      
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    regex: '\{"/_app":".*?_app\.js"'
+    length:
+      gt: 0
+  response_headers:
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        eq: "application/json"

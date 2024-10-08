@@ -70,16 +70,15 @@ api_selection_filters:
             regex: "${probableInputParameters1}"
             extract: userKey1
           value:
-            extract: userVal1
+            neq: 1
     - request_payload:
         for_one:
           key:
             regex: "${probableInputParameters2}"
             extract: userKey2
-          value:
-            extract: userVal2
   - request_payload:
       contains_either: "${probableInputVerificationParameters}"
+
 wordLists:
   probableInputVerificationParameters:
     - gift
@@ -131,7 +130,6 @@ wordLists:
     - giftActivated
     - giftGranted
     - giftValidated
-
 
 execute:
   type: single
