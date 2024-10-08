@@ -5,7 +5,7 @@ info:
   description: |
     "This test examines the potential for exploiting refund policies by manipulating the refund type parameter in API requests. The objective is to identify whether users can alter the refund type, such as changing from a partial refund to a full refund, to gain unauthorized advantages or refunds beyond the allowed policy."
   details: |
-    "The test involves sending API requests to the order cancellation endpoint with different `refund_type` parameters, such as `full` or `partial`, to determine if the system appropriately validates these inputs. For example, when cancelling an order with the `refund_type` set to `full`, the test checks whether the system correctly processes the request based on the item's status, such as `shipped` or `delivered`. The goal is to ensure that the application enforces its refund policies correctly and does not allow unauthorized changes to the refund type."
+    "The test involves sending API requests to the order cancellation endpoint with different refund_type parameters, such as full or partial, to determine if the system appropriately validates these inputs. For example, when cancelling an order with the refund_type set to full, the test checks whether the system correctly processes the request based on the item's status, such as shipped or delivered. The goal is to ensure that the application enforces its refund policies correctly and does not allow unauthorized changes to the refund type."
   impact: |
     "Improper handling of the refund type can lead to financial losses and abuse of the refund policy. If users can manipulate the refund type to obtain full refunds where only partial refunds are allowed, it can result in significant revenue leakage and potentially fraudulent claims. Ensuring that refund types are accurately validated and processed according to the established policies is crucial to maintaining the integrity of the refund process and protecting the business from exploitation."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,14 +64,14 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-  or:
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          extract: userVal
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        extract: userVal
+
 wordLists:
   probableInputParameters:
     - refundType
@@ -113,6 +115,7 @@ execute:
   - req:
     - modify_body_param:
         userKey: ${attemptValues}
+
 validate:
   response_code:
     gte: 200

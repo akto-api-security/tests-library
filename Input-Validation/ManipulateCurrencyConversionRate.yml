@@ -5,7 +5,7 @@ info:
   description: >
     "This test assesses the system's ability to handle and validate currency conversion rates properly. The objective is to identify vulnerabilities that might allow users to manipulate conversion rates, potentially leading to financial discrepancies or fraudulent activities."
   details: >
-    "The test involves sending API requests to convert currencies with both valid and invalid currency codes or manipulated conversion parameters. For example, the system should accurately convert a specified amount from one currency to another using the correct conversion rate. If an invalid or unsupported currency code is provided, the system should reject the request or return an appropriate error message. The test checks whether the application properly validates the currency codes and conversion rates to prevent unauthorized or incorrect conversions."
+    "The test involves sending API requests to convert currencies with both valid and invalid currency codes or manipulated conversion parameters."
   impact: >
     "Improper handling of currency conversion rates can lead to significant financial losses and opportunities for fraud. If users can manipulate conversion rates or use invalid currency codes to receive favorable rates, it may result in incorrect transactions, loss of revenue, and potential legal consequences. Ensuring robust validation of currency conversion parameters is critical to maintaining the financial integrity of the application and protecting against fraudulent activities."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,7 +64,6 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-
     for_one:
       key:
         regex: "${probableOutputParameters}"
@@ -70,14 +71,15 @@ api_selection_filters:
       value:
         datatype: number
         extract: outputUserValue
-  or:
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          extract: userVal
+
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        extract: userVal
+
 wordLists:
   probableInputParameters:
     - conversionRate
@@ -106,7 +108,6 @@ wordLists:
     - adjustedAmount
     - equivalentAmount
     - netConvertedAmount
-
 
 execute:
   type: single

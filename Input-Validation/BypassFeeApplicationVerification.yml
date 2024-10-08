@@ -5,7 +5,7 @@ info:
   description: |
     This vulnerability involves bypassing the verification mechanism that applies fees to transactions. Attackers might exploit this flaw to avoid fees by manipulating request parameters related to fee application.
   details: |
-    The issue occurs when an attacker modifies the request to bypass the fee application process. In a typical transaction, a fee is applied based on certain conditions. By setting the `applyFee` parameter to `false`, the attacker can circumvent the fee application, resulting in no additional charges despite the transaction being processed successfully.
+    The issue occurs when an attacker modifies the request to bypass the fee application process. 
   impact: |
     Exploiting this vulnerability can lead to financial loss for the business due to uncollected fees. It also undermines the integrity of the fee application process, which could result in inconsistent revenue and potential abuse of the transaction system.
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,14 +64,13 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-  or:
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          extract: userVal
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        extract: userVal
 
 wordLists:
   probableInputParameters:
@@ -104,6 +105,37 @@ wordLists:
     - completed
     - feeWaived
 
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
 execute:
   type: multiple
   requests:
@@ -117,37 +149,8 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
-        contains_either: ${probableOutputFailParameters}
+          not_contains: ${responseErrorList}
+          contains_either: ${probableOutputFailParameters}
     - success: x2
     - failure: exit
   - req:
@@ -160,35 +163,6 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
-        contains_either: ${probableOutputPassParameters}
+          not_contains: ${responseErrorList}
+          contains_either: ${probableOutputPassParameters}
     - success: vulnerable

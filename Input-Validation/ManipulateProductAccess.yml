@@ -1,14 +1,13 @@
 ---
 id: MANIPULATE_PRODUCT_ACCESS
 info:
-  name: "Manipulate Product Access Using Unverified Time Periods"
-  description: >
+  name: Manipulate Product Access Using Unverified Time Periods
+  description: |
     "This test assesses the ability to manipulate access to products by altering the time period parameters without proper verification. The goal is to determine if users can extend or modify their access to digital products, such as eBooks or subscriptions, beyond the intended duration."
-  details: >
-    "The test involves sending API requests to manipulate the `accessPeriod` parameter for a product to check if the system properly validates the time period before granting access. For example, by modifying the `accessPeriod` from `30_days` to `90_days`, an attacker might attempt to extend access to the product without authorization. The test checks if the system correctly restricts access based on predefined rules or if it allows unauthorized extensions of access periods."
-  impact: >
+  details: |
+    "The test involves sending API requests to manipulate the parameters related to periods for a product to check if the system properly validates the time period before granting access."
+  impact: |
     "Manipulating product access periods can lead to unauthorized access, resulting in potential revenue losses and unfair advantages for some users. If the system allows users to extend their access to digital products without proper verification, it undermines the business model, reduces the effectiveness of subscription controls, and could negatively impact profitability. Ensuring strict validation of access period parameters is essential to maintain the integrity of digital product access and protect the company's financial interests."
-
   category:
     name: INPUT
     shortName: Input Validation
@@ -35,6 +34,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,83 +63,66 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-
-    # Here we check for the modified values of contextual keys in response.
     for_one:
       key:
         regex: "${probableOutputParameters}"
         extract: outputUserKey
       value:
         extract: outputUserValue
-  or:
-  # In case the amount is being sent as a number
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          datatype: number
-          extract: userVal
-  # In case the amount is being sent as a string
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey2
-        value:
-          regex: "\b([1-9][0-9]*)\b"
-          extract: userVal2
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey2
+      value:
+        regex: "\b([1-9][0-9]*)\b"
+        not_contains: ${daysValue}
+
 wordLists:
   probableInputParameters:
-    - accessDays
-    - accessPeriod
-    - accessTime
-    - accessDuration
-    - accessLength
-    - subscriptionDays
-    - subscriptionPeriod
-    - validityPeriod
-    - accessValidity
-    - periodOfAccess
-    - accessExpiry
-    - accessInterval
-    - accessEndDate
-    - productAccessDays
-    - accessTerm
-
+  - accessDays
+  - accessPeriod
+  - accessTime
+  - accessDuration
+  - accessLength
+  - subscriptionDays
+  - subscriptionPeriod
+  - validityPeriod
+  - accessValidity
+  - periodOfAccess
+  - accessExpiry
+  - accessInterval
+  - accessEndDate
+  - productAccessDays
+  - accessTerm
   probableOutputParameters:
-    - grantedTill
-    - timePeriod
-    - accessPeriod
-    - accessEndsOn
-    - validUntil
-    - expiryDate
-    - accessExpires
-    - accessExpiration
-    - validThrough
-    - accessEnd
-    - subscriptionEndDate
-    - periodRemaining
-    - accessEndTime
-    - remainingAccessPeriod
-    - accessTerminationDate
-
+  - grantedTill
+  - timePeriod
+  - accessPeriod
+  - accessEndsOn
+  - validUntil
+  - expiryDate
+  - accessExpires
+  - accessExpiration
+  - validThrough
+  - accessEnd
+  - subscriptionEndDate
+  - periodRemaining
+  - accessEndTime
+  - remainingAccessPeriod
+  - accessTerminationDate
   daysValue:
-    - 30
-    - 90
-    - 180
-    - 360
-    - 720
-
+  - 30
+  - 90
+  - 180
+  - 360
+  - 720
 execute:
   type: single
   requests:
   - req:
     - modify_body_param:
-        userKey: ${daysValue}
-    - modify_body_param:
-        userKey2: "${daysValue}"
+        userKey: "${daysValue}"
 
 validate:
   response_code:
