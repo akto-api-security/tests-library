@@ -1,19 +1,19 @@
 ---
-id: MANIPULATING_ACCESS_LEVELS
+id: MANIPULATE_ACCOUNT_TYPE
 info:
-  name: "Manipulating Access Levels in Resource Consumption APIs"
-  description: |  
-    "This test evaluates the ability to manipulate access levels in APIs that control resource consumption, such as video or content streaming services. The objective is to identify vulnerabilities that could allow unauthorized users to elevate their access level, thereby gaining access to restricted or premium content without proper authorization."
-  details: |
-    "The test involves sending API requests with different accessLevel parameters to check if the system correctly validates and enforces access controls. For example, a request with `accessLevel: standard` might grant access to basic content, while changing the `accessLevel` to `premium` should require additional authorization. The test checks if the system appropriately handles such changes and ensures that users cannot access content beyond their entitlement level by simply modifying request parameters."
-  impact: |
-    "Improper handling of access levels can lead to unauthorized access to premium or restricted content, resulting in potential revenue loss and abuse of the service. If users can manipulate access levels to obtain premium content without payment, it undermines the value of subscription tiers, impacts monetization strategies, and could lead to significant financial and reputation damage. Ensuring robust access control mechanisms is essential to protect the service's integrity and maintain a fair and secure consumption model."
+  name: "Manipulate Account Type"
+  description: >
+    "This test evaluates the system's handling and validation of account types during user account operations. The objective is to identify vulnerabilities that could allow unauthorized changes to account types, potentially granting users unintended privileges or benefits."
+  details: >
+    "The test involves sending API requests to modify the accountType field for a user account and observing whether the system correctly validates the specified account type against a predefined set of allowed values. For example, changing an account type from 'SAVINGS' to an unsupported or unauthorized type such as 'PLATINUM' should be rejected or result in an error response. The test checks whether the application enforces proper validation to prevent unauthorized account type changes."
+  impact: >
+    "Improper handling of account type changes can lead to serious security risks, including unauthorized access to restricted features, financial loss, or exploitation of account privileges. If users can manipulate their account type to gain elevated status or access to special services, it could compromise the system's integrity, result in fraudulent activities, and undermine trust in the platform. Ensuring robust validation of account types is essential to protect against unauthorized changes and maintain a secure environment."
 
   category:
     name: INPUT
     shortName: Input Validation
     displayName: Input Validation (INPUT)
-  subCategory: MANIPULATING_ACCESS_LEVELS
+  subCategory: MANIPULATE_ACCOUNT_TYPE
   severity: LOW
   tags:
   - Business logic
@@ -74,48 +74,36 @@ api_selection_filters:
 
 wordLists:
   probableInputParameters:
-    - accessLevel
-    - accessType
-    - userAccess
-    - permissionLevel
-    - accessTier
-    - authorizationLevel
-    - contentAccess
-    - subscriptionLevel
-    - accessCategory
-    - accessPermission
-    - userLevel
-    - entitlementType
-    - accessCode
+    - accountType
+    - userAccountType
+    - accountCategory
+    - membershipLevel
+    - tier
+    - planType
+    - accountLevel
+    - subscriptionType
+    - profileType
+    - userType
+    - customerType
 
   probableOutputParameters:
     - success
-    - granted
-    - authorized
-    - allowed
-    - accessApproved
-    - accessEnabled
-    - permissionGranted
-    - accessSuccessful
+    - successful
     - validated
-    - accessConfirmed
+    - approved
+    - confirmed
+    - updated
+    - statusChanged
+    - changeApplied
+    - typeChanged
+    - modificationSuccessful
+    - accountUpdated
 
   attemptValues:
-    - full
-    - premium
-    - enterprise
-    - internal
-    - complete
-    - restricted
-    - unlimited
-    - elevated
-    - VIP
-    - admin
-    - exclusive
-    - gold
-    - silver
-    - unrestricted
-    - privileged
+    source: sample_data
+    key:
+      regex: accountType|userAccountType|membershipLevel|planType|tier|accountLevel|subscriptionType|profileType|userType|customerType
+    location: payload
 
 execute:
   type: single
