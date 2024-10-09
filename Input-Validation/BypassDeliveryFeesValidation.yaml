@@ -1,19 +1,19 @@
 ---
-id: MANIPULATE_FEES
+id: BYPASS_DELIVERY_FEES_VALIDATION
 info:
-  name: "Manipulate Fees or Price in Transactions"
-  description: >
-    "This test evaluates whether the system correctly handles and validates transaction fees or product prices. The objective is to identify potential vulnerabilities that could allow users to manipulate the price of items or associated fees during a transaction, potentially resulting in financial loss or fraud."
-  details: >
-    "The test focuses on scenarios where users or attackers attempt to modify fee values in transaction requests, such as setting the fee to zero or an incorrect amount."
-  impact: >
-    "Manipulating fees or prices in transactions can lead to significant financial losses and undermine trust in the payment system. If users are able to alter prices or fees to their advantage, it could result in fraudulent transactions, reduced revenue, and potential damage to the business's reputation. Ensuring robust validation of all price and fee parameters is essential to maintain financial integrity, protect against fraud, and uphold fair business practices."
+  name: "Bypass Delivery Fees Validation"
+  description: |
+    "This test examines the system's ability to correctly validate delivery methods and apply corresponding delivery fees. The objective is to identify vulnerabilities that might allow users to avoid delivery charges by selecting invalid or non-existent delivery methods."
+  details: |
+    "The test involves sending API requests with different values to assess if the system properly checks and applies delivery fees based on the selected method."
+  impact: |
+    "Circumventing delivery fees can lead to financial losses and encourage abuse of the delivery system. If users can manipulate delivery methods to avoid charges, it undermines the business's pricing strategy and results in a direct loss of revenue. Ensuring robust validation of delivery methods is essential to prevent exploitation, maintain fair pricing practices, and protect the company's financial interests."
 
   category:
     name: INPUT
     shortName: Input Validation
     displayName: Input Validation (INPUT)
-  subCategory: MANIPULATE_FEES
+  subCategory: BYPASS_DELIVERY_FEES_VALIDATION
   severity: LOW
   tags:
   - Business logic
@@ -64,8 +64,6 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-
-    # Here we check for the modified values of contextual keys in response.
     for_one:
       key:
         regex: "${probableOutputParameters}"
@@ -73,91 +71,67 @@ api_selection_filters:
       value:
         extract: outputUserValue
   or:
-  # In case the amount is being sent as a number
   - request_payload:
       for_one:
         key:
-          regex: "${probableInputParameters}"
-          extract: userKey
+          regex: "${probableInputParameters1}"
+          extract: userKey1
         value:
-          datatype: number
-          extract: userVal
-  # In case the amount is being sent as a string
+          extract: userVal1
   - request_payload:
       for_one:
         key:
-          regex: "${probableInputParameters}"
+          regex: "${probableInputParameters2}"
           extract: userKey2
         value:
-          regex: "\b([1-9][0-9]*)\b"
           extract: userVal2
 wordLists:
-  probableInputParameters:
-  # Fees-related parameters
-    - fees
-    - fee
-    - charge
-    - serviceFee
-    - processingFee
+  probableInputParameters1:
+    - deliveryFees
+    - deliveryCost
+    - shippingFee
+    - shippingCost
+    - transportCost
+    - courierFee
+    - freightCharge
     - handlingFee
-    - surcharge
-    - additionalCharge
-    - transactionFee
-    - extraCost
-    - cost
-    - convenienceFee
-    - paymentFee
-    - commission
-    - gatewayFee
-    - platformFee
-    - deliveryFee
-    - shippingCharge
-    - administrativeFee
-    - reservationFee
-    - bookingFee
-    - checkoutFee
-    - financeCharge
+    - serviceCharge
+    - shippingCharges
+    - logisticsFee
 
-  # Price-related parameters
-    - price
-    - basePrice
-    - unitPrice
-    - itemCost
-    - productPrice
-    - salePrice
-    - listPrice
-    - discountedPrice
-    - retailPrice
-    - catalogPrice
-    - netPrice
-    - subtotal
-    - totalPrice
-    - quotedPrice
-    - finalPrice
-    - adjustedPrice
+  probableInputParameters2:
+    - freeDelivery
+    - discountDelivery
+    - waiveDeliveryFee
+    - zeroDeliveryCost
+    - deliveryPromo
+    - noShippingCharge
+    - freeShipping
+    - complimentaryDelivery
+    - reducedDeliveryFee
+    - waivedShipping
 
   probableOutputParameters:
-    - transactionAmount
-    - amount
-    - finalAmount
-    - balance
-    - paid
-    - bill
+    - deliveryCost
+    - finalCost
+    - cost
+    - totalCharge
+    - shippingTotal
+    - deliveryFee
+    - amountDue
     - totalAmount
-    - totalPaid
-    - payableAmount
-    - netAmount
-    - invoiceAmount
-    - dueAmount
+    - orderTotal
+    - totalPayable
+    - netCost
 
 execute:
   type: single
   requests:
   - req:
     - modify_body_param:
-        userKey: 0
+        userKey1: 1
     - modify_body_param:
-        userKey2: "0"
+        userKey2: true
 
 validate:
   response_code:
@@ -201,4 +175,3 @@ validate:
         eq: "${outputUserKey}"
       value:
         neq: "${outputUserValue}"
-
