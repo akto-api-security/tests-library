@@ -1,0 +1,162 @@
+---
+id: MANIPULATING_SHIPPING_ADDRESS
+info:
+  name: "Manipulating Shipping Address"
+  description: |
+    "This test evaluates the system's ability to correctly validate and handle shipping addresses during checkout. The objective is to identify vulnerabilities that could allow users to manipulate the shipping address details, such as mismatching the pincode (zip code) with the state or country, to exploit shipping costs or gain unauthorized delivery advantages."
+  details: |
+    "The test involves sending API requests with mismatched shipping address components, such as providing a pincode that does not correspond to the specified state or country. For example, a user might attempt to use a pincode from a low-cost or free shipping zone while specifying a different state or country in the address."
+  impact: |
+    "Manipulating the shipping address can lead to incorrect shipping cost calculations, unauthorized use of free or discounted shipping options, and potential delivery failures. If users can exploit mismatches in address details, it may result in financial losses, logistical challenges, and customer dissatisfaction. Ensuring robust validation of shipping addresses, including consistent verification of all address components, is critical to maintaining the integrity of shipping processes and preventing abuse of shipping policies."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: MANIPULATING_SHIPPING_ADDRESS
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+  and:
+    -  request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+            extract: userKey
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters2}"
+            extract: userKey2
+
+wordLists:
+  probableInputParameters:
+    - pincode
+    - zipCode
+    - postalCode
+    - deliveryCode
+    - areaCode
+    - regionCode
+    - shippingCode
+    - zoneCode
+
+  probableInputParameters2:
+    - state
+    - province
+    - region
+    - territory
+    - stateCode
+    - administrativeArea
+    - locality
+    - district
+
+  probableOutputParameters:
+    - shipping
+
+  pincodeValues:
+    source: sample_data
+    key:
+      regex: pincode|zipCode|postalCode|deliveryCode|areaCode|regionCode
+    location: payload
+
+  stateValues:
+    source: sample_data
+    key:
+      regex: state|province|region|territory|stateCode|administrativeArea
+    location: payload
+
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: ${pincodeValues}
+    - modify_body_param:
+        userKey2: ${stateValues} 
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match_schema:
+      gte: 90
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"

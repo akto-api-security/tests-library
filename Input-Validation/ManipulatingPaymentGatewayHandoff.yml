@@ -1,0 +1,135 @@
+---
+id: MANIPULATING_PAYMENT_GATEWAY_HANDOFF
+info:
+  name: "Manipulating Payment Gateway Handoff"
+  description: |
+    "This test evaluates the system's ability to securely handle and validate the handoff process between the application and the payment gateway. The objective is to identify vulnerabilities that could allow users to manipulate the payment handoff process, potentially leading to unauthorized payment methods being used or bypassing proper payment authorization checks."
+  details: |
+    "The test involves sending API requests to initiate transactions with different payment methods and checking if the system correctly validates the handoff to the payment gateway. For example, changing the payment method from 'credit_card' to 'bank_transfer' should trigger distinct responses and URL redirection for each method. However, if the application returns the same response or payment gateway URL regardless of the payment method chosen, it may indicate a lack of validation or improper handling of the payment process. The test checks whether the application consistently validates payment methods and ensures that the correct handoff parameters are sent to the payment gateway for each transaction."
+  impact: |
+    "Manipulating the payment gateway handoff can lead to serious security risks, such as unauthorized transactions, payment fraud, and financial loss. If users can bypass or manipulate the payment process to use different methods without appropriate validation or authorization, it can compromise the integrity of the payment system and lead to exploitation of the payment gateway. Ensuring robust validation of payment handoff parameters is crucial to prevent misuse, protect against fraudulent activities, and maintain the security of financial transactions."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: MANIPULATING_PAYMENT_GATEWAY_HANDOFF
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts  
+    contains_either: ${probableOutputParameters}
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+
+wordLists:
+  probableInputParameters:
+    - paymentMethod
+
+  probableOutputParameters:
+    - gatewayUrl
+
+  attemptValues:
+    source: sample_data
+    key:
+      regex: paymentMethod
+    location: payload
+
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues} 
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      gte: 90
+    percentage_match_schema:
+      gte: 90
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+    contains_either: ${probableOutputParameters}
