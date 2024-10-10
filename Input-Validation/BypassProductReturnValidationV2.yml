@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -64,26 +66,20 @@ api_selection_filters:
     - multiple failed attempts  
     contains_either: ${probableOutputParameters}
   request_payload:
-    contains_either: ${probableInputParametersValidation}
     for_one:
       key:
         regex: "${probableInputParameters}"
         extract: userKey
+  url:
+    contains_either: ${probableInputValidationParameters}
 
 wordLists:
-  probableInputParametersValidation:
-    - orderId
-    - transactionId
-    - purchaseId
-    - saleId
-    - invoiceId
-    - receiptId
-    - orderNumber
-    - orderReference
-    - returnOrderId
-    - refundOrderId
-    - purchaseReference
-    - checkoutId
+  probableInputValidationParameters:
+    - initiateRefund
+    - startRefund
+    - claimRefund
+    - initiateReturn
+    - startReturn
 
   probableInputParameters:
     - productId
@@ -94,15 +90,6 @@ wordLists:
     - returnedProductIds
     - productCodes
     - returnProductList
-    - merchandiseIds
-    - goodsIds
-    - returnItems
-    - productReferences
-    - itemList
-    - productSkus
-    - returnItemIds
-    - articleIds
-    - itemReferences
 
   probableOutputParameters:
     - amount successfully refunded
@@ -141,7 +128,7 @@ execute:
   requests:
   - req: 
       - modify_body_param:
-        userKey: ${attemptValues}
+          userKey: ${attemptValues}
 
 validate:
   response_code:

@@ -9,7 +9,6 @@ info:
   impact: |
     "Manipulating the payment gateway handoff can lead to serious security risks, such as unauthorized transactions, payment fraud, and financial loss. If users can bypass or manipulate the payment process to use different methods without appropriate validation or authorization, it can compromise the integrity of the payment system and lead to exploitation of the payment gateway. Ensuring robust validation of payment handoff parameters is crucial to prevent misuse, protect against fraudulent activities, and maintain the security of financial transactions."
 
-
   category:
     name: INPUT
     shortName: Input Validation
@@ -36,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -69,8 +70,6 @@ api_selection_filters:
       key:
         regex: "${probableInputParameters}"
         extract: userKey
-      value:
-        extract: userVal
 
 wordLists:
   probableInputParameters:
@@ -100,6 +99,8 @@ validate:
     length:
       gt: 0
     percentage_match:
+      gte: 90
+    percentage_match_schema:
       gte: 90
     not_contains:
     - Error

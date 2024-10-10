@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -65,8 +67,17 @@ api_selection_filters:
     contains_either: ${probableOutputParameters}
   request_payload:
     contains_either: ${probableInputParameters}
+  url:
+    contains_either: ${probableInputValidationParameters}
 
 wordLists:
+  probableInputValidationParameters:
+    - initiateRefund
+    - startRefund
+    - claimRefund
+    - initiateReturn
+    - startReturn
+
   probableInputParameters:
     - orderId
     - itemId
