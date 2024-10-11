@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -67,10 +69,9 @@ api_selection_filters:
       for_one:
         key:
           regex: "${probableInputParameters}"
-          extract: userKey
+          extract: userKey1
         value:
           regex: "\b\\d{4}-\\d{2}-\\d{2}\b"
-          extract: userVal
   - request_payload:
       for_one:
         key:
@@ -78,7 +79,6 @@ api_selection_filters:
           extract: userKey2
         value:
           datatype: number
-          extract: userVal2
   - request_payload:
       for_one:
         key:
@@ -86,7 +86,6 @@ api_selection_filters:
           extract: userKey3
         value:
           regex: "\b([1-9][0-9]*)\b"
-          extract: userVal3
 
 wordLists:
   probableInputParameters:
@@ -153,12 +152,8 @@ execute:
   type: multiple
   requests:
   - req:
-    - modify_body_param:
-        userKey1: ${userVal1}
-    - modify_body_param:
-        userKey2: ${userVal2}
-    - modify_body_param:
-        userKey3: ${userVal3}
+    - add_header:
+        x-akto-ignore: 0
     - validate:
         response_code:
           gte: 200
@@ -201,11 +196,11 @@ execute:
     - failure: exit
   - req:
     - modify_body_param:
-        userKey1: ${attemptValues1}
-    - modify_body_param:
         userKey2: "1*${attemptValues2}"
     - modify_body_param:
         userKey3: "${attemptValues2}"
+    - modify_body_param:
+        userKey1: ${attemptValues1}
     - validate:
         response_code:
           gte: 200

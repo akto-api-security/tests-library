@@ -5,7 +5,7 @@ info:
   description: |
     "This test examines the ability to bypass the deposit validation mechanism for orders and pre-orders. The objective is to determine whether users can manipulate the deposit amount to secure a reservation or pre-order a product without meeting the required deposit criteria."
   details: |
-    "The test involves sending API requests with different `depositAmount` values to check if the system accurately validates the deposit requirement before confirming an order or reservation. For example, a product that requires a deposit of `50` should only confirm the reservation if the correct deposit amount is provided. The test checks if the system can detect and reject attempts to provide a lower deposit amount (e.g., `10`) while still obtaining a reservation confirmation. This ensures the deposit validation process is robust and prevents users from bypassing the required payment conditions."
+    "The test involves sending API requests with different values to check if the system accurately validates the deposit requirement before confirming an order or reservation."
   impact: |
     "Bypassing deposit validation can lead to potential financial losses and inventory management issues. If users are able to secure reservations or pre-orders without providing the correct deposit, it could result in unpaid or incomplete transactions, reduced inventory control, and abuse of the ordering system. Ensuring proper validation and enforcement of deposit requirements is crucial to maintaining financial integrity, protecting against fraudulent activity, and ensuring fair business practices."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,14 +64,14 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-  or:
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          extract: userVal
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        extract: userVal
+
 wordLists:
   probableInputParameters:
     - depositAmount
@@ -117,6 +119,7 @@ execute:
   - req:
     - modify_body_param:
         userKey: ${attemptValues}
+
 validate:
   response_code:
     gte: 200

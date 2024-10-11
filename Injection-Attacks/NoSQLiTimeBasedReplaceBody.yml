@@ -1,0 +1,130 @@
+id: TIME_BASED_NOSQLI_JSON_BODY_REPLACE
+info:
+  name: "Time based NoSQL Injection test by replacing JSON body completely with sleep function parameter"
+  description: >
+    "Time-based NoSQL injection testing involves manipulating a NoSQL database query to include a time delay function, such as `sleep`, to assess the system's vulnerability to injection attacks. By completely replacing or modifying the JSON body of a request with a sleep function parameter, testers can determine if the system is vulnerable to execution of arbitrary commands. This technique helps identify potential security weaknesses where time-based delays indicate successful injection, revealing the presence of vulnerabilities that could be exploited for further attacks."
+  details: >
+    "Time-based NoSQL injection testing by replacing the JSON body with a sleep function parameter involves crafting a malicious request where the entire JSON payload is replaced with a command that introduces a delay. When the request is processed, the database query includes this sleep function, causing the server to pause for the specified duration. This delay confirms that the injected command was executed, indicating a vulnerability to NoSQL injection. This method helps identify systems susceptible to executing arbitrary code through injection, highlighting potential security risks."
+  impact: >
+    "The impact of time-based NoSQL injection testing by replacing the JSON body with a sleep function parameter is significant. It reveals that the system is vulnerable to arbitrary code execution through injection attacks, which can lead to unauthorized access or manipulation of the database. Successful exploitation could allow attackers to execute custom commands, potentially compromising the integrity, confidentiality, and availability of the application. Additionally, it exposes weaknesses that could be further exploited to perform more severe attacks, including data breaches and system disruptions"
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: TIME_BASED_NOSQLI_JSON_BODY_REPLACE
+  severity: MEDIUM
+  tags:
+    - Injection Attack
+    - OWASP Top 10
+    - HackerOne Top 10
+  references:
+    - "https://github.com/Charlie-belmer/nosqli"
+    - "https://owasp.org/www-community/Injection_Flaws"
+  cwe:
+    - CWE-943
+    - CWE-89
+  cve:
+    - CVE-2020-35847
+    - CVE-2021-22911
+    - CVE-2023-28359
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+  method:
+    not_contains:
+      - GET
+      - OPTIONS
+
+wordLists:
+  timeBasedPayloads:
+    - "{\"$where\" : \"sleep(4000)\" }"
+execute:
+  type: multiple
+  requests:
+  - req: 
+    - add_header:
+        dummyKey: dummyVal
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+            - failure
+            - cloudflare
+    - success: x2
+    - failure: exit
+  - req:
+    - replace_body: ${timeBasedPayloads}
+    - validate:
+        response_code:
+          eq: 429        
+validate:
+  and:
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - 3001
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 3

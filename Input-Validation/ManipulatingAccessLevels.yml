@@ -5,9 +5,9 @@ info:
   description: |  
     "This test evaluates the ability to manipulate access levels in APIs that control resource consumption, such as video or content streaming services. The objective is to identify vulnerabilities that could allow unauthorized users to elevate their access level, thereby gaining access to restricted or premium content without proper authorization."
   details: |
-    "The test involves sending API requests with different `accessLevel` parameters to check if the system correctly validates and enforces access controls. For example, a request with `accessLevel: standard` might grant access to basic content, while changing the `accessLevel` to `premium` should require additional authorization. The test checks if the system appropriately handles such changes and ensures that users cannot access content beyond their entitlement level by simply modifying request parameters."
+    "The test involves sending API requests with different accessLevel parameters to check if the system correctly validates and enforces access controls. For example, a request with `accessLevel: standard` might grant access to basic content, while changing the `accessLevel` to `premium` should require additional authorization. The test checks if the system appropriately handles such changes and ensures that users cannot access content beyond their entitlement level by simply modifying request parameters."
   impact: |
-    "Improper handling of access levels can lead to unauthorized access to premium or restricted content, resulting in potential revenue loss and abuse of the service. If users can manipulate access levels to obtain premium content without payment, it undermines the value of subscription tiers, impacts monetization strategies, and could lead to significant financial and reputational damage. Ensuring robust access control mechanisms is essential to protect the service's integrity and maintain a fair and secure consumption model."
+    "Improper handling of access levels can lead to unauthorized access to premium or restricted content, resulting in potential revenue loss and abuse of the service. If users can manipulate access levels to obtain premium content without payment, it undermines the value of subscription tiers, impacts monetization strategies, and could lead to significant financial and reputation damage. Ensuring robust access control mechanisms is essential to protect the service's integrity and maintain a fair and secure consumption model."
 
   category:
     name: INPUT
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,14 +64,14 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-  or:
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          extract: userVal
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        extract: userVal
+
 wordLists:
   probableInputParameters:
     - accessLevel
@@ -114,15 +116,14 @@ wordLists:
     - silver
     - unrestricted
     - privileged
-    - earlyBird
-    - EARLY_BIRD
-  
+
 execute:
   type: single
   requests:
   - req:
     - modify_body_param:
         userKey: ${attemptValues}
+
 validate:
   response_code:
     gte: 200
