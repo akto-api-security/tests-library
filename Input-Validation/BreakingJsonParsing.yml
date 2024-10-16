@@ -74,10 +74,6 @@ wordLists:
     - "\0"
     - "\ufffe"
     - "\uffff"
-    - "\b"
-    - "\f"
-    - "\r"
-    - "\t"
     - "null"
     - undefined
     - "{"
@@ -157,6 +153,7 @@ execute:
             gt: 0
           percentage_match:
             gt: 90
+            neq: 100
           percentage_match_schema:
             gt: 90
           not_contains: ${responseErrorList}
