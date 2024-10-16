@@ -37,7 +37,7 @@ api_selection_filters:
     neq: OPTIONS
   response_payload:
     length: 
-      gt: 90
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -71,64 +71,32 @@ api_selection_filters:
 
 wordLists:
   attemptValues:
-    - "\u2342"
-    - "\u0000"
-    - "\u2028"
-    - "\u2029"
-    - "\uFFFE"
-    - "\uFFFF"
+    - "\0"
+    - "\ufffe"
+    - "\uffff"
     - "\b"
     - "\f"
-    - "\n"
     - "\r"
     - "\t"
-    - "\\"
-    - "\""
-    - "/"
     - "null"
-    - "undefined"
+    - undefined
     - "{"
     - "}"
     - "["
     - "]"
-    - "NaN"
-    - "\u0085"
-    - "\u2060"
-    - "\uFEFF"
-    - "\x00"
+    - NaN
     - "\x1f"
     - "\x7f"
     - "\x81"
-    - "\xFF"
-    - "\xA0"
-    - "\uD800"
-    - "\uDBFF"
-    - "\uDC00"
-    - "\uDFFF"
-    - "\uFFFD"
-    - "0x0000"
-    - "\u003Cscript\u003E"
-    - "\u0022"
-    - "\\u0022"
-
-execute:
-  type: single
-  requests:
-  - req:
-    - replace_body: ${userBody}${attemptValues}
-
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    percentage_match:
-      gt: 90
-    percentage_match_schema:
-      gt: 90
-    not_contains:
+    - "\ud800"
+    - "\udbff"
+    - "\udc00"
+    - "\udfff"
+    - �
+    - <script>
+    - \u0022
+  
+  responseErrorList:
     - Error
     - Internal Server
     - Failed
@@ -158,3 +126,38 @@ validate:
     - Attention Required!
     - CloudFlare
     - "Sorry, you have been blocked"
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - add_header:
+        x-akto-ignore: 123
+    - replace_body: "{}"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${responseErrorList}
+    - success: exit
+    - failure: x2
+  - req:
+    - add_header:
+        x-akto-ignore: 123
+    - replace_body: ${userBody}${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          percentage_match:
+            gt: 90
+          percentage_match_schema:
+            gt: 90
+          not_contains: ${responseErrorList}
+    - success: vulnerable

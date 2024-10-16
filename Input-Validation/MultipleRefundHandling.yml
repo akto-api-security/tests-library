@@ -5,7 +5,7 @@ info:
   description: |
     "This test evaluates the application's handling of multiple refund requests for the same order or product to identify potential fraud or abuse. The goal is to ensure that the system correctly manages and validates refund requests to prevent users from receiving duplicate or excessive refunds."
   details: |
-    "The test involves submitting multiple refund requests for the same order and product with the same reason. For example, sending refund requests for order `order123` with product `A1` and reason `defective` should result in a single successful refund of `100`. The test verifies whether the system accurately processes only the first request and rejects subsequent identical requests to prevent multiple refunds. This ensures the integrity of the refund process and mitigates the risk of refund fraud."
+    "The test involves submitting multiple refund requests for the same order and product with the same reason."
   impact: |
     "Improper handling of multiple refund requests can lead to significant financial losses and fraud. If the system allows users to receive multiple refunds for the same item, it could result in undue financial burden for the company and potential misuse of the refund policy. This can damage the company's reputation, impact profitability, and lead to increased operational costs. Ensuring proper validation and management of refund requests is crucial to preventing abuse and maintaining financial stability."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -79,10 +81,43 @@ wordLists:
   - refundAmount
   - refundValue
 
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
 execute:
   type: multiple
   requests:
   - req:
+    - add_header:
+        x-akto-ignore: 0
     - validate:
         response_code:
           gte: 200
@@ -90,39 +125,12 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
+          not_contains: ${responseErrorList}
     - success: x2
     - failure: exit
   - req:
+    - add_header:
+        x-akto-ignore: 0
     - validate:
         response_code:
           gte: 200
@@ -130,34 +138,5 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
+          not_contains: ${responseErrorList}
     - success: vulnerable

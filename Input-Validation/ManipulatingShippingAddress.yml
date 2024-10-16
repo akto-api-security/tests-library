@@ -5,7 +5,7 @@ info:
   description: |
     "This test evaluates the system's ability to correctly validate and handle shipping addresses during checkout. The objective is to identify vulnerabilities that could allow users to manipulate the shipping address details, such as mismatching the pincode (zip code) with the state or country, to exploit shipping costs or gain unauthorized delivery advantages."
   details: |
-    "The test involves sending API requests with mismatched shipping address components, such as providing a pincode that does not correspond to the specified state or country. For example, a user might attempt to use a pincode from a low-cost or free shipping zone while specifying a different state or country in the address. The test checks whether the application validates the shipping address details correctly, ensuring that all components (country, state, city, and pincode) match and correspond to the actual geographical location."
+    "The test involves sending API requests with mismatched shipping address components, such as providing a pincode that does not correspond to the specified state or country. For example, a user might attempt to use a pincode from a low-cost or free shipping zone while specifying a different state or country in the address."
   impact: |
     "Manipulating the shipping address can lead to incorrect shipping cost calculations, unauthorized use of free or discounted shipping options, and potential delivery failures. If users can exploit mismatches in address details, it may result in financial losses, logistical challenges, and customer dissatisfaction. Ensuring robust validation of shipping addresses, including consistent verification of all address components, is critical to maintaining the integrity of shipping processes and preventing abuse of shipping policies."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -95,6 +97,9 @@ wordLists:
     - locality
     - district
 
+  probableOutputParameters:
+    - shipping
+
   pincodeValues:
     source: sample_data
     key:
@@ -123,6 +128,8 @@ validate:
   response_payload:
     length:
       gt: 0
+    percentage_match_schema:
+      gte: 90
     not_contains:
     - Error
     - Internal Server

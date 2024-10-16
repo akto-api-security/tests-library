@@ -5,7 +5,7 @@ info:
   description: |
     "This test assesses whether the system properly manages the transfer of loyalty or referral points between users. The goal is to identify potential weaknesses that could allow unauthorized or improper transfer of points, potentially leading to fraud or abuse of the loyalty program."
   details: |
-    "The test involves sending API requests to transfer points from one user to another to check if the system correctly validates the source and destination users and the amount of points being transferred. For example, a legitimate transfer of points should only occur if the `fromUserId` is authorized and has a sufficient points balance. The test verifies if the system prevents unauthorized transfers and ensures that points are accurately deducted from the sender and added to the recipient."
+    "The test involves sending API requests to transfer points from one user to another to check if the system correctly validates the source and destination users and the amount of points being transferred."
   impact: |
     "Improper handling of points transfers can lead to fraudulent activities, such as unauthorized transfers, manipulation of loyalty or referral programs, and potential financial losses. If users can transfer points without proper validation, it undermines the integrity of the points system, leading to customer dissatisfaction, reduced program effectiveness, and possible reputation damage. Ensuring robust validation and monitoring of points transfers is essential to prevent abuse and maintain trust in the loyalty program."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,14 +64,17 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-  or:
-  - request_payload:
-      for_one:
+  request_payload:
+    and:
+    - contains_either: "${probableInputParameters}"
+    - for_one:
         key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          extract: userVal
+          regex: "${probableFromParameters}"
+          extract: userKey1
+    - for_one:
+        key:
+          regex: "${probableToParameters}"
+          extract: userKey2
 wordLists:
   probableInputParameters:
     - points
@@ -135,9 +140,9 @@ execute:
   requests:
   - req:
     - modify_body_param:
-        probableFromParameters: ${fromUserIds}
+        userKey1: ${fromUserIds}
     - modify_body_param:
-        probableToParameters: ${toUserIds}
+        userKey2: ${toUserIds}
     
 validate:
   response_code:

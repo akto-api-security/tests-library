@@ -5,7 +5,7 @@ info:
   description: >
     "This test evaluates whether the system correctly handles and validates auto-renewal settings for subscriptions. The goal is to identify potential vulnerabilities that could allow users to manipulate auto-renewal options, potentially impacting the billing cycle and service continuation."
   details: >
-    "The test involves sending API requests to modify the `autoRenewal` parameter of a subscription and observing the system's response. For example, an initial request with `autoRenewal: true` sets the next billing date to `2024-10-01`. Changing the `autoRenewal` to `false` should logically disable auto-renewal, but if the system fails to handle this properly, it could either incorrectly extend or shorten the subscription period. The test ensures that any changes to auto-renewal settings are correctly validated and reflected in the system."
+    "The test involves sending API requests to modify a parameter of a subscription and observing the system's response."
   impact: >
     "Improper handling of auto-renewal settings can result in financial losses, service disruptions, and customer dissatisfaction. If users can manipulate their auto-renewal status without proper verification, they may exploit the system to avoid payments or receive unintended service extensions. Ensuring robust validation and enforcement of subscription auto-renewal rules is essential to maintaining predictable revenue streams, customer trust, and the overall integrity of the subscription service."
   
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,8 +64,6 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-
-    # Here we check for the modified values of contextual keys in response.
     for_one:
       key:
         regex: "${probableOutputParameters}"
@@ -71,7 +71,6 @@ api_selection_filters:
       value:
         extract: outputUserValue
   or:
-  # In case the amount is being sent as a number
   - request_payload:
       for_one:
         key:
@@ -79,16 +78,13 @@ api_selection_filters:
           extract: userKey
         value:
           datatype: boolean
-          extract: userVal
-  # In case the amount is being sent as a string
   - request_payload:
       for_one:
         key:
           regex: "${probableInputParameters}"
-          extract: userKey2
+          extract: userKey
         value:
           regex: "^(?i)(true|false)$"
-          extract: userVal2
 wordLists:
   probableInputParameters:
     - autoRenewal
@@ -225,5 +221,5 @@ execute:
               eq: "${outputUserKey1}"
             value:
               neq: "${outputUserValue1}"
-
     - success: vulnerable
+

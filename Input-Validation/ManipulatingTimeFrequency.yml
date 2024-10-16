@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -94,22 +96,7 @@ wordLists:
       regex: frequency|repeatFrequency|orderFrequency|reorderInterval|deliveryFrequency|subscriptionFrequency|recurrencePeriod
     location: payload
 
-execute:
-  type: single
-  requests:
-  - req:
-    - modify_body_param:
-        userKey: ${sampleValues} 
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    percentage_match:
-      eq: 100
-    not_contains:
+  responseErrorList:
     - Error
     - Internal Server
     - Failed
@@ -139,3 +126,36 @@ validate:
     - Attention Required!
     - CloudFlare
     - "Sorry, you have been blocked"
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - delete_body_param: ${userKey}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          percentage_match:
+            eq: 90
+          not_contains: ${responseErrorList}
+    # if it works without the param, then it's not exploitable using that param.
+    - success: exit
+    - failure: x2
+  - req:
+    - modify_body_param:
+        userKey: ${sampleValues} 
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          percentage_match:
+            eq: 90
+          not_contains: ${responseErrorList}
+    - success: vulnerable

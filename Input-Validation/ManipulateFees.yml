@@ -5,7 +5,7 @@ info:
   description: >
     "This test evaluates whether the system correctly handles and validates transaction fees or product prices. The objective is to identify potential vulnerabilities that could allow users to manipulate the price of items or associated fees during a transaction, potentially resulting in financial loss or fraud."
   details: >
-    "The test involves sending API requests with modified fee or price values to check if the system properly validates and enforces the correct amounts. For example, manipulating the price of an item to a significantly lower value than intended or altering the fees associated with a payment method (like setting a fee to zero) could bypass the normal transaction validation checks. The test ensures that the application correctly calculates total costs, validates fees, and prevents unauthorized changes to prices or fees."
+    "The test focuses on scenarios where users or attackers attempt to modify fee values in transaction requests, such as setting the fee to zero or an incorrect amount."
   impact: >
     "Manipulating fees or prices in transactions can lead to significant financial losses and undermine trust in the payment system. If users are able to alter prices or fees to their advantage, it could result in fraudulent transactions, reduced revenue, and potential damage to the business's reputation. Ensuring robust validation of all price and fee parameters is essential to maintain financial integrity, protect against fraud, and uphold fair business practices."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server

