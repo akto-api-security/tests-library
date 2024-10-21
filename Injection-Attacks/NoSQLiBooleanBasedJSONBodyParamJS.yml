@@ -85,6 +85,8 @@ execute:
                   gte: 400
                   lt: 410
               - response_payload:
+                  length:
+                    gt: 0
                   not_contains:
                     - Error
                     - fail
@@ -99,6 +101,7 @@ execute:
                     - multiple failed attempt
                     - cloudflare
                     - "'a' != 'a"
+                    - rejected
         - success: x2
         - failure: exit
     - req:
