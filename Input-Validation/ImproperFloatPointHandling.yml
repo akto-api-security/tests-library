@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,15 +64,16 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-  or:
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          regex: "\b\\d+\b"
-          extract: userVal
+    contains_either: ${probableOutputParameters}
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        datatype: number
+        extract: userVal
+
 wordLists:
   probableInputParameters:
     - amount
@@ -104,27 +107,7 @@ wordLists:
     - recalculated
     - calculationValidated
 
-  attemptValues:
-    - ".999999999"
-    - ".00000001"
-    - ".012002130"
-    - ".21324324563"
-
-execute:
-  type: single
-  requests:
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${attemptValues}
-
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    not_contains:
+  responseErrorList:
     - Error
     - Internal Server
     - Failed
@@ -154,4 +137,41 @@ validate:
     - Attention Required!
     - CloudFlare
     - "Sorry, you have been blocked"
-    contains_either: ${probableOutputParameters}
+
+  attemptValues:
+    - ".999999999"
+    - ".012002130"
+    - ".21324324563"
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - delete_body_param: ${userKey}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+        and:
+          - response_payload:
+              not_contains: ${responseErrorList}
+          - response_payload:
+              not_contains: ${probableOutputParameters}
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${responseErrorList}
+          contains_either: ${probableOutputParameters}
+    - success: vulnerable
