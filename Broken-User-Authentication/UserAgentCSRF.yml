@@ -88,9 +88,14 @@ api_selection_filters:
       - multiple failed attempts
   and:
     - request_headers:
-        not_contains:
-        - csrf
-        - xsrf
+        for_one:
+          key:
+            contains_either: csrf
+            extract: csrf_key
+          value:
+            not_contains:
+              - ":"
+              - ";"
     - request_headers:
         for_one:
           key: 
@@ -106,17 +111,12 @@ api_selection_filters:
               - KHTML
               - Edg
               - Googlebot
-    - request_headers:
-        for_one:
-          key:
-            eq: Cookie
-            extract: cookieKey
       
 execute:
   type: multiple
   requests:
   - req: 
-    - delete_header: $(cookieKey)
+    - delete_header: ${csrf_key}
     - validate:
         response_code:
           eq: ${resp_code}
@@ -155,8 +155,9 @@ execute:
     - success: exit
     - failure: x2
   - req:
-    - add_header: 
-        dummyHeader: "dummyData"
+    - delete_header: ${csrf_key}
+    - modify_header:
+        user-agent: "dummyBrowser"
     - validate:
         response_code:
           eq: ${resp_code}
