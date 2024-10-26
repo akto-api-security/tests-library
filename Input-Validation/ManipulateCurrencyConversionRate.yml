@@ -1,0 +1,160 @@
+---
+id: MANIPULATE_CURRENCY_CONVERSION_RATE
+info:
+  name: "Manipulate Currency Conversion Rate"
+  description: >
+    "This test assesses the system's ability to handle and validate currency conversion rates properly. The objective is to identify vulnerabilities that might allow users to manipulate conversion rates, potentially leading to financial discrepancies or fraudulent activities."
+  details: >
+    "The test involves sending API requests to convert currencies with both valid and invalid currency codes or manipulated conversion parameters."
+  impact: >
+    "Improper handling of currency conversion rates can lead to significant financial losses and opportunities for fraud. If users can manipulate conversion rates or use invalid currency codes to receive favorable rates, it may result in incorrect transactions, loss of revenue, and potential legal consequences. Ensuring robust validation of currency conversion parameters is critical to maintaining the financial integrity of the application and protecting against fraudulent activities."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: MANIPULATE_CURRENCY_CONVERSION_RATE
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length: 
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    for_one:
+      key:
+        regex: "${probableOutputParameters}"
+        extract: outputUserKey
+      value:
+        datatype: number
+        extract: outputUserValue
+
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        extract: userVal
+
+wordLists:
+  probableInputParameters:
+    - conversionRate
+    - exchangeRate
+    - currencyRate
+    - rate
+    - fxRate
+    - conversionFactor
+    - forexRate
+    - conversionMultiplier
+    - currencyConversionValue
+    - rateOfExchange
+    - conversionIndex
+
+  probableOutputParameters:
+    - amount
+    - convertedAmount
+    - finalAmount
+    - convertedValue
+    - exchangedAmount
+    - convertedTotal
+    - currencyConverted
+    - resultantAmount
+    - computedAmount
+    - calculatedAmount
+    - adjustedAmount
+    - equivalentAmount
+    - netConvertedAmount
+
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: "1.00"
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+    for_one:
+      key:
+        eq: "${outputUserKey}"
+      value:
+        neq: "${outputUserValue}"

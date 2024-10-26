@@ -78,6 +78,8 @@ execute:
                   gte: 400
                   lt: 410
               - response_payload:
+                  length:
+                    gt: 0
                   not_contains:
                     - Error
                     - fail
@@ -96,7 +98,12 @@ execute:
     - req:
         - replace_body: "{ \"$where\" : \"return true\" }"
         - validate:
+            response_code:
+              gte: 200
+              lt: 300
             response_payload:
+              length:
+                gt: 0
               neq: "${x1.response.body}"
               not_contains:
                 - rate-limit
@@ -106,6 +113,8 @@ execute:
                 - account is blocked
                 - multiple failed attempt
                 - cloudflare
+                - invalid
+                - fail
         - success: x3
         - failure: exit         
     - req:
@@ -114,6 +123,8 @@ execute:
         - replace_body: "{ \"$where\" : \"return true\" }"
         - validate:
             response_payload:
+              length:
+                gt: 0
               eq: "${x2.response.body}"
               not_contains:
                 - rate-limit
@@ -123,5 +134,7 @@ execute:
                 - account is blocked
                 - multiple failed attempt
                 - cloudflare
+                - invalid
+                - fail
         - success: vulnerable
         - failure: exit     

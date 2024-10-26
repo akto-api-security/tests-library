@@ -21,8 +21,7 @@ info:
   cve:
     - CVE-2023-4647
     - CVE-2023-38254
-auth:
-  authenticated: true
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -83,9 +82,9 @@ validate:
     and:
         - compare_greater:
             - ${x2.response.stats.median_response_time}
-            - 3001
+            - 5001
         - compare_greater:
             - ${x2.response.stats.median_response_time}
-            - ${x1.response.stats.median_response_time} * 3
+            - ${x1.response.stats.median_response_time} * 5
 strategy:
     run_once: /

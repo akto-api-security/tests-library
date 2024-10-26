@@ -1,13 +1,13 @@
 ---
 id: MANIPULATE_FEES
 info:
-  name: "Manipulate Fees in transactions"
+  name: "Manipulate Fees or Price in Transactions"
   description: >
-    "This test assesses how the application handles fee parameters in transaction requests, such as processing fees or service charges, to identify potential vulnerabilities that could allow fee manipulation. The objective is to determine whether the system correctly validates and calculates fees based on predefined rules, preventing unauthorized fee alterations."
+    "This test evaluates whether the system correctly handles and validates transaction fees or product prices. The objective is to identify potential vulnerabilities that could allow users to manipulate the price of items or associated fees during a transaction, potentially resulting in financial loss or fraud."
   details: >
     "The test focuses on scenarios where users or attackers attempt to modify fee values in transaction requests, such as setting the fee to zero or an incorrect amount."
   impact: >
-    "Improper handling of fees can lead to financial losses for the business, as attackers or users may bypass fee requirements, resulting in reduced revenue. If the application does not enforce accurate fee calculations, it could lead to discrepancies in billing, loss of trust from customers, and potential regulatory issues. Ensuring robust validation and handling of fees is crucial to maintain financial integrity, prevent revenue leakage, and protect the organization's financial interests."
+    "Manipulating fees or prices in transactions can lead to significant financial losses and undermine trust in the payment system. If users are able to alter prices or fees to their advantage, it could result in fraudulent transactions, reduced revenue, and potential damage to the business's reputation. Ensuring robust validation of all price and fee parameters is essential to maintain financial integrity, protect against fraud, and uphold fair business practices."
 
   category:
     name: INPUT
@@ -93,6 +93,7 @@ api_selection_filters:
           extract: userVal2
 wordLists:
   probableInputParameters:
+  # Fees-related parameters
     - fees
     - fee
     - charge
@@ -104,6 +105,36 @@ wordLists:
     - transactionFee
     - extraCost
     - cost
+    - convenienceFee
+    - paymentFee
+    - commission
+    - gatewayFee
+    - platformFee
+    - deliveryFee
+    - shippingCharge
+    - administrativeFee
+    - reservationFee
+    - bookingFee
+    - checkoutFee
+    - financeCharge
+
+  # Price-related parameters
+    - price
+    - basePrice
+    - unitPrice
+    - itemCost
+    - productPrice
+    - salePrice
+    - listPrice
+    - discountedPrice
+    - retailPrice
+    - catalogPrice
+    - netPrice
+    - subtotal
+    - totalPrice
+    - quotedPrice
+    - finalPrice
+    - adjustedPrice
 
   probableOutputParameters:
     - transactionAmount
