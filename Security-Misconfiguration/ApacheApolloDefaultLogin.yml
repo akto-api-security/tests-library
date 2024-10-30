@@ -27,8 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
   request_headers:
     for_one:
       key:
@@ -68,3 +66,6 @@ execute:
               - 'Logout</a>'           
       - success: vulnerable
       - failure: exit   
+
+strategy:
+  run_once: /

@@ -27,8 +27,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
+
   request_headers:
     for_one:
       key:
@@ -60,3 +59,6 @@ validate:
       gt: 0
     contains_either:
       - "<h1>Welcome to Axis2 Web Admin Module !!</h1>"
+
+strategy:
+  run_once: /

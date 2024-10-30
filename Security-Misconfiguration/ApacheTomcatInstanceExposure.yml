@@ -27,8 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
   request_headers:
     for_one:
       key:
@@ -69,3 +67,6 @@ validate:
           - 'Version\s+([0-9.]+),'
           - '(?i)/lib/([a-z0-9.]+)/webapps'
           - '(?i)<h3>Apache\s+Tomcat/([0-9.]+)'
+
+strategy:
+  run_once: /

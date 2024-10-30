@@ -27,8 +27,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
+
   request_headers:
     for_one:
       key:
@@ -70,3 +69,5 @@ validate:
       for_one:
         key:
           eq: "kbn-license-sig"
+strategy:
+  run_once: /

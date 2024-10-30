@@ -24,8 +24,6 @@ api_selection_filters:
       gt: 0
   method:
     neq: "OPTIONS"
-  url:
-    extract: urlVar
 
 execute:
   type: single
@@ -43,4 +41,7 @@ validate:
     length:
       gt: 0
   ssrf_url_hit: ${random_uuid}
+
+strategy:
+  run_once: /
 

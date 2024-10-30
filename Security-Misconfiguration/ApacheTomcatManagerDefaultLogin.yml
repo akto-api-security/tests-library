@@ -28,8 +28,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
+
   request_headers:
     for_one:
       key:
@@ -68,3 +67,5 @@ validate:
       - "OS Architecture"
       - "Hostname"
       - "IP Address"
+strategy:
+  run_once: /

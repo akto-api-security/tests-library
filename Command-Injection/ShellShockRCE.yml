@@ -24,8 +24,6 @@ api_selection_filters:
       gt: 0
   method:
     neq: "OPTIONS"
-  url:
-    extract: urlVar
 wordLists:
   paths:
     - ""
@@ -59,4 +57,5 @@ validate:
     length:
       gt: 0
     regex: "root:.*:0:0:"
-
+strategy:
+  run_once: /

@@ -27,8 +27,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
+
   request_headers:
     for_one:
       key:
@@ -56,3 +55,6 @@ validate:
         eq: "location"
       value:
         eq: "https://test-services.akto.io/store_uuid/${random_uuid}"
+
+strategy:
+  run_once: /

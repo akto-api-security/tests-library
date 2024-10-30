@@ -27,8 +27,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
+
   request_headers:
     for_one:
       key:
@@ -56,3 +55,5 @@ validate:
       - "Types of profiles available:"
       - "Profile Descriptions"
       - "goroutine profile: total"
+strategy:
+  run_once: /

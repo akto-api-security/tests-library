@@ -27,8 +27,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
+
   request_headers:
     for_one:
       key:
@@ -64,3 +63,5 @@ validate:
           eq: "x-jenkins"
         value:
           regex: ".*"
+strategy:
+  run_once: /

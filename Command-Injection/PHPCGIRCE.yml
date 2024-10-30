@@ -24,8 +24,6 @@ api_selection_filters:
       gt: 0
   method:
     neq: "OPTIONS"
-  url:
-    extract: urlVar
 
 execute:
   type: single
@@ -42,4 +40,6 @@ validate:
       gt: 0
     contains_either:
       - "e8dc4081b13434b45189a720b77b6818"
+strategy:
+  run_once: /
 
