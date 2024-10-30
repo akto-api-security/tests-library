@@ -27,14 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
-  request_headers:
-    for_one:
-      key:
-        eq: "host"
-      value:
-        extract: hostHeaderVal
 wordLists:
   paths:
     - "/api/v1/status/config"
@@ -61,3 +53,5 @@ validate:
         eq: "content-type"
       value:
         eq: "application/json"
+strategy:
+  run_once: /

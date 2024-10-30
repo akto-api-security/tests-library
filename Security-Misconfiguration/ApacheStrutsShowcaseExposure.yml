@@ -27,14 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
-  request_headers:
-    for_one:
-      key:
-        eq: "host"
-      value:
-        extract: hostHeaderVal
 wordLists:
   paths:
     - "/struts2-showcase/showcase.action"
@@ -53,3 +45,5 @@ validate:
       gt: 0
     contains_either:
       - "<title>Struts2 Showcase'"
+strategy:
+  run_once: /

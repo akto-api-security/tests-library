@@ -34,14 +34,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
-  request_headers:
-    for_one:
-      key:
-        eq: "host"
-      value:
-        extract: hostHeaderVal
 wordLists:
   paths:
     - '/static/%255c%255c..%255c/..%255c/..%255c/..%255c/..%255c/..%255c/..%255c/..%255c/..%255c/windows/win.ini'
@@ -61,3 +53,5 @@ validate:
       gt: 0
     contains_either:
       - "for 16-bit app support"
+strategy:
+  run_once: /

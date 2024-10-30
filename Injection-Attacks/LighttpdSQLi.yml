@@ -27,14 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
-  request_headers:
-    for_one:
-      key:
-        eq: "host"
-      value:
-        extract: hostHeaderVal
 
 execute:
   type: single
@@ -50,3 +42,5 @@ validate:
     regex: "root:[x*]:0:0:"
     length:
       gt: 0
+strategy:
+  run_once: /

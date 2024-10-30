@@ -27,14 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
-  request_headers:
-    for_one:
-      key:
-        eq: "host"
-      value:
-        extract: hostHeaderVal
 wordLists:
   paths:
       - "/api/v1/namespaces/kube-system/secrets/kubernetes-dashboard-certs"
@@ -55,3 +47,5 @@ validate:
     contains_all:
       - "apiVersion"
       - "objectRef"
+strategy:
+  run_once: /

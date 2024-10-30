@@ -27,14 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
-  request_headers:
-    for_one:
-      key:
-        eq: "host"
-      value:
-        extract: hostHeaderVal
 wordLists:
   paths:
     - '/..;/manager/html'
@@ -59,3 +51,5 @@ validate:
     contains_all:
       - 'username="tomcat" password="s3cret"'
       - 'manager-gui'
+strategy:
+  run_once: /

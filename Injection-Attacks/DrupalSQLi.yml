@@ -27,14 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
-  request_headers:
-    for_one:
-      key:
-        eq: "host"
-      value:
-        extract: hostHeaderVal
 
 execute:
   type: single
@@ -52,3 +44,5 @@ validate:
       - 'c8c605999f3d8352d7bb792cf3fdb25b'
     length:
       gt: 0
+strategy:
+  run_once: /

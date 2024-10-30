@@ -27,14 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
-  request_headers:
-    for_one:
-      key:
-        eq: "host"
-      value:
-        extract: hostHeaderVal
 execute:
   type: multiple
   requests:
@@ -70,5 +62,6 @@ execute:
               contains_either: "abcdefgh1"
         - success: vulnerable
         - failure: exit
-        
+strategy:
+  run_once: /    
 

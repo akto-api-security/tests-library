@@ -34,14 +34,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
-  request_headers:
-    for_one:
-      key:
-        eq: "host"
-      value:
-        extract: hostHeaderVal
 wordLists:
   paths:
     - '/api/console/api_server?sense_version=%40%40SENSE_VERSION&apis=../../../../../../../../../../../etc/passwd'
@@ -68,3 +60,5 @@ validate:
         contains_either:
           - "kbn-name"
           - "kibana"
+strategy:
+  run_once: /
