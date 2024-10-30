@@ -17,11 +17,11 @@ info:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
-    # review the references, cve, cwe, before finalizing.
   references:
     - "https://web.dev/security-headers/"
     - "https://www.keycdn.com/blog/http-security-headers"
     - "https://www.invicti.com/white-papers/whitepaper-http-security-headers"
+    - "https://seclists.org/webappsec/2002/q4/111"
   cwe:
     - CWE-693
   cve:
@@ -39,10 +39,8 @@ api_selection_filters:
       key:
         contains_either:
           - Referer
-        extract: headerKey
       value:
         regex: ".*session.*"
-        extract: headerValue
 
 execute:
   type: single
