@@ -17,11 +17,11 @@ info:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
-    # review the references, cve, cwe, before finalizing.
   references:
     - "https://web.dev/security-headers/"
     - "https://www.keycdn.com/blog/http-security-headers"
     - "https://www.invicti.com/white-papers/whitepaper-http-security-headers"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html"
   cwe:
     - CWE-693
   cve:
@@ -37,13 +37,14 @@ api_selection_filters:
   or: 
     - response_headers:
         for_one:
-          key: X-Frame-Options
+          key: 
+            eq: X-Frame-Options
           value:
             regex: "^(?!.*\bDENY\b)(?!.*\bSAMEORIGIN\b)(?!.*\bALLOW FROM\b).*"
-            extract: headerValue
     - response_headers:
         for_one:
-          key: X-Frame-Options
+          key: 
+            eq: X-Frame-Options
           value:
             regex: "(?=.*\bDENY\b)(?=.*\bSAMEORIGIN\b)|(?=.*\bDENY\b)(?=.*\bALLOW FROM\b)|(?=.*\bSAMEORIGIN\b)(?=.*\bALLOW FROM\b)"
     - request_payload:

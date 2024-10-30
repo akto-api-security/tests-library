@@ -85,6 +85,8 @@ execute:
                   gte: 400
                   lt: 410
               - response_payload:
+                  length:
+                    gt: 0
                   not_contains:
                     - Error
                     - fail
@@ -98,7 +100,11 @@ execute:
                     - rate limit
                     - multiple failed attempt
                     - cloudflare
-                    - "'a' != 'a"
+                    - " && 'a' != 'a' && 'a' != 'a"
+                    - rejected
+                    - "u0027a"
+                    - "u003d"
+                    - "||"
         - success: x2
         - failure: exit
     - req:
@@ -122,6 +128,10 @@ execute:
                 - cloudflare
                 - invalid
                 - fail
+                - "'a' == 'a"
+                - "u0027a"
+                - "u003d"
+
         - success: x3
         - failure: exit  
     - req:
@@ -144,5 +154,8 @@ execute:
                 - cloudflare
                 - invalid
                 - fail
+                - "'a' == 'a"
+                - "u0027a"
+                - "u003d"
         - success: vulnerable  
         - failure: exit        

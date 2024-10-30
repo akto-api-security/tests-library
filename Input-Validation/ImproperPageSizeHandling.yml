@@ -145,7 +145,7 @@ validate:
   and:
     - compare_greater:
         - ${x2.response.stats.median_response_time}
-        - 3001
+        - 5001
     - compare_greater:
         - ${x2.response.stats.median_response_time}
-        - ${x1.response.stats.median_response_time} * 3
+        - ${x1.response.stats.median_response_time} * 5
