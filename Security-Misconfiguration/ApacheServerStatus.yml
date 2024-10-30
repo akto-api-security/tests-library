@@ -27,12 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  request_headers:
-    for_one:
-      key:
-        eq: "host"
-      value:
-        extract: hostHeaderVal
 wordLists:
   paths:
     - '/server-info'

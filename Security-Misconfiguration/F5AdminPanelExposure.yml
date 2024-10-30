@@ -28,12 +28,6 @@ api_selection_filters:
     length:
       gt: 0
 
-  request_headers:
-    for_one:
-      key:
-        eq: "host"
-      value:
-        extract: hostHeaderVal
 execute:
   type: single
   requests:
