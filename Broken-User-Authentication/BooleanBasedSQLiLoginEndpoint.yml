@@ -140,6 +140,9 @@ execute:
     - modify_body_param:
         userKey: ${userVal}${trueCasePayloads}
     - validate:
+        response_code:
+          gte: 200
+          lt: 300
         response_payload:
           length:
             gt: 0
@@ -157,6 +160,8 @@ execute:
             - " OR "
             - "="
             - "--"
+            - "fail"
+            - "invalid"
     - success: x3
     - failure: exit
   - req:
@@ -165,6 +170,9 @@ execute:
     - modify_body_param:
         userKey: ${userVal}${trueCasePayloads}
     - validate:
+        response_code:
+          gte: 200
+          lt: 300
         response_payload:
           length:
             gt: 0
@@ -182,4 +190,6 @@ execute:
             - " OR "
             - "="
             - "--"
+            - "fail"
+            - "invalid"
     - success: vulnerable

@@ -1,0 +1,310 @@
+---
+id: BYPASS_RATE_LIMIT_WITH_INVALID_DATA
+info:
+  name: "Bypass Rate Limit with Invalid Data"
+  description: >
+    "This test evaluates whether the system can be exploited to bypass rate limiting by submitting requests with invalid or malformed data. The objective is to identify potential vulnerabilities that could allow attackers to circumvent rate limits and perform excessive requests without being properly throttled."
+  details: >
+    "The test involves sending a sequence of API requests, mixing valid and invalid data to check if the rate limiting mechanism correctly counts all requests. For example, sending an invalid transaction request (e.g., with an amount as 'NaN') should trigger an error, but the system should still count it towards the rate limit. The test checks whether the system consistently enforces rate limits, even when invalid data is submitted, to prevent attackers from bypassing restrictions by alternating between valid and invalid requests."
+  impact: >
+    "Bypassing rate limits can lead to a range of security issues, including denial of service attacks, excessive resource consumption, and abuse of APIs. If attackers can evade rate limits using invalid data, they could flood the system with requests, degrade performance, and disrupt services. Ensuring robust rate limiting is essential to maintain the availability, performance, and security of the application."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_RATE_LIMIT_WITH_INVALID_DATA
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length: 
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+
+wordLists:
+  probableInputParameters:
+    - amount
+    - value
+    - transactionAmount
+    - paymentValue
+    - transferAmount
+    - creditAmount
+    - debitValue
+    - totalAmount
+    - quantity
+    - fundAmount
+
+  probableOutputParameters:
+    - success
+    - succeeded
+    - completed
+    - transactionSuccess
+    - processed
+    - approved
+    - validated
+    - confirmed
+    - requestCompleted
+    - operationSucceeded
+    - actionSuccess
+
+  attemptValues:
+    - NaN
+    - Invalid value
+    - undefined
+    - blank
+    - zero
+    - negativeAmount
+    - emptyString
+    - specialCharacters
+    - infinity
+    - notANumber
+    - invalidFormat
+    - corruptData
+    - overflowValue
+    - malformedInput
+    - zeroLength
+
+  validationResponseInvalidKeywords:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+execute:
+  type: multiple
+  requests:
+  # valid attempt -1
+  - req:
+    - add_header:
+        x-akto-ignore: 0
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${validationResponseInvalidKeywords}
+          contains_either: ${probableOutputParameters}
+    - success: x2
+    - failure: exit
+  # attack attempts -1
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${validationResponseInvalidKeywords}
+    - success: x3
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${validationResponseInvalidKeywords}
+    - success: x4
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${validationResponseInvalidKeywords}
+    - success: x5
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${validationResponseInvalidKeywords}
+    - success: x6
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${validationResponseInvalidKeywords}
+    - success: x7
+    - failure: exit
+  # valid attempt -2
+  - req:
+    - add_header:
+        x-akto-ignore: 0
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${validationResponseInvalidKeywords}
+          contains_either: ${probableOutputParameters}
+    - success: x8
+    - failure: exit
+  # attack attempts -2
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${validationResponseInvalidKeywords}
+    - success: x9
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${validationResponseInvalidKeywords}
+    - success: x10
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${validationResponseInvalidKeywords}
+    - success: x12
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${validationResponseInvalidKeywords}
+    - success: x13
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${validationResponseInvalidKeywords}
+    - success: vulnerable

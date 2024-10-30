@@ -1,0 +1,163 @@
+---
+id: MANIPULATING_CLIENT_SIDE_TIMESTAMPS
+info:
+  name: "Manipulating Client-Side Timestamps"
+  description: |
+    "This test evaluates the system's ability to properly validate and handle timestamps provided by the client, ensuring that operations based on time are not exploited by manipulating client-side timestamps. The objective is to identify vulnerabilities that could allow users to bypass time-based restrictions, such as expiration dates, rate limits, or access controls, by submitting manipulated timestamps."
+  details: |
+    "The test involves sending API requests with manipulated client-side timestamps, such as setting a timestamp far in the future (e.g., '2099-12-31T12:00:00Z') or using timestamps that are clearly outside the expected range. For example, a user might attempt to manipulate a timestamp to extend the validity of a session, bypass rate limiting, or gain access to time-sensitive content or functionality. The test checks whether the application properly validates and handles timestamps provided by the client to prevent manipulation."
+  impact: |
+    "Manipulating client-side timestamps can lead to various security risks, including unauthorized access, bypassing rate limits, extending the validity of expired sessions, or exploiting time-sensitive operations. If users can manipulate timestamps to control the timing of requests, it undermines the integrity of time-based restrictions and application security. Ensuring robust server-side validation and handling of timestamps is crucial to maintain secure and consistent operations and prevent misuse."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: MANIPULATING_CLIENT_SIDE_TIMESTAMPS
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length: 
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        regex: "\b\\d{4}-\\d{2}-\\d{2}\b"
+
+wordLists:
+  probableInputParameters:
+    - timestamp
+    - epoch
+    - date
+    - clientTimestamp
+    - clientTime
+    - requestTime
+    - requestTimestamp
+    - sessionTimestamp
+    - accessTime
+    - eventTimestamp
+    - timeSent
+    - timeRequested
+    - expirationTimestamp
+    - createdAt
+    - updatedAt
+
+  attemptValues:
+    - "2026-12-12T23:59:59Z"
+    - "2027-12-12T23:59:59Z"
+    - "2028-12-12T23:59:59Z"
+    - "2026-12-12T23:59:59Z"
+    - "2027-12-12T23:59:59Z"
+    - "2028-12-12T23:59:59Z"
+
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - delete_body_param: ${userKey}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${responseErrorList}
+    - success: exit
+    - failure: x2
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          percentage_match:
+            gt: 90
+          percentage_match_schema:
+            gt: 90
+          not_contains: ${responseErrorList}
+    - success: vulnerable

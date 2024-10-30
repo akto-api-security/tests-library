@@ -1,0 +1,156 @@
+
+---
+id: BYPASS_EMAIL_VERIFICATION
+info:
+  name: "Bypass Email Verification"
+  description: |
+    "This test evaluates the system's ability to enforce proper email verification processes, ensuring that users cannot manipulate client-side data or requests to bypass verification. The objective is to identify vulnerabilities that could allow users to mark their email as verified without completing the necessary verification steps."
+  details: |
+    "The test involves sending API requests that attempt to bypass the email verification process by directly manipulating parameters related to the email verification status. For example, a user might attempt to set the 'email_verified' parameter to 'true' or submit a request that mimics a successful verification, such as providing a verification code without completing the actual verification process. The test checks whether the application properly validates and enforces the email verification process to prevent unauthorized status changes."
+  impact: |
+    "Bypassing email verification can lead to unauthorized access, account creation with unverified emails, and potential misuse of application features that require verified email addresses. If users can bypass the verification process, it compromises the integrity of the application's authentication mechanisms and may result in increased spam, fraudulent accounts, and potential security risks. Ensuring strict validation of the email verification process is essential to maintain the security and integrity of user accounts and communications."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_EMAIL_VERIFICATION
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length: 
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+  request_payload:
+    contains_either: ${probableInputVerificationParameters}
+
+wordLists:
+  probableInputVerificationParameters:
+    - emailVerificationCode
+    - verificationCode
+    - emailCode
+    - emailToken
+    - verificationToken
+    - emailVerificationToken
+    - code
+    - emailOtp
+    - otp
+    - emailVerify
+
+  attemptValues:
+    - emailVerified
+    - email_verified
+    - isEmailVerified
+    - emailStatus
+    - verificationStatus
+    - verified
+    - status
+    - isVerified
+    - emailConfirmed
+    - confirmed
+
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - add_header:
+        x-akto-ignore: 123
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${responseErrorList}
+    - success: exit
+    - failure: x2
+  - req:
+    - add_body_param:
+        attemptValues: true
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          percentage_match_schema:
+            gt: 90
+          not_contains: ${responseErrorList}
+    - success: vulnerable

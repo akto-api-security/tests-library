@@ -1,0 +1,245 @@
+---
+id: INSUFFICIENT_FUNDS_CHECK
+info:
+  name: "Exploiting Transactions APIs by Passing Values Over Sufficient Funds"
+  description: >
+    "This test involves manipulating transaction parameters to bypass or exploit insufficient funds checks by passing values that exceed the available balance or credit limit. The objective is to evaluate whether the application correctly validates transactions against the user's current balance or limits, preventing unauthorized transactions, overdrafts, or credit overages."
+  details: >
+    "The test focuses on scenarios where attackers or users may attempt to submit transactions with amounts greater than their available balance or credit limit. Techniques may include altering the transaction amount, modifying parameters related to balance checks, or using invalid values to trigger system flaws. This testing helps identify weaknesses in the application's validation logic, ensuring it properly enforces financial constraints and prevents transactions that exceed the user's available funds."
+  impact: >
+    "Failure to properly validate transaction amounts against available funds can lead to significant financial losses, unauthorized overdrafts, and exploitation of credit limits. Such vulnerabilities could be exploited to initiate fraudulent transactions, cause data corruption, or manipulate payment processing systems, leading to potential legal, regulatory, and reputation damage. Ensuring robust validation of funds before processing transactions is critical for maintaining financial integrity, protecting user assets, and upholding the trustworthiness of the application's financial operations."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: INSUFFICIENT_FUNDS_CHECK
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+
+    # Here we check for the modified values of contextual keys in response.
+    for_one:
+      key:
+        regex: "${probableOutputParameters}"
+        extract: outputUserKey
+      value:
+        extract: outputUserValue
+  or:
+  # In case the amount is being sent as a number
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey
+        value:
+          datatype: number
+          extract: userVal
+  # In case the amount is being sent as a string
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey2
+        value:
+          regex: "\b([1-9][0-9]*)\b"
+          extract: userVal2
+wordLists:
+  probableInputParameters:
+    - amount
+    - amounts
+    - price
+    - cost
+    - total
+    - quantity
+    - qty
+    - fee
+    - discount
+    - charge
+    - tax
+    - payment
+    - deposit
+    - withdrawal
+    - limit
+    - threshold
+    - minAmount
+    - maxAmount
+    - credit
+    - debit
+    - interest
+    - surcharge
+    - penalty
+    - refund
+    - shippingCost
+    - handlingFee
+  probableOutputParameters:
+    - balance
+    - amountLeft
+    - totalAmount
+    - remainingAmount
+    - availableCredit
+    - outstandingBalance
+    - dueAmount
+    - finalAmount
+    - discountedPrice
+    - calculatedTax
+    - processedAmount
+    - adjustedAmount
+    - refundedAmount
+    - paidAmount
+    - receivedAmount
+    - netAmount
+    - payableAmount
+    - settlementAmount
+    - accruedInterest
+    - clearedBalance
+    - unsettledBalance
+    - transactionAmount
+    - billedAmount
+    - costAfterDiscount
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - "Sorry, you have been blocked"
+          for_one:
+            key:
+              regex: "${probableOutputParameters}"
+              extract: outputUserKey1
+            value:
+              extract: outputUserValue1
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: "${outputUserValue1}*1000"
+    - modify_body_param:
+        userKey2: ${outputUserValue1}000
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - "Sorry, you have been blocked"
+          for_one:
+            key:
+              eq: "${outputUserKey1}"
+            value:
+              neq: "${outputUserValue1}"
+    - success: vulnerable
+
