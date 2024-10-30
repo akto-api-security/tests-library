@@ -1,0 +1,256 @@
+---
+id: BYPASS_DATE_BASED_ACCOUNT_RESTRICTIONS
+info:
+  name: "Bypass Date-Based Account Restrictions"
+  description: |
+    "This test assesses the system's ability to enforce date-based restrictions on user accounts correctly. The objective is to identify vulnerabilities that might allow users to manipulate account creation or modification dates to bypass certain restrictions or qualify for specific promotions or benefits."
+  details: |
+    "The test involves sending API requests with modified date values, such as account creation or modification dates, to check if the system correctly validates these dates against the expected rules. For instance, an account created recently might not be eligible for certain promotions or features, but altering the account creation date to an earlier date may bypass such restrictions. The test verifies whether the application properly enforces date-based rules and prevents unauthorized modifications that could grant unintended privileges or access."
+  impact: |
+    "Bypassing date-based account restrictions can lead to unauthorized access to promotions, services, or features that the user would not otherwise be eligible for. This may result in financial losses, abuse of promotional offers, and degradation of service integrity. Ensuring robust validation and handling of date-based restrictions is crucial to prevent exploitation, maintain fair access to benefits, and protect the platform's trustworthiness."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_DATE_BASED_ACCOUNT_RESTRICTIONS
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length: 
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+  or:
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey1
+        value:
+          regex: "\b\\d{4}-\\d{2}-\\d{2}\b"
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey2
+        value:
+          datatype: number
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey3
+        value:
+          regex: "\b\\d{10}\b"
+
+wordLists:
+  probableInputParameters:
+    - promoExpiryDate
+    - trialStartDate
+    - trialEndDate
+    - subscriptionStart
+    - subscriptionEnd
+    - nextBillingDate
+    - gracePeriodEnd
+    - promoStartDate
+    - promoEndDate
+    - offerStartDate
+    - offerEndDate
+    - eligibleDate
+    - rewardDate
+    - promotionDate
+    - bonusExpiryDate
+    - date
+
+  probableFailOutputParameters:
+    - registrationFailed
+    - registration failed
+    - failed
+    - deadlineExceeded
+    - pastDeadline
+    - registrationClosed
+    - notRegistered
+    - submissionFailed
+    - registrationDenied
+    - registrationNotAllowed
+    - registrationInvalid
+    - deadlinePassed
+    - enrollmentFailed
+    - closedForRegistration
+
+  probablePassOutputParameters:
+    - success
+    - confirmed
+    - registrationConfirmed
+    - registrationSuccess
+    - registrationAccepted
+    - enrolled
+    - participationConfirmed
+    - signUpSuccessful
+    - registrationComplete
+    - validRegistration
+    - enrollmentConfirmed
+    - applicationAccepted
+    - successfullyRegistered
+    - bookingConfirmed
+
+  attemptValues1:
+    - "2024-01-01"
+    - "2023-01-01"
+    - "2022-01-01"
+  
+  attemptValues2:
+    - 1704067200
+    - 1672531200
+    - 1640995200
+  
+  attemptValues3:
+    - "2026-12-12"
+    - "2027-12-12"
+    - "2028-12-12"
+  
+  attemptValues4:
+    - 1797033600
+    - 1828569600
+    - 1860192000
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - modify_body_param:
+        userKey2: "1*${attemptValues4}"
+    - modify_body_param:
+        userKey3: "${attemptValues4}"
+    - modify_body_param:
+        userKey1: ${attemptValues3}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - "Sorry, you have been blocked"
+          contains_either: ${probableFailOutputParameters}
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey2: "1*${attemptValues2}"
+    - modify_body_param:
+        userKey3: "${attemptValues2}"
+    - modify_body_param:
+        userKey1: ${attemptValues1}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - "Sorry, you have been blocked"
+          contains_either: "${probablePassOutputParameters}"
+    - success: vulnerable

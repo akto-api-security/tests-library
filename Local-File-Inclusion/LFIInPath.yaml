@@ -31,8 +31,8 @@ api_selection_filters:
   url:
     extract: urlVar
   response_payload:
-    contains_either:
-      - <!doctype html>
+    length:
+      gt: 0
 
 wordLists:
   filePaths: 
@@ -76,7 +76,7 @@ execute:
           regex_replace:
             regex: \/$
             replace_with: ''
-      - modify_url: ${urlVar}/etc/passwd
+      - modify_url: ${urlVar}/${filePaths}
 
 validate:
   response_payload:

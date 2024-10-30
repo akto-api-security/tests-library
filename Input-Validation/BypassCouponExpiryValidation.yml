@@ -1,0 +1,243 @@
+---
+id: BYPASS_COUPON_EXPIRY_VALIDATION
+info:
+  name: "Bypass Coupon Expiry Validation"
+  description: |
+    "This test evaluates the system's ability to properly handle and validate the expiry dates of coupons. The objective is to identify vulnerabilities that might allow users to modify the expiry date of a coupon to use it beyond its intended validity period."
+  details: |
+    "The test involves sending API requests with modified expiry dates for a coupon to check if the system accurately validates the coupon's validity. For example, an expired coupon with a past date should be rejected, but altering the expiry date to a future date may result in unauthorized application of the discount. The test checks whether the application correctly enforces expiry validation rules for coupons, even when users attempt to manipulate the date or time format (including normal date formats and epoch timestamps)."
+  impact: |
+    "Bypassing coupon expiry validation can lead to financial losses and abuse of promotional offers. If users can manipulate expiry dates to extend the validity of expired coupons, it undermines the integrity of promotional campaigns, impacts revenue, and may result in unauthorized discounts being applied. Ensuring robust validation of coupon expiry dates, including both standard and epoch formats, is crucial to maintain fair business practices and protect against potential fraud."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_COUPON_EXPIRY_VALIDATION
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length: 
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+  or:
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey1
+        value:
+          regex: "\b\\d{4}-\\d{2}-\\d{2}\b"
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey2
+        value:
+          datatype: number
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey3
+        value:
+          regex: "\b([1-9][0-9]*)\b"
+
+wordLists:
+  probableInputParameters:
+    - expiryDate
+    - expiry
+    - expirationDate
+    - couponExpiry
+    - validUntil
+    - endDate
+    - expiration
+    - expiryTimestamp
+    - expiryEpoch
+    - validThrough
+    - couponEnd
+    - expiryTime
+    - expirationTime
+    - dateValidUntil
+    - epochExpiry
+    - date
+
+  probableFailOutputParameters:
+    - couponExpired
+    - expired
+    - invalid coupon
+    - expiredCoupon
+    - expiredCode
+    - couponInvalid
+    - invalidExpiry
+    - pastExpiry
+    - expiredPromotion
+    - notValid
+    - noLongerValid
+    - expirationFailed
+    - noLongerActive
+    - invalidDueToExpiry
+    - dateExpired
+
+  probablePassOutputParameters:
+    - success
+    - coupon applied
+    - discountApplied
+    - validCoupon
+    - couponSuccess
+    - validPromotion
+    - activeCoupon
+    - appliedSuccessfully
+    - promoValid
+    - validDiscount
+    - couponRedeemed
+    - discountSuccess
+    - codeApplied
+    - promotionAccepted
+
+  attemptValues1:
+    - "2026-12-12"
+    - "2027-12-12"
+    - "2028-12-12"
+  
+  attemptValues2:
+    - 1797033600
+    - 1828569600
+    - 1860192000
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - add_header:
+        x-akto-ignore: 0
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - "Sorry, you have been blocked"
+          contains_either: ${probableFailOutputParameters}
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey2: "1*${attemptValues2}"
+    - modify_body_param:
+        userKey3: "${attemptValues2}"
+    - modify_body_param:
+        userKey1: ${attemptValues1}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - "Sorry, you have been blocked"
+          contains_either: "${probablePassOutputParameters}"
+    - success: vulnerable

@@ -92,7 +92,7 @@ execute:
             changed_query_key:  ${payloads}
 validate:
   response_payload:
-    regex: "(\\w+=[^\\s]+)(?:\\s+\\w+=[^\\s]+)*"
+    regex: '(\w+=[\w\/\.\-:]+)(?:\0\w+=[\w\/\.\-:]+)*'
     length:
       gt: 0
     not_contains:
