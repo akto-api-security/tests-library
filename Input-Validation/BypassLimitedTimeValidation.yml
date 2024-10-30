@@ -1,0 +1,201 @@
+---
+id: BYPASS_LIMITED_TIME_VALIDATION
+info:
+  name: "Bypass Limited Time Validation"
+  description: |
+    "This test evaluates the system's ability to handle and validate time-limited offers or discounts correctly, ensuring that users cannot manipulate the time parameters to extend the validity of an offer beyond its intended period. The objective is to identify vulnerabilities that could allow users to bypass the expiration of limited-time promotions by altering system clocks or request timestamps."
+  details: |
+    "The test involves sending API requests with manipulated timestamps or other time-related parameters to check if the system properly validates the offer's validity period. For example, users might attempt to change the timestamp in their request to a time before the offer expiration to receive a discount that has already expired. The test checks whether the application accurately enforces the validity period of time-sensitive offers, even when users attempt to alter time-related data."
+  impact: |
+    "Bypassing limited time validation can lead to revenue loss, abuse of promotional offers, and unfair advantages for certain users. If users can manipulate the system clock or request parameters to extend the validity of a time-limited offer, it undermines the effectiveness of promotional strategies and affects profitability. Ensuring robust validation of time-related parameters is crucial to maintain fair access to promotions, protect revenue, and prevent exploitation of time-limited offers."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_LIMITED_TIME_VALIDATION
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    contains_either: ${probableOutputParameters}
+  or:
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey1
+        value:
+          datatype: number
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+          extract: userKey2
+        value:
+          regex: "\b\\d{10}\b"
+
+wordLists:
+  probableInputParameters:
+    - timestamp
+    - flashSaleTimestamp
+    - offerTimestamp
+    - promoTimestamp
+    - saleEndTime
+    - saleStartTime
+    - discountTime
+    - expiryTimestamp
+    - validityTimestamp
+    - endTime
+    - startTime
+    - timeOfRequest
+    - requestTimestamp
+    - offerEndTime
+    - dealTimestamp
+    - promoEndTime
+    - promotionalTime
+    - timeWindow
+    - limitTimeStamp
+
+  probableOutputParameters:
+    - price
+    - discountApplied
+    - discountPercentage
+    - finalPrice
+    - adjustedPrice
+    - salePrice
+    - reducedPrice
+    - totalDiscount
+    - netPrice
+    - offerApplied
+    - promotionalPrice
+    - discountRate
+    - markdownPrice
+    - specialPrice
+    - savingsApplied
+    - rebateAmount
+    - offerDiscount
+  
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+  attemptValues:
+    - 1797033600
+    - 1828569600
+    - 1860192000
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - add_header:
+        x-akto-ignore: 0
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${responseErrorList}
+          for_one:
+            key:
+              regex: "${probableOutputParameters}"
+              extract: outputUserKey1
+            value:
+              extract: outputUserValue1
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey1: ${attemptValues}
+    - modify_body_param:
+        userKey2: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${responseErrorList}
+          for_one:
+            key:
+              eq: "${outputUserKey1}"
+            value:
+              neq: "${outputUserValue1}"
+    - success: vulnerable
