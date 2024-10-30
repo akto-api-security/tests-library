@@ -27,8 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
 execute:
   type: single
   requests:
@@ -44,3 +42,5 @@ validate:
     contains_all:
       - "Proxy Error"
       - "<a href=\"/\\google.com/evil.html\">"
+strategy:
+  run_once: /

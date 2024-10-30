@@ -27,8 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
 execute:
   type: single
   requests:
@@ -50,3 +48,5 @@ validate:
     contains_all:
       - '#000000"onload="prompt(1)'
       - 'Telerik.ReportViewer.axd?name=Resources'
+strategy:
+  run_once: /

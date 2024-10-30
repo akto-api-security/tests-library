@@ -25,17 +25,12 @@ api_selection_filters:
       gt: 0
   method:
     neq: "OPTIONS"
-  url:
-    extract: urlVar
 execute:
   type: multiple
   requests:
     - req:
         - modify_method: POST
-        - replace_body: '
-        {
-          "name": "test"
-        }'
+        - replace_body: '{"name": "test"}'
         - modify_url: "/website/blog/"
         - modify_header:
             content-type: "application/x-www-form-urlencoded"
@@ -65,3 +60,5 @@ execute:
               regex: "root:.*:0:0:"
         - success: vulnerable
         - failure: exit
+strategy:
+  run_once: /

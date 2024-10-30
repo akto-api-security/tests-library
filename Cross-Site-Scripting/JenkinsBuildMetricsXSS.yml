@@ -27,8 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
 execute:
   type: single
   requests:
@@ -77,3 +75,5 @@ validate:
         eq: "content-type"
       value:
         contains_either: "text/html"
+strategy:
+  run_once: /
