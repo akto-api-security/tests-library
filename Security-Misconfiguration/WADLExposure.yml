@@ -27,8 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
   request_headers:
     for_one:
       key:
@@ -57,3 +55,5 @@ validate:
       - "This is simplified WADL with user and core resources only"
       - "http://jersey.java.net"
       - "http://wadl.dev.java.net/2009/02"
+strategy:
+  run_once: /

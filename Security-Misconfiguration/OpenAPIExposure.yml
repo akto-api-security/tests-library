@@ -27,8 +27,7 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
+
   request_headers:
     for_one:
       key:
@@ -59,3 +58,5 @@ validate:
         contains_either:
           - application/openapi+json
           - application/json
+strategy:
+  run_once: /

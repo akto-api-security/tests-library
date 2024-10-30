@@ -27,8 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
   request_headers:
     for_one:
       key:
@@ -60,3 +58,5 @@ validate:
         eq: "location"
       value:
         regex: "https?://[\\w\\.\\-]+[:/w-]*/users/\\w+"
+strategy:
+  run_once: /

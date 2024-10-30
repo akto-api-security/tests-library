@@ -27,8 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
   request_headers:
     for_one:
       key:
@@ -57,3 +55,5 @@ validate:
       - "Apache Server Information"
     contains_all:
       - "Server Version"
+strategy:
+  run_once: /

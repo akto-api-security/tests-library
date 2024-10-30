@@ -27,8 +27,6 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-  url:
-    extract: urlVar
   request_headers:
     for_one:
       key:
@@ -50,3 +48,5 @@ validate:
       gt: 0
     regex:
       - '\{"display_name":"([A-Sa-z0-9-_]+)"\}'
+strategy:
+  run_once: /
