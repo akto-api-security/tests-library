@@ -42,8 +42,6 @@ info:
   cve:
     - CVE-2023-4647
     - CVE-2023-38254
-auth:
-  authenticated: true
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -87,6 +85,7 @@ api_selection_filters:
               - reportEnd
               - report_start
               - report_end
+              - date
           extract: userKey
     - query_param:
         for_one:
@@ -97,6 +96,7 @@ api_selection_filters:
               - start_date
               - end_date
               - fromDate
+              - date
               - toDate
               - from_date
               - to_date
@@ -175,7 +175,7 @@ validate:
   and:
     - compare_greater:
         - ${x2.response.stats.median_response_time}
-        - 3001
+        - 5001
     - compare_greater:
         - ${x2.response.stats.median_response_time}
-        - ${x1.response.stats.median_response_time} * 3
+        - ${x1.response.stats.median_response_time} * 5

@@ -5,7 +5,7 @@ info:
   description: |
     "This test assesses the ability to bypass user verification requirements in transaction APIs. The goal is to determine if it's possible to execute transactions without proper verification, which should normally be a mandatory step for high-value or sensitive transactions."
   details: |
-    "The test involves initiating transactions with verification requirements enabled and then attempting to bypass the verification step. For example, a transaction request for `user123` with an amount of `5000` should require verification. The test verifies whether the system correctly enforces the verification requirement or if it allows transactions to proceed without it when `verificationRequired` is set to `false`. The test also checks the system's response to ensure that it properly handles and flags attempts to bypass verification."
+    "The test involves initiating transactions with verification requirements enabled and then attempting to bypass the verification step."
   impact: |
     "Bypassing user verification can have severe security implications, including unauthorized transactions and potential fraud. If users can bypass verification for high-value or sensitive transactions, it exposes the system to significant financial and security risks. This could result in unauthorized access to funds, financial losses, and damage to the company's reputation. Ensuring robust verification mechanisms are in place and enforced is crucial to safeguarding transaction integrity and preventing abuse."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,14 +64,13 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-  or:
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          extract: userVal
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        extract: userVal
 
 wordLists:
   probableInputParameters:
@@ -106,6 +107,37 @@ wordLists:
     - processed
     - acceptable
 
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
 execute:
   type: multiple
   requests:
@@ -119,37 +151,8 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
-        contains_either: ${probableOutputFailParameters}
+          not_contains: ${responseErrorList}
+          contains_either: ${probableOutputFailParameters}
     - success: x2
     - failure: exit
   - req:
@@ -162,35 +165,6 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
-        contains_either: ${probableOutputPassParameters}
+          not_contains: ${responseErrorList}
+          contains_either: ${probableOutputPassParameters}
     - success: vulnerable

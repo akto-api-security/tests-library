@@ -45,6 +45,10 @@ info:
 auth:
   authenticated: true
 api_selection_filters:
+  request_headers:
+    for_one:
+      value:
+        contains_jwt: true
   response_code:
     gte: 200
     lt: 300

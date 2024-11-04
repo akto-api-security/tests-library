@@ -30,6 +30,9 @@ info:
     - CVE-2020-27379
 
 api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
   method:
     neq: OPTIONS
   response_payload:
@@ -63,9 +66,6 @@ api_selection_filters:
       - account is blocked
       - multiple failed attempts
   and:
-    - response_code:
-        gte: 200
-        lt: 300
     - or:
       - method:
           neq: GET
@@ -84,16 +84,28 @@ api_selection_filters:
             key:
               contains_either: csrf
               extract: csrf_key
+            value:
+              not_contains:
+                - ":"
+                - ";"
       - request_payload:
           for_one:
             key:
               contains_either: csrf
               extract: csrf_key
+            value:
+              not_contains:
+                - ":"
+                - ";"
       - query_param:
           for_one:
             key:
               contains_either: csrf
               extract: csrf_key
+            value:
+              not_contains:
+                - ":"
+                - ";"
 
 execute:
   type: single

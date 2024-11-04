@@ -5,7 +5,7 @@ info:
   description: |
     "This test evaluates the system's ability to properly enforce credit and Buy-Now-Pay-Later (BNPL) limits in transaction APIs. The objective is to determine whether users can manipulate transaction parameters to exceed their assigned credit limits or BNPL amounts without proper validation."
   details: |
-    "The test involves sending API requests with different `bnplAmount` values to assess if the system accurately checks and enforces the credit or BNPL limits. For example, submitting an order with a `bnplAmount` of `1000` should be processed successfully only if the user's credit or BNPL limit allows for that amount. The test also checks whether the system can detect and block attempts to bypass these limits, ensuring that the approved amount does not exceed the authorized limit set for the user."
+    "The test involves sending API requests with different values to assess if the system accurately checks and enforces the credit or BNPL limits."
   impact: |
     "Bypassing credit and BNPL limit validations can lead to financial risks and potential abuse of credit facilities. If users can exceed their credit limits or BNPL allowances without proper checks, it could result in unpaid debts, increased defaults, and financial losses for the company. Ensuring robust validation and enforcement of credit limits is critical to maintaining financial stability, protecting against fraud, and safeguarding the business's interests."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,14 +64,14 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-  or:
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          extract: userVal
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        extract: userVal
+
 wordLists:
   probableInputParameters:
     - creditLimit
@@ -112,6 +114,7 @@ execute:
   - req:
     - modify_body_param:
         userKey: ${userVal}00
+
 validate:
   response_code:
     gte: 200

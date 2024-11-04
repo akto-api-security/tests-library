@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,6 +64,7 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
+    contains_either: ${probableOutputParameters}
   or:
   - request_payload:
       for_one:
@@ -70,7 +73,6 @@ api_selection_filters:
           extract: userKey1
         value:
           datatype: number
-          extract: userVal1
   - request_payload:
       for_one:
         key:
@@ -78,7 +80,6 @@ api_selection_filters:
           extract: userKey2
         value:
           regex: "\b\\d{10}\b"
-          extract: userVal2
 
 wordLists:
   probableInputParameters:
@@ -121,22 +122,48 @@ wordLists:
     - rebateAmount
     - offerDiscount
   
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
   attemptValues:
-    - 10
-    - 60
-    - 120
-    - 600
-    - 900
-    - 1800
+    - 1797033600
+    - 1828569600
+    - 1860192000
 
 execute:
   type: multiple
   requests:
   - req:
-    - modify_body_param:
-        userKey1: ${userVal1}
-    - modify_body_param:
-        userKey2: ${userVal2}
+    - add_header:
+        x-akto-ignore: 0
     - validate:
         response_code:
           gte: 200
@@ -144,36 +171,7 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
+          not_contains: ${responseErrorList}
           for_one:
             key:
               regex: "${probableOutputParameters}"
@@ -184,9 +182,9 @@ execute:
     - failure: exit
   - req:
     - modify_body_param:
-        userKey1: 1*${attemptValues2}-${attemptValues}
+        userKey1: ${attemptValues}
     - modify_body_param:
-        userKey2: ${attemptValues2}-${attemptValues}
+        userKey2: ${attemptValues}
     - validate:
         response_code:
           gte: 200
@@ -194,36 +192,7 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
+          not_contains: ${responseErrorList}
           for_one:
             key:
               eq: "${outputUserKey1}"

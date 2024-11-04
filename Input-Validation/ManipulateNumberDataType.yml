@@ -36,6 +36,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -67,13 +69,14 @@ api_selection_filters:
   request_payload:
     for_one:
       key:
+        regex: .*
         extract: userKey
       value:
-        regex: "\b\\d{1}\b"
+        regex: "^\\d{1}$"
         extract: userVal
 
 wordLists:
-  list:
+  attemptList:
     - zero
     - one
     - two
@@ -90,7 +93,7 @@ execute:
   requests:
   - req:
     - modify_body_param:
-        userKey: ${list}
+        userKey: ${attemptList}
 
 validate:
   response_code:

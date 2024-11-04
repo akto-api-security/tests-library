@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -80,6 +82,7 @@ api_selection_filters:
 wordLists:
   probableStartInputParameters:
     - start
+    - date
     - startDate
     - begin
     - beginDate
@@ -101,6 +104,7 @@ wordLists:
     - finish
     - finishDate
     - to
+    - date
     - toDate
     - until
     - untilDate
@@ -161,3 +165,5 @@ validate:
     - Attention Required!
     - CloudFlare
     - "Sorry, you have been blocked"
+    - "failure"
+    - "not found"
