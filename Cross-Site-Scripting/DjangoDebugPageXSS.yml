@@ -1,0 +1,56 @@
+id: DJANGO_DEBUG_PAGE_XSS
+info:
+  name: "Django Debug Page Cross-Site Scripting"
+  description: "Django Debug Page Cross-Site Scripting (XSS) vulnerabilities occur when the debug page improperly sanitizes error messages or input data, allowing attackers to inject malicious scripts. These scripts can be executed in the browsers of developers or users accessing the debug page, potentially leading to session hijacking or data theft. To prevent XSS in Django's debug mode, proper input validation and output escaping are essential, along with avoiding the use of debug mode in production environments."
+  details: "Django Debug Page Cross-Site Scripting (XSS) vulnerabilities arise when the Django debug page exposes detailed error messages that include unsanitized user inputs. If attackers can manipulate this input, they can inject harmful scripts that run in the browsers of developers or users accessing the debug page. This can compromise session integrity or allow unauthorized access to sensitive information. To mitigate this risk, it’s crucial to ensure proper input validation, output escaping, and to disable the debug mode in production environments."
+  impact: "The impact of Django Debug Page Cross-Site Scripting (XSS) vulnerabilities can be significant, enabling attackers to execute malicious scripts in the browsers of users or developers viewing the debug page. This may result in session hijacking, allowing unauthorized access to user accounts and sensitive data. Additionally, attackers can exploit this vulnerability to manipulate application behavior or inject further malicious payloads, undermining the overall security of the application."
+  category:
+    name: XSS
+    shortName: XSS
+    displayName: Cross-site scripting (XSS)
+  subCategory: DJANGO_DEBUG_PAGE_XSS
+  severity: LOW
+  references:
+    - "https://owasp.org/www-community/attacks/xss/"
+    - "https://hackerone.com/reports/840759"
+  cwe:
+    - CWE-79
+  cve:
+    - CVE-2017-12794
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_method: GET
+      - modify_url: "/create_user/"
+      - replace_body: '{}'
+      - add_query_param:
+          username: "%3Cscript%3Ealert(document.domain)%3C%2Fscript%3E"
+
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "<script>alert(document.domain)</script>"
+  response_headers:
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        contains_either: "text/html"
+strategy:
+  run_once: /

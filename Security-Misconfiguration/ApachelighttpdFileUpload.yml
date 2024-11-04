@@ -1,0 +1,67 @@
+id: APACHE_LIGHTTPD_FILE_UPLOAD
+info:
+  name: "Apache lighttpd Arbitrary File Upload"
+  description: "This vulnerability occurs when the web server fails to properly validate and restrict file uploads, allowing attackers to upload malicious files. These files could include scripts or executables that can be executed on the server, potentially leading to unauthorized control, data theft, or further exploitation of the system. Proper file validation and restricting executable permissions are critical to prevent this issue."
+  details:  "Apache Lighttpd Arbitrary File Upload vulnerability arises when the server inadequately verifies file types and content during the upload process. Attackers can exploit this by uploading malicious files, such as scripts or executables, which can be executed remotely to compromise the server. This could allow for unauthorized actions like defacing websites, gaining system control, or accessing sensitive data. Enforcing strict file type validation and limiting upload directories can mitigate this threat."
+  impact: "The impact of an Apache Lighttpd Arbitrary File Upload vulnerability can be severe, potentially allowing attackers to execute malicious files on the server. This could lead to unauthorized access, system compromise, data theft, or even full control of the server. In the worst cases, the vulnerability could be exploited to spread malware, deface websites, or escalate attacks to other systems in the network."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: APACHE_LIGHTTPD_FILE_UPLOAD
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2021-43798
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+execute:
+  type: multiple
+  requests:
+    - req:
+      - modify_url: "/"
+      - modify_method: POST
+      - replace_body: '------WebKitFormBoundaryKc8fBVDo558U4hbJ
+      Content-Disposition: form-data; name="file"; filename="abcdefgh.php"
+      abcdefgh1
+      ------WebKitFormBoundaryKc8fBVDo558U4hbJ
+      Content-Disposition: form-data; name="name"
+      abcdefgh.php\x0A
+      ------WebKitFormBoundaryKc8fBVDo558U4hbJ--'
+      - modify_header: 
+          content-type: "multipart/form-data; boundary=----WebKitFormBoundaryKc8fBVDo558U4hbJ"
+      - validate:
+          response_code:
+             gt: 505
+      - success: exit
+      - failure: x2
+    - req:
+        - modify_url: "/abcdefgh.php\x0A"
+        - modify_method: GET
+        - replace_body: '{}'
+        - add_header:
+            accept-encoding: "gzip,deflate"
+        - add_header:
+            accept: "*/*"
+        - validate:
+            response_payload:
+              length:
+                gt: 0
+              contains_either: "abcdefgh1"
+        - success: vulnerable
+        - failure: exit
+strategy:
+  run_once: /    
+

