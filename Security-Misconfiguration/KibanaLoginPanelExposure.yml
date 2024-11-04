@@ -1,0 +1,53 @@
+id: KIBANA_LOGIN_PANEL_EXPOSE
+info:
+  name: "Kibana Login Panel Exposure"
+  description: "This test refers to the unprotected access of the Kibana dashboard's login panel, allowing it to be reachable over the internet without adequate security measures. This exposure can enable unauthorized users to attempt brute force attacks or exploit vulnerabilities to gain access to sensitive data visualizations and analytics. To mitigate this risk, it's crucial to enforce strong authentication, implement IP whitelisting, and secure the login panel behind firewalls."
+  details:  "Kibana Login Panel Exposure occurs when the login interface for Kibana is publicly accessible without sufficient security controls, such as proper authentication mechanisms or network restrictions. This vulnerability can allow attackers to launch brute force attacks to compromise user accounts, especially if weak passwords are used. To protect against this exposure, organizations should implement strong password policies, use multi-factor authentication, and restrict access to trusted IP addresses or networks, ensuring that the login panel is adequately secured."
+  impact: "The impact of Kibana Login Panel Exposure can be severe, as unauthorized access may allow attackers to manipulate or steal sensitive data visualizations and analytics. This could result in data breaches, unauthorized modifications of dashboards, and potential disruption of business operations. Additionally, attackers gaining access could escalate privileges to underlying Elasticsearch data, leading to broader security vulnerabilities and significant financial and reputational damage to the organization."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: KIBANA_LOGIN_PANEL_EXPOSE
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2021-43798
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "/app/kibana"
+      - modify_method: GET
+      - replace_body: '{}'
+      - follow_redirect: true
+validate:
+  or:
+  - response_payload:
+      length:
+        gt: 0
+      contains_either:
+        - "<title>Kibana</title>"
+        - "<title>Elastic</title>"
+        - "<title>Kibana Login</title>"
+  - response_payload:
+      length:
+        gt: 0
+      regex:
+        - "(?i)(Kbn-Name)"
+strategy:
+  run_once: /

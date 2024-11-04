@@ -1,0 +1,58 @@
+id: APACHE_HTTP_SERVER_OPEN_REDIRECT
+info:
+  name: "Apache HTTP server Open Redirect"
+  description: "The Apache HTTP Server Open Redirect vulnerability allows attackers to redirect users to malicious websites by manipulating URL parameters. This occurs when the server improperly validates redirect requests, enabling attackers to craft URLs that appear legitimate but lead to harmful destinations. Exploiting this vulnerability can result in phishing attacks, where users are misled into providing sensitive information on fake sites. Proper validation and sanitization of redirect parameters are essential to mitigate this risk."
+  details:  "The Apache HTTP Server Open Redirect vulnerability occurs when the server accepts user-supplied input for redirection without adequate validation. Attackers can exploit this by crafting URLs that include parameters leading to external sites, which may appear trustworthy. This vulnerability affects various configurations of the Apache server, particularly those using mod_rewrite or similar modules. To mitigate this issue, administrators should implement strict validation checks on redirect parameters to prevent unauthorized redirections."
+  impact: "The impact of the Apache HTTP Server Open Redirect vulnerability can be substantial, as it can facilitate phishing attacks and other malicious activities. By redirecting users to fraudulent sites, attackers can harvest sensitive information, such as login credentials or personal data. Additionally, the vulnerability can undermine user trust in legitimate websites and lead to reputational damage for affected organizations. Implementing proper validation measures is crucial to safeguarding against these risks."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: APACHE_HTTP_SERVER_OPEN_REDIRECT
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2019-10098
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+execute:
+  type: single
+  requests:
+    - req:
+      - send_ssrf_req:
+          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+      - modify_url: "/https://test-services.akto.io/store_uuid/${random_uuid}"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+  response_headers:
+    for_one:
+      key:
+        eq: "location"
+      value:
+        eq: "https://test-services.akto.io/store_uuid/${random_uuid}"
+strategy:
+  run_once: /
