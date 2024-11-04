@@ -15,10 +15,8 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: GOOGLE_API_KEY_DISCLOSURE
   severity: MEDIUM
-
-  # cross-check references
   references:
-    - https://github.com/detectify/ugly-duckling/blob/master/modules/crowdsourced/git-credentials-disclosure.json
+    - https://cwe.mitre.org/data/definitions/200.html
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
   cwe:
     - CWE-256
@@ -32,7 +30,11 @@ api_selection_filters:
     gte: 200
     lt: 300
   response_payload:
-    regex: "/AIza[0-9A-Za-z\\-_]{35}/g"
+    for_one:
+      key:
+        regex: .*
+      value:
+        regex: "AIza[0-9A-Za-z\\-_]{35}"
   response_headers:
     for_one:
       value:
@@ -43,7 +45,6 @@ api_selection_filters:
           - application/x-shockwave-flash
           - application/pdf
 
-
 execute:
   type: single
   requests:
@@ -53,7 +54,11 @@ validate:
   response_code:
     eq: 200
   response_payload:
-    regex: "/AIza[0-9A-Za-z\\-_]{35}/g"
+    for_one:
+      key:
+        regex: .*
+      value:
+        regex: "AIza[0-9A-Za-z\\-_]{35}"
   response_headers:
     for_one:
       value:

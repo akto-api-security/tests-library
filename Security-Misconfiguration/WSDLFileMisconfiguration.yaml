@@ -15,9 +15,8 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: WSDL_File_Misconfiguration
   severity: LOW
-  # TODO: fix references, cve, cwe.
   references:
-    - https://www.zaproxy.org/docs/alerts/10044-2/
+    - https://cwe.mitre.org/data/definitions/200.html
   cwe:
     - CWE-200
     - CWE-213
@@ -34,8 +33,10 @@ api_selection_filters:
     regex: ".*wsdl.*"
   request_headers:
     for_one:
-      key: content-type
-      value: application/wsdl+xml
+      key: 
+        eq: content-type
+      value: 
+        eq: application/wsdl+xml
 
 execute:
   type: single
@@ -48,8 +49,10 @@ validate:
     lt: 300
   request_headers:
     for_one:
-      key: content-type
-      value: application/wsdl+xml
+      key: 
+        eq: content-type
+      value: 
+        eq: application/wsdl+xml
 
 strategy:
   run_once: /

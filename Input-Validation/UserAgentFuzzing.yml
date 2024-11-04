@@ -9,23 +9,18 @@ info:
   impact: >
     "If the application serves different content or grants different levels of access based on the User-Agent header, it may be vulnerable to exploitation. Attackers could bypass security controls by pretending to be a trusted client (e.g., a search engine crawler or a privileged mobile app user). This could lead to unauthorized access to hidden content, altered functionality, or the exposure of sensitive data. Ensuring that User-Agent headers are not relied upon for critical security decisions helps protect against such attacks."
 
-  # fix category
   category:
-    name: MHH
-    shortName: Misconfigured HTTP Headers
-    displayName: Misconfigured HTTP Headers (MHH)
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
   subCategory: USER_AGENT_FUZZING
   severity: LOW
   tags: 
-    - csp
     - security
-    - misconfig
     - owasp-top10
 
-    # cross-check.
   references:
-    - https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
-    - https://content-security-policy.com/
+    - https://owasp.org/www-project-web-security-testing-guide/
   cwe:
     - CWE-693
   cve:
@@ -67,6 +62,8 @@ validate:
   response_payload:
     # the response should not change based on user-agents.
     percentage_match:
+      lte: 50
+    percentage_match_schema:
       lte: 50
 
 strategy:

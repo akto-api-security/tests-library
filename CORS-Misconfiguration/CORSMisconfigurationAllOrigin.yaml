@@ -39,8 +39,11 @@ api_selection_filters:
     neq: "OPTIONS"
   response_headers:
     for_one:
-      key: access-control-allow-origin
-      value: "*"
+      key: 
+        eq: access-control-allow-origin
+      value: 
+        eq: '*'
+
 
 execute:
   type: single
@@ -53,5 +56,7 @@ validate:
     lt: 300
   response_headers:
     for_one:
-      key: access-control-allow-origin
-      value: "*"
+      key: 
+        eq: access-control-allow-origin
+      value: 
+        eq: '*'
