@@ -1,0 +1,167 @@
+---
+id: MANIPULATING_PROMO_CODE_APPLICATION
+info:
+  name: "Manipulating Promo Code Application"
+  description: >
+    "This test evaluates the system's ability to handle promotional code applications and ensure that discounts are applied only to eligible products and within the correct parameters. The objective is to identify potential vulnerabilities where promo codes can be applied improperly, such as for ineligible products or receiving unintended discounts."
+  details: >
+    "The test involves sending API requests with promo codes applied to various products in different scenarios. For example, a promo code intended only for specific products (e.g., 'FREESHIP') might be applied to other items in the order to exploit system logic and receive unintended discounts. The test checks whether the application correctly validates and restricts promo codes to only eligible items and quantities, and prevents manipulation where users apply promotional codes across non-eligible products."
+  impact: >
+    "Improper handling of promo codes can lead to financial losses, as users may be able to exploit system loopholes and receive discounts on products that are not intended to be discounted. This can reduce revenue, especially if high-value items are improperly discounted to zero or drastically reduced amounts. Ensuring proper validation of promotional codes and their application is critical to maintaining the integrity of discount and pricing strategies."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: MANIPULATING_PROMO_CODE_APPLICATION
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length: 
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+
+  request_payload:
+    contains_either: ${probableInputValidationParameters}
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+
+wordLists:
+  probableInputParameters:
+    - products
+    - productIds
+    - items
+    - includedProducts
+    - bundleProducts
+    - productList
+    - itemCodes
+    - bundledItems
+    - bundleContents
+    - selectedProducts
+    - purchasedItems
+    - orderedProducts
+    - itemList
+    - orderedItems
+    - packageContents
+    - promoEligibleItems
+
+  probableInputValidationParameters:
+    - promoCode
+    - discountCode
+    - couponCode
+    - voucherCode
+    - promotionCode
+    - offerCode
+    - rebateCode
+    - specialCode
+    - savingsCode
+
+  probableOutputParameters:
+    - promoCode applied
+    - discountCode applied
+    - discount applied
+    - coupon applied
+    - promo successfully applied
+    - discount successfully applied
+    - totalDiscount
+    - appliedPromo
+    - finalDiscount
+
+  attemptValues:
+    source: sample_data
+    key:
+      regex: products|productIds|items|includedProducts|bundleProducts|productList|itemCodes|bundledItems|bundleContents|selectedProducts|purchasedItems|orderedProducts|itemList|orderedItems|packageContents|promoEligibleItems
+    location: payload
+
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+    contains_either: ${probableOutputParameters}
+

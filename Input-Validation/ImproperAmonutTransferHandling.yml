@@ -1,0 +1,196 @@
+---
+id: IMPROPER_AMOUNT_TRANSFER_HANDLING
+info:
+  name: "Improper Amount Transfer Handling"
+  description: |
+    "This test evaluates the system's ability to handle account transfers and validate the legitimacy of both source and destination accounts. The objective is to identify vulnerabilities where the application may not properly verify the destination account, leading to invalid or unauthorized fund transfers."
+  details: |
+    "The test involves sending API requests with various account IDs for the `fromAccountId` and `toAccountId` fields. It checks if the application allows transfers to invalid or non-existent accounts without proper validation. For example, a user might attempt to transfer funds to a non-existent account (`toAccountId`) and still receive a successful transaction response, indicating improper validation."
+  impact: |
+    "Improper handling of account transfers can lead to unauthorized transactions, potential fraud, and financial losses. If users can transfer funds to invalid or unverified accounts, it compromises the security of the financial system and may lead to funds being siphoned into inaccessible or fraudulent accounts. Ensuring the correct validation of account details is essential to maintain the integrity of financial transactions."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: IMPROPER_AMOUNT_TRANSFER_HANDLING
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length: 
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+  and:
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableInputParameters}"
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableFromParameters}"
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableToParameters}"
+
+wordLists:
+  probableInputParameters:
+    - amount
+    - transferAmount
+    - transactionAmount
+    - transferValue
+    - totalAmount
+    - paymentAmount
+    - funds
+    - creditAmount
+    - debitAmount
+    - transactionValue
+    - paymentValue
+    - transferSum
+    - transactionCost
+    - amountTransferred
+
+  probableOutputPassParameters:
+    - transactionSuccessful
+    - transferCompleted
+    - paymentSuccessful
+    - transactionComplete
+    - fundsTransferred
+    - transferSuccessful
+    - paymentProcessed
+    - transactionApproved
+    - transactionConfirmed
+    - paymentAccepted
+    - transferApproved
+    - fundsDisbursed
+    - transactionFinalized
+    - paymentConfirmed
+
+  probableFromParameters:
+    - fromUserId
+    - fromUser
+    - fromAccount
+    - senderUserId
+    - senderAccount
+    - userFrom
+    - sourceUser
+    - sourceAccount
+    - originUserId
+    - originAccount
+
+  probableToParameters:
+    - toUserId
+    - toUser
+    - toAccount
+    - receiverUserId
+    - recipientAccount
+    - userTo
+    - destinationUser
+    - destinationAccount
+    - targetUserId
+    - targetAccount
+
+  fromUserIds:
+    source: sample_data
+    key:
+      regex: fromUserId|fromUser|fromAccount|senderUserId|senderAccount|userFrom|sourceUser|sourceAccount|originUserId|originAccount
+    location: payload
+
+  toUserIds: 
+    source: sample_data
+    key:
+      regex: toUserId|toUser|toAccount|receiverUserId|recipientAccount|userTo|destinationUser|destinationAccount|targetUserId|targetAccount
+    location: payload
+
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        probableFromParameters: ${fromUserIds}
+    - modify_body_param:
+        probableToParameters: ${toUserIds}
+    
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+    contains_either: ${probableOutputPassParameters}
