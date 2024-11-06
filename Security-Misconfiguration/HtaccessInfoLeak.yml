@@ -44,7 +44,8 @@ validate:
     lt: 300
   response_headers:
     for_one:
-      key: content-type
+      key: 
+        eq: content-type
       value:
         not_contains:
           - xml
