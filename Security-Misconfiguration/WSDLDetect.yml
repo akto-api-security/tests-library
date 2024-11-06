@@ -40,5 +40,11 @@ validate:
       gt: 0
     contains_either:
       - "wsdl:definitions"
+  request_headers:
+    for_one:
+      key: 
+        eq: content-type
+      value: 
+        eq: application/wsdl+xml
 strategy:
   run_once: /

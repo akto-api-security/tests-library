@@ -1,0 +1,206 @@
+id: SOURCE_CODE_DISCLOSURE
+info:
+  name: "Source Code Disclosure"
+  description: >
+    "This scan detects instances where the application's source code is exposed in HTTP responses or other publicly accessible areas. Source code disclosure is a critical security risk, as it can reveal sensitive information about the application's internal structure, business logic, and potential vulnerabilities."
+  details: >
+    "Source code disclosure occurs when the server fails to correctly restrict access to files containing source code, configuration files, or sensitive logic. This can happen due to misconfigurations, improper file handling, or flaws in the web application. Exposed source code provides attackers with detailed information about the application, including authentication mechanisms, database queries, or other sensitive operations. Attackers can use this information to exploit vulnerabilities such as SQL injection, authentication bypass, or other critical flaws."
+  impact: >
+    "The disclosure of source code is highly dangerous as it gives attackers the blueprint to understand and exploit the application. By gaining access to source code, attackers can identify potential vulnerabilities, weaknesses in business logic, and sensitive information such as API keys, database credentials, or encryption mechanisms. This can lead to a full compromise of the application, theft of sensitive data, and further exploitation of the underlying infrastructure. Protecting source code from disclosure is critical to maintaining the security and integrity of the application."
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: SOURCE_CODE_DISCLOSURE
+  severity: LOW
+  references:
+    - https://cwe.mitre.org/data/definitions/200.html
+  cwe:
+    - CWE-200
+    - CWE-213
+  cve:
+    - CVE-2018-10245
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    regex: ${languagePatterns}
+
+wordLists:
+  languagePatterns:
+    - "<\\?php\\s*.+?;\\s*\\?>"
+    - "<\\?=\\s*.+?\\s*\\?>"
+    - "\\$_POST\\s*\\["
+    - "\\$_GET\\s*\\["
+    - "<\\?php\\s*.+?;"
+    - "<%@\\s*page\\s+.+?%>"
+    - "<%@\\s*include.+?%>"
+    - "<%@\\s*taglib.+?%>"
+    - "<jsp:directive\\.page.+?>"
+    - "<jsp:directive\\.include.+?>"
+    - "<jsp:directive\\.taglib.+?>"
+    - "import\\s+javax\\.servlet\\.http\\.HttpServlet\\s*;"
+    - "import\\s+javax\\.servlet\\.http\\.\\*\\s*;"
+    - "@WebServlet\\s*\\(\\s*\"/[a-z0-9]+\"\\s*\\)"
+    - "public\\s+class\\s+[a-z0-9]+\\s+extends\\s+(javax\\.servlet\\.http\\.)?HttpServlet"
+    - "public\\s+void\\s+doGet\\s*\\(\\s*HttpServletRequest\\s+[a-z0-9]+\\s*,\\s*HttpServletResponse\\s+[a-z0-9]+\\s*\\)"
+    - "public\\s+void\\s+doPost\\s*\\(\\s*HttpServletRequest\\s+[a-z0-9]+\\s*,\\s*HttpServletResponse\\s+[a-z0-9]+\\s*\\)"
+    - "^package\\s+[a-z0-9.]+;"
+    - "^import\\s+[a-z0-9.]+;"
+    - "class\\s+[a-z0-9]+\\s*\\{.+\\}"
+    - "public\\s+static\\s+void\\s+main\\s*\\(\\s*String\\s+[a-z0-9]+\\s*\\[\\s*\\]\\s*\\)\\s*\\{"
+    - "public\\s+static\\s+void\\s+main\\s*\\(\\s*String\\s*\\[\\s*\\]\\s*[a-z0-9]+\\s*\\)\\s*\\{"
+    - "On\\s+Error\\s+Resume\\s+Next"
+    - "Server.CreateObject\\s*\\(\\s*\"[a-z0-9.]+\"\\s*\\)"
+    - "Request.QueryString\\s*\\(\\s*\"[a-z0-9]+\"\\s*\\)"
+    - "If\\s*\\(\\s*Err.Number\\s*.+\\)\\s*Then"
+    - "<%@\\s+LANGUAGE\\s*=\\s*\"VBSCRIPT\"\\s*%>"
+    - "<%@\\s+Page.*?%>"
+    - "<script\\s+runat\\s*=\\s*\""
+    - "<%Assembly.+?%>"
+    - "<%Control.+?%>"
+    - "<%Implements.+?%>"
+    - "<%MasterType.+?%>"
+    - "<%Master.+?%>"
+    - "<%Page.+?%>"
+    - "<%OutputCache.+?%>"
+    - "<%PreviousPageType.+?%>"
+    - "<%Reference.+?%>"
+    - "<%Register.+?%>"
+    - "@RenderPage\\s*\\(\\s*\".*?\"\\)"
+    - "@RenderBody\\s*\\(\\s*\\)"
+    - "@RenderSection\\s*\\(\\s*\".+?\"\\s*\\)"
+    - "Request\\s*\\[\".+?\"\\]"
+    - "@foreach\\s*"
+    - "Database.Open\\s*\\(\\s*\""
+    - "db.Query\\s*\\(\\s*\""
+    - "@switch\\s*\\(.+?\\)\\s*\\{"
+    - "^\\s*<asp:Menu"
+    - "^\\s*<asp:TreeView"
+    - "^\\s*<asp:SiteMapPath"
+    - "^<%@\\s+Page\\s+Language\\s*=\\s*\"C#\""
+    - "^using\\s+System\\s*;"
+    - "^namespace\\s+[a-z.]+\\s*\\{"
+    - "^static\\s+void\\s+Main\\s*\\(\\s*string\\s*\\[\\s*\\]\\s*[a-z0-9]+\\s*\\)"
+    - "@for\\s*\\(\\s*var\\s+"
+    - "@foreach\\s*\\(\\s*var\\s+"
+    - "^Imports\\s+System[a-zA-Z0-9.]*\\s*$"
+    - "^dim\\s+[a-z0-9]+\\s*="
+    - "@for\\s+[a-z0-9]+\\s*=\\s*[0-9]+\\s+to\\s+[0-9]+"
+    - "@for\\s+each\\s+[a-z0-9]+\\s+in\\s+"
+    - "@Select\\s+Case"
+    - "select\\s+[a-z0-9., \"\\'()*]+\\s+from\\s+[a-z0-9._, ]+"
+    - "select\\s+@@[a-z]+"
+    - "insert\\s+into\\s+[a-z0-9._]+\\s+values\\s*\\("
+    - "insert\\s+into\\s+[a-z0-9._]+\\s*\\([a-z0-9_, \\t]+\\)\\s+values\\s*\\("
+    - "insert\\s+[a-z0-9._]+\\s+\\(.+?\\)\\s+values\\s*\\(.+?\\)"
+    - "insert\\s+[a-z0-9._]+\\s+values\\s*\\(.+?\\)"
+    - "insert\\s+[a-z0-9._]+\\s+select\\s+"
+    - "update\\s+[a-z0-9._]+\\s+set\\s+"
+    - "update\\s+[a-z0-9._]+\\s+[a-z0-9_]+\\s+set\\s+"
+    - "delete\\s+from\\s+[a-z0-9._]+(\\s+where\\s+)?"
+    - "truncate\\s+table\\s+[a-z0-9._]+"
+    - "create\\s+database\\s+[a-z0-9._]+"
+    - "create\\s+table\\s+(if\\s+not\\s+exists\\s+)?[a-z0-9._]+\\s*\\([^)]+\\)"
+    - "create\\s+view\\s+[a-z0-9._]+"
+    - "create\\s+index\\s+[a-z0-9._]+\\s+on\\s+[a-z0-9._]+\\s*\\("
+    - "create\\s+procedure\\s+[a-z0-9._]+"
+    - "create\\s+function\\s+[a-z0-9._]+"
+    - "drop\\s+database\\s+[a-z0-9._]+"
+    - "drop\\s+table\\s+[a-z0-9._]+"
+    - "drop\\s+view\\s+[a-z0-9._]+"
+    - "drop\\s+index\\s+[a-z0-9._]+"
+    - "drop\\s+procedure\\s+[a-z0-9._]+"
+    - "drop\\s+function\\s+[a-z0-9._]+"
+    - "grant\\s+[a-z]+\\s+on\\s+[a-z0-9._]+\\s+to\\s+"
+    - "revoke\\s+[a-z0-9 (),]+\\s+on\\s+"
+    - "^#!/usr/bin/perl"
+    - "^use\\s+strict\\s*;\\s*$"
+    - "^use\\s+warnings\\s*;\\s*$"
+    - "^use\\s+[A-Za-z:]+\\s*;\\s*$"
+    - "foreach\\s+my\\s+\\$[a-z0-9]+\\s*\\("
+    - "^\\s*my\\s+\\$[a-z0-9]+\\s*"
+    - "^\\s*my\\s+%[a-z0-9]+\\s*"
+    - "^\\s*my\\s+@[a-z0-9]+\\s*"
+    - "@[a-z0-9]+\\s+[a-z0-9]+\\s*=\\s*\\("
+    - "\\$#[a-z0-9]{4,}"
+    - "\\$[a-z0-9]+\\s*\\{'[a-z0-9]+'\\}\\s*="
+    - "die\\s+\".*?\\$!.*?\""
+    - "^#\\s+import\\s+<[a-zA-Z0-9/.]+>"
+    - "^#\\s+import\\s+\"[a-zA-Z0-9/.]+\""
+    - "@interface\\s*[a-zA-Z0-9]+\\s*:\\s*[a-zA-Z0-9]+\\s*\\{"
+    - "@implementation\\s+[a-z]"
+    - "@interface\\s+[a-zA-Z0-9]+\\s*:\\s*[a-zA-Z0-9]+\\s*<[a-zA-Z0-9]+>"
+    - "@protocol\\s+[a-zA-Z0-9]+"
+    - "@end\\s*$"
+    - "@synthesize"
+    - "#include\\s+<[a-zA-Z0-9/]+\\.h>"
+    - "#include\\s+\"[a-zA-Z0-9/]+\\.h\""
+    - "#define\\s+.+?$"
+    - "#ifndef\\s+.+?$"
+    - "#endif\\s*$"
+    - "\\s*char\\s*\\*\\*\\s*[a-zA-Z0-9_]+\\s*;"
+    - "#include\\s+<iostream\\.h>"
+    - "^[a-z0-9]+::[a-z0-9]+\\s*\\(\\s*\\).*?\\{.+?\\}"
+    - "(std::)?cout\\s*<<\\s*\".+?\"\\s*;"
+    - "^#!/bin/[a-z]*sh"
+    - "^#!/usr/bin/env\\s+node"
+    - "#!/usr/bin/python.*$"
+    - "#!/usr/bin/env\\s+python"
+    - "^\\s*def\\s+[a-z0-9]+\\s*\\(\\s*[a-z0-9]+\\s*\\)\\s*:"
+    - "\\s*for\\s+[a-z0-9]+\\s+in\\s+[a-z0-9]+:"
+    - "^\\s*try\\s*:"
+    - "^\\s*except\\s*:"
+    - "^\\s*def\\s+main\\s*\\(\\s*\\)\\s*:"
+    - "^\\s*require\\s+\".+?\"\\s*$"
+    - "^\\s*describe\\s+[a-z0-9:]+\\s+do"
+    - "^\\s*class\\s+[a-z0-9]+\\s+<\\s*[a-z0-9:]+"
+    - "^\\s*def\\s+[a-z0-9]+\\s*.+?^\\s*end\\s*$"
+    - "@@active\\s*=\\s*"
+    - "<cfoutput"
+    - "<cfset"
+    - "<cfexecute"
+    - "<cfexit"
+    - "<cfcomponent"
+    - "<cffunction"
+    - "<cfreturn"
+    - "<cfargument"
+    - "<cfscript"
+    - "<cfloop"
+    - "<cfquery"
+    - "<cfqueryparam"
+    - "<cfdump"
+    - "<cfloop"
+    - "<cfif"
+    - "<cfelseif"
+    - "<cfelse"
+    - "writeOutput\\s*\\("
+    - "oRequest\\.querystring\\s*\\(\\s*\"[a-z0-9]+\"\\s*\\)"
+    - "define\\s+class\\s+[a-z0-9]+\\s+as\\s+[a-z0-9]+"
+    - "for\\s+[a-z0-9]+\\s*=\\s*[0-9]+\\s+to\\s+[0-9]+.+?\\s+endfor"
+    - "do\\s+while\\s+.+?\\s+enddo"
+    - "if\\s+.+?\\s+endif"
+    - "do\\s+case\\s+case\\s+.+?\\s+endcase"
+    - "for\\s+each\\s+.+?\\s+endfor"
+    - "^program\\s+[a-z0-9]+;.*?begin.+?end"
+    - "\\documentclass\\s*\\{[a-z]+\\}"
+    - "\\begin\\s*\\{[a-z]+\\}"
+    - "\\end\\s*\\{[a-z]+\\}"
+    - "package\\s+[a-z0-9.]+\\s*\\{(.*import\\s+[a-z0-9.]+\\s*;)?.+\\}"
+
+execute:
+  type: single
+  requests:
+    - req: []
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    regex: ${languagePatterns}
