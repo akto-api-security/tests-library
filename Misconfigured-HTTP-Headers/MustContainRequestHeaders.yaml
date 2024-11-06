@@ -48,9 +48,8 @@ validate:
     gte: 200
     lt: 300
   request_headers:
-    for_one:
-      not_contains:
-        - sec-fetch-site
+    not_contains:
+      - sec-fetch-site
 
 strategy:
   run_once: /
