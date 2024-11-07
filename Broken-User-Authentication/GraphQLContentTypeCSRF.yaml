@@ -44,7 +44,9 @@ wordLists:
     - text/xml    
 api_selection_filters:
   method:
-    neq: "OPTIONS"
+    not_contains:
+      - GET
+      - OPTIONS
   url:
     regex: graphql
   request_headers:

