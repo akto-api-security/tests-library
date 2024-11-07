@@ -1,0 +1,124 @@
+---
+id: EXPRESSION_LANGUAGE_INJECTION
+info:
+  name: "Expression Language Injection"
+  description: >
+    "Expression Language (EL) injection occurs when an attacker is able to inject or manipulate expression language syntax into a web application's input fields or parameters. Expression languages, such as JSP EL or Spring EL, are used to dynamically resolve and evaluate expressions within templates or scripts. If improperly handled, these expressions can allow attackers to execute arbitrary code, manipulate server-side logic, or access sensitive data."
+  details: >
+    "Expression languages are often used in web applications to bind variables, handle conditional logic, or dynamically generate content. If user input is directly evaluated as an expression without proper sanitization, it can lead to EL injection, allowing an attacker to modify server-side logic or execute arbitrary code. This scan tests whether input fields or parameters are vulnerable to EL injection by submitting malicious EL syntax and observing the response."
+  impact: >
+    "If an application is vulnerable to Expression Language injection, an attacker could manipulate the application's logic, bypass security controls, or execute arbitrary server-side code. This can lead to unauthorized access to sensitive data, account takeover, or even remote code execution, depending on the severity of the vulnerability. Proper input validation, sanitization, and disabling expression evaluation on untrusted inputs are critical to mitigating this risk."
+
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: EXPRESSION_LANGUAGE_INJECTION
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-community/vulnerabilities/Expression_Language_Injection"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+
+wordLists:
+  attemptInput:
+    - "${100146+99273}"
+  attemptOutput:
+    - "199419"
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_body_param: 
+          changed_body_key:  ${attemptInput}
+      - modify_query_param:
+          changed_query_key:  ${attemptInput}
+
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_either: ${attemptOutput}
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts

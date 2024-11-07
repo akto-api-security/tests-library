@@ -1,0 +1,69 @@
+---
+id: AMAZON_S3_DISCLOSURE
+info:
+  name: "Amazon S3 Key Disclosure"
+  description: >
+    "Amazon S3 key disclosure occurs when an application accidentally exposes Amazon Web Services (AWS) S3 keys in source code, URLs, or other publicly accessible resources. These keys can be used to access, modify, or delete S3 storage buckets, leading to potential security breaches and data leaks."
+  details: >
+    "Amazon S3 keys provide access to AWS Simple Storage Service (S3), which allows users to store and retrieve data in the cloud. If S3 keys are exposed in publicly accessible locations like JavaScript files, URLs, or API responses, attackers can exploit these keys to gain unauthorized access to cloud storage. This scan identifies places where S3 keys may have been unintentionally disclosed and warns the user of the associated risk."
+  impact: >
+    "The exposure of Amazon S3 keys can have serious consequences, including unauthorized access to sensitive data, modification or deletion of stored objects, and potential data breaches. Attackers may also use the exposed keys to run malicious operations, leading to financial and reputation damage for the affected organization. Securing S3 keys and ensuring they are not exposed in public-facing resources is essential to maintaining the security of AWS environments."
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: AMAZON_S3_DISCLOSURE
+  severity: MEDIUM
+  references:
+    - https://cwe.mitre.org/data/definitions/200.html
+  cwe:
+    - CWE-256
+  cve:
+    - CVE-2020-5260
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    for_one:
+      key:
+        regex: .*
+      value:
+        regex: ".*s3.*amazonaws.*"
+  response_headers:
+    for_one:
+      value:
+        not_contains: 
+          - image/png
+          - image/jpeg
+          - image/gif
+          - application/x-shockwave-flash
+          - application/pdf
+
+execute:
+  type: single
+  requests:
+    - req: []
+      
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    for_one:
+      key:
+        regex: .*
+      value:
+        regex: ".*s3.*amazonaws.*"
+  response_headers:
+    for_one:
+      value:
+        not_contains: 
+          - image/png
+          - image/jpeg
+          - image/gif
+          - application/x-shockwave-flash
+          - application/pdf
