@@ -71,6 +71,7 @@ wordLists:
 execute:
   type: single
   requests:
+      - req:
         - send_ssrf_req:
             url: "https://test-services.akto.io/store_uuid/${random_uuid}.pdf"
             redirect_url: ${redirect_urls}
