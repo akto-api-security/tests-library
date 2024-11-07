@@ -72,9 +72,9 @@ execute:
         - send_ssrf_req:
             url: "https://test-services.akto.io/store_uuid/${random_uuid}"
         - modify_query_param:
-            param_key: "<script> window.location=\"https://test-services.akto.io/store_uuid/${random_uuid}\";</script>"
+            param_key: "<script> window.location=\"https://test-services.akto.io/${random_uuid}\";</script>"
         - modify_body_param:
-            param_key: "<script> window.location=\"https://test-services.akto.io/store_uuid/${random_uuid}\";</script>"
+            param_key: "<script> window.location=\"https://test-services.akto.io/${random_uuid}\";</script>"
 
 validate:
   response_code:

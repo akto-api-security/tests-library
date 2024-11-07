@@ -71,9 +71,9 @@ execute:
             redirect_url: ${redirect_urls}
         - follow_redirect: true
         - modify_query_param:
-            xml_key: https://test-services.akto.io/store_uuid/${random_uuid}.xml
+            xml_key: https://test-services.akto.io/${random_uuid}.xml
         - modify_body_param:
-            xml_key: https://test-services.akto.io/store_uuid/${random_uuid}.xml
+            xml_key: https://test-services.akto.io/${random_uuid}.xml
 
 validate:
   response_code:

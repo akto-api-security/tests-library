@@ -34,7 +34,9 @@ api_selection_filters:
     gte: 200
     lt: 300
   method:
-    neq: OPTIONS
+    not_contains:
+      - GET
+      - OPTIONS
   response_payload:
     length:
       gt: 0
