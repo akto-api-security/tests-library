@@ -20,9 +20,8 @@ info:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
-    # cross-check references
   references:
-    - https://www.zaproxy.org/docs/alerts/10097/
+    - https://openwall.info/wiki/john/sample-hashes
   cwe:
     - CWE-16
     - CWE-200
@@ -40,7 +39,7 @@ api_selection_filters:
         regex: ${hashRegex}
     - request_headers:
         regex: ${hashRegex}
-    - response_payload:
+    - request_payload:
         regex: ${hashRegex}
     - response_payload:
         regex: ${hashRegex}
@@ -67,7 +66,6 @@ wordLists:
     - "\\b[0-9a-f]{56}\\b"
     - "\\b[0-9a-f]{40}\\b"
     - "\\b\\[0-9a-f]{32}\\b"
-    - "(?<!jsessionid=)\\b[0-9a-f]{32}\\b"
 
 execute:
   type: single
@@ -83,7 +81,7 @@ validate:
         regex: ${hashRegex}
     - request_headers:
         regex: ${hashRegex}
-    - response_payload:
+    - request_payload:
         regex: ${hashRegex}
     - response_payload:
         regex: ${hashRegex}

@@ -14,9 +14,9 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: SOURCE_CODE_DISCLOSURE_WEB_INF
   severity: LOW
-  # TODO: fix references, cve, cwe.
   references:
-    - https://www.zaproxy.org/docs/alerts/10045/
+    - https://owasp.org/www-community/attacks/Forced_browsing
+    - https://cwe.mitre.org/data/definitions/425.html
   cwe:
     - CWE-200
     - CWE-213
@@ -29,10 +29,8 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
-  request_headers:
-    key: host
-    value:
-      extract: hostVar
+  url:
+    extract: urlVar
 
 wordLists:
   filePath:
@@ -43,8 +41,8 @@ execute:
   type: single
   requests:
     - req: 
-      - modify_url: https://${hostVar}/WEB-INF/${filePath}
-  # IMPROVEMNT: extract the java class name and attempt to find it.
+      - modify_url: ${urlVar}/WEB-INF/${filePath}
+  # IMPROVEMENT: extract the java class name and attempt to find it.
 
 validate:
   response_code:

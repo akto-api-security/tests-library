@@ -14,9 +14,8 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: SOURCE_CODE_DISCLOSURE
   severity: LOW
-  # TODO: fix references, cve, cwe.
   references:
-    - https://www.zaproxy.org/docs/alerts/10045/
+    - https://cwe.mitre.org/data/definitions/200.html
   cwe:
     - CWE-200
     - CWE-213
@@ -205,6 +204,3 @@ validate:
     lt: 300
   response_payload:
     regex: ${languagePatterns}
-
-strategy:
-  run_once: /

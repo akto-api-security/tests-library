@@ -59,14 +59,10 @@ validate:
   response_payload:
     length:
       gt: 0
-    contains_either: 
-      - "Django tried these url patterns"
-      - "Django version"
-      - "Exception Type"
-      - "Template rendering"
-      - "Request Method"
-      - "Request URL"
-      - "Django Settings"
-      - "Python Executable"
-      - "Python Path"
-      - "Server time"
+    contains_all: 
+      - "debug=true"
+      - "false"
+      - django
+      - error
+      - settings
+      - standard

@@ -5,7 +5,7 @@ info:
   description: |
     "This test evaluates whether the system properly handles the creation and validation of product bundles. The objective is to identify vulnerabilities that might allow users to manipulate bundle configurations to receive discounts or benefits without meeting the intended conditions of the bundle."
   details: |
-    "The test involves sending API requests to create or modify product bundles, altering the number or types of products included in a bundle. For example, a bundle with two products should have a specific price, and the system should validate that all required products are included. The test checks whether the application accurately enforces the rules for bundle creation and prevents users from altering bundle configurations to reduce costs or gain unauthorized discounts."
+    "The test involves sending API requests to create or modify product bundles, altering the number or types of products included in a bundle."
   impact: |
     "Bypassing product bundle handling can lead to financial losses and undermine the integrity of pricing strategies. If users can manipulate bundle configurations to remove required products or reduce bundle pricing, it can result in significant revenue leakage and abuse of promotional offers. Ensuring proper validation and enforcement of bundle rules is crucial to maintaining fair pricing practices, protecting revenue, and preventing exploitation of product bundles."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -68,8 +70,6 @@ api_selection_filters:
         key:
           regex: "${probableInputParameters}"
           extract: userKey
-        value:
-          extract: userVal
   - request_payload:
       contains_either: ${probableInputValidationParameters}
 
@@ -120,7 +120,7 @@ wordLists:
   productValues:
     source: sample_data
     key:
-      regex: products
+      regex: products|productIds|items|includedProducts|bundleProducts|productList|itemCodes|bundledItems|bundleContents|selectedProducts|bundleComponents
     location: payload
 
 execute:
@@ -129,6 +129,7 @@ execute:
   - req:
     - modify_body_param:
         userKey: ${productValues} 
+
 validate:
   response_code:
     gte: 200

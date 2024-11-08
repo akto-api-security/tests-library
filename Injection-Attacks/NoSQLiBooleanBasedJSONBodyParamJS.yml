@@ -85,6 +85,8 @@ execute:
                   gte: 400
                   lt: 410
               - response_payload:
+                  length:
+                    gt: 0
                   not_contains:
                     - Error
                     - fail
@@ -98,14 +100,23 @@ execute:
                     - rate limit
                     - multiple failed attempt
                     - cloudflare
-                    - "'a' != 'a"
+                    - " && 'a' != 'a' && 'a' != 'a"
+                    - rejected
+                    - "u0027a"
+                    - "u003d"
+                    - "||"
         - success: x2
         - failure: exit
     - req:
         - modify_body_param: 
             changed_body_key: !!str ${changed_body_value} || 'a' == 'a' || 'a 
         - validate:
+            response_code:
+              gte: 200
+              lt: 300
             response_payload:
+              length:
+                gt: 0
               neq: "${x1.response.body}"
               not_contains:
                 - rate-limit
@@ -115,6 +126,12 @@ execute:
                 - account is blocked
                 - multiple failed attempt
                 - cloudflare
+                - invalid
+                - fail
+                - "'a' == 'a"
+                - "u0027a"
+                - "u003d"
+
         - success: x3
         - failure: exit  
     - req:
@@ -125,6 +142,8 @@ execute:
         - validate:
             response_payload:
               eq: "${x2.response.body}"
+              length:
+                gt: 0
               not_contains:
                 - rate-limit
                 - rate limit
@@ -133,5 +152,10 @@ execute:
                 - account is blocked
                 - multiple failed attempt
                 - cloudflare
+                - invalid
+                - fail
+                - "'a' == 'a"
+                - "u0027a"
+                - "u003d"
         - success: vulnerable  
         - failure: exit        

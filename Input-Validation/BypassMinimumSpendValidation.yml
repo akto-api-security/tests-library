@@ -5,7 +5,7 @@ info:
   description: |
     "This test assesses whether the system correctly enforces minimum spend requirements for promotions or discounts. The objective is to determine if users can manipulate their order details to bypass the minimum spend threshold needed to qualify for certain offers."
   details: |
-    "The test involves modifying order details to simulate attempts to bypass the minimum spend validation. For example, an order with a `totalAmount` of `$95` should fail to qualify for an offer requiring a minimum spend of `$100`. However, by adding low-value items or directly modifying parameters to artificially reach the minimum spend threshold, the test checks if the system improperly validates the spend requirement. It also checks whether the system correctly calculates the total amount, rather than relying on user-supplied values."
+    "The test involves modifying order details to simulate attempts to bypass the minimum spend validation."
   impact: |
     "Bypassing minimum spend validation can lead to significant revenue loss and abuse of promotional offers. If users can manipulate their order details to qualify for discounts without meeting the actual spending criteria, it undermines the effectiveness of promotional strategies and devalues the offers. This can lead to financial losses and damage to the brand's integrity. Ensuring robust validation of minimum spend requirements is essential to prevent misuse, protect revenues, and maintain fair business practices."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -63,14 +65,14 @@ api_selection_filters:
     - account is blocked
     - multiple failed attempts
     contains_either: ${probableOutputFailParameters}
-  or:
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          extract: userVal
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        extract: userVal
+
 wordLists:
   probableInputParameters:
     - amount
@@ -124,6 +126,7 @@ execute:
   - req:
     - modify_body_param:
         userKey: ${userVal}0
+
 validate:
   response_code:
     gte: 200

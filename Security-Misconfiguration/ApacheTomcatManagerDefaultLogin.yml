@@ -1,0 +1,71 @@
+id: APACHE_TOMCAT_MANAGER_DEFAULT_LOGIN
+info:
+  name: "Apache Tomcat Manager Default Login Vulnerability"
+  description: "The Apache Tomcat Manager Default Login Vulnerability occurs when the Tomcat Manager application is accessible with default credentials, such as admin/admin. If these credentials are not changed during installation, attackers can exploit this weakness to gain unauthorized access to the Manager interface. This access allows them to deploy or undeploy applications, modify configurations, and view sensitive information, posing a significant security risk. To mitigate this vulnerability, it is essential to change default credentials and implement strict access controls immediately after installation."
+  details:  "The Apache Tomcat Manager Default Login Vulnerability arises when the Manager application is configured with default username and password settings, typically admin/admin. This flaw allows unauthorized users to log in and access the Manager interface, which provides control over deployed applications and server settings. Attackers can exploit this vulnerability to deploy malicious applications, alter configurations, or access sensitive data stored within the server. To mitigate this risk, administrators should ensure that default credentials are changed and apply stringent access control measures right after installation."
+  impact: "The impact of the Apache Tomcat Manager Default Login Vulnerability can be severe, as unauthorized access allows attackers to manipulate server settings and deployed applications. This can lead to the deployment of malicious software, alteration or deletion of critical applications, and exposure of sensitive data. Such breaches compromise the integrity and availability of services, potentially resulting in data loss and significant reputational damage for the affected organization. Immediate action to secure access controls and change default credentials is essential to prevent these risks."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: APACHE_TOMCAT_MANAGER_DEFAULT_LOGIN
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2021-43798
+auth:
+  authenticated: true
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+wordLists:
+  payloads:
+    - 'QURNSU46QURNSU4='
+    - "bWFuYWdlcjphZG1hbmFnZXI="
+    - "cm9vdDp0b29y"
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "/manager/html"
+      - modify_method: GET
+      - replace_body: '{}'
+      - modify_header:
+          authorization: "Basic ${payloads}"
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "Apache Tomcat"
+      - "Server Information"
+    contains_either:
+      - "Tomcat Version"
+      - "JVM Version"
+      - "JVM Vendor"
+      - "OS Name"
+      - "OS Version"
+      - "OS Architecture"
+      - "Hostname"
+      - "IP Address"
+strategy:
+  run_once: /

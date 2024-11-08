@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,14 +64,20 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-  or:
+  and:
   - request_payload:
       for_one:
         key:
           regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          extract: userVal
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableFromParameters}"
+  - request_payload:
+      for_one:
+        key:
+          regex: "${probableToParameters}"
+
 wordLists:
   probableInputParameters:
     - amount
