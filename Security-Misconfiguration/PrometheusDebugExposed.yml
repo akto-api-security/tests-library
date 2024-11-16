@@ -15,7 +15,6 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: PROMETHEUS_DEBUG_EXPOSED
   severity: LOW
-  # check ref.
   references:
     - https://training.promlabs.com/training/monitoring-and-debugging-prometheus/profiling/overview/
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
@@ -30,12 +29,6 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
-  request_headers:
-    for_one:
-      key:
-        eq: Host
-      value:
-        extract: hostVal
 
 wordLists:
   attemptValues:

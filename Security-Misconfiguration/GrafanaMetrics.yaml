@@ -11,9 +11,7 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: GRAFANA_METRICS
   severity: LOW
-  # check ref.
   references:
-    - https://hackerone.com/reports/1026196
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
   cwe:
     - CWE-16
@@ -25,14 +23,12 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
-  url:
-    extract: urlVar
   
 execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}/metrics
+      - modify_url: /metrics
 
 validate:
   response_code:

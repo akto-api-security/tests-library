@@ -15,14 +15,15 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: ZOOKEEPER_EXPOSED
   severity: LOW
-  # check ref.
   references:
-    - https://docs.docker.com/reference/api/engine/version/v1.47/
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
   cwe:
     - CWE-16
     - CWE-200
     - CWE-538
+
+auth:
+  authenticated: true
 
 api_selection_filters:
   method:
