@@ -81,11 +81,44 @@ wordLists:
     - 99999
     - 999999
     - 9999999
+  
+  responseErrorList:
+    - Error
+    - Internal Server 
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - Sorry, you have been blocked
 
 execute:
   type: multiple
   requests:
   - req: 
+    - add_header:
+        x-akto-ignore: 123  
     - validate:
         response_code:
           gte: 200
@@ -93,41 +126,11 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-            - Error
-            - Internal Server 
-            - Failed
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid token
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - " OR "
+          not_contains: ${responseErrorList}
     - success: x2
     - failure: exit
   - req:
-    - modify_body_param:
+    - modify_query_param:
         limitKey: ${attemptValues}
     - validate:
         response_code:
@@ -136,43 +139,13 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-            - Error
-            - Internal Server 
-            - Failed
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid token
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - " OR "
+          not_contains: ${responseErrorList}
 
 validate:
   and:
     - compare_greater:
         - ${x2.response.stats.median_response_time}
-        - 3001
+        - 5001
     - compare_greater:
         - ${x2.response.stats.median_response_time}
-        - ${x1.response.stats.median_response_time} * 3
+        - ${x1.response.stats.median_response_time} * 5

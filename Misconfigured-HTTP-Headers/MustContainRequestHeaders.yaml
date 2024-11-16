@@ -32,16 +32,11 @@ info:
     - CVE-2022-37436
 
 api_selection_filters:
-  request_code:
+  response_code:
     gte: 200
     lt: 300
   method:
     neq: "OPTIONS"
-  request_headers:
-    for_one:
-      key: 
-      not_contains:
-        - Sec-Fetch-Site
 
 execute:
   type: single
@@ -49,14 +44,13 @@ execute:
     - req: []
 
 validate:
-  request_code:
+  response_code:
     gte: 200
     lt: 300
   request_headers:
-      for_one:
-        key: 
-        not_contains:
-          - Sec-Fetch-Site
+    not_contains:
+      - sec-fetch-site
 
 strategy:
   run_once: /
+  

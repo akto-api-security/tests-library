@@ -1,0 +1,52 @@
+id: REFLECTED_XSS_TELERIK
+info:
+  name: "Reflected XSS Telerik Reporting Module"
+  description: "Reflected XSS vulnerabilities in the Telerik Reporting Module occur when user inputs are not properly sanitized, allowing attackers to inject malicious scripts into URLs or form fields. When a victim clicks a crafted link, the injected script executes in their browser, potentially leading to session hijacking, data theft, or unauthorized actions. This type of XSS is particularly dangerous as it can be exploited without any need for persistent storage. Implementing robust input validation and output encoding is essential to mitigate these risks in the Telerik Reporting Module."
+  details: "Reflected XSS vulnerabilities in the Telerik Reporting Module arise when user-supplied data is echoed back in the application’s responses without proper sanitization. Attackers can craft URLs containing malicious scripts that, when accessed by a victim, execute in their browser. This exploitation typically occurs in scenarios involving search queries or error messages where user input is directly reflected. To mitigate this vulnerability, it's crucial to implement thorough input validation, encode outputs, and ensure that all user-generated content is handled securely."
+  impact: "The impact of Reflected XSS vulnerabilities in the Telerik Reporting Module can be severe, allowing attackers to execute malicious scripts in the browsers of unsuspecting users. This can lead to session hijacking, where attackers gain unauthorized access to user accounts, and theft of sensitive information such as credentials or personal data. Additionally, such attacks can facilitate phishing attempts or further exploits, compromising the overall security of the application and damaging user trust."
+  category:
+    name: XSS
+    shortName: XSS
+    displayName: Cross-site scripting (XSS)
+  subCategory: REFLECTED_XSS_TELERIK
+  severity: LOW
+  references:
+    - "https://owasp.org/www-community/attacks/xss/"
+    - "https://hackerone.com/reports/840759"
+  cwe:
+    - CWE-79
+  cve:
+    - CVE-2017-9140
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_method: GET
+      - modify_url: "/Telerik.ReportViewer.axd"
+      - replace_body: '{}'
+      - add_query_param:
+          optype: "Parameters"
+      - add_query_param:
+          bgColor: "_000000%22onload=%22prompt(1)"
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - '#000000"onload="prompt(1)'
+      - 'Telerik.ReportViewer.axd?name=Resources'
+strategy:
+  run_once: /

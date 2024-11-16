@@ -53,7 +53,7 @@ api_selection_filters:
       - account is locked
       - account is blocked
       - multiple failed attempts
-      - "hello world"
+      - "hello akto"
   method:
     neq: "OPTIONS"
   or:
@@ -77,9 +77,9 @@ execute:
   requests:
     - req:
         - modify_query_param:
-            url_key: "| echo 'hello world'"
+            url_key: "| echo 'hello akto'"
         - modify_body_param:
-            url_key: "| echo 'hello world'"
+            url_key: "| echo 'hello akto'"
 
 validate:
   response_code:
@@ -89,9 +89,9 @@ validate:
     length:
       gt: 0
     contains_either:
-      - "hello world"
+      - "hello akto"
     not_contains:
-      - "echo 'hello world'"
+      - "echo 'hello akto'"
       - Error
       - Internal Server 
       - Failed
@@ -118,5 +118,5 @@ validate:
       - account is locked
       - account is blocked
       - multiple failed attempts
-      - "echo &#39;hello world&#39;"
+      - "echo &#39;hello akto&#39;"
       

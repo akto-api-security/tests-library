@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -71,6 +73,7 @@ api_selection_filters:
 
   request_payload:
     contains_either: ${probableInputValidationParameters}
+    not_contains: ${attemptKeys}
 
 wordLists:
   probableInputValidationParameters:
@@ -95,7 +98,7 @@ wordLists:
     - newTotal
     - priceAfterDiscount
 
-  attemptValues:
+  attemptKeys:
     - discount_percentage
     - discountPercent
     - discountRate
@@ -105,12 +108,18 @@ wordLists:
     - voucherPercentage
     - appliedDiscountPercentage
 
+  attemptValues:
+    source: sample_data
+    key:
+      regex: discount_percentage|discountPercent|discountRate|discountValuePercentage|percentDiscount|promoPercentage|voucherPercentage|appliedDiscountPercentage
+    location: payload
+
 execute:
   type: single
   requests:
   - req:
     - add_body_param:
-        userKey: ${attemptValues} 
+        ${attemptKeys}: ${attemptValues}0
 
 validate:
   response_code:

@@ -61,33 +61,33 @@ api_selection_filters:
       - account is locked
       - account is blocked
       - multiple failed attempts
-      - "hello world"
+      - "hello akto"
 execute:
   type: single
   requests:
     - req:
         - add_query_param:
-            cmd: "echo 'hello world'"
+            cmd: "echo 'hello akto'"
         - add_query_param:
-            exec: "echo 'hello world'"
+            exec: "echo 'hello akto'"
         - add_query_param:
-            command: "echo 'hello world'"
+            command: "echo 'hello akto'"
         - add_query_param:
-            execute: "echo 'hello world'"
+            execute: "echo 'hello akto'"
         - add_query_param:
-            ping: "echo 'hello world'"
+            ping: "echo 'hello akto'"
         - add_query_param:
-            query: "echo 'hello world'"
+            query: "echo 'hello akto'"
         - add_query_param:
-            code: "echo 'hello world'"
+            code: "echo 'hello akto'"
         - add_query_param:
-            func: "echo 'hello world'"
+            func: "echo 'hello akto'"
         - add_query_param:
-            exe: "echo 'hello world'"
+            exe: "echo 'hello akto'"
         - add_query_param:
-            exe: "echo 'hello world'"
+            exe: "echo 'hello akto'"
         - add_query_param:
-            run: "echo 'hello world'"
+            run: "echo 'hello akto'"
 validate:
   response_code:
     gte: 200
@@ -95,9 +95,9 @@ validate:
   response_payload:
     length:
       gt: 0
-    contains_either: hello world
+    contains_either: hello akto
     not_contains:
-      - "echo 'hello world'"
+      - "echo 'hello akto'"
       - Error
       - Internal Server 
       - Failed
@@ -124,4 +124,4 @@ validate:
       - account is locked
       - account is blocked
       - multiple failed attempts
-      - "echo &#39;hello world&#39;"
+      - "echo &#39;hello akto&#39;"

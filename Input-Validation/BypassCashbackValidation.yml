@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,6 +64,7 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
+    contains_either: ${probableOutputPassParameters}
   request_payload:
     for_one:
       key:
@@ -107,21 +110,7 @@ wordLists:
     - rebate applied
     - cashback payment success
 
-execute:
-  type: single
-  requests:
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}00
-
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    not_contains:
+  responseErrorList:
     - Error
     - Internal Server
     - Failed
@@ -151,4 +140,36 @@ validate:
     - Attention Required!
     - CloudFlare
     - "Sorry, you have been blocked"
-    contains_either: ${probableOutputPassParameters}
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - delete_body_param: ${userKey}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+        and:
+          - response_payload:
+              not_contains: ${responseErrorList}
+          - response_payload:
+              not_contains: ${probableOutputPassParameters}
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}00
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${responseErrorList}
+          contains_either: ${probableOutputParameters}
+    - success: vulnerable

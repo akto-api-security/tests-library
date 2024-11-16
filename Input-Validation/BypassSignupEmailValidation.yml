@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,7 +64,6 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-
   url:
     contains_either: ${probableInputValidationParameters}    
   and:
@@ -80,16 +81,43 @@ api_selection_filters:
             extract: passKey    
 
 wordLists:
-  probableInputParameters:
-    - includePendingTransactions
-    - pending
-    - includeAll
   probableInputValidationParameters:
       - register
       - signup
       - "users/create"
       - "account/create"
       - "create_account"
+  
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
 
 execute:
   type: multiple
@@ -106,42 +134,11 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
-          - rate limit
-          - rate_limit
-          - rate limit
-          - account is locked
-          - account is blocked
-          - multiple failed attempt    
+          percentage_match:
+            gt: 90
+          percentage_match_schema:
+            gt: 90
+          not_contains: ${responseErrorList}
     - success: x2
     - failure: exit
   - req:
@@ -156,40 +153,9 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
-          - rate limit
-          - rate_limit
-          - rate limit
-          - account is locked
-          - account is blocked
-          - multiple failed attempt    
+          percentage_match:
+            gt: 90
+          percentage_match_schema:
+            gt: 90
+          not_contains: ${responseErrorList}
     - success: vulnerable

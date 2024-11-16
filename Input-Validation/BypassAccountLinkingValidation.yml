@@ -5,7 +5,7 @@ info:
   description: |
     "This test evaluates the system's ability to handle and validate the linking of multiple accounts properly. The objective is to identify vulnerabilities that could allow users to link unauthorized or invalid accounts, potentially leading to unauthorized access or misuse of linked account privileges."
   details: |
-    "The test involves sending API requests with different `linkedAccountId` values to check if the system correctly validates whether an account can be linked to another. For instance, users might attempt to link an account that should not be authorized for linking, such as linking a personal account to a joint account without proper authorization. The test checks whether the application enforces appropriate validation rules to prevent unauthorized or inappropriate account linking."
+    "The test involves sending API requests with different values to check if the system correctly validates whether an account can be linked to another. For instance, users might attempt to link an account that should not be authorized for linking, such as linking a personal account to a joint account without proper authorization. The test checks whether the application enforces appropriate validation rules to prevent unauthorized or inappropriate account linking."
   impact: |
     "Bypassing account linking validation can result in unauthorized access to sensitive information, misuse of funds, and potential fraud. If users can link accounts without proper validation, they might gain access to another user's account or perform unauthorized transactions, leading to security breaches and financial losses. Ensuring robust validation of account linking requests is critical to maintaining security, preventing fraud, and protecting user privacy."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server

@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,53 +64,32 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-  or:
+  and:
     - request_payload:
         for_one:
           key:
-            regex: ${probableInputParameters1}
-            extract: userKey1
+            regex: ${probableInputParameters}
+            extract: userKey
     - request_payload:
-        for_one:
-          key:
-            regex: ${probableInputParameters2}
-            extract: userKey2
-  request_payload:
-    contains_either: ${probableInputValidationParameters}
+        contains_either: ${probableInputValidationParameters}
 
 wordLists:
   probableInputValidationParameters:
     - payment
     - pay
-    - paymentMethod
-    - paymentType
-    - paymentOption
-    - transactionMethod
-    - billingMethod
-    - checkoutMethod
+    - transaction
+    - billing
+    - checkout
 
-  probableInputParameters1:
+  probableInputParameters:
     - paymentMethod
     - paymentMethodId
     - paymentMethodToken
-    - method
     - payMethod
     - cardType
     - paymentProvider
     - paymentGateway
     - accountMethod
-
-  probableInputParameters2:
-    - overrideDefaultPaymentMethod
-    - adminPaymentMethod
-    - testing_mode
-    - debug_mode
-    - internalPaymentMethod
-    - hiddenPaymentOption
-    - restrictedPayment
-    - specialPaymentMode
-    - backendPaymentMethod
-    - privilegedPaymentMethod
 
   attemptValues:
     - admin_mode
@@ -126,11 +107,9 @@ execute:
   type: single
   requests:
   - req:
-    - replace_auth_header: true
+    - remove_auth_header: true
     - modify_body_param:
-        userKey1: ${attemptValues}
-    - modify_body_param:
-        userKey2: true
+        userKey: ${attemptValues}
 
 validate:
   response_code:

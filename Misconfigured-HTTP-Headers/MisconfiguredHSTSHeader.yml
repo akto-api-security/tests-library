@@ -19,11 +19,11 @@ info:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
-    # review the references, cve, cwe, before finalizing.
   references:
     - "https://web.dev/security-headers/"
     - "https://www.keycdn.com/blog/http-security-headers"
     - "https://www.invicti.com/white-papers/whitepaper-http-security-headers"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html"
   cwe:
     - CWE-693
   cve:
@@ -39,7 +39,8 @@ api_selection_filters:
   or: 
     - response_headers:
         for_one:
-          key: Strict-Transport-Security
+          key: 
+            eq: Strict-Transport-Security
           value:
             regex: "^(?!.*max-age).*"
     - response_headers:

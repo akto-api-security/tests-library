@@ -36,6 +36,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -70,7 +72,6 @@ api_selection_filters:
         extract: userKey
       value:
         regex: "\b\\d{4}-\\d{2}-\\d{2}\b"
-        extract: userVal
 
 wordLists:
   probableInputParameters:
@@ -91,29 +92,14 @@ wordLists:
     - updatedAt
 
   attemptValues:
-    - "T00:00:00Z"
-    - "T00:00:00Z"
-    - "T23:59:59Z"
-    - "T23:59:59Z"
-    - "T00:00:00Z"
+    - "2026-12-12T23:59:59Z"
+    - "2027-12-12T23:59:59Z"
+    - "2028-12-12T23:59:59Z"
+    - "2026-12-12T23:59:59Z"
+    - "2027-12-12T23:59:59Z"
+    - "2028-12-12T23:59:59Z"
 
-execute:
-  type: single
-  requests:
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${attemptValues}
-
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    percentage_match:
-      gt: 90
-    not_contains:
+  responseErrorList:
     - Error
     - Internal Server
     - Failed
@@ -143,3 +129,35 @@ validate:
     - Attention Required!
     - CloudFlare
     - "Sorry, you have been blocked"
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - delete_body_param: ${userKey}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: ${responseErrorList}
+    - success: exit
+    - failure: x2
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          percentage_match:
+            gt: 90
+          percentage_match_schema:
+            gt: 90
+          not_contains: ${responseErrorList}
+    - success: vulnerable

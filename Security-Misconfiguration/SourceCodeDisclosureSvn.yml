@@ -15,10 +15,10 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: SOURCE_CODE_DISCLOSURE_SVN
   severity: LOW
-  # cross-check reference.
   references:
-    - https://pentester.land/blog/source-code-disclosure-via-exposed-git-folder/
-    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+    - https://owasp.org/www-community/attacks/Forced_browsing
+    - https://cwe.mitre.org/data/definitions/425.html
+    - https://infosecwriteups.com/exposing-source-code-via-svn-a-400-discovery-9fc54b3f3f31
   cwe:
     - CWE-16
   cve:
@@ -30,6 +30,8 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  url:
+    extract: urlVar
 
 execute:
   type: single
