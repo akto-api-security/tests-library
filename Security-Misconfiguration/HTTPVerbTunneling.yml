@@ -56,6 +56,8 @@ execute:
         response_payload:
           length:
             gt: 0
+          percentage_match:
+            gte: 80
           not_contains:
             - Error
             - Internal Server
