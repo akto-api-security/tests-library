@@ -15,7 +15,7 @@ info:
     shortName: CORS Misconfiguration
     displayName: Cross-Origin Resource Sharing (CORS)
   subCategory: CORS_MISCONFIGURATION_ALL_ORIGIN
-  severity: HIGH
+  severity: LOW
   tags:
     - Business logic
     - OWASP top 10
@@ -43,7 +43,6 @@ api_selection_filters:
         eq: access-control-allow-origin
       value: 
         eq: '*'
-
 
 execute:
   type: single

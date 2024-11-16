@@ -39,7 +39,7 @@ execute:
     - req:
       - send_ssrf_req:
           url: "https://test-services.akto.io/store_uuid/${random_uuid}"
-      - modify_url: "//https://test-services.akto.io/store_uuid/${random_uuid}"
+      - modify_url: "//https://test-services.akto.io/${random_uuid}"
       - modify_method: GET
       - replace_body: '{}'
 validate:
@@ -53,6 +53,6 @@ validate:
       key:
         eq: "location"
       value:
-        eq: "https://test-services.akto.io/store_uuid/${random_uuid}"
+        eq: "https://test-services.akto.io/${random_uuid}"
 strategy:
   run_once: /

@@ -68,9 +68,9 @@ execute:
             redirect_url: ${redirect_urls}
         - follow_redirect: true
         - modify_query_param:
-            pdf_key: https://test-services.akto.io/store_uuid/${random_uuid}.pdf
+            pdf_key: https://test-services.akto.io/${random_uuid}.pdf
         - modify_body_param:
-            pdf_key: https://test-services.akto.io/store_uuid/${random_uuid}.pdf
+            pdf_key: https://test-services.akto.io/${random_uuid}.pdf
 
 validate:
   response_code:

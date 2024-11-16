@@ -62,7 +62,7 @@ execute:
       - add_query_param:
           command: fetchindex
       - add_query_param:
-          masterUrl: "https://test-services.akto.io/store_uuid/${random_uuid}"
+          masterUrl: "https://test-services.akto.io/${random_uuid}"
       - replace_body: '{}'
       - validate:
           response_payload:

