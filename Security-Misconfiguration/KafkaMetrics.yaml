@@ -12,10 +12,8 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: KAFKA_METRICS
   severity: LOW
-  # check ref.
   references:
-    - https://hackerone.com/reports/1026196
-    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+    - https://docs.confluent.io/cloud/current/monitoring/metrics-api.html
   cwe:
     - CWE-16
     - CWE-200
@@ -26,14 +24,12 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
-  url:
-    extract: urlVar
   
 execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}/metrics
+      - modify_url: /metrics
 
 validate:
   response_code:

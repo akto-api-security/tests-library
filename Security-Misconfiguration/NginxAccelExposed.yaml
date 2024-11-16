@@ -6,7 +6,7 @@ info:
   details: >
     "The `X-Accel-Redirect` header is used to perform internal redirects in Nginx, typically to serve files or execute internal requests. However, if this header is exposed and not properly validated, attackers can manipulate it to request internal files such as configuration files, credentials, or other sensitive backend resources."
   impact: >
-    "Exposing internal files via an unvalidated `X-Accel-Redirect` header can lead to the leakage of sensitive information such as configuration files, database credentials, or system settings. This can lead to further compromise of the application or the underlying infrastructure."
+    "Exposing internal files via an un-validated `X-Accel-Redirect` header can lead to the leakage of sensitive information such as configuration files, database credentials, or system settings. This can lead to further compromise of the application or the underlying infrastructure."
   
   category:
     name: SM
@@ -14,7 +14,6 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: NGINX_ACCEL_EXPOSED
   severity: LOW
-  # check ref.
   references:
     - https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/nginx
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"

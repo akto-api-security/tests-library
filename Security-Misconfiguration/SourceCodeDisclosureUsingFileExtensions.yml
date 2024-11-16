@@ -15,7 +15,6 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: SOURCE_CODE_DISCLOSURE_USING_FILE_EXTENSIONS
   severity: LOW
-  # TODO: fix references, cve, cwe.
   references:
     - https://www.zaproxy.org/docs/alerts/10045/
   cwe:
@@ -30,8 +29,6 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
-  url:
-    extract: urlVar
 
 wordLists:
   languagePatterns:
@@ -206,7 +203,7 @@ execute:
   type: single
   requests:
     - req: 
-        modify_url: ${urlVar}${attemptPaths}
+        modify_url: ${attemptPaths}
 
 validate:
   response_code:
@@ -215,7 +212,7 @@ validate:
   response_payload:
     length: 
       gt: 0
-    regex: ${languagePatterns}
+    contains_either: ${languagePatterns}
     not_contains:
       - Error
       - Internal Server

@@ -28,6 +28,10 @@ info:
   cve:
   - CVE-2018-20679
   - CVE-2019-14271
+
+auth:
+  authenticated: true
+
 api_selection_filters:
   response_code:
     gte: 200
@@ -75,6 +79,7 @@ execute:
   - req:
     - add_header:
          x-akto-ignore: "0"
+    - remove_auth_header: true
     - validate:
         response_code:
           eq: 403
@@ -85,6 +90,7 @@ execute:
         regex_replace:
           regex: admin
           replace_with: "%2e%2e%2fadmin"
+    - remove_auth_header: true
     - validate:
         response_code:
           gte: 200
