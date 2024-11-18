@@ -61,6 +61,10 @@ validate:
       - "graphql_error"
       - "graphene"
       - "graphql_controller"
-
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>
 strategy:
   run_once: /

@@ -43,3 +43,8 @@ validate:
     contains_all:
       - 'AWSEBDockerrunVersion'
       - 'containerDefinitions'
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>

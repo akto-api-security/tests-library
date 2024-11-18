@@ -107,6 +107,8 @@ execute:
                     - cloudflare
                     - "HTTP Status 400"
                     - "Bad Request"
+                    - <html>
+                    - </html>
         - success: x2
         - failure: exit
     - req:
@@ -135,6 +137,8 @@ execute:
                 - "Bad Request"
                 - "invalid"
                 - "fail"
+                - <html>
+                - </html>
 
         - success: x3
         - failure: exit            
@@ -166,5 +170,7 @@ execute:
                 - "Bad Request"
                 - "invalid"
                 - "fail"
+                - <html>
+                - </html>
         - success: vulnerable
         - failure: exit

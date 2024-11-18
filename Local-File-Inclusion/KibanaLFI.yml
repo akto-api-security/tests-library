@@ -50,6 +50,9 @@ validate:
       gt: 0
     contains_either:
       - '"message":"An internal server error occurred"'
+    not_contains:
+      - <html>
+      - </html>
   response_headers:
     for_one:
       key:

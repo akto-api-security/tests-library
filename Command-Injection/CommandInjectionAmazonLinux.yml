@@ -109,6 +109,8 @@ execute:
                     - rate_limit
                     - rate limit
                     - multiple failed attempt
+                    - <html>
+                    - </html>
         - success: x2
         - failure: exit
     - req:
@@ -150,4 +152,6 @@ execute:
                 - account is locked
                 - account is blocked
                 - multiple failed attempts
+                - <html>
+                - </html>
         - success: vulnerable          

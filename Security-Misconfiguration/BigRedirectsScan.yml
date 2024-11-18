@@ -44,4 +44,9 @@ validate:
     lt: 400
     neq: 304
   response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>
     regex: ".*href.*href.*"

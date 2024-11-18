@@ -70,6 +70,9 @@ execute:
             contains_all:
               - "</web-app>"
               - "java.sun.com"
+            not_contains:
+              - <html>
+              - </html>
           response_headers:
             for_one:
               key:

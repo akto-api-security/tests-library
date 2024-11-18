@@ -53,12 +53,17 @@ execute:
         - modify_url: ${urlVar}
         - replace_body: ${specialPayloads}
 validate:
-  or:
+  and:
     - response_payload:
-        regex: "(?i)Cast to string failed for value"
-    - response_payload:
-        regex: "MongoError: unknown operator"
-    - response_payload:
-        regex: "CastError: Cast to ObjectId failed"
-    - response_payload:
-        regex: "ValidationError: User validation failed: "
+        not_contains:
+          - <html>
+          - </html>
+    - or:
+      - response_payload:
+          regex: "(?i)Cast to string failed for value"
+      - response_payload:
+          regex: "MongoError: unknown operator"
+      - response_payload:
+          regex: "CastError: Cast to ObjectId failed"
+      - response_payload:
+          regex: "ValidationError: User validation failed: "

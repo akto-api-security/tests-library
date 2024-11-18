@@ -149,7 +149,9 @@ execute:
             - Attention Required!
             - CloudFlare
             - Sorry, you have been blocked
-            - " UNION SELECT "          
+            - " UNION SELECT "  
+            - </html>
+            - <html>        
     - success: x2
     - failure: exit
   - req:
@@ -198,6 +200,8 @@ execute:
             - host
             - mysql
             - linux
+            - <html>
+            - </html>
 
           neq: "${x1.response.body}"
     - success: vulnerable

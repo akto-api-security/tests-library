@@ -56,6 +56,9 @@ validate:
     contains_all:
       - "<methodResponse>"
       - "<int>"
+    not_contains:
+      - </html>
+      - <html>
   response_headers:
     for_one:
       key:

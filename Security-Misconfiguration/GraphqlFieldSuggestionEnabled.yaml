@@ -49,6 +49,10 @@ validate:
     contains_either:
       - "Did you mean" 
       - "Expected value of type"
-
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>
 strategy:
   run_once: /

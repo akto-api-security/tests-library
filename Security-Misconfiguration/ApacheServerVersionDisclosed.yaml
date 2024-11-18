@@ -46,6 +46,12 @@ execute:
 validate:
   response_code:
     eq: 200
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>
   response_headers:
       regex: apache/[0-9.]+
         

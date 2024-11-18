@@ -47,5 +47,8 @@ validate:
     regex:
       - "root:.*:0:0:"
       - "\\[(font|extension|file)s\\]"
+    not_contains:
+      - <html>
+      - </html>
 strategy:
   run_once: /

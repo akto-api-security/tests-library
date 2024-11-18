@@ -43,6 +43,9 @@ validate:
   response_payload:
     length:
       gt: 0
+    not_contains:
+      - <html>
+      - </html>
     contains_all:
       - '"status": "success":'
       - '"data":'

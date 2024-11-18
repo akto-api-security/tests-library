@@ -50,3 +50,8 @@ validate:
     lt: 300
   response_payload:
     regex: ".*java.*"
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>

@@ -53,6 +53,9 @@ validate:
   response_payload:
     length:
       gt: 0
+    not_contains:
+      - <html>
+      - </html>
     regex:
       - 'root:.*:0:([0-9]+):'
       - '\/tmp\/grafana\.sock'

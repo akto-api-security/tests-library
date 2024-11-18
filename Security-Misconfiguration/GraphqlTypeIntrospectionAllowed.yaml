@@ -50,6 +50,10 @@ validate:
     contains_all: 
       - "data"
       - "__type"
-
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>
 strategy:
   run_once: /

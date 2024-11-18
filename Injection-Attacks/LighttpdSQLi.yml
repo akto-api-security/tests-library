@@ -42,5 +42,8 @@ validate:
     regex: "root:[x*]:0:0:"
     length:
       gt: 0
+    not_contains:
+      - <html>
+      - </html>
 strategy:
   run_once: /

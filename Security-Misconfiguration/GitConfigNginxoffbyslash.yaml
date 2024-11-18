@@ -53,5 +53,11 @@ validate:
   response_code:
     eq: 200
   response_payload:
+    not_contains:
+      - <html>
+      - </html>
+    length:
+      gt: 0
     contains_all:
       - '[core]'
+

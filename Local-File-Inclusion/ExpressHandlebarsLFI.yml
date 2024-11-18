@@ -49,10 +49,15 @@ execute:
 validate:
   response_code:
     eq: 200
-  or: 
+  and:
   - response_payload:
-      regex: "root:.*:0:0:"
-  - response_payload:
-      regex: "daemon:[x*]:0:0:"
-  - response_payload:
-      regex: "operator:[x*]:0:0:"
+      not_contains:
+        - <html>
+        - </html>
+  - or: 
+    - response_payload:
+        regex: "root:.*:0:0:"
+    - response_payload:
+        regex: "daemon:[x*]:0:0:"
+    - response_payload:
+        regex: "operator:[x*]:0:0:"

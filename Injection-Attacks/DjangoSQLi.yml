@@ -54,5 +54,8 @@ validate:
       - "ORA-29257:"
       - "ORA-06512:"
       - "Request Method:"
+    not_contains:
+      - <html>
+      - </html>
     length:
       gt: 0

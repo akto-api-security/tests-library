@@ -93,6 +93,8 @@ execute:
                     - rate limit
                     - multiple failed attempt
                     - cloudflare
+                    - <html>
+                    - </html>
         - success: x2
         - failure: exit
     - req:
@@ -115,6 +117,8 @@ execute:
                 - cloudflare
                 - invalid
                 - fail
+                - <html>
+                - </html>
         - success: x3
         - failure: exit         
     - req:
@@ -136,5 +140,7 @@ execute:
                 - cloudflare
                 - invalid
                 - fail
+                - <html>
+                - </html>
         - success: vulnerable
         - failure: exit     

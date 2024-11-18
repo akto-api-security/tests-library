@@ -59,6 +59,11 @@ validate:
         regex: .*
       value:
         regex: "AIza[0-9A-Za-z\\-_]{35}"
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>
   response_headers:
     for_one:
       value:

@@ -58,6 +58,9 @@ execute:
               length:
                 gt: 0
               regex: "root:.*:0:0:"
+              not_contains:
+                - <html>
+                - </html>
         - success: vulnerable
         - failure: exit
 strategy:

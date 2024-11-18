@@ -70,39 +70,44 @@ execute:
         - modify_query_param:
             changed_query_key:  ${changed_query_value}${specialCharacters}
 validate:
-  or:
+  and:
     - response_payload:
-      - contains_either:
-        - "SQLSTATE"
-    - response_payload:
-        regex: "SQL syntax.*?MySQL"
-    - response_payload:
-        regex: "Warning.*?\\Wmysqli?_"
-    - response_payload:
-        regex: "MySQLSyntaxErrorException"
-    - response_payload:
-        regex: "valid MySQL result"
-    - response_payload:
-        regex: "check the manual that (corresponds to|fits) your MySQL server version"
-    - response_payload:
-        regex: "check the manual that (corresponds to|fits) your MariaDB server version"
-    - response_payload:
-        regex: "check the manual that (corresponds to|fits) your Drizzle server version"
-    - response_payload:
-        regex: "Unknown column '[^ ]+' in 'field list'"
-    - response_payload:
-        regex: "MySqlClient\\\\."
-    - response_payload:
-        regex: "com\\.mysql\\.jdbc"
-    - response_payload:
-        regex: "Zend_Db_(Adapter|Statement)_Mysqli_Exception"
-    - response_payload:
-        regex: "Pdo[./_\\]Mysql"
-    - response_payload:
-        regex: "MySqlException"
-    - response_payload:
-        regex: "MemSQL does not support this type of query"
-    - response_payload:
-        regex: "is not supported by MemSQL"
-    - response_payload:
-        regex: "unsupported nested scalar subselect"
+        not_contains:
+          - <html>
+          - </html>
+    - or:
+      - response_payload:
+        - contains_either:
+          - "SQLSTATE"
+      - response_payload:
+          regex: "SQL syntax.*?MySQL"
+      - response_payload:
+          regex: "Warning.*?\\Wmysqli?_"
+      - response_payload:
+          regex: "MySQLSyntaxErrorException"
+      - response_payload:
+          regex: "valid MySQL result"
+      - response_payload:
+          regex: "check the manual that (corresponds to|fits) your MySQL server version"
+      - response_payload:
+          regex: "check the manual that (corresponds to|fits) your MariaDB server version"
+      - response_payload:
+          regex: "check the manual that (corresponds to|fits) your Drizzle server version"
+      - response_payload:
+          regex: "Unknown column '[^ ]+' in 'field list'"
+      - response_payload:
+          regex: "MySqlClient\\\\."
+      - response_payload:
+          regex: "com\\.mysql\\.jdbc"
+      - response_payload:
+          regex: "Zend_Db_(Adapter|Statement)_Mysqli_Exception"
+      - response_payload:
+          regex: "Pdo[./_\\]Mysql"
+      - response_payload:
+          regex: "MySqlException"
+      - response_payload:
+          regex: "MemSQL does not support this type of query"
+      - response_payload:
+          regex: "is not supported by MemSQL"
+      - response_payload:
+          regex: "unsupported nested scalar subselect"

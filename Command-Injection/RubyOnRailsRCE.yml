@@ -47,5 +47,8 @@ validate:
     eq: 200 
   response_payload:
     regex: "root:.*:0:0:"
+    not_contains:
+      - <html>
+      - </html>
     length:
       gt: 0

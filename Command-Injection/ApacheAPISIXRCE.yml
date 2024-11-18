@@ -72,5 +72,8 @@ execute:
             contains_all:
               - "\"reason\":\"OK\""
               - "\"status\":200"
+            not_contains:
+              - <html>
+              - </html>
       - success: vulnerable
       - failure: exit  

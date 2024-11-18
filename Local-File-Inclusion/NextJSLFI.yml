@@ -45,6 +45,9 @@ validate:
     regex: '\{"/_app":".*?_app\.js"'
     length:
       gt: 0
+    not_contains:
+      - <html>
+      - </html>
   response_headers:
     for_one:
       key:

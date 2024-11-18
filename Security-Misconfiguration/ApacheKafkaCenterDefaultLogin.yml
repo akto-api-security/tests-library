@@ -49,5 +49,8 @@ validate:
     contains_all:
       - '"code":200'
       - '"name":"admin"'
+    not_contains:
+      - <html>
+      - </html>
 strategy:
   run_once: /

@@ -49,5 +49,8 @@ validate:
       - 'password'
       - 'isAdmin'
       - 'createAt'
+    not_contains:
+      - <html>
+      - </html>
     length:
       gt: 0

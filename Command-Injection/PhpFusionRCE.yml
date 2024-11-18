@@ -49,5 +49,8 @@ validate:
   response_payload:
     contains_either:
       - "infusion_db.php"
+    not_contains:
+      - <html>
+      - </html>
     length:
       gt: 0
