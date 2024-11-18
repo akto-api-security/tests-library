@@ -75,7 +75,7 @@ execute:
   type: single
   requests:
   - req:
-    - add_header:
+    - modify_header:
         content-length: ${attemptValues}
 
 validate:
