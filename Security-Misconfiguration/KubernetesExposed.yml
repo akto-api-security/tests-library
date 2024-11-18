@@ -1,0 +1,113 @@
+---
+id: KUBERNETES_EXPOSED
+info:
+  name: "Kubernetes APIs Exposure"
+  description: >
+    "Kubernetes is a powerful orchestration platform for containerized applications. It exposes a number of APIs for cluster management and workload deployment. If these APIs are improperly configured or exposed to the public, attackers can potentially manipulate the cluster, access sensitive data, or disrupt services."
+  details: >
+    "Kubernetes API exposure occurs when the Kubernetes API server or other critical components such as etcd, kubelets, or the dashboard are accessible without proper authentication or access control. An exposed Kubernetes API allows an attacker to interact with the cluster, potentially creating, modifying, or deleting resources such as deployments, pods, services, and secrets. Improperly secured clusters can result in the exposure of sensitive data, disruption of operations, or unauthorized access to resources."
+  impact: >
+    "Exposing Kubernetes APIs to unauthorized users can lead to severe consequences, including cluster takeover, service disruption, data exfiltration, and unauthorized access to internal workloads. Attackers could manipulate workloads, steal secrets, create rogue resources, or escalate privileges within the cluster. Ensuring proper authentication, role-based access control (RBAC), and secure access policies is crucial to mitigating these risks."
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: KUBERNETES_EXPOSED
+  severity: LOW
+  references:
+    - https://kubernetes.io/docs/concepts/overview/kubernetes-api/
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-16
+    - CWE-200
+    - CWE-538
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  request_headers:
+    for_one:
+      key:
+        eq: Host
+      value:
+        extract: hostVal
+
+execute:
+  type: multiple
+  requests:
+    - req:
+      - modify_url: "https://${hostVal}:6443/api"
+      - validate:
+          response_code:
+            gte: 200
+            lt: 300
+          response_payload:
+            length:
+              gt: 0
+            contains_all:
+              - "kind"
+              - "groups"
+              - "apiVersion"
+      - success: vulnerable
+      - failure: x2
+    - req:
+      - modify_url: "https://${hostVal}:6443/apis"
+      - validate:
+          response_code:
+            gte: 200
+            lt: 300
+          response_payload:
+            length:
+              gt: 0
+            contains_all:
+              - "kind"
+              - "groups"
+              - "apiVersion"
+      - success: vulnerable
+      - failure: x3
+    - req:
+      - modify_url: "https://${hostVal}:6443/openapi/v3"
+      - validate:
+          response_code:
+            gte: 200
+            lt: 300
+          response_payload:
+            length:
+              gt: 0
+            contains_all:
+              - "paths"
+              - "k8s"
+      - success: vulnerable
+      - failure: x4
+    - req:
+      - modify_url: "https://${hostVal}:6443/openapi/v2"
+      - validate:
+          response_code:
+            gte: 200
+            lt: 300
+          response_payload:
+            length:
+              gt: 0
+            contains_all:
+              - "paths"
+              - "k8s"
+      - success: vulnerable
+      - failure: x5
+    - req:
+      - modify_url: "https://${hostVal}:6443/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy"
+      - validate:
+          response_payload:
+            length:
+              gt: 0
+            contains_all:
+              - "html"
+              - "ashboard"
+              - "ubernetes"
+      - success: vulnerable
+
+strategy:
+  run_once: /

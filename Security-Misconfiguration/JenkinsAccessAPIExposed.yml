@@ -1,0 +1,80 @@
+---
+id: JENKINS_API_EXPOSED
+info:
+  name: "Jenkins API Exposed"
+  description: >
+    "The Jenkins Remote Access API allows users to access Jenkins programmatically. If this API is improperly exposed, it can reveal sensitive system details, such as job configurations, build histories, and executor statuses, leading to potential system compromise."
+  details: >
+    "The Jenkins Remote Access API provides information about the state of the Jenkins server, including details like node configurations, executor information, and job status. When exposed without proper access controls, this API can be queried by unauthorized users to gather internal information about the Jenkins environment. This exposure can give attackers insight into the Jenkins infrastructure and provide opportunities for exploiting build systems."
+  impact: >
+    "Exposing the Jenkins API allows attackers to query sensitive information about the Jenkins environment, including node and executor details, job configurations, and the current build pipeline. This information can be used to stage attacks, manipulate builds, or gain access to sensitive data within the pipeline. In worst cases, it can lead to the manipulation of production systems, pipeline disruption, and unauthorized code execution."
+  
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: JENKINS_ACCESS_API_EXPOSED
+  severity: LOW
+  references:
+    - https://wiki.jenkins.io/display/JENKINS/Remote+access+API
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-16
+    - CWE-200
+  cve:
+    - CVE-2020-11959
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "/crumbIssuer/api/json"
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length: 
+      gt: 0
+    contains_all:
+      - Jenkins
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
+
+strategy:
+  run_once: /

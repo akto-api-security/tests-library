@@ -1,0 +1,86 @@
+---
+id: ZOOKEEPER_EXPOSED
+info:
+  name: "Zookeeper APIs Exposed"
+  description: >
+    "This vulnerability occurs when Apache Zookeeper APIs are accessible without proper authentication, allowing unauthorized users to interact with the Zookeeper service."
+  details: >
+    "Exposed Zookeeper APIs can lead to unauthorized access to critical configuration data, service coordination tasks, and cluster management capabilities. Attackers could exploit this exposure to modify or delete znodes, which can disrupt service operations and impact application stability."
+  impact: >
+    "The exposure of Zookeeper APIs can result in severe security risks, including data loss, service downtime, and unauthorized manipulation of application configurations. This can compromise the integrity and availability of the systems relying on Zookeeper for coordination and configuration."
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: ZOOKEEPER_EXPOSED
+  severity: LOW
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-16
+    - CWE-200
+    - CWE-538
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  url:
+    contains_either: ${probableInputParams}
+
+wordLists:
+  probableInputParams:
+    - "znodes"
+    - "zookeeper"
+
+execute:
+  type: single
+  requests:
+    - req:
+      - remove_auth_header: true
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      gt: 90
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
