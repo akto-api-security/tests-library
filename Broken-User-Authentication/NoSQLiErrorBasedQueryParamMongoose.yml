@@ -51,12 +51,17 @@ execute:
         - add_query_param: 
             !!str ${changed_query_key} [$]: ${changed_query_value}
 validate:
-  or: 
+  and:
     - response_payload:
-        regex: "Uncaught MongoDB\\\\Driver\\\\Exception\\\\CommandException: unknown operator"
-    - response_payload:
-        regex: "(?i)MongoError"
-    - response_payload:
-        regex: "(?i)unterminated string literal"
-    - response_payload:
-        regex: "Cast to string failed for value"
+        not_contains:
+          - <html>
+          - </html>
+    - or: 
+      - response_payload:
+          regex: "Uncaught MongoDB\\\\Driver\\\\Exception\\\\CommandException: unknown operator"
+      - response_payload:
+          regex: "(?i)MongoError"
+      - response_payload:
+          regex: "(?i)unterminated string literal"
+      - response_payload:
+          regex: "Cast to string failed for value"

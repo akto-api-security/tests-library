@@ -53,5 +53,8 @@ validate:
   - response_payload:
       contains_either:
         - CVE-2021-41773-POC
+      not_contains:
+        - <html>
+        - </html>
   - response_payload:
       regex: 'root:.*:0:0:'

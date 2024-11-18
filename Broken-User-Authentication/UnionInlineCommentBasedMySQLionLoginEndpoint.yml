@@ -145,6 +145,8 @@ execute:
             - Sorry, you have been blocked
             - UNION
             - SELECT
+            - </html>
+            - <html>
     - success: x2
     - failure: exit
   - req:
@@ -190,6 +192,8 @@ execute:
             - UNION
             - SELECT
             - " WHERE "   
+            - <html>
+            - </html>
           neq: "${x1.response.body}"
     - success: vulnerable
         

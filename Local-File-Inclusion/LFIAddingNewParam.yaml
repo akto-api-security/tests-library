@@ -100,3 +100,8 @@ execute:
 validate:
   response_payload:
     regex: "root:.*:0:0:"
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>

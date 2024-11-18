@@ -76,6 +76,12 @@ validate:
   response_code:
     gte: 200
     lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>
   or:
     - response_headers:
         regex: ${hashRegex}

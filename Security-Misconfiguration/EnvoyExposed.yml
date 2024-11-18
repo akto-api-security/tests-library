@@ -112,6 +112,9 @@ execute:
               - "layer_values"
               - "layers"
               - "admin"
+            not_contains:
+              - <html>
+              - </html>
       - success: vulnerable
 
 strategy:

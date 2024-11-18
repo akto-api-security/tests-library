@@ -49,5 +49,8 @@ validate:
     contains_all:
       - "commandResult"
       - "8831-2202-EVC"
+    not_contains:
+      - <html>
+      - </html>
     length:
       gt: 0

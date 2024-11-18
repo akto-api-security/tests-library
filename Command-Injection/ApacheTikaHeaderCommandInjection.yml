@@ -50,6 +50,9 @@ validate:
     contains_all:
       - org.apache.tika.parser.DefaultParser
       - org.apache.tika.parser.gdal.GDALParse
+    not_contains:
+      - <html>
+      - </html>
   response_headers:
     for_one:
       key:

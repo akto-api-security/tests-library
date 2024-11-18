@@ -48,5 +48,8 @@ validate:
       - "Not Acceptable"
       - "Available variants:"
       - "<address>Apache Server at"
+    not_contains:
+      - <html>
+      - </html>
 strategy:
   run_once: /

@@ -39,10 +39,15 @@ validate:
   response_code:
     eq: 200
   response_payload:
-    or:
-      - contains_all:
-        - "<Directory"
-        - "</Directory"
-      - contains_all:
-        - "<VirtualHost"
-        - "</VirtualHost"
+    and:
+      - response_payload:
+          not_contains:
+            - <html>
+            - </html>
+      - or:
+        - contains_all:
+          - "<Directory"
+          - "</Directory"
+        - contains_all:
+          - "<VirtualHost"
+          - "</VirtualHost"

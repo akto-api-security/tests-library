@@ -46,6 +46,9 @@ validate:
   response_payload:
     length:
       gt: 0
+    not_contains:
+      - <html>
+      - </html>
   response_headers:
     for_one:
       key:

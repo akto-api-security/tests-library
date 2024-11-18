@@ -49,5 +49,8 @@ validate:
       gt: 0
     contains_all:
       - "Unsupported response types: [978015547]"
+    not_contains:
+      - <html>
+      - </html>
 strategy:
   run_once: /

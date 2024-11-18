@@ -46,6 +46,9 @@ validate:
       - X-Web-Console-Session-Id
       - data-remote-path=
       - data-session-id=
+    not_contains:
+      - <html>
+      - </html>
   response_headers:
     for_one:
       key:

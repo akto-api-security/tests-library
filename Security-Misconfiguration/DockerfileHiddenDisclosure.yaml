@@ -44,6 +44,11 @@ validate:
     eq: 200
   response_payload:
     regex: '^(?:FROM(?:CACHE)?|RUN|ADD|WORKDIR|ENV|EXPOSE|\#)\s+[ -~]+'
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>
   response_headers:
     for_one:
       value:

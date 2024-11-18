@@ -47,5 +47,8 @@ validate:
       - name
       - running
       - pids
+    not_contains:
+      - <html>
+      - </html>
     length:
       gt: 0

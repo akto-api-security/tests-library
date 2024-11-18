@@ -58,6 +58,11 @@ validate:
         regex: .*
       value:
         regex: ".*s3.*amazonaws.*"
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>
   response_headers:
     for_one:
       value:

@@ -38,6 +38,8 @@ validate:
   response_code:
     eq: 200
   response_payload:
+    length:
+      gt: 0
     contains_all:
       - "[core]"
     not_contains:
@@ -47,3 +49,5 @@ validate:
       - '<BODY'
       - '<Html'
       - '<Body'
+      - <html>
+      - </html>

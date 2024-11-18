@@ -43,6 +43,9 @@ validate:
     contains_all:
       - "numRowsRead"
       - "numRowsIndexed"
+    not_contains:
+      - <html>
+      - </html>
     regex: "root:.*:0:0:"
     length:
       gt: 0

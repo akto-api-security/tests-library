@@ -46,6 +46,9 @@ validate:
   response_payload:
     contains_all:
       - "RecordSupplier"
+    not_contains:
+      - <html>
+      - </html>
     length:
       gt: 0
   ssrf_url_hit: ${random_uuid} 

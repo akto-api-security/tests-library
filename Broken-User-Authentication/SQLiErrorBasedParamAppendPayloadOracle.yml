@@ -70,7 +70,12 @@ execute:
         - modify_query_param:
             changed_query_key:  ${changed_query_value}${specialCharacters}
 validate:
-  or:
+  and:
+  - response_payload:
+      not_contains:
+        - <html>
+        - </html>
+  - or:
     - response_payload:
         regex: "\\bORA-\\d{5}"
     - response_payload:

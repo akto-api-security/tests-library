@@ -49,5 +49,8 @@ validate:
       - 'apiVersion'
       - 'uuid'
       - 'userName'
+    not_contains:
+      - <html>
+      - </html>
     length:
       gt: 0

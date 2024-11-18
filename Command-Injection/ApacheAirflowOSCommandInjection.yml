@@ -54,3 +54,6 @@ validate:
     length:
       gt: 0
     contains_either: "foo was passed in via Airflow CLI Test command with value {{ params.foo }}"
+    not_contains:
+      - <html>
+      - </html>

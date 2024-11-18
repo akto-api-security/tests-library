@@ -63,7 +63,10 @@ execute:
             contains_all:
               - '<strong>Log Details:'
               - 'Store Status'
-              - 'Logout</a>'           
+              - 'Logout</a>' 
+            not_contains:
+              - <html>
+              - </html>          
       - success: vulnerable
       - failure: exit   
 

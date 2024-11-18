@@ -49,6 +49,9 @@ validate:
   response_payload:
     length:
       gt: 0
+    not_contains:
+      - <html>
+      - </html>
     contains_either:  
       - "Illegal character 0x0 in state"
 strategy:

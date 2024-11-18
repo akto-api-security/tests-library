@@ -62,6 +62,8 @@ api_selection_filters:
       - account is locked
       - account is blocked
       - multiple failed attempts
+      - <html>
+      - </html>
   method:
     contains_either:
       - POST
@@ -142,6 +144,7 @@ validate:
       - Attention Required!
       - CloudFlare
       - Sorry, you have been blocked
-
+      - <html>
+      - </html>
     length:
       gt: 0

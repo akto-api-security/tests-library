@@ -53,5 +53,8 @@ validate:
       gt: 0
     contains_either:
       - "for 16-bit app support"
+    not_contains:
+      - <html>
+      - </html>
 strategy:
   run_once: /

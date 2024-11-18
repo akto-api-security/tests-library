@@ -57,6 +57,9 @@ validate:
     length:
       gt: 0
     regex: "((u|g)id|groups)=[0-9]{1,4}\\([a-z0-9]+\\)"
+    not_contains:
+      - <html>
+      - </html>
 
 strategy:
   run_once: /

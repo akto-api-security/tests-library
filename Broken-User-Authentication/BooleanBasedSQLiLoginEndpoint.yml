@@ -64,6 +64,8 @@ api_selection_filters:
       - account is locked
       - account is blocked
       - multiple failed attempts
+      - <html>
+      - </html>
   url:
     contains_either:
       - login
@@ -162,6 +164,8 @@ execute:
             - "--"
             - "fail"
             - "invalid"
+            - <html>
+            - </html>
     - success: x3
     - failure: exit
   - req:
@@ -192,4 +196,6 @@ execute:
             - "--"
             - "fail"
             - "invalid"
+            - <html>
+            - </html>
     - success: vulnerable

@@ -65,7 +65,12 @@ execute:
         - modify_query_param:
             changed_query_key: ${specialCharacters}
 validate:
-  or:
+  and:
+  - response_payload:
+      not_contains:
+        - <html>
+        - </html>
+  - or:
     - response_payload:
       - contains_either:
         - "SQLSTATE"
