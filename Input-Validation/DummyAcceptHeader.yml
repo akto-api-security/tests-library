@@ -1,0 +1,115 @@
+---
+id: DUMMY_ACCEPT_HEADER
+info:
+  name: Dummy Accept Header
+  description: |
+    "This vulnerability occurs when an application does not properly validate or handle Accept headers in HTTP requests, allowing for potential exploitation through invalid or unexpected header values."
+  details: |
+    "By sending a dummy Accept header with a value of 'application/cats', an attacker can iteratively test all paths and HTTP methods of the application. The goal is to provoke a response from the server that reveals how it handles unexpected content types. The server's failure to reject the request appropriately may expose underlying issues in content negotiation."
+  impact: |
+    "Improper handling of Accept headers can lead to unexpected behavior in the application, including the potential exposure of sensitive endpoints, mis-routing of requests, or information disclosure through error messages. The consistent receipt of a 406 Not Acceptable response indicates that the application correctly rejects unsupported media types, but any other response may suggest vulnerabilities in the API's content negotiation logic."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: DUMMY_ACCEPT_HEADER
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://endava.github.io/cats/docs/fuzzers/header-fuzzers/dummy-accept
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length: 
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_header:
+        Accept: application/cats
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match_schema:
+      eq: 100
+    percentage_match:
+      lt: 20
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"

@@ -1,0 +1,100 @@
+---
+id: DATADOG_PORT_EXPOSED
+info:
+  name: Datadog Port Exposed
+  description: >
+    Exposure of Datadog ports can lead to unauthorized access to monitoring and logging data, potentially allowing malicious users to manipulate metrics and configuration settings.
+  details: >
+    When Datadog ports, such as those used for DogStatsD or tracing, are improperly secured, they can be accessed from untrusted networks or by unauthorized users. This exposure can result in unauthorized data collection, manipulation of monitoring metrics, and exposure of sensitive information related to application performance and health.
+  impact: >
+    Unauthorized access to Datadog services can lead to significant risks, including data leaks, altered metrics, and disruptions in application monitoring. Ensuring that Datadog ports are protected with proper authentication and firewall rules is essential to safeguard monitoring data and maintain the integrity of observability practices.
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: DATADOG_PORT_EXPOSED
+  severity: LOW
+  references:
+    - https://docs.datadoghq.com/developers/dogstatsd
+    - https://docs.datadoghq.com/tracing/troubleshooting/connection_errors
+
+  cwe:
+    - CWE-16
+    - CWE-200
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length: 
+      gt: 0
+  request_headers:
+    for_one:
+      key:
+        eq: Host
+      value:
+        extract: hostVal
+  
+wordLists:
+  attemptPaths:
+    - "http://${hostVal}:8125/info"
+    - "http://${hostVal}:8126/info"
+
+  probableOutputParams:
+    - "config"
+    - "version"
+    - "health"
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_method: GET
+      - remove_auth_header: true
+      - replace_body: "{}"
+      - modify_url: ${attemptPaths}
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length: 
+      gt: 0
+    contains_all: ${probableOutputParams}
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+strategy:
+  run_once: /

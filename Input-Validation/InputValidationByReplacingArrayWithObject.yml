@@ -1,0 +1,129 @@
+---
+id: INPUT_VALIDATION_BY_REPLACING_ARRAY_WITH_OBJECT
+info:
+  name: Input Validation by Replacing Array with Object
+  description: >
+    This test examines the application's ability to validate input by replacing expected array structures with objects. 
+  details: >
+    The test involves sending requests where arrays are substituted with objects to determine if the application correctly identifies and handles the structural change in input data.
+  impact: >
+    Failing to validate the input type can lead to unexpected behavior, data processing errors, or security vulnerabilities, such as injection attacks or denial of service.
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: INPUT_VALIDATION_BY_REPLACING_ARRAY_WITH_OBJECT
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length: 
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+  request_payload:
+    regex: "\\[.*\\]"  
+    extract: userPayload
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    # checking if the payload is actually important, if it is only then continue with attack.
+    - replace_body: ''
+    - validate:
+        response_code:
+          gte: 400
+    - success: x2
+    - failure: exit
+  - req:
+    - replace_body: "{\"data\":${userPayload}}"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          percentage_match:
+            gte: 90
+          percentage_match_schema:
+            eq: 100
+          not_contains: ${badList}
+    - success: vulnerable
+
+wordLists:
+  badList: 
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+

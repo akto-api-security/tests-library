@@ -1,0 +1,148 @@
+---
+id: PAYLOAD_ALL_KEYS_INVALID_VALUES
+info:
+  name: "Payload All Keys Invalid Values"
+  description: >
+    This test examines how the application handles requests with all keys containing invalid values in the payload.
+  details: >
+    The test involves sending requests where every key in the payload is replaced with invalid or unexpected values, such as control characters, special characters, or completely non-alphanumeric strings. The purpose is to assess the application's ability to properly validate and respond to such inputs.
+  impact: >
+    Failing to validate keys appropriately can lead to security vulnerabilities, such as denial of service, data corruption, or unintended application behavior. It may also expose the application to injection attacks or other forms of exploitation.
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: PAYLOAD_ALL_KEYS_INVALID_VALUES
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length: 
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extractMultiple: payloadKeys
+
+wordLists:
+  attemptValues:
+    - ""
+    # null values
+    - \u0000
+    - \0
+    - "NULL"
+    - "null"
+    - "0000"
+    - \x00
+    - "\0"
+    - "\x00"
+    - NUL
+    - "NUL"
+    - "\u0000"
+    - "\000"
+    - 0x00
+    - "\u0000null"
+    # whitespace
+    - "      "
+    # emojis
+    - ":)"
+    # abugidas chars
+    - "జ్ఞ‌ా"
+    - "স্র‌ু"
+
+execute:
+  type: single
+  requests:
+  - req:
+    - ${payloadKeys}:
+        for_all:
+        - modify_body_param: 
+            ${iteratorKey}: ${attemptValues}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      gt: 90
+    percentage_match_schema:
+      eq: 100
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
