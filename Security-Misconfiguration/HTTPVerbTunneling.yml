@@ -1,0 +1,91 @@
+---
+id: HTTP_VERB_TUNNELING
+info:
+  name: Bypassing Access Controls Using HTTP Verb Tunneling
+  description: |
+    "HTTP verb tunneling allows clients to bypass restrictions on specific HTTP methods by sending alternative HTTP methods in the request headers. By using headers such as `X-HTTP-Method-Override` or `X-Method-Override`, attackers may be able to bypass access controls that restrict certain HTTP methods such as DELETE or PUT, allowing unauthorized actions on server resources."
+  details: |
+    "In cases where servers restrict HTTP methods like DELETE or PUT, attackers may use HTTP verb tunneling to override these restrictions. By adding headers such as `X-HTTP-Method-Override: DELETE` to a request, the attacker can bypass security mechanisms that only allow GET and POST requests. This can lead to unauthorized modifications, deletions, or updates to server data. Verb tunneling is often used when servers fail to validate or filter overridden HTTP methods, making it a serious security concern."
+  impact: |
+    "HTTP verb tunneling can lead to severe security issues, including unauthorized data deletion or modification. Attackers can bypass method restrictions and access or manipulate server resources they should not have access to. This can result in data loss, service disruption, or complete server compromise if sensitive operations like DELETE are improperly executed. Ensuring that HTTP methods are correctly validated and that verb tunneling headers are not blindly trusted is crucial for securing the application."
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: HTTP_VERB_TUNNELING
+  severity: LOW
+  references:
+    - https://portswigger.net/web-security/request-smuggling/advanced/request-tunnelling
+    - https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/07-Input_Validation_Testing/03-Testing_for_HTTP_Verb_Tampering
+  cwe:
+    - CWE-16
+    - CWE-200
+  cve:
+    - CVE-2023-4009
+    - CVE-2021-32039
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+    not_contains: ${attemptValues}
+  
+wordLists:
+  attemptValues:
+    - PUT
+
+execute:
+  type: multiple
+  requests:
+  - req:
+    - add_header:
+        x-akto-ignore: 0
+    - modify_method: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 400
+    - success: x2
+    - failure: exit
+  - req:
+    - add_header:
+        X-HTTP-Method-Override: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          percentage_match:
+            lte: 30
+          not_contains:
+            - Error
+            - Internal Server
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+            - Attention Required!
+            - CloudFlare
+            - "Sorry, you have been blocked"
+    - success: vulnerable

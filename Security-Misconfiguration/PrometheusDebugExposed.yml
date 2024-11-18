@@ -1,0 +1,84 @@
+---
+id: PROMETHEUS_DEBUG_EXPOSED
+info:
+  name: "Prometheus Debug Exposed"
+  description: >
+    "This vulnerability arises when Prometheus' debugging endpoints are accessible without proper authentication, potentially exposing sensitive metrics and configuration information."
+  details: >
+    "When the debug endpoints of Prometheus are exposed, unauthorized users may gain access to internal metrics, profiling information, and other sensitive data. This can happen due to misconfigurations in network access controls or when services are inadvertently exposed to the public internet."
+  impact: >
+    "Exposing the Prometheus debug endpoints can lead to unauthorized access to sensitive operational data, which can be exploited to gain insights into system behavior, performance bottlenecks, or vulnerabilities. Attackers could use this information to launch further attacks or disrupt services."
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: PROMETHEUS_DEBUG_EXPOSED
+  severity: LOW
+  references:
+    - https://training.promlabs.com/training/monitoring-and-debugging-prometheus/profiling/overview/
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-16
+    - CWE-200
+    - CWE-538
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+
+wordLists:
+  attemptValues:
+    - "/debug/pprof/profile"
+    - "/debug/pprof/heap"
+    - "/debug/pprof/goroutine"
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: ${attemptValues}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+strategy:
+  run_once: /
