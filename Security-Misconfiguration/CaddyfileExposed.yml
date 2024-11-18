@@ -14,7 +14,6 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: CADDYFILE_EXPOSED
   severity: LOW
-  # check ref.
   references:
     - https://caddyserver.com/docs/caddyfile
     - https://caddyserver.com/docs/conventions
@@ -50,6 +49,11 @@ validate:
   response_payload:
     length:
       gt: 0
+    contains_either:
+      - directive
+      - localhost
+      - respond
+      - file_server
     not_contains:
     - Error
     - Internal Server

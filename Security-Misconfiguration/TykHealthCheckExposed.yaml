@@ -14,7 +14,6 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: TYK_HEALTH_CHECK_EXPOSED
   severity: LOW
-  # check ref.
   references:
     - https://tyk.io/docs/developer-support/debugging-series/debugging-selfmanaged/
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
@@ -87,3 +86,6 @@ validate:
     - Attention Required!
     - CloudFlare
     - "Sorry, you have been blocked"
+
+strategy:
+  run_once: /

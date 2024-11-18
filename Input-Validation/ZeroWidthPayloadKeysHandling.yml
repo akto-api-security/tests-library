@@ -86,6 +86,7 @@ execute:
   - req:
     - add_body_param:
         "": "${userVal}"
+    - delete_body_param: "${userKey}"
     - validate:
         response_code:
           gte: 200

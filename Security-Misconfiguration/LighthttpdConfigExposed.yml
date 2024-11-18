@@ -15,7 +15,6 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: LIGHTHTTPD_CONFIG_EXPOSED
   severity: LOW
-  # check ref.
   references:
     - https://redmine.lighttpd.net/projects/1/wiki/docs
     - https://blog.lighttpd.net/articles/2006/04/02/log-condition-handling-the-hidden-feature-for-debuging/
@@ -53,6 +52,10 @@ validate:
   response_payload:
     length:
       gt: 0
+    percentage_match:
+      lt: 10
+    percentage_match_schema:
+      lt: 10
     not_contains:
     - Error
     - Internal Server

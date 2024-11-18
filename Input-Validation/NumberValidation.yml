@@ -73,26 +73,7 @@ wordLists:
   attemptValues:
     - "this is a string"
     - "string"
-
-execute:
-  type: single
-  requests:
-  - req:
-    - modify_body_param:
-        userKey: ${attemptValues}
-
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    percentage_match_schema:
-      eq: 100
-    percentage_match:
-      gte: 90
-    not_contains:
+  badList: 
     - Error
     - Internal Server
     - Failed
@@ -123,3 +104,30 @@ validate:
     - CloudFlare
     - "Sorry, you have been blocked"
 
+execute:
+  type: multiple
+  requests:
+  - req:
+    # checking if the value is actually important, if it is only then continue with attack.
+    - delete_body_param: ${userKey}
+    - validate:
+        response_code:
+          gte: 400
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${attemptValues}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          percentage_match:
+            gte: 90
+          percentage_match_schema:
+            eq: 100
+          not_contains: ${badList}
+    - success: vulnerable

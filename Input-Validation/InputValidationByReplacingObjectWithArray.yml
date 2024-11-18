@@ -3,7 +3,7 @@ id: INPUT_VALIDATION_BY_REPLACING_OBJECT_WITH_ARRAY
 info:
   name: Input Validation by Replacing Object with Array
   description: >
-    This test checks the application’s validation mechanisms by replacing expected object structures with arrays.
+    This test checks the application's validation mechanisms by replacing expected object structures with arrays.
   details: >
     The test involves sending requests where objects are replaced by arrays to assess whether the application appropriately detects and rejects this structural mismatch.
   impact: >
@@ -21,7 +21,6 @@ info:
   - OWASP top 10
   - HackerOne top 10
   references:
-  - https://endava.github.io/cats/docs/fuzzers/header-fuzzers
   - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
   - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
   cwe:
@@ -67,7 +66,7 @@ api_selection_filters:
     - account is blocked
     - multiple failed attempts
   request_payload:
-    regex: "{.*}"
+    regex: "\\{.*\\}"
     extract: userPayload
 
 execute:

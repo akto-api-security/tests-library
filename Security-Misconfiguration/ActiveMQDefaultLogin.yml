@@ -10,16 +10,15 @@ info:
     "Using default credentials can lead to unauthorized access, allowing attackers to manipulate message queues, read sensitive data, and potentially disrupt services. It is crucial to change these credentials to maintain security and prevent unauthorized exploitation."
 
   category:
-      name: SM
-      shortName: Misconfiguration
-      displayName: Security Misconfiguration (SM)
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
   subCategory: ACTIVE_MQ_DEFAULT_LOGIN
   severity: LOW
   tags: 
     - Business logic
     - OWASP top 10
     - HackerOne top 10
-    # TODO: Fix references, cve, cwe
   references:
     - "https://activemq.apache.org/components/classic/documentation/web-console/"
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"

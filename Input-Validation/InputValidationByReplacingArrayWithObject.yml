@@ -20,7 +20,6 @@ info:
   - OWASP top 10
   - HackerOne top 10
   references:
-  - https://endava.github.io/cats/docs/fuzzers/header-fuzzers
   - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
   - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
   cwe:
@@ -66,7 +65,7 @@ api_selection_filters:
     - account is blocked
     - multiple failed attempts
   request_payload:
-    regex: "[.*]"
+    regex: "\\[.*\\]"  
     extract: userPayload
 
 execute:
@@ -81,7 +80,7 @@ execute:
     - success: x2
     - failure: exit
   - req:
-    - replace_body: "{\"data\":\"${userPayload}\"}"
+    - replace_body: "{\"data\":${userPayload}}"
     - validate:
         response_code:
           gte: 200

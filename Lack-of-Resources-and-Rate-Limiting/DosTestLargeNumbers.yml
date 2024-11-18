@@ -9,7 +9,7 @@ info:
   impact: >
     Improper handling of large numeric values may lead to performance degradation, resource exhaustion, or even application crashes, rendering the service unavailable to legitimate users.
 
-    category:
+  category:
     name: RL
     shortName: Lack of Resources & Rate Limiting
     displayName: Lack of Resources & Rate Limiting (RL)
@@ -89,7 +89,14 @@ execute:
     - success: x2
     - failure: exit
   - req:
-    - modify_header:
+    - delete_body_param: ${userKey}
+    - validate:
+        response_code:
+          gte: 400
+    - success: x3
+    - failure: exit
+  - req:
+    - modify_body_param:
         userKey: ${attemptValues}
     - validate:
         response_code:
@@ -107,10 +114,10 @@ execute:
 validate:
   and:
     - compare_greater:
-        - ${x2.response.stats.median_response_time}
+        - ${x3.response.stats.median_response_time}
         - 3001
     - compare_greater:
-        - ${x2.response.stats.median_response_time}
+        - ${x3.response.stats.median_response_time}
         - ${x1.response.stats.median_response_time} * 4
 
 wordLists:

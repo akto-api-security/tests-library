@@ -15,7 +15,6 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: CADDY_ADMIN_EXPOSED
   severity: LOW
-  # check ref.
   references:
     - https://caddyserver.com/docs/api
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
@@ -39,7 +38,7 @@ api_selection_filters:
 
 wordLists:
   attemptValues:
-    - "http://${hostVal}:2019"
+    - "http://${hostVal}:2019/config"
 
 execute:
   type: single
@@ -56,6 +55,10 @@ validate:
   response_payload:
     length:
       gt: 0
+    contains_either:
+      - apps
+      - servers
+      - routes
     not_contains:
     - Error
     - Internal Server

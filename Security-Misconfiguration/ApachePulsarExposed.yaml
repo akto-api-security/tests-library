@@ -15,7 +15,6 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: APACHE_PULSAR_EXPOSED
   severity: LOW
-  # check ref.
   references:
     - https://pulsar.apache.org/admin-rest-api
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
@@ -29,8 +28,6 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
-  url:
-    extract: urlVar
   
 wordLists:
   attemptPaths:

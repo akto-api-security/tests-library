@@ -15,7 +15,6 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: TRAEFIK_CONFIG_EXPOSED
   severity: LOW
-  # check ref.
   references:
     - https://doc.traefik.io/traefik/getting-started/configuration-overview/
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
@@ -56,6 +55,10 @@ validate:
   response_payload:
     length:
       gt: 0
+    percentage_match:
+      lt: 10
+    percentage_match_schema:
+      lt: 10
     not_contains:
     - Error
     - Internal Server

@@ -14,7 +14,6 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: APIGEE_NGINX_LOG_EXPOSED
   severity: LOW
-  # check ref.
   references:
     - https://docs.apigee.com/api-platform/troubleshoot/debugging/enable-nginx-debug-logs-on-routers
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
@@ -37,8 +36,8 @@ execute:
   type: single
   requests:
     - req:
-      - add_header:
-          x-akto-ignore: "0"
+      - remove_auth_header: true
+      - replace_body: "{}"
 
 validate:
   response_code:

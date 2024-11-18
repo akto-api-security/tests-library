@@ -15,7 +15,6 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: FLUENTD_API_EXPOSED_VIA_DEBUG_PORT
   severity: LOW
-  # check ref.
   references:
     - https://docs.fluentd.org/monitoring-fluentd/overview
     - https://docs.fluentd.org/monitoring-fluentd/monitoring-rest-api
@@ -36,7 +35,7 @@ api_selection_filters:
   request_headers:
     for_one:
       key:
-        eq: Host
+        eq: host
       value:
         extract: hostVal
   

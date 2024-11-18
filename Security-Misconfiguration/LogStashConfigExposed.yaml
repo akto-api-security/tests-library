@@ -15,7 +15,6 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: LOGSTASH_CONFIG_EXPOSED
   severity: LOW
-  # check ref.
   references:
     - https://www.elastic.co/guide/en/logstash/current/config-setting-files.html
     - https://elastic.co/guide/en/logstash/current/hot-threads-api.html
@@ -36,7 +35,7 @@ api_selection_filters:
   request_headers:
     for_one:
       key:
-        eq: Host
+        eq: host
       value:
         extract: hostVal
   
