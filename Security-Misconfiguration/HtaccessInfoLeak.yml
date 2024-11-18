@@ -15,9 +15,8 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: HTACCESS_INFO_LEAK
   severity: LOW
-  # TODO: fix references, cve, cwe.
   references:
-    - https://www.zaproxy.org/docs/alerts/10044-2/
+    - https://cwe.mitre.org/data/definitions/200.html
   cwe:
     - CWE-200
     - CWE-213
@@ -37,16 +36,16 @@ execute:
   type: single
   requests:
     - req: 
-      modify_url: ${urlVar}/.htaccess
+        modify_url: ${urlVar}/.htaccess
 
 validate:
   response_code:
     gte: 200
     lt: 300
-  or: 
   response_headers:
     for_one:
-      key: content-type
+      key: 
+        eq: content-type
       value:
         not_contains:
           - xml

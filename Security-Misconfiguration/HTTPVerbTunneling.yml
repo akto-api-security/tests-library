@@ -15,10 +15,9 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: HTTP_VERB_TUNNELING
   severity: LOW
-  # check references.
   references:
-    - https://web.cystack.net/vulnerability/cystack.remote.robomongo_cred_disclosure
-    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+    - https://portswigger.net/web-security/request-smuggling/advanced/request-tunnelling
+    - https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/07-Input_Validation_Testing/03-Testing_for_HTTP_Verb_Tampering
   cwe:
     - CWE-16
     - CWE-200
@@ -29,14 +28,19 @@ info:
 api_selection_filters:
   method:
     neq: "OPTIONS"
-    extract: methodVar
+    not_contains: ${attemptValues}
   
+wordLists:
+  attemptValues:
+    - PUT
+
 execute:
   type: multiple
   requests:
   - req:
     - add_header:
         x-akto-ignore: 0
+    - modify_method: ${attemptValues}
     - validate:
         response_code:
           gte: 400
@@ -44,7 +48,7 @@ execute:
     - failure: exit
   - req:
     - add_header:
-        X-HTTP-Method-Override: ${methodVar}
+        X-HTTP-Method-Override: ${attemptValues}
     - validate:
         response_code:
           gte: 200
@@ -52,6 +56,8 @@ execute:
         response_payload:
           length:
             gt: 0
+          percentage_match:
+            lte: 30
           not_contains:
             - Error
             - Internal Server

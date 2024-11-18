@@ -81,12 +81,14 @@ execute:
   type: single
   requests:
     - req:
-        - modify_url: ${urlVar}?{payloads}
+        - modify_url: ${urlVar}/?${payloads}
 
 validate:
   response_payload:
     length:
       gt: 0
+    percentage_match:
+      gte: 90
     not_contains:
       - Error
       - Internal Server 

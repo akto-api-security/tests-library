@@ -19,7 +19,6 @@ info:
   - Business logic
   - OWASP top 10
   - HackerOne top 10
-  # check ref.
   references:
   - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
   - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
@@ -38,23 +37,20 @@ api_selection_filters:
     neq: OPTIONS
   request_headers:
     for_one:
-      key: content-type
+      key: 
+        eq: content-type
       value: 
         regex: ".*kafka.*"
-  request_payload:
-    extract: userPayload
 
 wordLists:
   attemptValues:
-    - \u0000
-    - "null"
     - NaN
 
 execute:
   type: single
   requests:
   - req:
-    - replace_body: ${userPayload}${attemptValues}
+    - replace_body: ${attemptValues}
 
 validate:
   response_code:

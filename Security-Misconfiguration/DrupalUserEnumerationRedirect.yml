@@ -1,0 +1,56 @@
+id: DRUPAL_USER_ENUM_REDIRECTION
+info:
+  name: "Drupal User Enumeration with Redirection"
+  description: "This test refers to a security vulnerability in Drupal applications where attackers can exploit the system to enumerate user accounts by observing redirection responses. When specific URLs are accessed, the application may provide different responses based on whether a username exists, enabling attackers to determine valid usernames without authentication. This type of enumeration can lead to targeted attacks, such as brute force or social engineering, as attackers gain insights into the user base. To mitigate this risk, it is essential to implement proper error handling and response normalization to prevent user identification through redirection patterns."
+  details:  "Drupal User Enumeration with Redirection occurs when an attacker can manipulate URL requests to the Drupal application and observe how the system responds to different usernames. The application may redirect or provide unique error messages based on whether a user exists or not, making it easier for attackers to compile a list of valid usernames. This enumeration can be exploited to perform further attacks, such as brute force login attempts or phishing. To protect against this vulnerability, developers should implement uniform responses for both existing and non-existing users and enhance overall security practices within the application."
+  impact: "The impact of Drupal User Enumeration with Redirection can be considerable, as it allows attackers to identify valid usernames within the application, facilitating targeted attacks. Once valid usernames are known, attackers can launch brute force attacks to gain unauthorized access to user accounts or employ phishing tactics to compromise credentials. Additionally, this enumeration can lead to privacy violations if sensitive user data is exposed, resulting in reputational damage for the organization. Furthermore, the increased risk of account takeovers may lead to significant financial losses and regulatory implications if user data is mishandled."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: DRUPAL_USER_ENUM_REDIRECTION
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2021-43798
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+wordLists:
+  paths:
+      - "/user/0"
+      - "/user/1"
+      - "/user/2"
+      - "/user/3"
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "${paths}"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_code:
+    eq: 301
+  response_payload:
+    length:
+      gt: 0
+  response_headers:
+    for_one:
+      key:
+        eq: "location"
+      value:
+        regex: "https?://[\\w\\.\\-]+[:/w-]*/users/\\w+"
+strategy:
+  run_once: /

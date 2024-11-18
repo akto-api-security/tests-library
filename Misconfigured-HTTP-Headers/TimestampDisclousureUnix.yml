@@ -20,11 +20,8 @@ info:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
-    # cross-check ref., cwe, cve
   references:
-    - "https://www.fastly.com/blog/headers-we-dont-want"
-    - "https://portswigger.net/web-security/host-header/exploiting"
-    - "https://blog.yeswehack.com/yeswerhackers/http-header-exploitation/"
+    - "https://cwe.mitre.org/data/definitions/200.html"
   cwe:
     - CWE-16
     - CWE-200
@@ -83,7 +80,6 @@ validate:
           - "X-Rate-Limit-Reset"
       value:
         regex: "\\b(?:1\\d|2[0-2])\\d{8}\\b(?!%)"
-
 
 strategy:
   run_once: /

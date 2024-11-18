@@ -5,7 +5,7 @@ info:
   description: |
     "This test examines the system's ability to correctly validate delivery methods and apply corresponding delivery fees. The objective is to identify vulnerabilities that might allow users to avoid delivery charges by selecting invalid or non-existent delivery methods."
   details: |
-    "The test involves sending API requests with different `deliveryMethod` values to assess if the system properly checks and applies delivery fees based on the selected method. For example, if a valid delivery method like 'standard' incurs a fee, the system should reject or handle an invalid method like 'non_existent' that attempts to avoid the fee. The test checks whether the application enforces proper validation of delivery methods and prevents users from bypassing fees by using unsupported or incorrect options."
+    "The test involves sending API requests with different values to assess if the system properly checks and applies delivery fees based on the selected method."
   impact: |
     "Circumventing delivery fees can lead to financial losses and encourage abuse of the delivery system. If users can manipulate delivery methods to avoid charges, it undermines the business's pricing strategy and results in a direct loss of revenue. Ensuring robust validation of delivery methods is essential to prevent exploitation, maintain fair pricing practices, and protect the company's financial interests."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length:
+      gt: 0
     not_contains:
     - Error
     - Internal Server

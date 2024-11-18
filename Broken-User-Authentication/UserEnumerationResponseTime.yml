@@ -95,7 +95,7 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
-            regex: "password|^pass$|^pwd$|^user_password$|^userpass$|passwd|^user_pwd$|^password1$|^userPass$|^login_password$|^loginpassword$|^user_pass$|^access_password$|^secret$|^user_secret$"
+            regex: "password|^pass$|^pwd$|^user_password$|^userpass$|passwd|^user_pwd$|^password1$|^userPass$|^login_password$|^loginpassword$|^user_pass$|^access_password$|^secret$|^user_secret$|^code$|^token$"
             extract: passKey
 wordLists:
   invalidPasswords:
@@ -126,5 +126,5 @@ execute:
 validate:
   compare_greater:
     - ${x1.response.stats.median_response_time}
-    - ${x2.response.stats.median_response_time} * 1.2
+    - ${x2.response.stats.median_response_time} * 3
 

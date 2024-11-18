@@ -5,7 +5,7 @@ info:
   description: |
     "This test examines whether the system correctly enforces validation checks for first-time users when applying discount coupons. The focus is on whether a user can bypass the validation that should apply special rules or discounts exclusively for first-time users."
   details: |
-    "The test involves applying a discount coupon intended for first-time users and checking whether the system correctly validates the `isFirstTimeUser` flag. For instance, an order with the coupon code `DISCOUNT10` should typically apply a discount only if the user is marked as a first-time user. The test verifies if the system properly enforces this condition or if the discount is applied regardless of the user's status. It involves sending requests with and without the `isFirstTimeUser` flag and observing the system's response."
+    "The test involves applying a discount coupon intended for first-time users and checking whether the system correctly validates the same."
   impact: |
     "Bypassing first user validation can lead to misuse of promotional offers and discounts, potentially resulting in financial losses and reduced effectiveness of marketing strategies. If the system allows non-first-time users to access discounts intended for new customers, it undermines the integrity of promotional campaigns and can lead to fraudulent activities. Proper enforcement of user validation checks is essential to ensure that discounts and promotions are applied correctly and that business rules are upheld."
 
@@ -35,6 +35,8 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
+    length: 
+      gt: 0
     not_contains:
     - Error
     - Internal Server
@@ -62,14 +64,13 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-  or:
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          extract: userVal
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        extract: userVal
 
 wordLists:
   probableInputParameters:
@@ -108,6 +109,37 @@ wordLists:
     - processed
     - eligible
 
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
 execute:
   type: multiple
   requests:
@@ -121,37 +153,8 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
-        contains_either: ${probableOutputFailParameters}
+          not_contains: ${responseErrorList}
+          contains_either: ${probableOutputFailParameters}
     - success: x2
     - failure: exit
   - req:
@@ -164,35 +167,6 @@ execute:
         response_payload:
           length:
             gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
-        contains_either: ${probableOutputPassParameters}
+          not_contains: ${responseErrorList}
+          contains_either: ${probableOutputPassParameters}
     - success: vulnerable

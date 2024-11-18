@@ -97,6 +97,7 @@ execute:
   type: multiple
   requests:
     - req:
+      - replace_auth_header: true
       - modify_url:
           token_replace:
             location: 1
@@ -104,6 +105,7 @@ execute:
       - success: vulnerable
       - failure: x2
     - req:
+      - replace_auth_header: true
       - modify_url:
           token_replace:
             location: 2
@@ -111,6 +113,7 @@ execute:
       - success: vulnerable
       - failure: x3
     - req:
+      - replace_auth_header: true
       - modify_url:
           token_replace:
             location: 3
@@ -118,6 +121,7 @@ execute:
       - success: vulnerable
       - failure: x4
     - req:
+      - replace_auth_header: true
       - modify_url:
           token_replace:
             location: 4

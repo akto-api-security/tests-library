@@ -19,9 +19,9 @@ info:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
-    # TODO: Fix references, cve, cwe
   references:
     - "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/"
+    - https://portswigger.net/kb/issues/00600100_directory-listing
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
   cwe:
     - CWE-16
@@ -41,7 +41,7 @@ execute:
       - modify_method: GET
       - modify_url:
           regex_replace:
-            regex: "\/[^\/]+\/(.*)"
+            regex: "\\/[^\\/]+\\/(.*)"
             replace_with: ""
 
 validate:
