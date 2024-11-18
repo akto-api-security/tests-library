@@ -44,14 +44,22 @@ info:
 auth:
   authenticated: true
 api_selection_filters:
-  response_code:
-    gte: 200
-    lt: 300
+  or: 
+  - response_code:
+      gte: 200
+      lt: 300
+      neq: 204
+    response_payload:
+      length:
+        gt: 0
+  - response_code:
+      eq: 204
+    response_payload:
+      length:
+        eq: 0
   method:
     neq: "OPTIONS"
-  response_payload:
-    length:
-      gt: 0
+
 
 execute:
   type: multiple
@@ -100,14 +108,22 @@ execute:
             location: 5
             replace_with: "admin"
 validate:
-  response_code:
-    gte: 200
-    lt: 300
+  or: 
+  - response_code:
+      gte: 200
+      lt: 300
+      neq: 204
+    response_payload:
+      length:
+        gt: 0
+  - response_code:
+      eq: 204
+    response_payload:
+      length:
+        eq: 0
   url:
     endpoint_in_traffic_context: false 
   response_payload:
-    length:
-      gt: 0
     percentage_match:
       lt: 10
     percentage_match_schema:
