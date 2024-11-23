@@ -38,16 +38,11 @@ execute:
 validate:
   response_code:
     eq: 200
-  and:
-    - response_payload:
-        not_contains:
-          - <html>
-          - </html>
-    - response_payload:
-        or:
-        - contains_all:
-          - "<Directory"
-          - "</Directory"
-        - contains_all:
-          - "<VirtualHost"
-          - "</VirtualHost"
+  response_payload:
+    or:
+      - contains_all:
+        - "<Directory"
+        - "</Directory"
+      - contains_all:
+        - "<VirtualHost"
+        - "</VirtualHost"
