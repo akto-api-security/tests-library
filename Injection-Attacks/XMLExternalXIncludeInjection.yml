@@ -72,13 +72,13 @@ execute:
   requests:
     - req:
         - replace_body: ${payloads}
+        - modify_header:
+            content-type: "application/xml"
 
 validate:
   response_payload:
     length:
       gt: 0
-    percentage_match: 
-      lt: 40
     not_contains:
       - Error
       - Internal Server 
@@ -124,4 +124,4 @@ validate:
       - "XML External Entity (XXE) Reference Error"
       - "Error: Invalid CDATA section"
       - "Malformed XML request"
-
+    regex: "root:.*:0:0:"
