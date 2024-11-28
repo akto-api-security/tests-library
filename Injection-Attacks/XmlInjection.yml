@@ -111,10 +111,9 @@ validate:
   response_payload:
     length:
       gt: 0
-    percentage_match:
-      lt: 40
-    percentage_match_schema:
-      gt: 80
+    contains_all:
+      - "<xml>"
+      - "</xml>"
     not_contains:
       - Error
       - Internal Server 

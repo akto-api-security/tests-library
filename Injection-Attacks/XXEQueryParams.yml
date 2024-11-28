@@ -3,8 +3,7 @@ id: XXE_QUERY_PARAMS
 info:
   name: "XML External Entity (XXE) Vulnerability test with URL Encoded payload in API Endpoints"
   description: >
-    "This test can be used to detect and mitigate XML External Entity vulnerabilities where 
-    malicious payloads are transmitted via percent-encoded URLs."
+    "This test can be used to detect and mitigate XML External Entity vulnerabilities where malicious payloads are transmitted via percent-encoded URLs."
   details: >
     "This test evaluates the robustness of API endpoints against XXE attacks embedded in URL-encoded XML data."
   impact: >
@@ -87,8 +86,7 @@ validate:
   response_payload:
     length:
       gt: 0
-    percentage_match:
-      gte: 90
+    regex: "root:.*:0:0:"
     not_contains:
       - Error
       - Internal Server 

@@ -128,10 +128,9 @@ validate:
     length:
       gt: 0
     # we are expecting the payloads to be different.
-    percentage_match:
-      lt: 40
-    percentage_match_schema:
-      gt: 80
+    contains_all:
+      - "<xml>"
+      - "</xml"
     not_contains:
       - Error
       - Internal Server 
