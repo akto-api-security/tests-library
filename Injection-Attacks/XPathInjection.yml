@@ -114,6 +114,9 @@ validate:
     length:
       gt: 0
     contains_either: ${probableOutputParameters}
+    contains_all:
+      - "<xml>"
+      - "</xml>"
     not_contains:
       - Error
       - Internal Server 

@@ -67,6 +67,7 @@ wordLists:
   probableOutputParameters:
     - debug
     - trace
+    - "<xml>"
   payloads:
     - "<config><debug>true</debug></config>"
 
@@ -82,7 +83,7 @@ validate:
       gt: 0
     percentage_match: 
       lt: 40
-    contains_either: ${probableOutputParameters}
+    contains_all: ${probableOutputParameters}
     not_contains:
       - Error
       - Internal Server 
