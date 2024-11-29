@@ -1,0 +1,44 @@
+id: MSSQL_RCE
+info:
+  name: "Microsoft SQL Server Reporting Services Remote Code Execution"
+  description: "Microsoft SQL Server Reporting Services (SSRS) Remote Code Execution (RCE) is a vulnerability that allows attackers to execute arbitrary code on a server running SSRS. This occurs when the application improperly handles user input, especially during the report generation or viewing process. By exploiting this vulnerability, an attacker can trigger the execution of malicious code on the server, potentially compromising the system. Proper input validation, patching, and restricting access to SSRS can help mitigate the risk of RCE attacks."
+  details:  "The Microsoft SQL Server Reporting Services (SSRS) Remote Code Execution (RCE) vulnerability arises when attackers exploit improper input validation in SSRS, particularly in report processing. This allows them to inject malicious payloads into the report creation or viewing process, leading to the execution of arbitrary code on the server. Exploiting this vulnerability, attackers could gain control over the server, execute unauthorized commands, or access sensitive data. To mitigate this, it is crucial to apply security patches, restrict access, and validate all inputs to prevent the execution of untrusted code."
+  impact: "The impact of a Microsoft SQL Server Reporting Services (SSRS) Remote Code Execution (RCE) vulnerability is severe, as it enables attackers to execute arbitrary code on the affected server. This could lead to full server compromise, allowing attackers to steal sensitive data, disrupt services, or escalate privileges. Additionally, the attacker could deploy malicious software, such as ransomware, or gain control over connected systems. Prompt patching, input validation, and restricting access are essential to prevent such exploitation and minimize potential damage."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: MSSQL_RCE
+  severity: MEDIUM
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2020-9484
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "/ReportServer/Pages/ReportViewer.aspx"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    contains_all:
+      - "view report"
+    length:
+      gt: 0
