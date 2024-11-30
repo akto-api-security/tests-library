@@ -1,0 +1,50 @@
+id: NODE_ECSTATIC_INTERNAL_PATH_EXPOSURE
+info:
+  name: "Node.js Ecstatic Package - Internal Path Exposure"
+  description: "Node.js Ecstatic Package - Internal Path Exposure refers to a vulnerability in the Ecstatic package, which serves static files in Node.js applications. If the package is misconfigured, it can unintentionally expose internal file paths or directory structures to external users. Attackers can exploit this exposure to gain insights into the server’s file system, potentially revealing sensitive files, configurations, or application source code. Proper configuration and access controls are essential to prevent such leaks."
+  details:  "Node.js Ecstatic Package - Internal Path Exposure occurs when the Ecstatic package, used to serve static files, exposes internal file paths or directories due to improper configuration. This can happen if user input, such as query parameters or URLs, is not sanitized, allowing attackers to infer or access restricted file paths on the server. Malicious users can exploit this to view sensitive files, configuration settings, or even access parts of the application's source code. Proper sanitization and strict access controls are necessary to mitigate this risk."
+  impact: "The impact of Node.js Ecstatic Package - Internal Path Exposure can be significant, as it may lead to unauthorized access to sensitive server files, such as configuration files, credentials, or application source code. This exposure can provide attackers with valuable insights into the application’s structure and vulnerabilities, which can be exploited for further attacks. Additionally, it could compromise data integrity, breach privacy, and lead to further exploitation, including privilege escalation or data manipulation."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: NODE_ECSTATIC_INTERNAL_PATH_EXPOSURE
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2021-43798
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+wordLists:
+  paths:
+    - '/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "${paths}"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_code:
+    eq: 500
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - 'ENAMETOOLONG'
+      - 'stat'
+strategy:
+  run_once: /

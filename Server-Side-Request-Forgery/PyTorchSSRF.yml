@@ -1,0 +1,53 @@
+id: PYTORCH_SSRF
+info:
+  name: "PyTorch Server-Side Request Forgery Test"
+  description: "The PyTorch Server-Side Request Forgery (SSRF) Test identifies vulnerabilities in PyTorch applications where an attacker can manipulate server-side requests to access internal or external resources that the application shouldn’t be able to reach. By exploiting SSRF, attackers can send crafted requests to internal services, leading to information leakage, unauthorized access to internal systems, or triggering unintended actions. To mitigate this, it is crucial to validate and sanitize user inputs, restrict outgoing requests, and implement strong network segmentation."
+  details:  "The PyTorch Server-Side Request Forgery (SSRF) Test checks for flaws in the way a PyTorch application handles HTTP requests from the server side. In an SSRF attack, attackers manipulate input parameters to force the server to make requests to internal services, other systems, or external resources, potentially bypassing network restrictions. This can result in the exposure of sensitive internal data, the exploitation of vulnerabilities in other services, or unauthorized access to internal systems. To protect against SSRF, input validation and proper request whitelisting are essential to prevent malicious requests from being processed."
+  impact: "The impact of a PyTorch Server-Side Request Forgery (SSRF) vulnerability can be severe, as it enables attackers to make unauthorized requests to internal systems or external resources from the server. This could lead to the exposure of sensitive information, such as internal API endpoints or databases, and allow attackers to exploit other services within the network. Furthermore, SSRF can be used to trigger denial-of-service (DoS) attacks, access internal metadata, or escalate privileges, resulting in a serious security breach. Proper input validation and strict access controls are crucial to mitigate these risks."
+  category:
+    name: SSRF
+    shortName: Server Side Request Forgery
+    displayName: Server Side Request Forgery (SSRF)
+  subCategory: PYTORCH_SSRF
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa7-server-side-request-forgery.md"
+    - "https://www.akto.io/blog/how-to-prevent-server-side-request-forgery-ssrf-as-a-developer"
+    - "https://www.cobalt.io/blog/from-ssrf-to-port-scanner"
+  cwe:
+    - CWE-918
+  cve:
+    - CVE-2021-28169
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+execute:
+  type: single
+  requests:
+    - req:
+      - send_ssrf_req:
+          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+      - modify_method: POST
+      - modify_url: "/models?url=https://test-services.akto.io/${random_uuid}"
+      - replace_body: '{}'
+      - modify_header:
+          content-type: "application/x-www-form-urlencoded"
+
+
+validate:
+  response_code:
+    eq: 200
+  ssrf_url_hit: ${random_uuid}
+  response_headers:
+    for_one:
+      key:  
+        eq: "content-type"
+      value:
+        eq: "application/json"

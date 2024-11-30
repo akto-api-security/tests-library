@@ -1,0 +1,51 @@
+id: OAUTH2_DETECT
+info:
+  name: "OAuth 2.0 Authorization Server Detection Test"
+  description: "The OAuth 2.0 Authorization Server Detection Test involves identifying whether an application or service is using OAuth 2.0 for authorization. This test checks for the presence of OAuth 2.0 endpoints, such as `/authorize` and `/token`, and verifies if the server is handling authentication and authorization via the OAuth 2.0 protocol. Detecting these endpoints helps assess the security of the authorization flow and identify potential weaknesses, such as improper configurations or the use of outdated OAuth versions."
+  details:  "The OAuth 2.0 Authorization Server Detection Test focuses on identifying OAuth 2.0 authorization endpoints within an application, such as `/authorize`, `/token`, or `/revoke`. These endpoints are used for handling user authentication and generating access tokens for secure API access. The test may involve sending requests to common OAuth 2.0 paths or inspecting the application's HTTP responses for OAuth-related parameters. Properly identifying these endpoints is crucial for assessing the implementation of OAuth 2.0, ensuring the system adheres to security best practices, and avoiding vulnerabilities like insecure token storage or improper client validation."
+  impact: "The impact of OAuth 2.0 Authorization Server Detection can be significant if insecure or improperly configured endpoints are discovered. Attackers could exploit vulnerabilities in the authorization flow, such as intercepting tokens, performing token leakage, or bypassing authentication mechanisms. Inadequate OAuth implementation can lead to unauthorized access to sensitive resources, data breaches, or privilege escalation. Proper configuration, secure token storage, and implementation of best practices are crucial to prevent exploitation of detected OAuth endpoints."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: OAUTH2_DETECT
+  severity: LOW
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-213
+  cve:
+    - CVE-2018-10245
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+wordLists:
+  paths:
+    - '/oauth/token'
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "${paths}"
+      - modify_method: POST
+      - replace_body: 'grant_type=authorization_code&client_id=xxx&redirect_uri=https%3A%2F%2Fakto.io&code=xxx&client_secret=xxx'
+validate:
+  response_code:
+    gte: 400
+    lte: 401
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - 'error":"invalid_client"'
+strategy:
+  run_once: /

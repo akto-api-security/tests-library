@@ -1,0 +1,51 @@
+id: FASTIFY_SWAGGER_EXPOSURE
+info:
+  name: "Fastify Swagger UI Exposure Test"
+  description: "The Fastify Swagger UI Exposure Test checks for vulnerabilities where the Swagger UI, used for API documentation in Fastify applications, is publicly exposed without proper access controls. If exposed, this UI could reveal sensitive API endpoints, internal application details, or authentication mechanisms, which could be exploited by attackers. Unauthorized access to this documentation may lead to information disclosure or assist attackers in crafting targeted attacks. To mitigate this risk, Fastify applications should restrict access to the Swagger UI, ensuring it’s only available to trusted users or environments."
+  details:  "The Fastify Swagger UI Exposure Test evaluates whether the Swagger UI, a tool used to visualize and interact with Fastify APIs, is accessible without proper authentication or access controls. If misconfigured, the Swagger UI could be publicly exposed, revealing detailed information about API endpoints, request/response structures, and potentially sensitive metadata. Attackers could use this information to understand the application's behavior and discover vulnerabilities. To prevent this, the Swagger UI should be secured through IP whitelisting, authentication, or restricted to development and trusted environments only."
+  impact: "The impact of Fastify Swagger UI Exposure is significant, as it could expose sensitive API documentation and internal application details to unauthorized users. Attackers could use this information to identify potential vulnerabilities, craft targeted attacks, or bypass authentication mechanisms. Additionally, exposed API endpoints may facilitate further exploitation, such as unauthorized access to data or services. Securing the Swagger UI is essential to prevent these risks and protect the application from information disclosure and potential attacks."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: FASTIFY_SWAGGER_EXPOSURE
+  severity: LOW
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-213
+  cve:
+    - CVE-2018-10245
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+wordLists:
+  paths:
+    - '/documentation/playwright.config.js'
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "${paths}"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "module.exports"
+      - "defineConfig"
+strategy:
+  run_once: /
