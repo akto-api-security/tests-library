@@ -73,7 +73,7 @@ execute:
         - send_ssrf_req:
             url: "https://test-services.akto.io/store_uuid/${random_uuid}"
         - modify_query_param:
-            stateKey: "maliciousToken123%26redirect_uri%3Dhttps%3A%2F%2Ftest-services.akto.io%2Fstore_uuid%2F%24%7Brandom_uuid%7D"
+            stateKey: "maliciousToken123%26redirect_uri%3Dhttps%3A%2F%2Ftest-services.akto.io%2F%24%7Brandom_uuid%7D"
 validate:
   response_code:
     eq: 302

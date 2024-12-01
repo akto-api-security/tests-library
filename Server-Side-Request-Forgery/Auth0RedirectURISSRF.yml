@@ -75,7 +75,7 @@ execute:
         - send_ssrf_req:
             url: "https://test-services.akto.io/store_uuid/${random_uuid}"
         - modify_query_param:
-            ${redirectURIKey}: "https://test-services.akto.io/store_uuid/${random_uuid}"
+            ${redirectURIKey}: "https://test-services.akto.io/${random_uuid}"
 validate:
   response_code:
     eq: 302
