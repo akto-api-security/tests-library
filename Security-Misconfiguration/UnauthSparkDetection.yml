@@ -1,0 +1,51 @@
+id: UNAUTH_SPARK_DETECT
+info:
+  name: "Unauthenticated Spark REST API Detection Test"
+  description: "The Unauthenticated Spark REST API Detection Test checks if the Apache Spark REST API is exposed without proper authentication mechanisms in place. Spark's REST API provides access to various cluster management and job execution functionalities, and if left unauthenticated, attackers could potentially manipulate jobs, access sensitive data, or disrupt the cluster. This test looks for publicly accessible endpoints that lack authentication controls, making the system vulnerable to unauthorized access and malicious activities. Securing access with proper authentication and authorization is crucial to prevent exploitation."
+  details:  "The Unauthenticated Spark REST API Detection Test focuses on identifying whether the Apache Spark REST API endpoints are exposed without adequate authentication. The REST API in Apache Spark allows users to interact with the Spark cluster, submit jobs, monitor status, and retrieve data. If these endpoints are accessible without proper authentication, attackers can potentially submit unauthorized jobs, access sensitive data, or disrupt cluster operations. To secure the API, it is critical to implement proper authentication mechanisms, such as API keys or OAuth, and limit access based on trusted sources."
+  impact: "The impact of an Unauthenticated Spark REST API vulnerability can be severe, as it allows unauthorized users to interact with the Spark cluster. Attackers could submit malicious jobs, retrieve sensitive data, or disrupt the operation of the cluster, potentially causing data loss or performance degradation. This could also lead to unauthorized access to critical information or system configurations. Implementing proper authentication and access controls is essential to protect the Spark API from exploitation and ensure the integrity and security of the system."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: UNAUTH_SPARK_DETECT
+  severity: LOW
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-213
+  cve:
+    - CVE-2018-10245
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+wordLists:
+  paths:
+    - '/v1/submissions'
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_url: "${paths}"
+      - modify_method: GET
+      - replace_body: '{}'
+validate:
+  response_code:
+    eq: 400
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "Missing an action"
+      - "serverSparkVersion"
+strategy:
+  run_once: /
