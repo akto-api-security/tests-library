@@ -47,6 +47,7 @@ execute:
     - success: x2
     - failure: exit
   - req:
+    - modify_method: ${attemptValues}
     - add_header:
         X-HTTP-Method-Override: ${attemptValues}
     - validate:

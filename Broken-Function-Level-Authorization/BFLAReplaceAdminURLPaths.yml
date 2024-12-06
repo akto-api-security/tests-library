@@ -1,28 +1,14 @@
 id: BFLA_REPLACE_ADMIN_IN_URL_PATHS
 info:
-  name: "Broken Function Level Authorization - Vertical Privilege Escalation test 
-  by replacing URL subpaths with admin keyword for new URL path identification"
+  name: "Broken Function Level Authorization - Vertical Privilege Escalation test by replacing URL subpaths with admin keyword for new URL path identification"
   description: > 
-    "In this test, attackers manipulate URL paths by replacing URL subpaths 
-    with "admin" keywords to access privileged functionalities. This tactic 
-    aims to bypass access controls and gain unauthorized entry to 
-    administrative features or sensitive data. By exploiting this 
+    "In this test, attackers manipulate URL paths by replacing URL subpaths with "admin" keywords to access privileged functionalities. This tactic aims to bypass access controls and gain unauthorized entry to administrative features or sensitive data. By exploiting this 
     vulnerability, attackers can escalate their privileges within the 
     system and potentially compromise its security."
   details: >
-    In this test, attackers exploit weaknesses in function level authorization by 
-    replacing URL subpaths with keywords like "admin" to access privileged 
-    functionalities. By replacing specific subpaths, they attempt to 
-    bypass access controls and gain unauthorized entry to administrative 
-    features or sensitive areas of the application. This tactic aims to 
-    escalate privileges within the system, potentially compromising its 
-    security and allowing for unauthorized access to critical resources."
+    In this test, attackers exploit weaknesses in function level authorization by replacing URL subpaths with keywords like "admin" to access privileged functionalities. By replacing specific subpaths, they attempt to bypass access controls and gain unauthorized entry to administrative features or sensitive areas of the application. This tactic aims to escalate privileges within the system, potentially compromising its security and allowing for unauthorized access to critical resources."
   impact: >
-    "The impact of this test can be significant. Attackers can exploit this 
-    vulnerability to gain unauthorized access to privileged functionalities, 
-    leading to data breaches, system compromise, and unauthorized actions. 
-    This can result in the exposure of sensitive information, compromise of 
-    user accounts, and damage to the organization's reputation and trust."
+    "The impact of this test can be significant. Attackers can exploit this vulnerability to gain unauthorized access to privileged functionalities, leading to data breaches, system compromise, and unauthorized actions. This can result in the exposure of sensitive information, compromise of user accounts, and damage to the organization's reputation and trust."
 
   category:
     name: BFLA
@@ -112,3 +98,6 @@ validate:
       lt: 10
     percentage_match_schema:
       gte: 90
+    not_contains:
+      - <html>
+      - </html>
