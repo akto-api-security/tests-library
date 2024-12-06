@@ -45,18 +45,20 @@ auth:
   authenticated: true
 api_selection_filters:
   or: 
-  - response_code:
-      gte: 200
-      lt: 300
-      neq: 204
-    response_payload:
-      length:
-        gt: 0
-  - response_code:
-      eq: 204
-    response_payload:
-      length:
-        eq: 0
+  - and:
+    - response_code:
+        gte: 200
+        lt: 300
+        neq: 204
+    - response_payload:
+        length:
+          gt: 0
+  - and: 
+    - response_code:
+        eq: 204
+    - response_payload:
+        length:
+          eq: 0
   method:
     neq: "OPTIONS"
 
@@ -109,18 +111,20 @@ execute:
             replace_with: "admin"
 validate:
   or: 
-  - response_code:
-      gte: 200
-      lt: 300
-      neq: 204
-    response_payload:
-      length:
-        gt: 0
-  - response_code:
-      eq: 204
-    response_payload:
-      length:
-        eq: 0
+  - and:
+    - response_code:
+        gte: 200
+        lt: 300
+        neq: 204
+    - response_payload:
+        length:
+          gt: 0
+  - and: 
+    - response_code:
+        eq: 204
+    - response_payload:
+        length:
+          eq: 0
   url:
     endpoint_in_traffic_context: false 
   response_payload:

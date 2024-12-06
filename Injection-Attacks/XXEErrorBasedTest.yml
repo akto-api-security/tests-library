@@ -119,7 +119,7 @@ validate:
           - CloudFlare
           - Sorry, you have been blocked
           - "Invalid access"
-      and: 
+    - and: 
         - response_payload:
             regex: "(cannot|could not|unable to|no such|failed to)"
         - response_payload:
