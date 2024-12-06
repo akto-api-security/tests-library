@@ -83,10 +83,10 @@ execute:
         - validate:
             or:
               - and:
-                  response_payload:
+                - response_payload:
                     length:
                       gt: 0
-                  response_code:
+                - response_code:
                     gte: 400
                     lt: 410
               - response_payload:

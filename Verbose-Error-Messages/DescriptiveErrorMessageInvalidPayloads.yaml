@@ -50,35 +50,35 @@ execute:
 validate:
   or:
       - response_payload: # Javascript / Node.js errors
-          - contains_either:
-              - "TypeError: Cannot"
-              - "SyntaxError: Unexpected"
-              - "ReferenceError:"
+          contains_either:
+            - "TypeError: Cannot"
+            - "SyntaxError: Unexpected"
+            - "ReferenceError:"
       - response_payload: # Python errors
-          - contains_either:
-              - "ValueError: invalid"
-              - "TypeError: unsupported"
-              - "KeyError: "
+          contains_either:
+            - "ValueError: invalid"
+            - "TypeError: unsupported"
+            - "KeyError: "
       - response_payload: # Java errors
-          - contains_either:
-              - "java.lang.NullPointerException"
-              - "java.lang.ArrayIndexOutOfBoundsException"
-              - "java.lang.IllegalArgumentException"
+          contains_either:
+            - "java.lang.NullPointerException"
+            - "java.lang.ArrayIndexOutOfBoundsException"
+            - "java.lang.IllegalArgumentException"
       - response_payload: # C# errors
-          - contains_either:
-              - "System.NullReferenceException"
-              - "System.IndexOutOfRangeException"
-              - "System.InvalidOperationException"
+          contains_either:
+            - "System.NullReferenceException"
+            - "System.IndexOutOfRangeException"
+            - "System.InvalidOperationException"
       - response_payload: # PHP errors
-          - contains_either:
-              - "Fatal error: Call"
-              - "Parse error: syntax error"
-              - "Exception: "
+          contains_either:
+            - "Fatal error: Call"
+            - "Parse error: syntax error"
+            - "Exception: "
       - response_payload: # Ruby errors
-          - contains_either:
-              - "RuntimeError: "
-              - "NoMethodError: "
-              - "ArgumentError: "
+          contains_either:
+            - "RuntimeError: "
+            - "NoMethodError: "
+            - "ArgumentError: "
       - response_payload: # Go errors
-          - contains_either:
-              - "panic: runtime error"
+          contains_either:
+            - "panic: runtime error"
