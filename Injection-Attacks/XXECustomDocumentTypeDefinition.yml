@@ -2,14 +2,11 @@ id: XXE_CUSTOM_DOCUMENT_TYPE_DEFINITION
 info:
   name: "XML External Entity (XXE) Vulnerability test with Custom Document Type Definition in API Endpoints"
   description: >
-    "This test can be used to focus on detecting XXE risks in API endpoints arising from the 
-    use of user-defined Document Type Definitions."
+    "This test can be used to focus on detecting XXE risks in API endpoints arising from the  use of user-defined Document Type Definitions."
   details: >
-    "This test methodically evaluates the handling of custom Document Type Definitions 
-    in APIs to uncover potential XML External Entity vulnerabilities."
+    "This test methodically evaluates the handling of custom Document Type Definitions  in APIs to uncover potential XML External Entity vulnerabilities."
   impact: >
-    "Exploiting XXE vulnerabilities via custom DTDs in APIs can lead to severe data leakage, 
-    unauthorized system access, and compromise of application integrity and confidentiality."
+    "Exploiting XXE vulnerabilities via custom DTDs in APIs can lead to severe data leakage,  unauthorized system access, and compromise of application integrity and confidentiality."
   category:
     name: INJECT
     shortName: Injection Attacks
@@ -31,6 +28,8 @@ info:
     - CVE-2022-42745
 
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -40,7 +39,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -85,7 +84,7 @@ execute:
   type: single
   requests:
     - req:
-        - replace_body:  ${payloads}
+        - replace_body: ${payloads}
         - modify_header:
             ${headerKey}: "application/xml"
 validate:
@@ -101,7 +100,7 @@ validate:
       - "Failed to load external entity"
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

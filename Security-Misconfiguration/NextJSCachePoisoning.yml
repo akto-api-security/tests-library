@@ -2,7 +2,7 @@ id: NEXT_JS_CACHE_POISONING
 info:
   name: "Next.JS Cache Poisoning"
   description: "Next.js Cache Poisoning refers to an attack where malicious actors exploit vulnerabilities in the caching mechanisms of a Next.js application. By injecting or manipulating untrusted data, attackers can serve malicious or incorrect responses to other users. Common vectors include unvalidated query parameters, headers, or cookies, leading to potential security issues like leaking sensitive data or serving unauthorized content. Proper cache configuration and validation mechanisms are crucial to mitigate this risk."
-  details:  "Next.js Cache Poisoning occurs when attackers manipulate the cache key or stored data in a Next.js application to serve malicious or unintended responses to users. This can happen if caching is improperly configured, allowing inputs like headers, cookies, or query parameters to alter the cached content. It can lead to unauthorized access, data leaks, or compromised functionality. Mitigation involves validating inputs, normalizing cache keys, and implementing strict caching policies."
+  details: "Next.js Cache Poisoning occurs when attackers manipulate the cache key or stored data in a Next.js application to serve malicious or unintended responses to users. This can happen if caching is improperly configured, allowing inputs like headers, cookies, or query parameters to alter the cached content. It can lead to unauthorized access, data leaks, or compromised functionality. Mitigation involves validating inputs, normalizing cache keys, and implementing strict caching policies."
   impact: "The impact of Next.js Cache Poisoning can be significant, including serving malicious content to users, leaking sensitive or private data, and bypassing authentication or authorization controls. It may disrupt user experience, compromise application integrity, and expose vulnerabilities that attackers can exploit further. These issues can lead to reputational damage, user trust loss, and potential legal or compliance consequences."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2021-43798
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -31,30 +33,30 @@ execute:
   type: multiple
   requests:
     - req:
-      - modify_url: "/?cb=abcd1"
-      - modify_header:
-          priority: "u=1"
-      - modify_method: GET
-      - replace_body: '{}'
-      - add_header:
-          x-invoke-status: 888
-      - validate:
-          response_code:
+        - modify_url: "/?cb=abcd1"
+        - modify_header:
+            priority: "u=1"
+        - modify_method: GET
+        - replace_body: '{}'
+        - add_header:
+            x-invoke-status: 888
+        - validate:
+            response_code:
               eq: 888
-          response_payload:
+            response_payload:
               contains_either: '/_error'
-      - success: x2
-      - failure: exit
+        - success: x2
+        - failure: exit
     - req:
-      - modify_url: "/?cb=abcd1"
-      - modify_method: GET
-      - replace_body: '{}'
-      - validate:
-          response_code:
+        - modify_url: "/?cb=abcd1"
+        - modify_method: GET
+        - replace_body: '{}'
+        - validate:
+            response_code:
               eq: 888
-          response_payload:
+            response_payload:
               contains_either: '/_error'
-      - success: vulnerable
-      - failure: exit
+        - success: vulnerable
+        - failure: exit
 strategy:
   run_once: /

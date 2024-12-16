@@ -3,7 +3,7 @@ info:
   name: CGI script environment variable
   description: "A test CGI script on the server leaks a list of server environment variables in the response page."
   details: >
-              "CGI Script Environment Variable refers to a vulnerability where a test CGI script on the server unintentionally exposes a list of server environment variables in its response page. These variables may include sensitive information like database paths, SSL configuration, remote IP addresses, and server administrator details. The leakage of such information can provide attackers with valuable insights into the server's configuration, potentially aiding them in planning targeted attacks. Addressing this misconfiguration promptly is crucial to prevent unauthorized access and protect the confidentiality of sensitive information."
+    "CGI Script Environment Variable refers to a vulnerability where a test CGI script on the server unintentionally exposes a list of server environment variables in its response page. These variables may include sensitive information like database paths, SSL configuration, remote IP addresses, and server administrator details. The leakage of such information can provide attackers with valuable insights into the server's configuration, potentially aiding them in planning targeted attacks. Addressing this misconfiguration promptly is crucial to prevent unauthorized access and protect the confidentiality of sensitive information."
   impact: "Exposing server environment variables through the CGI script increases the risk of targeted attacks, unauthorized access, and compromise of sensitive data and system integrity."
   category:
     name: SM
@@ -19,6 +19,8 @@ info:
   cve:
     - CVE-2023-22897
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -27,12 +29,12 @@ api_selection_filters:
     lt: 300
   url:
     extract: urlVar
-  
+
 execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}/cgi-bin/printenv.pl
+        - modify_url: ${urlVar}/cgi-bin/printenv.pl
 
 validate:
   response_code:

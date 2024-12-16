@@ -1,7 +1,7 @@
 id: DRUPAL_RCE
 info:
   name: "Drupal Remote Code Execution"
-  description: "Drupal Remote Code Execution (RCE) vulnerabilities occur when flaws in the Drupal content management system allow attackers to execute arbitrary code on a server remotely. These vulnerabilities typically arise from improper input validation, misconfigurations, or outdated modules. By exploiting RCE flaws, attackers can gain unauthorized access, manipulate content, or take full control of the affected site. Regular updates and security best practices are essential to mitigate the risk of RCE in Drupal installations." 
+  description: "Drupal Remote Code Execution (RCE) vulnerabilities occur when flaws in the Drupal content management system allow attackers to execute arbitrary code on a server remotely. These vulnerabilities typically arise from improper input validation, misconfigurations, or outdated modules. By exploiting RCE flaws, attackers can gain unauthorized access, manipulate content, or take full control of the affected site. Regular updates and security best practices are essential to mitigate the risk of RCE in Drupal installations."
   details: "Drupal Remote Code Execution (RCE) vulnerabilities are often linked to specific flaws in Drupal core or contributed modules that fail to adequately sanitize user inputs or handle requests securely. Attackers can exploit these vulnerabilities by sending specially crafted requests, leading to the execution of arbitrary code on the server. This can allow them to install backdoors, steal sensitive data, or manipulate site content. To prevent RCE attacks, it's crucial to keep Drupal and its modules up to date, apply security patches promptly, and follow best practices for secure configuration."
   impact: "The impact of Drupal Remote Code Execution (RCE) vulnerabilities can be devastating, allowing attackers to execute arbitrary code and potentially gain full control over the affected server. This can lead to unauthorized access to sensitive user data, manipulation or deletion of website content, and the installation of malware or backdoors. Additionally, an RCE exploit can compromise the integrity and availability of the entire Drupal site, resulting in reputational damage, loss of user trust, and significant financial and legal repercussions for the organization."
   category:
@@ -19,6 +19,8 @@ info:
   cve:
     - CVE-2019-6340
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_payload:
     length:

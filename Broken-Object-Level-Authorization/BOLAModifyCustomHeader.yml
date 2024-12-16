@@ -1,34 +1,19 @@
 id: BOLA_MODIFY_CUSTOM_HEADER
 info:
   name: "Exploiting BOLA by fuzzing Custom Header for Unauthorized Access."
-  description: > 
-    "Attackers exploit Broken Object Level Authorization (BOLA) by employing header fuzzing 
-    techniques, systematically testing variations to gain unauthorized access. This method 
-    highlights vulnerabilities in the system's authorization mechanisms, underscoring the 
-    importance of robust security assessments, secure header handling, and comprehensive 
-    testing to mitigate the risks associated with unauthorized access and BOLA vulnerabilities 
-    introduced through custom header manipulation."
+  description: >
+    "Attackers exploit Broken Object Level Authorization (BOLA) by employing header fuzzing  techniques, systematically testing variations to gain unauthorized access. This method  highlights vulnerabilities in the system's authorization mechanisms, underscoring the  importance of robust security assessments, secure header handling, and comprehensive  testing to mitigate the risks associated with unauthorized access and BOLA vulnerabilities  introduced through custom header manipulation."
   details: >
-    "Attackers exploit Broken Object Level Authorization (BOLA) by fuzzing custom headers, 
-    systematically testing variations to gain unauthorized access. This method exposes 
-    vulnerabilities in the system's authorization mechanisms, highlighting the crucial need 
-    for robust security assessments and secure header handling to mitigate the risks associated 
-    with unauthorized access and BOLA vulnerabilities introduced through custom header fuzzing."
+    "Attackers exploit Broken Object Level Authorization (BOLA) by fuzzing custom headers,  systematically testing variations to gain unauthorized access. This method exposes  vulnerabilities in the system's authorization mechanisms, highlighting the crucial need  for robust security assessments and secure header handling to mitigate the risks associated  with unauthorized access and BOLA vulnerabilities introduced through custom header fuzzing."
   impact: >
-    "The impact of exploiting Broken Object Level Authorization through custom header fuzzing can 
-    be significant. Successful manipulation may lead to unauthorized access, potentially 
-    compromising sensitive data and enabling malicious actions within the system. This 
-    method underscores the critical importance of implementing stringent security measures, 
-    including robust access controls, secure header handling, and thorough testing, to 
-    prevent unauthorized access and mitigate the risks associated with Broken Object 
-    Level Authorization vulnerabilities introduced through custom header fuzzing."
+    "The impact of exploiting Broken Object Level Authorization through custom header fuzzing can  be significant. Successful manipulation may lead to unauthorized access, potentially  compromising sensitive data and enabling malicious actions within the system. This  method underscores the critical importance of implementing stringent security measures,  including robust access controls, secure header handling, and thorough testing, to  prevent unauthorized access and mitigate the risks associated with Broken Object  Level Authorization vulnerabilities introduced through custom header fuzzing."
   category:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: BOLA_MODIFY_CUSTOM_HEADER
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -45,6 +30,8 @@ info:
     - CWE-639
   cve:
     - CVE-2022-34770
+settings:
+  nature: NON-INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -58,7 +45,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -98,15 +85,15 @@ api_selection_filters:
 wordLists:
   specialHeaders:
     source: sample_data
-    key: 
+    key:
       regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|username|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
     all_apis: true
 execute:
   type: single
   requests:
-  - req:
-    - modify_header:
-         headerValue: "${specialHeaders}"  
+    - req:
+        - modify_header:
+            headerValue: "${specialHeaders}"
 validate:
   response_code:
     gte: 200
@@ -120,7 +107,7 @@ validate:
       gte: 90
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

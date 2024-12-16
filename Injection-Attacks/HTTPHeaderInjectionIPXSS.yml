@@ -1,7 +1,7 @@
 id: HTTP_HEADER_IP_INJECTION_XSS
 info:
   name: "XSS in HTTP headers containing IP address"
-  description: > 
+  description: >
     "This test involves exploiting a Cross-Site Scripting (XSS) vulnerability by injecting malicious scripts into HTTP headers like `X-Forwarded-For` or `X-Real-IP`. When these headers are reflected or processed by web applications, the injected scripts can execute in the context of the user's browser. This can lead to unauthorized data access, session hijacking, or other malicious activities targeting users interacting with the compromised application."
   details: >
     "In this vulnerability, attackers inject malicious JavaScript into HTTP headers that include IP address fields, such as `X-Forwarded-For`. When the application reflects or processes these headers without proper sanitization, the malicious script can execute in the user's browser. This can lead to a range of attacks, including stealing cookies, capturing sensitive information, or manipulating the user experience. Proper validation and sanitization of header inputs are crucial to prevent such exploits."
@@ -28,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -83,10 +85,10 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - modify_header:
-        userKey: ${XSSPayloads}
-        
+    - req:
+        - modify_header:
+            userKey: ${XSSPayloads}
+
 validate:
   or:
     - response_payload:
@@ -96,7 +98,7 @@ validate:
           gte: 90
         not_contains:
           - Error
-          - Internal Server 
+          - Internal Server
           - Failed
           - Unauthorized
           - access denied

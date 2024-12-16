@@ -20,12 +20,16 @@ info:
   references:
     - "https://github.com/leondz/garak/blob/main/garak/probes/encoding.py"
     - "https://github.com/leondz/garak/blob/main/garak/detectors/encoding.py"
+  cve:
+    - "CVE-2024-22422"
+settings:
+  nature: NON-INTRUSIVE
 inactive: true
 api_selection_filters:
   response_code:
     gte: 200
     lt: 300
-  method: 
+  method:
     eq: GET
   query_param:
     for_one:

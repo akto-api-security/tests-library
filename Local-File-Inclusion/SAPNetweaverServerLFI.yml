@@ -2,7 +2,7 @@ id: SAP_NETWEAVER_SERVER_LFI
 info:
   name: "SAP NetWeaver Application Server Java Local File Inclusion Test"
   description: "The SAP NetWeaver Application Server Java Local File Inclusion (LFI) Test involves identifying vulnerabilities in the SAP NetWeaver Java-based application server that may allow attackers to include local files on the server. LFI vulnerabilities occur when user input is improperly handled, enabling an attacker to manipulate file paths and access sensitive files on the server. If exploited, this can lead to information disclosure, server configuration exposure, or code execution. Ensuring proper input validation and restricting file access are key to mitigating such risks."
-  details:  "The SAP NetWeaver Application Server Java Local File Inclusion (LFI) Test checks for weaknesses in the way the SAP NetWeaver platform handles user inputs related to file paths. If the application improperly sanitizes or validates input, an attacker can manipulate the file path to include sensitive files, such as configuration files or log files, from the local server. This can expose sensitive information, such as credentials or system settings, and potentially lead to further attacks. Securing file inclusion mechanisms and validating user inputs can prevent LFI vulnerabilities."
+  details: "The SAP NetWeaver Application Server Java Local File Inclusion (LFI) Test checks for weaknesses in the way the SAP NetWeaver platform handles user inputs related to file paths. If the application improperly sanitizes or validates input, an attacker can manipulate the file path to include sensitive files, such as configuration files or log files, from the local server. This can expose sensitive information, such as credentials or system settings, and potentially lead to further attacks. Securing file inclusion mechanisms and validating user inputs can prevent LFI vulnerabilities."
   impact: "The impact of a SAP NetWeaver Application Server Java Local File Inclusion (LFI) vulnerability can be serious, as it may allow attackers to access sensitive files on the server, such as configuration files, logs, or even application source code. This exposure can lead to information disclosure, potentially revealing credentials, system settings, or vulnerabilities. If exploited, it could provide a stepping stone for further attacks, including privilege escalation or code execution. Proper input validation and access restrictions are essential to mitigate such risks."
   category:
     name: LFI
@@ -25,6 +25,8 @@ info:
     - CVE-2023-22973
 
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -41,9 +43,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

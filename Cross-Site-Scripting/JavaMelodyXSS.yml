@@ -2,7 +2,7 @@ id: JAVAMELODY_XSS
 info:
   name: "JavaMelody Cross-Site Scripting Vulnerability"
   description: "JavaMelody Cross-Site Scripting (XSS) Vulnerability refers to a security flaw where malicious scripts can be injected into the JavaMelody monitoring interface. This occurs if the application improperly sanitizes user inputs displayed on the dashboard. Exploiting this vulnerability allows attackers to execute scripts in a victim's browser, potentially leading to data theft or session hijacking. Patching and input validation are essential to mitigate this risk."
-  details:  "A JavaMelody Cross-Site Scripting (XSS) Vulnerability arises when JavaMelody's monitoring interface fails to sanitize or escape user-supplied input properly. Attackers can exploit this by injecting malicious scripts into parameters or logs displayed on the interface. When an admin or user views the compromised page, the injected script executes in their browser, potentially exposing sensitive data or allowing session hijacking. Such vulnerabilities highlight the importance of applying security patches and implementing proper input sanitization."
+  details: "A JavaMelody Cross-Site Scripting (XSS) Vulnerability arises when JavaMelody's monitoring interface fails to sanitize or escape user-supplied input properly. Attackers can exploit this by injecting malicious scripts into parameters or logs displayed on the interface. When an admin or user views the compromised page, the injected script executes in their browser, potentially exposing sensitive data or allowing session hijacking. Such vulnerabilities highlight the importance of applying security patches and implementing proper input sanitization."
   impact: "The impact of a JavaMelody Cross-Site Scripting (XSS) Vulnerability can be significant, as it allows attackers to execute malicious scripts in the browser of an admin or user viewing the monitoring dashboard. This can lead to theft of sensitive data, session hijacking, or unauthorized actions within the application. In environments with critical monitoring setups, such an exploit can compromise the integrity of application performance data and overall system security."
   category:
     name: XSS
@@ -20,6 +20,8 @@ info:
 
 
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -36,9 +38,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

@@ -2,7 +2,7 @@ id: APACHE_PATH_TRAVERSAL_RCE
 info:
   name: "Apache Path Traversal and Remote Code Execution"
   description: "This vulnerability allows attackers to exploit improper path handling in Apache servers. By leveraging directory traversal techniques, attackers can access restricted directories and potentially execute arbitrary code on the affected system. This vulnerability is critical as it exposes sensitive files and grants unauthorized control over the server, leading to severe security breaches. Proper patching and configuration are necessary to prevent exploitation."
-  details:  "This vulnerability arises when an attacker manipulates file paths to bypass security controls and access unintended directories or files. This can occur due to improper validation of user-supplied input in requests. By crafting specific directory traversal payloads, attackers can gain access to restricted system files and, in some cases, execute arbitrary code. Affected versions of Apache must be patched to prevent unauthorized access."
+  details: "This vulnerability arises when an attacker manipulates file paths to bypass security controls and access unintended directories or files. This can occur due to improper validation of user-supplied input in requests. By crafting specific directory traversal payloads, attackers can gain access to restricted system files and, in some cases, execute arbitrary code. Affected versions of Apache must be patched to prevent unauthorized access."
   impact: "The impact of this vulnerability is severe. An attacker could exploit it to gain unauthorized access to sensitive files, including configuration files, passwords, or other critical data. Additionally, in certain cases, the vulnerability may allow the execution of arbitrary code, potentially leading to complete system compromise, data breaches, or further attacks within the network. This poses a significant risk to system integrity and confidentiality."
   category:
     name: COMMAND_INJECTION
@@ -17,6 +17,8 @@ info:
   cve:
     - CVE-2021-41773
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -43,18 +45,18 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${pathtests}"
-      - modify_method: GET
-      - replace_body: 'echo Content-Type: text/plain; echo; echo COP-37714-1202-EVC | rev'
-      - modify_header:
-          content-type: "application/x-www-form-urlencoded"
+        - modify_url: "${pathtests}"
+        - modify_method: GET
+        - replace_body: 'echo Content-Type: text/plain; echo; echo COP-37714-1202-EVC | rev'
+        - modify_header:
+            content-type: "application/x-www-form-urlencoded"
 validate:
-  or: 
-  - response_payload:
-      contains_either:
-        - CVE-2021-41773-POC
-      not_contains:
-        - <html>
-        - </html>
-  - response_payload:
-      regex: 'root:.*:0:0:'
+  or:
+    - response_payload:
+        contains_either:
+          - CVE-2021-41773-POC
+        not_contains:
+          - <html>
+          - </html>
+    - response_payload:
+        regex: 'root:.*:0:0:'

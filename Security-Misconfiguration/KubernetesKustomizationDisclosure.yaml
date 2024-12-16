@@ -3,7 +3,7 @@ info:
   name: Kubernetes Kustomization Disclosure
   description: "Search for the presence of Kubernetes Kustomization files (kustomization.yml) on the provided URLs."
   details: >
-            "Kubernetes Kustomization Disclosure involves searching for the presence of Kubernetes Kustomization files (kustomization.yml) on the provided URLs. These files define customizations for Kubernetes deployments and may contain sensitive configuration information such as API versions, resource definitions, namespaces, and labels. Identifying and addressing this vulnerability is critical to prevent unauthorized access, protect sensitive data, and maintain the integrity of Kubernetes deployments."
+    "Kubernetes Kustomization Disclosure involves searching for the presence of Kubernetes Kustomization files (kustomization.yml) on the provided URLs. These files define customizations for Kubernetes deployments and may contain sensitive configuration information such as API versions, resource definitions, namespaces, and labels. Identifying and addressing this vulnerability is critical to prevent unauthorized access, protect sensitive data, and maintain the integrity of Kubernetes deployments."
   impact: "Exposing Kubernetes Kustomization files reveals sensitive configuration details, enabling attackers to gain insights into the deployment structure and potentially launch unauthorized access, data leaks, or further attacks."
   category:
     name: SM
@@ -20,6 +20,8 @@ info:
   cve:
     - CVE-2021-41254
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -33,8 +35,8 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}/kustomization.yml
-      
+        - modify_url: ${urlVar}/kustomization.yml
+
 validate:
   response_code:
     eq: 200

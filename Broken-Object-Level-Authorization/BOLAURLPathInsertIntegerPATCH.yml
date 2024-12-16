@@ -1,9 +1,8 @@
 id: BOLA_URL_INSERT_INTEGER_ID_PATCH
 info:
   name: "Exploiting BOLA by inserting Integer IDs in URL path for Unauthorized Access with PUT/PATCH based APIs"
-  description: > 
-    "This test involves assessing the security of a system's Object Level Authorization by attempting to exploit it through the manipulation of Integer IDs in the URL path (for PUT/PATCH Based APIs). In this scenario, attackers attempt to gain unauthorized access by inserting 
-    specific Integer IDs, bypassing proper authorization mechanisms. This test aims to identify vulnerabilities in the system's ability to enforce proper access controls, potentially exposing sensitive data or functionalities to unauthorized users."
+  description: >
+    "This test involves assessing the security of a system's Object Level Authorization by attempting to exploit it through the manipulation of Integer IDs in the URL path (for PUT/PATCH Based APIs). In this scenario, attackers attempt to gain unauthorized access by inserting  specific Integer IDs, bypassing proper authorization mechanisms. This test aims to identify vulnerabilities in the system's ability to enforce proper access controls, potentially exposing sensitive data or functionalities to unauthorized users."
   details: >
     "In this test, attackers exploit security weaknesses by manipulating Integer IDs within the URL path to gain unauthorized access (for PUT/PATCH Based APIs). By inserting specific Integer values, they attempt to bypass proper authorization controls implemented by the system. This test is crucial for identifying vulnerabilities in Object Level Authorization, which, if left unchecked, could lead to unauthorized users accessing sensitive data or functionalities within the system."
   impact: >
@@ -14,7 +13,7 @@ info:
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: BOLA_URL_INSERT_INTEGER_ID_PATCH
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -32,6 +31,8 @@ info:
   cve:
     - CVE-2022-34770
 
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -47,7 +48,7 @@ api_selection_filters:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -88,50 +89,50 @@ execute:
   type: multiple
   requests:
     - req:
-      - modify_url:
-          token_insert:
-            location: 1
-            replace_with: ${integerIDs}
-      - success: vulnerable
-      - failure: x2
+        - modify_url:
+            token_insert:
+              location: 1
+              replace_with: ${integerIDs}
+        - success: vulnerable
+        - failure: x2
     - req:
-      - modify_url:
-          token_insert:
-            location: 2
-            replace_with: ${integerIDs}
-      - success: vulnerable
-      - failure: x3
+        - modify_url:
+            token_insert:
+              location: 2
+              replace_with: ${integerIDs}
+        - success: vulnerable
+        - failure: x3
     - req:
-      - modify_url:
-          token_insert:
-            location: 3
-            replace_with: ${integerIDs}
-      - success: vulnerable
-      - failure: x4
+        - modify_url:
+            token_insert:
+              location: 3
+              replace_with: ${integerIDs}
+        - success: vulnerable
+        - failure: x4
     - req:
-      - modify_url:
-          token_insert:
-            location: 4
-            replace_with: ${integerIDs}
-      - success: vulnerable
-      - failure: x5
+        - modify_url:
+            token_insert:
+              location: 4
+              replace_with: ${integerIDs}
+        - success: vulnerable
+        - failure: x5
     - req:
-      - modify_url:
-          token_insert:
-            location: 5
-            replace_with: ${integerIDs}
+        - modify_url:
+            token_insert:
+              location: 5
+              replace_with: ${integerIDs}
 validate:
   response_code:
     gte: 200
     lt: 300
   url:
-    endpoint_in_traffic_context: false 
+    endpoint_in_traffic_context: false
   response_payload:
     length:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

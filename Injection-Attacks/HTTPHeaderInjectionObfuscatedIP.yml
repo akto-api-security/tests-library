@@ -1,7 +1,7 @@
 id: HTTP_HEADER_IP_INJECTION_OBFUSCATED_IP
 info:
   name: "Obfuscated IP Injection in HTTP headers containing IP address"
-  description: > 
+  description: >
     "This test involves attackers injecting IP addresses into HTTP headers in a manner that disguises their true intent. This obfuscation can be achieved through various techniques, such as encoding or manipulating header values to bypass detection. The goal is to trick internal systems into processing these hidden or disguised IP addresses, potentially leading to unauthorized access or security breaches."
   details: >
     "In this attack, attackers inject obfuscated IP addresses into HTTP headers like `X-Forwarded-For` using techniques such as encoding, concatenation, or other forms of disguise. This manipulation aims to evade detection mechanisms that look for straightforward IP injection patterns. The obfuscated IP addresses can then mislead internal systems into misinterpreting or incorrectly handling the IP information, potentially bypassing security controls or gaining unauthorized access."
@@ -28,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -86,10 +88,10 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - modify_header:
-        userKey: ${IPPayloads}
-        
+    - req:
+        - modify_header:
+            userKey: ${IPPayloads}
+
 validate:
   or:
     - response_payload:
@@ -99,7 +101,7 @@ validate:
           gte: 90
         not_contains:
           - Error
-          - Internal Server 
+          - Internal Server
           - Failed
           - Unauthorized
           - access denied

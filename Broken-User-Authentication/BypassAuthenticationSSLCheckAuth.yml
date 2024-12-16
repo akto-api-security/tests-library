@@ -1,28 +1,13 @@
 id: SSL_ENABLE_CHECK_AUTH
 info:
   name: "Bypass Authentication by modifying authenticated URL to HTTP only"
-  description: > 
-    "Bypassing authentication by modifying the authenticated URL to HTTP is a security exploit where 
-    attackers manipulate the URL protocol, often downgrading from HTTPS to HTTP. This 
-    manipulation can compromise the integrity of secure authentication processes, 
-    enabling unauthorized access to sensitive systems. Preventive measures include
-    enforcing HTTPS, implementing secure session management, and conducting regular 
-    security assessments to identify and mitigate such vulnerabilities."
+  description: >
+    "Bypassing authentication by modifying the authenticated URL to HTTP is a security exploit where  attackers manipulate the URL protocol, often downgrading from HTTPS to HTTP. This  manipulation can compromise the integrity of secure authentication processes,  enabling unauthorized access to sensitive systems. Preventive measures include
+    enforcing HTTPS, implementing secure session management, and conducting regular  security assessments to identify and mitigate such vulnerabilities."
   details: >
-    "Bypassing authentication by modifying the authenticated URL to HTTP is a security vulnerability 
-    where attackers manipulate the web address, often downgrading from HTTPS to HTTP. 
-    This manipulation can compromise secure authentication, allowing unauthorized 
-    access to sensitive systems. Mitigation involves enforcing HTTPS, implementing 
-    robust session management, and conducting regular security audits to detect and 
-    remediate such vulnerabilities."
+    "Bypassing authentication by modifying the authenticated URL to HTTP is a security vulnerability  where attackers manipulate the web address, often downgrading from HTTPS to HTTP.  This manipulation can compromise secure authentication, allowing unauthorized  access to sensitive systems. Mitigation involves enforcing HTTPS, implementing  robust session management, and conducting regular security audits to detect and  remediate such vulnerabilities."
   impact: >
-    "The impact of bypassing authentication by modifying the authenticated URL to HTTP can be severe, 
-    potentially leading to unauthorized access to sensitive information or systems. 
-    This manipulation compromises the confidentiality and integrity of data exchanged 
-    during authentication. Organizations may face reputational damage, regulatory 
-    consequences, and compromised user trust. Mitigating this risk requires strict 
-    enforcement of HTTPS, secure session handling, and continuous monitoring for 
-    potential vulnerabilities."
+    "The impact of bypassing authentication by modifying the authenticated URL to HTTP can be severe,  potentially leading to unauthorized access to sensitive information or systems.  This manipulation compromises the confidentiality and integrity of data exchanged  during authentication. Organizations may face reputational damage, regulatory  consequences, and compromised user trust. Mitigating this risk requires strict  enforcement of HTTPS, secure session handling, and continuous monitoring for  potential vulnerabilities."
 
   category:
     name: NO_AUTH
@@ -43,6 +28,8 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
+settings:
+  nature: NON-INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -56,7 +43,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -84,12 +71,12 @@ api_selection_filters:
 execute:
   type: single
   requests:
-  - req:
-    - modify_url:
-        regex_replace:
-          regex: https
-          replace_with: http
-    - follow_redirect: false
+    - req:
+        - modify_url:
+            regex_replace:
+              regex: https
+              replace_with: http
+        - follow_redirect: false
 validate:
   response_code:
     gte: 200
@@ -101,7 +88,7 @@ validate:
       gte: 90
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

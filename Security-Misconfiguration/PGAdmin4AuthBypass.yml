@@ -2,7 +2,7 @@ id: PGADMIN4_AUTH_BYPASS
 info:
   name: "pgadmin 4 Authentication Bypass Test"
   description: "The pgAdmin 4 Authentication Bypass Test involves checking whether pgAdmin 4, the web-based PostgreSQL administration tool, can be accessed without proper authentication. This vulnerability may allow attackers to bypass login mechanisms and gain unauthorized access to the pgAdmin interface, where they could manipulate databases, execute malicious queries, or steal sensitive data. Detecting this issue is crucial for ensuring that pgAdmin is properly secured with strong authentication controls to prevent unauthorized access. Implementing proper access restrictions and applying security patches can mitigate this risk."
-  details:  "The pgAdmin 4 Authentication Bypass Test checks for flaws in the authentication process of pgAdmin 4 that may allow unauthorized access. Attackers can exploit weaknesses, such as improper session management or insecure default configurations, to bypass login mechanisms and gain access to the pgAdmin interface without credentials. Once bypassed, they could potentially perform actions such as database manipulation, data exfiltration, or executing arbitrary SQL queries. It is important to secure pgAdmin 4 with strong authentication, proper session handling, and up-to-date security patches to prevent such attacks."
+  details: "The pgAdmin 4 Authentication Bypass Test checks for flaws in the authentication process of pgAdmin 4 that may allow unauthorized access. Attackers can exploit weaknesses, such as improper session management or insecure default configurations, to bypass login mechanisms and gain access to the pgAdmin interface without credentials. Once bypassed, they could potentially perform actions such as database manipulation, data exfiltration, or executing arbitrary SQL queries. It is important to secure pgAdmin 4 with strong authentication, proper session handling, and up-to-date security patches to prevent such attacks."
   impact: "The impact of a pgAdmin 4 Authentication Bypass vulnerability is significant, as it could allow unauthorized users to access and control PostgreSQL databases without proper credentials. This could lead to data manipulation, unauthorized querying, or even complete data exfiltration. Attackers could also alter critical database configurations or introduce malicious queries. To mitigate such risks, strong authentication mechanisms, session management, and regular security updates are essential to prevent unauthorized access and protect sensitive data."
   category:
     name: SM
@@ -19,6 +19,8 @@ info:
     - CVE-2018-10245
 
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -35,9 +37,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

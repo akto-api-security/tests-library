@@ -1,10 +1,10 @@
 id: XSS_IN_PATH
 info:
   name: "XSS by changing path"
-  description: "Testing vulnerability by injecting malicious scripts in filenames to bypass security measures and execute unauthorized code." 
+  description: "Testing vulnerability by injecting malicious scripts in filenames to bypass security measures and execute unauthorized code."
   details: >
-            "Security test that aims to identify vulnerabilities in web applications. By injecting malicious scripts into url paths, attackers can bypass security measures and execute unauthorized code on the victim's browser."
-            "This test helps developers uncover and address potential XSS (Cross-Site Scripting) vulnerabilities, ensuring robust protection against malicious attacks."
+    "Security test that aims to identify vulnerabilities in web applications. By injecting malicious scripts into url paths, attackers can bypass security measures and execute unauthorized code on the victim's browser."
+    "This test helps developers uncover and address potential XSS (Cross-Site Scripting) vulnerabilities, ensuring robust protection against malicious attacks."
   impact: "An XSS vulnerability can have significant impacts, including the potential for data theft, unauthorized access, session hijacking, defacement of web pages, and the injection of malicious content."
   category:
     name: XSS
@@ -24,6 +24,8 @@ info:
   cve:
     - CVE-2021-35976
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -42,14 +44,14 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url:
-          regex_replace:
-            regex: \/$
-            replace_with: ''
-      - modify_url: ${urlVar}/%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E
+        - modify_url:
+            regex_replace:
+              regex: \/$
+              replace_with: ''
+        - modify_url: ${urlVar}/%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E
 
 validate:
   response_payload:
     contains_all:
-        - "<script>alert(document.domain)</script>"
-        - <!doctype html>
+      - "<script>alert(document.domain)</script>"
+      - <!doctype html>

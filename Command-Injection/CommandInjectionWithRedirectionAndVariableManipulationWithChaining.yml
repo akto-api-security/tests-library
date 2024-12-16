@@ -23,6 +23,8 @@ info:
     - CVE-2023-25826
     - CVE-2023-41031
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -34,7 +36,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -83,10 +85,10 @@ execute:
   type: multiple
   requests:
     - req:
-        - modify_body_param: 
-            changed_body_key:  ${specialOSPayloads}
+        - modify_body_param:
+            changed_body_key: ${specialOSPayloads}
         - modify_query_param:
-            changed_query_key:  ${specialOSPayloads}
+            changed_query_key: ${specialOSPayloads}
         - validate:
             and:
               - response_code:
@@ -115,7 +117,7 @@ execute:
         - modify_body_param:
             changed_body_key: "cat output.txt"
         - modify_query_param:
-            changed_query_key:  "cat output.txt"
+            changed_query_key: "cat output.txt"
         - validate:
             response_payload:
               length:
@@ -139,7 +141,7 @@ execute:
                 - "-December-"
               not_contains:
                 - Error
-                - Internal Server 
+                - Internal Server
                 - Failed
                 - Unauthorized
                 - access denied
@@ -166,4 +168,4 @@ execute:
                 - multiple failed attempts
                 - <html>
                 - </html>
-        - success: vulnerable          
+        - success: vulnerable

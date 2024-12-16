@@ -1,31 +1,12 @@
 id: 2FA_BROKEN_LOGIC_AUTH_TOKEN_TEST
 info:
   name: "Authentication Bypass with 2FA Broken Logic Auth Token by hitting Authenticated APIs"
-  description: > 
-    "Authentication Bypass with 2FA Broken Logic occurs when attackers exploit flaws 
-    in the two-factor authentication (2FA) system, gaining unauthorized access to 
-    authenticated APIs by manipulating authentication tokens. By exploiting broken 
-    logic in the 2FA process, attackers can bypass the intended security measures 
-    and potentially compromise sensitive information or functionalities. This 
-    vulnerability emphasizes the critical need for robust and secure implementation 
-    of two-factor authentication mechanisms to prevent unauthorized access to protected systems."
+  description: >
+    "Authentication Bypass with 2FA Broken Logic occurs when attackers exploit flaws  in the two-factor authentication (2FA) system, gaining unauthorized access to  authenticated APIs by manipulating authentication tokens. By exploiting broken  logic in the 2FA process, attackers can bypass the intended security measures  and potentially compromise sensitive information or functionalities. This  vulnerability emphasizes the critical need for robust and secure implementation  of two-factor authentication mechanisms to prevent unauthorized access to protected systems."
   details: >
-    "Authentication Bypass with 2FA Broken Logic involves attackers exploiting 
-    vulnerabilities in a two-factor authentication (2FA) system to gain unauthorized 
-    access to authenticated APIs. By manipulating authentication tokens and taking 
-    advantage of flaws in the 2FA process, attackers can bypass intended security 
-    measures, posing a serious risk of unauthorized data access or system compromise. 
-    Mitigation requires thorough examination and enhancement of the 2FA implementation 
-    to ensure a robust and effective defense against potential authentication bypass threats."
+    "Authentication Bypass with 2FA Broken Logic involves attackers exploiting  vulnerabilities in a two-factor authentication (2FA) system to gain unauthorized  access to authenticated APIs. By manipulating authentication tokens and taking  advantage of flaws in the 2FA process, attackers can bypass intended security  measures, posing a serious risk of unauthorized data access or system compromise.  Mitigation requires thorough examination and enhancement of the 2FA implementation  to ensure a robust and effective defense against potential authentication bypass threats."
   impact: >
-    "The impact of Authentication Bypass with 2FA Broken Logic is severe, as it 
-    allows attackers to circumvent the intended security measures of a two-factor 
-    authentication system. Exploiting this vulnerability could lead to unauthorized 
-    access to authenticated APIs, risking compromise of sensitive data and system 
-    integrity. To mitigate such risks, it is crucial to promptly address and 
-    rectify the broken logic in the 2FA process, ensuring a robust defense 
-    against potential authentication bypass threats and maintaining the overall 
-    security of the authentication mechanism."
+    "The impact of Authentication Bypass with 2FA Broken Logic is severe, as it  allows attackers to circumvent the intended security measures of a two-factor  authentication system. Exploiting this vulnerability could lead to unauthorized  access to authenticated APIs, risking compromise of sensitive data and system  integrity. To mitigate such risks, it is crucial to promptly address and  rectify the broken logic in the 2FA process, ensuring a robust defense  against potential authentication bypass threats and maintaining the overall  security of the authentication mechanism."
 
   category:
     name: NO_AUTH
@@ -46,6 +27,8 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -59,7 +42,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -88,8 +71,8 @@ execute:
   type: single
   requests:
     - req:
-      - modify_header:
-          ${roles_access_context.LOGIN_2FA_INCOMPLETE_SYSTEM_ROLE}: 1       
+        - modify_header:
+            ${roles_access_context.LOGIN_2FA_INCOMPLETE_SYSTEM_ROLE}: 1
 validate:
   response_code:
     gte: 200
@@ -101,7 +84,7 @@ validate:
       gte: 90
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

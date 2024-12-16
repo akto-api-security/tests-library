@@ -1,4 +1,3 @@
----
 id: MANIPULATE_WEIGHT
 info:
   name: "Manipulate Weight Input Parameters in Shipping or Logistics Related APIs"
@@ -16,18 +15,20 @@ info:
   subCategory: MANIPULATE_WEIGHT
   severity: LOW
   tags:
-  - Business logic
-  - OWASP top 10
-  - HackerOne top 10
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
   references:
-  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
-  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
-  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
   cwe:
-  - CWE-20
+    - CWE-20
   cve:
-  - CVE-2018-20679
-  - CVE-2019-14271
+    - CVE-2018-20679
+    - CVE-2019-14271
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -35,35 +36,35 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
-    length: 
+    length:
       gt: 0
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
 
     # Here we check for the modified values of contextual keys in response.
     for_one:
@@ -91,7 +92,7 @@ wordLists:
     - shipping
     - cost
     - fees
-  
+
   inputWeights:
     - "-1kg"
     - "-1g"
@@ -104,9 +105,9 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - modify_body_param:
-        userKey: ${inputWeights}
+    - req:
+        - modify_body_param:
+            userKey: ${inputWeights}
 
 validate:
   response_code:
@@ -116,35 +117,35 @@ validate:
     length:
       gt: 0
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
-    - Attention Required!
-    - CloudFlare
-    - "Sorry, you have been blocked"
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
     for_one:
       key:
         eq: "${outputUserKey}"

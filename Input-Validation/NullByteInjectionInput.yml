@@ -1,7 +1,7 @@
 id: NULL_BYTE_INJECT_INPUT
 info:
   name: "Input Validation test using Null Byte injection"
-  description: > 
+  description: >
     "Null Byte injection is a technique used in input validation testing where a null byte (represented as `\0`) is inserted into user input. This can exploit vulnerabilities in applications that improperly handle or sanitize input data. By injecting a null byte, an attacker can potentially truncate or manipulate input strings, bypassing security filters or altering program behavior, leading to security breaches."
   details: >
     "Null Byte injection testing involves inserting a null byte (`\0`) into input fields to evaluate how an application handles this potentially disruptive character. The test checks if the application improperly processes the null byte, which could lead to bypassing input validation, truncating data, or altering how data is parsed. Proper input validation and encoding practices are critical to mitigate these risks."
@@ -28,6 +28,8 @@ info:
     - CVE-2018-20679
     - CVE-2019-14271
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -80,10 +82,10 @@ api_selection_filters:
 execute:
   type: single
   requests:
-  - req:
-    - modify_body_param:
-        userKey: !!str ${userVal}%00admin
-        
+    - req:
+        - modify_body_param:
+            userKey: !!str ${userVal}%00admin
+
 validate:
   response_code:
     gte: 200
@@ -93,7 +95,7 @@ validate:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

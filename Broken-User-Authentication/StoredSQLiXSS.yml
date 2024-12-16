@@ -1,7 +1,7 @@
 id: STORED_SQLI_XSS
 info:
   name: "Stored SQL Injection Test with XSS"
-  description: > 
+  description: >
     "Stored SQL Injection testing with XSS involves assessing vulnerabilities where malicious SQL queries are injected into a database and stored for future execution. Attackers exploit these vulnerabilities to inject persistent XSS payloads, which are stored in the database and executed whenever the affected data is retrieved and rendered by the web application. This test identifies and mitigates risks that allow both server-side SQL injection and client-side script execution, compromising data integrity and user security."
   details: >
     "Stored SQL Injection testing with XSS focuses on identifying vulnerabilities where malicious SQL queries and XSS payloads can be injected and stored in a database. These payloads are then executed whenever the stored data is retrieved and displayed by the web application. Attackers use this technique to achieve persistent exploitation, allowing them to execute malicious scripts each time the affected data is accessed. This testing helps uncover security flaws that enable both persistent SQL injection and stored XSS attacks, highlighting the need for proper input validation and output sanitization."
@@ -27,6 +27,8 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -38,7 +40,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -88,104 +90,104 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${storedXSSPayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          contains_either:
-            - "<script>alert(\"XSS\")</script>"
-            - "<svg/onload=alert(\"XSS\")>"
-            - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
-            - "<script>alert(\"Stored XSS\")</script>"
-            - "<svg/onload=alert(\"Stored XSS\")>"
-            - "<img src=\"x\" onerror=\"alert('Stored XSS')\">"
-          not_contains:
-            - Error
-            - Internal Server 
-            - Failed
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid token
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - " INSERT INTO "          
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_body_param:
-        userKey: ${storedXSSNegativePayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0 
-          not_contains:
-            - Error
-            - Internal Server 
-            - Failed
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid token
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts  
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked 
-            - " INSERT INTO "
-            - "<script>alert(\"XSS\")</script>"
-            - "<svg/onload=alert(\"XSS\")>"
-            - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
-            - "<script>alert(\"Stored XSS\")</script>"
-            - "<svg/onload=alert(\"Stored XSS\")>"
-            - "<img src=\"x\" onerror=\"alert('Stored XSS')\">"
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${storedXSSPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_either:
+                - "<script>alert(\"XSS\")</script>"
+                - "<svg/onload=alert(\"XSS\")>"
+                - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
+                - "<script>alert(\"Stored XSS\")</script>"
+                - "<svg/onload=alert(\"Stored XSS\")>"
+                - "<img src=\"x\" onerror=\"alert('Stored XSS')\">"
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " INSERT INTO "
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${storedXSSNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " INSERT INTO "
+                - "<script>alert(\"XSS\")</script>"
+                - "<svg/onload=alert(\"XSS\")>"
+                - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
+                - "<script>alert(\"Stored XSS\")</script>"
+                - "<svg/onload=alert(\"Stored XSS\")>"
+                - "<img src=\"x\" onerror=\"alert('Stored XSS')\">"
 
-          neq: "${x1.response.body}"
-    - success: vulnerable
-    - failure: exit                      
+              neq: "${x1.response.body}"
+        - success: vulnerable
+        - failure: exit

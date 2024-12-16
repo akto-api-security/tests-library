@@ -3,8 +3,8 @@ info:
   name: "CSRF Login attack"
   description: "Hackers trick users to log into their account by forging requests, exploiting server authentication."
   details: >
-            "A login CSRF attack involves hackers tricking users into logging into an attacker-controlled account."
-            "By forging a request using their credentials and submitting it to the victim's browser, the server mistakenly authenticates the request, granting access to the attacker's account."
+    "A login CSRF attack involves hackers tricking users into logging into an attacker-controlled account."
+    "By forging a request using their credentials and submitting it to the victim's browser, the server mistakenly authenticates the request, granting access to the attacker's account."
   impact: >
     "Depending on the user account and information exposed, the impacts of an attack range from mild to severe."
     "Some consequences of a successful login CSRF attack include: Deployment of malicious code, Unauthorized financial transactions and Data breach and sensitive information exposure"
@@ -28,6 +28,8 @@ info:
     - CVE-2023-33212
     - CVE-2023-42270
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -42,7 +44,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -75,7 +77,7 @@ api_selection_filters:
       - log-in
   request_payload:
     for_one:
-      key: 
+      key:
         contains_either:
           - password
           - pwd
@@ -91,20 +93,20 @@ execute:
   type: single
   requests:
     - req:
-      - delete_header: ${header_key}
+        - delete_header: ${header_key}
 
 validate:
   response_code:
     gte: 200
     lt: 300
   response_payload:
-    percentage_match: 
+    percentage_match:
       gt: 80
     length:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

@@ -1,32 +1,19 @@
 id: ID_REPLACE_JSON_OBJECT
 info:
   name: "BOLA: Turning Parameters into JSON Objects for Unauthorized Access"
-  description: > 
-    "This test entails transforming parameters into JSON objects to potentially circumvent 
-    security measures and gain unauthorized entry, emphasizing the critical need for securing 
-    input validation and addressing BOLA risks. This underscores the importance of robust 
-    security practices to prevent unauthorized access and protect against exploitation of 
-    broken object-level authorization."
+  description: >
+    "This test entails transforming parameters into JSON objects to potentially circumvent  security measures and gain unauthorized entry, emphasizing the critical need for securing  input validation and addressing BOLA risks. This underscores the importance of robust  security practices to prevent unauthorized access and protect against exploitation of  broken object-level authorization."
   details: >
-    "In this test, manipulation involves transforming parameters into JSON objects, aiming 
-    to exploit broken object-level authorization and gain unauthorized entry. Such actions 
-    highlight the critical importance of robust security practices, emphasizing the need 
-    for stringent input validation to mitigate the risks associated with unauthorized 
-    access and potential data breaches."
+    "In this test, manipulation involves transforming parameters into JSON objects, aiming  to exploit broken object-level authorization and gain unauthorized entry. Such actions  highlight the critical importance of robust security practices, emphasizing the need  for stringent input validation to mitigate the risks associated with unauthorized  access and potential data breaches."
   impact: >
-    "The impact of this test can be severe, introducing the risk of unauthorized entry and 
-    compromising sensitive data. Exploiting broken object-level authorization through parameter 
-    manipulation may lead to unauthorized access, potential data breaches, and a compromise 
-    of overall system security. Timely mitigation of these vulnerabilities is crucial to 
-    prevent unauthorized access and protect the system from the consequences of broken 
-    object-level authorization exploitation."
+    "The impact of this test can be severe, introducing the risk of unauthorized entry and  compromising sensitive data. Exploiting broken object-level authorization through parameter  manipulation may lead to unauthorized access, potential data breaches, and a compromise  of overall system security. Timely mitigation of these vulnerabilities is crucial to  prevent unauthorized access and protect the system from the consequences of broken  object-level authorization exploitation."
   category:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: ID_REPLACE_JSON_OBJECT
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -43,6 +30,8 @@ info:
     - CWE-639
   cve:
     - CVE-2023-39349
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -56,7 +45,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -89,7 +78,7 @@ api_selection_filters:
 wordLists:
   random_ids:
     source: sample_data
-    key: 
+    key:
       regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|username|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
     all_apis: true
 execute:
@@ -107,7 +96,7 @@ validate:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

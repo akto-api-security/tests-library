@@ -1,4 +1,3 @@
----
 id: BUFFER_OVERFLOW_VIA_LARGE_COOKIE
 info:
   name: Buffer Overflow via Large Cookie
@@ -16,18 +15,20 @@ info:
   subCategory: BUFFER_OVERFLOW_VIA_LARGE_COOKIE
   severity: LOW
   tags:
-  - Business logic
-  - OWASP top 10
-  - HackerOne top 10
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
   references:
-  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
-  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
-  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
   cwe:
-  - CWE-20
+    - CWE-20
   cve:
-  - CVE-2018-20679
-  - CVE-2019-14271
+    - CVE-2018-20679
+    - CVE-2019-14271
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -36,32 +37,32 @@ api_selection_filters:
     neq: OPTIONS
   response_payload:
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
 
 wordLists:
   attemptValue:
@@ -100,31 +101,31 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - add_header:
-         x-akto-ignore: "0"
-    - delete_header: cookie
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          not_contains: ${responseErrorList}
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_header:
-        cookie: session=${attemptValue}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          not_contains: ${responseErrorList}
+    - req:
+        - add_header:
+            x-akto-ignore: "0"
+        - delete_header: cookie
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${responseErrorList}
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_header:
+            cookie: session=${attemptValue}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${responseErrorList}
 
 validate:
   and:

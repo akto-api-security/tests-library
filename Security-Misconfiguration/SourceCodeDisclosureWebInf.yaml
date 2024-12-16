@@ -23,6 +23,8 @@ info:
   cve:
     - CVE-2018-10245
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -40,8 +42,8 @@ wordLists:
 execute:
   type: single
   requests:
-    - req: 
-      - modify_url: ${urlVar}/WEB-INF/${filePath}
+    - req:
+        - modify_url: ${urlVar}/WEB-INF/${filePath}
   # IMPROVEMENT: extract the java class name and attempt to find it.
 
 validate:

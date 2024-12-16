@@ -1,4 +1,3 @@
----
 id: IMPROPER_AMOUNT_TRANSFER_HANDLING
 info:
   name: "Improper Amount Transfer Handling"
@@ -16,18 +15,20 @@ info:
   subCategory: IMPROPER_AMOUNT_TRANSFER_HANDLING
   severity: LOW
   tags:
-  - Business logic
-  - OWASP top 10
-  - HackerOne top 10
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
   references:
-  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
-  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
-  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
   cwe:
-  - CWE-20
+    - CWE-20
   cve:
-  - CVE-2018-20679
-  - CVE-2019-14271
+    - CVE-2018-20679
+    - CVE-2019-14271
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -35,48 +36,48 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
-    length: 
+    length:
       gt: 0
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   and:
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableFromParameters}"
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableToParameters}"
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableFromParameters}"
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableToParameters}"
 
 wordLists:
   probableInputParameters:
@@ -141,7 +142,7 @@ wordLists:
       regex: fromUserId|fromUser|fromAccount|senderUserId|senderAccount|userFrom|sourceUser|sourceAccount|originUserId|originAccount
     location: payload
 
-  toUserIds: 
+  toUserIds:
     source: sample_data
     key:
       regex: toUserId|toUser|toAccount|receiverUserId|recipientAccount|userTo|destinationUser|destinationAccount|targetUserId|targetAccount
@@ -150,12 +151,12 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - modify_body_param:
-        probableFromParameters: ${fromUserIds}
-    - modify_body_param:
-        probableToParameters: ${toUserIds}
-    
+    - req:
+        - modify_body_param:
+            probableFromParameters: ${fromUserIds}
+        - modify_body_param:
+            probableToParameters: ${toUserIds}
+
 validate:
   response_code:
     gte: 200
@@ -164,33 +165,33 @@ validate:
     length:
       gt: 0
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
-    - Attention Required!
-    - CloudFlare
-    - "Sorry, you have been blocked"
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
     contains_either: ${probableOutputPassParameters}

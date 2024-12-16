@@ -2,7 +2,7 @@ id: F5_ADMIN_PANEL_EXPOSURE
 info:
   name: "F5 Admin Interface Exposure"
   description: "This test refers to the unintended exposure of the administrative interface of F5 systems, which manage traffic and security for networks and applications. If left accessible without proper security controls, unauthorized users can potentially gain access to critical configurations, manage traffic settings, and even disrupt services. To mitigate risks, the interface should be secured with strong authentication, network segmentation, and restricted access."
-  details:  "F5 Admin Interface Exposure occurs when the administrative interface of F5 devices, such as BIG-IP, is publicly accessible without sufficient security measures like firewalls or authentication protocols. This vulnerability allows unauthorized users to attempt access and manipulate configurations, which can compromise network security and application performance. Administrators should implement strict access controls, including IP whitelisting and multi-factor authentication, to safeguard the admin interface from unauthorized access."
+  details: "F5 Admin Interface Exposure occurs when the administrative interface of F5 devices, such as BIG-IP, is publicly accessible without sufficient security measures like firewalls or authentication protocols. This vulnerability allows unauthorized users to attempt access and manipulate configurations, which can compromise network security and application performance. Administrators should implement strict access controls, including IP whitelisting and multi-factor authentication, to safeguard the admin interface from unauthorized access."
   impact: "The impact of F5 Admin Interface Exposure can be severe, as unauthorized access to the admin interface allows attackers to modify critical configurations and security settings. This could lead to traffic manipulation, denial of service attacks, and exposure of sensitive data. Additionally, attackers might exploit the compromised interface to launch further attacks on connected systems, resulting in significant operational disruptions and potential financial losses for the organization."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2021-43798
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -32,10 +34,10 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/tmui/login.jsp"
-      - modify_method: GET
-      - replace_body: '{}'
-      - follow_redirect: true
+        - modify_url: "/tmui/login.jsp"
+        - modify_method: GET
+        - replace_body: '{}'
+        - follow_redirect: true
 validate:
   response_code:
     eq: 200

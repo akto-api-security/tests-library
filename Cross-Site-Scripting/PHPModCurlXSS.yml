@@ -2,7 +2,7 @@ id: PHPMOD_CURL_XSS
 info:
   name: "Php-mod/curl Library Cross-Site Scripting"
   description: "This vulnerability allows attackers to inject malicious scripts into web applications using the PHP cURL library. This occurs when user input is not properly sanitized before being reflected back to the user, enabling the execution of harmful scripts in the context of the user's browser. Exploitation can lead to session hijacking, data theft, and defacement of web content. It primarily affects applications that rely on user-generated content without adequate validation."
-  details:  "This vulnerability affects versions of the library where user input is not adequately validated or sanitized. Attackers can exploit this flaw by crafting requests that include malicious scripts, which are then processed and returned by the application. The vulnerability typically arises in scenarios where dynamic content is generated based on user input, such as forms or URL parameters. Developers are encouraged to implement strict input validation and encoding to mitigate this risk."
+  details: "This vulnerability affects versions of the library where user input is not adequately validated or sanitized. Attackers can exploit this flaw by crafting requests that include malicious scripts, which are then processed and returned by the application. The vulnerability typically arises in scenarios where dynamic content is generated based on user input, such as forms or URL parameters. Developers are encouraged to implement strict input validation and encoding to mitigate this risk."
   impact: "The impact of this vulnerability can be significant, as it allows attackers to inject malicious scripts into web pages viewed by users. This can lead to unauthorized actions being performed on behalf of users, theft of sensitive information (like cookies or session tokens), and redirection to phishing sites. Additionally, successful exploitation can damage the credibility of the affected application, resulting in loss of user trust and potential legal repercussions."
   category:
     name: XSS
@@ -17,6 +17,8 @@ info:
   cve:
     - CVE-2021-30134
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -39,11 +41,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/vendor/curl/curl/tests/server/php-curl-test/post_file_path_upload.php"
-      - modify_method: GET
-      - replace_body: '{}'
-      - add_query_param:
-          key: "<img%20src%20onerror%3dalert(document.domain)>"
+        - modify_url: "/vendor/curl/curl/tests/server/php-curl-test/post_file_path_upload.php"
+        - modify_method: GET
+        - replace_body: '{}'
+        - add_query_param:
+            key: "<img%20src%20onerror%3dalert(document.domain)>"
 
 
 validate:

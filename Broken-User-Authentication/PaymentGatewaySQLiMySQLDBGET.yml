@@ -1,7 +1,7 @@
 id: PAYMENT_GATEWAY_SQL_INJECTION_MYSQL_GET
 info:
   name: "SQL Injection test on Payment Gateway API for MySQL and GET method APIs"
-  description: > 
+  description: >
     "SQL Injection testing on a Payment Gateway API for MySQL and GET method APIs involves assessing vulnerabilities in the API's handling and processing of SQL queries. Attackers exploit these vulnerabilities by injecting malicious SQL commands through API parameters, aiming to compromise the MySQL database behind the payment gateway. This test ensures the security of sensitive financial transactions by identifying and mitigating potential SQL injection risks in the API implementation."
   details: >
     "SQL Injection testing on a Payment Gateway API for MySQL and GET method APIs focuses on identifying and exploiting vulnerabilities in the API's input validation and SQL query handling mechanisms. Attackers attempt to inject SQL commands through API parameters, potentially gaining unauthorized access to sensitive payment information stored in the MySQL database. Mitigating these vulnerabilities is crucial to ensuring the integrity and security of financial transactions processed through the payment gateway."
@@ -28,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     eq: "GET"
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -120,101 +122,101 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_query_param:
-        userKey: ${paymentPayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          contains_either:
-            - MySQL
-            - database
-            - syntax
-            - information_schema
-          not_contains:
-            - Error
-            - Internal Server 
-            - Fail
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - UNION
-            - SELECT           
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_query_param:
-        userKey: ${paymentNegativePayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0  
-          not_contains:
-            - Error
-            - Internal Server 
-            - Fail
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts  
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked 
-            - UNION
-            - SELECT
-            - MySQL
-            - database
-            - syntax
-            - information_schema
-          neq: "${x1.response.body}"
-    - success: vulnerable
-    - failure: exit       
+    - req:
+        - modify_query_param:
+            userKey: ${paymentPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_either:
+                - MySQL
+                - database
+                - syntax
+                - information_schema
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - UNION
+                - SELECT
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_query_param:
+            userKey: ${paymentNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - UNION
+                - SELECT
+                - MySQL
+                - database
+                - syntax
+                - information_schema
+              neq: "${x1.response.body}"
+        - success: vulnerable
+        - failure: exit

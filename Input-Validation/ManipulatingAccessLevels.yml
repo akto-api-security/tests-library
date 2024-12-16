@@ -1,8 +1,7 @@
----
 id: MANIPULATING_ACCESS_LEVELS
 info:
   name: "Manipulating Access Levels in Resource Consumption APIs"
-  description: |  
+  description: |
     "This test evaluates the ability to manipulate access levels in APIs that control resource consumption, such as video or content streaming services. The objective is to identify vulnerabilities that could allow unauthorized users to elevate their access level, thereby gaining access to restricted or premium content without proper authorization."
   details: |
     "The test involves sending API requests with different accessLevel parameters to check if the system correctly validates and enforces access controls. For example, a request with `accessLevel: standard` might grant access to basic content, while changing the `accessLevel` to `premium` should require additional authorization. The test checks if the system appropriately handles such changes and ensures that users cannot access content beyond their entitlement level by simply modifying request parameters."
@@ -16,18 +15,20 @@ info:
   subCategory: MANIPULATING_ACCESS_LEVELS
   severity: LOW
   tags:
-  - Business logic
-  - OWASP top 10
-  - HackerOne top 10
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
   references:
-  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
-  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
-  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
   cwe:
-  - CWE-20
+    - CWE-20
   cve:
-  - CVE-2018-20679
-  - CVE-2019-14271
+    - CVE-2018-20679
+    - CVE-2019-14271
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -35,35 +36,35 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
-    length: 
+    length:
       gt: 0
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   request_payload:
     for_one:
       key:
@@ -120,9 +121,9 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - modify_body_param:
-        userKey: ${attemptValues}
+    - req:
+        - modify_body_param:
+            userKey: ${attemptValues}
 
 validate:
   response_code:
@@ -132,33 +133,33 @@ validate:
     length:
       gt: 0
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
-    - Attention Required!
-    - CloudFlare
-    - "Sorry, you have been blocked"
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
     contains_either: ${probableOutputParameters}

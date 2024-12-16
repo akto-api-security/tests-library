@@ -10,7 +10,7 @@ info:
     displayName: Verbose Error Messages (VEM)
   subCategory: DETECT_DJANGO_EXCEPTION
   severity: LOW
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -22,6 +22,8 @@ info:
   cve:
     - CVE-2020-11883
     - CVE-2020-15652
+settings:
+  nature: INTRUSIVE
 wordLists:
   specialCharacters:
     - "aaaa"
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -73,8 +75,8 @@ execute:
   type: single
   requests:
     - req:
-      - modify_body_param:
-          keyVar: ${specialCharacters}
+        - modify_body_param:
+            keyVar: ${specialCharacters}
 validate:
   response_payload:
     length:
@@ -83,4 +85,3 @@ validate:
       - "django version"
       - "python3"
       - "/usr/local/bin/"
-    

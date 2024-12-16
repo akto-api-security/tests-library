@@ -1,7 +1,7 @@
 id: BOOLEAN_BASED_SQLI_XSS_GET
 info:
   name: "Boolean based SQL Injection Test with XSS and GET method APIs"
-  description: > 
+  description: >
     "Boolean-based SQL Injection testing with XSS and GET method APIs involves exploiting vulnerabilities by manipulating Boolean conditions in SQL queries to infer database content. Attackers craft SQL injection payloads that adjust logical conditions to provoke true or false responses, revealing sensitive data. By incorporating XSS payloads, attackers further exploit the injection to execute malicious scripts in the application's output, posing a dual threat of data exposure and client-side script execution. This test helps identify and mitigate combined SQL injection and XSS vulnerabilities in web applications."
   details: >
     "Boolean-based SQL Injection testing with XSS and GET method APIs entails crafting SQL injection payloads that exploit Boolean conditions in SQL queries. Attackers manipulate these conditions to extract sensitive data from the database through true or false responses. By injecting XSS payloads into the manipulated queries, attackers can execute malicious scripts in the application's output, potentially compromising users' browsers. This testing method aims to uncover and address vulnerabilities where SQL injection and XSS intersect, ensuring robust application security."
@@ -28,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -90,105 +92,105 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_query_param:
-        userKey: ${userVal}${booleanXSSPayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          contains_either:
-            - "<script>alert(\"XSS\");</script>"
-            - "<svg/onload=alert(\"XSS\")>"
-            - "XSS"
-            - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
-          not_contains:
-            - Error
-            - Internal Server 
-            - Fail
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - UNION
-            - SELECT 
-            - " 1=1 "
-            - "&#61;"          
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_query_param:
-        userKey: ${userVal}${booleanXSSNegativePayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          not_contains:
-            - Error
-            - Internal Server 
-            - Fail
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts  
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked 
-            - UNION
-            - SELECT
-            - "<script>alert(\"XSS\");</script>"
-            - "<svg/onload=alert(\"XSS\")>"
-            - "XSS"
-            - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
-          neq: "${x1.response.body}"
-    - success: vulnerable
-    - failure: exit             
+    - req:
+        - modify_query_param:
+            userKey: ${userVal}${booleanXSSPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_either:
+                - "<script>alert(\"XSS\");</script>"
+                - "<svg/onload=alert(\"XSS\")>"
+                - "XSS"
+                - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - UNION
+                - SELECT
+                - " 1=1 "
+                - "&#61;"
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_query_param:
+            userKey: ${userVal}${booleanXSSNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - UNION
+                - SELECT
+                - "<script>alert(\"XSS\");</script>"
+                - "<svg/onload=alert(\"XSS\")>"
+                - "XSS"
+                - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
+              neq: "${x1.response.body}"
+        - success: vulnerable
+        - failure: exit
 
 

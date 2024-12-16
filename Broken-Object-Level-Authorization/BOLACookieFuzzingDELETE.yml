@@ -1,7 +1,7 @@
 id: BOLA_COOKIE_FUZZING_DELETE
 info:
   name: "Fuzzing Cookie Data: Exploiting BOLA for Unauthorized Access for DELETE method APIs"
-  description: > 
+  description: >
     "In this scenario, attackers exploit Broken Object Level Authorization by employing fuzzing techniques on cookie data extracted from existing user records (where request API method is DELETE). Fuzzing involves manipulating and testing variations of the cookie data to uncover vulnerabilities and potentially gain unauthorized access. This method underscores the critical need for robust access controls, secure session management, and thorough testing to mitigate the risks associated with unauthorized access and cookie-based attacks."
   details: >
     "In the exploitation of Broken Object Level Authorization through cookie data fuzzing, attackers manipulate existing user data within cookies to uncover vulnerabilities and gain unauthorized access (where request API method is DELETE). Fuzzing involves systematically testing variations of the cookie parameters to identify weaknesses in access controls and session management. This method highlights the importance of robust security measures to safeguard against unauthorized access and mitigate the risks associated with Broken Object Level Authorization through cookie-based attacks."
@@ -13,7 +13,7 @@ info:
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: BOLA_COOKIE_FUZZING_DELETE
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -30,6 +30,8 @@ info:
     - CWE-639
   cve:
     - CVE-2022-34770
+settings:
+  nature: INTRUSIVE
 inactive: true
 auth:
   authenticated: true
@@ -44,7 +46,7 @@ api_selection_filters:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -68,7 +70,7 @@ api_selection_filters:
       - service unavailable
       - account is locked
       - account is blocked
-      - multiple failed attempts 
+      - multiple failed attempts
   private_variable_context:
     gt: 0
 wordLists:
@@ -80,10 +82,10 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - remove_auth_header: true
-    - modify_header:
-        cookie: "${cookiesList}"
+    - req:
+        - remove_auth_header: true
+        - modify_header:
+            cookie: "${cookiesList}"
 validate:
   response_code:
     gte: 200
@@ -93,7 +95,7 @@ validate:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

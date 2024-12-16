@@ -26,6 +26,8 @@ info:
   cve:
     - CVE-2022-30927
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -65,10 +67,10 @@ execute:
   type: single
   requests:
     - req:
-        - modify_body_param: 
-            changed_body_key:  ${changed_body_value}${specialCharacters}
+        - modify_body_param:
+            changed_body_key: ${changed_body_value}${specialCharacters}
         - modify_query_param:
-            changed_query_key:  ${changed_query_value}${specialCharacters}
+            changed_query_key: ${changed_query_value}${specialCharacters}
 validate:
   and:
     - response_payload:
@@ -76,38 +78,38 @@ validate:
           - <html>
           - </html>
     - or:
-      - response_payload:
-        - contains_either:
-          - "SQLSTATE"
-      - response_payload:
-          regex: "SQL syntax.*?MySQL"
-      - response_payload:
-          regex: "Warning.*?\\Wmysqli?_"
-      - response_payload:
-          regex: "MySQLSyntaxErrorException"
-      - response_payload:
-          regex: "valid MySQL result"
-      - response_payload:
-          regex: "check the manual that (corresponds to|fits) your MySQL server version"
-      - response_payload:
-          regex: "check the manual that (corresponds to|fits) your MariaDB server version"
-      - response_payload:
-          regex: "check the manual that (corresponds to|fits) your Drizzle server version"
-      - response_payload:
-          regex: "Unknown column '[^ ]+' in 'field list'"
-      - response_payload:
-          regex: "MySqlClient\\\\."
-      - response_payload:
-          regex: "com\\.mysql\\.jdbc"
-      - response_payload:
-          regex: "Zend_Db_(Adapter|Statement)_Mysqli_Exception"
-      - response_payload:
-          regex: "Pdo[./_\\]Mysql"
-      - response_payload:
-          regex: "MySqlException"
-      - response_payload:
-          regex: "MemSQL does not support this type of query"
-      - response_payload:
-          regex: "is not supported by MemSQL"
-      - response_payload:
-          regex: "unsupported nested scalar subselect"
+        - response_payload:
+            - contains_either:
+                - "SQLSTATE"
+        - response_payload:
+            regex: "SQL syntax.*?MySQL"
+        - response_payload:
+            regex: "Warning.*?\\Wmysqli?_"
+        - response_payload:
+            regex: "MySQLSyntaxErrorException"
+        - response_payload:
+            regex: "valid MySQL result"
+        - response_payload:
+            regex: "check the manual that (corresponds to|fits) your MySQL server version"
+        - response_payload:
+            regex: "check the manual that (corresponds to|fits) your MariaDB server version"
+        - response_payload:
+            regex: "check the manual that (corresponds to|fits) your Drizzle server version"
+        - response_payload:
+            regex: "Unknown column '[^ ]+' in 'field list'"
+        - response_payload:
+            regex: "MySqlClient\\\\."
+        - response_payload:
+            regex: "com\\.mysql\\.jdbc"
+        - response_payload:
+            regex: "Zend_Db_(Adapter|Statement)_Mysqli_Exception"
+        - response_payload:
+            regex: "Pdo[./_\\]Mysql"
+        - response_payload:
+            regex: "MySqlException"
+        - response_payload:
+            regex: "MemSQL does not support this type of query"
+        - response_payload:
+            regex: "is not supported by MemSQL"
+        - response_payload:
+            regex: "unsupported nested scalar subselect"

@@ -26,6 +26,8 @@ info:
   cve:
     - CVE-2021-1636
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -60,52 +62,52 @@ execute:
   type: single
   requests:
     - req:
-        - modify_body_param: 
+        - modify_body_param:
             changed_body_key: ${specialCharacters}
         - modify_query_param:
             changed_query_key: ${specialCharacters}
 validate:
   and:
-  - response_payload:
-      not_contains:
-        - <html>
-        - </html>
-  - or:
     - response_payload:
-        regex: "Driver.*? SQL[\\-\\_\\ ]*Server"
-    - response_payload:
-        regex: "OLE DB.*? SQL Server"
-    - response_payload:
-        regex: "\\bSQL Server[^&lt;&quot;]+Driver"
-    - response_payload:
-        regex: "Warning.*?\\W(mssql|sqlsrv)_"
-    - response_payload:
-        regex: "\\bSQL Server[^&lt;&quot;]+[0-9a-fA-F]{8}"
-    - response_payload:
-        regex: "System\\.Data\\.SqlClient\\.(SqlException|SqlConnection\\.OnError)"
-    - response_payload:
-        regex: "(?s)Exception.*?\\bRoadhouse\\.Cms\\."
-    - response_payload:
-        regex: "Microsoft SQL Native Client error '[0-9a-fA-F]{8}"
-    - response_payload:
-        regex: "\\[SQL Server\\]"
-    - response_payload:
-        regex: "ODBC SQL Server Driver"
-    - response_payload:
-        regex: "ODBC Driver \\d+ for SQL Server"
-    - response_payload:
-        regex: "SQLServer JDBC Driver"
-    - response_payload:
-        regex: "com\\.jnetdirect\\.jsql"
-    - response_payload:
-        regex: "macromedia\\.jdbc\\.sqlserver"
-    - response_payload:
-        regex: "Zend_Db_(Adapter|Statement)_Sqlsrv_Exception"
-    - response_payload:
-        regex: "com\\.microsoft\\.sqlserver\\.jdbc"
-    - response_payload:
-        regex: "Pdo[./_\\](Mssql|SqlSrv)"
-    - response_payload:
-        regex: "SQL(Srv|Server)Exception"
-    - response_payload:
-        regex: "Unclosed quotation mark after the character string"
+        not_contains:
+          - <html>
+          - </html>
+    - or:
+        - response_payload:
+            regex: "Driver.*? SQL[\\-\\_\\ ]*Server"
+        - response_payload:
+            regex: "OLE DB.*? SQL Server"
+        - response_payload:
+            regex: "\\bSQL Server[^&lt;&quot;]+Driver"
+        - response_payload:
+            regex: "Warning.*?\\W(mssql|sqlsrv)_"
+        - response_payload:
+            regex: "\\bSQL Server[^&lt;&quot;]+[0-9a-fA-F]{8}"
+        - response_payload:
+            regex: "System\\.Data\\.SqlClient\\.(SqlException|SqlConnection\\.OnError)"
+        - response_payload:
+            regex: "(?s)Exception.*?\\bRoadhouse\\.Cms\\."
+        - response_payload:
+            regex: "Microsoft SQL Native Client error '[0-9a-fA-F]{8}"
+        - response_payload:
+            regex: "\\[SQL Server\\]"
+        - response_payload:
+            regex: "ODBC SQL Server Driver"
+        - response_payload:
+            regex: "ODBC Driver \\d+ for SQL Server"
+        - response_payload:
+            regex: "SQLServer JDBC Driver"
+        - response_payload:
+            regex: "com\\.jnetdirect\\.jsql"
+        - response_payload:
+            regex: "macromedia\\.jdbc\\.sqlserver"
+        - response_payload:
+            regex: "Zend_Db_(Adapter|Statement)_Sqlsrv_Exception"
+        - response_payload:
+            regex: "com\\.microsoft\\.sqlserver\\.jdbc"
+        - response_payload:
+            regex: "Pdo[./_\\](Mssql|SqlSrv)"
+        - response_payload:
+            regex: "SQL(Srv|Server)Exception"
+        - response_payload:
+            regex: "Unclosed quotation mark after the character string"

@@ -2,7 +2,7 @@ id: KUBERNETES_DASHBOARD_EXPOSURE
 info:
   name: "Kubernetes Dashboard Exposure by Authentication Bypass"
   description: "Kubernetes Dashboard Exposure by Authentication Bypass refers to a security vulnerability where unauthorized users can gain access to the Kubernetes Dashboard due to insufficient authentication mechanisms. This exposure occurs when proper authentication checks are not enforced, allowing attackers to bypass security measures and interact with sensitive cluster resources. Once inside, they can view, modify, or delete critical configurations, leading to potential data breaches or disruption of services. To mitigate this risk, it is essential to implement strong authentication methods, role-based access controls, and secure configurations for the Kubernetes Dashboard."
-  details:  "Kubernetes Dashboard Exposure by Authentication Bypass occurs when the dashboard's authentication mechanisms are improperly configured, allowing unauthorized access to the interface without valid credentials. This vulnerability can arise from misconfigured role-based access control (RBAC) settings or default configurations that do not enforce strict authentication. Attackers who exploit this flaw can gain visibility into the Kubernetes cluster, manipulate resources, and potentially escalate privileges to gain control over critical services. To prevent this exposure, organizations should implement strict authentication policies, regularly audit configurations, and apply security best practices for the Kubernetes Dashboard."
+  details: "Kubernetes Dashboard Exposure by Authentication Bypass occurs when the dashboard's authentication mechanisms are improperly configured, allowing unauthorized access to the interface without valid credentials. This vulnerability can arise from misconfigured role-based access control (RBAC) settings or default configurations that do not enforce strict authentication. Attackers who exploit this flaw can gain visibility into the Kubernetes cluster, manipulate resources, and potentially escalate privileges to gain control over critical services. To prevent this exposure, organizations should implement strict authentication policies, regularly audit configurations, and apply security best practices for the Kubernetes Dashboard."
   impact: "The impact of Kubernetes Dashboard Exposure by Authentication Bypass can be severe, as it allows unauthorized users to gain full access to the Kubernetes cluster, potentially leading to significant security breaches. Attackers can manipulate or delete critical resources, deploy malicious workloads, or extract sensitive data from the cluster, jeopardizing the integrity and confidentiality of applications. This exposure can result in operational disruptions, data loss, and reputational damage for the organization. Additionally, such vulnerabilities may lead to regulatory penalties if sensitive data is compromised, further highlighting the need for robust security measures around Kubernetes configurations."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2021-43798
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -29,15 +31,15 @@ api_selection_filters:
       gt: 0
 wordLists:
   paths:
-      - "/api/v1/namespaces/kube-system/secrets/kubernetes-dashboard-certs"
-      - "/k8s/api/v1/namespaces/kube-system/secrets/kubernetes-dashboard-certs"
+    - "/api/v1/namespaces/kube-system/secrets/kubernetes-dashboard-certs"
+    - "/k8s/api/v1/namespaces/kube-system/secrets/kubernetes-dashboard-certs"
 execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

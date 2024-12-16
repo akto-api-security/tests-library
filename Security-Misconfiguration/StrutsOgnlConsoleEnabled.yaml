@@ -1,23 +1,17 @@
 id: STRUTS_OGNL_CONSOLE_ENABLED
 info:
-  name: Struts OGNL Console Enabled 
+  name: Struts OGNL Console Enabled
   description: "Detection of Struts OGNL console enabled misconfiguration, which can lead to remote code execution vulnerabilities."
   details: >
-          The Struts OGNL Console Enabled test identifies a security misconfiguration where the OGNL 
-          (Object-Graph Navigation Language) console in Struts framework is accessible. By modifying the URL and 
-          appending "struts/webconsole.html?debug=console," the test checks if the OGNL console is enabled and 
-          accessible. Enabling the OGNL console can lead to remote code execution vulnerabilities, allowing 
-          attackers to execute arbitrary code on the server. This misconfiguration falls under the Security 
-          Misconfiguration category with a low severity level. Disabling the OGNL console is essential to prevent 
-          potential remote code execution and enhance application security.
+    The Struts OGNL Console Enabled test identifies a security misconfiguration where the OGNL  (Object-Graph Navigation Language) console in Struts framework is accessible. By modifying the URL and  appending "struts/webconsole.html?debug=console," the test checks if the OGNL console is enabled and  accessible. Enabling the OGNL console can lead to remote code execution vulnerabilities, allowing  attackers to execute arbitrary code on the server. This misconfiguration falls under the Security  Misconfiguration category with a low severity level. Disabling the OGNL console is essential to prevent  potential remote code execution and enhance application security.
   impact: "Enabling Struts OGNL console exposes the application to remote code execution, allowing attackers to execute arbitrary code on the server."
   category:
-      name: SM
-      shortName: Misconfiguration
-      displayName: Security Misconfiguration (SM)
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
   subCategory: Server Misconfiguration
   severity: LOW
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -29,6 +23,8 @@ info:
   cwe:
     - CWE-215
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -42,12 +38,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}/struts/webconsole.html?debug=console
+        - modify_url: ${urlVar}/struts/webconsole.html?debug=console
 
 validate:
   response_code:
     eq: 200
   response_payload:
-    contains_all: 
+    contains_all:
       - 'Welcome to the OGNL console!'
-      

@@ -1,4 +1,3 @@
----
 id: XML_EXTERNAL_XINCLUDE_INJECTION
 info:
   name: XML External XInclude Injection
@@ -29,6 +28,8 @@ info:
   cve:
     - CVE-2022-42745
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -37,7 +38,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -81,7 +82,7 @@ validate:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

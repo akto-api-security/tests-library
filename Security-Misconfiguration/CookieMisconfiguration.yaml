@@ -3,7 +3,7 @@ info:
   name: Cookie misconfiguration
   description: "This test verifies if the 'secure' attribute is properly set in HTTP response header 'set-cookie' field to ensure secure cookie transmission."
   details: >
-            "Validates presence of 'secure' attribute in HTTP response headers' 'set-cookie' field. If not found, sensitive cookie data may be transmitted over insecure connections, exposing it to potential interception and compromising the security and privacy of user information."
+    "Validates presence of 'secure' attribute in HTTP response headers' 'set-cookie' field. If not found, sensitive cookie data may be transmitted over insecure connections, exposing it to potential interception and compromising the security and privacy of user information."
   impact: "Without the secure flag in the set-cookie header, sensitive cookie data can be intercepted, potentially leading to unauthorized access, session hijacking, and compromise of user privacy and security."
   category:
     name: SM
@@ -11,7 +11,7 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: COOKIE_MISCONFIGURATION
   severity: LOW
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -26,6 +26,8 @@ info:
     - CVE-2023-4654
     - CVE-2023-28708
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -36,7 +38,7 @@ api_selection_filters:
     for_one:
       key:
         eq: Set-Cookie
-      value: 
+      value:
         contains_all:
           - secure;
           - httponly;
@@ -51,16 +53,16 @@ validate:
     for_one:
       key:
         eq: Set-Cookie
-      value: 
-        and: 
-        - contains_all:
-          - secure;
-          - httponly;
-        - contains_either:
-          - samesite;
-          - SameSite;
-        - not_contains:
-          - samesite=None
-          - samesite=none
-          - SameSite=none
-          - SameSite=None
+      value:
+        and:
+          - contains_all:
+              - secure;
+              - httponly;
+          - contains_either:
+              - samesite;
+              - SameSite;
+          - not_contains:
+              - samesite=None
+              - samesite=none
+              - SameSite=none
+              - SameSite=None

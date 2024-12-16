@@ -1,4 +1,3 @@
----
 id: HTACCESS_INFO_LEAK
 info:
   name: "Htaccess Information Leak"
@@ -23,6 +22,8 @@ info:
   cve:
     - CVE-2018-10245
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -31,11 +32,11 @@ api_selection_filters:
     lt: 300
   url:
     extract: urlVar
-  
+
 execute:
   type: single
   requests:
-    - req: 
+    - req:
         modify_url: ${urlVar}/.htaccess
 
 validate:
@@ -50,7 +51,7 @@ validate:
       - </html>
   response_headers:
     for_one:
-      key: 
+      key:
         eq: content-type
       value:
         not_contains:

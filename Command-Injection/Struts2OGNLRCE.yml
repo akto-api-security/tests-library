@@ -1,7 +1,7 @@
 id: STRUTS2_OGNL_RCE
 info:
   name: "Apache Struts 2 DefaultActionMapper Prefixes OGNL Code Execution"
-  description: "The Apache Struts 2 DefaultActionMapper Prefixes OGNL Code Execution vulnerability allows attackers to exploit improper handling of OGNL (Object-Graph Navigation Language) expressions in specific configurations of Struts 2 applications. By manipulating request parameters, attackers can execute arbitrary OGNL code on the server, leading to remote code execution. This vulnerability can compromise the integrity and security of the application, making it critical to apply proper input validation and upgrade to secure versions of Struts 2." 
+  description: "The Apache Struts 2 DefaultActionMapper Prefixes OGNL Code Execution vulnerability allows attackers to exploit improper handling of OGNL (Object-Graph Navigation Language) expressions in specific configurations of Struts 2 applications. By manipulating request parameters, attackers can execute arbitrary OGNL code on the server, leading to remote code execution. This vulnerability can compromise the integrity and security of the application, making it critical to apply proper input validation and upgrade to secure versions of Struts 2."
   details: "The Apache Struts 2 DefaultActionMapper Prefixes OGNL Code Execution vulnerability, identified as CVE-2013-1966, occurs when applications using Struts 2 improperly handle the action mapping of parameters prefixed with `#`. Attackers can craft malicious requests that include OGNL expressions, allowing them to execute arbitrary code on the server. To mitigate this risk, developers should upgrade to the latest version and implement strict input validation to prevent such exploits."
   impact: "The impact of the Apache Struts 2 DefaultActionMapper Prefixes OGNL Code Execution vulnerability can be severe, as it allows attackers to execute arbitrary code on the server. This can lead to full system compromise, enabling unauthorized access to sensitive data, modification of application behavior, or even control over the underlying infrastructure. The exploitation of this vulnerability can result in significant reputational damage, data breaches, and potential legal repercussions for affected organizations. Timely upgrades and robust security measures are essential to mitigate these risks."
   category:
@@ -18,6 +18,8 @@ info:
     - CWE-78
   cve:
     - CVE-2013-2251
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_payload:
     length:

@@ -26,6 +26,8 @@ info:
     - CWE-827
   cve:
     - CVE-2022-42745
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -36,7 +38,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -91,7 +93,7 @@ execute:
   type: single
   requests:
     - req:
-        - replace_body:  ${payloads}
+        - replace_body: ${payloads}
         - modify_header:
             ${headerKey}: "application/xml"
 validate:
@@ -101,7 +103,7 @@ validate:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

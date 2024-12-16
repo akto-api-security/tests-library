@@ -1,7 +1,7 @@
 id: LFI_IN_PATH_WINDOWS
 info:
   name: "LFI in URL path for Windows"
-  description: "Local File Inclusion (LFI) in URL paths on Windows occurs when web applications allow users to specify file paths in the URL without proper validation or sanitization. Attackers can manipulate the URL to include sensitive files by using directory traversal sequences, such as `..\\`, leading to unauthorized access to files like system configurations or logs. This vulnerability can expose critical information and, in some cases, enable further exploitation, including remote code execution or privilege escalation." 
+  description: "Local File Inclusion (LFI) in URL paths on Windows occurs when web applications allow users to specify file paths in the URL without proper validation or sanitization. Attackers can manipulate the URL to include sensitive files by using directory traversal sequences, such as `..\\`, leading to unauthorized access to files like system configurations or logs. This vulnerability can expose critical information and, in some cases, enable further exploitation, including remote code execution or privilege escalation."
   details: "Local File Inclusion (LFI) in URL paths for Windows arises when applications permit user input in file path parameters without adequate checks. Attackers can exploit this vulnerability by crafting URLs that leverage directory traversal patterns, allowing them to navigate the file system and access files outside the intended directory. Commonly targeted files include system configuration files, sensitive data, or application logs. If successful, this attack can reveal critical information and potentially lead to additional vulnerabilities, such as remote code execution."
   impact: "The impact of Local File Inclusion (LFI) in URL paths on Windows can be significant, leading to unauthorized access to sensitive files such as configuration settings, user credentials, or log files. This exposure may result in data breaches, allowing attackers to gather critical information for further exploitation or privilege escalation. Additionally, if an attacker can include executable files or scripts, it may lead to remote code execution, potentially compromising the entire system and allowing full control over it."
   category:
@@ -23,6 +23,8 @@ info:
   cve:
     - CVE-2023-2453
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -33,7 +35,7 @@ api_selection_filters:
       gt: 0
 
 wordLists:
-  filePaths: 
+  filePaths:
     - "/boot.ini"
     - "/inetpub/logs/logfiles"
     - "/inetpub/wwwroot/global.asa"
@@ -65,11 +67,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url:
-          regex_replace:
-            regex: \/$
-            replace_with: ''
-      - modify_url: ${urlVar}/${filePaths}
+        - modify_url:
+            regex_replace:
+              regex: \/$
+              replace_with: ''
+        - modify_url: ${urlVar}/${filePaths}
 
 validate:
   response_payload:

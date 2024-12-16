@@ -23,6 +23,8 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -50,7 +52,7 @@ execute:
   type: single
   requests:
     - req:
-      - remove_auth_header: true
+        - remove_auth_header: true
 
 validate:
   response_code:

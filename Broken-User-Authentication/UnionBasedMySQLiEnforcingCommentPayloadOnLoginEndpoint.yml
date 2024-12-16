@@ -1,7 +1,7 @@
 id: UNION_ENFORCE_COMMENT_BASED_MYSQLI
 info:
   name: "Union based SQL Injection test with Enforcing Comment Character Payloads for MySQL on Login Endpoints"
-  description: > 
+  description: >
     "A Union-based SQL Injection test with enforcing '-- -' comment character payloads for MySQL on login endpoints involves using these comment markers to manipulate and terminate SQL queries. By inserting '-- -' strategically, testers can nullify the rest of the SQL query, allowing them to append malicious UNION SELECT statements. This technique bypasses input validation and security filters, potentially exposing sensitive data from the database."
   details: >
     "In a Union-based SQL Injection test with enforcing '-- -' comment character payloads for MySQL on login endpoints, attackers insert '-- -' to comment out the remainder of the original SQL query. This allows them to append their own UNION SELECT statements without interference from the rest of the query. By doing so, they can manipulate the SQL execution flow to extract sensitive data, exploiting vulnerabilities in input validation and query handling."
@@ -28,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -103,106 +105,106 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${unionBasedPayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          contains_either:
-            - database
-            - schema
-            - host
-            - mysql
-            - linux
-          not_contains:
-            - Error
-            - Internal Server 
-            - Fail
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - " UNION SELECT "  
-            - </html>
-            - <html>        
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_body_param:
-        userKey: ${unionBasedNegativePayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0 
-          not_contains:
-            - Error
-            - Internal Server 
-            - Fail
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts  
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked 
-            - " UNION SELECT "
-            - database
-            - schema
-            - host
-            - mysql
-            - linux
-            - <html>
-            - </html>
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${unionBasedPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_either:
+                - database
+                - schema
+                - host
+                - mysql
+                - linux
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " UNION SELECT "
+                - </html>
+                - <html>
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${unionBasedNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " UNION SELECT "
+                - database
+                - schema
+                - host
+                - mysql
+                - linux
+                - <html>
+                - </html>
 
-          neq: "${x1.response.body}"
-    - success: vulnerable
-    - failure: exit                                     
+              neq: "${x1.response.body}"
+        - success: vulnerable
+        - failure: exit

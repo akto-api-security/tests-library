@@ -2,7 +2,7 @@ id: AUTH_ASMX_EXPOSURE
 info:
   name: "Authentication.asmx Detection test"
   description: "The Authentication.asmx Detection Test involves checking if a web application exposes an `Authentication.asmx` web service endpoint. This file is often associated with legacy or older systems that implement authentication services via SOAP (Simple Object Access Protocol). Detecting this endpoint can indicate that the system is using outdated authentication methods, which may be vulnerable to attacks like SOAP injection or insecure communication. Identifying and securing or removing such legacy endpoints is important for improving overall security."
-  details:  "The Authentication.asmx Detection Test involves scanning for the presence of the `Authentication.asmx` endpoint, which is commonly used in older .NET-based web applications to handle authentication via SOAP web services. This endpoint typically includes methods for login, token management, and user validation. If exposed without proper security measures like encryption or input validation, it can be vulnerable to attacks such as injection, brute force, or session hijacking. Detecting and securing or removing these endpoints is crucial for mitigating risks associated with outdated authentication mechanisms."
+  details: "The Authentication.asmx Detection Test involves scanning for the presence of the `Authentication.asmx` endpoint, which is commonly used in older .NET-based web applications to handle authentication via SOAP web services. This endpoint typically includes methods for login, token management, and user validation. If exposed without proper security measures like encryption or input validation, it can be vulnerable to attacks such as injection, brute force, or session hijacking. Detecting and securing or removing these endpoints is crucial for mitigating risks associated with outdated authentication mechanisms."
   impact: "The impact of an exposed Authentication.asmx endpoint can be significant, as it may allow attackers to exploit outdated or insecure SOAP-based authentication mechanisms. Vulnerabilities like SOAP injection or weak access controls could enable unauthorized access, data leakage, or privilege escalation. If not properly secured, the endpoint could also become a target for brute-force attacks or session hijacking. Securing or removing such legacy endpoints is critical to prevent these security risks and ensure modern, robust authentication practices."
   category:
     name: SM
@@ -19,6 +19,8 @@ info:
     - CVE-2018-10245
 
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -35,9 +37,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

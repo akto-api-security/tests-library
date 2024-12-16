@@ -28,6 +28,8 @@ info:
     - CVE-2021-27786
     - CVE-2021-26991
 
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 
@@ -39,9 +41,9 @@ api_selection_filters:
     neq: "OPTIONS"
   response_headers:
     for_one:
-      key: 
+      key:
         eq: access-control-allow-origin
-      value: 
+      value:
         eq: '*'
 
 execute:
@@ -55,7 +57,7 @@ validate:
     lt: 300
   response_headers:
     for_one:
-      key: 
+      key:
         eq: access-control-allow-origin
-      value: 
+      value:
         eq: '*'

@@ -28,6 +28,8 @@ info:
     - CVE-2021-27786
     - CVE-2021-26991
 
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 
@@ -41,8 +43,8 @@ execute:
   type: single
   requests:
     - req:
-      - add_header:
-          origin:  "`evil.com"
+        - add_header:
+            origin: "`evil.com"
 
 validate:
   response_code:

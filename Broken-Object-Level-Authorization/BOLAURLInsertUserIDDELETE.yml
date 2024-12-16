@@ -1,20 +1,19 @@
 id: BOLA_URL_INSERT_USER_ID_DELETE
 info:
   name: "Exploiting BOLA by inserting User IDs in URL path for Unauthorized Access for DELETE based APIs"
-  description: > 
+  description: >
     "This test involves assessing the vulnerability of a system's authorization mechanism by manipulating User IDs within the URL path (requests having DELETE based APIs). This form of exploitation aims to gain unauthorized access by inserting User IDs in the URL, tricking the system into granting privileges that should be restricted. This test helps identify weaknesses in object-level authorization controls, ensuring that proper access restrictions are in place and unauthorized users cannot manipulate identifiers to gain unauthorized entry."
   details: >
     "This test involves probing for vulnerabilities in a system's authorization process (requests having DELETE based APIs). Specifically, attackers exploit BOLA by manipulating User IDs within the URL path to gain unauthorized access. This method targets object-level authorization controls, aiming to bypass restrictions and exploit weaknesses in the system's security. Identifying and addressing these vulnerabilities is crucial for preventing unauthorized users from manipulating identifiers and accessing restricted resources."
   impact: >
-    "The impact of a successful Broken Object Level Authorization (BOLA) exploit can be severe, leading to unauthorized access to sensitive data or functionalities. Attackers could gain elevated privileges, compromising the integrity and confidentiality of the system. This breach may result in unauthorized manipulation or deletion of critical information, posing a significant risk to the organization's 
-    data security. Proper mitigation strategies are essential to prevent such unauthorized access and safeguard against potential data breaches."
+    "The impact of a successful Broken Object Level Authorization (BOLA) exploit can be severe, leading to unauthorized access to sensitive data or functionalities. Attackers could gain elevated privileges, compromising the integrity and confidentiality of the system. This breach may result in unauthorized manipulation or deletion of critical information, posing a significant risk to the organization's  data security. Proper mitigation strategies are essential to prevent such unauthorized access and safeguard against potential data breaches."
   category:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: BOLA_URL_INSERT_USER_ID_DELETE
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -32,6 +31,8 @@ info:
   cve:
     - CVE-2022-34770
 
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -45,7 +46,7 @@ api_selection_filters:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -76,7 +77,7 @@ api_selection_filters:
 wordLists:
   random_ids:
     source: sample_data
-    key: 
+    key:
       regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|username|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
     all_apis: true
 
@@ -84,50 +85,50 @@ execute:
   type: multiple
   requests:
     - req:
-      - modify_url:
-          token_insert:
-            location: 1
-            replace_with: ${random_ids}
-      - success: vulnerable
-      - failure: x2
+        - modify_url:
+            token_insert:
+              location: 1
+              replace_with: ${random_ids}
+        - success: vulnerable
+        - failure: x2
     - req:
-      - modify_url:
-          token_insert:
-            location: 2
-            replace_with: ${random_ids}
-      - success: vulnerable
-      - failure: x3
+        - modify_url:
+            token_insert:
+              location: 2
+              replace_with: ${random_ids}
+        - success: vulnerable
+        - failure: x3
     - req:
-      - modify_url:
-          token_insert:
-            location: 3
-            replace_with: ${random_ids}
-      - success: vulnerable
-      - failure: x4
+        - modify_url:
+            token_insert:
+              location: 3
+              replace_with: ${random_ids}
+        - success: vulnerable
+        - failure: x4
     - req:
-      - modify_url:
-          token_insert:
-            location: 4
-            replace_with: ${random_ids}
-      - success: vulnerable
-      - failure: x5
+        - modify_url:
+            token_insert:
+              location: 4
+              replace_with: ${random_ids}
+        - success: vulnerable
+        - failure: x5
     - req:
-      - modify_url:
-          token_insert:
-            location: 5
-            replace_with: ${random_ids}
+        - modify_url:
+            token_insert:
+              location: 5
+              replace_with: ${random_ids}
 validate:
   response_code:
     gte: 200
     lt: 300
   url:
-    endpoint_in_traffic_context: false   
+    endpoint_in_traffic_context: false
   response_payload:
     length:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

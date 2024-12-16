@@ -4,8 +4,7 @@ info:
   description: >
     "This test can be used to evaluate the susceptibility of an XML parser to External Entity attacks using publicly accessible Document Type Definitions"
   details: >
-    "This test investigates how XML processing handles external references to public Document 
-    Type Definitions, a potential vector for XXE attacks."
+    "This test investigates how XML processing handles external references to public Document  Type Definitions, a potential vector for XXE attacks."
   impact: >
     "Exploitation of XXE through Public DTDs can lead to severe data breaches, system information disclosure, or service interruptions, posing critical risks to application security."
   category:
@@ -27,6 +26,8 @@ info:
     - CWE-827
   cve:
     - CVE-2022-42745
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -36,7 +37,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -82,7 +83,7 @@ execute:
   type: single
   requests:
     - req:
-        - replace_body:  ${payloads}
+        - replace_body: ${payloads}
         - modify_header:
             ${headerKey}: "application/xml"
 validate:
@@ -92,7 +93,7 @@ validate:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

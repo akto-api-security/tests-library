@@ -22,6 +22,8 @@ info:
     - CVE-2023-4647
     - CVE-2023-38254
 
+settings:
+  nature: INTRUSIVE
 wordLists:
   dummyHeaderValues:
     - a
@@ -32,7 +34,7 @@ wordLists:
     - f
     - g
     - h
-    - i 
+    - i
     - j
 api_selection_filters:
   method:
@@ -56,20 +58,20 @@ execute:
   type: multiple
   requests:
     - req:
-      - add_header:
-          dummyKey: dummyVal
-      - validate:
-          response_payload:
-            percentage_match:
-              gte: 80
-      - success: x2
-      - failure: exit
+        - add_header:
+            dummyKey: dummyVal
+        - validate:
+            response_payload:
+              percentage_match:
+                gte: 80
+        - success: x2
+        - failure: exit
     - req:
-      - add_header:
-          dummyKey: ${dummyHeaderValues}
-      - validate:
-          response_code:
-            gt: 505
+        - add_header:
+            dummyKey: ${dummyHeaderValues}
+        - validate:
+            response_code:
+              gt: 505
 validate:
   and:
     - compare_greater:

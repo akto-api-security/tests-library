@@ -2,7 +2,7 @@ id: NODE_ECSTATIC_DIRECTORY_LISTING
 info:
   name: "Node.js Ecstatic Package - Directory Listing"
   description: "Node.js Ecstatic Package - Directory Listing is a vulnerability in the Ecstatic package, used for serving static files in Node.js applications, where an improperly configured server may allow attackers to view a list of files and directories within the server's filesystem. This can occur if directory listing is not disabled or access controls are not properly set. It can expose sensitive files or information about the application’s structure, increasing the risk of exploitation. Proper configuration and disabling of directory listing are essential to prevent this issue."
-  details:  "Node.js Ecstatic Package - Directory Listing occurs when the Ecstatic package is misconfigured to allow the listing of files within a directory. If the server is set to allow directory listing without access control, attackers can view all files and subdirectories within the public directory. This can expose sensitive files, application structures, or configurations that should not be publicly accessible. To mitigate this, directory listing should be disabled, and strict access control policies should be enforced."
+  details: "Node.js Ecstatic Package - Directory Listing occurs when the Ecstatic package is misconfigured to allow the listing of files within a directory. If the server is set to allow directory listing without access control, attackers can view all files and subdirectories within the public directory. This can expose sensitive files, application structures, or configurations that should not be publicly accessible. To mitigate this, directory listing should be disabled, and strict access control policies should be enforced."
   impact: "The impact of Node.js Ecstatic Package - Directory Listing can be significant, as it allows attackers to view the contents of directories that should remain private. This exposure can reveal sensitive files, application configurations, or other valuable information, potentially aiding in further attacks like data breaches or unauthorized access. Attackers may also identify vulnerable files or misconfigurations that can be exploited to compromise the system, leading to security breaches or integrity issues."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2021-43798
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -34,11 +36,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
-      - add_header:
-          range: 10000
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
+        - add_header:
+            range: 10000
 validate:
   response_code:
     eq: 200

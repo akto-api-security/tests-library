@@ -2,7 +2,7 @@ id: VERTAAI_MODELDB_LFI
 info:
   name: "VertaAI ModelDB Directory Traversal Test"
   description: "The VertaAI ModelDB Directory Traversal Test identifies potential vulnerabilities in the ModelDB component of VertaAI that could allow attackers to manipulate file paths and access files outside of the intended directory. This type of attack occurs when user inputs are not properly validated, enabling attackers to use traversal sequences like `../` to navigate through the file system. If exploited, this could lead to unauthorized file access, including sensitive configuration files or data. Proper input sanitization and secure file path handling are essential to mitigate such risks."
-  details:  "The VertaAI ModelDB Directory Traversal Test checks for vulnerabilities in the ModelDB storage system, where an attacker may exploit improper input validation to perform directory traversal attacks. By manipulating user input, attackers could craft requests containing sequences like `../` to move outside the intended directory, potentially exposing sensitive files or configurations stored on the server. If successful, this could lead to unauthorized access to critical information, which may be used for further exploitation. Implementing strict input validation and path sanitization helps prevent such vulnerabilities."
+  details: "The VertaAI ModelDB Directory Traversal Test checks for vulnerabilities in the ModelDB storage system, where an attacker may exploit improper input validation to perform directory traversal attacks. By manipulating user input, attackers could craft requests containing sequences like `../` to move outside the intended directory, potentially exposing sensitive files or configurations stored on the server. If successful, this could lead to unauthorized access to critical information, which may be used for further exploitation. Implementing strict input validation and path sanitization helps prevent such vulnerabilities."
   impact: "The impact of a VertaAI ModelDB Directory Traversal vulnerability is significant, as it could allow unauthorized access to sensitive files or system configurations stored outside the intended directory. Exploiting this flaw could lead to information disclosure, such as the exposure of API keys, credentials, or other confidential data. Attackers may use this access to escalate privileges, compromise the system, or disrupt the integrity of the application. Proper path sanitization and access control mechanisms are crucial to mitigating these risks."
   category:
     name: LFI
@@ -25,6 +25,8 @@ info:
     - CVE-2023-22973
 
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -41,9 +43,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

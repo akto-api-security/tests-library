@@ -3,7 +3,7 @@ info:
   name: "Broken Authentication test by removing XSRF token"
   description: "This test involves checking if a web application properly validates XSRF (CSRF) tokens. XSRF (CSRF) tokens prevent unauthorized actions by ensuring requests originate from the legitimate user. By removing the token from requests, testers can see if the application rejects these requests, thereby identifying potential vulnerabilities in CSRF protection."
   details: >
-            "This test involves testing a web application’s security by omitting the Cross-Site Request Forgery (XSRF/CSRF) token from requests. XSRF tokens protect against unauthorized actions by verifying the source of requests. By removing the token, testers check if the application still processes the request, which would indicate a vulnerability in CSRF protection mechanisms."
+    "This test involves testing a web application’s security by omitting the Cross-Site Request Forgery (XSRF/CSRF) token from requests. XSRF tokens protect against unauthorized actions by verifying the source of requests. By removing the token, testers check if the application still processes the request, which would indicate a vulnerability in CSRF protection mechanisms."
   impact: "The impact of a successful XSRF/CSRF attack can be severe, allowing attackers to perform unauthorized actions on behalf of authenticated users without their knowledge. This can lead to unauthorized fund transfers, password changes, or data theft, compromising user accounts and potentially causing significant financial and reputational damage to both users and organizations."
   category:
     name: NO_AUTH
@@ -26,8 +26,10 @@ info:
   cve:
     - CVE-2023-22501
 
+settings:
+  nature: NON-INTRUSIVE
 auth:
-    authenticated: true
+  authenticated: true
 api_selection_filters:
   response_code:
     gte: 200
@@ -48,9 +50,9 @@ api_selection_filters:
 execute:
   type: single
   requests:
-  - req:
-    - delete_header: ${xsrfHeaderKey}
-        
+    - req:
+        - delete_header: ${xsrfHeaderKey}
+
 validate:
   response_code:
     gte: 200
@@ -58,7 +60,7 @@ validate:
   response_payload:
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

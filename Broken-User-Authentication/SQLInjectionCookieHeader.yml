@@ -1,7 +1,7 @@
 id: SQL_INJECTION_COOKIE_HEADER
 info:
   name: "SQL Injection test on Cookie Header"
-  description: > 
+  description: >
     "SQL Injection testing on the Cookie header involves assessing web applications for vulnerabilities where the Cookie HTTP header is improperly sanitized or directly used in SQL queries. Attackers manipulate cookie values to inject malicious SQL commands, aiming to exploit backend databases like MySQL. This test helps identify and mitigate security weaknesses by uncovering potential injection points where user-supplied cookie data is processed without adequate validation."
   details: >
     "SQL Injection testing on the Cookie header targets vulnerabilities in web applications where cookie values are improperly handled and sanitized. Attackers manipulate these cookies to inject SQL queries, potentially compromising the backend MySQL database. This test aims to uncover weaknesses in how the application processes cookie data, helping to prevent unauthorized access and data manipulation through cookie-based SQL injection attacks."
@@ -28,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -84,10 +86,10 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - modify_header:
-        userKey: ${userVal}${cookieHeaderPayloads}
-        
+    - req:
+        - modify_header:
+            userKey: ${userVal}${cookieHeaderPayloads}
+
 validate:
   or:
     - response_payload:
@@ -130,4 +132,4 @@ validate:
               - "' OR 1=1 LIMIT 1 --"
               - "' UNION SELECT null,null,null --"
               - "' AND 1=0 --"
-              - "'; SELECT 1; --" 
+              - "'; SELECT 1; --"

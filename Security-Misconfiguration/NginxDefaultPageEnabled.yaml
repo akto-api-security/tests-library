@@ -1,22 +1,21 @@
 id: NGINX_DEFAULT_PAGE_ENABLED
 info:
-  name: Nginx Default Page Enabled 
+  name: Nginx Default Page Enabled
   description: Detection of Nginx default page enabled misconfiguration, potentially exposing sensitive server information.
   details: >
-        The Nginx Default Page Enabled test identifies a security misconfiguration where the default Nginx page is 
-        accessible. The test checks if the response payload contains the string "Welcome to nginx!" indicating that
-        the default page is enabled. This misconfiguration can potentially expose sensitive server information,
-        such as the version of Nginx and other configuration details, to attackers. It falls under the Security
-        Misconfiguration category with a low severity level. Disabling the default Nginx page and customizing
-        error pages helps protect sensitive server information and enhance security.
+    The Nginx Default Page Enabled test identifies a security misconfiguration where the default Nginx page is  accessible. The test checks if the response payload contains the string "Welcome to nginx!" indicating that
+    the default page is enabled. This misconfiguration can potentially expose sensitive server information,
+    such as the version of Nginx and other configuration details, to attackers. It falls under the Security
+    Misconfiguration category with a low severity level. Disabling the default Nginx page and customizing
+    error pages helps protect sensitive server information and enhance security.
   impact: Enabling Nginx default page exposes sensitive server information, potentially aiding attackers in crafting targeted attacks and exploiting vulnerabilities.
   category:
-      name: SM
-      shortName: Misconfiguration
-      displayName: Security Misconfiguration (SM)
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
   subCategory: Server Misconfiguration
   severity: LOW
-  tags: 
+  tags:
     - NGINX
     - Business logic
     - OWASP top 10
@@ -30,6 +29,8 @@ info:
   cve:
     - CVE-2013-0337
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -44,5 +45,5 @@ execute:
 
 validate:
   response_payload:
-      contains_either: 
-        - "Welcome to nginx!"
+    contains_either:
+      - "Welcome to nginx!"

@@ -2,7 +2,7 @@ id: PYPISERVER_CRLF
 info:
   name: "Pypiserver Carriage Return Line Feed Injection"
   description: "Pypiserver Carriage Return Line Feed (CRLF) Injection refers to a vulnerability where an attacker can inject CRLF characters into HTTP headers handled by a Pypiserver instance. This type of injection can allow attackers to manipulate server responses, potentially leading to HTTP response splitting, cache poisoning, or cross-site scripting (XSS) attacks. By exploiting this vulnerability, malicious actors can interfere with how data is processed or displayed, leading to security risks such as data manipulation or hijacking of user sessions. Proper input validation and sanitization are key to mitigating this issue."
-  details:  "Pypiserver Carriage Return Line Feed (CRLF) Injection occurs when user input is not properly validated, allowing attackers to include CRLF characters in HTTP request headers. This can lead to HTTP response splitting, where the attacker manipulates the server's response to inject arbitrary headers or body content. For instance, an attacker could craft responses that redirect users to malicious sites or deliver unwanted content, effectively poisoning the cache. To prevent this vulnerability, developers must implement rigorous input validation and ensure that CRLF characters are sanitized in user inputs before being processed by the server."
+  details: "Pypiserver Carriage Return Line Feed (CRLF) Injection occurs when user input is not properly validated, allowing attackers to include CRLF characters in HTTP request headers. This can lead to HTTP response splitting, where the attacker manipulates the server's response to inject arbitrary headers or body content. For instance, an attacker could craft responses that redirect users to malicious sites or deliver unwanted content, effectively poisoning the cache. To prevent this vulnerability, developers must implement rigorous input validation and ensure that CRLF characters are sanitized in user inputs before being processed by the server."
   impact: "The impact of Pypiserver Carriage Return Line Feed (CRLF) Injection can be substantial, as it allows attackers to manipulate HTTP responses and potentially execute arbitrary code or redirect users to malicious sites. This vulnerability can lead to security issues such as cache poisoning, where legitimate content is replaced with harmful data, and cross-site scripting (XSS) attacks, compromising user sessions and data integrity. Additionally, if sensitive information is exposed or altered, it can result in data breaches, loss of user trust, and significant reputational damage to the organization. Organizations may also face legal repercussions if they fail to protect user data adequately."
   category:
     name: CRLF
@@ -25,6 +25,8 @@ info:
     - CVE-2020-15693
     - CVE-2023-0040
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -41,9 +43,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_payload:
     length:

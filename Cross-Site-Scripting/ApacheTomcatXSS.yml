@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2019-0221
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -35,9 +37,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: GET
-      - modify_url: ${paths}
-      - replace_body: '{}'
+        - modify_method: GET
+        - modify_url: ${paths}
+        - replace_body: '{}'
 
 validate:
   response_code:

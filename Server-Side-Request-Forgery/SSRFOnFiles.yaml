@@ -28,6 +28,8 @@ info:
   cve:
     - CVE-2022-4725
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -40,13 +42,13 @@ api_selection_filters:
         for_one:
           key:
             contains_either:
-                - file
+              - file
             extract: file_key
     - query_param:
         for_one:
           key:
             contains_either:
-                - file
+              - file
             extract: file_key
 
 execute:

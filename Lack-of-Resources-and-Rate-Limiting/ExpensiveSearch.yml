@@ -1,28 +1,9 @@
 id: EXPENSIVE_SEARCH
 info:
-  name: "Denial of Service test by entering long strings in 
-  search field of an endpoint"
-  description: "In this Denial of Service (DoS) test, excessively long strings 
-  are entered into the search field of an endpoint to evaluate the system's resilience 
-  against overload. By inundating the search functionality with extended inputs, 
-  testers assess how the system handles and processes such requests. This 
-  method helps uncover potential vulnerabilities in the search feature's 
-  implementation, aiding in the enhancement of defenses against DoS attacks 
-  targeting search functionalities."
-  details: "In this Denial of Service (DoS) test, the search field of an 
-  endpoint is bombarded with unusually long strings to evaluate the 
-  system's resilience under heavy loads. Such prolonged inputs may 
-  strain system resources, leading to performance degradation or 
-  unresponsiveness. Consequently, users may experience delays or 
-  disruptions in search functionality. By simulating these scenarios, 
-  testers can identify vulnerabilities and enhance the system's defenses 
-  against potential DoS attacks targeting the search feature."
-  impact: "The impact of successful Denial of Service (DoS) attacks targeting the 
-  search functionality of an endpoint can be substantial. It may result in 
-  system slowdowns or unavailability, hindering users' ability to perform 
-  essential tasks. Additionally, prolonged disruptions can erode user trust 
-  and damage the organization's reputation, leading to potential financial 
-  losses and diminished customer satisfaction."
+  name: "Denial of Service test by entering long strings in search field of an endpoint"
+  description: "In this Denial of Service (DoS) test, excessively long strings are entered into the search field of an endpoint to evaluate the system's resilience against overload. By inundating the search functionality with extended inputs, testers assess how the system handles and processes such requests. This method helps uncover potential vulnerabilities in the search feature's implementation, aiding in the enhancement of defenses against DoS attacks targeting search functionalities."
+  details: "In this Denial of Service (DoS) test, the search field of an endpoint is bombarded with unusually long strings to evaluate the system's resilience under heavy loads. Such prolonged inputs may strain system resources, leading to performance degradation or unresponsiveness. Consequently, users may experience delays or disruptions in search functionality. By simulating these scenarios, testers can identify vulnerabilities and enhance the system's defenses against potential DoS attacks targeting the search feature."
+  impact: "The impact of successful Denial of Service (DoS) attacks targeting the search functionality of an endpoint can be substantial. It may result in system slowdowns or unavailability, hindering users' ability to perform essential tasks. Additionally, prolonged disruptions can erode user trust and damage the organization's reputation, leading to potential financial losses and diminished customer satisfaction."
   category:
     name: RL
     shortName: Lack of Resources & Rate Limiting
@@ -41,6 +22,8 @@ info:
     - CVE-2023-4647
     - CVE-2023-38254
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -70,22 +53,22 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - add_header:
-        dummy_Header_Key: "dummyValue"
-    - validate:
-        percentage_match:
-          gte: 90
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_query_param:
-        searchKey: ${searchParamValues}
-    - modify_body_param:
-        searchKey: ${searchParamValues}
-    - validate:
-        response_code:
-          gt: 505
+    - req:
+        - add_header:
+            dummy_Header_Key: "dummyValue"
+        - validate:
+            percentage_match:
+              gte: 90
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_query_param:
+            searchKey: ${searchParamValues}
+        - modify_body_param:
+            searchKey: ${searchParamValues}
+        - validate:
+            response_code:
+              gt: 505
 validate:
   and:
     - compare_greater:

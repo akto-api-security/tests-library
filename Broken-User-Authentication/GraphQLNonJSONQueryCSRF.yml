@@ -23,6 +23,8 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -48,13 +50,13 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: GET
-      - replace_body: '{}'
-      - add_query_param:
-          query: "query getDummy {  __typename}"
-      - add_query_param:
-          operationName: "getDummy"
-      
+        - modify_method: GET
+        - replace_body: '{}'
+        - add_query_param:
+            query: "query getDummy {  __typename}"
+        - add_query_param:
+            operationName: "getDummy"
+
 
 validate:
   response_code:

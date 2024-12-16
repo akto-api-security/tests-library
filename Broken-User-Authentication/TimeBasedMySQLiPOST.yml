@@ -24,6 +24,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     eq: "POST"
@@ -35,7 +37,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -77,55 +79,55 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req: 
-    - add_header:
-        dummyKey: dummyVal
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          not_contains:
-            - Error
-            - Internal Server 
-            - Failed
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid token
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - " OR "
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${timeBasedPayloads}
-    - validate:
-        response_code:
-          eq: 429        
+    - req:
+        - add_header:
+            dummyKey: dummyVal
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " OR "
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${timeBasedPayloads}
+        - validate:
+            response_code:
+              eq: 429
 validate:
   and:
     - compare_greater:

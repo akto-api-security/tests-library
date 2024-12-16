@@ -1,7 +1,7 @@
 id: HTTP_HEADER_IP_INJECTION_INCORRECT_IP
 info:
   name: "Incorrect IP Injection in HTTP headers containing IP address"
-  description: > 
+  description: >
     "This test refers to a vulnerability where an attacker injects improper or malicious IP addresses into HTTP headers, such as `X-Forwarded-For`. This misconfiguration can lead to security issues, including unauthorized access or bypassing of IP-based restrictions. The injected IP addresses might be improperly validated or processed, allowing attackers to manipulate internal routing or authentication mechanisms."
   details: >
     "In this scenario, attackers inject invalid or malicious IP addresses into HTTP headers like `X-Forwarded-For` or `X-Real-IP`. This can disrupt the intended IP validation and processing logic within web applications or services. The system might incorrectly trust the injected IP address, potentially bypassing security controls, affecting access permissions, or leading to misrouted traffic. Such vulnerabilities can compromise the integrity of IP-based security mechanisms and expose internal systems to attacks."
@@ -28,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -87,10 +89,10 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - modify_header:
-        userKey: ${IPPayloads}
-        
+    - req:
+        - modify_header:
+            userKey: ${IPPayloads}
+
 validate:
   or:
     - response_payload:
@@ -100,7 +102,7 @@ validate:
           gte: 90
         not_contains:
           - Error
-          - Internal Server 
+          - Internal Server
           - Failed
           - Unauthorized
           - access denied
@@ -132,11 +134,11 @@ validate:
             regex: .*
           value:
             contains_either:
-            - "999.999.999.999"
-            - "1.1.1.1."
-            - ".1.1.1.1"
-            - "001.001.001.001"
-            - "1.1.1.10"
-            - "192.168.1.1%2500"
-            - "192%2E168%2E1%2E1"
-            - "::ffff:7f00:1"
+              - "999.999.999.999"
+              - "1.1.1.1."
+              - ".1.1.1.1"
+              - "001.001.001.001"
+              - "1.1.1.10"
+              - "192.168.1.1%2500"
+              - "192%2E168%2E1%2E1"
+              - "::ffff:7f00:1"

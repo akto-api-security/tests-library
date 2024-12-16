@@ -1,7 +1,7 @@
 id: PHP_CGI_RCE
 info:
   name: "PHP CGI Remote Code Execution"
-  description: "The PHP CGI Remote Code Execution vulnerability occurs in setups where PHP is incorrectly configured with the Common Gateway Interface (CGI). This flaw allows attackers to craft malicious URLs that bypass normal security checks and execute arbitrary PHP code on the server. Exploiting this vulnerability can lead to unauthorized access and control of affected systems, making it a critical security risk for web servers using CGI-based PHP setups." 
+  description: "The PHP CGI Remote Code Execution vulnerability occurs in setups where PHP is incorrectly configured with the Common Gateway Interface (CGI). This flaw allows attackers to craft malicious URLs that bypass normal security checks and execute arbitrary PHP code on the server. Exploiting this vulnerability can lead to unauthorized access and control of affected systems, making it a critical security risk for web servers using CGI-based PHP setups."
   details: "The PHP CGI Remote Code Execution vulnerability, identified as CVE-2012-1823, is due to improper handling of query string parameters in PHP when used with CGI. Attackers can craft specially formed URLs to inject commands directly into the server, bypassing normal input sanitization. This issue is especially prevalent in web servers that rely on CGI to handle PHP requests, potentially leading to remote code execution and system compromise. Patches and proper configuration are essential to mitigate the risk."
   impact: "The impact of the PHP CGI Remote Code Execution vulnerability is severe, allowing attackers to execute arbitrary PHP code on vulnerable servers. This can lead to full system compromise, data breaches, defacement of websites, and the deployment of malware. Since many web servers rely on PHP, this vulnerability poses a high risk for exploitation if not properly patched or mitigated through secure configurations."
   category:
@@ -18,6 +18,8 @@ info:
     - CWE-78
   cve:
     - CVE-2012-1823
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_payload:
     length:

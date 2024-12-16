@@ -2,7 +2,7 @@ id: DJANGO_ADMIN_PANEL_DETECTION
 info:
   name: "Django Admin Panel Detection Test"
   description: "Django Admin Panel Detection Test involves identifying the presence of the Django framework's default admin interface in a web application. This test typically focuses on locating the `/admin` endpoint, which is often exposed by default. Detecting the admin panel is critical for assessing its security posture, as attackers could target it with brute-force or credential-stuffing attacks if left unprotected. Proper configuration and access restrictions mitigate such risks."
-  details:  "The Django Admin Panel Detection Test identifies the existence and accessibility of the admin interface, typically located at `/admin`. This involves sending requests to common endpoints, analyzing HTTP responses, or observing default admin page elements. Detecting the panel helps evaluate if it is properly secured through methods like URL obfuscation, strong authentication, and IP restrictions, reducing the risk of unauthorized access or exploitation."
+  details: "The Django Admin Panel Detection Test identifies the existence and accessibility of the admin interface, typically located at `/admin`. This involves sending requests to common endpoints, analyzing HTTP responses, or observing default admin page elements. Detecting the panel helps evaluate if it is properly secured through methods like URL obfuscation, strong authentication, and IP restrictions, reducing the risk of unauthorized access or exploitation."
   impact: "The impact of an exposed Django Admin Panel can be severe, as it provides attackers with potential access to critical application data and administrative controls. If not properly secured, it may be vulnerable to brute-force attacks, credential stuffing, or privilege escalation. An insecure admin panel can lead to data breaches, unauthorized changes to the application, or complete system compromise, posing significant risks to the organization’s security."
   category:
     name: SM
@@ -19,6 +19,8 @@ info:
     - CVE-2018-10245
 
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -35,10 +37,10 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
-      - follow_redirect: true
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
+        - follow_redirect: true
 validate:
   response_code:
     eq: 200

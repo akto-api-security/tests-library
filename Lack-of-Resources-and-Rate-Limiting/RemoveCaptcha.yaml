@@ -3,8 +3,8 @@ info:
   name: "Remove Captcha from request"
   description: "Ignoring CAPTCHA validation without the field present in the backend server can result in severe damage and vulnerabilities."
   details: >
-            "By neglecting CAPTCHA validation when the field is absent, the backend server becomes vulnerable to significant damage."
-            "Hackers can exploit this loophole to gain unauthorized access, engage in malicious activities, compromise privacy, and cause financial losses or service disruptions."
+    "By neglecting CAPTCHA validation when the field is absent, the backend server becomes vulnerable to significant damage."
+    "Hackers can exploit this loophole to gain unauthorized access, engage in malicious activities, compromise privacy, and cause financial losses or service disruptions."
   impact: "Bypassing CAPTCHA protection enables hackers to automate malicious activities, such as unauthorized account access, spamming, data harvesting, and DDoS attacks."
   category:
     name: RL
@@ -24,6 +24,8 @@ info:
   cve:
     - CVE-2021-37417
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -59,7 +61,7 @@ validate:
     gte: 200
     lt: 300
   response_payload:
-    percentage_match: 
+    percentage_match:
       gt: 80
     length:
       gt: 0

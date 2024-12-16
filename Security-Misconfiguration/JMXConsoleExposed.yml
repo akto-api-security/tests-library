@@ -1,4 +1,3 @@
----
 id: JMX_CONSOLE_EXPOSED
 info:
   name: "JMX Console Exposure"
@@ -22,6 +21,8 @@ info:
     - CWE-200
     - CWE-538
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -45,9 +46,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: ${attemptValues}
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: ${attemptValues}
+        - modify_method: GET
+        - replace_body: '{}'
 
 validate:
   response_code:

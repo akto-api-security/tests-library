@@ -1,4 +1,3 @@
----
 id: TOMCAT_SERVER_VERSION_DISCLOSED
 info:
   name: Tomcat Server Version Disclosed
@@ -10,12 +9,12 @@ info:
     "The disclosure of server version information can lead to targeted attacks on the server, increasing the risk of exploitation. If the exposed version has known vulnerabilities, attackers may leverage this information to compromise the server, leading to data breaches, service disruptions, or unauthorized access to sensitive data."
 
   category:
-      name: SM
-      shortName: Misconfiguration
-      displayName: Security Misconfiguration (SM)
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
   subCategory: TOMCAT_SERVER_VERSION_DISCLOSED
   severity: LOW
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -28,6 +27,8 @@ info:
   cve:
     - CVE-2017-7529
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -50,7 +51,7 @@ validate:
       - <html>
       - </html>
   response_headers:
-      regex: .*Apache-Coyote.*
-        
+    regex: .*Apache-Coyote.*
+
 strategy:
   run_once: /

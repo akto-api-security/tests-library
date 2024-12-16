@@ -10,7 +10,7 @@ info:
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: REPLACE_AUTH_TOKEN_PATCH
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -28,6 +28,8 @@ info:
   cve:
     - CVE-2023-39349
 
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -41,7 +43,7 @@ api_selection_filters:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -70,60 +72,22 @@ execute:
   type: multiple
   requests:
     - req:
-      - modify_method: "GET"
-      - replace_body: '{}'
-      - validate: 
-          response_code:
-            gte: 200
-            lt: 300
-            extract: x1ResponseCode
-          response_payload:
-            for_one:
-              key:
-                regex: '\b(?:user[-_]?id|userid|userId|user[-_]?identifier)\b'
-            length:
-              gt: 0
-            not_contains:
-              - Error
-              - Internal Server 
-              - Failed
-              - Unauthorized
-              - access denied
-              - Forbidden
-              - Method Not allowed
-              - Gateway timeout
-              - request timeout
-              - server error
-              - server busy
-              - authentication error
-              - authorization error
-              - validation error
-              - Permission Denied
-              - invalid token
-              - token expired
-              - session expired
-              - session timeout
-              - unexpected error
-              - unable to process request
-              - bad request
-              - service unavailable
-              - account is locked
-              - account is blocked
-              - multiple failed attempts           
-      - success: x2
-      - failure: exit
-    - req:
-      - replace_auth_header: true
-      - validate:
-          response_code:
-            gte: 200
-            lt: 300
-          response_payload:
+        - modify_method: "GET"
+        - replace_body: '{}'
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+              extract: x1ResponseCode
+            response_payload:
+              for_one:
+                key:
+                  regex: '\b(?:user[-_]?id|userid|userId|user[-_]?identifier)\b'
               length:
-                eq: 0
+                gt: 0
               not_contains:
                 - Error
-                - Internal Server 
+                - Internal Server
                 - Failed
                 - Unauthorized
                 - access denied
@@ -148,46 +112,84 @@ execute:
                 - account is locked
                 - account is blocked
                 - multiple failed attempts
-      - success: x3
-      - failure: exit
+        - success: x2
+        - failure: exit
     - req:
-      - replace_body: '{}'
-      - modify_method: GET
-      - validate:
-          response_code:
-            eq: ${x1ResponseCode}
-          response_payload:
-            for_one:
-              key:
-                regex: '\b(?:user[-_]?id|userid|userId|user[-_]?identifier)\b'
-            length:
-              gt: 0
-            not_contains:
-              - Error
-              - Internal Server 
-              - Failed
-              - Unauthorized
-              - access denied
-              - Forbidden
-              - Method Not allowed
-              - Gateway timeout
-              - request timeout
-              - server error
-              - server busy
-              - authentication error
-              - authorization error
-              - validation error
-              - Permission Denied
-              - invalid token
-              - token expired
-              - session expired
-              - session timeout
-              - unexpected error
-              - unable to process request
-              - bad request
-              - service unavailable
-              - account is locked
-              - account is blocked
-              - multiple failed attempts
-      - success: vulnerable
-      - failure: exit
+        - replace_auth_header: true
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                eq: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+        - success: x3
+        - failure: exit
+    - req:
+        - replace_body: '{}'
+        - modify_method: GET
+        - validate:
+            response_code:
+              eq: ${x1ResponseCode}
+            response_payload:
+              for_one:
+                key:
+                  regex: '\b(?:user[-_]?id|userid|userId|user[-_]?identifier)\b'
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+        - success: vulnerable
+        - failure: exit

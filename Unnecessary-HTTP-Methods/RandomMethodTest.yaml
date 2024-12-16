@@ -3,26 +3,17 @@ info:
   name: Access Control Bypass by changing request method to an arbitrary value
   description: "Many authentication mechanisms only limit access to the most common HTTP methods, thus allowing unauthorized access to restricted resources by other HTTP methods."
   details: >
-            "It may be possible to bypass authentication or authorization on this endpoint by changing the HTTP
-            method to an arbitrary value. The original request was replayed by removing victim's <b>auth</b> token. The server 
-            responded with 2XX success codes.<br>"
-            "<b>Background:</b> An access control vulnerability can arise if the server does not properly enforce 
-            authorization checks for certain resources when the an arbitrary method value is used. This vulnerability can allow 
-            an attacker to bypass access controls and gain unauthorized access to restricted resources. The access 
-            bypass control by changing the HTTP method to an arbitrary value occurs when an attacker modifies the HTTP request 
-            method from a restricted method (e.g., POST) to the an arbitrary value. By doing so, the attacker aims to 
-            exploit the server's vulnerability in handling authorization checks for the given method, which may 
-            differ from other methods."
-  impact: "Broken User authentication is a serious vulnerability. Attackers can gain control to other user's 
-          accounts in the system, read their personal data, and perform sensitive actions on their behalf, like 
-          money transactions and sending personal messages."
+    "It may be possible to bypass authentication or authorization on this endpoint by changing the HTTP
+    method to an arbitrary value. The original request was replayed by removing victim's <b>auth</b> token. The server  responded with 2XX success codes.<br>"
+    "<b>Background:</b> An access control vulnerability can arise if the server does not properly enforce  authorization checks for certain resources when the an arbitrary method value is used. This vulnerability can allow  an attacker to bypass access controls and gain unauthorized access to restricted resources. The access  bypass control by changing the HTTP method to an arbitrary value occurs when an attacker modifies the HTTP request  method from a restricted method (e.g., POST) to the an arbitrary value. By doing so, the attacker aims to  exploit the server's vulnerability in handling authorization checks for the given method, which may  differ from other methods."
+  impact: "Broken User authentication is a serious vulnerability. Attackers can gain control to other user's accounts in the system, read their personal data, and perform sensitive actions on their behalf, like money transactions and sending personal messages."
   category:
     name: UHM
     shortName: Unnecessary HTTP Methods
     displayName: Unnecessary HTTP Methods (UHM)
   subCategory: RANDOM_METHOD_TEST
   severity: LOW
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -38,6 +29,8 @@ info:
     - CVE-2020-35239
     - CVE-2018-19908
 
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 
@@ -54,8 +47,8 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: TestMethod
-      - remove_auth_header: true
+        - modify_method: TestMethod
+        - remove_auth_header: true
 
 validate:
   response_code:

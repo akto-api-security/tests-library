@@ -2,7 +2,7 @@ id: JAVA_SERVER_FACES_LFI
 info:
   name: "Java Server Faces Local File Inclusion"
   description: "Java Server Faces (JSF) Local File Inclusion (LFI) is a vulnerability in web applications that use JSF, where an attacker can include local files from the server by manipulating user input. This often occurs when the application fails to properly validate or sanitize input parameters that specify file paths. By exploiting this vulnerability, attackers can access sensitive files on the server, such as configuration files or source code, potentially leading to information disclosure or further exploitation. Proper input validation and path sanitization are crucial to prevent LFI attacks."
-  details:  "Java Server Faces (JSF) Local File Inclusion (LFI) occurs when user-supplied input, such as file paths or filenames, is improperly handled by the JSF application. If the application allows users to request local files without validating the input, attackers can manipulate the file path to access files outside the intended directory, potentially revealing sensitive information. For example, by providing a path like ../../etc/passwd, an attacker could access the server’s password file. Mitigating this requires proper input validation, restricting file access, and using secure coding practices."
+  details: "Java Server Faces (JSF) Local File Inclusion (LFI) occurs when user-supplied input, such as file paths or filenames, is improperly handled by the JSF application. If the application allows users to request local files without validating the input, attackers can manipulate the file path to access files outside the intended directory, potentially revealing sensitive information. For example, by providing a path like ../../etc/passwd, an attacker could access the server’s password file. Mitigating this requires proper input validation, restricting file access, and using secure coding practices."
   impact: "The impact of Java Server Faces (JSF) Local File Inclusion (LFI) can be severe, as it allows attackers to access sensitive files on the server, such as configuration files, credentials, or even source code. This can lead to information disclosure, unauthorized access, or further exploitation of the system. By exploiting LFI, attackers may also escalate their privileges, compromise application integrity, or prepare the system for more advanced attacks, such as remote code execution."
   category:
     name: LFI
@@ -25,6 +25,8 @@ info:
     - CVE-2023-22973
 
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -50,9 +52,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

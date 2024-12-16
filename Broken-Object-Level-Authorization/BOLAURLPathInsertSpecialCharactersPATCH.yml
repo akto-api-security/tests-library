@@ -1,23 +1,19 @@
 id: BOLA_URL_INSERT_SPECIAL_CHAR_PATCH
 info:
   name: "Exploiting BOLA by inserting Special Characters in URL path for Unauthorized Access with PATCH/PUT based APIs"
-  description: > 
-    "In this BOLA test (for PUT/PATCH based APIs), attackers exploit vulnerabilities by inserting special characters into the URL path, attempting unauthorized access. This method focuses on flaws in object-level authorization, enabling attackers to manipulate 
-    URLs and bypass access controls. By strategically using special characters, the test emulates unauthorized access attempts, exposing weaknesses in the authorization process for organizations to address and enhance their system's security."
+  description: >
+    "In this BOLA test (for PUT/PATCH based APIs), attackers exploit vulnerabilities by inserting special characters into the URL path, attempting unauthorized access. This method focuses on flaws in object-level authorization, enabling attackers to manipulate  URLs and bypass access controls. By strategically using special characters, the test emulates unauthorized access attempts, exposing weaknesses in the authorization process for organizations to address and enhance their system's security."
   details: >
-    "This BOLA test (for PUT/PATCH based APIs) involves probing for security weaknesses by inserting special characters into URL paths. This simulated attack aims to exploit vulnerabilities in object-level authorization, allowing unauthorized access. Attackers manipulate 
-    the URL structure to bypass access controls, revealing potential flaws in the authorization process. This test helps organizations identify and rectify security risks associated with object-level authorization mechanisms."
+    "This BOLA test (for PUT/PATCH based APIs) involves probing for security weaknesses by inserting special characters into URL paths. This simulated attack aims to exploit vulnerabilities in object-level authorization, allowing unauthorized access. Attackers manipulate  the URL structure to bypass access controls, revealing potential flaws in the authorization process. This test helps organizations identify and rectify security risks associated with object-level authorization mechanisms."
   impact: >
-    "Exploiting BOLA through special character insertion can have severe 
-    impacts. Unauthorized access to sensitive objects may lead to data breaches, exposing confidential information. Attackers could manipulate or delete critical data, disrupting business operations and causing reputational damage. Organizations must address BOLA vulnerabilities promptly to prevent these potential impacts 
-    on data integrity, privacy, and overall system security."
+    "Exploiting BOLA through special character insertion can have severe  impacts. Unauthorized access to sensitive objects may lead to data breaches, exposing confidential information. Attackers could manipulate or delete critical data, disrupting business operations and causing reputational damage. Organizations must address BOLA vulnerabilities promptly to prevent these potential impacts  on data integrity, privacy, and overall system security."
   category:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: BOLA_URL_INSERT_SPECIAL_CHAR_PATCH
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -35,6 +31,8 @@ info:
   cve:
     - CVE-2022-34770
 
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -50,7 +48,7 @@ api_selection_filters:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -94,38 +92,38 @@ execute:
   type: multiple
   requests:
     - req:
-      - modify_url:
-          token_insert:
-            location: 1
-            replace_with: ${specialCharacters}
-      - success: vulnerable
-      - failure: x2
+        - modify_url:
+            token_insert:
+              location: 1
+              replace_with: ${specialCharacters}
+        - success: vulnerable
+        - failure: x2
     - req:
-      - modify_url:
-          token_insert:
-            location: 2
-            replace_with: ${specialCharacters}
-      - success: vulnerable
-      - failure: x3
+        - modify_url:
+            token_insert:
+              location: 2
+              replace_with: ${specialCharacters}
+        - success: vulnerable
+        - failure: x3
     - req:
-      - modify_url:
-          token_insert:
-            location: 3
-            replace_with: ${specialCharacters}
-      - success: vulnerable
-      - failure: x4
+        - modify_url:
+            token_insert:
+              location: 3
+              replace_with: ${specialCharacters}
+        - success: vulnerable
+        - failure: x4
     - req:
-      - modify_url:
-          token_insert:
-            location: 4
-            replace_with: ${specialCharacters}
-      - success: vulnerable
-      - failure: x5
+        - modify_url:
+            token_insert:
+              location: 4
+              replace_with: ${specialCharacters}
+        - success: vulnerable
+        - failure: x5
     - req:
-      - modify_url:
-          token_insert:
-            location: 5
-            replace_with: ${specialCharacters}
+        - modify_url:
+            token_insert:
+              location: 5
+              replace_with: ${specialCharacters}
 validate:
   response_code:
     gte: 200
@@ -135,7 +133,7 @@ validate:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

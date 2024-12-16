@@ -2,7 +2,7 @@ id: JENKINS_COOKIE_EXPOSURE
 info:
   name: "Jenkins Cookie Exposure"
   description: "The Jenkins Cookie Exposure vulnerability allows attackers to access sensitive session information through insecure cookie handling. When Jenkins stores session cookies without proper security attributes, such as the HttpOnly and Secure flags, attackers can exploit this to hijack user sessions. This vulnerability can lead to unauthorized access to Jenkins instances, potentially compromising sensitive build information and configuration settings. Proper configuration of cookie attributes is essential to mitigate this risk."
-  details:  "The Jenkins Cookie Exposure vulnerability arises when Jenkins improperly configures session cookies, failing to set security attributes like HttpOnly and Secure. Without these protections, cookies can be accessed by client-side scripts or transmitted over unencrypted connections, making them susceptible to interception by attackers. This issue affects various versions of Jenkins, particularly those that do not implement stringent security measures for cookie management. To address this vulnerability, users should upgrade to the latest version and ensure secure cookie configurations are in place."
+  details: "The Jenkins Cookie Exposure vulnerability arises when Jenkins improperly configures session cookies, failing to set security attributes like HttpOnly and Secure. Without these protections, cookies can be accessed by client-side scripts or transmitted over unencrypted connections, making them susceptible to interception by attackers. This issue affects various versions of Jenkins, particularly those that do not implement stringent security measures for cookie management. To address this vulnerability, users should upgrade to the latest version and ensure secure cookie configurations are in place."
   impact: "The impact of the Jenkins Cookie Exposure vulnerability is significant, as it can lead to session hijacking and unauthorized access to Jenkins instances. Attackers can gain control over sensitive operations, modify builds, and access confidential configuration data. This breach not only compromises the integrity of development workflows but also poses risks to the overall security of the applications being developed. Mitigating this vulnerability is crucial to protect sensitive information and maintain trust in the Jenkins platform."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2019-10405
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -38,9 +40,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/whoAmI/"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "/whoAmI/"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200
@@ -54,17 +56,17 @@ validate:
       - 'Cookie'
       - 'JSESSIONID'
   and:
-  - response_headers:
-      for_one:
-        key:
-          eq: "content-type"
-        value:
-          eq: "text/html"
-  - response_headers:
-      for_one:
-        key:
-          eq: "x-jenkins"
-        value:
-          regex: ".*"
+    - response_headers:
+        for_one:
+          key:
+            eq: "content-type"
+          value:
+            eq: "text/html"
+    - response_headers:
+        for_one:
+          key:
+            eq: "x-jenkins"
+          value:
+            regex: ".*"
 strategy:
   run_once: /

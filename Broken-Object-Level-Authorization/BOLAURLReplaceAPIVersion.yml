@@ -1,37 +1,19 @@
 id: BOLA_URL_REPLACE_API_VERSION
 info:
   name: "Exploiting BOLA by replacing URL path with API Version IDs for Unauthorized Access."
-  description: > 
-    "This test involves exploiting security vulnerabilities by manipulating the URL 
-    path with API Version IDs to gain unauthorized access. In this scenario, 
-    attackers leverage BOLA to compromise the system by replacing the URL path, 
-    tricking the system into granting access to sensitive data or functionalities 
-    without proper authorization. This test aims to identify and rectify weaknesses 
-    in object-level authorization mechanisms to ensure robust security measures 
-    against unauthorized access attempts."
+  description: >
+    "This test involves exploiting security vulnerabilities by manipulating the URL  path with API Version IDs to gain unauthorized access. In this scenario,  attackers leverage BOLA to compromise the system by replacing the URL path,  tricking the system into granting access to sensitive data or functionalities  without proper authorization. This test aims to identify and rectify weaknesses  in object-level authorization mechanisms to ensure robust security measures  against unauthorized access attempts."
   details: >
-    "This test focuses on identifying vulnerabilities where attackers manipulate URL 
-    paths by substituting them with API Version IDs. This manipulation allows 
-    unauthorized access to sensitive information or functionalities within a 
-    system. By exploiting BOLA, attackers can circumvent proper authorization 
-    mechanisms, posing a significant security risk. Conducting this test helps 
-    organizations identify and address weaknesses in object-level authorization, 
-    enhancing overall system security."
+    "This test focuses on identifying vulnerabilities where attackers manipulate URL  paths by substituting them with API Version IDs. This manipulation allows  unauthorized access to sensitive information or functionalities within a  system. By exploiting BOLA, attackers can circumvent proper authorization  mechanisms, posing a significant security risk. Conducting this test helps  organizations identify and address weaknesses in object-level authorization,  enhancing overall system security."
   impact: >
-    "Exploiting Broken Object Level Authorization (BOLA) through the manipulation of 
-    URL paths can have severe impacts on system security. Unauthorized access to 
-    sensitive data or functionalities may lead to unauthorized disclosure, 
-    alteration, or deletion of critical information. This security vulnerability 
-    could result in a compromise of user privacy, financial losses, and reputational 
-    damage for the affected organization. Addressing BOLA vulnerabilities is crucial 
-    to mitigate these potential impacts and maintain the integrity of the system."
+    "Exploiting Broken Object Level Authorization (BOLA) through the manipulation of  URL paths can have severe impacts on system security. Unauthorized access to  sensitive data or functionalities may lead to unauthorized disclosure,  alteration, or deletion of critical information. This security vulnerability  could result in a compromise of user privacy, financial losses, and reputational  damage for the affected organization. Addressing BOLA vulnerabilities is crucial  to mitigate these potential impacts and maintain the integrity of the system."
   category:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: BOLA_URL_REPLACE_API_VERSION
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -49,6 +31,8 @@ info:
   cve:
     - CVE-2022-34770
 
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -64,7 +48,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -109,35 +93,35 @@ execute:
   type: multiple
   requests:
     - req:
-      - replace_auth_header: true
-      - modify_url:
-          token_replace:
-            location: 1
-            replace_with: ${apiVersions}
-      - success: vulnerable
-      - failure: x2
+        - replace_auth_header: true
+        - modify_url:
+            token_replace:
+              location: 1
+              replace_with: ${apiVersions}
+        - success: vulnerable
+        - failure: x2
     - req:
-      - replace_auth_header: true
-      - modify_url:
-          token_replace:
-            location: 2
-            replace_with: ${apiVersions}
-      - success: vulnerable
-      - failure: x3
+        - replace_auth_header: true
+        - modify_url:
+            token_replace:
+              location: 2
+              replace_with: ${apiVersions}
+        - success: vulnerable
+        - failure: x3
     - req:
-      - replace_auth_header: true
-      - modify_url:
-          token_replace:
-            location: 3
-            replace_with: ${apiVersions}
-      - success: vulnerable
-      - failure: x4
+        - replace_auth_header: true
+        - modify_url:
+            token_replace:
+              location: 3
+              replace_with: ${apiVersions}
+        - success: vulnerable
+        - failure: x4
     - req:
-      - replace_auth_header: true
-      - modify_url:
-          token_replace:
-            location: 4
-            replace_with: ${apiVersions}
+        - replace_auth_header: true
+        - modify_url:
+            token_replace:
+              location: 4
+              replace_with: ${apiVersions}
 validate:
   response_code:
     gte: 200
@@ -151,7 +135,7 @@ validate:
       gte: 90
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

@@ -3,8 +3,8 @@ info:
   name: Text injection via invalid URLs
   description: "Injecting malicious content into a web url to mislead users."
   details: >
-            "Content spoofing vulnerability is a web application security flaw where attackers inject malicious content into user-supplied data.
-            By exploiting this vulnerability, attackers can manipulate the displayed content, misleading users. An example involves redirecting users from valid website to a fake website. "
+    "Content spoofing vulnerability is a web application security flaw where attackers inject malicious content into user-supplied data.
+    By exploiting this vulnerability, attackers can manipulate the displayed content, misleading users. An example involves redirecting users from valid website to a fake website. "
   impact: "This attack is typically used as, or in conjunction with, social engineering because the attack is exploiting a code-based vulnerability and a user’s trust."
   category:
     name: SM
@@ -12,7 +12,7 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: TEXT_INJECTION_VIA_INVALID_URLS
   severity: LOW
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -25,6 +25,8 @@ info:
     - CVE-2019-1680
     - CVE-2022-42889
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -35,7 +37,7 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}/has%20been%20changed%20to%20https%3A%2F%2Fwww.fakewebsite.com.%20so%20please%20visit%20https%3A%2F%2Fwww.fakewebsite.com%20as%20your%20requested%20link
+        - modify_url: ${urlVar}/has%20been%20changed%20to%20https%3A%2F%2Fwww.fakewebsite.com.%20so%20please%20visit%20https%3A%2F%2Fwww.fakewebsite.com%20as%20your%20requested%20link
 
 validate:
   response_payload:
@@ -46,5 +48,5 @@ validate:
       key:
         eq: Content-Type
       value:
-        contains_either:  "text/html"
+        contains_either: "text/html"
 

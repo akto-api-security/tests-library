@@ -1,32 +1,12 @@
 id: AUTH_BYPASS_STAGING_URL
 info:
   name: "Authentication Bypass by hitting Staging URLs for Login endpoints"
-  description: > 
-    "Authentication Bypass by hitting Staging URLs for Login endpoints is a security 
-    vulnerability where attackers exploit misconfigurations in a web application's 
-    staging environment. By targeting staging URLs associated with login endpoints, 
-    attackers may uncover weaknesses, leading to unauthorized access without proper 
-    authentication. Addressing this vulnerability requires thorough security assessments 
-    and the implementation of robust measures to secure the staging environment, 
-    preventing potential authentication bypass issues and enhancing overall web 
-    application security."
+  description: >
+    "Authentication Bypass by hitting Staging URLs for Login endpoints is a security  vulnerability where attackers exploit misconfigurations in a web application's  staging environment. By targeting staging URLs associated with login endpoints,  attackers may uncover weaknesses, leading to unauthorized access without proper  authentication. Addressing this vulnerability requires thorough security assessments  and the implementation of robust measures to secure the staging environment,  preventing potential authentication bypass issues and enhancing overall web  application security."
   details: >
-    "Authentication Bypass by hitting Staging URLs for Login endpoints involves 
-    attackers exploiting misconfigurations in a web application's staging environment. 
-    By accessing staging URLs related to login endpoints, they may discover 
-    vulnerabilities that allow unauthorized access without proper authentication. 
-    Mitigating this risk requires comprehensive security assessments and the 
-    implementation of stringent measures to secure the staging environment, preventing 
-    potential authentication bypass scenarios and bolstering the overall security 
-    of the web application."
+    "Authentication Bypass by hitting Staging URLs for Login endpoints involves  attackers exploiting misconfigurations in a web application's staging environment.  By accessing staging URLs related to login endpoints, they may discover  vulnerabilities that allow unauthorized access without proper authentication.  Mitigating this risk requires comprehensive security assessments and the  implementation of stringent measures to secure the staging environment, preventing  potential authentication bypass scenarios and bolstering the overall security  of the web application."
   impact: >
-    "The impact of Authentication Bypass by hitting Staging URLs for Login endpoints 
-    can be significant, allowing unauthorized access to sensitive areas of a web 
-    application. Exploiting misconfigurations in the staging environment may 
-    lead to compromised user accounts, unauthorized data exposure, and potential 
-    security breaches. Addressing this vulnerability is crucial to maintain 
-    the confidentiality and integrity of user data, emphasizing the need for 
-    robust security measures in both production and staging environments."
+    "The impact of Authentication Bypass by hitting Staging URLs for Login endpoints  can be significant, allowing unauthorized access to sensitive areas of a web  application. Exploiting misconfigurations in the staging environment may  lead to compromised user accounts, unauthorized data exposure, and potential  security breaches. Addressing this vulnerability is crucial to maintain  the confidentiality and integrity of user data, emphasizing the need for  robust security measures in both production and staging environments."
 
   category:
     name: NO_AUTH
@@ -48,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -60,7 +42,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -110,11 +92,11 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - modify_url:
-        token_replace:
-          regex: "https://"
-          replace_with: ${subPaths}
+    - req:
+        - modify_url:
+            token_replace:
+              regex: "https://"
+              replace_with: ${subPaths}
 
 validate:
   response_code:
@@ -126,7 +108,7 @@ validate:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

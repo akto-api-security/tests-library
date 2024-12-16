@@ -1,10 +1,10 @@
 id: LFI_IN_PARAMETER
 info:
   name: "LFI in parameter"
-  description: "File path fuzzing in query parameters and request body to identify potential Local File Inclusion vulnerabilities." 
+  description: "File path fuzzing in query parameters and request body to identify potential Local File Inclusion vulnerabilities."
   details: >
-            "This test examines the presence of file path names in query parameters or request bodies, fuzzing them to identify potential Local File Inclusion vulnerabilities."
-            "If exploited, LFI can lead to unauthorized access, information disclosure, server compromise, and execution of malicious code, posing significant risks to the application and its users."
+    "This test examines the presence of file path names in query parameters or request bodies, fuzzing them to identify potential Local File Inclusion vulnerabilities."
+    "If exploited, LFI can lead to unauthorized access, information disclosure, server compromise, and execution of malicious code, posing significant risks to the application and its users."
   impact: "Successful exploitation allows an attacker to read arbitrary files on a web server, potentially leading to unauthorized access, information disclosure, server compromise, and execution of malicious code."
   category:
     name: LFI
@@ -25,6 +25,8 @@ info:
   cve:
     - CVE-2022-29597
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -43,7 +45,7 @@ api_selection_filters:
             extract: file_path
 
 wordLists:
-  filePaths: 
+  filePaths:
     - /etc/passwd
     - /etc/npasswd
     - ..//etc/passwd
@@ -79,10 +81,10 @@ execute:
   type: single
   requests:
     - req:
-      - modify_query_param:
-          file_path : ${filePaths}
-      - modify_body_param:
-          file_path: ${filePaths}
+        - modify_query_param:
+            file_path: ${filePaths}
+        - modify_body_param:
+            file_path: ${filePaths}
 
 validate:
   response_payload:

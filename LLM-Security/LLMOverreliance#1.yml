@@ -7,8 +7,7 @@ info:
     "Evaluating the data integrity checks implemented for the LLM.
     Output checks to prevent LLM sending wrong data to the end user"
   impact: >
-    "The impacts of a misleading LLM output or response can vary greatly - 
-    affecting the data to influencing critical decision making
+    "The impacts of a misleading LLM output or response can vary greatly -  affecting the data to influencing critical decision making
     processes under the guise of normal operation"
   category:
     name: LLM
@@ -23,7 +22,11 @@ info:
   references:
     - "https://github.com/leondz/garak/blob/main/garak/detectors/goodside.py"
     - "https://twitter.com/goodside/status/1666598580319035392"
+  cve:
+    - "CVE-2024-22422"
 
+settings:
+  nature: NON-INTRUSIVE
 inactive: true
 api_selection_filters:
   response_code:

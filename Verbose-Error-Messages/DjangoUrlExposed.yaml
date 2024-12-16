@@ -3,10 +3,9 @@ info:
   name: Django url exposed due to debug mode enable
   description: "The error response contains information related to urls which may help in more sophisticated attacks"
   details: >
-            "The endpoint appears to be give out information related to endpoints existing in the application, on trying an invalid request, possibly due to DJANGO DEBUG mode being enabled. The original request
-            was replayed by modifying the url with an invalid value.
-            "<b>Background:</b> Inconsistencies in error messages can reveal important clues on how a site works, 
-            and what information is present under the covers.
+    "The endpoint appears to be give out information related to endpoints existing in the application, on trying an invalid request, possibly due to DJANGO DEBUG mode being enabled. The original request
+    was replayed by modifying the url with an invalid value.
+    "<b>Background:</b> Inconsistencies in error messages can reveal important clues on how a site works,  and what information is present under the covers.
   impact: "This information can be used to facilitate more sophisticated attacks on your application"
   category:
     name: VEM
@@ -14,7 +13,7 @@ info:
     displayName: Verbose Error Messages (VEM)
   subCategory: DJANGO_URL_EXPOSED
   severity: LOW
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -28,6 +27,8 @@ info:
   cve:
     - CVE-2017-12794
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -53,13 +54,13 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}testInvalidUrl
+        - modify_url: ${urlVar}testInvalidUrl
 
 validate:
   response_payload:
     length:
       gt: 0
-    contains_all: 
+    contains_all:
       - "debug=true"
       - "false"
       - django

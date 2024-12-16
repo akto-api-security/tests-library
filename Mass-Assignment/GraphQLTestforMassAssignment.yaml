@@ -1,7 +1,7 @@
 id: GRAPHQL_MASS_ASSIGNMENT
 info:
   name: "Mass Assignment Test for GraphQL APIs"
-  description: > 
+  description: >
     "This test involves evaluating GraphQL endpoints for vulnerabilities related to mass assignment. This occurs when an API allows users to set or modify attributes of objects without proper authorization, potentially leading to unauthorized data changes. The test aims to identify and mitigate such risks by ensuring that only permitted fields can be modified by users, thus securing the API against exploitation."
   details: >
     "This test involves assessing the API's resilience against mass assignment vulnerabilities, where unauthorized users can modify sensitive attributes. It includes verifying that only specified fields can be altered, ensuring robust role-based access control (RBAC) is in place, and checking for proper input validation and filtering to prevent unauthorized data changes. This test is crucial for maintaining the security and integrity of the API."
@@ -25,6 +25,8 @@ info:
     - CVE-2023-32079
     - CVE-2023-42768
 
+settings:
+  nature: INTRUSIVE
 wordLists:
   ${nonTerminalKeys}:
     for_all:
@@ -53,11 +55,11 @@ api_selection_filters:
 execute:
   type: single
   requests:
-  - req:
-    - ${nonTerminalKeys}:
-        for_all:
-        - add_unique_graphql_field:
-            ${iteratorKey}: "${iteratorKey}.wordList"
+    - req:
+        - ${nonTerminalKeys}:
+            for_all:
+              - add_unique_graphql_field:
+                  ${iteratorKey}: "${iteratorKey}.wordList"
 validate:
   response_code:
     eq: "${resp_code}"

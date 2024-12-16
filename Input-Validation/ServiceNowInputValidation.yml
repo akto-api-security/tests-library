@@ -2,7 +2,7 @@ id: SERVICENOW_INPUT_VALIDATION
 info:
   name: "ServiceNow Incomplete Input Validation Test"
   description: "The ServiceNow Incomplete Input Validation Test checks for vulnerabilities where ServiceNow, a popular IT service management platform, fails to fully validate user inputs. Incomplete input validation can lead to issues like SQL injection, cross-site scripting (XSS), or other attacks that exploit improperly sanitized data. This test aims to identify areas where user inputs, such as form fields or query parameters, may be processed without proper validation or sanitization. To mitigate risks, it is crucial to implement comprehensive input validation and sanitize all user-supplied data."
-  details:  "The ServiceNow Incomplete Input Validation Test focuses on identifying vulnerabilities in the platform where user input is not fully validated or sanitized. This can occur in areas such as form fields, query parameters, or API requests, where input is processed without thorough checks for malicious content. Attackers can exploit these weaknesses to inject harmful code, like SQL injection or XSS attacks, which could compromise data integrity or security. Ensuring all user inputs are strictly validated and sanitized can help prevent these vulnerabilities and secure the platform."
+  details: "The ServiceNow Incomplete Input Validation Test focuses on identifying vulnerabilities in the platform where user input is not fully validated or sanitized. This can occur in areas such as form fields, query parameters, or API requests, where input is processed without thorough checks for malicious content. Attackers can exploit these weaknesses to inject harmful code, like SQL injection or XSS attacks, which could compromise data integrity or security. Ensuring all user inputs are strictly validated and sanitized can help prevent these vulnerabilities and secure the platform."
   impact: "The impact of ServiceNow Incomplete Input Validation can be severe, as it opens the door for attacks like SQL injection, cross-site scripting (XSS), and other forms of input-based exploitation. These vulnerabilities could lead to unauthorized access, data manipulation, or disclosure of sensitive information. Additionally, attackers could inject malicious scripts or commands, disrupting services or compromising the platform. Proper input validation, data sanitization, and regular security updates are essential to mitigate these risks and ensure the integrity of the system."
   category:
     name: INPUT
@@ -11,21 +11,23 @@ info:
   subCategory: SERVICENOW_INPUT_VALIDATION
   severity: LOW
   tags:
-  - Business logic
-  - OWASP top 10
-  - HackerOne top 10
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
   references:
-  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
-  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
-  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
   cwe:
-  - CWE-20
+    - CWE-20
   cve:
-  - CVE-2018-20679
-  - CVE-2019-14271
+    - CVE-2018-20679
+    - CVE-2019-14271
 
 
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -42,9 +44,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

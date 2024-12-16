@@ -1,4 +1,3 @@
----
 id: DATADOG_PORT_EXPOSED
 info:
   name: Datadog Port Exposed
@@ -23,6 +22,8 @@ info:
     - CWE-16
     - CWE-200
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -30,7 +31,7 @@ api_selection_filters:
     gte: 200
     lt: 300
   response_payload:
-    length: 
+    length:
       gt: 0
   request_headers:
     for_one:
@@ -38,7 +39,7 @@ api_selection_filters:
         eq: Host
       value:
         extract: hostVal
-  
+
 wordLists:
   attemptPaths:
     - "http://${hostVal}:8125/info"
@@ -53,48 +54,48 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: GET
-      - remove_auth_header: true
-      - replace_body: "{}"
-      - modify_url: ${attemptPaths}
+        - modify_method: GET
+        - remove_auth_header: true
+        - replace_body: "{}"
+        - modify_url: ${attemptPaths}
 
 validate:
   response_code:
     eq: 200
   response_payload:
-    length: 
+    length:
       gt: 0
     contains_all: ${probableOutputParams}
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
-    - Attention Required!
-    - CloudFlare
-    - "Sorry, you have been blocked"
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
 
 strategy:
   run_once: /

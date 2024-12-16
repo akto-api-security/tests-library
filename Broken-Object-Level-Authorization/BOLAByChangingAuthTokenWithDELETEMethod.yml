@@ -10,7 +10,7 @@ info:
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: REPLACE_AUTH_TOKEN_DELETE
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -28,6 +28,8 @@ info:
   cve:
     - CVE-2023-39349
 
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -41,7 +43,7 @@ api_selection_filters:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -72,7 +74,7 @@ execute:
   type: single
   requests:
     - req:
-      - replace_auth_header: true
+        - replace_auth_header: true
 validate:
   response_code:
     gte: 200
@@ -82,7 +84,7 @@ validate:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

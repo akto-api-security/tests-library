@@ -1,4 +1,3 @@
----
 id: PARAMETER_MANIPULATION_BOUNDARY_COUPON
 info:
   name: Parameter manipulation by boundary values in coupon and discount codes
@@ -8,7 +7,7 @@ info:
     "The test focuses on applying boundary value analysis to coupon and discount code fields, such as testing with the shortest or longest acceptable code lengths, values at or beyond the expected minimum or maximum limits, and other edge cases. This includes entering codes with minimal characters, excessively long strings, or special characters that may test the application's validation rules and error handling. By examining how the system responds to these boundary cases, the test identifies potential weaknesses in validation logic, ensuring that only legitimate and properly formatted codes are processed."
   impact: >
     "Failure to handle boundary values properly in coupon and discount codes can lead to various issues, including unauthorized discounts, financial losses, and exploitation of promotional campaigns. Attackers or malicious users could use this vulnerability to apply invalid or expired codes, manipulate discount amounts, or bypass restrictions, causing revenue loss and damaging the company's reputation. Ensuring robust input validation for boundary values in coupon and discount codes helps protect the application's integrity, maintain fair promotional practices, and safeguard financial assets."
-  
+
   category:
     name: INPUT
     shortName: Input Validation
@@ -16,18 +15,20 @@ info:
   subCategory: PARAMETER_MANIPULATION_BOUNDARY_COUPON
   severity: LOW
   tags:
-  - Business logic
-  - OWASP top 10
-  - HackerOne top 10
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
   references:
-  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
-  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
-  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
   cwe:
-  - CWE-20
+    - CWE-20
   cve:
-  - CVE-2018-20679
-  - CVE-2019-14271
+    - CVE-2018-20679
+    - CVE-2019-14271
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -38,32 +39,32 @@ api_selection_filters:
     length:
       gt: 0
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
 
     # Here we check for the modified values of contextual keys in response.
     for_one:
@@ -75,23 +76,23 @@ api_selection_filters:
         extract: outputUserValue
   or:
   # In case the amount is being sent as a number
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          datatype: number
-          extract: userVal
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+            extract: userKey
+          value:
+            datatype: number
+            extract: userVal
   # In case the amount is being sent as a string
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          regex: "\b([1-9][0-9]*)\b"
-          extract: userVal
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+            extract: userKey
+          value:
+            regex: "\b([1-9][0-9]*)\b"
+            extract: userVal
 wordLists:
   probableInputParameters:
     - discountCode
@@ -140,9 +141,9 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}0
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}0
 validate:
   response_code:
     gte: 200
@@ -151,38 +152,38 @@ validate:
     length:
       gt: 0
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
-    - Attention Required!
-    - CloudFlare
-    - "Sorry, you have been blocked"
-    - "not applicable"
-    - "failure"
-    - "not found"
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
+      - "not applicable"
+      - "failure"
+      - "not found"
     for_one:
       key:
         eq: "${outputUserKey}"

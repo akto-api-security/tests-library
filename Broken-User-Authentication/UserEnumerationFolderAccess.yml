@@ -1,27 +1,12 @@
 id: USER_ENUM_FOLDER_ACCESS
 info:
   name: "User Enumeration using Directory Access"
-  description: > 
-    "User Enumeration using Directory Access entails examining HTTP responses when 
-    accessing directory paths with invalid and valid user credentials. For instance, 
-    an attempt with an invalid user may yield a 403 (Forbidden) response, while a 
-    valid user could result in a 404 (Not Found) response. This analysis aids in 
-    identifying and addressing potential security risks related to unauthorized 
-    user enumeration, enhancing the overall security posture of web applications."
+  description: >
+    "User Enumeration using Directory Access entails examining HTTP responses when  accessing directory paths with invalid and valid user credentials. For instance,  an attempt with an invalid user may yield a 403 (Forbidden) response, while a  valid user could result in a 404 (Not Found) response. This analysis aids in  identifying and addressing potential security risks related to unauthorized  user enumeration, enhancing the overall security posture of web applications."
   details: >
-    "User Enumeration using Directory Access involves scrutinizing HTTP responses when 
-    accessing directory paths with different user credentials. For instance, an attempt 
-    with an invalid user might trigger a 403 (Forbidden) response, whereas a valid user 
-    could elicit a 404 (Not Found) response. This examination helps identify potential 
-    security vulnerabilities tied to unauthorized user enumeration, contributing to 
-    improved web application security."
+    "User Enumeration using Directory Access involves scrutinizing HTTP responses when  accessing directory paths with different user credentials. For instance, an attempt  with an invalid user might trigger a 403 (Forbidden) response, whereas a valid user  could elicit a 404 (Not Found) response. This examination helps identify potential  security vulnerabilities tied to unauthorized user enumeration, contributing to  improved web application security."
   impact: >
-    "The impact of User Enumeration using Directory Access lies in its potential to expose 
-    security vulnerabilities within web applications. By discerning distinct HTTP responses 
-    for invalid and valid user credentials, attackers can gain insights into valid usernames, 
-    facilitating targeted exploits. This form of enumeration poses a threat to 
-    confidentiality and can lead to unauthorized access, making it crucial for organizations 
-    to address and remediate such vulnerabilities to safeguard their systems and user data."
+    "The impact of User Enumeration using Directory Access lies in its potential to expose  security vulnerabilities within web applications. By discerning distinct HTTP responses  for invalid and valid user credentials, attackers can gain insights into valid usernames,  facilitating targeted exploits. This form of enumeration poses a threat to  confidentiality and can lead to unauthorized access, making it crucial for organizations  to address and remediate such vulnerabilities to safeguard their systems and user data."
 
   category:
     name: NO_AUTH
@@ -43,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -56,7 +43,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -119,37 +106,37 @@ execute:
   type: multiple
   requests:
     - req:
-      - modify_url: ${urlVar}/${folderPaths}
-      - validate:
-          response_code:
-            eq: 404
-          response_payload:
-            not_contains:
-              - rate-limit
-              - rate_limit
-              - rate limit
-              - account is locked
-              - account is blocked
-              - multiple failed attempt
-      - success: x2
-      - failure: exit
+        - modify_url: ${urlVar}/${folderPaths}
+        - validate:
+            response_code:
+              eq: 404
+            response_payload:
+              not_contains:
+                - rate-limit
+                - rate_limit
+                - rate limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+        - success: x2
+        - failure: exit
     - req:
-      - modify_url: ${urlVar}/${folderPaths}
-      - replace_auth_header: true
-      - validate:
-          response_code:
-            neq: 404
-          response_payload:
-            regex: "root:.*:0:0:"
-            not_contains:
-              - invalid
-              - expired
-              - failed
-              - rate-limit
-              - rate_limit
-              - rate limit
-              - account is locked
-              - account is blocked
-              - multiple failed attempt
+        - modify_url: ${urlVar}/${folderPaths}
+        - replace_auth_header: true
+        - validate:
+            response_code:
+              neq: 404
+            response_payload:
+              regex: "root:.*:0:0:"
+              not_contains:
+                - invalid
+                - expired
+                - failed
+                - rate-limit
+                - rate_limit
+                - rate limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
 strategy:
   run_once: /

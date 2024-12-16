@@ -2,7 +2,7 @@ id: APACHE_SUPERSET_AUTH_BYPASS
 info:
   name: "Apache Superset Authentication Bypass Test"
   description: "The Apache Superset Authentication Bypass Test examines vulnerabilities in Apache Superset, an open-source data exploration and visualization platform, where improper authentication mechanisms may allow unauthorized users to bypass login controls. If the application does not properly validate or secure user authentication tokens or session management, attackers may gain unauthorized access to sensitive data or administrative functions. This could result in data exposure, unauthorized actions, or complete system compromise. Strengthening authentication protocols and enforcing access control mechanisms are essential to mitigate such risks."
-  details:  "The Apache Superset Authentication Bypass Test assesses the security of authentication mechanisms in the Apache Superset platform, specifically looking for weaknesses that allow attackers to bypass login procedures. This can occur if there are flaws in session handling, authentication token validation, or improper configuration of authentication providers. Attackers could exploit these weaknesses to access the application without proper credentials, potentially gaining access to sensitive data or administrative privileges. To prevent this, it's important to enforce robust authentication measures, including multi-factor authentication, secure session management, and proper configuration of authentication plugins."
+  details: "The Apache Superset Authentication Bypass Test assesses the security of authentication mechanisms in the Apache Superset platform, specifically looking for weaknesses that allow attackers to bypass login procedures. This can occur if there are flaws in session handling, authentication token validation, or improper configuration of authentication providers. Attackers could exploit these weaknesses to access the application without proper credentials, potentially gaining access to sensitive data or administrative privileges. To prevent this, it's important to enforce robust authentication measures, including multi-factor authentication, secure session management, and proper configuration of authentication plugins."
   impact: "The impact of an Apache Superset Authentication Bypass vulnerability can be significant, as it could allow unauthorized users to access sensitive data, dashboards, and administrative functions without proper credentials. This could lead to data breaches, unauthorized manipulation of visualizations, and exposure of confidential information. Additionally, attackers could exploit the bypass to escalate privileges or perform malicious actions on the system. Implementing secure authentication mechanisms and access controls is crucial to prevent such risks and safeguard sensitive data."
   category:
     name: SM
@@ -19,6 +19,8 @@ info:
     - CVE-2018-10245
 
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -49,11 +51,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/api/v1/database/${path}"
-      - modify_method: GET
-      - replace_body: '{}'
-      - modify_header:
-          cookie: ${session}
+        - modify_url: "/api/v1/database/${path}"
+        - modify_method: GET
+        - replace_body: '{}'
+        - modify_header:
+            cookie: ${session}
 validate:
   response_code:
     eq: 200

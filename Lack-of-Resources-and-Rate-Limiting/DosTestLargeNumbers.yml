@@ -1,4 +1,3 @@
----
 id: DOS_TEST_LARGE_NUMBERS
 info:
   name: "Denial of Service Test by Entering Numbers"
@@ -27,6 +26,8 @@ info:
     - CVE-2023-4647
     - CVE-2023-38254
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -34,35 +35,35 @@ api_selection_filters:
     gte: 200
     lt: 300
   response_payload:
-    length: 
+    length:
       gt: 0
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   request_payload:
     for_one:
       key:
@@ -75,41 +76,41 @@ api_selection_filters:
 execute:
   type: multiple
   requests:
-  - req:
-    - add_header:
-        x-akto-ignore: "0"
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          not_contains: ${badList}
-    - success: x2
-    - failure: exit
-  - req:
-    - delete_body_param: ${userKey}
-    - validate:
-        response_code:
-          gte: 400
-    - success: x3
-    - failure: exit
-  - req:
-    - modify_body_param:
-        userKey: ${attemptValues}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          percentage_match:
-            gte: 90
-          percentage_match_schema:
-            eq: 100
-          not_contains: ${badList}
+    - req:
+        - add_header:
+            x-akto-ignore: "0"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${badList}
+        - success: x2
+        - failure: exit
+    - req:
+        - delete_body_param: ${userKey}
+        - validate:
+            response_code:
+              gte: 400
+        - success: x3
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${attemptValues}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              percentage_match:
+                gte: 90
+              percentage_match_schema:
+                eq: 100
+              not_contains: ${badList}
 
 validate:
   and:
@@ -125,7 +126,7 @@ wordLists:
     - 11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
     - 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
 
-  badList: 
+  badList:
     - Error
     - Internal Server
     - Failed

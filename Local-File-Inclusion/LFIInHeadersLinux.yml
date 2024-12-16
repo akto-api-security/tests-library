@@ -1,7 +1,7 @@
 id: LFI_IN_HEADERS_LINUX
 info:
   name: "LFI in Headers for Linux"
-  description: "Local File Inclusion (LFI) in headers on Linux systems occurs when web applications accept user-defined input in HTTP headers without adequate validation or sanitization. Attackers can exploit this vulnerability by manipulating headers like `User-Agent` or `Referer` to include malicious file paths, often using directory traversal techniques (e.g., `../../`). If the application improperly processes these headers, it may unintentionally include sensitive files from the server, leading to information disclosure. This can expose critical data such as configuration files, logs, or user credentials, increasing the risk of further exploitation." 
+  description: "Local File Inclusion (LFI) in headers on Linux systems occurs when web applications accept user-defined input in HTTP headers without adequate validation or sanitization. Attackers can exploit this vulnerability by manipulating headers like `User-Agent` or `Referer` to include malicious file paths, often using directory traversal techniques (e.g., `../../`). If the application improperly processes these headers, it may unintentionally include sensitive files from the server, leading to information disclosure. This can expose critical data such as configuration files, logs, or user credentials, increasing the risk of further exploitation."
   details: "Local File Inclusion (LFI) in headers for Linux involves manipulating HTTP headers to include unauthorized file paths in web applications. Attackers can craft requests with modified headers such as `User-Agent` or `Referer`, appending directory traversal sequences to navigate the file system (e.g., `../../../etc/passwd`). If the application lacks proper validation and sanitization for these headers, it may include and disclose sensitive files, potentially exposing system configurations, logs, or user information. This vulnerability can serve as an entry point for attackers to escalate their privileges or execute further malicious actions within the system."
   impact: "The impact of Local File Inclusion (LFI) through headers on Linux systems can be severe, leading to unauthorized access to sensitive files, such as system configurations, user data, or application logs. This exposure can facilitate further attacks, including privilege escalation or data exfiltration, thereby compromising the security of the entire system. Additionally, if attackers can include executable files or scripts, it may result in remote code execution, granting them complete control over the compromised server. Such incidents can result in significant financial losses and reputational damage for affected organizations."
   category:
@@ -23,6 +23,8 @@ info:
   cve:
     - CVE-2022-29597
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -36,7 +38,7 @@ api_selection_filters:
       gt: 0
 
 wordLists:
-  filePaths: 
+  filePaths:
     - etc/passwd
     - /etc/passwd
     - /etc/npasswd
@@ -73,8 +75,8 @@ execute:
   type: single
   requests:
     - req:
-      - modify_header:
-          header_key: ${filePaths}
+        - modify_header:
+            header_key: ${filePaths}
 
 validate:
   response_payload:

@@ -1,4 +1,3 @@
----
 id: GRAFANA_METRICS
 info:
   name: Exposed Grafana metrics
@@ -17,24 +16,26 @@ info:
     - CWE-16
     - CWE-200
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
   response_code:
     gte: 200
     lt: 300
-  
+
 execute:
   type: single
   requests:
     - req:
-      - modify_url: /metrics
+        - modify_url: /metrics
 
 validate:
   response_code:
     eq: 200
   response_payload:
-    length: 
+    length:
       gt: 0
     not_contains:
       - <html>

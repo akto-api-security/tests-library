@@ -1,10 +1,9 @@
----
 id: KAFKA_METRICS
 info:
   name: Exposed Kafka metrics
   description: "Exposed Kafka metrics endpoint found."
   details: >
-              "The Kafka metrics endpoint is publicly accessible, allowing anyone to access and view detailed system and application metrics, potentially revealing sensitive information."
+    "The Kafka metrics endpoint is publicly accessible, allowing anyone to access and view detailed system and application metrics, potentially revealing sensitive information."
   impact: "Exposing Kafka metrics can provide insights into the system, potentially aiding attackers in identifying vulnerabilities and exploiting them."
   category:
     name: SM
@@ -18,18 +17,20 @@ info:
     - CWE-16
     - CWE-200
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
   response_code:
     gte: 200
     lt: 300
-  
+
 execute:
   type: single
   requests:
     - req:
-      - modify_url: /metrics
+        - modify_url: /metrics
 
 validate:
   response_code:

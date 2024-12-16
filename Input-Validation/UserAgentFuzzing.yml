@@ -1,4 +1,3 @@
----
 id: USER_AGENT_FUZZING
 info:
   name: "User Agent Fuzzing"
@@ -15,7 +14,7 @@ info:
     displayName: Input Validation (INPUT)
   subCategory: USER_AGENT_FUZZING
   severity: LOW
-  tags: 
+  tags:
     - security
     - owasp-top10
 
@@ -26,6 +25,8 @@ info:
   cve:
     - CVE-2024-21255
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -51,9 +52,9 @@ wordLists:
 execute:
   type: single
   requests:
-    - req: 
-      - modify_header: 
-          user-agent : ${userAgent}
+    - req:
+        - modify_header:
+            user-agent: ${userAgent}
 
 validate:
   response_code:

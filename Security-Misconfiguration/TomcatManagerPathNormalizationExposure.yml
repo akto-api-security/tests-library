@@ -2,7 +2,7 @@ id: TOMCAT_MANAGER_PATH_NORMALIZATION_EXPOSURE
 info:
   name: "Apache Tomcat Manager Path Normalization Panel Exposure"
   description: "Apache Tomcat Manager Path Normalization Panel Exposure refers to a security vulnerability that arises when the Tomcat Manager application improperly handles path normalization. This can allow attackers to manipulate URLs and gain unauthorized access to sensitive functions or resources, potentially leading to the execution of arbitrary commands or the disclosure of confidential information. If exploited, this vulnerability can compromise the integrity of the server, allowing unauthorized users to manage applications or view sensitive data within the Tomcat environment. Proper configuration and access controls are essential to mitigate this risk."
-  details:  "The Apache Tomcat Manager Path Normalization Panel Exposure occurs when the Tomcat Manager application fails to adequately validate and normalize incoming URLs, allowing attackers to exploit this weakness. By crafting specially formatted requests, attackers may bypass security restrictions and gain access to management functions intended only for authorized users. This vulnerability can lead to unauthorized application deployment, configuration changes, or even execution of malicious commands on the server. To mitigate this risk, administrators should enforce strict access controls, ensure proper URL validation, and regularly update Tomcat to the latest secure version."
+  details: "The Apache Tomcat Manager Path Normalization Panel Exposure occurs when the Tomcat Manager application fails to adequately validate and normalize incoming URLs, allowing attackers to exploit this weakness. By crafting specially formatted requests, attackers may bypass security restrictions and gain access to management functions intended only for authorized users. This vulnerability can lead to unauthorized application deployment, configuration changes, or even execution of malicious commands on the server. To mitigate this risk, administrators should enforce strict access controls, ensure proper URL validation, and regularly update Tomcat to the latest secure version."
   impact: "The impact of Apache Tomcat Manager Path Normalization Panel Exposure can be severe, allowing attackers to gain unauthorized access to management functionalities and potentially compromise the entire server. This may result in unauthorized deployment of malicious applications, alteration of configurations, or execution of arbitrary code, leading to service disruptions and data breaches. Additionally, compromised systems can expose sensitive information, damage the organization’s reputation, and result in significant financial losses. Furthermore, failing to address this vulnerability may lead to compliance issues if regulatory requirements regarding data protection are violated."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2021-43798
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -39,9 +41,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     neq: 403

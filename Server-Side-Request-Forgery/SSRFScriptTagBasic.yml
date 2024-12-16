@@ -1,30 +1,9 @@
 id: SSRF_SCRIPT_TAG_BASIC
 info:
   name: "SSRF test via replacing parameters with script tags containing malicious URL"
-  description: "This tests involves the replacement of 
-  parameters with script tags containing malicious URLs aiming to assess the vulnerability 
-  of web applications to unauthorized server-side requests. By injecting these script 
-  tags, testers evaluate whether the application can be manipulated to make 
-  requests to external resources, potentially leading to data 
-  breaches or system compromise. This technique helps identify and mitigate security 
-  flaws that could be exploited by attackers to gain unauthorized access or manipulate 
-  sensitive information."
-  details: "In this test, attackers replace parameters in web requests with script tags 
-  containing URLs pointing to malicious destinations. These malicious URLs are 
-  designed to trigger server-side actions, potentially exploiting vulnerabilities 
-  in the target application. By analyzing the application's response to these 
-  manipulated requests, security testers assess its susceptibility to unauthorized 
-  data access, internal network probing, or even remote code execution. This method 
-  helps uncover and remediate SSRF vulnerabilities, safeguarding against potential 
-  exploitation by malicious actors."
-  impact: "The impact of SSRF vulnerabilities exploited via malicious URL 
-  injections can be severe. Attackers could gain unauthorized access to 
-  sensitive internal systems, databases, or cloud resources, leading to 
-  data theft, manipulation, or even complete system compromise. Furthermore, 
-  SSRF attacks may facilitate lateral movement within a network, enabling 
-  attackers to pivot and escalate privileges, amplifying the scope and severity 
-  of the breach. Without proper mitigation, these exploits pose significant 
-  risks to data integrity, confidentiality, and overall system security."
+  description: "This tests involves the replacement of parameters with script tags containing malicious URLs aiming to assess the vulnerability of web applications to unauthorized server-side requests. By injecting these script tags, testers evaluate whether the application can be manipulated to make requests to external resources, potentially leading to data breaches or system compromise. This technique helps identify and mitigate security flaws that could be exploited by attackers to gain unauthorized access or manipulate sensitive information."
+  details: "In this test, attackers replace parameters in web requests with script tags containing URLs pointing to malicious destinations. These malicious URLs are designed to trigger server-side actions, potentially exploiting vulnerabilities in the target application. By analyzing the application's response to these manipulated requests, security testers assess its susceptibility to unauthorized data access, internal network probing, or even remote code execution. This method helps uncover and remediate SSRF vulnerabilities, safeguarding against potential exploitation by malicious actors."
+  impact: "The impact of SSRF vulnerabilities exploited via malicious URL injections can be severe. Attackers could gain unauthorized access to sensitive internal systems, databases, or cloud resources, leading to data theft, manipulation, or even complete system compromise. Furthermore, SSRF attacks may facilitate lateral movement within a network, enabling attackers to pivot and escalate privileges, amplifying the scope and severity of the breach. Without proper mitigation, these exploits pose significant risks to data integrity, confidentiality, and overall system security."
   category:
     name: SSRF
     shortName: Server Side Request Forgery
@@ -42,6 +21,8 @@ info:
     - CWE-918
   cve:
     - CVE-2022-4725
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"

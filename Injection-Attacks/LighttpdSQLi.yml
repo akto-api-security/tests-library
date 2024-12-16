@@ -2,13 +2,13 @@ id: LIGHTTPD_SQLI
 info:
   name: "Lighttpd SQL Injection"
   description: "Lighttpd SQL Injection refers to a security vulnerability where an attacker exploits weaknesses in how Lighttpd web server handles user inputs, particularly in queries to a backend database. By injecting malicious SQL code into input fields, an attacker can manipulate database queries, potentially gaining unauthorized access, altering data, or exposing sensitive information. Proper input validation and parameterized queries are essential defenses against this type of attack."
-  details:  "Lighttpd, a lightweight web server, can be vulnerable to SQL injection if it does not properly sanitize user inputs before passing them to the backend database. In such cases, attackers can craft malicious SQL statements that exploit these weaknesses, potentially leading to unauthorized access, data leakage, or database manipulation. Ensuring secure coding practices like using prepared statements and input validation can help mitigate this risk."
+  details: "Lighttpd, a lightweight web server, can be vulnerable to SQL injection if it does not properly sanitize user inputs before passing them to the backend database. In such cases, attackers can craft malicious SQL statements that exploit these weaknesses, potentially leading to unauthorized access, data leakage, or database manipulation. Ensuring secure coding practices like using prepared statements and input validation can help mitigate this risk."
   impact: "The impact of a SQL injection vulnerability in Lighttpd can be severe, allowing attackers to gain unauthorized access to sensitive data, modify or delete database records, and even execute administrative operations. This can result in data breaches, loss of integrity, service disruption, or complete system compromise. In extreme cases, the attacker may gain full control over the web application and its underlying server."
   category:
     name: INJECT
     shortName: Injection Attacks
     displayName: Injection Attacks (INJECT)
-  subCategory:  LIGHTTPD_SQLI
+  subCategory: LIGHTTPD_SQLI
   severity: MEDIUM
   references:
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2020-9402
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -32,11 +34,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/etc/passwd"
-      - modify_method: GET
-      - replace_body: '{}'
-      - add_header:
-          host: "[::1]' UNION SELECT '/"
+        - modify_url: "/etc/passwd"
+        - modify_method: GET
+        - replace_body: '{}'
+        - add_header:
+            host: "[::1]' UNION SELECT '/"
 validate:
   response_payload:
     regex: "root:[x*]:0:0:"

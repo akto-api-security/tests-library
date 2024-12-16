@@ -3,7 +3,7 @@ info:
   name: eSMTP - Config Discovery
   description: "eSMTP configuration was discovered."
   details: >
-              "eSMTP - Config Discovery refers to the vulnerability where the eSMTP configuration file, .esmtprc, is discovered due to misconfiguration. This file contains sensitive information like the hostname, username, and password, which can be exploited by attackers for unauthorized access, email impersonation, and spam/phishing campaigns. Promptly addressing this vulnerability is critical to protect the integrity and confidentiality of email communications."
+    "eSMTP - Config Discovery refers to the vulnerability where the eSMTP configuration file, .esmtprc, is discovered due to misconfiguration. This file contains sensitive information like the hostname, username, and password, which can be exploited by attackers for unauthorized access, email impersonation, and spam/phishing campaigns. Promptly addressing this vulnerability is critical to protect the integrity and confidentiality of email communications."
   impact: "Discovering the eSMTP configuration file exposes sensitive information, allowing attackers to impersonate users, send spam/phishing emails, and gain unauthorized access to email accounts."
   category:
     name: SM
@@ -19,6 +19,8 @@ info:
     - CWE-200
     - CWE-538
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -27,47 +29,47 @@ api_selection_filters:
     lt: 300
   url:
     extract: urlVar
-  
+
 execute:
   type: multiple
   requests:
     - req:
-      - modify_url: ${urlVar}/this-sub-url-path-will-never-exist-123456
-      - validate:
-          response_payload:
-            or:
-              - contains_all:
-                  - "hostname"
-                  - "username"
-                  - "password"
-              - regex: "hostname\\s*=\\s*([^\\s]+)"
-              - regex: "starttls\\s*=\\s*"
-              - regex: "identity\\s*=\\s*"
-          response_headers:
-            for_one:
-              value:
-                contains_all:
-                  - text/html
-      - success: exit
-      - failure: x2
+        - modify_url: ${urlVar}/this-sub-url-path-will-never-exist-123456
+        - validate:
+            response_payload:
+              or:
+                - contains_all:
+                    - "hostname"
+                    - "username"
+                    - "password"
+                - regex: "hostname\\s*=\\s*([^\\s]+)"
+                - regex: "starttls\\s*=\\s*"
+                - regex: "identity\\s*=\\s*"
+            response_headers:
+              for_one:
+                value:
+                  contains_all:
+                    - text/html
+        - success: exit
+        - failure: x2
     - req:
-      - modify_url: ${urlVar}/.esmtprc
-      - validate:
-          response_payload:
-            or:
-              - contains_all:
-                  - "hostname"
-                  - "username"
-                  - "password"
-              - regex: "hostname\\s*=\\s*([^\\s]+)"
-              - regex: "starttls\\s*=\\s*"
-              - regex: "identity\\s*=\\s*"
-          response_headers:
-            for_one:
-              value:
-                contains_all:
-                  - text/html
-      - success: vulnerable
-      - failure: exit
+        - modify_url: ${urlVar}/.esmtprc
+        - validate:
+            response_payload:
+              or:
+                - contains_all:
+                    - "hostname"
+                    - "username"
+                    - "password"
+                - regex: "hostname\\s*=\\s*([^\\s]+)"
+                - regex: "starttls\\s*=\\s*"
+                - regex: "identity\\s*=\\s*"
+            response_headers:
+              for_one:
+                value:
+                  contains_all:
+                    - text/html
+        - success: vulnerable
+        - failure: exit
 strategy:
   run_once: /

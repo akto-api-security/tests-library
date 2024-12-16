@@ -3,8 +3,8 @@ info:
   name: "Firebase Collection Exposed Data"
   description: "Assessing security vulnerability by appending .json to API path, accessing complete Firebase collection data without authentication."
   details: >
-            "Conducting a critical security test to evaluate the potential risk of appending '.json' to the API path, allowing unauthorized access to retrieve and view the entire data of a Firebase collection. 
-             This vulnerability poses a serious threat as it exposes sensitive information, potentially leading to unauthorized data exposure and privacy breaches."
+    "Conducting a critical security test to evaluate the potential risk of appending '.json' to the API path, allowing unauthorized access to retrieve and view the entire data of a Firebase collection. 
+     This vulnerability poses a serious threat as it exposes sensitive information, potentially leading to unauthorized data exposure and privacy breaches."
   impact: "Unrestricted access to Firebase collection data by simply adding '.json' to the API path, causing alarming data exposure and privacy nightmares."
   category:
     name: SM
@@ -26,6 +26,8 @@ info:
     - CVE-2020-7765
     - CVE-2021-46743
 
+settings:
+  nature: NON-INTRUSIVE
 auth:
   authenticated: true
 

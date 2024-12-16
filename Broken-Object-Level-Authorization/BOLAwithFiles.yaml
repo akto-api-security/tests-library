@@ -1,34 +1,19 @@
 id: BOLA_FILE_ACCESS
 info:
   name: "BOLA by Accessing Files of other Users"
-  description: > 
-    "This specific test of Broken object level authorization occurs when a user gains unauthorized 
-    access to files belonging to other users within a system. This security vulnerability allows 
-    an attacker to exploit weaknesses in the object-level permissions, bypassing proper access 
-    controls. By doing so, the attacker can compromise the confidentiality and integrity of 
-    sensitive information stored in files, potentially leading to unauthorized data disclosure 
-    or manipulation."
+  description: >
+    "This specific test of Broken object level authorization occurs when a user gains unauthorized  access to files belonging to other users within a system. This security vulnerability allows  an attacker to exploit weaknesses in the object-level permissions, bypassing proper access  controls. By doing so, the attacker can compromise the confidentiality and integrity of  sensitive information stored in files, potentially leading to unauthorized data disclosure  or manipulation."
   details: >
-    "This type of Broken object level authorization refers to a security flaw where an attacker 
-    gains unauthorized access to files belonging to different users within a system. This 
-    typically happens when object-level permissions are inadequately enforced, allowing an 
-    attacker to bypass access controls and access files they shouldn't. Exploiting this 
-    vulnerability can result in unauthorized data access, potentially compromising sensitive 
-    information and violating data confidentiality and integrity."
+    "This type of Broken object level authorization refers to a security flaw where an attacker  gains unauthorized access to files belonging to different users within a system. This  typically happens when object-level permissions are inadequately enforced, allowing an  attacker to bypass access controls and access files they shouldn't. Exploiting this  vulnerability can result in unauthorized data access, potentially compromising sensitive  information and violating data confidentiality and integrity."
   impact: >
-    "The impact of broken object level authorization can be severe, leading to unauthorized 
-    access and exposure of sensitive information stored in files. Attackers exploiting this 
-    vulnerability can compromise data confidentiality, potentially leading to privacy breaches 
-    and unauthorized disclosure of personal or confidential data. Additionally, the integrity 
-    of the data may be at risk, as attackers could manipulate or corrupt files, posing a threat 
-    to the overall reliability and trustworthiness of the affected system."
+    "The impact of broken object level authorization can be severe, leading to unauthorized  access and exposure of sensitive information stored in files. Attackers exploiting this  vulnerability can compromise data confidentiality, potentially leading to privacy breaches  and unauthorized disclosure of personal or confidential data. Additionally, the integrity  of the data may be at risk, as attackers could manipulate or corrupt files, posing a threat  to the overall reliability and trustworthiness of the affected system."
   category:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: BOLA_FILE_ACCESS
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -45,6 +30,8 @@ info:
     - CWE-639
   cve:
     - CVE-2023-39349
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -58,7 +45,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -93,11 +80,11 @@ api_selection_filters:
         for_one:
           key:
             regex: file|document|attachment|saveAsName|File|Document|Attachment|path
-            extract: userKey   
+            extract: userKey
 wordLists:
   random_ids:
     source: sample_data
-    key: 
+    key:
       regex: file|document|attachment|saveAsName|File|Document|Attachment|path
     all_apis: true
 execute:
@@ -121,7 +108,7 @@ validate:
       gte: 90
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

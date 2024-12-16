@@ -2,7 +2,7 @@ id: APACHE_CRLF
 info:
   name: "Apache mod_userdir CRLF injection"
   description: "Apache mod_userdir CRLF Injection is a security vulnerability that occurs in web applications using the Apache HTTP Server's `mod_userdir` module, where an attacker can inject Carriage Return Line Feed (CRLF) characters into HTTP requests. This injection can manipulate server responses by crafting HTTP headers or body content, potentially leading to HTTP response splitting or cache poisoning. If exploited, attackers may redirect users to malicious sites, execute arbitrary scripts, or deliver unwanted content. To mitigate this risk, it is essential to validate and sanitize user inputs, ensuring that CRLF characters cannot be used to disrupt HTTP responses."
-  details:  "Apache mod_userdir CRLF injection occurs when user input is not properly sanitized, allowing attackers to inject CRLF characters into HTTP requests handled by the Apache web server. This vulnerability can enable attackers to craft responses that include malicious HTTP headers, effectively manipulating the server's response behavior. By exploiting this flaw, attackers can perform actions such as HTTP response splitting, which can lead to cache poisoning, cross-site scripting (XSS), or redirecting users to malicious sites. To prevent this vulnerability, developers must implement stringent input validation and sanitation processes, ensuring that CRLF characters cannot disrupt the normal operation of HTTP responses."
+  details: "Apache mod_userdir CRLF injection occurs when user input is not properly sanitized, allowing attackers to inject CRLF characters into HTTP requests handled by the Apache web server. This vulnerability can enable attackers to craft responses that include malicious HTTP headers, effectively manipulating the server's response behavior. By exploiting this flaw, attackers can perform actions such as HTTP response splitting, which can lead to cache poisoning, cross-site scripting (XSS), or redirecting users to malicious sites. To prevent this vulnerability, developers must implement stringent input validation and sanitation processes, ensuring that CRLF characters cannot disrupt the normal operation of HTTP responses."
   impact: "The impact of Apache mod_userdir CRLF injection can be severe, as it allows attackers to manipulate HTTP responses and potentially execute arbitrary code or redirect users to malicious sites. By exploiting this vulnerability, attackers can engage in HTTP response splitting, which may lead to cache poisoning, cross-site scripting (XSS) attacks, or unauthorized content delivery. Such incidents can result in compromised user sessions, data breaches, and significant reputational damage for the affected organization. Additionally, the exploitation of this vulnerability can expose organizations to regulatory penalties if sensitive user data is involved, emphasizing the need for robust security measures."
   category:
     name: CRLF
@@ -25,6 +25,8 @@ info:
     - CVE-2020-15693
     - CVE-2023-0040
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -41,9 +43,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_payload:
     length:

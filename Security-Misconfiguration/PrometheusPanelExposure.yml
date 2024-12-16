@@ -2,7 +2,7 @@ id: PROMETHEUS_PANEL_EXPOSE
 info:
   name: "Prometheus Panel Exposure"
   description: "Prometheus Panel Exposure refers to the unintended exposure of the Prometheus monitoring system's web interface, making it accessible over the internet without proper security measures. This vulnerability can allow unauthorized users to view sensitive metrics and potentially manipulate configurations or queries. To mitigate this risk, it is essential to implement strong authentication, use network restrictions, and secure the panel with firewalls."
-  details:  "Prometheus Panel Exposure occurs when the Prometheus web interface is publicly accessible without adequate security controls, such as proper authentication or IP whitelisting. This vulnerability can enable attackers to access sensitive monitoring data, view system metrics, and potentially exploit exposed endpoints to modify queries or configurations. To protect against this exposure, organizations should enforce strong access controls, utilize encryption for data in transit, and restrict access to trusted networks or IP addresses."
+  details: "Prometheus Panel Exposure occurs when the Prometheus web interface is publicly accessible without adequate security controls, such as proper authentication or IP whitelisting. This vulnerability can enable attackers to access sensitive monitoring data, view system metrics, and potentially exploit exposed endpoints to modify queries or configurations. To protect against this exposure, organizations should enforce strong access controls, utilize encryption for data in transit, and restrict access to trusted networks or IP addresses."
   impact: "The impact of Prometheus Panel Exposure can be significant, as unauthorized access may allow attackers to view sensitive metrics related to application performance and infrastructure health. This information can be leveraged for further attacks, such as targeting specific vulnerabilities within the system. Additionally, if attackers can modify configurations or queries, they could disrupt monitoring services, leading to operational downtime and potentially causing critical failures in systems being monitored. This exposure could result in substantial financial and reputational damage to the organization."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2021-43798
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -35,9 +37,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_payload:
     length:

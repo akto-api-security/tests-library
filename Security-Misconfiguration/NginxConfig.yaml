@@ -3,7 +3,7 @@ info:
   name: Nginx Config file disclosure
   description: "Attacker can get unauthorized access of Nginx config file."
   details: >
-              "The Nginx Config File Disclosure check is performed to detect the exposure of Nginx configuration files. These files contain crucial server settings, including listening ports and server names. If accessible, they can provide valuable information to attackers and potentially compromise the security of the web server. It is important to ensure that Nginx configuration files are properly secured and not publicly accessible."
+    "The Nginx Config File Disclosure check is performed to detect the exposure of Nginx configuration files. These files contain crucial server settings, including listening ports and server names. If accessible, they can provide valuable information to attackers and potentially compromise the security of the web server. It is important to ensure that Nginx configuration files are properly secured and not publicly accessible."
   impact: "Exposing Nginx configuration files can provide valuable information to attackers, compromising the security of the web server."
   category:
     name: SM
@@ -20,6 +20,8 @@ info:
   cve:
     - CVE-2020-11959
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -28,12 +30,12 @@ api_selection_filters:
     lt: 300
   url:
     extract: urlVar
-  
+
 execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}/nginx.conf
+        - modify_url: ${urlVar}/nginx.conf
 
 validate:
   response_code:

@@ -3,7 +3,7 @@ info:
   name: Laravel - Sensitive Information Disclosure
   description: "A Laravel .env file was discovered, which stores sensitive information like database credentials and tokens. It should not be publicly accessible."
   details: >
-              "The Laravel - Sensitive Information Disclosure vulnerability identifies the presence of a Laravel .env file, which stores sensitive data such as database credentials, API keys, and configuration settings. If publicly accessible, this file exposes critical information and can lead to unauthorized access, data breaches, and compromise of the application's security. It is essential to secure the .env file to protect sensitive information and maintain the integrity of the Laravel application."
+    "The Laravel - Sensitive Information Disclosure vulnerability identifies the presence of a Laravel .env file, which stores sensitive data such as database credentials, API keys, and configuration settings. If publicly accessible, this file exposes critical information and can lead to unauthorized access, data breaches, and compromise of the application's security. It is essential to secure the .env file to protect sensitive information and maintain the integrity of the Laravel application."
   impact: "Publicly exposing the Laravel .env file exposes sensitive information like database credentials and API keys, leading to potential unauthorized access, data breaches, and compromise of the application's security."
   category:
     name: SM
@@ -21,6 +21,8 @@ info:
   cve:
     - CVE-2017-16894
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -56,51 +58,51 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_url: ${urlVar}/this-sub-url-path-will-never-exist-123456
-    - validate:
-        response_payload:
-          or:
-            - contains_either:
-                - 'APP_NAME'
-                - 'APP_ENV'
-                - 'APP_KEY'
-                - 'APP_DEBUG'
-                - 'APP_URL'
-                - 'DB_HOST'
-                - 'DB_PASSWORD'
-                - 'DB_DATABASE'
-                - "DB_CONNECTION"
-                - "LOG_CHANNEL"
-                - "LOG_DEPRECATIONS_CHANNEL"
-                - "LOG_LEVEL"
-            - regex: "DB_HOST=([^\\s#]+)"
-            - regex: "MAIL_HOST=([^\\s#]+)"
-            - regex: "REDIS_HOST=([^\\s#]+)"
-    - success: exit
-    - failure: x2
-  - req:
-    - modify_url: ${urlPaths}
-    - validate:
-        response_payload:
-          or:
-            - contains_either:
-                - 'APP_NAME'
-                - 'APP_ENV'
-                - 'APP_KEY'
-                - 'APP_DEBUG'
-                - 'APP_URL'
-                - 'DB_HOST'
-                - 'DB_PASSWORD'
-                - 'DB_DATABASE'
-                - "DB_CONNECTION"
-                - "LOG_CHANNEL"
-                - "LOG_DEPRECATIONS_CHANNEL"
-                - "LOG_LEVEL"
-            - regex: "DB_HOST=([^\\s#]+)"
-            - regex: "MAIL_HOST=([^\\s#]+)"
-            - regex: "REDIS_HOST=([^\\s#]+)"
-    - success: vulnerable
-    - failure: exit
+    - req:
+        - modify_url: ${urlVar}/this-sub-url-path-will-never-exist-123456
+        - validate:
+            response_payload:
+              or:
+                - contains_either:
+                    - 'APP_NAME'
+                    - 'APP_ENV'
+                    - 'APP_KEY'
+                    - 'APP_DEBUG'
+                    - 'APP_URL'
+                    - 'DB_HOST'
+                    - 'DB_PASSWORD'
+                    - 'DB_DATABASE'
+                    - "DB_CONNECTION"
+                    - "LOG_CHANNEL"
+                    - "LOG_DEPRECATIONS_CHANNEL"
+                    - "LOG_LEVEL"
+                - regex: "DB_HOST=([^\\s#]+)"
+                - regex: "MAIL_HOST=([^\\s#]+)"
+                - regex: "REDIS_HOST=([^\\s#]+)"
+        - success: exit
+        - failure: x2
+    - req:
+        - modify_url: ${urlPaths}
+        - validate:
+            response_payload:
+              or:
+                - contains_either:
+                    - 'APP_NAME'
+                    - 'APP_ENV'
+                    - 'APP_KEY'
+                    - 'APP_DEBUG'
+                    - 'APP_URL'
+                    - 'DB_HOST'
+                    - 'DB_PASSWORD'
+                    - 'DB_DATABASE'
+                    - "DB_CONNECTION"
+                    - "LOG_CHANNEL"
+                    - "LOG_DEPRECATIONS_CHANNEL"
+                    - "LOG_LEVEL"
+                - regex: "DB_HOST=([^\\s#]+)"
+                - regex: "MAIL_HOST=([^\\s#]+)"
+                - regex: "REDIS_HOST=([^\\s#]+)"
+        - success: vulnerable
+        - failure: exit
 strategy:
   run_once: /

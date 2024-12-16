@@ -2,7 +2,7 @@ id: NGINX_PLUS_REST_API_EXPOSURE
 info:
   name: "NGINX Plus REST API Exposure"
   description: "NGINX Plus REST API Exposure refers to a security risk where the NGINX Plus REST API is improperly secured, allowing unauthorized access to sensitive configurations and management functionalities. This exposure can lead to attackers manipulating server settings, accessing logs, or altering traffic routing, which compromises the integrity of applications served by NGINX. If exploited, this vulnerability can result in data breaches, service disruptions, and potential unauthorized control over the web server. Implementing strict authentication, access controls, and regular security assessments are essential to mitigate this risk."
-  details:  "NGINX Plus REST API Exposure occurs when the REST API provided by NGINX Plus is not adequately protected, often due to weak authentication methods or misconfigured access controls. Attackers can exploit this vulnerability to gain unauthorized access to sensitive information, such as server configurations, user data, or application logs. This access can enable malicious actors to manipulate server behavior, deploy unauthorized changes, or disrupt services. To mitigate this risk, it is crucial to implement strong authentication mechanisms, limit API access to trusted sources, and regularly audit API configurations for security best practices."
+  details: "NGINX Plus REST API Exposure occurs when the REST API provided by NGINX Plus is not adequately protected, often due to weak authentication methods or misconfigured access controls. Attackers can exploit this vulnerability to gain unauthorized access to sensitive information, such as server configurations, user data, or application logs. This access can enable malicious actors to manipulate server behavior, deploy unauthorized changes, or disrupt services. To mitigate this risk, it is crucial to implement strong authentication mechanisms, limit API access to trusted sources, and regularly audit API configurations for security best practices."
   impact: "The impact of NGINX Plus REST API Exposure can be severe, as it allows unauthorized users to manipulate server configurations and potentially take control of critical web applications. This vulnerability can lead to data breaches, where sensitive information is accessed or altered, resulting in significant financial losses and reputational damage. Additionally, attackers may disrupt services by changing routing rules or disabling applications, leading to downtime and loss of business. Compliance issues may arise if exposed data violates regulations, further exacerbating the organization's legal and financial challenges."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2021-43798
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -99,9 +101,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

@@ -1,23 +1,12 @@
 id: USER_ENUM_REGISTER
 info:
   name: "Broken Authentication Test - Username Enumeration via Registration Endpoint"
-  description: > 
-    "In this scenario, security testing assesses a system's authentication by attempting user 
-    registration with valid and invalid usernames. Testers analyze responses to detect patterns 
-    that may reveal the existence of valid usernames, aiming to uncover vulnerabilities in the 
-    registration process. This evaluation strengthens overall authentication security and 
-    mitigates the risk of unauthorized access."
+  description: >
+    "In this scenario, security testing assesses a system's authentication by attempting user  registration with valid and invalid usernames. Testers analyze responses to detect patterns  that may reveal the existence of valid usernames, aiming to uncover vulnerabilities in the  registration process. This evaluation strengthens overall authentication security and  mitigates the risk of unauthorized access."
   details: >
-    "This test assesses a system by attempting user registrations with different usernames. 
-    Testers analyze responses to identify patterns that may reveal valid usernames, addressing 
-    vulnerabilities in the registration process to enhance overall authentication security 
-    and prevent potential unauthorized access."
+    "This test assesses a system by attempting user registrations with different usernames.  Testers analyze responses to identify patterns that may reveal valid usernames, addressing  vulnerabilities in the registration process to enhance overall authentication security  and prevent potential unauthorized access."
   impact: >
-    "The impact of a successful Broken Authentication Test - Username Enumeration via Registration 
-    Endpoint is significant. It may lead to the inadvertent disclosure of valid usernames, enabling 
-    targeted attacks for unauthorized access. This vulnerability poses a risk of compromised user 
-    accounts, potential data breaches, and increased security threats. Swift mitigation is crucial 
-    to fortify authentication security and prevent unauthorized access."
+    "The impact of a successful Broken Authentication Test - Username Enumeration via Registration  Endpoint is significant. It may lead to the inadvertent disclosure of valid usernames, enabling  targeted attacks for unauthorized access. This vulnerability poses a risk of compromised user  accounts, potential data breaches, and increased security threats. Swift mitigation is crucial  to fortify authentication security and prevent unauthorized access."
 
   category:
     name: NO_AUTH
@@ -40,6 +29,8 @@ info:
     - CVE-2021-45901
 
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -51,7 +42,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -99,32 +90,14 @@ api_selection_filters:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_body_param:
-        passKey: Default1!
-    - validate:
-        response_code:
-          gte: 400
-          lt: 410
-        response_payload:
-          not_contains:
-            - rate limit
-            - rate_limit
-            - rate limit
-            - account is locked
-            - account is blocked
-            - multiple failed attempt
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_body_param:
-        userKey: dummymail@dummy.com
-    - modify_body_param:
-        passKey: Default1!
-    - validate:
-        or:
-          - response_payload:
-              neq: "${x1.response.body}"
+    - req:
+        - modify_body_param:
+            passKey: Default1!
+        - validate:
+            response_code:
+              gte: 400
+              lt: 410
+            response_payload:
               not_contains:
                 - rate limit
                 - rate_limit
@@ -132,26 +105,43 @@ execute:
                 - account is locked
                 - account is blocked
                 - multiple failed attempt
-          - response_code:
-              neq: "${x1.response.status_code}"
-    
-    - success: x3
-    - failure: exit
-  - req:
-    - modify_body_param:
-        userKey: dummymail@dummy.com
-    - modify_body_param:
-        passKey: Default2!
-    - validate:
-        or:
-          - response_payload:
-              eq: "${x2.response.body}"
-              not_contains:
-                - rate limit
-                - rate_limit
-                - rate limit
-                - account is locked
-                - account is blocked
-                - multiple failed attempt
-    
-    - success: vulnerable
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: dummymail@dummy.com
+        - modify_body_param:
+            passKey: Default1!
+        - validate:
+            or:
+              - response_payload:
+                  neq: "${x1.response.body}"
+                  not_contains:
+                    - rate limit
+                    - rate_limit
+                    - rate limit
+                    - account is locked
+                    - account is blocked
+                    - multiple failed attempt
+              - response_code:
+                  neq: "${x1.response.status_code}"
+        - success: x3
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: dummymail@dummy.com
+        - modify_body_param:
+            passKey: Default2!
+        - validate:
+            or:
+              - response_payload:
+                  eq: "${x2.response.body}"
+                  not_contains:
+                    - rate limit
+                    - rate_limit
+                    - rate limit
+                    - account is locked
+                    - account is blocked
+                    - multiple failed attempt
+
+        - success: vulnerable

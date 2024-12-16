@@ -2,7 +2,7 @@ id: STRUTS_OLD_VERSION_OPEN_REDIRECT
 info:
   name: "Apache Struts Old Version Open Redirect"
   description: "The Apache Struts Old Version Open Redirect vulnerability arises from improper validation of redirect URLs in outdated versions of the Struts framework. Attackers can exploit this flaw by manipulating redirect parameters, allowing them to redirect users to malicious sites. This can facilitate phishing attacks and other malicious activities, undermining user trust. Updating to the latest version of Struts and implementing strict validation measures for redirects are essential to mitigate this risk."
-  details:  "The Apache Struts Old Version Open Redirect vulnerability typically occurs when applications using outdated versions of the Struts framework do not adequately validate redirect URLs. This can happen if developers allow user input to dictate redirect destinations without proper sanitization. Attackers can craft malicious URLs that redirect users to untrusted external sites after legitimate actions, such as logging in. To mitigate this issue, it is crucial to upgrade to the latest version of Struts and enforce strict validation of redirect parameters."
+  details: "The Apache Struts Old Version Open Redirect vulnerability typically occurs when applications using outdated versions of the Struts framework do not adequately validate redirect URLs. This can happen if developers allow user input to dictate redirect destinations without proper sanitization. Attackers can craft malicious URLs that redirect users to untrusted external sites after legitimate actions, such as logging in. To mitigate this issue, it is crucial to upgrade to the latest version of Struts and enforce strict validation of redirect parameters."
   impact: "The impact of the Apache Struts Old Version Open Redirect vulnerability can be considerable, as it allows attackers to redirect users to harmful sites, facilitating phishing attacks and the potential theft of sensitive information. Users may unknowingly disclose personal data, such as credentials or payment information, believing they are interacting with a legitimate application. This vulnerability can also damage an organization's reputation and user trust, emphasizing the importance of timely updates and robust security practices."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2013-2248
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -38,13 +40,13 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/index.action"
-      - send_ssrf_req:
-          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
-      - add_query_param:
-          redirect: "https://test-services.akto.io/${random_uuid}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "/index.action"
+        - send_ssrf_req:
+            url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+        - add_query_param:
+            redirect: "https://test-services.akto.io/${random_uuid}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_payload:
     length:

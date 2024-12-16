@@ -1,7 +1,7 @@
 id: APACHE_TIKA_HEADER_COMMAND_INJECTION
 info:
   name: "Apache Tika Header Command Injection"
-  description: "Apache Tika Header Command Injection vulnerabilities occur when user input is improperly validated, allowing attackers to inject malicious commands through HTTP headers or other input fields. This can lead to unauthorized execution of system commands on the server, potentially compromising the server's integrity and exposing sensitive information. By exploiting this vulnerability, attackers can manipulate how Tika processes data, leading to potential data leaks or further attacks on the application. Proper input validation and security measures are essential to mitigate these risks in Apache Tika." 
+  description: "Apache Tika Header Command Injection vulnerabilities occur when user input is improperly validated, allowing attackers to inject malicious commands through HTTP headers or other input fields. This can lead to unauthorized execution of system commands on the server, potentially compromising the server's integrity and exposing sensitive information. By exploiting this vulnerability, attackers can manipulate how Tika processes data, leading to potential data leaks or further attacks on the application. Proper input validation and security measures are essential to mitigate these risks in Apache Tika."
   details: "Apache Tika Header Command Injection vulnerabilities arise when the application fails to adequately sanitize or validate user inputs, particularly in HTTP headers. Attackers can exploit this weakness by crafting requests that include malicious payloads, which Tika may then inadvertently execute as system commands. This can lead to unauthorized access, data manipulation, or even complete control over the server running Tika. To mitigate these risks, it is essential to implement stringent input validation, sanitize header inputs, and regularly update Tika to address known vulnerabilities."
   impact: "The impact of Apache Tika Header Command Injection vulnerabilities can be severe, enabling attackers to execute arbitrary commands on the server. This may result in unauthorized access to sensitive data, modification or deletion of files, and potential exploitation of the server for further attacks. Additionally, such vulnerabilities can compromise the overall integrity and availability of the application, leading to reputational damage, legal consequences, and significant financial losses for affected organizations."
   category:
@@ -19,6 +19,8 @@ info:
   cve:
     - CVE-2018-1335
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_payload:
     length:

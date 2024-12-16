@@ -1,7 +1,7 @@
 id: FILE_INCLUSION_NEW_PARAM_WINDOWS
 info:
   name: "LFI by adding new parameter for Windows"
-  description: "Local File Inclusion (LFI) by adding new parameters on Windows occurs when attackers manipulate web application requests to introduce additional parameters that specify file paths. If the application fails to properly validate these parameters, attackers can exploit the vulnerability to include arbitrary files from the server’s file system. This technique can expose sensitive information or configuration files, leading to further security breaches. The exploitation of such vulnerabilities can have serious consequences, including data leakage and unauthorized access to system resources." 
+  description: "Local File Inclusion (LFI) by adding new parameters on Windows occurs when attackers manipulate web application requests to introduce additional parameters that specify file paths. If the application fails to properly validate these parameters, attackers can exploit the vulnerability to include arbitrary files from the server’s file system. This technique can expose sensitive information or configuration files, leading to further security breaches. The exploitation of such vulnerabilities can have serious consequences, including data leakage and unauthorized access to system resources."
   details: "Local File Inclusion (LFI) by adding new parameters in Windows applications involves modifying the URL or request payload to include additional parameters that dictate file inclusion. Attackers may append new parameters like `?file=../../../../path/to/file` to the URL, aiming to traverse directories and access sensitive files on the server. If the application does not validate or sanitize these parameters, it can inadvertently include and disclose restricted files. This method can be particularly dangerous if it allows access to critical system files or application logs, paving the way for further exploitation."
   impact: "The impact of Local File Inclusion (LFI) through added parameters on Windows can be substantial, leading to unauthorized access to sensitive information such as user data, configuration files, or system logs. This exposure can facilitate further attacks, including privilege escalation or data exfiltration, compromising the security of the entire application. Additionally, if attackers can manipulate the parameters to include executable files, it may result in remote code execution, giving them full control over the compromised system and posing significant risks to the network."
   category:
@@ -24,6 +24,8 @@ info:
     - CVE-2021-39433
     - CVE-2023-22973
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -34,7 +36,7 @@ api_selection_filters:
       - "GET"
 
 wordLists:
-  filePaths: 
+  filePaths:
     - "/boot.ini"
     - "/inetpub/logs/logfiles"
     - "/inetpub/wwwroot/global.asa"
@@ -66,30 +68,30 @@ execute:
   type: single
   requests:
     - req:
-      - add_query_param:
-          file: ${filePaths}
-      - add_query_param:
-          files: ${filePaths}
-      - add_query_param:
-          filePath: ${filePaths}
-      - add_query_param:
-          file_path: ${filePaths}
-      - add_query_param:
-          previewFilePath: ${filePaths}
-      - add_query_param:
-          controller: ${filePaths}
-      - add_query_param:
-          filename: ${filePaths}
-      - add_query_param:
-          page: ${filePaths}
-      - add_query_param:
-          sub_page: ${filePaths}
-      - add_query_param:
-          href: ${filePaths}
-      - add_query_param:
-          fn: ${filePaths}
-      - add_query_param:
-          module: ${filePaths}
+        - add_query_param:
+            file: ${filePaths}
+        - add_query_param:
+            files: ${filePaths}
+        - add_query_param:
+            filePath: ${filePaths}
+        - add_query_param:
+            file_path: ${filePaths}
+        - add_query_param:
+            previewFilePath: ${filePaths}
+        - add_query_param:
+            controller: ${filePaths}
+        - add_query_param:
+            filename: ${filePaths}
+        - add_query_param:
+            page: ${filePaths}
+        - add_query_param:
+            sub_page: ${filePaths}
+        - add_query_param:
+            href: ${filePaths}
+        - add_query_param:
+            fn: ${filePaths}
+        - add_query_param:
+            module: ${filePaths}
 
 validate:
   response_payload:

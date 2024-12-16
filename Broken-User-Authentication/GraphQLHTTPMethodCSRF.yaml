@@ -23,6 +23,8 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -32,7 +34,7 @@ api_selection_filters:
     eq: POST
   request_payload:
     for_one:
-      key: 
+      key:
         contains_either: mutation
   response_payload:
     length:
@@ -52,7 +54,7 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: GET
+        - modify_method: GET
 
 
 validate:

@@ -2,7 +2,7 @@ id: SELENIUM_NODE_EXPOSURE
 info:
   name: "Selenium - Node Exposure"
   description: "Selenium - Node Exposure refers to the security risk where the Selenium WebDriver server is exposed to the internet, allowing attackers to send arbitrary commands to interact with web applications. If the Selenium Node, responsible for running tests on the browser, is not properly secured, it can lead to remote code execution, unauthorized access, or manipulation of the application being tested. Proper firewall configurations and access controls are essential to mitigate this risk."
-  details:  "Selenium - Node Exposure occurs when the Selenium WebDriver node, used for running browser-based automation tests, is exposed to the public internet without adequate security measures. This exposure allows attackers to send malicious commands to the WebDriver server, potentially executing arbitrary actions on the web application being tested. Insecure configurations, such as failing to restrict access to trusted IPs or using weak authentication, can make the Selenium Node vulnerable to exploitation. Proper isolation and access control are essential to mitigate these risks."
+  details: "Selenium - Node Exposure occurs when the Selenium WebDriver node, used for running browser-based automation tests, is exposed to the public internet without adequate security measures. This exposure allows attackers to send malicious commands to the WebDriver server, potentially executing arbitrary actions on the web application being tested. Insecure configurations, such as failing to restrict access to trusted IPs or using weak authentication, can make the Selenium Node vulnerable to exploitation. Proper isolation and access control are essential to mitigate these risks."
   impact: "The impact of Selenium - Node Exposure can be severe, as attackers can gain remote access to the exposed Selenium WebDriver node and execute arbitrary commands on the web application. This could lead to data theft, unauthorized actions, or manipulation of the application, potentially compromising its integrity. Exploiting this vulnerability may also allow attackers to execute malicious code, escalate privileges, or disrupt testing and development environments."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2021-43798
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -34,10 +36,10 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - follow_redirect: true
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - follow_redirect: true
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

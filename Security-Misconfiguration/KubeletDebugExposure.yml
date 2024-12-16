@@ -2,7 +2,7 @@ id: KUBELET_DEBUG_EXPOSURE
 info:
   name: "Kubelet Debug Endpoint Exposure Detection"
   description: "The Kubelet Debug Endpoint Exposure vulnerability involves the unintended exposure of sensitive debugging information through the Kubelet's API endpoint. When misconfigured, this endpoint can reveal internal cluster details, including node configurations and container statuses, to unauthorized users. This exposure poses a security risk, as it may allow attackers to gather intelligence about the cluster and exploit other vulnerabilities. Proper configuration and access controls are essential to secure the Kubelet and protect against unauthorized access."
-  details:  "The Kubelet Debug Endpoint Exposure vulnerability occurs when the Kubelet's debug endpoints are accessible without adequate authentication or authorization controls. This can happen in clusters where default settings are used or where security best practices are not followed. Attackers can leverage this exposure to obtain sensitive information about the cluster, such as API access tokens, pod specifications, and health statuses. To mitigate this risk, administrators should restrict access to the debug endpoints and implement proper authentication mechanisms."
+  details: "The Kubelet Debug Endpoint Exposure vulnerability occurs when the Kubelet's debug endpoints are accessible without adequate authentication or authorization controls. This can happen in clusters where default settings are used or where security best practices are not followed. Attackers can leverage this exposure to obtain sensitive information about the cluster, such as API access tokens, pod specifications, and health statuses. To mitigate this risk, administrators should restrict access to the debug endpoints and implement proper authentication mechanisms."
   impact: "The impact of the Kubelet Debug Endpoint Exposure vulnerability can be severe, as it allows attackers to gain insights into the internal workings of a Kubernetes cluster. This information can facilitate further attacks, enabling unauthorized access to sensitive data or the execution of malicious actions within the cluster. Additionally, exposure of debug information may compromise the overall security posture of the deployment, increasing the risk of data breaches and service disruptions. Implementing stringent access controls is crucial to mitigate these risks."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2019-11248
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -42,11 +44,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
-      - add_query_param:
-          debug: 1
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
+        - add_query_param:
+            debug: 1
 validate:
   response_payload:
     length:

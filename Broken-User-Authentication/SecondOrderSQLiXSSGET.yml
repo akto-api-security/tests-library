@@ -1,7 +1,7 @@
 id: SECOND_ORDER_SQLI_XSS_GET
 info:
   name: "Second Order SQL Injection Test with XSS and GET method APIs"
-  description: > 
+  description: >
     "Second Order SQL Injection testing with XSS and GET method APIs involves exploiting vulnerabilities where user-controlled input is stored in the database and later used in SQL queries without proper sanitization. Attackers manipulate these stored inputs to inject SQL queries that may execute later when retrieved by the application. By incorporating XSS payloads into these stored inputs, attackers can also execute malicious scripts in the application's output, posing a dual threat of data extraction and client-side attacks. This testing method helps identify and mitigate vulnerabilities that enable both server-side SQL injection and stored XSS attacks."
   details: >
     "Second Order SQL Injection with XSS and GET method APIs occurs when user input, typically stored in a database, is later used in SQL queries without adequate validation. Attackers exploit this by manipulating stored inputs to inject SQL queries that execute when retrieved. By embedding XSS payloads into these inputs, attackers can execute scripts in the application's output. This technique aims to uncover vulnerabilities where stored data is misused, leading to potential data breaches and client-side attacks through malicious script execution."
@@ -27,6 +27,8 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     eq: "GET"
@@ -38,7 +40,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -84,101 +86,101 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_query_param:
-        userKey: ${userVal}${secondOrderXSSPayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          contains_either:
-            - "<script>alert(\"XSS\");</script>"
-            - "<svg/onload=alert(\"XSS\")>"
-            - "XSS"
-            - "<img src=\"x\" onerror=\"alert('XSS')\">"
-          not_contains:
-            - Error
-            - Internal Server 
-            - Fail
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - UNION
-            - SELECT           
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_query_param:
-        userKey: ${secondOrderXSSNegativePayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0 
-          not_contains:
-            - Error
-            - Internal Server 
-            - Fail
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts  
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked 
-            - UNION
-            - SELECT
-            - "<script>alert(\"XSS\");</script>"
-            - "<svg/onload=alert(\"XSS\")>"
-            - "XSS"
-            - "<img src=\"x\" onerror=\"alert('XSS')\">"
-          neq: "${x1.response.body}"
-    - success: vulnerable
-    - failure: exit               
+    - req:
+        - modify_query_param:
+            userKey: ${userVal}${secondOrderXSSPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_either:
+                - "<script>alert(\"XSS\");</script>"
+                - "<svg/onload=alert(\"XSS\")>"
+                - "XSS"
+                - "<img src=\"x\" onerror=\"alert('XSS')\">"
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - UNION
+                - SELECT
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_query_param:
+            userKey: ${secondOrderXSSNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - UNION
+                - SELECT
+                - "<script>alert(\"XSS\");</script>"
+                - "<svg/onload=alert(\"XSS\")>"
+                - "XSS"
+                - "<img src=\"x\" onerror=\"alert('XSS')\">"
+              neq: "${x1.response.body}"
+        - success: vulnerable
+        - failure: exit

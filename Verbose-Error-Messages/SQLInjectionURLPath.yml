@@ -10,7 +10,7 @@ info:
     displayName: Verbose Error Messages (VEM)
   subCategory: SQL_INJECTION_URL_PATH
   severity: MEDIUM
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -24,6 +24,8 @@ info:
   cve:
     - CVE-2017-12794
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -40,7 +42,7 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${urlVar}'"
+        - modify_url: "${urlVar}'"
 
 validate:
   response_payload:

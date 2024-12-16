@@ -2,13 +2,13 @@ id: CDATA_API_SERVER_JAVA_LFI
 info:
   name: "CData API Server Java Local File Inclusion Test"
   description: "The CData API Server Java Local File Inclusion (LFI) Test checks for vulnerabilities in CData API Server, which could allow attackers to include local files on the server via user-supplied input. If the server improperly handles file paths or input sanitization, attackers might be able to access sensitive system files, such as configuration files, log files, or application data. This could lead to information disclosure or, in some cases, further exploitation like remote code execution. Protecting against LFI requires strict input validation and ensuring file path references are properly sanitized."
-  details:  "The CData API Server Java Local File Inclusion (LFI) Test examines the application's handling of user input related to file paths. If CData API Server fails to properly sanitize or validate input, an attacker could manipulate file paths to access restricted local files on the server. This could allow unauthorized access to sensitive files, such as configuration settings, credentials, or log files, potentially exposing critical system information. To mitigate LFI vulnerabilities, it's crucial to validate and sanitize all user inputs, restrict file path access, and implement strong security measures such as file system access controls."
+  details: "The CData API Server Java Local File Inclusion (LFI) Test examines the application's handling of user input related to file paths. If CData API Server fails to properly sanitize or validate input, an attacker could manipulate file paths to access restricted local files on the server. This could allow unauthorized access to sensitive files, such as configuration settings, credentials, or log files, potentially exposing critical system information. To mitigate LFI vulnerabilities, it's crucial to validate and sanitize all user inputs, restrict file path access, and implement strong security measures such as file system access controls."
   impact: "The impact of a CData API Server Java Local File Inclusion (LFI) vulnerability can be severe, as it may allow attackers to gain unauthorized access to sensitive files on the server, such as configuration files or system logs. This could lead to the exposure of credentials, internal system information, or application secrets, increasing the risk of further exploitation. In some cases, LFI vulnerabilities can be leveraged for remote code execution or privilege escalation. Proper input sanitization, access controls, and secure configuration practices are essential to mitigate these risks."
   category:
     name: LFI
     shortName: Local File Inclusion
     displayName: Local File Inclusion (LFI)
-  subCategory:  CDATA_API_SERVER_JAVA_LFI
+  subCategory: CDATA_API_SERVER_JAVA_LFI
   severity: HIGH
   tags:
     - Business logic
@@ -25,6 +25,8 @@ info:
     - CVE-2023-22973
 
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -41,9 +43,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

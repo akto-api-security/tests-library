@@ -3,11 +3,11 @@ info:
   name: Content Type Header Missing
   description: "This vulnerability can enable attackers to inject malicious code into the application or cause it to malfunction."
   details: >
-            "The endpoint appears to be have Misconfigured HTTP Headers. The original request
-            was replayed without any modifications. The server responded with 2XX success codes and the
-            response headers didn't contain Content-Type header"
-            "<b>Background:</b> The Content-Type header specifies the type of data contained in the request or
-            response body, allowing the receiving party to interpret and handle the data correctly."
+    "The endpoint appears to be have Misconfigured HTTP Headers. The original request
+    was replayed without any modifications. The server responded with 2XX success codes and the
+    response headers didn't contain Content-Type header"
+    "<b>Background:</b> The Content-Type header specifies the type of data contained in the request or
+    response body, allowing the receiving party to interpret and handle the data correctly."
   impact: "When the Content-Type header is missing, it can lead to various security risks, data integrity issues and possible DOS attacks"
   category:
     name: MHH
@@ -15,7 +15,7 @@ info:
     displayName: Misconfigured HTTP Headers (MHH)
   subCategory: CONTENT_TYPE_HEADER_MISSING
   severity: LOW
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -33,6 +33,8 @@ info:
     - CVE-2023-38199
     - CVE-2023-26130
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200

@@ -1,28 +1,12 @@
 id: BFLA_REPLACE_ADMIN_IN_URL_PATHS
 info:
-  name: "Broken Function Level Authorization - Vertical Privilege Escalation test 
-  by replacing URL subpaths with admin keyword for new URL path identification"
-  description: > 
-    "In this test, attackers manipulate URL paths by replacing URL subpaths 
-    with "admin" keywords to access privileged functionalities. This tactic 
-    aims to bypass access controls and gain unauthorized entry to 
-    administrative features or sensitive data. By exploiting this 
-    vulnerability, attackers can escalate their privileges within the 
-    system and potentially compromise its security."
+  name: "Broken Function Level Authorization - Vertical Privilege Escalation test by replacing URL subpaths with admin keyword for new URL path identification"
+  description: >
+    "In this test, attackers manipulate URL paths by replacing URL subpaths  with "admin" keywords to access privileged functionalities. This tactic  aims to bypass access controls and gain unauthorized entry to  administrative features or sensitive data. By exploiting this  vulnerability, attackers can escalate their privileges within the  system and potentially compromise its security."
   details: >
-    In this test, attackers exploit weaknesses in function level authorization by 
-    replacing URL subpaths with keywords like "admin" to access privileged 
-    functionalities. By replacing specific subpaths, they attempt to 
-    bypass access controls and gain unauthorized entry to administrative 
-    features or sensitive areas of the application. This tactic aims to 
-    escalate privileges within the system, potentially compromising its 
-    security and allowing for unauthorized access to critical resources."
+    In this test, attackers exploit weaknesses in function level authorization by  replacing URL subpaths with keywords like "admin" to access privileged  functionalities. By replacing specific subpaths, they attempt to  bypass access controls and gain unauthorized entry to administrative  features or sensitive areas of the application. This tactic aims to  escalate privileges within the system, potentially compromising its  security and allowing for unauthorized access to critical resources."
   impact: >
-    "The impact of this test can be significant. Attackers can exploit this 
-    vulnerability to gain unauthorized access to privileged functionalities, 
-    leading to data breaches, system compromise, and unauthorized actions. 
-    This can result in the exposure of sensitive information, compromise of 
-    user accounts, and damage to the organization's reputation and trust."
+    "The impact of this test can be significant. Attackers can exploit this  vulnerability to gain unauthorized access to privileged functionalities,  leading to data breaches, system compromise, and unauthorized actions.  This can result in the exposure of sensitive information, compromise of  user accounts, and damage to the organization's reputation and trust."
 
   category:
     name: BFLA
@@ -41,6 +25,8 @@ info:
     - CWE-285
   cve:
     - CVE-2022-48341
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -57,54 +43,54 @@ execute:
   type: multiple
   requests:
     - req:
-      - modify_header:
-          ${roles_access_context.MEMBER}: 1
-      - modify_url:
-          token_replace:
-            location: 1
-            replace_with: "admin"
-      - success: vulnerable
-      - failure: x2
+        - modify_header:
+            ${roles_access_context.MEMBER}: 1
+        - modify_url:
+            token_replace:
+              location: 1
+              replace_with: "admin"
+        - success: vulnerable
+        - failure: x2
     - req:
-      - modify_header:
-          ${roles_access_context.MEMBER}: 1
-      - modify_url:
-          token_replace:
-            location: 2
-            replace_with: "admin"
-      - success: vulnerable
-      - failure: x3
+        - modify_header:
+            ${roles_access_context.MEMBER}: 1
+        - modify_url:
+            token_replace:
+              location: 2
+              replace_with: "admin"
+        - success: vulnerable
+        - failure: x3
     - req:
-      - modify_header:
-          ${roles_access_context.MEMBER}: 1
-      - modify_url:
-          token_replace:
-            location: 3
-            replace_with: "admin"
-      - success: vulnerable
-      - failure: x4
+        - modify_header:
+            ${roles_access_context.MEMBER}: 1
+        - modify_url:
+            token_replace:
+              location: 3
+              replace_with: "admin"
+        - success: vulnerable
+        - failure: x4
     - req:
-      - modify_header:
-          ${roles_access_context.MEMBER}: 1
-      - modify_url:
-          token_replace:
-            location: 4
-            replace_with: "admin"
-      - success: vulnerable
-      - failure: x5
+        - modify_header:
+            ${roles_access_context.MEMBER}: 1
+        - modify_url:
+            token_replace:
+              location: 4
+              replace_with: "admin"
+        - success: vulnerable
+        - failure: x5
     - req:
-      - modify_header:
-          ${roles_access_context.MEMBER}: 1
-      - modify_url:
-          token_replace:
-            location: 5
-            replace_with: "admin"
+        - modify_header:
+            ${roles_access_context.MEMBER}: 1
+        - modify_url:
+            token_replace:
+              location: 5
+              replace_with: "admin"
 validate:
   response_code:
     gte: 200
     lt: 300
   url:
-    endpoint_in_traffic_context: false 
+    endpoint_in_traffic_context: false
   response_payload:
     length:
       gt: 0

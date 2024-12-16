@@ -2,7 +2,7 @@ id: GRAFANA_FILE_READ
 info:
   name: "Grafana Arbitrary File Read"
   description: "This vulnerability allows an attacker to access files on the server where Grafana is running. By exploiting this flaw, attackers can potentially read sensitive files outside the intended scope, such as configuration files or system credentials, leading to further compromise of the system. This vulnerability affects specific versions of Grafana, which require prompt patching to mitigate."
-  details:  "This vulnerability occurs when improperly validated input allows an attacker to specify and access arbitrary file paths on the server. This flaw can be exploited by sending specially crafted requests to the affected Grafana instance. As a result, attackers can access sensitive files and system information that are typically restricted, posing a significant security risk to the affected environment."
+  details: "This vulnerability occurs when improperly validated input allows an attacker to specify and access arbitrary file paths on the server. This flaw can be exploited by sending specially crafted requests to the affected Grafana instance. As a result, attackers can access sensitive files and system information that are typically restricted, posing a significant security risk to the affected environment."
   impact: "The impact of this vulnerability is severe, as it allows attackers to access sensitive files on the server, such as configuration files, credentials, and other critical data. Exploiting this flaw can lead to unauthorized access, data breaches, or further exploitation of the system, ultimately compromising the security and integrity of the affected environment."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2021-43798
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -44,9 +46,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

@@ -2,10 +2,9 @@ id: OPEN_REDIRECT_SUBDOMAIN_WHITELIST
 info:
   name: "Open redirect subdomain whitelist"
   description: "An attacker can construct a URL within the application that causes a redirection to an arbitrary external domain by leveraging subdomain whitelisting."
-  details: > 
-            "Open redirection vulnerabilities arise when an application incorporates user-controllable data into the target of a redirection in an unsafe way.
-            The ability to use an authentic application URL, targeting the correct domain and with a valid SSL certificate (if SSL is used), lends credibility 
-            to the phishing attack because many users, even if they verify these features, will not notice the subsequent redirection to a different domain"
+  details: >
+    "Open redirection vulnerabilities arise when an application incorporates user-controllable data into the target of a redirection in an unsafe way.
+    The ability to use an authentic application URL, targeting the correct domain and with a valid SSL certificate (if SSL is used), lends credibility  to the phishing attack because many users, even if they verify these features, will not notice the subsequent redirection to a different domain"
   impact: "This behavior can be leveraged to facilitate phishing attacks against users of the application."
   category:
     name: SM
@@ -23,8 +22,10 @@ info:
     - CWE-601
     - CWE-610
   cve:
-    -  CVE-2021-21291
+    - CVE-2021-21291
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -32,7 +33,7 @@ api_selection_filters:
     eq: 302
   response_headers:
     for_one:
-      key: 
+      key:
         eq: location
       value:
         regex: .*
@@ -64,13 +65,13 @@ execute:
   type: single
   requests:
     - req:
-      - modify_query_param:
-          payload_location_key: http://${payload_location_value}.evil.com/
-      - modify_body_param:
-          payload_location_key: http://${payload_location_value}.evil.com/
-      - modify_header:
-          payload_location_key: http://${payload_location_value}.evil.com/
-      - follow_redirect: false
+        - modify_query_param:
+            payload_location_key: http://${payload_location_value}.evil.com/
+        - modify_body_param:
+            payload_location_key: http://${payload_location_value}.evil.com/
+        - modify_header:
+            payload_location_key: http://${payload_location_value}.evil.com/
+        - follow_redirect: false
 
 
 validate:

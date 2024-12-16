@@ -1,4 +1,3 @@
----
 id: JETTY_STATS_EXPOSED
 info:
   name: "Jetty Stats Exposed"
@@ -24,6 +23,8 @@ info:
   cve:
     - CVE-2018-10245
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -34,15 +35,15 @@ api_selection_filters:
 execute:
   type: single
   requests:
-    - req: 
-      - modify_url: "/stats"
+    - req:
+        - modify_url: "/stats"
 
 validate:
   response_code:
     gte: 200
     lt: 300
   response_payload:
-    length: 
+    length:
       gt: 0
     not_contains:
       - <html>

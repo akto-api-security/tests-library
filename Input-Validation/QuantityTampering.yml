@@ -1,7 +1,7 @@
 id: QUANTITY_TAMPERING
 info:
   name: "Input Validation test using Quantity Tampering"
-  description: > 
+  description: >
     "Input Validation testing using Quantity Tampering involves manipulating the quantity field in a form or API request to test how the system handles unexpected or extreme values. This ensures that the application correctly validates and processes input, preventing issues like incorrect pricing, overflow errors, or security vulnerabilities such as injection attacks."
   details: >
     "Quantity Tampering in Input Validation testing targets the manipulation of quantity fields to assess the application's response to altered or malicious input. By testing various scenarios, such as negative values, excessively large numbers, or invalid characters, testers can identify weaknesses in the system's validation logic, ensuring that it accurately enforces business rules and maintains data integrity."
@@ -28,6 +28,8 @@ info:
     - CVE-2018-20679
     - CVE-2019-14271
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -81,10 +83,10 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - modify_body_param:
-        userKey: ${quantityValues}
-        
+    - req:
+        - modify_body_param:
+            userKey: ${quantityValues}
+
 validate:
   response_code:
     gte: 200
@@ -94,7 +96,7 @@ validate:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

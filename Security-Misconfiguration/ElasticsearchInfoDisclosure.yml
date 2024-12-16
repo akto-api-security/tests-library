@@ -2,7 +2,7 @@ id: ELASTICSEARCH_INFO_DISCLOSURE
 info:
   name: "Elasticsearch Information Disclosure"
   description: "This vulnerability allows unauthorized users to access sensitive data within Elasticsearch clusters. This issue typically arises from inadequate access controls or misconfigurations, enabling attackers to retrieve private or confidential information from indices and documents. Such exposure can lead to data breaches, unauthorized information access, and potential security risks for the affected systems."
-  details:  "This vulnerability occurs due to improper access controls or misconfigurations in Elasticsearch clusters. Attackers can exploit this flaw to access restricted indices or data that should be protected. This often involves exploiting weak security settings or default configurations, which can expose sensitive information such as internal documents, user data, or system details, posing a risk of data breaches and unauthorized access."
+  details: "This vulnerability occurs due to improper access controls or misconfigurations in Elasticsearch clusters. Attackers can exploit this flaw to access restricted indices or data that should be protected. This often involves exploiting weak security settings or default configurations, which can expose sensitive information such as internal documents, user data, or system details, posing a risk of data breaches and unauthorized access."
   impact: "The impact of this vulnerability is significant, as it can lead to the exposure of sensitive or confidential data stored in Elasticsearch clusters. Unauthorized access to this information can result in data breaches, loss of privacy, and potential misuse of the exposed data. This vulnerability can compromise the confidentiality and integrity of the information, impacting organizational security and potentially leading to further attacks."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2021-22145
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -33,10 +35,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: POST
-      - modify_url: "/_bulk"
-      - replace_body: '@'
-      
+        - modify_method: POST
+        - modify_url: "/_bulk"
+        - replace_body: '@'
 validate:
   response_code:
     eq: 400

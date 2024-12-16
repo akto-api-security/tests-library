@@ -1,25 +1,12 @@
 id: USER_ENUM_HTTP_CODES
 info:
   name: "Broken Authentication Test - Username Enumeration via Different HTTP response codes"
-  description: > 
-    "In this test, testers assess a system's security by analyzing how it responds to authentication 
-    requests with valid and invalid usernames. The focus is on variations in HTTP response codes, 
-    revealing potential vulnerabilities in the username enumeration process. Identifying 
-    and addressing these issues is crucial for bolstering authentication security and 
-    preventing the unintentional exposure of valid username information."
+  description: >
+    "In this test, testers assess a system's security by analyzing how it responds to authentication  requests with valid and invalid usernames. The focus is on variations in HTTP response codes,  revealing potential vulnerabilities in the username enumeration process. Identifying  and addressing these issues is crucial for bolstering authentication security and  preventing the unintentional exposure of valid username information."
   details: >
-    "This test assesses a system's security by analyzing responses to authentication requests 
-    with various usernames. Testers focus on distinct HTTP response codes for valid and invalid 
-    attempts, revealing potential vulnerabilities. Identifying and addressing these issues is 
-    vital for strengthening authentication security and preventing inadvertent disclosure of 
-    valid username information."
+    "This test assesses a system's security by analyzing responses to authentication requests  with various usernames. Testers focus on distinct HTTP response codes for valid and invalid  attempts, revealing potential vulnerabilities. Identifying and addressing these issues is  vital for strengthening authentication security and preventing inadvertent disclosure of  valid username information."
   impact: >
-    "A successful Broken Authentication Test - Username Enumeration via Different HTTP Response Codes 
-    could have significant consequences. Exploiting variations in response codes may expose valid 
-    usernames, aiding attackers in targeted unauthorized access. This vulnerability could lead 
-    to compromised user accounts, potential data breaches, and an increased risk of unauthorized 
-    system entry. Addressing these issues promptly is crucial to maintaining robust authentication 
-    security and preventing the inadvertent exposure of sensitive user information."
+    "A successful Broken Authentication Test - Username Enumeration via Different HTTP Response Codes  could have significant consequences. Exploiting variations in response codes may expose valid  usernames, aiding attackers in targeted unauthorized access. This vulnerability could lead  to compromised user accounts, potential data breaches, and an increased risk of unauthorized  system entry. Addressing these issues promptly is crucial to maintaining robust authentication  security and preventing the inadvertent exposure of sensitive user information."
 
   category:
     name: NO_AUTH
@@ -41,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -52,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -99,28 +88,28 @@ api_selection_filters:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_body_param:
-        password: Default1!
-    - validate:
-        response_code:
-          gte: 400
-          lt: 410
-        response_payload:
-          not_contains:
-            - rate limit
-            - rate_limit
-            - rate-limit
-            - multiple failed attempt
-            - account is locked
-            - account is blocked
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_body_param:
-        email: dummymail@dummy.com
-        password: Default1!
-    - validate:
-        response_code:
-          neq: "${x1.response.status_code}"
-    - success: vulnerable
+    - req:
+        - modify_body_param:
+            password: Default1!
+        - validate:
+            response_code:
+              gte: 400
+              lt: 410
+            response_payload:
+              not_contains:
+                - rate limit
+                - rate_limit
+                - rate-limit
+                - multiple failed attempt
+                - account is locked
+                - account is blocked
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            email: dummymail@dummy.com
+            password: Default1!
+        - validate:
+            response_code:
+              neq: "${x1.response.status_code}"
+        - success: vulnerable

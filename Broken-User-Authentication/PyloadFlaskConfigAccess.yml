@@ -1,7 +1,7 @@
 id: PYLOAD_FLASK_CONFIG_ACCESS_CONTROL
 info:
   name: "Pyload Flask Config Unauthenticated Access"
-  description: "This test refers to a security vulnerability in Pyload, a download management system using Flask. This issue arises when the configuration endpoint of Pyload's Flask application is exposed without proper authentication, potentially allowing unauthorized users to access sensitive configuration settings. Exploiting this vulnerability could lead to unauthorized changes or exposure of critical information." 
+  description: "This test refers to a security vulnerability in Pyload, a download management system using Flask. This issue arises when the configuration endpoint of Pyload's Flask application is exposed without proper authentication, potentially allowing unauthorized users to access sensitive configuration settings. Exploiting this vulnerability could lead to unauthorized changes or exposure of critical information."
   details: "This vulnerability occurs when the Flask-based Pyload application exposes its configuration interface without requiring user authentication. This can allow attackers to access or modify sensitive configuration settings, such as API keys or server credentials. Exploiting this flaw can lead to unauthorized access to the system, potentially compromising its security and integrity."
   impact: "The impact of this vulnerability can be significant, as it allows unauthorized users to access or alter critical configuration settings. This exposure can lead to unauthorized control over the Pyload application, potentially compromising data security, altering system settings, or enabling further attacks. The vulnerability increases the risk of system compromise and data breaches."
   category:
@@ -23,6 +23,8 @@ info:
   cve:
     - CVE-2024-21644
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -34,7 +36,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -64,9 +66,9 @@ api_selection_filters:
 execute:
   type: single
   requests:
-  - req: 
-    - modify_method: GET
-    - modify_url: ${urlVar}/render/info.html
+    - req:
+        - modify_method: GET
+        - modify_url: ${urlVar}/render/info.html
 validate:
   response_code:
     eq: 200
@@ -78,7 +80,7 @@ validate:
       - "&#39;pyload_session&#39;"
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -107,4 +109,3 @@ validate:
       - cloudflare
       - <html>
       - </html>
-   

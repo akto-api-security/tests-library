@@ -2,7 +2,7 @@ id: APACHE_AXIS2_DEFAULT_LOGIN
 info:
   name: "Apache Axis2 Default Login"
   description: "The Apache Axis2 Default Login vulnerability arises from the use of default or weak credentials in the Axis2 web services framework. Attackers can exploit this flaw by accessing the administrative interface using the default username and password, which may not have been changed by the user. This unauthorized access can allow attackers to manipulate web services, access sensitive data, and potentially compromise the application. Proper configuration and the immediate changing of default credentials are essential to mitigate this vulnerability."
-  details:  "The Apache Axis2 Default Login vulnerability occurs when installations of the Axis2 framework are left with default credentials, such as 'admin/admin,' allowing unauthorized users to access the administrative interface. Attackers can exploit this weakness to perform various malicious actions, including modifying configurations, accessing sensitive data, or deploying malicious services. This issue primarily affects installations where administrators have not taken the necessary steps to secure the default accounts. To mitigate this risk, it is critical to change default credentials immediately after installation and enforce strong password policies."
+  details: "The Apache Axis2 Default Login vulnerability occurs when installations of the Axis2 framework are left with default credentials, such as 'admin/admin,' allowing unauthorized users to access the administrative interface. Attackers can exploit this weakness to perform various malicious actions, including modifying configurations, accessing sensitive data, or deploying malicious services. This issue primarily affects installations where administrators have not taken the necessary steps to secure the default accounts. To mitigate this risk, it is critical to change default credentials immediately after installation and enforce strong password policies."
   impact: "The impact of the Apache Axis2 Default Login vulnerability can be significant, as it allows attackers to gain unauthorized access to the administrative interface of web services. This can lead to manipulation of service configurations, exposure of sensitive data, and potentially the deployment of malicious services. Such unauthorized access can compromise the integrity and availability of applications, resulting in data breaches and reputational damage for affected organizations. Promptly changing default credentials and enforcing strong access controls are crucial to prevent these risks."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2010-0219
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -45,12 +47,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: POST
-      - replace_body: '${bodyPayloads}'
-      - modify_header:
-          content-type: "application/x-www-form-urlencoded"
-      
+        - modify_url: "${paths}"
+        - modify_method: POST
+        - replace_body: '${bodyPayloads}'
+        - modify_header:
+            content-type: "application/x-www-form-urlencoded"
 validate:
   response_code:
     eq: 200

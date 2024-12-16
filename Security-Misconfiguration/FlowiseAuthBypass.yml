@@ -2,7 +2,7 @@ id: FLOWISE_AUTH_BYPASS
 info:
   name: "Flowise Authentication Bypass Test"
   description: "The Flowise Authentication Bypass Test checks for vulnerabilities in Flowise where unauthorized users may be able to bypass the authentication mechanisms. This vulnerability could allow attackers to gain access to the Flowise platform without proper credentials, potentially exposing sensitive data, workflows, or system configurations. Exploiting this flaw could lead to unauthorized changes in workflow automation, data access, or system manipulation. Ensuring strong authentication controls, proper session handling, and regular updates can help mitigate such risks."
-  details:  "The Flowise Authentication Bypass Test focuses on identifying weaknesses in Flowise’s authentication process that may allow attackers to gain unauthorized access. Potential issues could include improper session handling, insecure default configurations, or flaws in the login mechanism that enable users to bypass authentication. Once bypassed, attackers could modify workflows, access sensitive data, or perform actions within the platform without proper authorization. Securing the application with robust authentication protocols and input validation is critical to prevent such vulnerabilities."
+  details: "The Flowise Authentication Bypass Test focuses on identifying weaknesses in Flowise’s authentication process that may allow attackers to gain unauthorized access. Potential issues could include improper session handling, insecure default configurations, or flaws in the login mechanism that enable users to bypass authentication. Once bypassed, attackers could modify workflows, access sensitive data, or perform actions within the platform without proper authorization. Securing the application with robust authentication protocols and input validation is critical to prevent such vulnerabilities."
   impact: "The impact of a Flowise Authentication Bypass vulnerability is significant, as it allows unauthorized users to access and manipulate sensitive workflows and data within the platform. Attackers could alter or disrupt automated processes, access confidential information, or perform malicious actions. This could lead to data leaks, service disruptions, or system manipulation. Implementing strong authentication, secure session management, and access controls is essential to prevent unauthorized access and protect the integrity of the system."
   category:
     name: SM
@@ -19,6 +19,8 @@ info:
     - CVE-2018-10245
 
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -37,13 +39,13 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
-      - modify_header:
-          accept: "application/json, text/plain, */*"
-      - modify_header:
-          referer: "${urlVar}/document-stores"
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
+        - modify_header:
+            accept: "application/json, text/plain, */*"
+        - modify_header:
+            referer: "${urlVar}/document-stores"
 validate:
   response_code:
     eq: 200

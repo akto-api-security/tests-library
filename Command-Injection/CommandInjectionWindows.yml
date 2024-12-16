@@ -23,6 +23,8 @@ info:
     - CVE-2023-25826
     - CVE-2023-41031
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -34,7 +36,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -89,10 +91,10 @@ execute:
   type: single
   requests:
     - req:
-        - modify_body_param: 
-            changed_body_key:  ${specialOSPayloads}
+        - modify_body_param:
+            changed_body_key: ${specialOSPayloads}
         - modify_query_param:
-            changed_query_key:  ${specialOSPayloads}
+            changed_query_key: ${specialOSPayloads}
 validate:
   response_payload:
     length:
@@ -105,7 +107,7 @@ validate:
       - "Ethernet adapter Local Area Connection"
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

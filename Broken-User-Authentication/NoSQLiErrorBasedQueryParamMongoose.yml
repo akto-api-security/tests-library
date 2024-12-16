@@ -28,6 +28,8 @@ info:
     - CVE-2021-22911
     - CVE-2023-28359
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -48,7 +50,7 @@ execute:
   requests:
     - req:
         - delete_query_param: ${changed_query_key}
-        - add_query_param: 
+        - add_query_param:
             !!str ${changed_query_key} [$]: ${changed_query_value}
 validate:
   and:
@@ -56,12 +58,12 @@ validate:
         not_contains:
           - <html>
           - </html>
-    - or: 
-      - response_payload:
-          regex: "Uncaught MongoDB\\\\Driver\\\\Exception\\\\CommandException: unknown operator"
-      - response_payload:
-          regex: "(?i)MongoError"
-      - response_payload:
-          regex: "(?i)unterminated string literal"
-      - response_payload:
-          regex: "Cast to string failed for value"
+    - or:
+        - response_payload:
+            regex: "Uncaught MongoDB\\\\Driver\\\\Exception\\\\CommandException: unknown operator"
+        - response_payload:
+            regex: "(?i)MongoError"
+        - response_payload:
+            regex: "(?i)unterminated string literal"
+        - response_payload:
+            regex: "Cast to string failed for value"

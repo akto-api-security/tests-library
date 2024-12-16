@@ -1,4 +1,3 @@
----
 id: HEADER_INVALID_VALUES
 info:
   name: Header Invalid Values
@@ -16,19 +15,21 @@ info:
   subCategory: HEADER_INVALID_VALUES
   severity: LOW
   tags:
-  - Business logic
-  - OWASP top 10
-  - HackerOne top 10
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
   references:
-  - https://endava.github.io/cats/docs/fuzzers/header-fuzzers
-  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
-  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+    - https://endava.github.io/cats/docs/fuzzers/header-fuzzers
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
   cwe:
-  - CWE-20
+    - CWE-20
   cve:
-  - CVE-2018-20679
-  - CVE-2019-14271
+    - CVE-2018-20679
+    - CVE-2019-14271
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -36,35 +37,35 @@ api_selection_filters:
   method:
     neq: OPTIONS
   response_payload:
-    length: 
+    length:
       gt: 0
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   request_headers:
     for_one:
       key:
@@ -76,58 +77,58 @@ api_selection_filters:
 execute:
   type: multiple
   requests:
-  - req:
+    - req:
     # checking if the header is actually important, if it is only then continue with attack.
-    - delete_header: ${userKey}
-    - validate:
-        response_code:
-          gte: 400
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_header:
-        userKey: "${userVal}${attemptValues}"
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          percentage_match:
-            gte: 90
-          not_contains: ${badList}
-    - success: vulnerable
-    - failure: x3
-  - req:
-    - modify_header:
-        userKey: "${attemptValues}"
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          percentage_match:
-            gte: 90
-          not_contains: ${badList}
-    - success: vulnerable
-    - failure: x4
-  - req:
-    - modify_header:
-        userKey: "${attemptValues}${userVal}"
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          percentage_match:
-            gte: 90
-          not_contains: ${badList}
-    - success: vulnerable
+        - delete_header: ${userKey}
+        - validate:
+            response_code:
+              gte: 400
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_header:
+            userKey: "${userVal}${attemptValues}"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              percentage_match:
+                gte: 90
+              not_contains: ${badList}
+        - success: vulnerable
+        - failure: x3
+    - req:
+        - modify_header:
+            userKey: "${attemptValues}"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              percentage_match:
+                gte: 90
+              not_contains: ${badList}
+        - success: vulnerable
+        - failure: x4
+    - req:
+        - modify_header:
+            userKey: "${attemptValues}${userVal}"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              percentage_match:
+                gte: 90
+              not_contains: ${badList}
+        - success: vulnerable
 
 wordLists:
   attemptValues:
@@ -139,20 +140,20 @@ wordLists:
     - "0000"
     - \x00
     - "\0"
-    - "\x00"
+    - "\0"
     - NUL
     - "NUL"
-    - "\u0000"
+    - "\0"
     - "\000"
     - 0x00
-    - "\u0000null"
+    - "\0null"
     # emojis
     - ":)"
     # abugidas chars
     - "జ్ఞ‌ా"
     - "স্র‌ু"
 
-  badList: 
+  badList:
     - Error
     - Internal Server
     - Failed

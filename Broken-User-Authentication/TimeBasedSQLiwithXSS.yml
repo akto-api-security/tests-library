@@ -1,7 +1,7 @@
 id: TIME_BASED_SQLI_XSS
 info:
   name: "Time based SQL Injection Test with XSS"
-  description: > 
+  description: >
     "Time-based SQL Injection testing with XSS involves exploiting SQL injection vulnerabilities by introducing time delays in the database's response to infer data extraction. Attackers inject payloads that cause the database to pause execution using functions like `SLEEP()`, and measure the delay to confirm the vulnerability. By incorporating XSS payloads, attackers can also inject malicious scripts into the application's output. This combined testing method helps identify vulnerabilities that affect both database response times and client-side security."
   details: >
     "Time-based SQL Injection testing with XSS involves injecting SQL payloads that introduce delays in the database's response to detect vulnerabilities. Attackers use functions like `SLEEP()` to make the database pause, and measure the delay to infer the presence of the injection flaw. Simultaneously, XSS payloads are included to inject malicious scripts into the application's output. This test uncovers weaknesses in how the application handles SQL queries and user input, revealing both server-side and client-side vulnerabilities."
@@ -27,6 +27,8 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -38,7 +40,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -87,56 +89,56 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req: 
-    - add_header:
-        dummyKey: dummyVal
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          not_contains:
-            - Error
-            - Internal Server 
-            - Failed
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid token
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - " AND "
-            - " OR "
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${timeBasedPayloads}
-    - validate:
-        response_code:
-          eq: 429        
+    - req:
+        - add_header:
+            dummyKey: dummyVal
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " AND "
+                - " OR "
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${timeBasedPayloads}
+        - validate:
+            response_code:
+              eq: 429
 validate:
   and:
     - compare_greater:

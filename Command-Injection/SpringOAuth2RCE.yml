@@ -1,7 +1,7 @@
 id: SPRING_OAUTH2_RCE
 info:
   name: "Spring Security OAuth2 Remote Command Execution"
-  description: "Spring Security OAuth2 Remote Command Execution vulnerabilities occur when flaws in the OAuth2 implementation allow attackers to execute arbitrary commands on a server. These vulnerabilities often stem from improper validation of user inputs or insecure handling of access tokens, which can be exploited to gain unauthorized access to server resources. By leveraging these weaknesses, attackers can execute malicious commands, potentially compromising sensitive data or taking control of the server environment. To mitigate these risks, it's essential to enforce strict input validation, secure token management, and regularly update the Spring Security framework." 
+  description: "Spring Security OAuth2 Remote Command Execution vulnerabilities occur when flaws in the OAuth2 implementation allow attackers to execute arbitrary commands on a server. These vulnerabilities often stem from improper validation of user inputs or insecure handling of access tokens, which can be exploited to gain unauthorized access to server resources. By leveraging these weaknesses, attackers can execute malicious commands, potentially compromising sensitive data or taking control of the server environment. To mitigate these risks, it's essential to enforce strict input validation, secure token management, and regularly update the Spring Security framework."
   details: "Spring Security OAuth2 Remote Command Execution vulnerabilities typically arise from misconfigurations or flaws in the handling of OAuth2 tokens and user inputs. Attackers can exploit these vulnerabilities by crafting malicious OAuth2 requests or tokens that the server improperly processes, leading to the execution of arbitrary commands. This can occur if the application trusts user inputs without adequate validation, allowing unauthorized operations on the server. To defend against these vulnerabilities, it's crucial to implement comprehensive input validation, secure token storage, and keep the Spring Security framework updated with the latest security patches."
   impact: "The impact of Spring Security OAuth2 Remote Command Execution vulnerabilities can be critical, enabling attackers to execute arbitrary commands on the server and potentially gain complete control over the application environment. This can lead to unauthorized access to sensitive data, manipulation of application behavior, and the deployment of malware. Additionally, such vulnerabilities can undermine the integrity and availability of services, resulting in significant reputational damage, legal consequences, and financial losses for organizations affected by the exploit."
   category:
@@ -19,6 +19,8 @@ info:
   cve:
     - CVE-2016-4977
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_payload:
     length:

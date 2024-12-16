@@ -2,7 +2,7 @@ id: APACHE_SERVER_STATUS_LOCALHOST
 info:
   name: "Apache Server Status Exposure via localhost"
   description: "This test refers to the unintended accessibility of the Apache server status page over a public network, despite it being intended for local access only. This status page provides detailed information about server performance, resource usage, and active connections, which can be valuable for monitoring but also poses a security risk if exposed externally. If unauthorized users can access this information, they may identify potential weaknesses in the server configuration or exploit vulnerabilities. To mitigate this risk, it is essential to restrict access to the status page using proper firewall rules or authentication mechanisms."
-  details:  "Apache Server Status Exposure via localhost occurs when the Apache server status page, which is designed to provide insights into server performance and activity, is inadvertently made accessible from public networks instead of being restricted to local access. This status page reveals critical information, including server load, active requests, and resource usage metrics, which can aid attackers in identifying potential vulnerabilities. If exploited, attackers could craft targeted attacks based on the insights gained from this exposure. To prevent this risk, organizations should ensure that access to the status page is strictly limited to trusted IP addresses or protected by authentication mechanisms."
+  details: "Apache Server Status Exposure via localhost occurs when the Apache server status page, which is designed to provide insights into server performance and activity, is inadvertently made accessible from public networks instead of being restricted to local access. This status page reveals critical information, including server load, active requests, and resource usage metrics, which can aid attackers in identifying potential vulnerabilities. If exploited, attackers could craft targeted attacks based on the insights gained from this exposure. To prevent this risk, organizations should ensure that access to the status page is strictly limited to trusted IP addresses or protected by authentication mechanisms."
   impact: "The impact of Apache Server Status Exposure via localhost can be significant, as unauthorized access to the server status page can provide attackers with valuable insights into the server's operational state and performance metrics. This information may be used to identify weaknesses in server configurations or exploit existing vulnerabilities, potentially leading to unauthorized access or denial of service attacks. Additionally, the exposure can result in data leakage about active connections and resource usage, increasing the risk of targeted attacks that could disrupt services or compromise sensitive information. Ultimately, such exposure may lead to operational downtime, financial losses, and reputational damage for the organization."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2021-43798
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -44,11 +46,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/server-status"
-      - modify_method: GET
-      - replace_body: '{}'
-      - add_header:
-          ${headersTest}: 127.0.0.1
+        - modify_url: "/server-status"
+        - modify_method: GET
+        - replace_body: '{}'
+        - add_header:
+            ${headersTest}: 127.0.0.1
 validate:
   response_payload:
     length:

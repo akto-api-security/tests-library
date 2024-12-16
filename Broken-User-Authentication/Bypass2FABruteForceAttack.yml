@@ -1,25 +1,12 @@
 id: BYPASS_2FA_BRUTE_FORCE
 info:
   name: "2FA Bypass with brute-force attack"
-  description: > 
-    "This test examines vulnerabilities in multi-factor authentication (2FA) systems. It 
-    simulates a scenario where attackers exploit weaknesses to bypass the additional 
-    security layer through brute-force methods, potentially gaining unauthorized access 
-    to sensitive accounts or systems. This test helps identify gaps in authentication 
-    mechanisms and fortify defenses against sophisticated attacks."
+  description: >
+    "This test examines vulnerabilities in multi-factor authentication (2FA) systems. It  simulates a scenario where attackers exploit weaknesses to bypass the additional  security layer through brute-force methods, potentially gaining unauthorized access  to sensitive accounts or systems. This test helps identify gaps in authentication  mechanisms and fortify defenses against sophisticated attacks."
   details: >
-    "In this test, security analysts scrutinize the effectiveness of multi-factor 
-    authentication (MFA) setups. They simulate scenarios where attackers attempt to 
-    circumvent 2FA protections using brute-force techniques, such as systematically 
-    guessing combinations until successful. By assessing these vulnerabilities, 
-    organizations can refine their authentication protocols, reinforce security measures, 
-    and thwart potential breaches before they occur."
+    "In this test, security analysts scrutinize the effectiveness of multi-factor  authentication (MFA) setups. They simulate scenarios where attackers attempt to  circumvent 2FA protections using brute-force techniques, such as systematically  guessing combinations until successful. By assessing these vulnerabilities,  organizations can refine their authentication protocols, reinforce security measures,  and thwart potential breaches before they occur."
   impact: >
-    "The impact of this test could be severe. It may lead to unauthorized access to 
-    critical systems or sensitive data, compromising confidentiality, integrity, 
-    and possibly compliance requirements. Such breaches can damage reputation, incur 
-    financial losses, and disrupt operations, highlighting the critical need for 
-    robust authentication mechanisms to thwart sophisticated cyber threats effectively."
+    "The impact of this test could be severe. It may lead to unauthorized access to  critical systems or sensitive data, compromising confidentiality, integrity,  and possibly compliance requirements. Such breaches can damage reputation, incur  financial losses, and disrupt operations, highlighting the critical need for  robust authentication mechanisms to thwart sophisticated cyber threats effectively."
   category:
     name: NO_AUTH
     shortName: Broken Authentication
@@ -39,6 +26,8 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -55,7 +44,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -84,7 +73,7 @@ api_selection_filters:
     for_one:
       key:
         regex: "(?i)(captcha|2fa[-_]?code|mfa[-_]?code|auth[-_]?code|verification[-_]?code|security[-_]?code)"
-        extract:  captchaKey
+        extract: captchaKey
       value:
         regex: "^\\d+$"
 wordLists:
@@ -102,9 +91,9 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-      modify_body_param:
-        captchaKey: ${randomCaptcha}
+    - req:
+        modify_body_param:
+          captchaKey: ${randomCaptcha}
 validate:
   response_code:
     eq: ${resp_code}
@@ -115,7 +104,7 @@ validate:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

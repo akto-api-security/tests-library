@@ -3,8 +3,7 @@ info:
   name: Descriptive Error Message Using invalid payloads
   description: "Verifies error messages for sensitive information leakage, specifically preventing the exposure of stack traces, enhancing application security."
   details: >
-          "The DESCRIPTIVE_ERROR_MESSAGE test ensures that error messages do not leak sensitive information, specifically avoiding the exposure of stack traces. 
-          It verifies that error messages provide useful and informative feedback without disclosing implementation details, reducing the risk of exposing vulnerabilities and aiding in maintaining the security and integrity of the application."
+    "The DESCRIPTIVE_ERROR_MESSAGE test ensures that error messages do not leak sensitive information, specifically avoiding the exposure of stack traces.  It verifies that error messages provide useful and informative feedback without disclosing implementation details, reducing the risk of exposing vulnerabilities and aiding in maintaining the security and integrity of the application."
   impact: "This information can be used to facilitate more sophisticated attacks on your application"
   category:
     name: VEM
@@ -12,7 +11,7 @@ info:
     displayName: Verbose Error Messages (VEM)
   subCategory: DESCRIPTIVE_ERROR_MESSAGE_INVALID_PAYLOAD
   severity: LOW
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -25,6 +24,8 @@ info:
     - CVE-2020-11883
     - CVE-2020-15652
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     contains_either:
@@ -46,39 +47,39 @@ execute:
   type: single
   requests:
     - req:
-      - replace_body: "random payload containing 5s3c1@al characters and emojis😊"
+        - replace_body: "random payload containing 5s3c1@al characters and emojis😊"
 validate:
   or:
-      - response_payload: # Javascript / Node.js errors
-          - contains_either:
-              - "TypeError: Cannot"
-              - "SyntaxError: Unexpected"
-              - "ReferenceError:"
-      - response_payload: # Python errors
-          - contains_either:
-              - "ValueError: invalid"
-              - "TypeError: unsupported"
-              - "KeyError: "
-      - response_payload: # Java errors
-          - contains_either:
-              - "java.lang.NullPointerException"
-              - "java.lang.ArrayIndexOutOfBoundsException"
-              - "java.lang.IllegalArgumentException"
-      - response_payload: # C# errors
-          - contains_either:
-              - "System.NullReferenceException"
-              - "System.IndexOutOfRangeException"
-              - "System.InvalidOperationException"
-      - response_payload: # PHP errors
-          - contains_either:
-              - "Fatal error: Call"
-              - "Parse error: syntax error"
-              - "Exception: "
-      - response_payload: # Ruby errors
-          - contains_either:
-              - "RuntimeError: "
-              - "NoMethodError: "
-              - "ArgumentError: "
-      - response_payload: # Go errors
-          - contains_either:
-              - "panic: runtime error"
+    - response_payload:   # Javascript / Node.js errors
+        - contains_either:
+            - "TypeError: Cannot"
+            - "SyntaxError: Unexpected"
+            - "ReferenceError:"
+    - response_payload:   # Python errors
+        - contains_either:
+            - "ValueError: invalid"
+            - "TypeError: unsupported"
+            - "KeyError: "
+    - response_payload:   # Java errors
+        - contains_either:
+            - "java.lang.NullPointerException"
+            - "java.lang.ArrayIndexOutOfBoundsException"
+            - "java.lang.IllegalArgumentException"
+    - response_payload:   # C# errors
+        - contains_either:
+            - "System.NullReferenceException"
+            - "System.IndexOutOfRangeException"
+            - "System.InvalidOperationException"
+    - response_payload:   # PHP errors
+        - contains_either:
+            - "Fatal error: Call"
+            - "Parse error: syntax error"
+            - "Exception: "
+    - response_payload:   # Ruby errors
+        - contains_either:
+            - "RuntimeError: "
+            - "NoMethodError: "
+            - "ArgumentError: "
+    - response_payload:   # Go errors
+        - contains_either:
+            - "panic: runtime error"

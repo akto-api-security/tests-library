@@ -2,10 +2,9 @@ id: OPEN_REDIRECT
 info:
   name: "Open redirect"
   description: "An attacker can construct a URL within the application that causes a redirection to an arbitrary external domain."
-  details: > 
-            "Open redirection vulnerabilities arise when an application incorporates user-controllable data into the target of a redirection in an unsafe way.
-            The ability to use an authentic application URL, targeting the correct domain and with a valid SSL certificate (if SSL is used), lends credibility 
-            to the phishing attack because many users, even if they verify these features, will not notice the subsequent redirection to a different domain"
+  details: >
+    "Open redirection vulnerabilities arise when an application incorporates user-controllable data into the target of a redirection in an unsafe way.
+    The ability to use an authentic application URL, targeting the correct domain and with a valid SSL certificate (if SSL is used), lends credibility  to the phishing attack because many users, even if they verify these features, will not notice the subsequent redirection to a different domain"
   impact: "This behavior can be leveraged to facilitate phishing attacks against users of the application."
   category:
     name: SM
@@ -27,6 +26,8 @@ info:
     - CVE-2023-45909
     - CVE-2022-46683
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -59,13 +60,13 @@ execute:
   type: single
   requests:
     - req:
-      - modify_query_param:
-          payload_location_key: http://evil.com/?p=${payload_location_value}
-      - modify_body_param:
-          payload_location_key: http://evil.com/?p=${payload_location_value}
-      - modify_header:
-          payload_location_key: http://evil.com/?p=${payload_location_value}
-      - follow_redirect: false
+        - modify_query_param:
+            payload_location_key: http://evil.com/?p=${payload_location_value}
+        - modify_body_param:
+            payload_location_key: http://evil.com/?p=${payload_location_value}
+        - modify_header:
+            payload_location_key: http://evil.com/?p=${payload_location_value}
+        - follow_redirect: false
 
 
 validate:

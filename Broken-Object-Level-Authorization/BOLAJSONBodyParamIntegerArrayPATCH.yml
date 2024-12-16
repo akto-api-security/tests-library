@@ -1,20 +1,19 @@
 id: ID_WRAP_ARRAY_JSON_BODY_INTEGER_ID_PATCH
 info:
   name: "BOLA: Turning JSON Param into Integer Array for Unauthorized Access with PATCH/PUT method APIs"
-  description: > 
+  description: >
     "This manipulation involves converting JSON parameter into array of single Integer element to potentially circumvent security measures and gain unauthorized entry (where requests have PUT/PATCH HTTP method). Such actions underscore the importance of securing input validation and emphasize the risks associated with broken object-level authorization, necessitating robust security practices to thwart unauthorized access attempts."
   details: >
     "Attackers exploit vulnerabilities by manipulating the system through this test (where requests have PUT/PATCH HTTP method). This involves converting JSON parameter into array of single Integer element, aiming to exploit weaknesses in object-level authorization and gain unauthorized entry. This method highlights the critical need for secure input validation and emphasizes the risks associated with unauthorized access, reinforcing the importance of robust security measures to prevent and mitigate potential exploitation."
   impact: >
-    "The impact of this test can be significant, posing a risk of unauthorized entry and potential compromise of sensitive data. By exploiting broken object-level authorization through JSON parameter manipulation, attackers may gain unauthorized access, leading to data 
-    breaches and compromising the overall integrity of the system. Promptly addressing and mitigating these vulnerabilities is crucial to prevent unauthorized access and safeguard against the potential consequences of broken object-level authorization exploitation."
+    "The impact of this test can be significant, posing a risk of unauthorized entry and potential compromise of sensitive data. By exploiting broken object-level authorization through JSON parameter manipulation, attackers may gain unauthorized access, leading to data  breaches and compromising the overall integrity of the system. Promptly addressing and mitigating these vulnerabilities is crucial to prevent unauthorized access and safeguard against the potential consequences of broken object-level authorization exploitation."
   category:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: ID_WRAP_ARRAY_JSON_BODY_INTEGER_ID_PATCH
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -31,6 +30,8 @@ info:
     - CWE-639
   cve:
     - CVE-2023-39349
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -46,7 +47,7 @@ api_selection_filters:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -88,7 +89,7 @@ execute:
   requests:
     - req:
         modify_body_param:
-          userKey: 
+          userKey:
             - ${random_ids}
 validate:
   response_code:
@@ -99,7 +100,7 @@ validate:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

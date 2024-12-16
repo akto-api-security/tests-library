@@ -1,4 +1,3 @@
----
 id: PARAMETER_MANIPULATION_DISCOUNT_ABUSE
 info:
   name: Parameter manipulation by abusing discount values by using additional discount coupons
@@ -8,7 +7,7 @@ info:
     "The test focuses on scenarios where users might try to stack multiple discount coupons or use invalid combinations of discounts that exceed the allowed limits. This includes applying multiple discount codes in quick succession, using expired or restricted coupons, or combining promotional discounts in ways that the system was not designed to handle. By testing these cases, the objective is to identify flaws in the validation logic that could allow users to receive unauthorized discounts or benefits, ultimately safeguarding the integrity of promotional offers."
   impact: >
     "Improper handling of multiple or stacked discount applications can result in significant financial losses, revenue leakage, and damage to the company's promotional strategy. Exploiting such vulnerabilities could allow users to receive unintended discounts, abuse loyalty programs, or combine offers that were not meant to be combined. Ensuring robust validation and enforcement of discount rules is essential to protect the organization's financial interests, maintain fair pricing policies, and uphold the credibility of its promotions."
-  
+
   category:
     name: INPUT
     shortName: Input Validation
@@ -16,18 +15,20 @@ info:
   subCategory: PARAMETER_MANIPULATION_DISCOUNT_ABUSE
   severity: LOW
   tags:
-  - Business logic
-  - OWASP top 10
-  - HackerOne top 10
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
   references:
-  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
-  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
-  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
   cwe:
-  - CWE-20
+    - CWE-20
   cve:
-  - CVE-2018-20679
-  - CVE-2019-14271
+    - CVE-2018-20679
+    - CVE-2019-14271
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -38,32 +39,32 @@ api_selection_filters:
     length:
       gt: 0
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
 
     # Here we check for the modified values of contextual keys in response.
     for_one:
@@ -74,13 +75,13 @@ api_selection_filters:
         datatype: number
         extract: outputUserValue
   or:
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          extract: userVal
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+            extract: userKey
+          value:
+            extract: userVal
 wordLists:
   probableInputParameters:
     - discountCode
@@ -132,9 +133,9 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - add_body_param:
-        ${probableAdditionalInputParameters}: ${codes}
+    - req:
+        - add_body_param:
+            ${probableAdditionalInputParameters}: ${codes}
 validate:
   response_code:
     gte: 200
@@ -143,35 +144,35 @@ validate:
     length:
       gt: 0
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
-    - Attention Required!
-    - CloudFlare
-    - "Sorry, you have been blocked"
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
     for_one:
       key:
         eq: "${outputUserKey}"

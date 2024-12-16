@@ -2,7 +2,7 @@ id: KUBEOPERATOR_FILE_DOWNLOAD
 info:
   name: "KubeOperator kubeconfig - Arbitrary File Download"
   description: "This vulnerability allows unauthorized users to download arbitrary files from the server. By exploiting this flaw, attackers can potentially retrieve sensitive configuration files, such as kubeconfig, which contain critical information for accessing and managing Kubernetes clusters. This could lead to a severe compromise of the system’s security and unauthorized access to cluster resources."
-  details:  "This vulnerability occurs when improper access controls allow users to download files without sufficient authorization checks. Specifically, attackers can manipulate requests to target and retrieve files like the kubeconfig, which stores authentication and cluster configuration details. This issue arises from insufficient validation of file access requests within the KubeOperator platform."
+  details: "This vulnerability occurs when improper access controls allow users to download files without sufficient authorization checks. Specifically, attackers can manipulate requests to target and retrieve files like the kubeconfig, which stores authentication and cluster configuration details. This issue arises from insufficient validation of file access requests within the KubeOperator platform."
   impact: "This vulnerability can lead to serious security breaches. Attackers can exploit it to download sensitive files like the kubeconfig, which contains authentication details for Kubernetes clusters. This could allow unauthorized access to the cluster, leading to potential data breaches, privilege escalation, or even full control over the Kubernetes environment."
   category:
     name: SM
@@ -17,6 +17,8 @@ info:
     - CWE-16
   cve:
     - CVE-2023-22480
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -32,10 +34,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: GET
-      - modify_url: "/api/v1/clusters/kubeconfig/k8s"
-      - replace_body: '{}'
-      
+        - modify_method: GET
+        - modify_url: "/api/v1/clusters/kubeconfig/k8s"
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

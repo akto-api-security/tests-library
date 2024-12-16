@@ -2,7 +2,7 @@ id: APACHE_SERVER_STATUS
 info:
   name: "Apache Server Status Exposure"
   description: "This test refers to the unintended public accessibility of the Apache server status page, which provides detailed information about the server's performance, active connections, and resource usage. This page is typically intended for internal use only, but if misconfigured, it can be exposed to unauthorized users. Accessing this information can aid attackers in understanding the server's operational state and identifying potential weaknesses. To mitigate this risk, it's crucial to restrict access to the status page using proper authentication and network security measures."
-  details:  "Apache Server Status Exposure occurs when the status page, designed to provide insights into server health and performance, is accessible to the public instead of being restricted to internal networks. This page reveals crucial information, such as server load, current requests, and resource usage statistics. If exposed, unauthorized users could exploit this information to plan targeted attacks, such as denial of service or resource exhaustion attacks. To protect against this exposure, administrators should ensure that access to the status page is limited to trusted IP addresses and secured with authentication mechanisms."
+  details: "Apache Server Status Exposure occurs when the status page, designed to provide insights into server health and performance, is accessible to the public instead of being restricted to internal networks. This page reveals crucial information, such as server load, current requests, and resource usage statistics. If exposed, unauthorized users could exploit this information to plan targeted attacks, such as denial of service or resource exhaustion attacks. To protect against this exposure, administrators should ensure that access to the status page is limited to trusted IP addresses and secured with authentication mechanisms."
   impact: "The impact of Apache Server Status Exposure can be significant, as unauthorized access to the status page allows attackers to gather detailed information about the server's performance and activity. This information can be leveraged to identify vulnerabilities, enabling attackers to execute targeted attacks such as denial of service or exploit weaknesses in server configurations. Additionally, exposing performance metrics may lead to service disruptions, data breaches, and operational inefficiencies. The potential financial losses, reputational damage, and regulatory implications resulting from such exposure can have lasting effects on the organization’s credibility and security posture."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2021-43798
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -35,9 +37,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

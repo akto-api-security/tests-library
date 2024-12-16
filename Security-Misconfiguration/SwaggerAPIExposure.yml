@@ -2,7 +2,7 @@ id: SWAGGER_API_EXPOSURE
 info:
   name: "Swagger API Documentation Exposure"
   description: "This test refers to the unintended public accessibility of Swagger-generated API documentation, which details the endpoints, request/response formats, and authentication methods of an application’s APIs. When exposed without proper security controls, this documentation can provide attackers with critical insights into the API's functionality and structure. Such exposure increases the risk of targeted attacks, as attackers can identify potential vulnerabilities to exploit. To mitigate these risks, it is essential to restrict access to Swagger documentation through authentication and authorization mechanisms."
-  details:  "Swagger API Documentation Exposure occurs when the Swagger UI or JSON file is accessible to the public without adequate security measures, allowing unauthorized users to view detailed API specifications. This can include information about available endpoints, parameters, response types, and security protocols, making it easier for attackers to understand the application's architecture. The exposed documentation can facilitate targeted attacks, such as injection or exploitation of vulnerabilities. To protect against this exposure, organizations should implement strong access controls, secure the documentation behind authentication, and limit visibility to trusted users only."
+  details: "Swagger API Documentation Exposure occurs when the Swagger UI or JSON file is accessible to the public without adequate security measures, allowing unauthorized users to view detailed API specifications. This can include information about available endpoints, parameters, response types, and security protocols, making it easier for attackers to understand the application's architecture. The exposed documentation can facilitate targeted attacks, such as injection or exploitation of vulnerabilities. To protect against this exposure, organizations should implement strong access controls, secure the documentation behind authentication, and limit visibility to trusted users only."
   impact: "The impact of Swagger API Documentation Exposure can be significant, as it provides attackers with detailed knowledge of the API’s structure and functionality, making it easier to exploit vulnerabilities. This can lead to unauthorized access to sensitive data, manipulation of application behavior, and potential data breaches. Additionally, the exposure can result in targeted attacks, such as denial of service or injection attacks, causing operational disruptions and financial losses. Furthermore, organizations may face reputational damage and regulatory consequences if sensitive information is compromised due to insufficient security measures."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2021-43798
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -92,11 +94,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
-      - add_header:
-          accept: "text/html"
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
+        - add_header:
+            accept: "text/html"
 validate:
   response_code:
     eq: 200

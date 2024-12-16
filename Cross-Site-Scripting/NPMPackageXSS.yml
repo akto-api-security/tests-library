@@ -2,7 +2,7 @@ id: NPM_XSS
 info:
   name: "npm package Cross-Site Scripting"
   description: "This vulnerability occurs when an npm package fails to properly sanitize user input, allowing attackers to inject malicious scripts into web applications. This can lead to unauthorized actions being performed on behalf of users, data theft, or manipulation of the application’s behavior. Exploitation typically targets the client side, affecting users who interact with the compromised application. Developers should ensure robust input validation and sanitization to mitigate this risk."
-  details:  "This vulnerability arises from inadequate input validation in various npm packages, enabling attackers to execute scripts in the context of a user’s browser. This flaw can be exploited through crafted payloads, often targeting web applications that rely on these packages for rendering user-generated content. Attackers can leverage this to steal cookies, session tokens, or redirect users to malicious sites. Regular updates and thorough code reviews are essential to identify and remediate these vulnerabilities in npm packages."
+  details: "This vulnerability arises from inadequate input validation in various npm packages, enabling attackers to execute scripts in the context of a user’s browser. This flaw can be exploited through crafted payloads, often targeting web applications that rely on these packages for rendering user-generated content. Attackers can leverage this to steal cookies, session tokens, or redirect users to malicious sites. Regular updates and thorough code reviews are essential to identify and remediate these vulnerabilities in npm packages."
   impact: "The impact of this vulnerability can be severe, allowing attackers to execute malicious scripts in a user's browser. This may lead to unauthorized access to sensitive information such as cookies and session tokens, facilitating account hijacking or data theft. Additionally, users can be redirected to phishing sites, compromising their credentials. The reputation of the affected application may suffer, leading to a loss of trust among users."
   category:
     name: XSS
@@ -17,6 +17,8 @@ info:
   cve:
     - CVE-2021-3377
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -39,13 +41,13 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/\u001B]8;;https://akto.io\"/onmouseover=\"alert(1)\u0007example\u001B]8;;\u0007"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "/\e]8;;https://akto.io\"/onmouseover=\"alert(1)\aexample\e]8;;\a"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_payload:
     contains_all:
-      -  "sh\"/onmouseover=\"alert(1)\">"
+      - "sh\"/onmouseover=\"alert(1)\">"
     length:
       gt: 0
   response_headers:

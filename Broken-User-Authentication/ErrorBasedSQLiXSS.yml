@@ -1,7 +1,7 @@
 id: ERROR_BASED_SQLI_XSS
 info:
   name: "Error based SQL Injection Test with XSS"
-  description: > 
+  description: >
     "Error-based SQL Injection testing with XSS involves exploiting SQL injection vulnerabilities by deliberately causing SQL errors that reveal database information. Attackers inject malicious queries designed to trigger errors, extracting data from the error messages. By incorporating XSS payloads into these queries, attackers can also inject malicious scripts into the application's output. This combined approach helps identify and mitigate vulnerabilities that expose both database structure and enable client-side script execution."
   details: >
     "Error-based SQL Injection testing with XSS involves injecting SQL queries that intentionally cause database errors, which in turn reveal detailed information about the database structure and contents through error messages. Attackers craft these queries to include XSS payloads, aiming to inject malicious scripts into the application's output. This testing method identifies vulnerabilities that not only expose sensitive database information but also allow for client-side script execution, highlighting critical security flaws in the application's error handling and input validation."
@@ -28,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -95,99 +97,99 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${errorXSSPayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          contains_either:
-            - "<script>alert(\"XSS\");</script>"
-            - "<svg/onload=alert(\"XSS\")>"
-            - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
-          not_contains:
-            - Error
-            - Internal Server 
-            - Fail
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - UNION
-            - SELECT           
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${errorXSSNegativePayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0  
-          not_contains:
-            - Error
-            - Internal Server 
-            - Fail
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts  
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked 
-            - UNION
-            - SELECT
-            - "<script>alert(\"XSS\");</script>"
-            - "<svg/onload=alert(\"XSS\")>"
-            - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
-          neq: "${x1.response.body}"
-    - success: vulnerable 
-    - failure: exit      
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${errorXSSPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_either:
+                - "<script>alert(\"XSS\");</script>"
+                - "<svg/onload=alert(\"XSS\")>"
+                - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - UNION
+                - SELECT
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${errorXSSNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - UNION
+                - SELECT
+                - "<script>alert(\"XSS\");</script>"
+                - "<svg/onload=alert(\"XSS\")>"
+                - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
+              neq: "${x1.response.body}"
+        - success: vulnerable
+        - failure: exit

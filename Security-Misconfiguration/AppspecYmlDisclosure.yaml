@@ -3,7 +3,7 @@ info:
   name: Appspec Yml Disclosure
   description: "Attackers can get access to the appspec.yml file used in application deployments."
   details: >
-              "Appspec Yml Disclosure refers to the vulnerability where the appspec.yml file, crucial for application deployments, is exposed due to misconfiguration. Unauthorized access to this file reveals sensitive deployment information, including version details, operating system specifications, and file information. Attackers can exploit this exposure to gain insights into the deployment process, identify potential vulnerabilities, and execute unauthorized modifications or disruptions to the application. Promptly addressing this issue is essential to prevent unauthorized access and protect the application's integrity and availability."
+    "Appspec Yml Disclosure refers to the vulnerability where the appspec.yml file, crucial for application deployments, is exposed due to misconfiguration. Unauthorized access to this file reveals sensitive deployment information, including version details, operating system specifications, and file information. Attackers can exploit this exposure to gain insights into the deployment process, identify potential vulnerabilities, and execute unauthorized modifications or disruptions to the application. Promptly addressing this issue is essential to prevent unauthorized access and protect the application's integrity and availability."
   impact: "Unauthorized access reveals deployment details, enabling potential exploitation, unauthorized modifications, and disruptions to the application."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
     - CWE-200
     - CWE-213
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -28,7 +30,7 @@ api_selection_filters:
     extract: urlVar
 
 wordLists:
-  urlPaths: 
+  urlPaths:
     - ${urlVar}/appspec.yml
     - ${urlVar}/appspec.yaml
 
@@ -36,8 +38,8 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlPaths}
-    
+        - modify_url: ${urlPaths}
+
 
 validate:
   response_code:

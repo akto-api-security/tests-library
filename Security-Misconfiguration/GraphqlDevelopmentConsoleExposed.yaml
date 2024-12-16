@@ -2,13 +2,10 @@ id: GRAPHQL_DEVELOPMENT_CONSOLE_EXPOSED
 info:
   name: "Graphql Development Console Exposed"
   description: "Exposed GraphQL development console allows type introspection, increasing the risk of security vulnerabilities and unauthorized access"
-  details: > 
-          The GraphQL Development Console Exposed vulnerability arises when the GraphQL development console, such as GraphiQL, GraphQL Playground, or
-          GraphQL Console, allows type introspection.Type introspection enables clients to retrieve detailed information about the GraphQL schema, 
-          including available types, fields, and their relationships. Exposing this feature in a production environment can lead to security 
-          vulnerabilities by providing unauthorized users with insights into the data model and potentially sensitive information. The impact 
-          includes an increased risk of unauthorized access and potential data exposure through the exposed GraphQL development console,
-          necessitating proper configuration and access control measures.
+  details: >
+    The GraphQL Development Console Exposed vulnerability arises when the GraphQL development console, such as GraphiQL, GraphQL Playground, or
+    GraphQL Console, allows type introspection.Type introspection enables clients to retrieve detailed information about the GraphQL schema,  including available types, fields, and their relationships. Exposing this feature in a production environment can lead to security  vulnerabilities by providing unauthorized users with insights into the data model and potentially sensitive information. The impact  includes an increased risk of unauthorized access and potential data exposure through the exposed GraphQL development console,
+    necessitating proper configuration and access control measures.
   impact: "Increased risk of unauthorized access and potential data exposure through the exposed GraphQL development console."
   category:
     name: SM
@@ -31,6 +28,8 @@ info:
   cve:
     - CVE-2021-41248
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -41,10 +40,10 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url:
-          regex_replace:
-            regex: graphql.*
-            replace_with: graphiql
+        - modify_url:
+            regex_replace:
+              regex: graphql.*
+              replace_with: graphiql
 
 validate:
   response_payload:

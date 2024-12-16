@@ -12,7 +12,7 @@ info:
     displayName: Misconfigured HTTP Headers (MHH)
   subCategory: MISCONFIGURED_CSP_POLICY
   severity: LOW
-  tags: 
+  tags:
     - csp
     - security
     - owasp-top10
@@ -26,34 +26,36 @@ info:
   cve:
     - CVE-2024-21255
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
     lt: 300
   method:
     neq: "OPTIONS"
-  or: 
-  - response_headers:
-      for_one:
-        key: 
-          eq: Content-Security-Policy
-        value:
-          or: 
-          - regex:
-              - "(?i)script-src.*'unsafe-inline'"
-              - "(?i)style-src.*'unsafe-inline'"
-              - "(?i)script-src.*'unsafe-eval'"
-              - "(?i)script-src.*'unsafe-hashes'"
-              - "(?i)style-src.*'unsafe-hashes'"
-          - contains_either: ${non_ascii_characters}
+  or:
+    - response_headers:
+        for_one:
+          key:
+            eq: Content-Security-Policy
+          value:
+            or:
+              - regex:
+                  - "(?i)script-src.*'unsafe-inline'"
+                  - "(?i)style-src.*'unsafe-inline'"
+                  - "(?i)script-src.*'unsafe-eval'"
+                  - "(?i)script-src.*'unsafe-hashes'"
+                  - "(?i)style-src.*'unsafe-hashes'"
+              - contains_either: ${non_ascii_characters}
   # for meta tags.
-  - response_payload:
-      regex: 
-        - "(?i)script-src.*'unsafe-inline'"
-        - "(?i)style-src.*'unsafe-inline'"
-        - "(?i)script-src.*'unsafe-eval'"
-        - "(?i)script-src.*'unsafe-hashes'"
-        - "(?i)style-src.*'unsafe-hashes'"
+    - response_payload:
+        regex:
+          - "(?i)script-src.*'unsafe-inline'"
+          - "(?i)style-src.*'unsafe-inline'"
+          - "(?i)script-src.*'unsafe-eval'"
+          - "(?i)script-src.*'unsafe-hashes'"
+          - "(?i)style-src.*'unsafe-hashes'"
 
 execute:
   type: single
@@ -64,28 +66,28 @@ validate:
   response_code:
     gte: 200
     lt: 300
-  or: 
-  - response_headers:
-      for_one:
-        key: 
-          eq: Content-Security-Policy
-        value:
-          or: 
-          - regex:
-              - "(?i)script-src.*'unsafe-inline'"
-              - "(?i)style-src.*'unsafe-inline'"
-              - "(?i)script-src.*'unsafe-eval'"
-              - "(?i)script-src.*'unsafe-hashes'"
-              - "(?i)style-src.*'unsafe-hashes'"
-          - contains_either: ${non_ascii_characters}
+  or:
+    - response_headers:
+        for_one:
+          key:
+            eq: Content-Security-Policy
+          value:
+            or:
+              - regex:
+                  - "(?i)script-src.*'unsafe-inline'"
+                  - "(?i)style-src.*'unsafe-inline'"
+                  - "(?i)script-src.*'unsafe-eval'"
+                  - "(?i)script-src.*'unsafe-hashes'"
+                  - "(?i)style-src.*'unsafe-hashes'"
+              - contains_either: ${non_ascii_characters}
   # for meta tags.
-  - response_payload:
-      regex: 
-        - "(?i)script-src.*'unsafe-inline'"
-        - "(?i)style-src.*'unsafe-inline'"
-        - "(?i)script-src.*'unsafe-eval'"
-        - "(?i)script-src.*'unsafe-hashes'"
-        - "(?i)style-src.*'unsafe-hashes'"
+    - response_payload:
+        regex:
+          - "(?i)script-src.*'unsafe-inline'"
+          - "(?i)style-src.*'unsafe-inline'"
+          - "(?i)script-src.*'unsafe-eval'"
+          - "(?i)script-src.*'unsafe-hashes'"
+          - "(?i)style-src.*'unsafe-hashes'"
 
 strategy:
   run_once: /

@@ -1,25 +1,12 @@
 id: USER_ENUM_RESPONSE_TIME
 info:
   name: "Broken Authentication Test - Username Enumeration via Response time analysis"
-  description: > 
-    "This test is a security assessment method focused on detecting vulnerabilities in 
-    authentication systems. By scrutinizing the response times of authentication attempts, 
-    it aims to discern subtle differences that may reveal the validity of provided usernames. 
-    This approach leverages variations in response times to uncover potential weaknesses, 
-    aiding in the prevention of username enumeration attacks."
+  description: >
+    "This test is a security assessment method focused on detecting vulnerabilities in  authentication systems. By scrutinizing the response times of authentication attempts,  it aims to discern subtle differences that may reveal the validity of provided usernames.  This approach leverages variations in response times to uncover potential weaknesses,  aiding in the prevention of username enumeration attacks."
   details: >
-    "This test is a security evaluation method that scrutinizes authentication systems for 
-    vulnerabilities. It involves analyzing response times during login attempts to discern 
-    patterns that may expose valid usernames. By leveraging variations in response times, 
-    this test helps identify and address potential weaknesses, fortifying systems against 
-    the risk of unauthorized username enumeration attacks."
+    "This test is a security evaluation method that scrutinizes authentication systems for  vulnerabilities. It involves analyzing response times during login attempts to discern  patterns that may expose valid usernames. By leveraging variations in response times,  this test helps identify and address potential weaknesses, fortifying systems against  the risk of unauthorized username enumeration attacks."
   impact: >
-    "The impact of this test can be severe, as it exposes the vulnerability of authentication 
-    systems to unauthorized access attempts. By discerning valid usernames through response 
-    time patterns, attackers gain a crucial foothold for launching targeted attacks, such 
-    as brute force or phishing campaigns. This can lead to unauthorized access, data 
-    breaches, and compromise of sensitive information, posing significant risks to the 
-    security and integrity of the affected systems and user accounts."
+    "The impact of this test can be severe, as it exposes the vulnerability of authentication  systems to unauthorized access attempts. By discerning valid usernames through response  time patterns, attackers gain a crucial foothold for launching targeted attacks, such  as brute force or phishing campaigns. This can lead to unauthorized access, data  breaches, and compromise of sensitive information, posing significant risks to the  security and integrity of the affected systems and user accounts."
 
   category:
     name: NO_AUTH
@@ -42,6 +29,8 @@ info:
     - CVE-2023-3897
     - CVE-2023-40758
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -53,7 +42,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -107,22 +96,22 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_body_param:
-        passKey: ${invalidPasswords}
-    - validate:
-        response_code:
-          eq: 429
-    - success: exit
-    - failure: x2
-  - req:
-    - modify_body_param:
-        userKey: dummyemail@mail.com
-    - modify_body_param:
-        passKey: ${invalidPasswords}
-    - validate:
-        response_code:
-          eq: 429
+    - req:
+        - modify_body_param:
+            passKey: ${invalidPasswords}
+        - validate:
+            response_code:
+              eq: 429
+        - success: exit
+        - failure: x2
+    - req:
+        - modify_body_param:
+            userKey: dummyemail@mail.com
+        - modify_body_param:
+            passKey: ${invalidPasswords}
+        - validate:
+            response_code:
+              eq: 429
 validate:
   compare_greater:
     - ${x1.response.stats.median_response_time}

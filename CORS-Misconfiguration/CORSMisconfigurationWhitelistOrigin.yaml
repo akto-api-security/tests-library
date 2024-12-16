@@ -27,6 +27,8 @@ info:
     - CVE-2021-27786
 
 
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 
@@ -47,8 +49,8 @@ execute:
   type: single
   requests:
     - req:
-      - add_header:
-          origin:  ${host_val}.evil.com
+        - add_header:
+            origin: ${host_val}.evil.com
 
 validate:
   response_code:

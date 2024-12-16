@@ -1,4 +1,3 @@
----
 id: MANIPULATE_AUTO_RENEWAL
 info:
   name: "Manipulate Auto Renewal in Subscriptions"
@@ -8,7 +7,7 @@ info:
     "The test involves sending API requests to modify a parameter of a subscription and observing the system's response."
   impact: >
     "Improper handling of auto-renewal settings can result in financial losses, service disruptions, and customer dissatisfaction. If users can manipulate their auto-renewal status without proper verification, they may exploit the system to avoid payments or receive unintended service extensions. Ensuring robust validation and enforcement of subscription auto-renewal rules is essential to maintaining predictable revenue streams, customer trust, and the overall integrity of the subscription service."
-  
+
   category:
     name: INPUT
     shortName: Input Validation
@@ -16,18 +15,20 @@ info:
   subCategory: MANIPULATE_AUTO_RENEWAL
   severity: LOW
   tags:
-  - Business logic
-  - OWASP top 10
-  - HackerOne top 10
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
   references:
-  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
-  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
-  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
   cwe:
-  - CWE-20
+    - CWE-20
   cve:
-  - CVE-2018-20679
-  - CVE-2019-14271
+    - CVE-2018-20679
+    - CVE-2019-14271
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -38,32 +39,32 @@ api_selection_filters:
     length:
       gt: 0
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
     for_one:
       key:
         regex: "${probableOutputParameters}"
@@ -71,20 +72,20 @@ api_selection_filters:
       value:
         extract: outputUserValue
   or:
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          datatype: boolean
-  - request_payload:
-      for_one:
-        key:
-          regex: "${probableInputParameters}"
-          extract: userKey
-        value:
-          regex: "^(?i)(true|false)$"
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+            extract: userKey
+          value:
+            datatype: boolean
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+            extract: userKey
+          value:
+            regex: "^(?i)(true|false)$"
 wordLists:
   probableInputParameters:
     - autoRenewal
@@ -118,7 +119,7 @@ wordLists:
     - nextChargeDate
     - recurringBillingDate
     - paymentDueDate
-  
+
   passValues:
     - true
 
@@ -128,98 +129,98 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_body_param:
-        userKey: "${failValues}"
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
-          for_one:
-            key:
-              regex: "${probableOutputParameters}"
-              extract: outputUserKey1
-            value:
-              extract: outputUserValue1
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_body_param:
-        userKey: "${passValues}"
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          not_contains:
-          - Error
-          - Internal Server
-          - Failed
-          - Unauthorized
-          - access denied
-          - Forbidden
-          - Method Not allowed
-          - Gateway timeout
-          - request timeout
-          - server error
-          - server busy
-          - authentication error
-          - authorization error
-          - validation error
-          - Permission Denied
-          - invalid token
-          - token expired
-          - session expired
-          - session timeout
-          - unexpected error
-          - unable to process request
-          - bad request
-          - service unavailable
-          - account is locked
-          - account is blocked
-          - multiple failed attempts
-          - Attention Required!
-          - CloudFlare
-          - "Sorry, you have been blocked"
-          for_one:
-            key:
-              eq: "${outputUserKey1}"
-            value:
-              neq: "${outputUserValue1}"
-    - success: vulnerable
+    - req:
+        - modify_body_param:
+            userKey: "${failValues}"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - "Sorry, you have been blocked"
+              for_one:
+                key:
+                  regex: "${probableOutputParameters}"
+                  extract: outputUserKey1
+                value:
+                  extract: outputUserValue1
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: "${passValues}"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - "Sorry, you have been blocked"
+              for_one:
+                key:
+                  eq: "${outputUserKey1}"
+                value:
+                  neq: "${outputUserValue1}"
+        - success: vulnerable
 

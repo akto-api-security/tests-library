@@ -3,7 +3,7 @@ info:
   name: Exposed Prometheus metrics
   description: "Exposed Prometheus metrics endpoint found."
   details: >
-              "The Prometheus metrics endpoint is publicly accessible, allowing anyone to access and view detailed system and application metrics, potentially revealing sensitive information."
+    "The Prometheus metrics endpoint is publicly accessible, allowing anyone to access and view detailed system and application metrics, potentially revealing sensitive information."
   impact: "Exposing Prometheus metrics can provide insights into the system, potentially aiding attackers in identifying vulnerabilities and exploiting them."
   category:
     name: SM
@@ -19,6 +19,8 @@ info:
     - CWE-16
     - CWE-200
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -27,12 +29,12 @@ api_selection_filters:
     lt: 300
   url:
     extract: urlVar
-  
+
 execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}/metrics
+        - modify_url: ${urlVar}/metrics
 
 validate:
   response_code:

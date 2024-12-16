@@ -2,7 +2,7 @@ id: GRAFANA_LOGIN_PANEL_EXPOSURE
 info:
   name: "Grafana Login Panel Exposure"
   description: "This test refers to the unintended exposure of the Grafana dashboard's login panel, making it accessible over the internet without adequate security measures. This vulnerability can allow unauthorized users to attempt login through brute force or credential stuffing attacks, potentially gaining access to sensitive visualizations and data sources. To mitigate these risks, it is essential to implement strong authentication, enforce IP restrictions, and secure the login panel behind firewalls."
-  details:  "Grafana Login Panel Exposure occurs when the login interface for Grafana is left accessible without proper security controls, such as IP whitelisting or robust authentication mechanisms. This vulnerability enables attackers to target the panel with brute force attempts, seeking to compromise accounts that may have weak passwords. Organizations should protect the login panel by enforcing strong password policies, implementing multi-factor authentication, and limiting access to trusted networks to minimize the risk of unauthorized access."
+  details: "Grafana Login Panel Exposure occurs when the login interface for Grafana is left accessible without proper security controls, such as IP whitelisting or robust authentication mechanisms. This vulnerability enables attackers to target the panel with brute force attempts, seeking to compromise accounts that may have weak passwords. Organizations should protect the login panel by enforcing strong password policies, implementing multi-factor authentication, and limiting access to trusted networks to minimize the risk of unauthorized access."
   impact: "The impact of Grafana Login Panel Exposure can be significant, as unauthorized access may allow attackers to view and manipulate sensitive data visualizations and dashboards. This could lead to data leaks, misrepresentation of critical business metrics, and unauthorized modifications to data sources. Furthermore, attackers gaining access could escalate privileges to other systems connected to Grafana, resulting in broader security breaches and potential financial and reputational damage to the organization."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2021-43798
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -32,9 +34,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/graph/login"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "/graph/login"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_payload:
     length:

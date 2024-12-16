@@ -1,7 +1,7 @@
 id: BOLA_ADD_CUSTOM_HEADER_INTEGER_ID_DELETE
 info:
   name: "Exploiting BOLA by adding Custom Header with Integer IDs for Unauthorized Access for DELETE method APIs"
-  description: > 
+  description: >
     "In this exploitation scenario for DELETE HTTP method APIs, attackers target Broken Object Level Authorization (BOLA) by adding custom headers with Integer IDs to their requests, attempting to gain unauthorized access. By manipulating request headers, adversaries seek to exploit weaknesses in authorization mechanisms, potentially bypassing security controls. This method underscore the need for thorough security assessments, emphasizing the importance of secure header handling and robust access controls to mitigate the risks associated with unauthorized access and BOLA vulnerabilities."
   details: >
     "Attackers exploit Broken Object Level Authorization (BOLA) by adding custom headers to their requests (having DELETE HTTP method), attempting unauthorized access. Manipulating headers aims to exploit vulnerabilities in the system's authorization mechanisms, highlighting the need for robust security assessments and secure header handling. Thorough security measures are essential to prevent unauthorized access, addressing the risks associated with BOLA vulnerabilities and custom header manipulation."
@@ -13,7 +13,7 @@ info:
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: BOLA_ADD_CUSTOM_HEADER_INTEGER_ID_DELETE
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -30,6 +30,8 @@ info:
     - CWE-639
   cve:
     - CVE-2022-34770
+settings:
+  nature: INTRUSIVE
 inactive: true
 auth:
   authenticated: true
@@ -44,7 +46,7 @@ api_selection_filters:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -79,21 +81,21 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - add_header:
-         X-User-ID: "${headerValues}"
-    - add_header:
-         X-Customer-ID: "${headerValues}"
-    - add_header:
-         X-Member-ID: "${headerValues}"
-    - add_header:
-         X-Client-ID: "${headerValues}"
-    - add_header:
-         X-Account-ID: "${headerValues}"
-    - add_header:
-         X-Subscriber-ID: "${headerValues}"
-    - add_header:
-         X-User-Hash: "${headerValues}"
+    - req:
+        - add_header:
+            X-User-ID: "${headerValues}"
+        - add_header:
+            X-Customer-ID: "${headerValues}"
+        - add_header:
+            X-Member-ID: "${headerValues}"
+        - add_header:
+            X-Client-ID: "${headerValues}"
+        - add_header:
+            X-Account-ID: "${headerValues}"
+        - add_header:
+            X-Subscriber-ID: "${headerValues}"
+        - add_header:
+            X-User-Hash: "${headerValues}"
 validate:
   response_code:
     gte: 200
@@ -103,7 +105,7 @@ validate:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

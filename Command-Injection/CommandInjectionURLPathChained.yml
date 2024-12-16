@@ -23,6 +23,8 @@ info:
     - CVE-2023-25826
     - CVE-2023-41031
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -34,7 +36,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -67,31 +69,31 @@ execute:
   type: multiple
   requests:
     - req:
-      - modify_url:
-          token_replace:
-            location: 1
-            replace_with: ${specialOSPayloads}
-      - success: vulnerable
-      - failure: x2
+        - modify_url:
+            token_replace:
+              location: 1
+              replace_with: ${specialOSPayloads}
+        - success: vulnerable
+        - failure: x2
     - req:
-      - modify_url:
-          token_replace:
-            location: 2
-            replace_with: ${specialOSPayloads}
-      - success: vulnerable
-      - failure: x3
+        - modify_url:
+            token_replace:
+              location: 2
+              replace_with: ${specialOSPayloads}
+        - success: vulnerable
+        - failure: x3
     - req:
-      - modify_url:
-          token_replace:
-            location: 3
-            replace_with: ${specialOSPayloads}
-      - success: vulnerable
-      - failure: x4
+        - modify_url:
+            token_replace:
+              location: 3
+              replace_with: ${specialOSPayloads}
+        - success: vulnerable
+        - failure: x4
     - req:
-      - modify_url:
-          token_replace:
-            location: 4
-            replace_with: ${specialOSPayloads}
+        - modify_url:
+            token_replace:
+              location: 4
+              replace_with: ${specialOSPayloads}
 
 validate:
   response_payload:
@@ -116,7 +118,7 @@ validate:
       - "-December-"
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

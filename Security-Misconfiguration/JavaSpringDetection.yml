@@ -2,7 +2,7 @@ id: JAVA_SPRING_DETECTION
 info:
   name: "Java Spring Framework Detection"
   description: "Java Spring Framework Detection involves identifying the presence and version of the Spring Framework in an application. This is crucial for assessing potential vulnerabilities, such as outdated versions or misconfigurations. Detection methods often include analyzing HTTP headers, endpoints, or application behavior, as Spring-specific patterns (e.g., `Spring Boot Actuator`) can reveal its use. Security tools and manual checks aid in detecting and mitigating risks associated with Spring applications."
-  details:  "Java Spring Framework Detection focuses on identifying if an application uses the Spring Framework and its specific version. Techniques include examining HTTP response headers, paths like `/actuator`, or error messages that expose Spring-related details. Tools like Wappalyzer or specialized scanners can automate detection. Identifying the framework helps in assessing security risks, ensuring up-to-date versions, and addressing vulnerabilities like Spring4Shell."
+  details: "Java Spring Framework Detection focuses on identifying if an application uses the Spring Framework and its specific version. Techniques include examining HTTP response headers, paths like `/actuator`, or error messages that expose Spring-related details. Tools like Wappalyzer or specialized scanners can automate detection. Identifying the framework helps in assessing security risks, ensuring up-to-date versions, and addressing vulnerabilities like Spring4Shell."
   impact: "Detecting the Java Spring Framework in applications can expose security risks if outdated or vulnerable versions are in use, such as susceptibility to exploits like Spring4Shell. Attackers can use this information to tailor specific attacks, such as exploiting misconfigured endpoints or accessing sensitive data. Timely detection helps mitigate risks by enabling patch management, secure configuration, and informed defense strategies."
   category:
     name: SM
@@ -19,6 +19,8 @@ info:
     - CVE-2018-10245
 
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -35,10 +37,10 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
-      - follow_redirect: true
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
+        - follow_redirect: true
 validate:
   response_code:
     eq: 500

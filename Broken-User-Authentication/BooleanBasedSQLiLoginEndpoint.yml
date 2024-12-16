@@ -1,7 +1,7 @@
 id: BOOLEAN_BASED_SQLI
 info:
   name: "Boolean based SQL Injection test on Login Endpoints"
-  description: > 
+  description: >
     "A Boolean-based SQL Injection test on login endpoints involves manipulating the input fields (such as username and password) with SQL statements that result in true or false conditions. By observing the application's response, testers can infer whether the SQL query execution is being influenced. This method helps in identifying vulnerabilities without retrieving actual data, as it relies on changes in application behavior or error messages."
   details: >
     "Boolean-based SQL Injection testing on login endpoints involves injecting SQL statements into input fields to create conditions that evaluate to true or false. By monitoring the application's responses to these injections, testers can determine if the endpoint is vulnerable to SQL Injection. This technique does not extract data directly but relies on changes in the application's behavior or responses to infer the presence of a vulnerability."
@@ -28,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -109,93 +111,93 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${falseCasePayloads}
-    - validate:
-        or:
-          - response_code:
-              gte: 400
-              lt: 410
-          - response_payload:
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${falseCasePayloads}
+        - validate:
+            or:
+              - response_code:
+                  gte: 400
+                  lt: 410
+              - response_payload:
+                  not_contains:
+                    - Error
+                    - fail
+                    - invalid
+                    - expired
+                    - not found
+                    - account is locked
+                    - account is blocked
+                    - rate-limit
+                    - rate_limit
+                    - rate limit
+                    - multiple failed attempt
+                    - Attention Required!
+                    - CloudFlare
+                    - Sorry, you have been blocked
+                    - " AND "
+                    - "="
+                    - "--"
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${trueCasePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              neq: "${x1.response.body}"
               not_contains:
-                - Error
-                - fail
-                - invalid
-                - expired
-                - not found
+                - rate-limit
+                - rate limit
+                - rate_limit
                 - account is locked
                 - account is blocked
-                - rate-limit
-                - rate_limit
-                - rate limit
                 - multiple failed attempt
                 - Attention Required!
                 - CloudFlare
                 - Sorry, you have been blocked
-                - " AND "
+                - " OR "
                 - "="
                 - "--"
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${trueCasePayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          neq: "${x1.response.body}"
-          not_contains:
-            - rate-limit
-            - rate limit
-            - rate_limit
-            - account is locked
-            - account is blocked
-            - multiple failed attempt
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - " OR "
-            - "="
-            - "--"
-            - "fail"
-            - "invalid"
-            - <html>
-            - </html>
-    - success: x3
-    - failure: exit
-  - req:
-    - add_header:
-        dummyHeader: dummyValue
-    - modify_body_param:
-        userKey: ${userVal}${trueCasePayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          eq: "${x2.response.body}"
-          not_contains:
-            - rate-limit
-            - rate limit
-            - rate_limit
-            - account is locked
-            - account is blocked
-            - multiple failed attempt
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - " OR "
-            - "="
-            - "--"
-            - "fail"
-            - "invalid"
-            - <html>
-            - </html>
-    - success: vulnerable
+                - "fail"
+                - "invalid"
+                - <html>
+                - </html>
+        - success: x3
+        - failure: exit
+    - req:
+        - add_header:
+            dummyHeader: dummyValue
+        - modify_body_param:
+            userKey: ${userVal}${trueCasePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              eq: "${x2.response.body}"
+              not_contains:
+                - rate-limit
+                - rate limit
+                - rate_limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " OR "
+                - "="
+                - "--"
+                - "fail"
+                - "invalid"
+                - <html>
+                - </html>
+        - success: vulnerable

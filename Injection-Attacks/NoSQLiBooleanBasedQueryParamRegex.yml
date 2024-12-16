@@ -27,6 +27,8 @@ info:
     - CVE-2020-35847
     - CVE-2021-22911
     - CVE-2023-28359
+settings:
+  nature: INTRUSIVE
 inactive: true
 api_selection_filters:
   response_code:
@@ -37,7 +39,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -78,7 +80,7 @@ execute:
   requests:
     - req:
         - delete_query_param: ${changed_query_key}
-        - add_query_param: 
+        - add_query_param:
             !!str ${changed_query_key}[$regex]: "a^"
         - validate:
             or:
@@ -106,7 +108,7 @@ execute:
         - failure: exit
     - req:
         - delete_query_param: ${changed_query_key}
-        - add_query_param: 
+        - add_query_param:
             !!str ${changed_query_key}[$regex]: ".*"
         - validate:
             response_code:
@@ -134,7 +136,7 @@ execute:
         - add_header:
             dummyHeader: dummyValue
         - delete_query_param: ${changed_query_key}
-        - add_query_param: 
+        - add_query_param:
             !!str ${changed_query_key}[$regex]: ".*"
         - validate:
             response_code:
@@ -156,5 +158,5 @@ execute:
                 - fail
                 - <html>
                 - </html>
-        - success: vulnerable 
-        - failure: exit           
+        - success: vulnerable
+        - failure: exit

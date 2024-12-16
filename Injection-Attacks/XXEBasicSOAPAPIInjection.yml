@@ -26,7 +26,9 @@ info:
     - CWE-827
   cve:
     - CVE-2022-42745
-  
+
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -37,7 +39,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -73,8 +75,8 @@ api_selection_filters:
         eq: "content-type"
       value:
         contains_either:
-        - "application/xml"
-        - "text/xml"
+          - "application/xml"
+          - "text/xml"
 
 wordLists:
   payloads:
@@ -83,7 +85,7 @@ execute:
   type: single
   requests:
     - req:
-        - replace_body:  ${payloads}
+        - replace_body: ${payloads}
 validate:
   response_payload:
     regex: "root:.*:0:0:"
@@ -91,7 +93,7 @@ validate:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

@@ -1,4 +1,3 @@
----
 id: KAFKA_METADATA_API_EXPOSED
 info:
   name: "Kafka Metadata API Exposed"
@@ -25,6 +24,8 @@ info:
     - CVE-2021-31567
     - CVE-2023-35005
 
+settings:
+  nature: NON-INTRUSIVE
 auth:
   authenticated: true
 
@@ -34,20 +35,20 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
-  
+
 execute:
   type: single
   requests:
     - req:
-      - modify_url: /security/openapi/swagger-ui/index.html
-      - remove_auth_header: true
+        - modify_url: /security/openapi/swagger-ui/index.html
+        - remove_auth_header: true
 
 validate:
   response_code:
     gte: 200
     lt: 300
   response_payload:
-    length: 
+    length:
       gt: 0
     not_contains:
       - Error

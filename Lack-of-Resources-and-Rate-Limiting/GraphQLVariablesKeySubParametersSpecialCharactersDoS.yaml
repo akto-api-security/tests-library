@@ -22,6 +22,8 @@ info:
     - CVE-2023-4647
     - CVE-2023-38254
 
+settings:
+  nature: INTRUSIVE
 wordLists:
   specialValues:
     - "999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"
@@ -51,35 +53,35 @@ api_selection_filters:
       - "Bad Request"
   request_payload:
     for_one:
-        key:
-            regex: ^(?!.*\b(operationName|query)\b).*
-            extractMultiple: terminalKeys
+      key:
+        regex: ^(?!.*\b(operationName|query)\b).*
+        extractMultiple: terminalKeys
 
 execute:
   type: multiple
   requests:
     - req:
-      - add_header:
-          dummyKey: dummyVal
-      - validate:
-          response_payload:
-            percentage_match:
-              gte: 80
-      - success: x2
-      - failure: exit
+        - add_header:
+            dummyKey: dummyVal
+        - validate:
+            response_payload:
+              percentage_match:
+                gte: 80
+        - success: x2
+        - failure: exit
     - req:
-      - modify_body_param:
-          ${terminalKeys}: ${specialValues}
+        - modify_body_param:
+            ${terminalKeys}: ${specialValues}
 
 validate:
   or:
-    - and:   
-      - compare_greater:
-          - ${x2.response.stats.median_response_time}
-          - 5001
-      - compare_greater:
-          - ${x2.response.stats.median_response_time}
-          - ${x1.response.stats.median_response_time} * 5
+    - and:
+        - compare_greater:
+            - ${x2.response.stats.median_response_time}
+            - 5001
+        - compare_greater:
+            - ${x2.response.stats.median_response_time}
+            - ${x1.response.stats.median_response_time} * 5
     - response_payload:
         length:
           gt: 0

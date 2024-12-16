@@ -3,7 +3,7 @@ info:
   name: AWS S3 keys Leak
   description: "WordPress configuration file (wp-config.php) leaked, exposing AWS S3 keys and sensitive database credentials."
   details: >
-              "This template searches for the presence of the wp-config.php file and checks for the presence of AWS S3 keys, database access credentials, and other sensitive information within the file."
+    "This template searches for the presence of the wp-config.php file and checks for the presence of AWS S3 keys, database access credentials, and other sensitive information within the file."
   impact: "Exposing AWS S3 keys and database credentials can result in unauthorized access, data breaches, and potential compromise of the entire system's security."
   category:
     name: SM
@@ -21,6 +21,8 @@ info:
     - CVE-2022-31159
     - CVE-2022-2582
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -34,12 +36,12 @@ wordLists:
   urlPaths:
     - ${urlVar}/wp-config.php-backup
     - ${urlVar}/%c0
-  
+
 execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlPaths}
+        - modify_url: ${urlPaths}
 
 validate:
   response_payload:

@@ -3,7 +3,7 @@ info:
   name: Parameters.yml - File Discovery
   description: "Parameters.yml was discovered."
   details: >
-              "The parameters.yml file is a configuration file used in Symfony-based applications to store sensitive information like database credentials, API keys, and encryption settings. Its exposure can lead to unauthorized access, data leaks, and potential security vulnerabilities if not properly protected or restricted.The parameters.yml file often contains critical information required for the functioning of the application, making it a prime target for attackers seeking to exploit misconfigurations or gain unauthorized access to sensitive resources."
+    "The parameters.yml file is a configuration file used in Symfony-based applications to store sensitive information like database credentials, API keys, and encryption settings. Its exposure can lead to unauthorized access, data leaks, and potential security vulnerabilities if not properly protected or restricted.The parameters.yml file often contains critical information required for the functioning of the application, making it a prime target for attackers seeking to exploit misconfigurations or gain unauthorized access to sensitive resources."
   impact: "Exposing parameters.yml can result in the compromise of sensitive information, including database credentials, jeopardizing the security and integrity of the application or system."
   category:
     name: SM
@@ -15,11 +15,13 @@ info:
     - https://www.exploit-db.com/ghdb/5986
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
   cwe:
-    - CWE-16  
+    - CWE-16
     - CWE-200
   cve:
-    - CVE-2015-4050  
+    - CVE-2015-4050
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -40,8 +42,8 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlPaths}
-      
+        - modify_url: ${urlPaths}
+
 validate:
   response_code:
     eq: 200

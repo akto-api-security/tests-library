@@ -1,4 +1,3 @@
----
 id: AMAZON_S3_DISCLOSURE
 info:
   name: "Amazon S3 Key Disclosure"
@@ -22,6 +21,8 @@ info:
   cve:
     - CVE-2020-5260
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -37,7 +38,7 @@ api_selection_filters:
   response_headers:
     for_one:
       value:
-        not_contains: 
+        not_contains:
           - image/png
           - image/jpeg
           - image/gif
@@ -48,7 +49,6 @@ execute:
   type: single
   requests:
     - req: []
-      
 validate:
   response_code:
     eq: 200
@@ -66,7 +66,7 @@ validate:
   response_headers:
     for_one:
       value:
-        not_contains: 
+        not_contains:
           - image/png
           - image/jpeg
           - image/gif

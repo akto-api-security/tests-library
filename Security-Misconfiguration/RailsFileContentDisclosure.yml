@@ -2,7 +2,7 @@ id: RAILS_FILE_CONTENT_DISCLOSURE
 info:
   name: "Rails File Content Disclosure"
   description: "The Rails File Content Disclosure vulnerability occurs when a Ruby on Rails application unintentionally exposes sensitive files through improper routing or misconfigured settings. Attackers can exploit this flaw to access and view confidential information, such as configuration files, credentials, or source code, by crafting specific requests. This exposure can lead to significant security risks, including data breaches and unauthorized access to critical application components. Proper configuration and input validation are essential to prevent this vulnerability."
-  details:  "The Rails File Content Disclosure vulnerability arises from insufficient input validation and improper handling of file paths in Ruby on Rails applications. When file upload features or route handlers do not adequately restrict file access, attackers can craft URLs to request sensitive files outside of the intended directories. This vulnerability typically affects applications that allow user input to determine file paths without proper sanitization. Developers should implement strict controls to validate and sanitize file access requests to mitigate this risk."
+  details: "The Rails File Content Disclosure vulnerability arises from insufficient input validation and improper handling of file paths in Ruby on Rails applications. When file upload features or route handlers do not adequately restrict file access, attackers can craft URLs to request sensitive files outside of the intended directories. This vulnerability typically affects applications that allow user input to determine file paths without proper sanitization. Developers should implement strict controls to validate and sanitize file access requests to mitigate this risk."
   impact: "The impact of the Rails File Content Disclosure vulnerability can be significant, as it may expose sensitive files containing credentials, configuration data, or proprietary code to unauthorized users. This exposure can lead to data breaches, enabling attackers to leverage the disclosed information for further exploitation of the application or its infrastructure. Additionally, the vulnerability can undermine user trust and damage the reputation of the organization behind the affected application. Ensuring proper access controls and input validation is critical to mitigate these risks."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2019-5418
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -38,11 +40,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/"
-      - modify_method: GET
-      - replace_body: '{}'
-      - add_header:
-          accept: "../../../../../../../../etc/passwd{{"
+        - modify_url: "/"
+        - modify_method: GET
+        - replace_body: '{}'
+        - add_header:
+            accept: "../../../../../../../../etc/passwd{{"
 validate:
   response_code:
     gte: 200

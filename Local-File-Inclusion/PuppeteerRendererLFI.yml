@@ -2,7 +2,7 @@ id: PUPPETEER_RENDERER_LFI
 info:
   name: "Puppeteer Renderer Directory Traversal Test"
   description: "The Puppeteer Renderer Directory Traversal Test examines the security of a Puppeteer-based application to identify potential directory traversal vulnerabilities. Directory traversal occurs when an attacker manipulates file paths to access files or directories outside of the intended directory scope. In this test, the focus is on ensuring that the Puppeteer renderer, which automates browser actions, does not allow users to navigate beyond permitted directories. Proper input sanitization and path validation are critical to preventing attackers from accessing sensitive files or system resources."
-  details:  "The Puppeteer Renderer Directory Traversal Test checks for vulnerabilities where an attacker can manipulate file paths to traverse directories in a Puppeteer-based application. Puppeteer automates browser tasks, but if not properly secured, users could exploit this flaw to access files outside of the designated directory, such as sensitive configuration files or system resources. This test identifies areas where user-supplied input, like file paths, may not be adequately sanitized or validated. Ensuring proper path sanitization and restricting access to critical files can mitigate the risk of directory traversal attacks."
+  details: "The Puppeteer Renderer Directory Traversal Test checks for vulnerabilities where an attacker can manipulate file paths to traverse directories in a Puppeteer-based application. Puppeteer automates browser tasks, but if not properly secured, users could exploit this flaw to access files outside of the designated directory, such as sensitive configuration files or system resources. This test identifies areas where user-supplied input, like file paths, may not be adequately sanitized or validated. Ensuring proper path sanitization and restricting access to critical files can mitigate the risk of directory traversal attacks."
   impact: "The impact of a **Puppeteer Renderer Directory Traversal** vulnerability is significant, as it can allow attackers to access sensitive files or system resources outside the intended directory. This could lead to unauthorized access to configuration files, credentials, or other confidential data. Exploiting this flaw could also result in data leakage, privilege escalation, or further attacks on the system. Ensuring proper input sanitization and limiting file access to authorized directories is crucial to preventing such security risks."
   category:
     name: LFI
@@ -25,6 +25,8 @@ info:
     - CVE-2023-22973
 
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -41,9 +43,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

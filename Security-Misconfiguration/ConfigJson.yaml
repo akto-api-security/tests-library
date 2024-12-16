@@ -3,7 +3,7 @@ info:
   name: Config File Exposure
   description: "Attacker can get unauthorized access to JSON configuration files."
   details: >
-              "JSON Config Exposure refers to the vulnerability where JSON configuration files, such as default.json, config.json, and credentials/config.json, are exposed due to misconfiguration. Unauthorized access to these files can lead to the exposure of sensitive information like API keys, AWS credentials, and server configurations. Attackers can exploit this exposure to misuse API keys, gain unauthorized access to AWS services, or exploit server vulnerabilities. Addressing this vulnerability promptly is crucial to prevent unauthorized access and protect the confidentiality of sensitive data and the security of the system."
+    "JSON Config Exposure refers to the vulnerability where JSON configuration files, such as default.json, config.json, and credentials/config.json, are exposed due to misconfiguration. Unauthorized access to these files can lead to the exposure of sensitive information like API keys, AWS credentials, and server configurations. Attackers can exploit this exposure to misuse API keys, gain unauthorized access to AWS services, or exploit server vulnerabilities. Addressing this vulnerability promptly is crucial to prevent unauthorized access and protect the confidentiality of sensitive data and the security of the system."
   impact: "Enables attackers to misuse API keys, gain unauthorized access, and exploit server vulnerabilities, posing a significant risk to data and system security."
   category:
     name: SM
@@ -21,6 +21,8 @@ info:
     - CVE-2021-31567
     - CVE-2023-35005
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -36,12 +38,12 @@ wordLists:
     - ${urlVar}/config.json
     - ${urlVar}/config/config.json
     - ${urlVar}/credentials/config.json
-  
+
 execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlPaths}
+        - modify_url: ${urlPaths}
 
 validate:
   response_code:

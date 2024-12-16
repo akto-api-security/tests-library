@@ -1,7 +1,7 @@
 id: BOLA_MODIFY_CUSTOM_HEADER_INTEGER_VAL_DELETE
 info:
   name: "Exploiting BOLA by fuzzing Custom Header with Integer for Unauthorized Access with DELETE based APIs"
-  description: > 
+  description: >
     "Attackers exploit Broken Object Level Authorization (BOLA) by employing header fuzzing techniques with Integer, systematically testing variations to gain unauthorized access (for DELETE based APIs). This method highlights vulnerabilities in the system's authorization mechanisms,  underscoring the importance of robust security assessments, secure header handling with Integer, and comprehensive testing to mitigate the risks associated with unauthorized access and BOLA vulnerabilities introduced through custom header manipulation."
   details: >
     "Attackers exploit Broken Object Level Authorization (BOLA) by fuzzing custom headers with Integer, systematically testing variations to gain unauthorized access (for DELETE based APIs). This method exposes vulnerabilities in the system's authorization mechanisms, highlighting the crucial need for robust security assessments and secure header handling with Integer to mitigate the risks associated with unauthorized access and BOLA vulnerabilities introduced through custom header fuzzing."
@@ -13,7 +13,7 @@ info:
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: BOLA_MODIFY_CUSTOM_HEADER_INTEGER_VAL_DELETE
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -30,6 +30,8 @@ info:
     - CWE-639
   cve:
     - CVE-2022-34770
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -43,7 +45,7 @@ api_selection_filters:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -90,9 +92,9 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - modify_header:
-         headerValue: "${specialHeaders}" 
+    - req:
+        - modify_header:
+            headerValue: "${specialHeaders}"
 validate:
   response_code:
     gte: 200
@@ -102,7 +104,7 @@ validate:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

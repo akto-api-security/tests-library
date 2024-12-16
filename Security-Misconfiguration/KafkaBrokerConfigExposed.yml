@@ -1,10 +1,9 @@
----
 id: KAFKA_BROKER_CONFIG_EXPOSED
 info:
   name: Exposed Kafka broker config
   description: "Exposed Kafka broker config endpoint found."
   details: >
-              "The Kafka broker config endpoint is publicly accessible, allowing anyone to access and view detailed system and application broker config, potentially revealing sensitive information."
+    "The Kafka broker config endpoint is publicly accessible, allowing anyone to access and view detailed system and application broker config, potentially revealing sensitive information."
   impact: "Exposing Kafka broker config can provide insights into the system, potentially aiding attackers in identifying vulnerabilities and exploiting them."
   category:
     name: SM
@@ -19,6 +18,8 @@ info:
     - CWE-16
     - CWE-200
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -27,7 +28,7 @@ api_selection_filters:
     lt: 300
   url:
     regex: .*clusters/.*/broker-config.*
-  
+
 execute:
   type: single
   requests:

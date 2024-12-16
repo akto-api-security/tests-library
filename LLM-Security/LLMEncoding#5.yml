@@ -7,6 +7,8 @@ info:
     "Evaluating the input validation checks implemented for the LLM integration. Output checks to prevent LLM sending unintended data out"
   impact: >
     "The results of a successful prompt injection attack can vary greatly - from solicitation of sensitive info to influencing critical decision making processes under the guise of normal operation"
+  cve:
+    - "CVE-2024-22422"
   category:
     name: LLM
     shortName: LLM
@@ -20,6 +22,8 @@ info:
   references:
     - "https://github.com/leondz/garak/blob/main/garak/probes/encoding.py"
     - "https://github.com/leondz/garak/blob/main/garak/detectors/encoding.py"
+settings:
+  nature: NON-INTRUSIVE
 inactive: true
 api_selection_filters:
   response_code:

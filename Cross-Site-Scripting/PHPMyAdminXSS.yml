@@ -2,7 +2,7 @@ id: PHPMYADMIN_XSS
 info:
   name: phpMyAdmin Cross-Site Scripting
   description: "This vulnerability allows attackers to inject malicious scripts into the phpMyAdmin web interface. This occurs due to insufficient sanitization of user input in certain parts of the application. By exploiting this flaw, attackers can execute scripts in the context of another user's browser, potentially stealing sensitive information or performing unauthorized actions on behalf of the user. Proper input validation and escaping are essential to mitigate this security issue."
-  details:  "This vulnerability arises from inadequate input sanitization in phpMyAdmin's web interface. Attackers can inject malicious JavaScript into the application by exploiting vulnerable fields or parameters. This injected script can then execute in the context of other users’ browsers, leading to potential theft of session cookies, credentials, or other sensitive data. This vulnerability affects various versions of phpMyAdmin and requires proper validation and sanitization to prevent exploitation."
+  details: "This vulnerability arises from inadequate input sanitization in phpMyAdmin's web interface. Attackers can inject malicious JavaScript into the application by exploiting vulnerable fields or parameters. This injected script can then execute in the context of other users’ browsers, leading to potential theft of session cookies, credentials, or other sensitive data. This vulnerability affects various versions of phpMyAdmin and requires proper validation and sanitization to prevent exploitation."
   impact: "The impact of this vulnerability is significant, as it enables attackers to execute malicious scripts in the context of other users' browsers. This can lead to theft of sensitive information, such as session cookies or login credentials, and unauthorized actions on behalf of the user. If exploited, it compromises the security of phpMyAdmin users and can result in unauthorized access to databases and other sensitive resources."
   category:
     name: XSS
@@ -17,6 +17,8 @@ info:
   cve:
     - CVE-2022-23808
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -36,10 +38,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: GET
-      - modify_url: "${XSSURLs}"
-      - replace_body: '{}'
-      
+        - modify_method: GET
+        - modify_url: "${XSSURLs}"
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

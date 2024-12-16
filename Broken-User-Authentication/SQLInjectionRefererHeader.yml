@@ -1,7 +1,7 @@
 id: SQL_INJECTION_REFERER_HEADER
 info:
   name: "SQL Injection test on Referer Header"
-  description: > 
+  description: >
     "SQL Injection testing on the Referer header involves assessing web applications for vulnerabilities where the Referer HTTP header is improperly sanitized or directly used in SQL queries. Attackers manipulate the Referer header to inject malicious SQL commands, aiming to exploit backend databases like MySQL. This test helps uncover and mitigate security weaknesses by identifying potential injection points where user-supplied header data is processed without adequate validation."
   details: >
     "SQL Injection testing on the Referer header focuses on identifying vulnerabilities in web applications that arise from improperly handling or sanitizing the Referer HTTP header. Attackers exploit this by injecting SQL queries into the Referer header, potentially compromising the backend MySQL database. The test aims to reveal weaknesses in input validation and query execution, helping to secure the application against unauthorized access and data manipulation through header-based SQL injection attacks."
@@ -28,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -84,10 +86,10 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - modify_header:
-        userKey: ${userVal}${refererPayloads}
-        
+    - req:
+        - modify_header:
+            userKey: ${userVal}${refererPayloads}
+
 validate:
   or:
     - response_payload:
@@ -130,4 +132,4 @@ validate:
               - "' OR 1=1 LIMIT 1 --"
               - "' UNION SELECT null,null,null --"
               - "' AND 1=0 --"
-              - "'; SELECT 1; --" 
+              - "'; SELECT 1; --"

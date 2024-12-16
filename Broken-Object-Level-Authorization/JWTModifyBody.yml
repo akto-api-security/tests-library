@@ -1,18 +1,10 @@
 id: JWT_MODIFY_BODY
 info:
   name: "JWT Token Tampering: Modifying User IDs for Potential Unauthorized Access."
-  description: > 
-    "JWT Token Tampering involves assessing security risks by identifying and modifying user 
-    IDs within tokens. By manipulating JWT tokens on jwt.io and substituting the user ID, 
-    this method aims to test the system's resilience against unauthorized access attempts. 
-    The evaluation helps identify and mitigate potential vulnerabilities, ensuring the 
-    integrity of user data and overall system security."
+  description: >
+    "JWT Token Tampering involves assessing security risks by identifying and modifying user  IDs within tokens. By manipulating JWT tokens on jwt.io and substituting the user ID,  this method aims to test the system's resilience against unauthorized access attempts.  The evaluation helps identify and mitigate potential vulnerabilities, ensuring the  integrity of user data and overall system security."
   details: >
-    "In this test, attackers attempt to manipulate JSON Web Tokens (JWT) by identifying user 
-    IDs and substituting them with new ones on jwt.io. This method serves as a security test 
-    to gauge the system's vulnerability to unauthorized access. By evaluating the system's 
-    response to tampered JWT tokens, organizations can identify and address potential 
-    weaknesses, enhancing overall security against unauthorized data access through token manipulation."
+    "In this test, attackers attempt to manipulate JSON Web Tokens (JWT) by identifying user  IDs and substituting them with new ones on jwt.io. This method serves as a security test  to gauge the system's vulnerability to unauthorized access. By evaluating the system's  response to tampered JWT tokens, organizations can identify and address potential  weaknesses, enhancing overall security against unauthorized data access through token manipulation."
   impact: >
     "The impact of this test is significant, potentially leading to unauthorized access to sensitive
      user data. Successful tampering could compromise the integrity of the authentication system, 
@@ -25,7 +17,7 @@ info:
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: JWT_MODIFY_BODY
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -42,6 +34,8 @@ info:
     - CWE-639
   cve:
     - CVE-2022-29217
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -59,7 +53,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -95,8 +89,8 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - jwt_replace_body: "${jwts}"
+    - req:
+        - jwt_replace_body: "${jwts}"
 validate:
   response_code:
     gte: 200
@@ -108,7 +102,7 @@ validate:
       gte: 90
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

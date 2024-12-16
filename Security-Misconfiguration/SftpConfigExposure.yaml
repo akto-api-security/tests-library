@@ -3,7 +3,7 @@ info:
   name: SFTP Config File Disclosure
   description: " Detects the exposure of SFTP configuration files."
   details: >
-              "Searches for the presence of SFTP configuration files, typically stored in "sftp-config.json". These files may contain sensitive information such as host, username, password, and remote paths."
+    "Searches for the presence of SFTP configuration files, typically stored in "sftp-config.json". These files may contain sensitive information such as host, username, password, and remote paths."
   impact: "Exposing SFTP configuration files can compromise the security of file transfer operations, leading to unauthorized access and potential data breaches."
   category:
     name: SM
@@ -22,6 +22,8 @@ info:
   cve:
     - CVE-2023-38951
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -30,12 +32,12 @@ api_selection_filters:
     lt: 300
   url:
     extract: urlVar
-  
+
 execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}/sftp-config.json
+        - modify_url: ${urlVar}/sftp-config.json
 
 validate:
   response_code:

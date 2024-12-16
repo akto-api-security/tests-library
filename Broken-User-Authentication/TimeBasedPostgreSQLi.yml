@@ -1,7 +1,7 @@
 id: TIME_BASED_POSTGRESQLI
 info:
   name: "Time based SQL injection test for PostgreSQL DB"
-  description: > 
+  description: >
     "Time-based SQL injection for PostgreSQL DB is a technique where an attacker exploits a vulnerability by introducing a time delay in the database's response. This is done by injecting a query that causes the database to pause for a specified period if the injection is successful. The delay indicates that the SQL injection attempt was successful, even without direct feedback from the database. This method is particularly useful for blind SQL injection scenarios."
   details: >
     "Time-based SQL injection for PostgreSQL DB is an exploitation technique that introduces deliberate delays in the database's response to infer the presence of vulnerabilities. By injecting SQL queries that use time delay functions, an attacker can determine the success of the injection based on the response time. This technique is effective in blind SQL injection scenarios where the application does not return error messages or query results directly. It helps in identifying and exploiting SQL injection flaws even when direct feedback from the database is not available."
@@ -28,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -86,55 +88,55 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req: 
-    - add_header:
-        dummyKey: dummyVal
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          not_contains:
-            - Error
-            - Internal Server 
-            - Failed
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid token
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - " OR "
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${timeBasedPayloads}
-    - validate:
-        response_code:
-          eq: 429        
+    - req:
+        - add_header:
+            dummyKey: dummyVal
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " OR "
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${timeBasedPayloads}
+        - validate:
+            response_code:
+              eq: 429
 validate:
   and:
     - compare_greater:

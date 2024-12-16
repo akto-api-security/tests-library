@@ -1,33 +1,19 @@
 id: BOLA_ACCESS_SYS_RESOURCE
 info:
   name: "File System Resource Retrieval: Exploiting BOLA through Direct Parameter Value Manipulation."
-  description: > 
-    "In this exploitation scenario, attackers manipulate parameters directly to retrieve file 
-    system resources, exploiting Broken Object Level Authorization (BOLA). By manipulating 
-    parameter values, adversaries aim to bypass authorization controls, potentially gaining 
-    unauthorized access to sensitive file system resources. This method underscores the critical 
-    need for robust access controls and secure parameter handling to mitigate the risks 
-    associated with unauthorized access and file system resource retrieval through BOLA vulnerabilities."
+  description: >
+    "In this exploitation scenario, attackers manipulate parameters directly to retrieve file  system resources, exploiting Broken Object Level Authorization (BOLA). By manipulating  parameter values, adversaries aim to bypass authorization controls, potentially gaining  unauthorized access to sensitive file system resources. This method underscores the critical  need for robust access controls and secure parameter handling to mitigate the risks  associated with unauthorized access and file system resource retrieval through BOLA vulnerabilities."
   details: >
-    "Attackers exploit Broken Object Level Authorization (BOLA) by manipulating parameters to 
-    directly retrieve file system resources, potentially gaining unauthorized access. This 
-    method underscores the importance of robust access controls and secure parameter handling 
-    to prevent unauthorized access and mitigate risks associated with file system resource 
-    retrieval through BOLA vulnerabilities."
+    "Attackers exploit Broken Object Level Authorization (BOLA) by manipulating parameters to  directly retrieve file system resources, potentially gaining unauthorized access. This  method underscores the importance of robust access controls and secure parameter handling  to prevent unauthorized access and mitigate risks associated with file system resource  retrieval through BOLA vulnerabilities."
   impact: >
-    "Exploiting Broken Object Level Authorization through direct parameter manipulation 
-    for file system resource retrieval can result in severe consequences. Unauthorized 
-    access may compromise sensitive data, leading to potential data breaches and system 
-    integrity issues. Implementing robust access controls and secure parameter handling 
-    is crucial to prevent unauthorized access and address the significant risks associated 
-    with BOLA vulnerabilities linked to file system resource retrieval."
+    "Exploiting Broken Object Level Authorization through direct parameter manipulation  for file system resource retrieval can result in severe consequences. Unauthorized  access may compromise sensitive data, leading to potential data breaches and system  integrity issues. Implementing robust access controls and secure parameter handling  is crucial to prevent unauthorized access and address the significant risks associated  with BOLA vulnerabilities linked to file system resource retrieval."
   category:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: BOLA_ACCESS_SYS_RESOURCE
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -44,6 +30,8 @@ info:
     - CWE-639
   cve:
     - CVE-2022-34770
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -57,7 +45,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -86,7 +74,7 @@ api_selection_filters:
     for_one:
       key:
         eq: Content-Type
-      value: 
+      value:
         extract: headerValue
   request_payload:
     for_one:
@@ -97,11 +85,11 @@ execute:
   type: single
   requests:
     - req:
-      - replace_auth_header: true
-      - replace_body:
-          regex_replace:
-            regex: jpg
-            replace_with: png
+        - replace_auth_header: true
+        - replace_body:
+            regex_replace:
+              regex: jpg
+              replace_with: png
 validate:
   response_code:
     gte: 200
@@ -112,13 +100,13 @@ validate:
         eq: Content-Type
       value:
         eq: ${headerValue}
-    
+
   response_payload:
     length:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -143,4 +131,3 @@ validate:
       - account is locked
       - account is blocked
       - multiple failed attempts
-    

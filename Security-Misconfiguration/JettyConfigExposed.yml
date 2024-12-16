@@ -1,4 +1,3 @@
----
 id: JETTY_CONFIG_EXPOSED
 info:
   name: "Jetty Config Exposed"
@@ -24,6 +23,8 @@ info:
   cve:
     - CVE-2018-10245
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -39,15 +40,15 @@ wordLists:
 execute:
   type: single
   requests:
-    - req: 
-      - modify_url: /WEB-INF/${filePath}
+    - req:
+        - modify_url: /WEB-INF/${filePath}
 
 validate:
   response_code:
     gte: 200
     lt: 300
   response_payload:
-    length: 
+    length:
       gt: 0
     contains_all:
       - jetty.xml

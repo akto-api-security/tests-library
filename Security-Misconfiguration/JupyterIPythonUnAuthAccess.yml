@@ -2,7 +2,7 @@ id: JUPYTER_IPYTHON_UNAUTH_ACCESS
 info:
   name: "Jupyter ipython Authorization Bypass"
   description: "Jupyter IPython Authorization Bypass refers to a vulnerability where an attacker is able to access the Jupyter Notebook or IPython environment without proper authentication. This can happen if the server's authentication mechanisms are misconfigured, such as weak password settings, missing token validation, or unsecured access controls. Exploiting this vulnerability allows unauthorized users to execute arbitrary code, access sensitive data, or alter the environment. Proper authentication setup and security measures are essential to prevent this risk."
-  details:  "Jupyter IPython Authorization Bypass occurs when an attacker can bypass the authentication process on a Jupyter Notebook or IPython server. This can happen due to misconfigurations like weak or default passwords, exposed authentication tokens, or a lack of encryption. Attackers can exploit this flaw to gain unauthorized access to the environment, execute arbitrary Python code, view or manipulate sensitive data, or alter server settings. Securing the server with strong passwords, tokens, and proper access controls is crucial to prevent such vulnerabilities."
+  details: "Jupyter IPython Authorization Bypass occurs when an attacker can bypass the authentication process on a Jupyter Notebook or IPython server. This can happen due to misconfigurations like weak or default passwords, exposed authentication tokens, or a lack of encryption. Attackers can exploit this flaw to gain unauthorized access to the environment, execute arbitrary Python code, view or manipulate sensitive data, or alter server settings. Securing the server with strong passwords, tokens, and proper access controls is crucial to prevent such vulnerabilities."
   impact: "The impact of a Jupyter IPython Authorization Bypass vulnerability is significant, as it grants unauthorized users access to sensitive data, code, and resources within the Jupyter environment. Attackers could execute arbitrary code, potentially causing data leaks, manipulation, or system compromise. This vulnerability also opens the door for privilege escalation, where attackers can modify or disrupt critical operations, leading to broader security risks and loss of data integrity. Proper authentication and security measures are essential to prevent exploitation."
   category:
     name: SM
@@ -19,6 +19,8 @@ info:
     - CVE-2018-10245
 
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -35,9 +37,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

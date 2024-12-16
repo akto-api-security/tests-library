@@ -1,25 +1,12 @@
 id: USER_ENUM_INVALID_CAPTCHA
 info:
   name: "Broken Authentication Test - Username Enumeration on Captcha Endpoint"
-  description: > 
-    "This test assesses a system's security by probing the authentication process. 
-    Testers attempt to exploit vulnerabilities by submitting authentication requests 
-    with valid and invalid usernames at the Captcha endpoint. The goal is to evaluate 
-    the effectiveness of the Captcha mechanism in preventing user enumeration and 
-    enhancing overall authentication security."
+  description: >
+    "This test assesses a system's security by probing the authentication process.  Testers attempt to exploit vulnerabilities by submitting authentication requests  with valid and invalid usernames at the Captcha endpoint. The goal is to evaluate  the effectiveness of the Captcha mechanism in preventing user enumeration and  enhancing overall authentication security."
   details: >
-    "This test focuses on evaluating a system's resilience against username enumeration attacks. 
-    Testers attempt to exploit potential vulnerabilities by submitting authentication requests 
-    with valid and invalid usernames specifically at the Captcha endpoint. This targeted 
-    assessment aims to determine the effectiveness of the Captcha mechanism in thwarting 
-    automated enumeration attempts, ensuring robust authentication security."
+    "This test focuses on evaluating a system's resilience against username enumeration attacks.  Testers attempt to exploit potential vulnerabilities by submitting authentication requests  with valid and invalid usernames specifically at the Captcha endpoint. This targeted  assessment aims to determine the effectiveness of the Captcha mechanism in thwarting  automated enumeration attempts, ensuring robust authentication security."
   impact: >
-    "A successful Broken Authentication Test - Username Enumeration on Captcha Endpoint can 
-    have severe consequences. By circumventing the Captcha mechanism, attackers may exploit 
-    username enumeration to gain unauthorized access. This could lead to compromised user 
-    accounts, unauthorized data access, and potential security breaches. Addressing such 
-    vulnerabilities is critical for safeguarding user privacy and maintaining the integrity 
-    of the authentication process."
+    "A successful Broken Authentication Test - Username Enumeration on Captcha Endpoint can  have severe consequences. By circumventing the Captcha mechanism, attackers may exploit  username enumeration to gain unauthorized access. This could lead to compromised user  accounts, unauthorized data access, and potential security breaches. Addressing such  vulnerabilities is critical for safeguarding user privacy and maintaining the integrity  of the authentication process."
 
   category:
     name: NO_AUTH
@@ -42,6 +29,8 @@ info:
     - CVE-2023-3897
     - CVE-2023-40758
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -53,7 +42,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -100,37 +89,37 @@ api_selection_filters:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_body_param:
-        captchaKey: "0000"  
-    - validate:
-        response_code:
-          gte: 400
-          lt: 410
-        response_payload:
-          not_contains:
-            - acccount is locked
-            - account is blocked
-            - multiple failed attempt
-            - rate limit
-            - rate-limit
-            - rate_limit
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_body_param:
-        userKey: dummymail@dummy.com
-        captchaKey: "0000"
-    - validate:
-        response_payload:
-          neq: "${x1.response.body}"
-          not_contains:
-            - account is locked
-            - account is blocked
-            - multiple failed attempt
-            - rate limit
-            - rate-limit
-            - rate_limit
-        response_code:
-          eq: "${x1.response.status_code}"
-    - success: vulnerable   
+    - req:
+        - modify_body_param:
+            captchaKey: "0000"
+        - validate:
+            response_code:
+              gte: 400
+              lt: 410
+            response_payload:
+              not_contains:
+                - acccount is locked
+                - account is blocked
+                - multiple failed attempt
+                - rate limit
+                - rate-limit
+                - rate_limit
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: dummymail@dummy.com
+            captchaKey: "0000"
+        - validate:
+            response_payload:
+              neq: "${x1.response.body}"
+              not_contains:
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+                - rate limit
+                - rate-limit
+                - rate_limit
+            response_code:
+              eq: "${x1.response.status_code}"
+        - success: vulnerable

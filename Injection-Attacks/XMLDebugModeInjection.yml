@@ -1,4 +1,3 @@
----
 id: XML_DEBUG_MODE_INJECTION
 info:
   name: XML Debug Mode Injection
@@ -29,6 +28,8 @@ info:
   cve:
     - CVE-2022-42745
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -37,7 +38,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -81,12 +82,12 @@ validate:
   response_payload:
     length:
       gt: 0
-    percentage_match: 
+    percentage_match:
       lt: 40
     contains_all: ${probableOutputParameters}
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -129,5 +130,5 @@ validate:
       - "XML External Entity (XXE) Reference Error"
       - "Error: Invalid CDATA section"
       - "Malformed XML request"
-      
+
 

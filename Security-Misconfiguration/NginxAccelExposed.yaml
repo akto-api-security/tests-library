@@ -7,7 +7,7 @@ info:
     "The `X-Accel-Redirect` header is used to perform internal redirects in Nginx, typically to serve files or execute internal requests. However, if this header is exposed and not properly validated, attackers can manipulate it to request internal files such as configuration files, credentials, or other sensitive backend resources."
   impact: >
     "Exposing internal files via an un-validated `X-Accel-Redirect` header can lead to the leakage of sensitive information such as configuration files, database credentials, or system settings. This can lead to further compromise of the application or the underlying infrastructure."
-  
+
   category:
     name: SM
     shortName: Misconfiguration
@@ -23,6 +23,8 @@ info:
   cve:
     - CVE-2020-11959
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -40,7 +42,7 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: ${headerValue}
+        - modify_url: ${headerValue}
 
 validate:
   response_code:
@@ -51,32 +53,32 @@ validate:
     percentage_match:
       lt: 40
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
-    - Attention Required!
-    - CloudFlare
-    - "Sorry, you have been blocked"
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"

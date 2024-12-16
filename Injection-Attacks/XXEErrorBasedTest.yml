@@ -4,8 +4,7 @@ info:
   description: >
     "This test can be used for improper error handling in XML parsing that could expose sensitive information or system details."
   details: >
-    "This test aims to identify vulnerabilities where error responses in XML processing 
-    could inadvertently reveal critical system insights or data."
+    "This test aims to identify vulnerabilities where error responses in XML processing  could inadvertently reveal critical system insights or data."
   impact: >
     "Inadequate handling of XML parsing errors can lead to information leaks and security breaches, significantly compromising the confidentiality and integrity of the API."
   category:
@@ -27,6 +26,8 @@ info:
     - CWE-827
   cve:
     - CVE-2022-42745
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -36,7 +37,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -80,7 +81,7 @@ execute:
   type: single
   requests:
     - req:
-        - replace_body:  ${payloads}
+        - replace_body: ${payloads}
         - modify_header:
             ${headerKey}: "application/xml"
 validate:
@@ -90,7 +91,7 @@ validate:
           gt: 0
         not_contains:
           - Error
-          - Internal Server 
+          - Internal Server
           - Failed
           - Unauthorized
           - access denied
@@ -119,10 +120,10 @@ validate:
           - CloudFlare
           - Sorry, you have been blocked
           - "Invalid access"
-      and: 
+      and:
         - response_payload:
             regex: "(cannot|could not|unable to|no such|failed to)"
         - response_payload:
             regex: "(find|locate|open|access|read)"
         - response_payload:
-            regex: "(the )?(directory|path)"    
+            regex: "(the )?(directory|path)"

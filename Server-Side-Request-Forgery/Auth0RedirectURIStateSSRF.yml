@@ -22,6 +22,8 @@ info:
   cve:
     - CVE-2022-4725
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     eq: "GET"
@@ -32,7 +34,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -58,7 +60,7 @@ api_selection_filters:
       - account is blocked
       - multiple failed attempts
   url:
-    contains_all: 
+    contains_all:
       - authorize
       - auth0
   query_param:
@@ -83,7 +85,7 @@ validate:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

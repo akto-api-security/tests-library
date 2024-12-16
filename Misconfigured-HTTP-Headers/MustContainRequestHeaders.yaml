@@ -3,13 +3,8 @@ info:
   name: Missing HTTP Request Headers
   description: "The request does not contain some HTTP security headers."
   details: >
-            "The endpoint seems to be missing some HTTP security headers which provide yet another layer of 
-            security by helping to mitigate attacks and security vulnerabilities.<br>"
-            "<b>Background:</b> Whenever a browser requests a page from a web server, the server responds with 
-            the content along with HTTP request headers. Some of these headers contain content meta data such 
-            as the Content-Encoding, Cache-Control, status codes, etc. Along with these are also HTTP security 
-            headers that tell your browser how to behave when handling your website's content. For example, 
-            by using the Strict-Transport-Security you can force the browser to communicate solely over HTTPS."
+    "The endpoint seems to be missing some HTTP security headers which provide yet another layer of  security by helping to mitigate attacks and security vulnerabilities.<br>"
+    "<b>Background:</b> Whenever a browser requests a page from a web server, the server responds with  the content along with HTTP request headers. Some of these headers contain content meta data such  as the Content-Encoding, Cache-Control, status codes, etc. Along with these are also HTTP security  headers that tell your browser how to behave when handling your website's content. For example,  by using the Strict-Transport-Security you can force the browser to communicate solely over HTTPS."
   impact: "This information can be used to facilitate more sophisticated attacks on your application."
   category:
     name: MHH
@@ -17,7 +12,7 @@ info:
     displayName: Misconfigured HTTP Headers (MHH)
   subCategory: MUST_CONTAIN_REQUEST_HEADERS
   severity: LOW
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -31,6 +26,8 @@ info:
     - CVE-2022-41915
     - CVE-2022-37436
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_code:
     gte: 200
@@ -53,4 +50,3 @@ validate:
 
 strategy:
   run_once: /
-  

@@ -1,7 +1,7 @@
 id: RUBY_ON_RAILS_WEB_RCE
 info:
   name: "Ruby on Rails Web Console Remote Code Execution"
-  description: "Ruby on Rails Web Console Remote Code Execution vulnerabilities occur when the web console feature is improperly configured, allowing attackers to execute arbitrary Ruby code on the server. This vulnerability typically arises from insufficient access controls or insecure settings that expose the web console to unauthorized users. By exploiting this flaw, attackers can gain full control of the application environment, manipulate data, or deploy malicious payloads. To mitigate these risks, it's essential to restrict access to the web console and implement strong authentication mechanisms." 
+  description: "Ruby on Rails Web Console Remote Code Execution vulnerabilities occur when the web console feature is improperly configured, allowing attackers to execute arbitrary Ruby code on the server. This vulnerability typically arises from insufficient access controls or insecure settings that expose the web console to unauthorized users. By exploiting this flaw, attackers can gain full control of the application environment, manipulate data, or deploy malicious payloads. To mitigate these risks, it's essential to restrict access to the web console and implement strong authentication mechanisms."
   details: "Ruby on Rails Web Console Remote Code Execution vulnerabilities often arise when the web console is enabled in production environments without proper security measures. Attackers can exploit this vulnerability by accessing the console through crafted requests, which may allow them to execute arbitrary Ruby code on the server. This can lead to unauthorized access, data manipulation, or complete control over the application. To prevent such vulnerabilities, it's crucial to disable the web console in production, enforce strict access controls, and implement robust authentication practices."
   impact: "The impact of Ruby on Rails Web Console Remote Code Execution vulnerabilities can be significant, enabling attackers to execute arbitrary Ruby code and potentially gain full control over the server. This may lead to unauthorized access to sensitive data, modification or deletion of application resources, and the deployment of malicious code. Additionally, such exploits can compromise the integrity and availability of the application, resulting in reputational damage, legal liabilities, and financial losses for the organization."
   category:
@@ -19,6 +19,8 @@ info:
   cve:
     - CVE-2015-3224
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   response_payload:
     length:

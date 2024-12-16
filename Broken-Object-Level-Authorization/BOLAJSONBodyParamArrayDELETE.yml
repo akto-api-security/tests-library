@@ -1,20 +1,19 @@
 id: ID_WRAP_ARRAY_JSON_BODY_DELETE
 info:
   name: "BOLA: Turning JSON Param into Array for Unauthorized Access with DELETE method APIs"
-  description: > 
+  description: >
     "This manipulation involves converting JSON parameter into array of single element to potentially circumvent security measures and gain unauthorized entry (where API request method is DELETE). Such actions underscore the importance of securing input validation and emphasize the risks associated with broken object-level authorization, necessitating robust security practices to thwart unauthorized access attempts."
   details: >
     "Attackers exploit vulnerabilities by manipulating the system through this test (where API request method is DELETE). This involves converting JSON parameter into array of single element, aiming to exploit weaknesses in object-level authorization and gain unauthorized entry. This method highlights the critical need for secure input validation and emphasizes the risks associated with unauthorized access, reinforcing the importance of robust security measures to prevent and mitigate potential exploitation."
   impact: >
-    "The impact of this test can be significant, posing a risk of unauthorized entry and potential compromise of sensitive data. By exploiting broken object-level authorization through JSON parameter manipulation, attackers may gain unauthorized access, leading to data 
-    breaches and compromising the overall integrity of the system. Promptly addressing and mitigating these vulnerabilities is crucial to prevent unauthorized access and safeguard against the potential consequences of broken object-level authorization exploitation."
+    "The impact of this test can be significant, posing a risk of unauthorized entry and potential compromise of sensitive data. By exploiting broken object-level authorization through JSON parameter manipulation, attackers may gain unauthorized access, leading to data  breaches and compromising the overall integrity of the system. Promptly addressing and mitigating these vulnerabilities is crucial to prevent unauthorized access and safeguard against the potential consequences of broken object-level authorization exploitation."
   category:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: ID_WRAP_ARRAY_JSON_BODY_DELETE
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -31,6 +30,8 @@ info:
     - CWE-639
   cve:
     - CVE-2023-39349
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -44,7 +45,7 @@ api_selection_filters:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -78,7 +79,7 @@ api_selection_filters:
 wordLists:
   random_ids:
     source: sample_data
-    key: 
+    key:
       regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|username|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
     all_apis: true
 execute:
@@ -86,7 +87,7 @@ execute:
   requests:
     - req:
         modify_body_param:
-          userKey: 
+          userKey:
             - "${random_ids}"
 validate:
   response_code:
@@ -97,7 +98,7 @@ validate:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

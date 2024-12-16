@@ -1,23 +1,18 @@
 id: SPRING_BOOT_ENV_ACTUATOR_EXPOSED
 info:
-  name: Spring Boot Environment Actuator Exposed 
+  name: Spring Boot Environment Actuator Exposed
   description: Spring Boot Environment Actuator Exposed Misconfiguration.
   details: >
-       The Spring Boot Environment Actuator Exposed misconfiguration occurs when the Actuator endpoint, 
-       which provides access to application environment details, is accessible to unauthorized users. 
-       This misconfiguration can lead to security risks as sensitive environment information, such as 
-       configuration properties and active profiles, can be exposed. Attackers can gain insights into 
-       the application's inner workings and exploit vulnerabilities. It falls under the Security Misconfiguration
-       category with a low severity level. Proper access control and secure configuration of the Actuator 
-       endpoints are crucial to protect sensitive environment details.
+    The Spring Boot Environment Actuator Exposed misconfiguration occurs when the Actuator endpoint,  which provides access to application environment details, is accessible to unauthorized users.  This misconfiguration can lead to security risks as sensitive environment information, such as  configuration properties and active profiles, can be exposed. Attackers can gain insights into  the application's inner workings and exploit vulnerabilities. It falls under the Security Misconfiguration
+    category with a low severity level. Proper access control and secure configuration of the Actuator  endpoints are crucial to protect sensitive environment details.
   impact: Exposing Spring Boot Environment Actuator can expose sensitive environment information, leading to potential security vulnerabilities and unauthorized access.
   category:
-      name: SM
-      shortName: Misconfiguration
-      displayName: Security Misconfiguration (SM)
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
   subCategory: Server Misconfiguration
   severity: LOW
-  tags: 
+  tags:
     - Spring Boot
     - Business logic
     - OWASP top 10
@@ -33,6 +28,8 @@ info:
     - CVE-2021-21234
     - CVE-2023-29986
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -46,10 +43,10 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}/actuator/env
+        - modify_url: ${urlVar}/actuator/env
 
 validate:
-  response_code: 
+  response_code:
     eq: 200
   response_payload:
     contains_either:

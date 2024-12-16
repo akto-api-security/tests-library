@@ -3,7 +3,7 @@ info:
   name: "Replaying request with same captcha"
   description: "The server fails to enforce captcha expiration, allowing users to submit multiple requests using the same captcha value without time restrictions."
   details: >
-            "Successful replaying of captchas presents a significant problem for companies, as it enables malicious actors to bypass security measures, potentially leading to spamming, data breaches, and reputation damage."
+    "Successful replaying of captchas presents a significant problem for companies, as it enables malicious actors to bypass security measures, potentially leading to spamming, data breaches, and reputation damage."
   impact: "Bypassing CAPTCHA protection enables hackers to automate malicious activities, such as unauthorized account access, spamming, data harvesting, and DDoS attacks."
   category:
     name: RL
@@ -24,6 +24,8 @@ info:
     - CVE-2021-29047
     - CVE-2022-34983
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -49,7 +51,7 @@ execute:
   type: single
   requests:
     - req:
-        - add_header: 
+        - add_header:
             x-akto-ignore: "0"
 
 validate:
@@ -57,7 +59,7 @@ validate:
     gte: 200
     lt: 300
   response_payload:
-    percentage_match: 
+    percentage_match:
       gt: 80
     length:
       gt: 0

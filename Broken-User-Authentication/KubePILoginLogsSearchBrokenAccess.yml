@@ -2,7 +2,7 @@ id: KUBEPI_LOGINLOGSSEARCH_BROKEN_ACCESS
 info:
   name: "KubePi LoginLogsSearch Unauthorized Access"
   description: "This vulnerability allows unauthorized users to access sensitive login logs without proper authentication. This issue exposes information about login attempts, including usernames, IP addresses, and timestamps. It compromises the confidentiality of system activity and could aid attackers in planning further malicious actions by analyzing login behavior and potential weaknesses in user accounts."
-  details:  "This vulnerability arises from insufficient access controls on the login logs search functionality. Attackers can exploit this flaw to retrieve sensitive data related to login activities without needing to authenticate themselves. This vulnerability is due to improper authorization checks in the KubePi application, making it possible for unauthorized users to view and access these logs directly."
+  details: "This vulnerability arises from insufficient access controls on the login logs search functionality. Attackers can exploit this flaw to retrieve sensitive data related to login activities without needing to authenticate themselves. This vulnerability is due to improper authorization checks in the KubePi application, making it possible for unauthorized users to view and access these logs directly."
   impact: "The impact of this vulnerability is significant, as attackers can access sensitive login data without authentication. This information may include usernames, timestamps, and other details related to login activities, potentially leading to further attacks such as account compromise or targeted exploitation. Unauthorized access to such logs can also expose system patterns and administrative behavior, increasing the risk of a larger security breach."
   category:
     name: NO_AUTH
@@ -18,6 +18,8 @@ info:
     - CWE-287
   cve:
     - CVE-2023-22478
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -33,14 +35,14 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: POST
-      - modify_url: "/kubepi/api/v1/systems/login/logs/search"
-      - replace_body: '{}'
-      - add_query_param:
-          pageNum: 1
-      - add_query_param:
-          pageSize: 10
-      
+        - modify_method: POST
+        - modify_url: "/kubepi/api/v1/systems/login/logs/search"
+        - replace_body: '{}'
+        - add_query_param:
+            pageNum: 1
+        - add_query_param:
+            pageSize: 10
+
 validate:
   response_code:
     eq: 200

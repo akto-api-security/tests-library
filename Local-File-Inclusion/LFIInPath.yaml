@@ -1,10 +1,10 @@
 id: LFI_IN_PATH
 info:
   name: "LFI in path"
-  description: "This test appends vulnerable payloads to the end of the URL, checking for Local File Inclusion vulnerabilities by manipulating file path references." 
+  description: "This test appends vulnerable payloads to the end of the URL, checking for Local File Inclusion vulnerabilities by manipulating file path references."
   details: >
-            "Assesses the vulnerability of a web application to Local File Inclusion vulnerabilities by appending vulnerable payloads at the end of the URL."
-            "By manipulating file path references, this test helps identify potential security weaknesses that could lead to unauthorized access, information disclosure, and server compromise"
+    "Assesses the vulnerability of a web application to Local File Inclusion vulnerabilities by appending vulnerable payloads at the end of the URL."
+    "By manipulating file path references, this test helps identify potential security weaknesses that could lead to unauthorized access, information disclosure, and server compromise"
   impact: "Successful exploitation allows an attacker to read arbitrary files on a web server, potentially leading to unauthorized access, information disclosure, server compromise, and execution of malicious code."
   category:
     name: LFI
@@ -25,6 +25,8 @@ info:
   cve:
     - CVE-2023-2453
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -35,7 +37,7 @@ api_selection_filters:
       gt: 0
 
 wordLists:
-  filePaths: 
+  filePaths:
     - etc/passwd
     - /etc/passwd
     - /etc/npasswd
@@ -72,11 +74,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url:
-          regex_replace:
-            regex: \/$
-            replace_with: ''
-      - modify_url: ${urlVar}/${filePaths}
+        - modify_url:
+            regex_replace:
+              regex: \/$
+              replace_with: ''
+        - modify_url: ${urlVar}/${filePaths}
 
 validate:
   response_payload:

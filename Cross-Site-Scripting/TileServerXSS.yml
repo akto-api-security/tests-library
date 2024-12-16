@@ -2,7 +2,7 @@ id: TILESERVER_XSS
 info:
   name: "Tileserver API XSS"
   description: "The Tileserver API XSS (Cross-Site Scripting) vulnerability occurs when user inputs are improperly handled by the Tileserver API, allowing attackers to inject malicious scripts into the API response. This can lead to the execution of malicious JavaScript in the context of a victim’s browser, compromising the security of the user. If exploited, attackers could steal sensitive information, perform actions on behalf of the user, or inject malicious content into the server’s response. Proper input sanitization and output encoding are essential to prevent such XSS vulnerabilities in the Tileserver API."
-  details:  "The Tileserver API XSS vulnerability arises when user input is not properly sanitized or encoded by the Tileserver API before being reflected back in API responses. This allows attackers to inject malicious JavaScript code into the response, which can then be executed by a victim’s browser. The injected script could steal session cookies, perform actions on behalf of the user, or display malicious content. To mitigate this, the application must properly sanitize all user inputs, encode outputs, and implement security mechanisms like Content Security Policy (CSP) to prevent such attacks."
+  details: "The Tileserver API XSS vulnerability arises when user input is not properly sanitized or encoded by the Tileserver API before being reflected back in API responses. This allows attackers to inject malicious JavaScript code into the response, which can then be executed by a victim’s browser. The injected script could steal session cookies, perform actions on behalf of the user, or display malicious content. To mitigate this, the application must properly sanitize all user inputs, encode outputs, and implement security mechanisms like Content Security Policy (CSP) to prevent such attacks."
   impact: "The impact of a Tileserver API XSS vulnerability is critical, as it can lead to session hijacking, data theft, and unauthorized actions performed on behalf of the victim. Attackers could inject malicious scripts that steal sensitive information like authentication tokens or perform phishing attacks. If exploited, this vulnerability could compromise user trust, disrupt services, or expose sensitive data. Implementing strong input validation, output encoding, and security policies like CSP are essential to prevent such attacks."
   category:
     name: XSS
@@ -20,6 +20,8 @@ info:
 
 
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -36,9 +38,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

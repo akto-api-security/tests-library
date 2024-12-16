@@ -3,7 +3,7 @@ info:
   name: Apache Airflow Configuration Exposure
   description: "Attacker can get unauthorized access to Apache Airflow configuration files."
   details: >
-              "Apache Airflow Configuration Exposure is a vulnerability that arises from misconfigured settings in Apache Airflow, an open-source workflow management platform. The misconfiguration exposes critical configuration files containing sensitive information, such as API keys and database credentials. This vulnerability could lead to unauthorized access and potential data breaches. Attackers can exploit the exposed configurations to gain unauthorized access, manipulate workflows, and compromise the integrity and confidentiality of the system. It is crucial to address this issue promptly to mitigate the risk of unauthorized access and protect sensitive data."
+    "Apache Airflow Configuration Exposure is a vulnerability that arises from misconfigured settings in Apache Airflow, an open-source workflow management platform. The misconfiguration exposes critical configuration files containing sensitive information, such as API keys and database credentials. This vulnerability could lead to unauthorized access and potential data breaches. Attackers can exploit the exposed configurations to gain unauthorized access, manipulate workflows, and compromise the integrity and confidentiality of the system. It is crucial to address this issue promptly to mitigate the risk of unauthorized access and protect sensitive data."
   impact: "Attackers can exploit exposed configurations to gain unauthorized access and compromise the system's integrity and confidentiality."
   category:
     name: SM
@@ -22,6 +22,8 @@ info:
   cve:
     - CVE-2023-35005
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -30,12 +32,12 @@ api_selection_filters:
     lt: 300
   url:
     extract: urlVar
-  
+
 execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}/airflow.cfg
+        - modify_url: ${urlVar}/airflow.cfg
 
 validate:
   response_code:

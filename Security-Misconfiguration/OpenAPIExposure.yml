@@ -2,7 +2,7 @@ id: OPENAPI_EXPOSURE
 info:
   name: "OpenAPI Documentation Exposure"
   description: "This test refers to the unintended public accessibility of OpenAPI documentation, which describes the APIs available in an application, including their endpoints, request/response formats, and security requirements. If this documentation is exposed without adequate security measures, it can provide attackers with valuable insights into the application’s architecture and functionality. This information can be exploited to launch targeted attacks or identify vulnerabilities. To mitigate risks, it is essential to restrict access to OpenAPI documentation and implement proper authentication and authorization controls."
-  details:  "OpenAPI Documentation Exposure occurs when the API documentation is publicly accessible without proper security controls, allowing anyone to view detailed information about the API endpoints, methods, parameters, and response structures. This exposure can give attackers a roadmap of the application, enabling them to identify potential vulnerabilities or weaknesses in the API. Additionally, it may expose sensitive data models or business logic, further increasing the risk of exploitation. To protect against this exposure, organizations should implement access controls, secure the documentation behind authentication, and limit visibility to authorized users only."
+  details: "OpenAPI Documentation Exposure occurs when the API documentation is publicly accessible without proper security controls, allowing anyone to view detailed information about the API endpoints, methods, parameters, and response structures. This exposure can give attackers a roadmap of the application, enabling them to identify potential vulnerabilities or weaknesses in the API. Additionally, it may expose sensitive data models or business logic, further increasing the risk of exploitation. To protect against this exposure, organizations should implement access controls, secure the documentation behind authentication, and limit visibility to authorized users only."
   impact: "The impact of OpenAPI Documentation Exposure can be severe, as it provides attackers with detailed insights into the API’s structure, making it easier to exploit vulnerabilities and craft targeted attacks. This can lead to unauthorized access, data breaches, and the potential for service disruptions. Moreover, the exposed documentation may reveal sensitive information about the application's architecture and business logic, increasing the risk of exploitation and significant financial and reputational damage to the organization. Additionally, regulatory consequences may arise if sensitive data is compromised due to inadequate security measures."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2021-43798
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -31,9 +33,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/openapi.json"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "/openapi.json"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

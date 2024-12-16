@@ -1,35 +1,19 @@
 id: BOLA_URL_INSERT_API_VERSION
 info:
   name: "Exploiting BOLA by inserting API Version IDs in URL path for Unauthorized Access."
-  description: > 
-    "This test involves exploiting security vulnerabilities by manipulating the URL 
-    path to insert API version IDs, leading to unauthorized access. This 
-    technique specifically targets flaws in Object Level Authorization, allowing 
-    attackers to bypass restrictions and gain access to sensitive information or 
-    functionalities intended for different API versions. By exploiting BOLA 
-    in this manner, unauthorized users can potentially compromise the security 
-    of an application or system."
+  description: >
+    "This test involves exploiting security vulnerabilities by manipulating the URL  path to insert API version IDs, leading to unauthorized access. This  technique specifically targets flaws in Object Level Authorization, allowing  attackers to bypass restrictions and gain access to sensitive information or  functionalities intended for different API versions. By exploiting BOLA  in this manner, unauthorized users can potentially compromise the security  of an application or system."
   details: >
-    "This test involves manipulating the URL path by inserting API Version IDs. 
-    This exploitation targets Object Level Authorization vulnerabilities, allowing 
-    unauthorized access to sensitive resources intended for different API versions. 
-    By exploiting BOLA in this manner, attackers can compromise system security 
-    and gain unauthorized entry to functionalities beyond their intended access level."
+    "This test involves manipulating the URL path by inserting API Version IDs.  This exploitation targets Object Level Authorization vulnerabilities, allowing  unauthorized access to sensitive resources intended for different API versions.  By exploiting BOLA in this manner, attackers can compromise system security  and gain unauthorized entry to functionalities beyond their intended access level."
   impact: >
-    "Exploiting Broken Object Level Authorization (BOLA) by inserting API Version IDs 
-    in the URL path can have severe impacts. Unauthorized access may lead to 
-    exposure of sensitive data, manipulation of critical functionalities, and 
-    potential breaches of confidentiality. This security vulnerability enables 
-    attackers to compromise the integrity of the system, posing a significant 
-    threat to the overall security posture and potentially causing reputational 
-    damage for the affected entity."
+    "Exploiting Broken Object Level Authorization (BOLA) by inserting API Version IDs  in the URL path can have severe impacts. Unauthorized access may lead to  exposure of sensitive data, manipulation of critical functionalities, and  potential breaches of confidentiality. This security vulnerability enables  attackers to compromise the integrity of the system, posing a significant  threat to the overall security posture and potentially causing reputational  damage for the affected entity."
   category:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: BOLA_URL_INSERT_API_VERSION
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -46,6 +30,8 @@ info:
     - CWE-639
   cve:
     - CVE-2022-34770
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -59,7 +45,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -103,49 +89,49 @@ execute:
   type: multiple
   requests:
     - req:
-      - replace_auth_header: true
-      - modify_url:
-          token_insert:
-            location: 1
-            replace_with: ${apiVersions}
-      - success: vulnerable
-      - failure: x2
+        - replace_auth_header: true
+        - modify_url:
+            token_insert:
+              location: 1
+              replace_with: ${apiVersions}
+        - success: vulnerable
+        - failure: x2
     - req:
-      - replace_auth_header: true
-      - modify_url:
-          token_insert:
-            location: 2
-            replace_with: ${apiVersions}
-      - success: vulnerable
-      - failure: x3
+        - replace_auth_header: true
+        - modify_url:
+            token_insert:
+              location: 2
+              replace_with: ${apiVersions}
+        - success: vulnerable
+        - failure: x3
     - req:
-      - replace_auth_header: true
-      - modify_url:
-          token_insert:
-            location: 3
-            replace_with: ${apiVersions}
-      - success: vulnerable
-      - failure: x4
+        - replace_auth_header: true
+        - modify_url:
+            token_insert:
+              location: 3
+              replace_with: ${apiVersions}
+        - success: vulnerable
+        - failure: x4
     - req:
-      - replace_auth_header: true
-      - modify_url:
-          token_insert:
-            location: 4
-            replace_with: ${apiVersions}
-      - success: vulnerable
-      - failure: x5
+        - replace_auth_header: true
+        - modify_url:
+            token_insert:
+              location: 4
+              replace_with: ${apiVersions}
+        - success: vulnerable
+        - failure: x5
     - req:
-      - replace_auth_header: true
-      - modify_url:
-          token_insert:
-            location: 5
-            replace_with: ${apiVersions}
+        - replace_auth_header: true
+        - modify_url:
+            token_insert:
+              location: 5
+              replace_with: ${apiVersions}
 validate:
   response_code:
     gte: 200
     lt: 300
   url:
-    endpoint_in_traffic_context: false 
+    endpoint_in_traffic_context: false
   response_payload:
     length:
       gt: 0
@@ -153,7 +139,7 @@ validate:
       lt: 90
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -182,4 +168,3 @@ validate:
       - not available
       - failure
 
-  

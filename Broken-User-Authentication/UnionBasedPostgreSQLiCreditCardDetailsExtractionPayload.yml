@@ -1,7 +1,7 @@
 id: UNION_CREDIT_CARD_DATA_PAYLOAD_POSTGRESQLI
 info:
   name: "Union based SQL Injection test with Credit Card Data Extraction Payload for PostgreSQL"
-  description: > 
+  description: >
     "A Union-based SQL Injection test with credit card data extraction payload for PostgreSQL involves injecting SQL queries designed to retrieve credit card information from the database. By using UNION SELECT statements, testers can combine results from malicious queries with legitimate ones, targeting tables that store credit card data. This method exploits vulnerabilities in input validation and query execution to access sensitive financial information."
   details: >
     "In a Union-based SQL Injection test with credit card data extraction payload for PostgreSQL, testers inject UNION SELECT statements to retrieve credit card information stored in the database. This involves crafting SQL queries that target specific tables and columns where credit card data is likely stored. By exploiting vulnerabilities in input validation and query handling, attackers can extract sensitive financial information, such as credit card numbers, expiration dates, and cardholder names."
@@ -28,6 +28,8 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -39,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -101,108 +103,108 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_body_param:
-        userKey: ${userVal}${unionBasedPayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          contains_either:
-            - credit
-            - card
-            - cardholder
-            - cvv
-            - expiry
-            - card_number
-          not_contains:
-            - Error
-            - Internal Server 
-            - Fail
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked
-            - " UNION SELECT " 
-            - <html>
-            - </html>         
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_body_param:
-        userKey: ${unionBasedNegativePayloads}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0 
-          not_contains:
-            - Error
-            - Internal Server 
-            - Fail
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts  
-            - Attention Required!
-            - CloudFlare
-            - Sorry, you have been blocked 
-            - " UNION SELECT "
-            - credit
-            - card
-            - cardholder
-            - cvv
-            - expiry
-            - card_number
-            - <html>
-            - </html>
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${unionBasedPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_either:
+                - credit
+                - card
+                - cardholder
+                - cvv
+                - expiry
+                - card_number
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " UNION SELECT "
+                - <html>
+                - </html>
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${unionBasedNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " UNION SELECT "
+                - credit
+                - card
+                - cardholder
+                - cvv
+                - expiry
+                - card_number
+                - <html>
+                - </html>
 
-          neq: "${x1.response.body}"
-    - success: vulnerable
-    - failure: exit                                             
+              neq: "${x1.response.body}"
+        - success: vulnerable
+        - failure: exit

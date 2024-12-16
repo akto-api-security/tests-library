@@ -1,7 +1,7 @@
 id: JWT_APPEND_SQL_INJECTION_MYSQL
 info:
   name: "SQL Injection test on JWT for MySQL"
-  description: > 
+  description: >
     "SQL Injection test on JWT for MySQL involves attempting to exploit vulnerabilities in the way JSON Web Tokens (JWTs) are processed and stored in a MySQL database. Attackers may manipulate JWT payloads to inject malicious SQL queries, aiming to compromise the database through unauthorized access or data manipulation. This test focuses on identifying and mitigating security weaknesses in how JWTs are handled within MySQL-backed applications to prevent SQL injection vulnerabilities."
   details: >
     "SQL Injection testing on JWT for MySQL involves probing for vulnerabilities where JWTs are mishandled and stored directly in a MySQL database. Attackers may attempt to inject SQL queries into JWT fields, exploiting insecure parsing or insufficient sanitization, potentially gaining unauthorized access or manipulating data within the database. This test aims to uncover and rectify such vulnerabilities to safeguard against SQL injection attacks targeting JWT-based authentication systems."
@@ -27,6 +27,8 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -40,7 +42,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -73,7 +75,7 @@ api_selection_filters:
           - auth-token
           - access-token
         extract: headerKey
-      value: 
+      value:
         contains_jwt: true
 wordLists:
   JWTPayloads:
@@ -88,84 +90,84 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - modify_header:
-        headerKey: "Bearer ${JWTPayloads}"
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          not_contains:
-            - Error
-            - Internal Server 
-            - Failed
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid token
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts          
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_header:
-        headerKey: "Bearer ${negativeJWTPayloads}" 
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          neq: "${x1.response.body}"
-          not_contains:
-            - rate-limit
-            - rate limit
-            - rate_limit
-            - Error
-            - Internal Server 
-            - Failed
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid token
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts          
-    - success: vulnerable
+    - req:
+        - modify_header:
+            headerKey: "Bearer ${JWTPayloads}"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_header:
+            headerKey: "Bearer ${negativeJWTPayloads}"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              neq: "${x1.response.body}"
+              not_contains:
+                - rate-limit
+                - rate limit
+                - rate_limit
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+        - success: vulnerable

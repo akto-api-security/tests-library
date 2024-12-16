@@ -1,20 +1,19 @@
 id: BOLA_STRING_PARAM_DELETE
 info:
   name: "Exploiting BOLA: Direct System Operation Using String Parameter Values with DELETE Based APIs"
-  description: > 
+  description: >
     "In this instance of Broken Object Level Authorization (BOLA), attackers exploit system vulnerabilities by directly utilizing string parameter values to perform operations (where request APIs have DELETE method). This manipulation poses a significant risk, potentially bypassing authorization controls and compromising the system's integrity. It underscores the imperative for stringent input validation and secure object-level authorization practices to mitigate these risks effectively. Addressing such vulnerabilities promptly is crucial for preventing unauthorized system operations and ensuring robust security measures."
   details: >
     "In the context of Broken Object Level Authorization (BOLA), this scenario involves attackers exploiting vulnerabilities by directly employing string parameter values to execute operations within the system. By manipulating these parameters, adversaries may bypass authorization controls, posing a substantial risk to the system's integrity (where request APIs have DELETE method). Robust input validation and secure object-level authorization practices are imperative to mitigate these vulnerabilities effectively and prevent unauthorized system operations."
   impact: >
-    "The impact of exploiting Broken Object Level Authorization (BOLA) through direct utilization of string parameter values for system operations can be severe. Successful manipulation may lead to unauthorized access, compromising sensitive data and potentially 
-    causing system disruptions. Addressing these vulnerabilities promptly is essential to prevent unauthorized operations, safeguard against data breaches, and uphold the overall security posture of the system."
+    "The impact of exploiting Broken Object Level Authorization (BOLA) through direct utilization of string parameter values for system operations can be severe. Successful manipulation may lead to unauthorized access, compromising sensitive data and potentially  causing system disruptions. Addressing these vulnerabilities promptly is essential to prevent unauthorized operations, safeguard against data breaches, and uphold the overall security posture of the system."
   category:
     name: BOLA
     shortName: BOLA
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: BOLA_STRING_PARAM_DELETE
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -31,6 +30,8 @@ info:
     - CWE-639
   cve:
     - CVE-2023-7102
+settings:
+  nature: INTRUSIVE
 inactive: true
 auth:
   authenticated: true
@@ -45,7 +46,7 @@ api_selection_filters:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -92,7 +93,7 @@ validate:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

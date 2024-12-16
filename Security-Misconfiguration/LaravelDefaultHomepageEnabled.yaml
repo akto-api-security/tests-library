@@ -1,21 +1,19 @@
 id: LARAVEL_DEFAULT_HOMEPAGE_ENABLED
 info:
-  name: Laravel Default Homepage Enabled 
+  name: Laravel Default Homepage Enabled
   description: Laravel Default Homepage Enabled Misconfiguration.
   details: >
-      The Laravel Default Homepage Enabled misconfiguration occurs when the default homepage is enabled in a production 
-      environment. The default homepage typically contains links to documentation, tutorials, news, and other resources, 
-      exposing sensitive information about the Laravel framework and the underlying PHP technology stack. This information can
-      be valuable for attackers looking for vulnerabilities and weaknesses in the system. To reduce the attack surface and
-      protect sensitive details, it is recommended to disable or customize the default homepage in production environments.
+    The Laravel Default Homepage Enabled misconfiguration occurs when the default homepage is enabled in a production  environment. The default homepage typically contains links to documentation, tutorials, news, and other resources,  exposing sensitive information about the Laravel framework and the underlying PHP technology stack. This information can
+    be valuable for attackers looking for vulnerabilities and weaknesses in the system. To reduce the attack surface and
+    protect sensitive details, it is recommended to disable or customize the default homepage in production environments.
   impact: Enabling the Laravel default homepage exposes sensitive information about the framework and underlying technology, increasing the risk of targeted attacks and exploitation.
   category:
-      name: SM
-      shortName: Misconfiguration
-      displayName: Security Misconfiguration (SM)
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
   subCategory: Server Misconfiguration
   severity: LOW
-  tags: 
+  tags:
     - Laravel
     - Business logic
     - OWASP top 10
@@ -26,6 +24,8 @@ info:
   cwe:
     - CWE-16
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -40,7 +40,7 @@ execute:
 
 validate:
   response_payload:
-    contains_all: 
+    contains_all:
       - "Documentation"
       - "Laracasts"
       - "Laravel News"

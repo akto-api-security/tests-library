@@ -1,7 +1,7 @@
 id: FUZZ_USER_ID_PATCH
 info:
   name: "BOLA by Accessing Existing User Data Through User ID Fuzzing for PATCH/PUT method APIs"
-  description: > 
+  description: >
     "This specific test involves accessing existing user data through new user ID fuzzing (where HTTP methods can be PUT/PATCH), where attackers manipulate identifiers like UUIDs, string IDs, and integers to exploit vulnerabilities and gain unauthorized access. This highlights the critical need for robust user ID handling to prevent Business Logic Abuse and protect against unauthorized data exposure."
   details: >
     "Attackers exploit a BOLA vulnerability by capturing a new user's ID and fuzzing it (where HTTP methods can be PUT/PATCH) with variations such as UUIDs, string IDs, and integer IDs. This manipulation allows them to gain unauthorized access to existing user data, potentially leading to privacy breaches and unauthorized disclosures. It underscores the importance of secure user ID handling and highlights the risks associated with BOLA abuse in systems."
@@ -13,7 +13,7 @@ info:
     displayName: Broken Object Level Authorization (BOLA)
   subCategory: FUZZ_USER_ID_PATCH
   severity: HIGH
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -30,6 +30,8 @@ info:
     - CWE-639
   cve:
     - CVE-2023-39349
+settings:
+  nature: INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -45,7 +47,7 @@ api_selection_filters:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -80,11 +82,11 @@ api_selection_filters:
         for_one:
           key:
             regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|^username$|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
-            extract: userKey   
+            extract: userKey
 wordLists:
   random_ids:
     source: sample_data
-    key: 
+    key:
       regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|username|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
     all_apis: true
 execute:
@@ -104,7 +106,7 @@ validate:
       eq: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

@@ -2,7 +2,7 @@ id: RAY_STATIC_LFI
 info:
   name: "Ray AI Compute Engine Directory Traversal Test"
   description: "The Ray AI Compute Engine Directory Traversal Test identifies vulnerabilities in Ray's distributed computing engine, where improper handling of user input allows attackers to exploit directory traversal attacks. By manipulating file paths, attackers can traverse outside the intended directory, potentially gaining unauthorized access to sensitive files or configurations on the system. This could expose critical information or allow attackers to manipulate system files. To mitigate such risks, Ray should implement strict input validation and secure file path handling to prevent unauthorized file access."
-  details:  "The Ray AI Compute Engine Directory Traversal Test evaluates the potential for attackers to manipulate file paths within Ray's distributed computing environment. If user input is not properly validated, attackers can craft requests with directory traversal sequences, such as `../`, to access files outside the intended directories. This could lead to the exposure of sensitive files, system configurations, or data stored on the server. Preventing such attacks requires ensuring that file paths are properly sanitized, restricted, and that sensitive directories are adequately protected from unauthorized access."
+  details: "The Ray AI Compute Engine Directory Traversal Test evaluates the potential for attackers to manipulate file paths within Ray's distributed computing environment. If user input is not properly validated, attackers can craft requests with directory traversal sequences, such as `../`, to access files outside the intended directories. This could lead to the exposure of sensitive files, system configurations, or data stored on the server. Preventing such attacks requires ensuring that file paths are properly sanitized, restricted, and that sensitive directories are adequately protected from unauthorized access."
   impact: "The impact of a Ray AI Compute Engine Directory Traversal vulnerability is significant, as it could allow attackers to access sensitive files or configurations outside the intended directories. This could lead to the exposure of critical information, such as system settings, credentials, or application data, which could be used for further exploitation. Additionally, unauthorized access to sensitive files could disrupt the integrity of the system or result in privilege escalation. Implementing proper input validation and access controls is essential to prevent such risks."
   category:
     name: LFI
@@ -25,6 +25,8 @@ info:
     - CVE-2023-22973
 
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -41,9 +43,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

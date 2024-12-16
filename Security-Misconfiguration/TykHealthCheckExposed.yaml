@@ -23,6 +23,8 @@ info:
   cve:
     - CVE-2020-11959
 
+settings:
+  nature: NON-INTRUSIVE
 auth:
   authenticated: true
 api_selection_filters:
@@ -39,12 +41,11 @@ api_selection_filters:
   url:
     contains_either:
       - "hello"
-  
 execute:
   type: single
   requests:
     - req:
-      - remove_auth_header: true
+        - remove_auth_header: true
 
 validate:
   response_code:
@@ -57,35 +58,35 @@ validate:
       - "redis"
       - "componentType"
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
-    - Attention Required!
-    - CloudFlare
-    - "Sorry, you have been blocked"
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
 
 strategy:
   run_once: /

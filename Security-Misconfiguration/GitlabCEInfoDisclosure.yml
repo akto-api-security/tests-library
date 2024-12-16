@@ -2,7 +2,7 @@ id: GITLAB_CE_EE_INFO_DISCLOSURE
 info:
   name: Gitlab CE/EE Information Disclosure
   description: "This test refers to a vulnerability found in GitLab's Community Edition (CE) and Enterprise Edition (EE) where sensitive information may be exposed to unauthorized users. This can include data such as internal system configurations, user details, or project information. Exploiting this vulnerability could allow attackers to gain insights into the system, leading to further attacks or data compromise. Fixes are generally provided via security patches in updated versions of GitLab."
-  details:  "GitLab CE/EE Information Disclosure vulnerabilities typically arise due to improper access controls or misconfigurations that expose sensitive data like user information, project details, or system settings. Attackers could exploit these flaws to gain unauthorized access or insights, potentially leading to further exploitation. Timely patching and updating to the latest GitLab versions are recommended to mitigate these risks."
+  details: "GitLab CE/EE Information Disclosure vulnerabilities typically arise due to improper access controls or misconfigurations that expose sensitive data like user information, project details, or system settings. Attackers could exploit these flaws to gain unauthorized access or insights, potentially leading to further exploitation. Timely patching and updating to the latest GitLab versions are recommended to mitigate these risks."
   impact: "The impact of a GitLab CE/EE Information Disclosure vulnerability can be significant, as it may allow unauthorized users to access sensitive data like user credentials, project configurations, or internal system details. This exposure could lead to further security breaches, including privilege escalation, data theft, or targeted attacks against the organization. Such vulnerabilities can compromise the confidentiality and integrity of the entire GitLab environment."
   category:
     name: SM
@@ -18,6 +18,8 @@ info:
   cve:
     - CVE-2022-0735
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     eq: "GET"
@@ -34,9 +36,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/users/sign_in"
-      - follow_redirect: true
-      
+        - modify_url: "/users/sign_in"
+        - follow_redirect: true
+
 validate:
   response_payload:
     contains_either:

@@ -3,7 +3,7 @@ info:
   name: Docker Container - Misconfiguration Exposure
   description: "A Docker container misconfiguration was discovered."
   details: >
-              "This vulnerability identifies misconfigured Docker containers by scanning the "/images/json" endpoint. Misconfigurations can include exposed parent IDs, container information, and labels. Such misconfigurations can lead to unauthorized access, data leaks, and potential compromise of the Docker environment."
+    "This vulnerability identifies misconfigured Docker containers by scanning the "/images/json" endpoint. Misconfigurations can include exposed parent IDs, container information, and labels. Such misconfigurations can lead to unauthorized access, data leaks, and potential compromise of the Docker environment."
   impact: "Misconfigured Docker containers can lead to unauthorized access, data leaks, and compromise of the Docker environment, posing significant security risks to applications and sensitive data."
   category:
     name: SM
@@ -20,6 +20,8 @@ info:
     - CVE-2021-41092
     - CVE-2023-5165
 
+settings:
+  nature: NON-INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -28,12 +30,12 @@ api_selection_filters:
     lt: 300
   url:
     extract: urlVar
-  
+
 execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}/images/json
+        - modify_url: ${urlVar}/images/json
 
 validate:
   response_code:

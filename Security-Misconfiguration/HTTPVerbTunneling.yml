@@ -1,4 +1,3 @@
----
 id: HTTP_VERB_TUNNELING
 info:
   name: Bypassing Access Controls Using HTTP Verb Tunneling
@@ -25,11 +24,13 @@ info:
     - CVE-2023-4009
     - CVE-2021-32039
 
+settings:
+  nature: INTRUSIVE
 api_selection_filters:
   method:
     neq: "OPTIONS"
     not_contains: ${attemptValues}
-  
+
 wordLists:
   attemptValues:
     - PUT
@@ -37,57 +38,57 @@ wordLists:
 execute:
   type: multiple
   requests:
-  - req:
-    - add_header:
-        x-akto-ignore: 0
-    - modify_method: ${attemptValues}
-    - validate:
-        response_code:
-          gte: 400
-    - success: x2
-    - failure: exit
-  - req:
-    - add_header:
-        X-HTTP-Method-Override: ${attemptValues}
-    - validate:
-        response_code:
-          gte: 200
-          lt: 300
-        response_payload:
-          length:
-            gt: 0
-          percentage_match:
-            lte: 30
-          percentage_match_schema:
-            gte: 70
-          not_contains:
-            - Error
-            - Internal Server
-            - Failed
-            - Unauthorized
-            - access denied
-            - Forbidden
-            - Method Not allowed
-            - Gateway timeout
-            - request timeout
-            - server error
-            - server busy
-            - authentication error
-            - authorization error
-            - validation error
-            - Permission Denied
-            - invalid token
-            - token expired
-            - session expired
-            - session timeout
-            - unexpected error
-            - unable to process request
-            - bad request
-            - service unavailable
-            - account is locked
-            - account is blocked
-            - multiple failed attempts
-            - Attention Required!
-            - CloudFlare
-            - "Sorry, you have been blocked"
-    - success: vulnerable
+    - req:
+        - add_header:
+            x-akto-ignore: 0
+        - modify_method: ${attemptValues}
+        - validate:
+            response_code:
+              gte: 400
+        - success: x2
+        - failure: exit
+    - req:
+        - add_header:
+            X-HTTP-Method-Override: ${attemptValues}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              percentage_match:
+                lte: 30
+              percentage_match_schema:
+                gte: 70
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - "Sorry, you have been blocked"
+        - success: vulnerable
