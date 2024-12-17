@@ -29,6 +29,7 @@ info:
 settings:
   nature: INTRUSIVE
   plan: PRO
+  duration: FAST
 api_selection_filters:
   response_code:
     gte: 200
@@ -121,7 +122,7 @@ validate:
           - CloudFlare
           - Sorry, you have been blocked
           - "Invalid access"
-    - and: 
+    - and:
         - response_payload:
             regex: "(cannot|could not|unable to|no such|failed to)"
         - response_payload:

@@ -30,6 +30,7 @@ info:
 settings:
   nature: INTRUSIVE
   plan: PRO
+  duration: FAST
 inactive: true
 api_selection_filters:
   response_code:
@@ -86,12 +87,12 @@ execute:
         - validate:
             or:
               - and:
-                - response_payload:
-                    length:
-                      gt: 0
-                - response_code:
-                    gte: 400
-                    lt: 410
+                  - response_payload:
+                      length:
+                        gt: 0
+                  - response_code:
+                      gte: 400
+                      lt: 410
               - response_payload:
                   length:
                     gt: 0
