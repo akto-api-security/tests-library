@@ -1,7 +1,7 @@
 id: BFLA_WITH_GET_METHOD
 info:
   name: "Broken Function Level Authorization - Vertical Privilege Escalation test with GET method"
-  description: > 
+  description: >
     "In this test, attackers exploit weaknesses in user privilege verification by using HTTP GET requests to access higher-level functionalities. By manipulating URL parameters or endpoint identifiers, they bypass authorization controls to gain unauthorized access to privileged resources or actions. This vulnerability can lead to unauthorized data exposure, system compromise, and potential escalation of user privileges within the application."
   details: >
     "In this test, attackers leverage vulnerabilities in user privilege checks to elevate their access within an application. By manipulating parameters in GET requests, they attempt to access functionalities typically restricted to higher privileged users. This technique enables unauthorized users to exploit weaknesses in authorization controls, potentially accessing sensitive data or performing privileged actions."
@@ -28,6 +28,7 @@ info:
 settings:
   nature: NON-INTRUSIVE
   plan: FREE
+  duration: FAST
 auth:
   authenticated: true
 api_selection_filters:
@@ -61,8 +62,8 @@ validate:
     percentage_match:
       lt: 10
     percentage_match_schema:
-      gte : 90
+      gte: 90
     not_contains:
       - <html>
       - </html>
-    
+

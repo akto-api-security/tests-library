@@ -28,24 +28,25 @@ info:
 settings:
   nature: INTRUSIVE
   plan: STANDARD
+  duration: FAST
 auth:
   authenticated: true
 api_selection_filters:
-  or: 
-  - and:
-    - response_code:
-        gte: 200
-        lt: 300
-        neq: 204
-    - response_payload:
-        length:
-          gt: 0
-  - and: 
-    - response_code:
-        eq: 204
-    - response_payload:
-        length:
-          eq: 0
+  or:
+    - and:
+        - response_code:
+            gte: 200
+            lt: 300
+            neq: 204
+        - response_payload:
+            length:
+              gt: 0
+    - and:
+        - response_code:
+            eq: 204
+        - response_payload:
+            length:
+              eq: 0
   method:
     neq: "OPTIONS"
   include_roles_access:
@@ -59,21 +60,21 @@ execute:
         - modify_header:
             ${roles_access_context.MEMBER}: 1
 validate:
-  or: 
-  - and:
-    - response_code:
-        gte: 200
-        lt: 300
-        neq: 204
-    - response_payload:
-        length:
-          gt: 0
-  - and: 
-    - response_code:
-        eq: 204
-    - response_payload:
-        length:
-          eq: 0
+  or:
+    - and:
+        - response_code:
+            gte: 200
+            lt: 300
+            neq: 204
+        - response_payload:
+            length:
+              gt: 0
+    - and:
+        - response_code:
+            eq: 204
+        - response_payload:
+            length:
+              eq: 0
   response_payload:
     percentage_match:
       gte: 90
