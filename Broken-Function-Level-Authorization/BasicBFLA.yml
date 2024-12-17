@@ -31,17 +31,19 @@ settings:
 auth:
   authenticated: true
 api_selection_filters:
-  or:
+  or: 
+  - and:
     - response_code:
         gte: 200
         lt: 300
         neq: 204
-      response_payload:
+    - response_payload:
         length:
           gt: 0
+  - and: 
     - response_code:
         eq: 204
-      response_payload:
+    - response_payload:
         length:
           eq: 0
   method:
@@ -57,19 +59,24 @@ execute:
         - modify_header:
             ${roles_access_context.MEMBER}: 1
 validate:
-  or:
+  or: 
+  - and:
     - response_code:
         gte: 200
         lt: 300
         neq: 204
-      response_payload:
+    - response_payload:
         length:
           gt: 0
+  - and: 
     - response_code:
         eq: 204
-      response_payload:
+    - response_payload:
         length:
           eq: 0
   response_payload:
     percentage_match:
       gte: 90
+    not_contains:
+      - <html>
+      - </html>

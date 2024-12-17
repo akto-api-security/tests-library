@@ -34,6 +34,9 @@ api_selection_filters:
     lt: 300
   method:
     neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
 
 wordLists:
   userAgent:
@@ -67,3 +70,8 @@ validate:
       lte: 50
     percentage_match_schema:
       gte: 90
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>
