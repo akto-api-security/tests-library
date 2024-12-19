@@ -1,26 +1,9 @@
 id: LDAP_LOGIN_DOS
 info:
   name: "Denial of Service on  LDAP Login endpoint stress test"
-  description: "In a Denial of Service (DoS) stress test on a LDAP login endpoint, 
-  the endpoint is provided with a special input that causes the endpoint to lag. This aims 
-  to evaluate the endpoint's resilience under heavy load and assess its ability 
-  to authenticate users efficiently. By simulating such attacks, testers 
-  identify potential weaknesses in the LDAP login mechanism, enabling 
-  proactive measures to bolster the system's defenses against DoS attacks targeting authentication services."
-  details: "In this Denial of Service (DoS) stress test on an LDAP login endpoint, testers 
-  intentionally provide the endpoint with a specially crafted input designed to 
-  induce lag. This evaluates the endpoint's performance under heavy load and its 
-  capacity to efficiently authenticate users despite disruptions. By simulating 
-  these attacks, vulnerabilities in the LDAP login mechanism are uncovered, 
-  empowering proactive measures to strengthen the system's defenses 
-  against DoS attacks targeting authentication services."
-  impact: "The impact of a successful Denial of Service (DoS) stress test on a 
-  LDAP login endpoint can be significant. Introducing lag-inducing inputs 
-  may cause delays in user authentication, leading to decreased system 
-  responsiveness and potential service interruptions. Additionally, 
-  prolonged login times or failures can frustrate users, erode trust 
-  in the system, and result in reputational damage for the organization, 
-  emphasizing the importance of fortifying defenses against such attacks."
+  description: "In a Denial of Service (DoS) stress test on a LDAP login endpoint, the endpoint is provided with a special input that causes the endpoint to lag. This aims to evaluate the endpoint's resilience under heavy load and assess its ability to authenticate users efficiently. By simulating such attacks, testers identify potential weaknesses in the LDAP login mechanism, enabling proactive measures to bolster the system's defenses against DoS attacks targeting authentication services."
+  details: "In this Denial of Service (DoS) stress test on an LDAP login endpoint, testers intentionally provide the endpoint with a specially crafted input designed to induce lag. This evaluates the endpoint's performance under heavy load and its capacity to efficiently authenticate users despite disruptions. By simulating these attacks, vulnerabilities in the LDAP login mechanism are uncovered, empowering proactive measures to strengthen the system's defenses against DoS attacks targeting authentication services."
+  impact: "The impact of a successful Denial of Service (DoS) stress test on a LDAP login endpoint can be significant. Introducing lag-inducing inputs may cause delays in user authentication, leading to decreased system responsiveness and potential service interruptions. Additionally, prolonged login times or failures can frustrate users, erode trust in the system, and result in reputational damage for the organization, emphasizing the importance of fortifying defenses against such attacks."
   category:
     name: RL
     shortName: Lack of Resources & Rate Limiting
@@ -40,17 +23,50 @@ info:
     - CVE-2023-38254
 attributes:
   nature: INTRUSIVE
-  plan: PRO
-  duration: SLOW
+  plan: FREE
+  duration: FAST
+compliance_standards:
+  GDPR:
+    - Article 32
+  HIPAA:
+    - 45 CFR § 164.308(a)(7)(i)
+    - 45 CFR § 164.312(e)(1)
+  SOC 2:
+    - System Availability and Performance Management
+    - Resource Allocation and Monitoring
+  PCI DSS:
+    - Requirement 6.5.10
+    - Requirement 12.1
+  ISO 27001:
+    - A.12.1.3
+    - A.14.1.3
+  NIST 800-53:
+    - SC-5
+    - SI-13
+  CSA CCM:
+    - IVS-03
+    - TVM-02
+  CIS Controls:
+    - IG2 Safeguard 9.1
+    - IG2 Safeguard 13.10
+  FedRAMP:
+    - SC-5
+    - AU-2
+  NIST 800-171:
+    - 3.1.3
+    - 3.14.3
+  FISMA:
+    - SC-5
+    - AU-2
+  Cybersecurity Maturity Model Certification (CMMC):
+    - SC.3.192
+    - AU.3.048
 api_selection_filters:
   method:
     neq: "OPTIONS"
   response_code:
     gte: 200
     lt: 300
-  method:
-    not_contains_either:
-      - GET
   url:
     contains_either:
       - login
@@ -72,20 +88,20 @@ api_selection_filters:
 execute:
   type: multiple
   requests:
-  - req:
-    - add_header:
-        dummy_Header_Key: "dummyValue"
-    - validate:
-        percentage_match:
-          gte: 90
-    - success: x2
-    - failure: exit
-  - req:
-    - modify_body_param:
-         userKey: "*)\" + \"(cn=*)\"*700000 + \"(cn=*"
-    - validate:
-        response_code:
-          gt: 505
+    - req:
+        - add_header:
+            dummy_Header_Key: "dummyValue"
+        - validate:
+            percentage_match:
+              gte: 90
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: "*)\" + \"(cn=*)\"*700000 + \"(cn=*"
+        - validate:
+            response_code:
+              gt: 505
 validate:
   and:
     - compare_greater:
