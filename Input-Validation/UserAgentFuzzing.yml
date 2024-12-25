@@ -1,4 +1,3 @@
----
 id: USER_AGENT_FUZZING
 info:
   name: "User Agent Fuzzing"
@@ -52,24 +51,36 @@ wordLists:
     - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
 
 execute:
-  type: single
+  type: multiple
   requests:
+    - req:
+      - add_header:
+          dummyHeader: dummyKey
+      - validate:
+          response_payload:
+            percentage_match:
+              gte: 50
+              lt: 90
+            length:
+              gt: 0
+      - success: x2
+      - failure: exit
     - req: 
       - modify_header: 
           user-agent : ${userAgent}
-
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    # the response should not change based on user-agents.
-    percentage_match:
-      lte: 50
-    percentage_match_schema:
-      gte: 90
-    length:
-      gt: 0
-    not_contains:
-      - <html>
-      - </html>
+      - validate:
+          response_code:
+            gte: 200
+            lt: 300
+          response_payload:
+            percentage_match:
+              lte: 50
+            percentage_match_schema:
+              gte: 90
+            length:
+              gt: 0
+            not_contains:
+              - <html>
+              - </html>
+      - success: vulnerable
+      - failure: exit       
