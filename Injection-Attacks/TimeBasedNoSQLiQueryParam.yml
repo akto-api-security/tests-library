@@ -178,3 +178,5 @@ validate:
     - compare_greater:
         - ${x2.response.stats.median_response_time}
         - ${x1.response.stats.median_response_time} * 5
+settings:
+  duration: SLOW
