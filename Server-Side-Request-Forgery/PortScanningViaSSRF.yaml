@@ -34,43 +34,7 @@ attributes:
   nature: INTRUSIVE
   plan: STANDARD
   duration: FAST
-compliance_standards:
-  GDPR:
-    - Article 32
-    - Article 25
-  HIPAA:
-    - 45 CFR § 164.312(c)(1)
-    - 45 CFR § 164.312(e)(1)
-  SOC 2:
-    - System and Communication Security
-    - Secure Application Development Controls
-  PCI DSS:
-    - Requirement 6.5.9
-    - Requirement 11.3
-  ISO 27001:
-    - A.12.6.1
-    - A.14.2.5
-  NIST 800-53:
-    - SC-7
-    - SI-10
-  CSA CCM:
-    - IVS-09
-    - TVM-03
-  CIS Controls:
-    - IG1 Safeguard 9.4
-    - IG2 Safeguard 18.3
-  FedRAMP:
-    - SC-7
-    - SI-10
-  NIST 800-171:
-    - 3.1.20
-    - 3.14.2
-  FISMA:
-    - SC-7
-    - SI-10
-  Cybersecurity Maturity Model Certification (CMMC):
-    - SC.3.192
-    - SI.2.216
+compliance_standards: https://github.com/akto-api-security/tests-library/blob/hotfix/fixed_some_minor_bugs/compliance/ssrf.conf
 api_selection_filters:
   method:
     neq: "OPTIONS"
