@@ -32,7 +32,7 @@ info:
 attributes:
   nature: INTRUSIVE
   plan: FREE
-  duration: FAST
+  duration: SLOW
 compliance_standards:
   GDPR:
     - Article 32
@@ -157,5 +157,3 @@ validate:
     - ${x1.response.stats.median_response_time}
     - ${x2.response.stats.median_response_time} * 3
 
-settings:
-  duration: SLOW
