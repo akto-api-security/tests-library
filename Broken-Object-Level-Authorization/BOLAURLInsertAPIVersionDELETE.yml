@@ -1,0 +1,168 @@
+id: BOLA_URL_INSERT_API_VERSION_DELETE
+info:
+  name: "Exploiting BOLA by inserting API Version IDs in URL path for Unauthorized Access with DELETE based APIs"
+  description: > 
+    "This test involves exploiting security vulnerabilities by manipulating the URL path to insert API version IDs, leading to unauthorized access (for DELETE based APIs). This technique specifically targets flaws in Object Level Authorization, allowing attackers to bypass restrictions and gain access to sensitive information or functionalities intended for different API versions. By exploiting BOLA in this manner, unauthorized users can potentially compromise the security of an application or system."
+  details: >
+    "This test involves manipulating the URL path by inserting API Version IDs (for DELETE based APIs). This exploitation targets Object Level Authorization vulnerabilities, allowing unauthorized access to sensitive resources intended for different API versions. By exploiting BOLA in this manner, attackers can compromise system security 
+    and gain unauthorized entry to functionalities beyond their intended access level."
+  impact: >
+    "Exploiting Broken Object Level Authorization (BOLA) by inserting API Version IDs in the URL path can have severe impacts. Unauthorized access may lead to exposure of sensitive data, manipulation of critical functionalities, and potential breaches of confidentiality. This security vulnerability enables attackers to compromise the integrity of the system, posing a significant threat to the overall security posture and potentially causing reputational damage for the affected entity."
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: BOLA_URL_INSERT_API_VERSION_DELETE
+  severity: HIGH
+  tags: 
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://www.akto.io/blog/bola-exploitation-using-unauthorized-uuid-on-api-endpoint"
+    - "https://www.akto.io/blog/what-is-broken-object-level-authorization-bola"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md"
+    - "https://cwe.mitre.org/data/definitions/284.html"
+    - "https://cwe.mitre.org/data/definitions/285.html"
+    - "https://cwe.mitre.org/data/definitions/639.html"
+  cwe:
+    - CWE-284
+    - CWE-285
+    - CWE-639
+  cve:
+    - CVE-2022-34770
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: DELETE
+  response_payload:
+    length:
+      eq: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - not found
+      - not available
+      - failure
+  private_variable_context:
+    gt: 0
+
+wordLists:
+  apiVersions:
+    - v0
+    - v1
+    - v2
+    - v3
+    - v4
+    - v5
+
+execute:
+  type: multiple
+  requests:
+    - req:
+      - replace_auth_header: true
+      - modify_url:
+          token_insert:
+            location: 1
+            replace_with: ${apiVersions}
+      - success: vulnerable
+      - failure: x2
+    - req:
+      - replace_auth_header: true
+      - modify_url:
+          token_insert:
+            location: 2
+            replace_with: ${apiVersions}
+      - success: vulnerable
+      - failure: x3
+    - req:
+      - replace_auth_header: true
+      - modify_url:
+          token_insert:
+            location: 3
+            replace_with: ${apiVersions}
+      - success: vulnerable
+      - failure: x4
+    - req:
+      - replace_auth_header: true
+      - modify_url:
+          token_insert:
+            location: 4
+            replace_with: ${apiVersions}
+      - success: vulnerable
+      - failure: x5
+    - req:
+      - replace_auth_header: true
+      - modify_url:
+          token_insert:
+            location: 5
+            replace_with: ${apiVersions}
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  url:
+    endpoint_in_traffic_context: false 
+  response_payload:
+    length:
+      eq: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - not found
+      - not available
+      - failure
+
+  
