@@ -1,47 +1,58 @@
 # Remediation for SENSITIVE_DATA_EXPOSURE_PASSWORD
 
-## Remediation Steps for Sensitive Data Exposure Test with Password on LLMs
+## Remediation Steps for Sensitive Data Exposure: PASSWORD
+Sensitive data exposure, specifically password exposure, can provide unauthorized individuals with access to secure areas or information. Passwords should always be encrypted and never stored in plain text. Additionally, ensure secure transmission of these encrypted passwords over the network.
 
-Sensitive Data Exposure is a critical security issue where sensitive information such as user passwords are not adequately protected, thus providing an opportunity for attackers to gain unauthorized access.
+### Step 1: Install Encryption Libraries
+For most programming languages, external libraries or modules are available to assist with password encryption. Here's how to do it in Python with the bcrypt library:
 
-### Step 1: Enable Password Hashing
-Secure your passwords by implementing password hashing using bcrypt. Here is an example in Python:
-
-```python
-from werkzeug.security import generate_password_hash
-
-password = "my_password"
-hashed_password = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
+```bash
+pip install bcrypt
 ```
 
-### Step 2: Secure Transmissions with HTTPS
-Ensure secure transmission of sensitive data over the network by enabling HTTPS encryption. 
-
-### Step 3: Use Secure Cookies
-In your settings, configure your application to only send cookies over HTTPS.
+### Step 2: Encrypt Passwords
+All passwords should be hashed and salted before being stored in the application database. Here's how to do it in Python using the bcrypt library:
 
 ```python
-SESSION_COOKIE_SECURE = True
+import bcrypt
+
+password = b"my_password" # convert text to bytes
+
+# Generate a salt
+salt = bcrypt.gensalt()
+
+# Generate a password hash
+hashed_password = bcrypt.hashpw(password, salt)
 ```
 
-### Step 4: Implement Access Controls
-Implement necessary access controls to prohibit unauthorized users from accessing sensitive data. Here's an example in Python using Flask-Login:
+### Step 3: Store Encrypted Passwords
+Store the hashed password in your database. Never store plaintext passwords.
+Here's an example in Python:
 
 ```python
-from flask_login import login_required
-
-@app.route("/sensitive_route")
-@login_required
-def sensitive_func():
-    pass
+# Assuming 'users' is your Users Model/Schema
+def create_user(username, hashed_password):
+    ...
+    new_user = users(username=username, password=hashed_password)
+    new_user.save()
+    ...
 ```
 
-### Step 5: Regular Monitoring and Logging
-Implement audit and monitoring mechanisms to keep track of access to sensitive resources. Regularly review the logs to identify any unauthorized access attempts.
+### Step 4: Validate User Input
+When checking user provided password, validate it against the hashed password in the database.
 
- ```bash
- tail -f /var/log/your_app.log
- ```
+```python
+# Assuming user_input_password is the password entered by the user during login
+def check_password(hashed_password, user_input_password):
+    ...
+    return bcrypt.checkpw(
+    user_input_password.encode('utf-8'),   # convert user's input from string to bytes
+    hashed_password,
+   )
+   ...
+```
 
-### Step 6: Regular Updates and Patching
-Keep all your system components up to date. Regularly apply security patches to ensure that known vulnerabilities are fixed promptly.
+### Step 5: Secure Transmission
+Ensure passwords are transmitted securely across the network using secure protocols such as HTTPS.
+
+Note: Strategies and principles may vary based on the specific language or framework you're working with, but the core idea remains the same: encrypt, never store plaintext passwords, and use secure protocols.
