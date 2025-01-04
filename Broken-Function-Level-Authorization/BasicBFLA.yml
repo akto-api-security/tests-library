@@ -7,7 +7,6 @@ info:
     "In Broken Function Level Authorization - Basic test, attackers exploit  inadequate user privilege verification, accessing functionalities beyond  their authorization. Without altering HTTP methods, they target endpoints  reserved for higher privileged users, attempting Vertical Privilege  Escalation. This tactic allows unauthorized users to gain access  to sensitive functionalities, potentially escalating their privileges within  the system."
   impact: >
     "The impact of Broken Function Level Authorization without modifying HTTP  methods can be severe. Attackers can gain unauthorized access to  sensitive functionalities, manipulate critical data, or even perform  malicious actions reserved for higher privileged users. This could  lead to data breaches, system compromises, and significant damage to  the organization's reputation and integrity."
-  remediation: remediation/basicbfla.md
   category:
     name: BFLA
     shortName: Broken Function Level Authorization
@@ -30,6 +29,7 @@ attributes:
   plan: STANDARD
   duration: FAST
 compliance_standards: compliance/bfla.conf
+remediation: remediation/BASIC_BFLA.md
 auth:
   authenticated: true
 api_selection_filters:
