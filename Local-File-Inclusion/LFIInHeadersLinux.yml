@@ -115,13 +115,11 @@ validate:
       - "apiVersion: v1"          
       - "kind: Pod"              
       - "kubernetes-admin@"       
-      - "client-certificate-data" 
-      - "docker.sock"             
+      - "client-certificate-data"             
       - "Entrypoint"             
       - "shosts.equiv"           
       - "AuthorizedKeysFile"     
       - "/var/log/auth.log"     
-      - "/etc/hostname"          
       - "127.0.0.1"
     length:
       gt: 0
