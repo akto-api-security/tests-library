@@ -40,9 +40,3 @@ Ensure that data returned to user is trusted and safe. Use a trusted library to 
 ```java
 String safeOutput = ESAPI.encoder().encodeForHTML(unsafeOutput);
 ```
-
-### Step 5: Regular Audit and Update
-
-Regularly performing code review, security testing and updating your application’s dependencies can ensure its safety.
-
-These steps, when see as a whole, can greatly enhance the security of APIs against Advanced Union Based SQL Injection Attacks with an XSS exploit for the POST method APIs. Remember, security is not a one time activity but a continuous one.

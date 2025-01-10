@@ -58,7 +58,3 @@ def application(environ, start_response):
     start_response('200 OK', response_headers)
     return [b'Hello, World!']
 ```
-
-### Step 5: Regularly Update and Audit your code
-
-Make sure all your dependencies are up to date and regularly audit your codebase for security issues. Pay extra attention to publicly exposed APIs.

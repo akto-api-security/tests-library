@@ -44,16 +44,7 @@ A Web Application Firewall (WAF) can help you filter out harmful SQL Injection q
 modsecurity_crs_41_sql_injection_attacks.conf
 ```
 
-### Step 4: Regularly Update and Patch Your Systems
-
-Keep all your systems, especially your database management systems, up-to-date with patches and updates. These often include fixes for known vulnerabilities.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-### Step 5: Limit Database Permissions
+### Step 4: Limit Database Permissions
 
 As much as possible, limit the permissions of the database user connected to your web application. Never connect your web application to the database using an account with admin level privileges.
 

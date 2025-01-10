@@ -32,6 +32,3 @@ Full example of the "<Call name="addConnector">" section:
 sudo service activemq stop
 sudo service activemq start
 ```
-Please note that these steps only reduce the exposure of information, it's essential to ensure you patch or upgrade your ActiveMQ server regularly to prevent exploitation of known vulnerabilities. 
-
-Also, ensure to adequately secure your ActiveMQ server with techniques like strong authentication, network isolation, etc., to mitigate other potential security risks.

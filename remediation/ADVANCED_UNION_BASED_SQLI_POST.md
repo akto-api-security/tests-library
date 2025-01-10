@@ -33,21 +33,3 @@ try {
 $conn = null;
 ?>
 ```
-
-### Step 2: Use Appropriate Firewall Rules
-
-Limit the number of requests from a single IP address per unit of time to prevent SQL Injection attacks.
-
-### Step 3: Regular Database Audit and Updates
-
-Regularly check and update your databases to the latest stable version to avoid being vulnerable to known exploits.
-
-### Step 4: Use Web Application Firewall
-
-Use a web application firewall (WAF) which can help to filter out SQL Injection attacks.
-
-### Step 5: Limit Database Permissions
-
-Limit the permissions of database accounts used by web applications. There is no need for these accounts to have administrative permissions.
-
-Remember: Prevention is the key. Secure coding practices and regular audits can go a long way in securing your applications.

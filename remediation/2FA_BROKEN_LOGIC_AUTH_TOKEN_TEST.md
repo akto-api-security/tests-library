@@ -52,7 +52,3 @@ limiter = Limiter(app, key_func=get_remote_address)
 def validate_token():
     // validation logic
 ```
-
-### Step 5: Regular Audit and Update
-Keep an eye on the logs for any failed attempts and take necessary actions. Keep updating the auth token system and 2FA mechanism as necessary. 
-

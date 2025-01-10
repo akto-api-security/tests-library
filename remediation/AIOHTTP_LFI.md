@@ -44,7 +44,3 @@ async def handle(request):
 
   return web.FileResponse(filepath)
 ```
-
-### Step 4: Regular Auditing 
-
-Perform frequent security code reviews and vulnerability scans to keep your application secure.

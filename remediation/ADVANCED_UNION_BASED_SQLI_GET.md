@@ -35,10 +35,3 @@ Using a WAF can help to filter or monitor HTTP(S) traffic and block any suspicio
 ```bash
 sudo apt-get install modsecurity-crs
 ```
-
-### Step 4: Regular code audits and updates
-
-Always ensure regular audits of your codebase to detect any vulnerabilities.
-
----
-**Please Note: Always ensure to escape or sanitize all user inputs and try not to expose detailed error messages to the user, as they can lead to hackers revealing more about the internal structure of your database or system.**

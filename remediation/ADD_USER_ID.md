@@ -48,7 +48,3 @@ import uuid
 def generate_uuid():
     return uuid.uuid4()
 ```
-
-### Step 4: Audit your code regularly
-
-Remember, regular updates and audits of your codebase can prevent such security issues. Regularly test your software, be it manually or using automated tools, for security vulnerabilities to ensure their non-existence.

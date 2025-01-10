@@ -40,12 +40,3 @@ def validate_token_no_jku(token, signing_key):
         return False  
     return True
 ```
-
-### Step 3: Regular Audit and Update
-Regularly update the library you are using to handle JWTs, and make sure you follow best security practices. Frequently check for new vulnerabilities and remediations in your third-party libraries and packages. 
-
-```bash
-pip install --upgrade pyjwt
-```
-
-Please note that the actual remediation steps could be different based on the programming language and library you are using. These examples are meant to show the general approach for preventing a JWT authentication bypass via JKU header injection. It's recommended to consult with a security expert or use a security tool to scan your code for potential vulnerabilities.

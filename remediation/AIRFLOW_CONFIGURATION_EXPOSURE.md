@@ -39,12 +39,3 @@ Airflow Variables have an option to be “Hidden”. This means their values wil
 ```python
 airflow variables -s 'my_hidden_variable' 'my_value' --hide
 ```
-
-### Step 5: Regularly audit and update your Airflow system.
-Ensure your system is up-to-date with the latest security patches and updates.
-
-```bash
-pip install --upgrade apache-airflow
-```
-
-Finally, regularly monitor the security advisories and apply necessary security patches promptly to keep your Airflow system secure.

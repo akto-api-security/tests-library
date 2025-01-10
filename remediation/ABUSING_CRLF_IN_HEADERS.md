@@ -34,15 +34,3 @@ server  {
    ...
 }
 ```
-### Step 4: Use up-to-date software 
-
-Ensure to use the latest software versions, which typically include security enhancements and vulnerabilities fixes. You can achieve this in Ubuntu systems as follows:
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-### Step 5: Conduct Regular Audits
-
-Conduct regular security audits to ensure that your system is not vulnerable to HTTP Header Abuse using CRLF Injection.

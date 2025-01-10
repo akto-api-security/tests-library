@@ -24,9 +24,3 @@ After making the password change, save your changes and restart the ActiveMQ ser
 ```bash
 sudo systemctl restart activemq
 ```
-### Step 3: Regularly Change Passwords and Monitor Access  
-Be sure to update passwords regularly and monitor access to the ActiveMQ dashboard in order to maintain security. 
-
----
-
-Remember, hardcoding a password into your application can still be a major security risk - even if it is not the default password. Always ensure to secure your secrets using effective techniques such as environment variables, secure secret storage, etc. Just replacing the default password isn't enough.

@@ -54,10 +54,7 @@ setcookie(session_name(), '', time() - 42000,
 );
 ```
 
-### Step 5: Regular Code Review
-Regularly review your codebase to identify potential SQL Injection vulnerabilities. Automated tools can help with this, but manual code review is also important as some vulnerabilities can be very subtle.
-
-### Step 6: Content-Security-Policy
+### Step 5: Content-Security-Policy
 To prevent Cross-site Scripting (XSS), use HTTP headers to control the resources which a user-agent is allowed to load for a page.
 
 ```bash
@@ -71,5 +68,3 @@ Alternatively, the policy can be defined within a <meta> element inside the <hea
 <!-- HTML Example -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https://*; child-src 'none';">
 ```
-
-These remediation steps will significantly reduce the risk of SQL Injection and Cross-Site Scripting (XSS) vulnerabilities within your application.
