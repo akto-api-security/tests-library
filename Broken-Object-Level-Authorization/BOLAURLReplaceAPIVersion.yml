@@ -62,6 +62,9 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
+    contains_all:
+      - "{"
+      - "}"
     not_contains:
       - Error
       - Internal Server 
@@ -149,6 +152,9 @@ validate:
       gt: 0
     percentage_match:
       gte: 90
+    contains_all:
+      - "{"
+      - "}"
     not_contains:
       - Error
       - Internal Server 

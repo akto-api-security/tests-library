@@ -30,7 +30,7 @@ info:
     - CWE-285
   cve:
     - CVE-2022-34621
-
+ 
 auth:
   authenticated: true
 api_selection_filters:
@@ -39,9 +39,18 @@ api_selection_filters:
     lt: 300
   method:
     neq: "OPTIONS"
+  response_headers:
+    for_one:
+      key:
+        eq: content-type
+      value:
+        regex: json
   response_payload:
     length:
       gt: 0
+    contains_all:
+      - "{"
+      - "}"
     not_contains:
       - Error
       - Internal Server 
@@ -82,6 +91,12 @@ validate:
   response_code:
     gte: 200
     lt: 300
+  response_headers:
+    for_one:
+      key:
+        eq: content-type
+      value:
+        regex: json
   response_payload:
     percentage_match:
       lt: 50
@@ -89,6 +104,9 @@ validate:
       gte: 70
     length:
       gt: 0
+    contains_all:
+      - "{"
+      - "}"
     not_contains:
       - Error
       - Internal Server 

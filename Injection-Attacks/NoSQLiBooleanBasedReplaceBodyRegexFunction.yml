@@ -124,7 +124,7 @@ execute:
     - req:
         - add_header:
             dummyHeader: dummyValue
-        - replace_body: "{\"$regex\" : \".*\" }"
+        - replace_body: "{\"field\": {\"$not\": {\"$regex\": \"a^\"}}}"
         - validate:
             response_code:
               gte: 200
