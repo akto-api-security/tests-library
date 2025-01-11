@@ -31,10 +31,6 @@ This ensures that user-provided inputs are not treated as SQL code.
 ### Step 3: Limit Database Permissions
 Limit the permissions given to the database accounts on which your application runs. Don't use the root account or any account with more privileges than necessary. 
 
-### Step 4: Update and Patch DBMS Regularly
-Ensure your DBMS (Database Management System) is always up-to-date. Check for patches and releases which would include fixes for any known security vulnerabilities.
 
-### Step 5: Implement Web Application Firewall
+### Step 4: Implement Web Application Firewall
 Use a Web Application Firewall (WAF) to filter out malicious data and to help protect against SQL Injection.
-
-If these steps were done correctly, the potential vulnerability from the time-based SQL injection in MySQL for the POST method APIs should be significantly reduced. However, continue to conduct regular security assessments and penetration testing to ensure your application remains secure as it evolves.

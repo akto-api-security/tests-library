@@ -43,8 +43,3 @@ Please note that SQLite3 does not have built-in `escape` method. Please use corr
 
 ### Step 3: Employ an Application Firewall
 An application firewall can spot and block SQL injection attempts. Some platforms have built-in support for this, while others loose support via extensions.
-
-### Step 4: Regular Code Review and Update
-No matter how conscientiously you code, vulnerabilities can still creep into your application. Regular security reviews, vulnerability scanning, and promptly system updates are an essential part of any security strategy. 
-
-Remember, the best way to prevent SQL injection attacks is to develop with security in mind from the beginning. Aim for a solid understanding of the security implications of your coding decisions, particularly as they pertain to communicating with a database.

@@ -36,15 +36,3 @@ dbf.setFeature(FEATURE, false);
 dbf.setXIncludeAware(false);
 dbf.setExpandEntityReferences(false);
 ```
-
-### Step 3: Patch or Upgrade Libraries
-Finally, ensure you are using the latest, most secure libraries for XML parsing. Older versions of libraries may contain security vulnerabilities that can be exploited with XXE attacks.
-
-To upgrade libraries you will use the package manager for your specific language, for instance, in java you might use Maven or Gradle. For Node.js, you may use npm or yarn.
-```bash
-mvn versions:use-latest-releases
-yarn upgrade
-```
-
-### Step 4: Regular Audit and Update
-Continually review and update these configurations along with the overall application code to ensure that the system remains secure. Regular penetration testing and code review are vital procedures to identify any security vulnerabilities early.

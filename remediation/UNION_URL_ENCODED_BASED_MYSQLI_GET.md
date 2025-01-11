@@ -44,18 +44,10 @@ def safe_decode(url):
 
 Consider a web application firewall (WAF) that may detect and block SQLi attacks. Many WAFs have built-in rulesets for preventing SQLi.
 
-### Step 4: Regularly Update and Patch
-
-Regularly patch and update your system and software to prevent SQLi from known vulnerabilities. This includes any APIs you are using.
-
-### Step 5: Least Privilege Principle
+### Step 4: Least Privilege Principle
 
 Ensure your database user has minimal privileges necessary to function. This can limit the potential damage caused by a SQLi attack. Do not grant admin or db owner access unless it's absolutely necessary. 
 
 ```bash
 GRANT SELECT, INSERT, UPDATE ON database_name.* TO 'user'@'localhost';
 ```
-
-### Step 6: Regular Audit and Testing
-
-Regularly audit your application for SQLi vulnerabilities. Use automated web vulnerability scanners and do penetration testing.

@@ -60,14 +60,3 @@ server.ssl.key-store-password=secret
 server.ssl.key-alias=alias
 server.ssl.enabled = true
 ```
-
-### Step 5: Conduct Regular Security Reviews
-
-Regularly audit your application for security vulnerabilities and keep all dependencies up-to-date.
-
-```bash
-# NPM(packages audit)
-npm audit
-```
-
-Follow these steps to mitigate the risks associated with an Authentication Bypass using API Replay.

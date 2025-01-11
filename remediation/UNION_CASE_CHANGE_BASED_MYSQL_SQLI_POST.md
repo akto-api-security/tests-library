@@ -31,9 +31,3 @@ A Web Application Firewall (WAF) can help block SQL injection attacks by inspect
 
 ### Step 4: Limit Database Permissions
 Ensure that database accounts used by web applications have the least privileges necessary.
-
-### Step 5: Regular Code Review and Update
-Regularly review your code for potential SQL injection vulnerabilities, particularly the code handling user input and forming SQL queries. Also, regularly update and patch all systems, applications, and libraries used in your environment. This can help you prevent not only SQL injection attacks but also other types of security issues. 
-
-### Step 6: Use a Security-Focused Development Framework
-Use a development framework or libraries that automatically escape user input and are designed with security in mind.

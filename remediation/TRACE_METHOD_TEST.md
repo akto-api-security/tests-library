@@ -55,10 +55,3 @@ For Apache, use `curl` or a similar tool to send the TRACE request:
 ```bash
 curl -X TRACE http://yourserver.com
 ```
-
-#### IIS
-In IIS, use a tool like Postman to manually send an HTTP TRACE request to the server.
-
-If the server is not vulnerable, it will return a '405 Method not allowed' response.
-
-***Note:*** *The said instructions assumes Linux as the operating system for Apache and Windows for IIS.*

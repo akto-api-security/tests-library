@@ -15,5 +15,3 @@ function removeZWSPs(inputString) {
 Ensure that all outputs to users are encoded in such a way that zero-width characters have no harmful effect. HTML Entities (`&#8203;`) should be used to replace these characters during output encoding.
 ### Step 3: Use of Security Headers
 Make sure appropriate security headers (like `Content-Security-Policy`) are being used to mitigate possible Cross-Site Scripting (XSS) attacks.
-### Step 4: Regular Application Audit
-An ongoing routine of code reviews and vulnerability assessments/penetration testing should be established to identify and remediate any security issues promptly.

@@ -38,5 +38,3 @@ chown user:user ~/.wgetrc
 > Replace `user` with your actual username.
 
 Please note, if removing passwords from the `.wgetrc` file is not feasible, you should at least ensure the file permissions are correctly set and file ownership is proper to minimize the security risks.
-
-Always, audit regularly, keep your systems and applications up-to-date and ensure secure coding practices to prevent such vulnerabilities. It's a good practice to not store passwords or any other sensitive data in plain text.

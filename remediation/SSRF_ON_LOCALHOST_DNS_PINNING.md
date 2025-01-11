@@ -43,13 +43,3 @@ Add middleware or use networking rules to block traffic to `localhost` and `127.
 sudo ufw deny from any to 127.0.0.1
 sudo ufw deny from any to localhost
 ```
-
-### Step 4: Regular Audit and Update
-
-Make sure to keep your libraries and runtime environments (for example Python, Node.js) up to date with the latest security patches.
-
-```bash
-sudo apt-get update && sudo apt-get upgrade
-```
-
-Enhance your security configurations, make regular audits and do not forget to update them based on your audit findings.

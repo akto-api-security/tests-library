@@ -35,9 +35,3 @@ Only respond to requests from known sources to make sure that no unexpected sour
 ### Step 4: Rate Limiting
 
 Make sure that your application employs rate limiting to prevent attackers from sending too many requests in a short period of time.
-
-### Step 5: Applying Patches and Updates
-
-Regularly patch and update your applications to ensure that any newly found vulnerabilities are fixed. Use the latest secure language/framework versions to build your applications.
-
-Remember, the steps provided might vary with the programming language and the web server used in your application. Understanding the principles behind these steps is crucial for implementing these guidelines in your context.

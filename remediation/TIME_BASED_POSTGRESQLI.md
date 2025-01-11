@@ -37,8 +37,3 @@ Ensure that the PostgreSQL DB is regularly updated and patched. Newer versions o
 
 ### Step 4: Implement a Web Application Firewall (WAF)
 A WAF can help to block SQL Injection attacks by inspecting the HTTP traffic and identifying suspicious patterns.
-
-### Step 5: Conduct Regular Security Audits
-Regularly conduct vulnerability and penetration testing to identify any security holes or misconfigurations. This can include both automated scans and manual checks. 
-
-Note: The remediation steps should be tailored according to your specific needs and organizational standards.

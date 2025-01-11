@@ -51,13 +51,3 @@ app.post('/user', function (req, res) {
     // rest of the logic
 })
 ```
-
-### Step 4: Regular Audit and Update
-Regular software audits and updates help to ensure that all the latest security patches and updates have been applied to the software stack.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-Keep in mind that prevention is better than cure. It's proactive measures you set in place that keep your system safe from such vulnerabilities.

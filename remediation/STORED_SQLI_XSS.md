@@ -25,6 +25,3 @@ Make sure to filter all user-submitted data before it's stored in your database.
 ```php
 $filtered_input = filter_input(INPUT_POST, 'data', FILTER_SANITIZE_STRING);
 ```
-
-### Step 4: Regularly Update
-Regularly check your website and databases for known vulnerabilities, and keep all your systems up to date.

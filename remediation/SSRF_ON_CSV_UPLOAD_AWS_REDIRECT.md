@@ -30,12 +30,3 @@ Use IAM roles to delegate permissions to applications that you run on AWS resour
 ```shell
 aws iam create-role --role-name my-config-role --assume-role-policy-document file://TrustPolicyForConfig.txt
 ```
-
-### Step 6: Regular Security Audits
-Regularly audit your application and AWS environment to detect and prevent vulnerabilities. 
-
-```shell
-aws auditmanager get-assessment-report --assessment-id ExampleId 
-```
-
-By following these remediation steps, your application can be made more secure against SSRF and potential AWS details leakage.

@@ -44,11 +44,3 @@ cleanInput = etree.tostring(root, pretty_print=True, xml_declaration=True)
 ### Step 3: Restrict SSRF by Restricting HTTP(S) Requests 
 
 To mitigate the risk of SSRF, you can restrict HTTP(s) requests to trusted domains. This can be achieved by creating an allow-list of trusted domains and avoid any outbound requests to non-trusted sites.  
-
-### Step 4: Patch and Update Regularly 
-
-Maintain regular patching and updates of your software to benefit from the latest security updates. If you are using a managed service, ensure that it's updated regularly. 
-
-### Step 5: Regularly Monitor and Audit your Applications
-
-Regular audit and continuous monitoring of your applications can help to detect and fix early any potential vulnerability. Best is to use any AI-based threat intelligence platform which can predict the threat beforehand.

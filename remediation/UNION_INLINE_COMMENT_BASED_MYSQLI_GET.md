@@ -47,16 +47,3 @@ def my_view(request, value):
     my_object = get_object_or_404(MyModel, pk=value)
     # further processing...
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly checking your application for any possible vulnerabilities and updating your systems accordingly is a good cybersecurity practice that can help protect against SQL injection attacks.
-
-```bash
-# Regular system and software updates
-sudo apt-get update
-sudo apt-get upgrade
-
-# Using an automated security tool for vulnerability scanning can be beneficial
-sudo w3af_gui
-```

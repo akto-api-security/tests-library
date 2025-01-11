@@ -42,9 +42,3 @@ Enable Security Manager to restrict the permissions of certain operations which 
 ```xml
 JAVA_OPTS="-Djava.security.manager -Djava.security.policy==conf/catalina.policy"
 ```
-
-### Step 4: Regularly Monitor and Audit 
-Monitor server logs regularly and audit any unusual or suspicious behaviour. Enable logging of incoming requests.
-
-## IMPORTANT 
-These are advisories and anyone implementing these should thoroughly test in a non-production setting before implementing in a production environment.

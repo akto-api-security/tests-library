@@ -72,5 +72,3 @@ app.use(helmet.contentSecurityPolicy({
 # Then start the server
 app.listen(3000)
 ```
-
-With these 3 steps, it is possible to mitigate most risks associated with Tileserver API XSS vulnerabilities. As always, make sure you properly QA test the changes before pushing them into the production.

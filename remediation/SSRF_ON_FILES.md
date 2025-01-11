@@ -54,14 +54,3 @@ sudo iptables -A OUTPUT -d 169.254.169.254 -j DROP
 Use AWS IAM roles instead of embedding AWS credentials within your application. The IAM roles can be then restricted to only have the required permissions.
 
 Refer to AWS documentation for setting this up as it requires AWS management console or AWS CLI.
-
-### Step 5: Regularly Check and Update
-
-Perform regular audits on your code to ensure that none of the AWS details are exposed. Remove hardcoded sensitive details and migrate to using environment variables. Update firewall rules and trusted URLs regularly.
-
-```bash
-sudo service iptables save
-sudo systemctl restart iptables
-```
-
-By following these steps, risks involved with SSRF attacks and AWS credentials exposure can be significantly reduced.

@@ -36,8 +36,3 @@ res = session.query(User).filter(User.name == username).filter(User.passw == pas
 
 ### Step 3: Employ a Web Application Firewall (WAF)
 A good WAF can help filter out SQL Injection attempts. While this shouldn't be your only line of defense, it can be a useful tool in your security arsenal.
-
-### Step 4: Regularly Update and Patch Systems
-Just like plug-ins and other pieces of software, your SQL-driven applications need to be patched and updated on a regular basis. Updates often contain security enhancements and patches that can protect against known bugs and vulnerabilities.
-
-Keep in mind that depending on the exact scenario, not all remediation steps might be applicable. It is vital to understand the underlying issue and address it in a way that makes sense within your specific context.

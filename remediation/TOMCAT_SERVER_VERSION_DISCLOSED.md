@@ -28,5 +28,3 @@ After the above changes are made, restart your Tomcat server to apply the change
 ```bash
 sudo service tomcat restart
 ```
-
-Just remember to test your applications after making these changes because these modifications can potentially break something that is expecting the original server identifier.

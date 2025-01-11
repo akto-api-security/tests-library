@@ -14,14 +14,3 @@ Modify the configuration to disable debug mode. In the Struts xml configuration 
 ```
 ### Step 3: Struts Rebuild and Restart
 After modifying the configuration, rebuild your application and restart the server for the changes to take effect.
-
-### Step 4: Regular Audits
-Perform regular audits of your configuration files to ensure that debug mode remains disabled in Struts. 
-
-```bash
-grep -i "struts.devMode" /path/to/webapp/WEB-INF/classes/struts.xml
-``` 
-
-The above command should return 'false' as the value of 'struts.devMode'. If it is 'true', follow the steps above to disable it. 
-
-By ensuring that 'struts.devMode' is set to 'false', you can prevent potential information leaks that could be used to compromise your application.

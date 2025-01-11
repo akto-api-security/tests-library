@@ -34,8 +34,3 @@ XPathNodeIterator nodes = navigator.Select("//book[author = $author]",
 
 ### Step 4: Use Least Privilege Principle
 Whenever possible, run your processing environment with the least privileges possible to reduce the amount of potential damage if a compromise does occur.
-
-### Step 5: Regular Audit and Patching
-Always patch and update your application environment regularly. Regular audits help in identifying and fixing any potential security issues. 
-
-Remember, prevention is always better than cure. Monitor your logs closely and ensure that every failure event is taken care of.

@@ -32,12 +32,3 @@ def validate_input(input_value):
     else:
         return False
 ``` 
-
-### Step 4: Regular Audit and Update
-Ensure that your applications, networking, and system software are regularly reviewed and updated to pick up the latest security patches or settings to mitigate against new security threats. Regularly perform security tests to find vulnerabilities in your software.
-
-```bash
-# Example of a security update routine for a Python application
-pip install --upgrade pip
-pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
-```

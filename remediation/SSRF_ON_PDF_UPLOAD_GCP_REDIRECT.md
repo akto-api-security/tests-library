@@ -43,9 +43,3 @@ Limit the application's outbound connections only to the necessary GCP services.
 sudo ufw deny out to any
 sudo ufw allow out to <GCP-services-ip-address> 
 ```
-### Step 4: Regular Audit and Update:
-Make sure to regularly audit your application for any signs of security issues and update your GCP IAM roles and permissions as needed.
-
-If your application is running on Compute Engine instances, make sure to use Service Accounts and limit their permissions to the bare minimum that your application needs.
-
-Also, understand and correctly implement [VPC Service Controls](https://cloud.google.com/vpc-service-controls/docs) to limit the exposure of your GCP resources.

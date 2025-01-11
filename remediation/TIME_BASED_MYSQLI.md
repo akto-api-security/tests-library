@@ -33,16 +33,8 @@ Ensure that the database user used by your application possesses only the bare m
 GRANT SELECT, INSERT, UPDATE ON mydb.mytbl TO 'someuser'@'somehost';
 ```
 
-### Step 3: Regularly Update and Patch Your Systems
 
-Keep your database management system (DBMS) and applications up-to-date to prevent any known vulnerabilities from being exploited.
-   
-```bash
-sudo apt update
-sudo apt upgrade
-```
-
-### Step 4: Implementing a Firewall
+### Step 3: Implementing a Firewall
 
 Restrict incoming and outgoing traffic to your database server. Only allow trusted IPs to access your server. You could do this via the `iptables` firewall for Linux like so:
 
@@ -60,5 +52,3 @@ Monitor your systems for any unusual activity and log any suspected attacks to a
 ```bash
 sudo service ossec start
 ```
-  
-Remember that security is an ongoing process and it's best to periodically audit and review your practices to close any vectors before they're exploited.

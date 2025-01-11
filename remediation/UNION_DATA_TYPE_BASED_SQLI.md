@@ -58,5 +58,3 @@ Regularly review and update your application to prevent any unpatched security v
 
 ### Step 5: Use Web Application Firewall
 A web application firewall (WAF) examines HTTP traffic to identify any suspicious activity and it can block these requests. Use a WAF to protect your application from SQL Injection attacks.
-
-Remember, in order to effectively protect your application from Union Based SQL Injection, it is wise to use a combination of above-mentioned techniques.

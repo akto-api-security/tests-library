@@ -54,7 +54,3 @@ def is_valid_password(password):
 ### Step 4: Least Privilege Principle 
 
 Ensure that the database user used by the application has the least amount of privilege necessary. The user should only be able to execute the necessary commands and access the necessary tables.
-
-### Step 5: Regular Audit and Update 
-
-Regular auditing and updating of your code to patch any security vulnerabilities is a good practice to keep your application secure.

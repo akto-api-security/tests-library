@@ -53,6 +53,3 @@ In `my-role-policy.json`:
   ]
 }
 ```
-
-### Step 4: Regularly Audit and Update Security Policies
-Regular security audits and updates are essential to ensure the robustness of your defenses.

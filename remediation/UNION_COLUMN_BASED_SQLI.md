@@ -61,5 +61,3 @@ except Exception as e:
     print("An error occurred, please try again.")
     log_error(e) # Where log_error is a function to log the error details in a secure log file.
 ```
-
-These should all help guard your Login Endpoints against Union based SQL Injection attacks.

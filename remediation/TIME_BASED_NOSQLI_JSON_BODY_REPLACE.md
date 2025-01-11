@@ -48,10 +48,8 @@ A web application firewall can help filter out malicious data and can be another
 
 Example, ModSecurity is an open source WAF which have rules to mitigate SQL injection.
 
-### Step 5: Regularly Update and Patch your System
-Always ensure your system and any software you are using are on the latest version. They may contain security patches that can prevent SQL Injections.
 
-### Step 6: Appropriate Error Handling
+### Step 5: Appropriate Error Handling
 Never display detailed error messages to users, as they can leak important data or database structure which hackers can use for further attacks.
 
 ```python

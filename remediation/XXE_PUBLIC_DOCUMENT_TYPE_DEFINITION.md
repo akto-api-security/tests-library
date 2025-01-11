@@ -29,6 +29,3 @@ dbf.setSchema(schema);
 
 ### Step 4: Update XML Processing Libraries
 Ensure that you use the most recent, up-to-date XML processing libraries as they are more likely to contain patches for vulnerabilities like this.
-
-### Step 5: Regular Audit and Update
-On a quarterly basis, perform an audit of your system, making sure that any and all security measures are kept up to date and work as expected. Regularly updating your system and libraries ensures you stay one step ahead of potential security vulnerabilities.

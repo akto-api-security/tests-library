@@ -49,15 +49,8 @@ REVOKE ALL PRIVILEGES ON your_table FROM your_user;
 GRANT SELECT, INSERT, UPDATE ON your_table TO your_user;
 ```
 
-### Step 4: Regular Audit and Update 
-Always keep your systems updated and do not ignore the latest security fixes and patches.
 
-```bash
-sudo apt update
-sudo apt upgrade
-```
-
-### Step 5: Protect Sensitive Data
+### Step 4: Protect Sensitive Data
 Always encrypt sensitive data like credit card information.
 
 ```python
@@ -71,7 +64,3 @@ def encrypt_val(clear_text):
     enc_val = base64.b64encode(cipher.encrypt(clear_text.rjust(32)))
     return enc_val
 ```
-
-Also, consider not storing sensitive data at all, if not required.
-
-Remember, there is no substitute to understanding the security aspects. Always seek expert advice, conduct regular vulnerability assessments, security audits, and code reviews to identify and mitigate security vulnerabilities.

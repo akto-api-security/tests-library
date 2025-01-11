@@ -72,5 +72,3 @@ def get_user(user_id):
 user_id = input("Enter user id:")
 print(get_user(user_id))
 ```
-
-Remember, SQL injection is entirely preventable with well-designed coding practices. Always ensure to follow the latest coding standards and guidelines related to security. Protect your SQLite database from any intrusion attempts using the time-based SQL Injection method by implementing the remediation steps mentioned here.

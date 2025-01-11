@@ -29,16 +29,3 @@ def block_localhost(user_input):
             raise ValueError(f"Blocked a {pattern} access attempt.")
     return user_input
 ```
-
-### Step 3: Use a Reputable Security Library
-There are a number of reputable security libraries available that already deal with these common vulnerabilities. OWASP's [ESAPI](https://www.owasp.org/index.php/Category:OWASP_Enterprise_Security_API) is one such library.
-
-### Step 4: Regular Audit and Update
-Regular audits and updates to your system are crucial for maintaining its security. Upgrade to the latest versions of libraries and tools, and keep yourself updated about new vulnerabilities or security procedures.
-
-Remember, no amount of sanitization or input validation will help if your systems or the software they're running is outdated. 
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```

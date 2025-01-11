@@ -60,8 +60,3 @@ public ResponseEntity<?> createAuthenticationToken(
     return ResponseEntity.ok(new AuthenticationResponse(jwt));
 }
 ```
-### Step 4: Regular Audit and Update
-
-Keep your servers and systems up-to-date with the latest security patches. Keep monitoring your logs and audit them regularly, looking for any suspicious activity.
-
-With combined techniques of Token validation, One Time Passwords, and verified password change requests, the authentication bypass vulnerability using password change endpoint replaying can be mitigated significantly.

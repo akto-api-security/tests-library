@@ -69,9 +69,3 @@ def get_secret():
             
     return secret
 ```
-### Step 5: Regular Audit and Update
-```bash
-# Use managed services like AWS CloudTrail, AWS Config & AWS SecurityHub for auditing.
-```
-
-Always remember, security is not a one-time event but an ongoing process. Regularly audit your services with automatic tools where possible, and also conduct manual review of system configuration and application design.

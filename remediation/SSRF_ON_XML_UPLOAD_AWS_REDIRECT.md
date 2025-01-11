@@ -35,12 +35,3 @@ response = client.update_access_key(
     Status='Active'
 )
 ```
-
-### Step 6: Regularly Review and Monitor your AWS Account activity 
-Monitor your AWS account's activity by turning on CloudTrail Log file validation.
-
-```bash
-aws cloudtrail validate-logs
-```
-
-With a comprehensive strategy and the right security measures in place, you can protect your AWS resources from SSRF vulnerabilities.

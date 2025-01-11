@@ -50,9 +50,3 @@ $query = sprintf("SELECT * FROM users WHERE email='%s'", $user_email);
 ### Step 4: Least Privilege Principle
 
 Only provide the minimum privileges that are necessary for the particular database account. For instance, a database used by a user-facing application should not have the ability to drop databases.
-
-### Step 5: Regularly update and patch your systems
-
-Regularly updating and patching your system can help protect you from any known vulnerabilities that might be exploited. 
-
-Following these steps should significantly tighten your security and protect your applications from Union-based SQL Injection attacks.

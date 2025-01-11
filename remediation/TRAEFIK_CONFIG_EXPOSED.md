@@ -44,6 +44,3 @@ Enable TLS on the entry point. Here's how to enable it with Let's Encrypt.
 ```
 
 ### Step 3: Make sure your config files are not in publicly accessible paths
-
-### Step 4: Regularly Update and Monitor
-Ensure Traefik is regularly updated to the latest version and continuously monitor for any irregularities or breaches. If there are changes in the settings that you did not make, investigate them promptly.

@@ -58,9 +58,3 @@ app.get('/data', (req, res) => {
     });
 });
 ```
-
-### Step 3: Regular Audits
-Ensure to perform regular audits of the server logs to detect any suspicious activity or patterns within the API Requests.
-
-### Step 4: Have a Crisis Plan
-Even with safeguards, things can go wrong. Always have a disaster recovery plan and capability for rapid response to potential incidents.

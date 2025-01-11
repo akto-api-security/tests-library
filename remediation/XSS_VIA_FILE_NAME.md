@@ -43,6 +43,3 @@ Implementing Content Security Policy (CSP) can help to mitigate a large portion 
 response["Content-Security-Policy"] = "default-src 'self'"
 ```
 By setting the CSP header in the response object, we are instructing the browser that it should only execute scripts from the same domain as the domain for the website.
-
-### Step 4: Regular Audits and Updates
-Regularly audit your codebase for potential XSS vulnerabilities and keep your libraries, dependencies and frameworks updated. Use static code analyzers which can help you identify potential security flaws.

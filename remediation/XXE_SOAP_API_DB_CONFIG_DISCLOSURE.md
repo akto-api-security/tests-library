@@ -32,11 +32,8 @@ dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd",
 
 Consider using less complex data formats such as JSON, and avoid serialisation of sensitive data.
 
-### Step 4: Patch and Update Regularly
 
-Regularly review, update and patch all components of the system. New vulnerabilities emerge on a regular basis and systems must be kept up-to-date to protect against known vulnerabilities.
-
-### Step 5: Implement Positive Server-Side Input Validation
+### Step 4: Implement Positive Server-Side Input Validation
 
 Implement strong server-side input validation to reject any unexpected or malicious inputs.
 

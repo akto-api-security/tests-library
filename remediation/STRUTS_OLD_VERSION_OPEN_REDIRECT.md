@@ -46,11 +46,3 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
     }
 }
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly monitor your application for any unauthorized redirect attempts. Check the application and Apache Struts log files. Set up alerts for such attempts.
-
-Ensure to regularly update your Apache Struts framework, as Apache might push security patches addressing these type of issues.
-
-Please note that the above Java code is for instructional purposes only, make sure to adapt and properly test it before using it in a production environment.

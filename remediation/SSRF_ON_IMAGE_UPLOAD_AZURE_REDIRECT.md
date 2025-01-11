@@ -40,8 +40,3 @@ import os
 
 AZURE_KEY = os.environ.get("AZURE_KEY")
 ```
-
-### Step 4: Regular Audit and Update
-Regularly audit and update your Azure parameters and keys, and ensure that the vulnerability won't show up again.
-
-Stay updated with the latest security vulnerabilities and keep your application secure.

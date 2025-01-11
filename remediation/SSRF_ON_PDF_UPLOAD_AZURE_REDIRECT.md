@@ -42,10 +42,3 @@ By limiting or restricting outbound requests from your server, you can minimize 
 iptables -A OUTPUT -p tcp -d 0.0.0.0/0 -j DROP
 iptables -A OUTPUT -p udp -d 0.0.0.0/0 -j DROP
 ```
-### Step 4: Regular Audit and Update
-
-Ensure that you audit the configurations regularly and apply updates as necessary. 
-
-Remember, application security is a continuous process and should be part of your ongoing development cycle. It's also crucial to have a system in place to detect, log, and respond to security events and incidents.
-
-Note: As with all security measures, there's no one-size-fits-all approach. Depending on the specific setup of your Azure environment and your application's requirements, you might need to adjust these steps to fit your needs.

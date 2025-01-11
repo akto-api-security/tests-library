@@ -50,9 +50,3 @@ if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
    exit;
 }
 ```
-
-### Step 4: Regular Audit and Update
-
-Implement regular reviews and updates to ensure these protective measures are actually in place where necessary. Furthermore, take steps to keep your software up-to-date, as new patches may contain security fixes which prevent SQL Injection.
-
-Remember, no set of steps can guarantee your data will always remain secure but following this guide can minimize the risk of exposure to SQL Injections.

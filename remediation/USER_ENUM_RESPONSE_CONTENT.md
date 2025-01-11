@@ -77,4 +77,3 @@ def verify_mfa(request):
             
     return render(request, 'accounts/verify_mfa.html')
 ```
-The Python code example uses the *django_mfa* package to implement an additional layer of security using multi-factor authentication (MFA) in addition to the typical username/password pair.

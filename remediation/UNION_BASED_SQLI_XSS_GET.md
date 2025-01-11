@@ -63,12 +63,3 @@ def apply_csp(response):
     response.headers['Content-Security-Policy'] = "default-src 'self'"
     return response
 ```
-
-### Step 6: Regularly update and patch your systems
-
-Ensure your systems are regularly updated and patched to protect from known vulnerabilities.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```

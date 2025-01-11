@@ -65,13 +65,3 @@ CSP adds an additional layer of security, helping to detect and mitigate XSS and
 ```html
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https://*; child-src 'none';">
 ```
-
-### Step 6: Regular Audit and Update
-
-Regularly audit your server for unpatched vulnerabilities and keep your all software updated.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-Special attention must always be given to database servers and web servers.

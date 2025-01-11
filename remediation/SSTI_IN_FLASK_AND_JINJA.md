@@ -31,6 +31,3 @@ def example():
 
 ### Step 4: Validate Input 
 If possible, use server-side validation to ensure any input matches expected patterns.
-
-### Step 5: Regular Code Review and Update
-Regularly reviewing and updating your code can prevent potential vulnerabilities from persisting in your applications.

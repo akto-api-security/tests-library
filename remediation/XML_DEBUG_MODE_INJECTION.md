@@ -33,13 +33,3 @@ Document document = parser.parse(new InputSource(new StringReader(input)));
 ```
 
 In the above code, `inputData` should be replaced with the actual data input.
-
-### Step 3: Regular Audit and Update
-
-Regularly audit your XML parsing activity and update the parsing settings as required to prevent any potential security loopholes.
-
-```bash
-auditctl -w /path/to/your/xml/file -p rwxa -k xml_audit
-```
-
-In the above command, replace `/path/to/your/xml/file` with the actual path where XML files are stored. This will log any unauthenticated access attempts.

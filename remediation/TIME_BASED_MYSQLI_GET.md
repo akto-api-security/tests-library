@@ -37,14 +37,9 @@ A good WAF helps protect your application by inspecting HTTP traffic before it r
 
 Check your service provider's documentation for how to enable and configure the WAF.
 
-### Step 4: Regularly Update and Patch your Systems
-Ensure your systems are up-to-date with the latest patches and updates. New vulnerabilities are discovered regularly, so make sure your system has the latest protection.
 
-```bash
-sudo apt update && sudo apt upgrade
-```
 
-### Step 5: Normalize Inputs
+### Step 4: Normalize Inputs
 Use whitelist input validation, utilize built-in functions like `ctype_digit()` to ensure data is of the right type, length and format.
 
 ```php

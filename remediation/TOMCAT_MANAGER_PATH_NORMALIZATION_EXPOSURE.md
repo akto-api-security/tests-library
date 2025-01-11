@@ -39,14 +39,3 @@ Edit the `tomcat-users.xml` file to add user roles and permissions.
   <user username="tomcat" password="password" roles="manager-gui"/>
 </tomcat-users>
 ```
-Apply strong, complex credentials. The example shown is for illustrative purposes only.
-
-### Step 4: Regular Software and Security Updates
-Perform frequent checks for software updates, patches, and security advisories. Apply these updates promptly to keep your Apache Tomcat install secure against known vulnerabilities.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-Always test updates in a non-production environment first to avoid unexpected disruptions.
-

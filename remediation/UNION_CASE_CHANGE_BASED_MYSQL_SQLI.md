@@ -53,6 +53,3 @@ $username = mysqli_real_escape_string($conn, $username);
 ```
 
 Note that this is not a best-practice solution and should only be used as a last resort when none of the above methods are viable.
-
-### Step 5: Regular Updates
-Install updates, patches, and fixes from your DBMS and application language vendors regularly. They may include security enhancements that prevent SQL Injection.

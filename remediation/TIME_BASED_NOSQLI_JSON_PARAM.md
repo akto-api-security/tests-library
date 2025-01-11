@@ -48,9 +48,3 @@ db.collection('users').find({}).limit(1)
 ### Step 4: Monitoring and Logging
 
 Detecting NoSQL injection, or any kind of malicious activity, can be really simple if you log every query hitting your database. This way you can simply check for any suspicious activities and react accordingly. 
-
-### Step 5: Regular Update and Dependency Check
-
-Update your NoSQL database along with other modules, libraries, and applications regularly. Regular updates not only provide new features but often include security patches to known vulnerabilities. 
-
-Finally, always keep an eye on what packages you are adding to your project and what permissions you are granting to your users.

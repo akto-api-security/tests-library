@@ -39,15 +39,8 @@ A WAF can help filter out malicious data and provide additional protection again
 sudo apt-get install mod-security-crs
 ```
 
-### Step 4: Regular Audit and Update
 
-Regularly review your code for potential injection points and keep your tools & libraries up to date.
-
-```bash
-sudo apt-get update && sudo apt-get upgrade
-```
-
-### Step 5: Limit Database Permissions
+### Step 4: Limit Database Permissions
 
 You should limit your database's permissions and not provide unnecessary access rights to the database account that is used to connect from your web application.
 
@@ -57,5 +50,3 @@ GRANT SELECT, INSERT ON schema public TO username;
 ```
 
 Note: Replace `username` with actual database user name.
-
-Bear in mind that only the application of some or all of these steps can truly lessen the risk of time-based SQL injection. It's also worth noting that using an ORM tool or parameterizing your queries does not guarantee total safety.

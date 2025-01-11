@@ -43,7 +43,3 @@ Safe APIs that are not vulnerable to XXE Injection should be used. These APIs in
 ### Step 3: Whitelist Server-Side File Access
 
 Whitelist server-side file access to only allow access to the files that are needed for your API functionality. This can reduce the impact of any XXE vulnerabilities. The exact implementation will depend on your system architecture and language used.
-
-### Step 4: Regular Patching & Code Review
-
-Ensure that your XML processing libraries and dependencies are routinely updated and patched. Additionally, regular code review should be performed to catch any instances where XXE vulnerabilities could be introduced.

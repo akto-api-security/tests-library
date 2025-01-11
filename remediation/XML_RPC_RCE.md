@@ -42,13 +42,3 @@ location = /xmlrpc.php {
 }
 ```
 Replace `192.0.2.0/24` with the actual IP range.
-
-### Step 4: Regularly Update Your Applications and Plugins
-Updates often include security patches that fix vulnerabilities. Keep your applications and any plugins/libraries you are using up to date.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-Remember that it is also important to regularly review and update your security configurations to ensure they are adequate as new vulnerabilities are discovered.

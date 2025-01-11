@@ -50,8 +50,3 @@ $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
 ### Step 3: Limit Database Privileges
 Limit access rights of the application or the user that's used in the connection to the database to only what they need, further reducing the potential impact of a SQL injection.
-
-### Step 4: Regularly Update and Patch
-Ensure your SQL server and your coding language libraries are regularly updated and patched, as vulnerabilities are often found and fixed in these updates. 
-
-By following these best practices, the impact of Union based SQL Injection can be minimized.

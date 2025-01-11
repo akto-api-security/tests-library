@@ -51,15 +51,3 @@ In Nginx:
 ```nginx
 add_header Strict-Transport-Security 'max-age=31536000; includeSubDomains';
 ```
-
-### Step 4: Regularly Audit and Update Security Configurations
-
-Ensure you regularly check and update your security configurations. This includes reviewing your SSL/TLS certificates, checking for mixed content issues, and staying updated on new security vulnerabilities related to your technology stack.
-
-```bash
-sudo service apache2 restart
-# OR
-sudo service nginx restart
-```
-
-Remember, these remediation steps are not exhaustive and should be part of a more comprehensive security plan. Always consult with a security expert or team when dealing with such vulnerabilities.

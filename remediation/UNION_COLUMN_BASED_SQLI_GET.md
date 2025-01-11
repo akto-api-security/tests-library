@@ -31,7 +31,5 @@ sudo apt-get install mod-security # for Ubuntu
 ### Step 5: Store Database Credentials Securely
 Do not store database connection strings or credentials in your code. Use environment variables or other secure methods to store this information.
 
-Remember to regularly test your applications for SQL Injection vulnerabilities, especially after making changes. With diligent coding, patching, and configuration practices, SQL Injection vulnerabilities can be mitigated successfully.
-
 
 

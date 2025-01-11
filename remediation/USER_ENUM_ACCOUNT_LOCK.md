@@ -71,5 +71,3 @@ public User authenticate(String username, String password) throws LoginFailedExc
     return user;
 }
 ```
-### Step 4: Regular Code Review and Update
-While the above code should help in making the login process more secure, it's also important to conduct regular code audits and updates to keep up with the latest security vulnerabilities and fixes.

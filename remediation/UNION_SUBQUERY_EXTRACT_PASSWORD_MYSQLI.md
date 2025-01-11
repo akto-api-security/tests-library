@@ -34,11 +34,3 @@ Using stored procedures can help with this problem, as it includes safety mechan
 
 ### Step 3: Input Validation
 Though not a full-proof method, input validation can deter a portion of basic SQL injection attacks by restricting allowed inputs.
-
-### Step 4: Regular Vulnerability Scanning
-Regular scanning of applications using automated tools can help identify SQL injection vulnerabilities. It can alarm teams of potential risks to take preventive measures on.
-
-### Step 5: Regularly Update and Patch Systems
-Often, vulnerabilities are found in the system software, which vendors fix through patches and updates. By regularly updating and patching your software, you can reduce the risk of attacks.
-
-It's important to maintain best security practices to safeguard against SQL injection attacks. The steps listed can be a comprehensive approach towards securing data.

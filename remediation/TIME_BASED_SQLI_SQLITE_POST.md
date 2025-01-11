@@ -47,14 +47,3 @@ sqlite> CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
 sqlite> GRANT SELECT, INSERT ON my_database.* TO 'newuser'@'localhost';
 sqlite> FLUSH PRIVILEGES;
 ```
-
-### Step 4: Regular Audit and Update
-
-Ensure that your application is regularly updated with latest security patches and updates. Implement proper error handling so that no detailed error messages containing information about your database are revealed.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-This is not an exhaustive list of remedies but it will help reduce the susceptibility of your APIs to Time Based SQL Injection attacks.

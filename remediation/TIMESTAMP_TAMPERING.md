@@ -46,11 +46,3 @@ public String hashTimestamp(String timestamp) throws NoSuchAlgorithmException {
     return sb.toString();
 }
 ```
-### Step 4: Log and Monitor Application
-Regularly monitor and log activities involving timestamps. This helps in detecting any anomaly which could signify tampering or other malicious activities. It also aids in troubleshooting post-breach investigations. 
-
-```bash
-tail -f /var/log/my_application.log 
-```
-
-Monitor your application regularly, promptly apply patches, and maintain an overall strong security posture to guard against timestamp tampering.

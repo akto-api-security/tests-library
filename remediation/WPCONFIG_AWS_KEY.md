@@ -29,11 +29,3 @@ response = client.delete_access_key(
 ```
 ### Step 3: Review and Update IAM Policies
 Review and update IAM policies and ensure that the privileges assigned to the keys are minimally permissive i.e., the keys should only have access to the resources they need. 
-
-### Step 4: Enable logging to track API requests
-AWS S3 has logging capabilities that can be set up to log all access requests to your buckets. This includes requests made through the AWS Management Console, AWS SDKs, direct S3 API requests, etc.
-
-### Step 5: Regular Audit and Update
-Regular audits of AWS S3 keys in source code or configuration files can help prevent such leaks. You can also integrate a key management system like AWS Key Management Service (KMS) to automate the process of updating, storing, and using keys safely. 
-
-**Note:** It is highly recommended to avoid hard-coding sensitive information like access keys in your code. Use safer alternatives like environment variables or AWS Secret Manager to store such information.

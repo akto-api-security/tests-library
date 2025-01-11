@@ -45,9 +45,3 @@ If possible, use less complex data formats such as JSON, and avoid serialization
 ### Step 3: Patch or Upgrade XML Processors and Libraries
 
 The libraries used by an application to parse XML may be outdated. Updating these can help patch any known vulnerabilities that could be exploited.
-
-### Step 4: Regular Security Audits
-
-Implement regular security audits to catch any lapses in security and address them before they can be discovered by attackers.
-
-_Remember that security is a dynamic field and what might be considered secure today could be found to have vulnerabilities tomorrow. Always keep up-to-date with the latest security best practices and ensure that they are implemented throughout your applications._

@@ -35,11 +35,3 @@ dbf.setEntityResolver(new EntityResolver() {
 ### Step 3: Use less complex data formats
 
 If possible, consider using less complex data formats such as JSON, which doesn't have the support for defining entities.
-
-### Step 4: Code review and update
-
-This should be followed by a rigorous code review to ensure there are no places left in the application that are still vulnerable to Blind XXE. Also, ensure to update the application regularly with security patches and updates.
-
-### Step 5: Regular Audit 
-
-Regular vulnerability scanning and assuring none of the changes re-introduced this exposure again into the system.

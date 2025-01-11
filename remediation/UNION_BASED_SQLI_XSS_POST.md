@@ -54,4 +54,3 @@ from flask_talisman import Talisman
 app = Flask(__name__)
 Talisman(app)
 ```
-Note: This is not all-covering for the whole application security but it's the basic remediation steps and each application may require different security controls.

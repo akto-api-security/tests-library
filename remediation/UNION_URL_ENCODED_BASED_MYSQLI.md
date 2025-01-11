@@ -64,7 +64,3 @@ Ensure your database user has the minimum necessary privileges.
 mysql> CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password';
 mysql> GRANT SELECT ON database_name.* TO 'new_user'@'localhost';
 ```
-
-### Step 5: Regular Patch and Update
-
-Always keep your database system, application platform, and all involved components updated to ensure known bugs and vulnerabilities are patched.

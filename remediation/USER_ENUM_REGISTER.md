@@ -49,14 +49,3 @@ def login():
     if login_attempts >= MAX_LOGIN_ATTEMPTS:
         return 'Account locked. Please check your email for further instructions.'
 ```
-
-### Step 4: Regular code audit and update
-
-Ensure to regularly update and audit the codebase to avoid and fix any possible vulnerability.
-
-```bash
-# Some developers like to use Git for version control.
-git add .
-git commit -m "Regular code audit and update"
-git push origin master
-```

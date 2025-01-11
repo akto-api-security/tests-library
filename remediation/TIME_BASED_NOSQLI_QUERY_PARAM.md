@@ -47,16 +47,3 @@ db.createUser(
   }
 );
 ```
-
-### Step 4: Regular Review & Update
-
-Always keep your libraries and applications updated with recent patches and improvements. Regular code reviews and internal audits can help in spotting potential risks early.
-
-```bash
-npm update
-```
-Remember, a layered approach to security including different protective measures will provide better protection against potential intruders.
-
-## Warning 
-
-Avoid 'Security through obscurity', as merely trying to hide vulnerabilities does not fix them and leaves the application security still compromised. Instead, concentrate on correcting them and implementing solid, robust, tried and tested security measures.

@@ -54,7 +54,3 @@ sudo service apache2 restart
 # or
 sudo systemctl restart nginx
 ```
-### Step 4: Regular Audit and Update
-Perform security audits on a regular basis to find possible exposures and keep your server updated.
-
-Please note that some headers might not be possible to remove depending on your server's setup and certain performance considerations. Always check the documentation for your specific server and application.

@@ -24,10 +24,3 @@ Instead of allowing any URL to be included, validate the inclusion against a lis
 
 ### Step 4: Use Limitations and Timing Controls
 Implement controls to block resource-intensive requests, or slow down the interactions to reduce the risk of Denial of Service attacks.
-
-### Step 5: Always Update and Patch
-Software developers often release patches for vulnerabilities. Always keep your software updated to protect your application from known vulnerabilities. For instance:
-```bash
-sudo apt-get update && sudo apt-get upgrade
-```
-Remember: Prevention is the most effective defense against XXE attacks. Implement these steps to ensure safer handling of XML data.

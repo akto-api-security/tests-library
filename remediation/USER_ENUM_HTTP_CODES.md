@@ -42,8 +42,3 @@ app.post('/login', (req, res) => {
     }
 });
 ```
-
-### Step 4: Monitoring and Logging
-Monitor and log all failed authentication attempts, along with relevant details such as the IP address, timestamp, and username used. These logs could assist in identifying and potentially blocking attackers.
-
-Remember to test your application after making these changes to ensure that they've been implemented correctly and the vulnerability is fixed.

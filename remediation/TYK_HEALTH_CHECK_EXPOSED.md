@@ -42,6 +42,3 @@ server {
 ```
 
 Replace `/etc/nginx/ssl/nginx.crt` and `/etc/nginx/ssl/nginx.key` with paths to your certificate and key files respectively, and replace `http://backend` with the address to your Tyk instance.
-
-### Step 4: Regular Monitoring and Updates
-Keep an eye on the access logs for any signs of unauthorized access attempts or suspicious activities. Also, ensure that Tyk is regularly updated to the latest version, which includes the most recent security patches.

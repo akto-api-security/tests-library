@@ -56,14 +56,3 @@ In PostgreSQL, ensure the database user used by the application has only the per
 ```sql
 GRANT SELECT, INSERT, UPDATE ON myTable TO myUser;
 ```
-
-### Step 5: Regular Audit and Update
-
-Ensure you're constantly monitoring the logs for suspicious activity, and keep your PostgreSQL version updated.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade postgresql
-```
-
-These steps, if followed, can significantly mitigate the threat of Union-based SQL Injection attacks with Credit Card Data Extraction Payload on GET method APIs. Always ensure you're following best security practices for your applications.

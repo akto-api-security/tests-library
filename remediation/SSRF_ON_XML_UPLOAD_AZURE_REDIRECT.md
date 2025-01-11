@@ -35,10 +35,3 @@ For example, with IPtables (Linux) it could be:
 sudo iptables -A OUTPUT -d metadata.google.internal -j DROP
 sudo iptables -A OUTPUT -d 169.254.169.254 -j DROP
 ```
-
-### Step 4: Regular Audit and Update
-Keep your software libraries and modules updated regularly to avoid any known security vulnerabilities. 
-
-Regularly perform code review and security audits to ensure best practices are followed in your project. Additionally, consider implementing automated SSRF detection as part of your continuous integration (CI) pipeline. 
-
-These steps should help you prevent SSRF, securing your Azure details from being leaked.

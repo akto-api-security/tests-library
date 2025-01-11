@@ -52,9 +52,3 @@ String getRedirectUrl(HttpServletRequest request, String defaultUrl) {
     }
 }
 ```
-
-### Step 4: Regular Security Review
-
-Perform regular checks and updates to ensure the robustness of these mitigations against evolving attack methods. Regularly monitor logs for signs of enumeration attacks.
-
-There is no definitive solution to prevent Username Enumeration via Redirect Page Analysis as responses must be given to the users, but reducing the amount of information and enforcing rate limiting can significantly enhance the robustness against such attacks.

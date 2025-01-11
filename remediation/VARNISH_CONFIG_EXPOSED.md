@@ -37,11 +37,3 @@ Generate a new secret, save it and restart Varnish.
 ```bash
 sudo service varnish restart
 ```
-
-### Step 4: Regular Audit and Update
-Always keep your Varnish server updated with the latest security patches, and regularly audit your config files.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```

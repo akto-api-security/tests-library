@@ -24,8 +24,3 @@ dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd",
 Whenever possible, consider using less complex data formats such as JSON, and avoiding serialization of sensitive data. If XML must be used, ensure any and all XML or XSL file processing is safe against XXE attacks.
 
 Remember, policing XML is tough - especially in legacy systems. It's better to avoid the risk altogether if possible.
-
-### Step 4: Regular Auditing and Update
-Work closely with your security team to conduct regular audits on your code and keep the system updated to protect against the latest known vulnerabilities. 
-
-Please note: The provided source code is in Java. For other programming languages, the exact steps or code might differ but the main strategy of disabling DTDs and external entities remains the same.

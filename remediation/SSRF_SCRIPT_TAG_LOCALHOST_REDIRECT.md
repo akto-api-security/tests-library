@@ -38,13 +38,8 @@ Imposing network level filters can also protect the internal network and resourc
 
 Note: It is infrastructure and platform specific. You need to consult your infrastructure manuals for concrete steps.
 
-### Step 4: Regularly Update and Audit
 
-Regularly update and audit your code for SSRF vulnerabilities.
-
-Remember, these are some steps to mitigate SSRF attacks. There is no silver bullet that can protect you fully. You have to adapt these steps to your use case and infrastructure. Always keep track of latest best practices and be aware of your application's security boundaries.
-
-### Step 5: Denylist Local and Reserved IP Addresses
+### Step 4: Denylist Local and Reserved IP Addresses
 
 Block requests going to localhost, 127.0.0.1, or in general any IP address from the private IP ranges:
 

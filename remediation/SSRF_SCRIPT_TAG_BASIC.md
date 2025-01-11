@@ -26,10 +26,3 @@ Limit and monitor the server's permissions to interact with internal and externa
 sudo iptables -A OUTPUT -p tcp --dport 80 -j DROP
 sudo iptables -A OUTPUT -p tcp --dport 443 -j DROP
 ```
-### Step 4: Regular Audit and Update 
-Just like the previous example, you should make regular audits to your system for any Requests that seem suspicious or out of the norm. Regularly updating and patching your system is also vital in keeping the defense against SSRF attacks.
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-Please note that this is a simplified example of mitigations, depending on your actual application and infrastructure the steps may vary or additional steps might be needed. Always consult with your security team or penetration testing results.

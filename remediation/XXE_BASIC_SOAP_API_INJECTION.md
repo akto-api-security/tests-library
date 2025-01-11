@@ -34,9 +34,3 @@ Stay up-to-date with the latest version of your XML parser software. Updates oft
 ### Step 4: Implement Positive Server-Side Input Validation
 
 Implement strict input validation using a whitelist approach, thereby eliminating potentially harmful input.
-
-### Step 5: Regular Code Review and Update
-
-Regularly review and update your application code, checking for and removing any potentially insecure code that could lead to XML injection vulnerabilities.
-        
-Always keep in mind that security is a constant process, and even after taking these steps, regular audits and updates are essential to maintain a secure environment.

@@ -30,11 +30,3 @@ Review your application configuration and make sure there is no other exposed fu
     <version>2.5.22</version> <!-- replace with the latest version -->
 </dependency>
 ```
-
-### Step 4: Regular Audit and Update
-Ensure regular auditing of your application for any disclosed vulnerabilities. Keep all your dependencies and libraries up to date to minimize the risk of security breaches.  
-
-```bash
-mvn versions:display-dependency-updates
-```
-The above maven command lists the dependencies of your project that have newer releases available.

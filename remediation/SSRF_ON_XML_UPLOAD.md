@@ -31,20 +31,15 @@ A proxy server can be used which will perform any server-to-server requests. The
 unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
 ```
 
-### Step 5: Regular Audit and Update
 
-Conduct regular audits of your server logs and keep all your systems updated with the latest patches and updates from the vendor.
-
-### Step 6: AWS IAM Roles
+### Step 5: AWS IAM Roles
 
 Use AWS IAM Roles assigned to EC2 instances instead of hardcoding credentials in your application.
 
-### Step 7: Firewall Configuration
+### Step 6: Firewall Configuration
 
 ```bash
 iptables -A OUTPUT -p tcp --dport 80 -j DROP
 iptables -A OUTPUT -p tcp --dport 443 -j DROP
 ```
 Block outbound traffic except for trusted domains to avoid sending requests to the internal ips, etc. 
-
-Remember, it's always important to follow best practices for secure coding to prevent such vulnerabilities.

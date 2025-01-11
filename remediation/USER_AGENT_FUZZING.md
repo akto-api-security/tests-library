@@ -37,12 +37,3 @@ def is_known_user_agent(user_agent):
 if not is_known_user_agent(request_user_agent):
     raise Exception('Unknown user agent')
 ```
-
-### Step 3: Monitor and throttle usage
-Keep track of the number of requests from each User Agent. If a User Agent starts making an unusual number of requests, that could signal a threat.  
-If User Agent fuzzing is detected, the IP address can be temporarily blocked or else slowed by using rate limiting.
-
-### Step 4: Regularly update your server software
-Ensure that the server software is regularly updated. Patches for new vulnerabilities related to User Agent parsing may be released by the server software developers.
-
-Remember, these steps only mitigate the risk of User Agent Fuzzing. Even with all these measures, it's still possible that an attacker could find a way through. A comprehensive security approach is essential.

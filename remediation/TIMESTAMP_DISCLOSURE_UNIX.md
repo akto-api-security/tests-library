@@ -30,10 +30,3 @@ sudo mount -o remount /dev/sda1
 Replace '/dev/sda1' with your partition name.
 
 After the remediation steps, Unix will cease to update the access timestamp, mitigating the timestamp disclosure vulnerability.
-
-### Step 3: Regular System Audits
-Regular system audits are necessary to ensure that the settings have not changed inadvertently and the security remains intact.
-
-```bash
-cat /etc/fstab | grep noatime
-```

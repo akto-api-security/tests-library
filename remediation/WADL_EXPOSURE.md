@@ -21,13 +21,3 @@ Depending on your network layout, you could use firewall rules to prevent access
 ```bash
 iptables -A INPUT -p tcp --dport 80 -m string --algo kmp --string 'GET /application.wadl' -j REJECT
 ```
-
-### Step 3: Regular Auditing
-Ensure regular auditing of your security configurations to confirm that there are no inadvertent changes which could expose sensitive resources.
-
-```bash
-grep -r 'com.sun.jersey.config.feature.DisableWADL' /path/to/your/webapp
-```
-If the output of this command shows the DisableWADL's value set to false, it means the WADL file can be generated and exposed. To prevent the exposure, make sure to always keep this value true.
-
-Remember, WADL exposure isn't inherently a flaw, but wise practice would suggest we should be careful about what details we expose about our applications.

@@ -32,15 +32,8 @@ if (user.matches("[A-Za-z0-9_]+") && user.length() < 16) {
 ### Step 3: Least Privilege Principle
 Ensure that database accounts used by web applications have the least privileges necessary and avoid using the "sa" account or "root" account.
 
-### Step 4: Regularly Update and Patch Systems
-Make sure the systems are up-to-date with the latest security updates and patches. Regularly monitoring security notifications from your DBMS and web application provider is essential. 
 
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-### Step 5: Implement WAF (Web Application Firewall)
+### Step 4: Implement WAF (Web Application Firewall)
 A WAF can help filter out SQL Injection attacks. This can be especially helpful as an extra security layer:
 
 ```bash
@@ -48,7 +41,7 @@ sudo apt-get install mod-security
 sudo a2enmod security2
 ```
 
-### Step 6: Lock Down Your Database Server
+### Step 5: Lock Down Your Database Server
 Your database server should not be publicly accessible. Only machines that require direct access should be white-listed.
 
 ```bash

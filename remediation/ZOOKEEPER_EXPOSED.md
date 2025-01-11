@@ -47,17 +47,3 @@ sudo ufw allow from trusted_ip to any port zookeeper_port
 sudo ufw deny from any to any port zookeeper_port
 ```
 Note: trusted_ip should be replaced with the actual IP address of a host you trust, and zookeeper_port should be replaced with the actual port number.
-
-### Step 4: Regular security audit and patch update
-
-Maintaining updated system and ZooKeeper versions is another good practice as it'll have the latest security patches.
-
-```bash
-# On Ubuntu, for example, update your package list, upgrade packages, and then upgrade the OS as follows:
-sudo apt update
-sudo apt upgrade
-sudo apt dist-upgrade
-```
-Please replace the commands accordingly if you are not using an Ubuntu-based system.
-
-Remember to ensure that these remedial steps are implemented in your ZooKeeper configurations and that regular security audits are maintained, to effectively protect your system from potential unauthorized access.

@@ -43,23 +43,3 @@ public class XMLValidator {
     }
 }
 ```
-
-### Step 3: Adopt an API Security Gateways
-
-The adoption of API security gateways can monitor and block malicious activity emanating from XML requests.
-
-```java
-// Code varies vastly depending upon Security Gateway used.
-```
-
-### Step 4: Regular Security Update and Patching
-
-Continuous security updates protect the API endpoints from any new vulnerabilities.
-
-```bash
-# This can vary and would generally be specific to the software and OS you are using.
-```
-
-Please replace the placeholders in the snippets with the paths or the values applicable in your case.
-
-If any step doesn’t work as expected, troubleshoot it based on error messages or refer to the documentation for the specific technologies you are using.

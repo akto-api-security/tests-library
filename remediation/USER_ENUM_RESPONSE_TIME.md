@@ -46,7 +46,3 @@ def authenticate(user, password):
 ### Step 3: Use Account Lockout Mechanisms
 
 Implement account lockout mechanisms that limit the number of failed authentication attempts within a certain timeframe. This not only defers brute-force attacks, but it can also alert you to any malicious activity.
-
-Please note that account lockout mechanisms must be implemented carefully to prevent Denial-of-Service where an attacker can intentionally lock users out of their own accounts by repeatedly failing authentication.
-
-Remember that the ideal solution depends heavily on your exact authentication requirements and the nature of your application. So, analyze and implement the best security practices accordingly.

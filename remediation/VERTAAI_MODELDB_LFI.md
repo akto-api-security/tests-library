@@ -23,5 +23,3 @@ As a next step, you could ensure that your application runs with the least amoun
 
 ### Step 3: Use chroot jails or containers
 If the above solutions are not enough, as a last resort, you could use a chroot jail or a container to isolate your application from the rest of your filesystem. This step is a more complex solution and might not be suitable for all situations. 
-
-While the directory traversal vulnerability can be quite serious if not addressed, the precautions highlighted can aid in making your VertaAI ModelDB setup much more secure. Regular scans and updates for new possible threats are extensively recommended.

@@ -63,6 +63,3 @@ security_group.authorize_ingress(
 
 ### Step 4: Implement Network Firewall or WAF
 Implement AWS Network Firewall or AWS WAF (Web Application Firewall) if the application is expected to handle unpredictable and complex traffic.
-
-### Step 5: Regularly Audit And Update 
-Regular audits should be performed to ensure the latest security measures are in place and are effective.

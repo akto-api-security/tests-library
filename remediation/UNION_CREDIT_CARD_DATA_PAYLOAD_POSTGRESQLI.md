@@ -34,8 +34,3 @@ Limit the database privileges. The database user the application uses should hav
 REVOKE ALL ON ALL TABLES IN SCHEMA public FROM PUBLIC;
 GRANT SELECT, INSERT ON TABLE public.users TO webapp;
 ```
-
-### Step 4: Regular code review and Update
-Regularly audit your codes to find unparameterized queries and convert them to parameterized ones. Keep your application and its dependencies up to date.
-
-These are steps to protect the Credit Card Data against a Union Based SQL Injection in PostgreSQL. These steps mainly involve writing secure application code and properly managing database permissions.

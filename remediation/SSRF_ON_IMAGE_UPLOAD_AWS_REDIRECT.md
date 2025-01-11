@@ -55,7 +55,3 @@ aws iam create-role --role-name my-role --assume-role-policy-document file://Tru
 
 aws iam put-role-policy --role-name my-role --policy-name limited-permissions --policy-document file://LimitedPermissions.json
 ```
-
-### Step 5: Regular Audit and Update
-
-Regularly reviewing access logs and updating IAM roles and Security Groups will help keep your security posture up-to-date.

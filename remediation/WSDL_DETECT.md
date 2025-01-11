@@ -40,14 +40,3 @@ public class YourService {
     // your code here
 }
 ```
-
-### Step 4: Regular Audit and Update
-
-Conduct regular audits to ensure that no new WSDL files have been exposed and promptly patch any security issues.
-
-Always keep your server and its software up to date with the latest security patches. Doing so will help you to minimize the risk of exposure. 
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```

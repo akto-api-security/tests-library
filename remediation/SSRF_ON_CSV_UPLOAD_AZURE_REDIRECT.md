@@ -63,12 +63,3 @@ public class HomeController : Controller
     }
 }
 ```
-### Step 5: Regular Audit and Update
-
-Ensure that the application is always up-to-date and regularly undergoes security auditing. Updating ensures that any security patches released by the framework are installed immediately, limiting further exposure to known vulnerabilities.
-
-```bash
-# Any system
-sudo apt-get update
-sudo apt-get upgrade
-```

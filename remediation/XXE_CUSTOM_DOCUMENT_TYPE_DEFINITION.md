@@ -36,9 +36,3 @@ if(inputXML.matches(".*<!DOCTYPE.*>.*")) {
 ### Step 4: Use Less Complex Data Formats
 
 If possible, consider using less complex data formats such as JSON, and avoiding serialization of sensitive data.
-
-### Step 5: Regular Audit and Update
-
-Regularly update and patch all XML processors and libraries in use by the application to protect against any newly discovered XXE vulnerabilities.
-
-It's worth noting that the measures above are only part of a defense-in-depth strategy against XXE attacks. Additional layers of security measures should be implemented depending on the specifics of the application and its environment.

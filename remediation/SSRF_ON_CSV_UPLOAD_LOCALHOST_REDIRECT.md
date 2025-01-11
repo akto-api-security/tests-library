@@ -57,16 +57,3 @@ if (isRedirectUrlAllowed(redirectTo)) {
     window.location.href = redirectTo;
 }
 ```
-
-### Step 4: Sanitize input parameters
-
-Whenever you're replacing URL parameters (like CSV params), ensure to sanitize the input to prevent harmful attributes:
-
-```javascript
-const sanitizeHtml = require('sanitize-html');
-
-const csvParam = '<img src="img.png">';
-const sanitizedParam = sanitizeHtml(csvParam);
-```
-
-These steps should minimize the chances of SSRF vulnerabilities being exploited through unsafe redirections.

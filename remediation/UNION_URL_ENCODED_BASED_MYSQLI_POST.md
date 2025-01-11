@@ -30,14 +30,8 @@ try {
 }
 ```
 
-### Step 3: Keep your Database System Version Up-to-Date
-Regular updates and patches can fix recognized SQL injection vulnerabilities.
 
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-### Step 4: Use a Web Application Firewall (WAF)
+### Step 3: Use a Web Application Firewall (WAF)
 A Web Application Firewall (WAF) can help protect your web applications by filtering and monitoring HTTP traffic between a web application and the Internet. You can configure your WAF to block SQL injections. 
 
 Most WAF settings can be tailored to your application's needs while blocking the malicious input patterns associated with SQL injection attacks.
@@ -47,4 +41,3 @@ sudo apt install mod-security-crs
 sudo a2enmod security2
 sudo systemctl restart apache2
 ```
-In conclusion, an effective approach to protecting against SQL Injection attack involves a combination of these defenses. Keep in mind that it's not enough to just implement one, but a combination of all these measures will ensure your application is safe from SQL Injection attacks.

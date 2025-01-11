@@ -30,11 +30,3 @@ A Web Application Firewall (WAF) acts as a shield between your server and the in
 ```bash
 sudo apt-get install mod-security-crs
 ```
-
-### Step 4: Regularly update and audit your systems
-
-Maintaining the security of your systems includes regular auditing and updating to ensure all security measures are up-to-date.
-
-```bash
-sudo service apache2 restart
-```

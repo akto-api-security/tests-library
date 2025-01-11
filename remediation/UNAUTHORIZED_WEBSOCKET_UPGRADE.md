@@ -47,6 +47,3 @@ class MyWebSocketHandler(tornado.websocket.WebSocketHandler):
     def check_origin(self, origin):
         return origin in ['http://mydomain1', 'http://mydomain2']
 ```
-
-### Step 4: Regular Audit and Update
-Ensure that WebSocket libraries and dependencies are updated regularly to prevent security vulnerabilities. Include this maintenance in your regular codebase auditing.

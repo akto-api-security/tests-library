@@ -34,8 +34,3 @@ app.post('/user', [
 
 ### Step 4: Web Application Firewall (WAF)
 Consider using a WAF, such as ModSecurity, to help filter out malicious input.
-
-### Step 5: Regularly Update and Audit
-Regularly update your application and its dependencies to ensure any recently discovered vulnerabilities have been patched. Conducting regular audits can help you detect attempts of SQL Injection.
-
-Remember, security is an ongoing effort and regular audits and code reviews should be conducted to ensure your defenses remain effective as new threats emerge.

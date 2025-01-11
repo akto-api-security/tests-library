@@ -40,17 +40,8 @@ sudo ufw allow from <trusted IP> to <machine IP> port <Spark REST API port>
 
 Replace the placeholders `<machine IP>`, `<Spark REST API port>`, and `<trusted IP>` with your details.
 
-### Step 3: Regular Audit and Update
 
-Ensure that the Spark version used is updated frequently. This keeps your systems up-to-date with the latest security patches and optimizations.
-
-```bash
-./spark/bin/spark-submit --version
-```
-
-Above command will help you to check the Spark version. Upgrade Spark if an updated version is available.
-
-### Step 4: Encrypted Data Transmission
+### Step 3: Encrypted Data Transmission
 
 Ensure that the data being transmitted is encrypted, especially when you are dealing with sensitive data. You can use SSL/TLS for this.
 

@@ -31,9 +31,3 @@ spf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd",
 ### Step 3: Update Xml Parser's Configuration
 
 If disabling DTDs or External Entities is not possible, consider patching or upgrading the XML parser software to a version that allows secure configuration.
-
-### Step 4: Regular Audit and Update
-
-Use static code analysis tools to detect XXE in source code or implement security test cases in your CI/CD pipeline to check for XXE vulnerabilities.
-
-Remember, the best mitigation is to configure XML processors to resist resolving entities from untrusted sources.

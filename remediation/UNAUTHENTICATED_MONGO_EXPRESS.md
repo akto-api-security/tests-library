@@ -64,18 +64,3 @@ server {
     ssl_certificate_key /etc/letsencrypt/live/myblog.com/privkey.pem;
 }
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly update your Mongo Express and MongoDB instances to ensure that they have the latest security patches.
-
-```bash
-npm update mongo-express
-npm update mongoose
-```
-
-Remember to restart your Mongo Express after updating.
-
-```bash
-npm restart mongo-express
-```

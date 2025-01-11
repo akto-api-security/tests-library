@@ -28,23 +28,3 @@ dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd",
 ### Step 3: Test the configuration
 
 Ensure that configuration changes have taken effect and that the system is no longer vulnerable to XXE attacks. Test it with unit tests, security-based tests, and QA.
-
-### Step 4: Regular Audit and Update
-
-Consistently check and update your libraries and parsers. Periodically check for the introduction of any XXE in the new or existing APIs. 
-
-This is your final remediated code:
-
-```java
- DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-
- //Disable DTDs
- dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-
- //Disable External Entities
- dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
- dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
- dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-
- DocumentBuilder safebuilder = dbf.newDocumentBuilder();
- ```

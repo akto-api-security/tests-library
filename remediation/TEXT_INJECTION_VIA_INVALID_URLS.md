@@ -59,5 +59,3 @@ Implement a Content Security Policy in your web application to control the sourc
 ```bash
 Content-Security-Policy: default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';
 ```
-
-Remember to keep updating your systems and taking regular audits of your codebase.

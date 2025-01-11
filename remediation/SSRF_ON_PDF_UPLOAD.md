@@ -58,5 +58,3 @@ Ensure that IAM roles and policies are correctly configured to limit the permiss
 ```bash
 aws iam create-role --role-name myrole --assume-role-policy-document file://Policyfile.json
 ```
-
-Also ensure that policies enforcing least privilege principle are applied on target IAM roles. This reduces the attack surface when such vulnerabilities as SSRF cannot be completely eliminated. Tool such as IAM Access Analyzer can help identify resources with public or cross-account access.

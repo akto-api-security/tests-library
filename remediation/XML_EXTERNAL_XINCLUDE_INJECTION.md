@@ -42,15 +42,8 @@ settings.ValidationType = ValidationType.Schema;
 
 XmlReader reader = XmlReader.Create("contosoBooks.xml", settings);
 ```
-### Step 3: Regular Update and Audit
-
-Always keep your XML parser libraries up-to-date and regularly audit your codebase to check for the injection vulnerabilities. 
-
-```bash
-# Your update command
-sudo apt-get update && sudo apt-get upgrade
 ```
-### Step 4: Implement Least Privilege Principle
+### Step 3: Implement Least Privilege Principle
 
 Give the XML parser the lowest permissions possible, so even if there is an XML External XInclude Injection attack, the attacker won't be able to read sensitive files on your server. 
 

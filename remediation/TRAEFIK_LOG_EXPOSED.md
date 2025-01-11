@@ -29,12 +29,3 @@ Traefik also allows to redact sensitive information. To hide passwords, authoriz
         "Authorization" = "redact"
         "Cookie" = "redact"
 ```
-
-### Step 4: Regular Audit and Update
-Similar to all other software services and systems, regularly conduct audits of your Traefik setup and keep your Traefik instance updated to the latest available version. This will ensure you are protected from any known vulnerabilities and are utilizing the latest security features.
-```bash
-docker pull traefik:latest
-docker stop <your_traefik_container>
-docker rm <your_traefik_container>
-docker run -d -p 80:80 -p 8080:8080 -v $PWD/traefik.toml:/etc/traefik/traefik.toml traefik:latest
-```

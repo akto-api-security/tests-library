@@ -35,9 +35,3 @@ public Template createSecureTemplate(String input) {
     return new Template("SecureTemplate", new StringReader(safeInput), configuration);
 }
 ```
-### Step 4: Regular Code Audit
-Always make sure to conduct regular code audits and updates to ensure the effectiveness of all safety measures.
-```bash
-git pull origin main
-```
-Remember that these steps alone are not sufficient to protect your application from all security threats. Always adhere to best practices for secure coding in your specific environment and language.

@@ -24,8 +24,3 @@ dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd",
 
 ### Step 3: Update XML Parsers
 Make sure all your XML parsers are up-to-date as security patches are regularly issued to fix these vulnerabilities.
-
-### Step 4: Regular Audit and Update
-Regularly perform code audits for XXE vulnerabilities. XXE vulnerabilities can be introduced through code changes. Hence a regular audit of the application code base is a necessary step.
-
-NOTE: The remediation steps are given in Java language, please apply the conceptual fixes in your technology stack.

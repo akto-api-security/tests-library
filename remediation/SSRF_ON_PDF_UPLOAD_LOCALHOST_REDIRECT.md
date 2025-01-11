@@ -58,16 +58,3 @@ Always make sure all the packages you are using are up-to-date. These packages i
 ```bash
 sudo apt update && sudo apt upgrade
 ```
-
-### Step 4: Regular Auditing
-
-Regularly scan  your codebase for vulnerabilities with various static code analysis tools that can help detect potential SSRF risks. 
-
-Remember to also have security reviews and unit tests in place to prevent new code that might introduce SSRF vulnerabilities from making into production.
-
-```bash
-npx audit-ci --low # if you're using npm
-bundle audit check # if you're using rubygem
-```
-
-If SSRF vulnerability is still affecting your system after executing these steps and taking these measures into consideration, consider consulting with a cyber-security specialist to get a more in-depth evaluation of your system's security.

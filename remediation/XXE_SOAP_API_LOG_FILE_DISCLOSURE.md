@@ -27,23 +27,3 @@ xml = parse("path/to/xml/file")
 
 # xml is now secure against XXE attacks
 ```
-
-### Step 3: Use of Firewalls
-
-To further reduce the attack surface, ensure that proper firewall rules are in place to disallow any incoming connections on unnecessary ports. 
-
-### Step 4: Regular Audit and Update
-
-Regularly check for updates for your XML parsers or libraries which may include security patches against XXE attacks and apply them as soon as possible. It's also recommended to have your code go through a dependency check to ensure that no vulnerable components are being used.
-
-```bash
-# Depending on the package manager being used
-
-# For npm (Node.js)
-npm audit fix
-
-# For pip (Python)
-pip-review --local --interactive
-```
-
-**Note:** Ensure that your XML data doesn't need to be declared with a DTD before disabling DTDs all together. This might break XML parsing for your application. Confirm before implementing.

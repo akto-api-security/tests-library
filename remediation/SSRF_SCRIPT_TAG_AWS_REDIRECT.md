@@ -33,10 +33,3 @@ response.sendRedirect(redirectURL);
 
 ### Step 4: Use Firewall
 Limit the server's ability to initiate outbound connections only to necessary IPs/ports.
-
-### Step 5: Regular Security Review
-Regular auditing and updating of the system with secure measures to keep up with potential new threats and rectify vulnerabilities.
-```bash
-sudo apt-get update && sudo apt-get upgrade
-```
-These steps will be effective in mitigating SSRF attacks associated with replacing parameters with script tags containing redirect URLs for AWS internal URLs.

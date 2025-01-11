@@ -36,7 +36,3 @@ import urllib.parse
 
 user_input = urllib.parse.quote(user_input, safe='')
 ```
-
-Remember, the main strategy for mitigating these vulnerabilities is to never trust user's inputs. You should always sanitize, validate and/or escape user's inputs before using them.
-
-Lastly, ensure to keep all your packages and dependencies updated and apply patches regularly.

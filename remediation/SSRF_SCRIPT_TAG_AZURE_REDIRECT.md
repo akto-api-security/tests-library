@@ -40,8 +40,3 @@ def validate_url(url):
 
 ### Step 4: Use Libraries That Mitigate SSRF
 Use server-side libraries like Azure Blob storage SDK that helps prevent SSRF issues associated with callbacks or redirects.
-
-### Step 5: Regular Audit and Update
-Regularly update your systems and software libraries to include latest security patches which will help to protect against such vulnerabilities.
-
-Ensure to perform these steps and test them thoroughly to confirm that SSRF is adequately mitigated. It is also crucial to educate developers about SSRF mitigation. This includes security training about best coding practices to prevent SSRF from ever being introduced into the Azure environment.

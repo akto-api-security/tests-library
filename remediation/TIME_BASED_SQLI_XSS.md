@@ -39,9 +39,3 @@ Implementing Content Security Policy (CSP) headers can significantly reduce the 
 <meta http-equiv="Content-Security-Policy"
     content="default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';">
 ```
-
-### Step 5: Regular Code Review and Update
-
-Regularly review and update your codebase to ensure that SQL and XSS vulnerabilities are not introduced in the future. Automated security tools can also be incorporated to scan your application for common security vulnerabilities.
-
-Remember, It's always better to prevent vulnerabilities in the first place than trying to fix them later.

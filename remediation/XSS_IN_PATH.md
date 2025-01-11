@@ -31,8 +31,3 @@ Implement a Content Security Policy (CSP). This helps in reducing XSS by declari
 ```bash
 add_header Content-Security-Policy "script-src 'self';"
 ```
-
-### Step 5: Regular Audit and Update of your codes
-Regularly update and audit your scripts and take note of the best practices in the development of web applications. Make sure to prioritize security in development.
-
-Please note that the example codes are written in Python, Flask Framework, and Nginx for demonstration purposes and will vary depending on the programming language and the framework that you are using.

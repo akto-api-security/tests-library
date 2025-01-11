@@ -43,15 +43,3 @@ public class UserAction extends ActionSupport{
   ...
 }
 ```
-
-### Step 4: Regular Audit and Update
-Stay vigilant for new Apache Struts updates and apply them regularly. Also, review the application code to ensure there is no security vulnerability.
-
-```bash
-mvn versions:display-dependency-updates
-```
-This command lists all dependencies that have newer releases. 
-
-Also, remember to perform penetration testing and code review to find any code vulnerabilities.
-
-**Please Note:** These remediation steps are a generalized suggestion and might need adjustments according to the specific use-case or environment. Always refer to the official documentation when available.

@@ -41,13 +41,3 @@ Restart the Squid service to apply the changes:
 ```bash
 sudo systemctl restart squid.service
 ```
-
-### Step 4: Regular Audit and Update
-
-To prevent exposure, periodically check the permissions of the Squid Proxy configuration files and update Squid Proxy software regularly:
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade squid
-```
-This will ensure your Squid Proxy is kept up-to-date, mitigating potential vulnerabilities from outdated versions.

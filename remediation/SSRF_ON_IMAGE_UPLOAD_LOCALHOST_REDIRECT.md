@@ -24,8 +24,3 @@ WAF can detect and block SSRF attacks by filtering malicious requests. It's reco
 
 ### Step 3: Use Network Segregation
 Ensure that your server can only make outbound connections to necessary services and ports.
-
-### Step 4: Regular Auditing
-Regularly audit your codebase and server for any security loop holes.
-
-These steps can prove instrumental in fixing vulnerabilities related to SSRF exposing localhost details.

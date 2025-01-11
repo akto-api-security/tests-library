@@ -27,16 +27,8 @@ sudo apt-get install mod-security
 sudo service apache2 restart
 ```
 
-### Step 3: Regularly Update and Patch Your Systems
 
-Keeping your systems, especially your database management systems, up to date is critical to preventing some SQL injection attacks.
-
-```bash
-sudo apt update
-sudo apt upgrade
-```
-
-### Step 4: Limit Database Permissions
+### Step 3: Limit Database Permissions
 
 Make sure that accounts associated with web applications have the least privileges necessary.
 
@@ -45,11 +37,9 @@ CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
 GRANT SELECT, INSERT ON table_name TO 'newuser'@'localhost';
 ```
 
-### Step 5: Validate and Sanitize All Inputs
+### Step 4: Validate and Sanitize All Inputs
 
 ```php
 $username_input = $_POST['username'];
 $username = filter_var($username_input, FILTER_SANITIZE_STRING);
 ```
-
-By following these steps, you not only secure your application against Union-based SQL Injection attacks, but also improve its overall security. Continuous monitoring and timely updates can further enhance the security of your application.

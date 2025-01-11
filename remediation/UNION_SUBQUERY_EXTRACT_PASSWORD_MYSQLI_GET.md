@@ -31,11 +31,8 @@ Implement the principle of least privilege across your database server. Ensure t
 
 Use input validation to check user input against a set of rules. It helps prevent malicious or unintended data from being processed by your application.
 
-### Step 6: Regular Code Reviews
 
-Regularly review your codebase to detect potential SQL injection vulnerabilities. Automated tools can assist with this but manual reviews are also valuable.
-
-### Step 7: Escaping All User-Supplied Input
+### Step 6: Escaping All User-Supplied Input
 
 This method is simplest and can be easily used in small projects. Here's an example:
 

@@ -34,15 +34,8 @@ CSP is a computer security standard that provides an added layer of protection a
 Header set Content-Security-Policy "default-src 'self';"
 ```
 
-### Step 4: Regular updates and security audits
 
-Keep your systems up-to-date and conduct regular security audits to ensure the continuous protection of your assets.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade 
-```
-### Step 5: Use an ORM (Object-Relational Mapping) 
+### Step 4: Use an ORM (Object-Relational Mapping) 
 
 An ORM is a technique that lets you interact with your database, like SQL, as though it were an object. It can protect against SQLi attacks as they utilize parameterized queries and sometimes build upon native parameterization features present in languages such as C# and java.
 
@@ -61,7 +54,7 @@ with engine.connect() as con:
         print line
 ```
 
-### Step 6: Use XSS protection libraries and functions
+### Step 5: Use XSS protection libraries and functions
 
 This will help to further sanitize input and ensure that malicious scripts can’t be executed in the victim’s browser.
 
@@ -74,7 +67,3 @@ def some_view(request):
 
     # escaped_username now contains '&lt;script&gt;alert("XSS")&lt;/script&gt;'
 ```
-
-### Conclusion
-
-Implementing these steps can help secure your system from Union-based SQL Injection and XSS attacks. Ensure that you maintain a routine security check on your system to prevent potential vulnerabilities.

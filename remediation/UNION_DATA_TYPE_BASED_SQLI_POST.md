@@ -32,8 +32,3 @@ In this case, SQLAlchemy automatically creates parameterized SQL queries and esc
 
 ### Step 3: Limiting Database Permissions
 Give the minimal permissions needed for the SQL account which the application uses to connect to the database. The account should not have the ability to drop tables or modify schema.
-
-### Step 4: Regular SQL Injection Scanning
-Use automatic tools or manual methods to perform regular scans for possible SQL injection vulnerabilities. Regular testing and updates will protect your applications from new emerging threats. 
-
-Please note that these steps though not exhaustive, significantly enhance the security of the application against SQL injection attacks. Ensure to implement and foster a healthy code review culture and include security checks. Also, being aware of the latest threats and vulnerabilities will help to protect the application from potential attacks.

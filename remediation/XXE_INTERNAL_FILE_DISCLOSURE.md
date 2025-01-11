@@ -45,13 +45,3 @@ Where possible, consider using less complex data formats such as JSON, and avoid
 ### Step 3: Patch or Upgrade
 
 Patch or upgrade all XML processors and libraries in use by the application or on the underlying operating system. Use dependency checkers to manage this process.
-
-### Step 4: Regularly Monitor
-
-Monitor and audit logs for abnormal behavior that could indicate an attempted or successful XXE attack. 
-
-### Step 5: Security Testing 
-
-Regular security tests should be conducted to ensure that the measures put in place to prevent XML External Entity (XXE) are effective. This should include penetration testing and vulnerability assessments. 
-
-In conclusion, it is important to understand that XXE attacks are a common and serious security risk to modern web applications. By taking these steps to remediate such vulnerabilities, you can protect your application and its data.

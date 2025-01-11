@@ -34,7 +34,3 @@ aws iam create-role --role-name MyLimitedRole --assume-role-policy-document file
 # Attach the policy to the role
 aws iam attach-role-policy --role-name MyLimitedRole --policy-arn arn:aws:iam::123456789012:policy/MyLimitedPolicy
 ```
-### Step 4: Regular audit and update
-Regularly audit your servers and applications for any vulnerabilities or exposed sensitive details and keep all servers, libraries and applications updated.
-
-Remember, input validation and limiting server functionality (block outbound traffic, least privilege roles etc) are the most effective ways to prevent SSRF attacks.

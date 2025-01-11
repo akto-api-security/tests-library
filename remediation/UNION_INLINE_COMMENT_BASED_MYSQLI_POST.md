@@ -82,10 +82,3 @@ public class PersonDataService {
   }
 }
 ```
-### Step 3: Regular Security Audits
-It is good to conduct regular security audits and updates to verify the integrity of your software.
-
-### Step 4: Using Web Application Firewalls
-Web Application Firewalls can help to block SQL Injection attacks by identifying malicious SQL queries using a blacklist of query signatures.
-
-These preventive measures, when implemented appropriately, should protect your web application from Union Based SQL Injection attacks.

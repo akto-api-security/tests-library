@@ -42,5 +42,3 @@ Ensure your XML processor and libraries are up-to-date to prevent known vulnerab
 ### Step 4: Implement Positive Server Security Controls
 
 Input validation, strong access controls, and minimized information disclosure in error messages are other standard security controls that can help protect against XXE attacks.
-
-Remember also to perform vulnerability scanning and conduct code reviews to prevent potential XXE attacks. Always follow a "least privilege" approach with permissions when setting up systems and services.

@@ -45,11 +45,3 @@ This is done through the HTTP response header as shown:
 ```bash
 Content-Security-Policy: default-src 'self'
 ```
-
-### Step 4: Regular testing and updating
-
-Finally, make sure to regularly test your application for any vulnerabilities, and keep your programming environment updated to reduce the risk of being exploited by a known vulnerability.
-
-Given these steps, make sure to regularly test your application for any vulnerabilities and keep your programming environments updated to reduce the risk of being exploited by known vulnerabilities. 
-
-This, of course, cannot guarantee full protection against XSS attacks, but they're a good start towards a more secure application.

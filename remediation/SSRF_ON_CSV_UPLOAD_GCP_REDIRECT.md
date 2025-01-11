@@ -36,13 +36,3 @@ gcloud projects get-iam-policy myproject > iam_policy.json
 # edit the iam_policy.json file to adjust roles then update the IAM policy
 gcloud projects set-iam-policy myproject iam_policy.json
 ```
-
-### Step 5: Regular Audit and Update
-Always ensure to carry out a regular check of your GCP for any unauthorized changes to IAM policies or usage of resources.
-```bash
-gcloud projects get-iam-policy myproject
-```
-
-Remember, prevention is the best form of protection against any security vulnerability.
-
-Disclaimer: The commands provided are illustrative. Depending on the specific configuration and environmental variables, the actual commands may vary. It is always recommended to consult with a GCP security expert or refer to GCP command line tool (gcloud) documentation.

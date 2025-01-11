@@ -47,5 +47,3 @@ email = request.POST['email'].lower()
 if User.objects.filter(email=email).exists():
     # rest of the method
 ```
-
-These steps can mitigate the risk of a broken authentication attack caused by username enumeration on password reset endpoint.

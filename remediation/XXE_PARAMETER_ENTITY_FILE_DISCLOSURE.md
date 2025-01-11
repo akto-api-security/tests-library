@@ -35,16 +35,3 @@ Where possible, use simpler data formats such as JSON, and avoid serialization o
 
 ### Step 4: Validate, Sanitize, And Escape User Inputs
 Ensure that all user input is validated, sanitized and safe to use in an XML document. This approach can complement a strong policy against including user-controllable data in XML documents.
-
-### Step 5: Regularly Update And Patch XML Processors and Libraries
-Keep software up-to-date to ensure you're protected from known vulnerabilities that could be exploited.
-
-```bash
-sudo apt update && sudo apt upgrade
-```
-
-Through implementing these steps, you will significantly decrease the chance of an XXE attack succeeding.
-
-### Sources:
-- [OWASP - XXE Processing](https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html)
-- [Oracle - Secure Processing](https://docs.oracle.com/javase/8/docs/api/javax/xml/parsers/DocumentBuilderFactory.html#setFeature-java.lang.String-boolean-)

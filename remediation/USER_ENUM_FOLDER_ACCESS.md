@@ -53,9 +53,3 @@ def login(request):
     if failed_attempts >= MAX_ATTEMPTS:
         return HttpResponse("Too many failed login attempts. Please try again later.")
 ```
-
-### Step 5: Regular Audit and Update
-
-Keep your system updated, monitor your logs for suspicious behavior, and regularly audit your system for weak points.
-
-Remember these measures aren't a silver bullet, but they can greatly reduce your attack surface.

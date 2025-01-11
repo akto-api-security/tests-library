@@ -46,12 +46,3 @@ Copy the public key (id_rsa.pub) into the authorized_keys file.
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 ```
-
-### Step 5: Regular Audit and Update
-Perform regular audits to ensure there's no unauthorized access to your SSH keys. Regularly update your authorized keys.
-
-```bash
-cd ~/.ssh
-ls -l
-```
-This command lists out the authorized keys. Make sure all keys are recognized and used.

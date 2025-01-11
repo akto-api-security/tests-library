@@ -54,9 +54,3 @@ try:
 except Exception as e:
     print("Not a valid URL")
 ```
-
-### Step 5: Regularly Update and Patch Systems
-
-Ensure that all your systems are updated and patched to the latest versions. This includes your server OS, application platforms, and all development frameworks and libraries in use.
-
-Remember, no protection is full proof and does not guarantee that SSRF attacks will not occur. It will, however, reduce the risk significantly.

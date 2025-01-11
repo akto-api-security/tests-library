@@ -46,9 +46,3 @@ AWS recommends assigning permissions to applications running on EC2 instances vi
 aws iam create-role --role-name SSRFThwartingRole
 aws iam put-role-policy --role-name SSRFThwartingRole --policy-name S3Access --policy-document file://path_to_policy.json
 ```
-### Step 5: Regular Audit and Update
-Ensure to audit your AWS credentials and modules regularly. Update your application dependencies and libraries when they receive security patches.
-
-```bash
-aws auditmanager list-assessments | jq
-```
