@@ -50,11 +50,20 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  response_payload:
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        regex: "json"
   method:
     neq: "OPTIONS"
   response_payload:
     length:
       gt: 0
+    contains_all:
+      - "{"
+      - "}"
     not_contains:
       - Error
       - Internal Server 
@@ -109,12 +118,21 @@ validate:
     gte: 200
     lt: 300
   response_payload:
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        regex: "json"
+  response_payload:
     length:
       gt: 0
     percentage_match_schema:
       gte: 90
     percentage_match:
       lt: 10
+    contains_all:
+      - "{"
+      - "}"
     not_contains:
       - Error
       - Internal Server 

@@ -52,11 +52,20 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  response_headers:
+    for_one:
+      key:
+        eq: content-type
+      value:
+        regex: json
   method:
     neq: "OPTIONS"
   response_payload:
     length:
       gt: 0
+    contains_all:
+      - "{"
+      - "}"
     not_contains:
       - Error
       - Internal Server 
@@ -144,11 +153,15 @@ validate:
   response_code:
     gte: 200
     lt: 300
+  
   url:
     endpoint_in_traffic_context: false 
   response_payload:
     length:
       gt: 0
+    contains_all:
+      - "{"
+      - "}"
     percentage_match:
       lt: 90
     not_contains:
