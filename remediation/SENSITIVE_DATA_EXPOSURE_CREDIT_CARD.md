@@ -51,8 +51,5 @@ Never log sensitive data and avoid displaying it unnecessarily. Remove sensitive
 ### Step 4: Have a Strong Password Policy
 A strong password policy would prevent hackers from cracking passwords and accessing credit card data. 
 
-### Step 5: Regular Audit and Updates
-Keep your system updated and perform regular audits to identify any possible security loopholes.
-
-### Step 6: Follow PCI DSS Compliance
+### Step 5: Follow PCI DSS Compliance
 If you're handling credit card data, it's important to adhere to the Payment Card Industry Data Security Standard (PCI DSS) to ensure you maintain a secure environment.

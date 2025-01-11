@@ -32,11 +32,3 @@ Protect the database used by Sonarqube as specified by the database documentatio
 # Example on how to restrict access to MongoDB on Ubuntu
 sudo ufw deny from any to any port 27017
 ```
-
-### Step 7: Regular Monitoring and Audit
-Monitor Sonarqube logs and audit trails periodically to identify any abnormal activities in the system. 
-
-```bash
-# Example command to view Sonarqube logs
-tail -f /opt/sonarqube/logs/sonar.log
-```

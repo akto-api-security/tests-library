@@ -38,14 +38,3 @@ load_dotenv()
 
 NOTION_API_TOKEN = os.getenv('NOTION_API_TOKEN')
 ```
-
-### Step 3: Regular Audit and Update
-Create a schedule to review and update your API tokens at frequent intervals. If a token needs to be shared between team members, use secure ways to transmit it. Avoid using emails, cloud drives, or chat systems.
-
-Also, consider using methods to revoke or change the tokens if you suspect that they have been compromised.
-
-```bash
-export NOTION_API_TOKEN="new_token"
-```
-
-Ensure these steps are followed by all members of the team to maintain secure practices in handling sensitive tokens like NOTION API TOKEN.

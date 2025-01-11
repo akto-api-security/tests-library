@@ -36,12 +36,3 @@ sudo ufw default deny incoming
 sudo ufw allow from trusted_IP to any port 81
 ```
 Remember to replace 'trusted_IP' with the actual trusted IP address. You may also use netmasks (/24, /16, etc.) to allow larger IP ranges.
-
-### Step 5: Regular Audit and Update
-Just like any other system, keep your Nginx Proxy Manager updated to the latest version.
-```bash
-# Pull the latest version of Nginx Proxy Manager
-docker pull jc21/nginx-proxy-manager:latest
-# Restart your Nginx Proxy Manager container
-docker restart nginxProxyManager
-```

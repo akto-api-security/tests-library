@@ -32,8 +32,3 @@ Ensure that this environment variable is only accessible to the necessary applic
 
 ### Step 3: Limit Access 
 Limit the usage and access of the shared secret to only those necessary. The fewer hands the shared secret passes through, the less the chance of exposure.
-
-### Step 4: Regular Audits
-Perform regular audits of your application’s security setup and keep all dependencies and libraries up to date.
-
-Now your Shopify shared secret should be more secure, reducing the risk of sensitive data exposure.

@@ -62,12 +62,3 @@ Restart Nginx to apply the changes:
 # Restart Nginx
 sudo service nginx restart
 ```
-
-### Step 3: Regular Audit
-Perform regular audits on the Selenium server. Watch out for any irregularities, especially unauthorized executions.
-
-```bash
-# Watch server logs
-tail -f /var/log/nginx/access.log
-tail -f /var/log/nginx/error.log
-```

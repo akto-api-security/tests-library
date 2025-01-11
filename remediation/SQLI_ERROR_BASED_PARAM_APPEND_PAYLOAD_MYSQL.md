@@ -52,14 +52,3 @@ Implement the principle of least privilege. Each user should be granted the mini
 ```bash
 GRANT SELECT, UPDATE ON orders TO 'web_user'@'localhost';
 ```
-
-### Step 5: Regularly Update and Patch
-
-Regularly update your system and software to the latest versions. Also, apply security patches as soon as they are released.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-Remember, the ultimate defense against SQL injections is a multi-layered security strategy. A missed secluded defense might lead to an application being vulnerable.

@@ -43,22 +43,3 @@ app.use('/api/', function(req, res, next) {
     }
 });
 ```
-
-### Step 4: Audit and Regularly Update the APIs
-Regular system audits and API updates help to detect any shadow APIs and ensure that all are up-to-date.
-
-```bash
-# For regular system audit
-npm audit
-
-# For updating the APIs
-npm update
-```
-
-### Step 5: Incorporate API Gateway
-Utilizing an API Gateway provides a unified entry point for all your APIs. It provides a method for centralized, organized API management including discovery.
-
-```bash
-# To start the API Gateway
-npm start
-```

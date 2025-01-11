@@ -48,23 +48,3 @@ db.createUser(
   }
 )
 ```
-
-### Step 5: Regular Audit and Update
-Ensure MongoDB is regularly updated and audited for any lingering or potential security threats. 
-
-Moreover, avoid sharing sensitive information, like MongoDB credentials, within your application code and use environment variables instead. 
-
-```bash
-export MONGO_USER=<username>
-export MONGO_PASSWORD=<password>
-```
-
-In your MongoDB connection string, replace the hardcoded username and password with these environment variables. 
-
-```javascript
-const mongoUser = process.env.MONGO_USER;
-const mongoPassword = process.env.MONGO_PASSWORD;
-
-const mongoUri = `mongodb://${mongoUser}:${mongoPassword}@localhost:27017/myDatabase`;
-```
-Remember to restart your application after setting the environment variables.

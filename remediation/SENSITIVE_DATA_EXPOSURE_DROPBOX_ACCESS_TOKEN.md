@@ -21,6 +21,3 @@ import os
 os.environ['DROPBOX_ACCESS_TOKEN'] = "<YOUR_NEW_ACCESS_TOKEN>"
 ```
 Replace '<YOUR_NEW_ACCESS_TOKEN>' with the new access token.
-
-### Step 4: Regular Audit and Security Practices
-Perform regular audits and code reviews to ensure there is no possibility of the access token being leaked. Protect your access keys by using clear-text environment variables only on your local machine or encrypted storage in production.

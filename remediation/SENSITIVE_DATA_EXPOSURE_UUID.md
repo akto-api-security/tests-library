@@ -23,8 +23,3 @@ Ensure the secure transmission of UUIDs. Always use HTTPS for transport to preve
 
 ### Step 4: Limit UUID Exposure
 Limit the exposure of UUIDs in logs, error messages, URLs, etc. UUIDs should be considered as sensitive data, even if they do not directly contain personally identifiable information.
-
-### Step 5: Regular Audit and Update
-Always check and update your UUID generation and storage methods to mitigate new vectors of attack. Practice regular access review and deny unnecessary permissions. Regularly update and patch your systems.
-
-This way, you can secure sensitive data exposure for UUID and mitigate any potential security risks.

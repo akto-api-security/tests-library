@@ -49,9 +49,3 @@ def application_error(e):
     app.logger.error('Unexpected error occurred.', exc_info=True) 
     return 'Sorry, unexpected error occurred!'
 ```
-
-### Step 4: Regular Code Review 
-
-Flask log injection vulnerability often arises from poor coding practices, including neglecting to sanitize user input before adding it to the logs. Regular code review and adherence to coding best practices, like input sanitization, can help to minimize risks. 
-
-Always remember logging should be done in a manner that captures necessary information but doesn't expose the system or software to further threat vectors.

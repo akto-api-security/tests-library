@@ -51,9 +51,3 @@ def view_passport(user, passport_id):
     else:
         raise Exception('Permission denied')
 ```
-
-### Step 4: Regular Security Audits and Updates
-
-Regularly audit and update your system, including your encryption method, access control, and exposure limitation strategies. Identify any vulnerabilities and address them immediately.
-
-Remember to also train your staff to deal properly with sensitive data and comply with all relevant regulations and guidelines.

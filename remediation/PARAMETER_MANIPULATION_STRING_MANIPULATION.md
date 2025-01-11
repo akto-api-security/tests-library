@@ -50,8 +50,3 @@ conn.commit()
 cur.close()
 conn.close()
 ```
-
-### Step 4: Regular Audit and Update
-Schedule regular audits to ensure the integrity of your application and update as necessary.
-
-In conclusion, while parameter manipulation cannot be completely eradicated, it can be effectively mitigated through proper input sanitization, using prepared statements, input parameterization, and regular audits.

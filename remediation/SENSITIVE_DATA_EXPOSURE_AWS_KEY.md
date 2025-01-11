@@ -33,11 +33,3 @@ Best practice is to assign IAM roles to EC2 instances or ECS tasks needing acces
 ### Step 4: Enable AWS Key Rotation
 
 Regularly rotate (change) your AWS Access Keys through the IAM console. Regular key rotation reduces the risk of compromise of keys.
-
-### Step 5: Regular Audit and Update
-
-Regularly review and update your IAM policies, enforce MFA (Multi-Factor Authentication) on your AWS root account, and implement least privilege access control to reduce the exposure surface for any potential compromise.
-
-```bash
-aws iam update-access-key --user-name MyIAMUser --access-key-id  AKIAIOSFODNN7EXAMPLE --status Active
-```

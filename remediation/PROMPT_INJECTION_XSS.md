@@ -27,10 +27,3 @@ It’s an additional layer of security that helps to detect and mitigate certain
 Content-Security-Policy: script-src 'self' https://apis.google.com
 ```
 This would allow scripts to be downloaded from your domain and `apis.google.com`.
-
-### Step 4: Regular Audit and Update
-Use tools like OWASP's ZAP to regularly scan your code for vulnerabilities. Additionally, keep your systems, especially those dealing with web services, regularly updated to the latest standards. 
-
-Also, educate your users to not click on suspicious links and not to approve any unknown scripts running on their browsers while using your application. 
-
-Remember, the steps above are general mitigation strategies and may not apply perfectly in all scenarios. Always perform thorough testing after implementing any security fix. Always explore and invest in up-to-date security practices!

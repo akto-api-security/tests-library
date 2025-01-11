@@ -40,12 +40,3 @@ To log out the authenticated user, nullify the `Authentication` object in `Secur
 ```java
 SecurityContextHolder.getContext().setAuthentication(null);
 ```
-
-### Step 6: Regular Audit and Update
-Lastly, always ensure you audit your security measures regularly and update as necessary.
-
-```java
-//This will depend on your organizational setting, no specific code.
-```
-
-Note: This is just a simple guide to remediation. Actual implementation may vary based on your organizational requirements and security considerations. Always ensure your steps are tailored to your use-cases and thoroughly tested.

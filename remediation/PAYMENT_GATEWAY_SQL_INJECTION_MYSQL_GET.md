@@ -45,7 +45,3 @@ import requests
 payload = {'key1': 'value1', 'key2': 'value2'}
 r = requests.post("https://httpbin.org/post", data=payload)
 ```
-### Step 6: Implement Security Testing
-Finally, regularly perform security tests on your applications to uncover and fix any vulnerabilities.
-
-Remember, prevention is always better than cure when it comes to security issues.

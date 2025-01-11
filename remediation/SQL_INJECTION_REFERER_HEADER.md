@@ -21,15 +21,3 @@ ResultSet rs = preparedStatement.executeQuery(selectSQL );
 ```
 ### Step 2: Database User Permissions
 Limit database permissions for directory browsing or execution of certain stored procedures.
-
-### Step 3: Regular Patching and Updating
-Ensure you're consistently applying patches to your DBMS software, as well as any associated applications that directly access it.
-
-### Step 4: Web Application Firewall (WAF)
-A web application firewall (WAF) can help mitigate SQL Injection attacks. This software application filters, monitors, and blocks HTTP/HTTPS traffic to and from a web application.
-
-### Step 5: Use a Secure Development Lifecycle
-Ensure that you introduce security early in your development cycle. Include practices such as threat modeling, secure code review, and penetration testing.
-
-### Step 6: Regular Auditing and Monitoring
-On a regular basis, conduct an application audit and maintain security incident logs. By doing so, you can track and assess new threats and vulnerabilities that emerge. Be sure to engage with security alerts and updates specific to your tech stack.

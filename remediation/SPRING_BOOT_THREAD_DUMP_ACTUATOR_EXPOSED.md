@@ -40,12 +40,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 }
 ```
-
-### Step 3: Regular Audit and Update
-Regularly update the Spring Boot and Spring Security dependencies to the latest stable versions for up-to-date security patches.
-
-```bash
-mvn versions:use-latest-versions
-```
-
-Consider consulting Spring Boot's production-ready features guide for more extensive configuration options applicable to your specific deployment scenario.

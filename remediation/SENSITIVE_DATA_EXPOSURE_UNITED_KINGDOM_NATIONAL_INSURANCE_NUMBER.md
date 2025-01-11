@@ -53,5 +53,3 @@ def decrypt_NI(nonce, ciphertext, tag, key):
 # Decrypt a NI number with the function `decrypt_NI()` and the key.
 decrypted_ni_number = decrypt_NI(nonce, ciphertext, tag, key)
 ```
-
-This remediation is just a simple way to address sensitive data exposure for National Insurance numbers. You should also enforce strong access controls, audit logs, user activity monitoring, and intrusion detection mechanisms as part of your broader data security strategy.

@@ -41,14 +41,3 @@ An example of escaping output in PHP:
 ```php
 echo htmlspecialchars($user_input, ENT_QUOTES, 'UTF-8');
 ```
-
-### Step 4: Regular Audit and Update
-
-Make sure your applications and server patches are kept up-to-date. Regular audit of your codebase for potential security vulnerabilities is also recommended. 
-
-```bash
-# Restart Apache after your changes
-sudo service apache2 restart
-```
-
-All these measures combined would help you to avoid XSS vulnerabilities in phpMyAdmin. Keep in mind, you might need to customize these rules as per your specific use case and environment.

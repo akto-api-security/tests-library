@@ -29,14 +29,3 @@ Keep your Ruby environment secure by regularly updating all gems to their latest
 ```bash
 bundle update
 ```
-
-### Step 4: Conduct Regular Security Audits
-
-Make sure to conduct regular security audits of your application and environment to ensure that you are not vulnerable to newly discovered security issues. Tools like `bundler-audit` can help find known security vulnerabilities in your current installed gems.
-
-```bash
-gem install bundler-audit
-bundler-audit check --update
-```
-
-Remember that the security of your applications is a continual effort and not a one-time fix. Stay vigilant and regularly review and update your application and environment.

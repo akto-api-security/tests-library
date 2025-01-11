@@ -39,6 +39,3 @@ try:
 except DatabaseError:
     return "An error occurred."
 ```
-
-### Step 5: Regular Audit and Update
-The framework, libraries, and dependencies being used should be kept up to date. Regular audits will reduce the chances of known vulnerabilities. Use automated updates where possible or include it in your regular maintenance activities.

@@ -40,14 +40,3 @@ con.close()
 ### Step 2: Implement a Database Firewall 
 
 A database firewall can serve as an additional security layer in intercepting and inspecting SQL queries from the application to the database. Rogue queries indicative of a SQL injection attack can be detected and blocked.
-
-### Step 3: Regular Audit and Update
-
-Ensure that your applications and systems are regularly audited for vulnerabilities and updated when new patches or versions become available.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-Please note that these steps will mitigate most common SQL Injection attacks, but they may not cover all possible vulnerabilities. Further security practices like Least Privilege Principle and securing the database server should also be implemented.

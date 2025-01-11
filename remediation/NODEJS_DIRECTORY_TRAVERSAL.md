@@ -48,12 +48,3 @@ app.get('/:user', function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../users/' + req.params.user + '/data.txt'));
 });
 ```
-
-### Step 4: Regularly Update and Patch
-
-Update Node.js to the latest version, install the latest patches and follow-up on the Node.js Hardening guidelines to make sure your application is secure from most known vulnerabilities.
-
-```bash
-sudo npm install -g n
-sudo n latest
-```

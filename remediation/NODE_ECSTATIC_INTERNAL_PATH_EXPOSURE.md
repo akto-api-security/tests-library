@@ -29,11 +29,3 @@ Even after updating the Ecstatic package, as a best practice you should limit th
 require('http').createServer(require('ecstatic')({ root: __dirname + '/public' })).listen(8080);
 ```
 This will make ecstatic serve only files from './public' directory.
-
-### Step 4: Regular Audit and Update
-Regularly audit and update the Ecstatic package and all other dependencies in your Node.js application to prevent potential vulnerabilities. To do this, use the below command:
-
-```bash
-npm audit
-npm update
-```

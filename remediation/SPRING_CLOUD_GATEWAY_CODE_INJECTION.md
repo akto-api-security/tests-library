@@ -53,14 +53,3 @@ public class InputSanitizer {
     }
 }
 ```
-
-### Step 4: Regular Audit and Update
-Maintain the latest versions of frameworks and encouraging developers to follow security best practices while coding can prevent such vulnerabilities to persist in your system. In this context, regular security audits might be beneficial.
-
-```java
-// Regular code verification and updates here...
-```
-
-### Source: OWASP Code Review Guide
-
-Please note that the code snippets provided are examples, and may not work if copied directly into your codebase. They are intended to be a guide on the direction you need to take in your specific application to remediate these vulnerabilities.

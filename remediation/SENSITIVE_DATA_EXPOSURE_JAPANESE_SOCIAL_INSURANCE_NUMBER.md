@@ -45,6 +45,3 @@ def display_sensitive_data(user):
     else:
         return "You don't have the permissions to access this data."
 ```
-
-### Step 4: Regularly Monitor and Update Security Measures
-Software updates often include security patches. Regularly update any libraries, services, or infrastructure that your application depends on.

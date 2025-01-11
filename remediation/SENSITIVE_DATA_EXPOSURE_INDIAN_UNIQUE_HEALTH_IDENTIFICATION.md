@@ -54,11 +54,3 @@ def decrypt_message(encrypted_message):
 ### Step 3: Secure Data at Rest
 
 Use strong access controls, hashing, salting, or other effective methods to secure data at rest.
-
-### Step 4: Regular Audit and Update
-
-Regularly evaluate and update security measures to ensure their effectiveness and stay ahead of new potential vulnerabilities and threats.
-
-### Step 5: Training
-
-Educate your staff, especially those with access to sensitive data, about the importance of proper data handling, including the risks and penalties associated with mishandling the data.

@@ -35,14 +35,3 @@ File file = new File(safeDirectory, fileName);
 ### Step 3:  Limit privileges and use chrooted Jails 
 
 Wherever possible, it's safe to keep your application running with minimal system privileges. Also, consider using chrooted jails to limit the file access to isolated directories only.
-
-### Step 4: Apply latest security patches and updates regularly 
-
-To ensure the security of your application, apply regular patch updates for Spring MVC and Java. Also, constantly harden and audit your application security to prevent such vulnerabilities.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-Don't forget, accurate threat modeling and using secured coding practices can prevent these types of vulnerabilities in the first place. So, build a strong base for your application. Regular audits, patch updates, and using minimum privileges for applications can keep it secure on the long run.

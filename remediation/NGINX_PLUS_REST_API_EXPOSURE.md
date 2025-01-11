@@ -62,5 +62,3 @@ sudo nginx -t
 # If syntax is ok, reload Nginx
 sudo service nginx reload
 ```
-
-Deploy these steps and regularly review access logs to ensure that unauthorized access attempts are blocked. Regular updates and patches are a must to prevent any vulnerability exploitation.

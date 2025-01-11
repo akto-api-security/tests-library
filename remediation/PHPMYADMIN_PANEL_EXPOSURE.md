@@ -46,12 +46,3 @@ Setting up HTTPS to serve phpMyAdmin can prevent eavesdropping and man-in-the-mi
    CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 ```
-
-### Step 4: Regular Audit and Update
-PhpMyAdmin, like any other software, needs to be regularly updated as vulnerabilities often get patched in newer releases. Check the official phpMyAdmin website for updates.
-
-```bash
-wget https://files.phpmyadmin.net/phpMyAdmin/5.0.4/phpMyAdmin-5.0.4-english.tar.gz
-tar xvf phpMyAdmin-5.0.4-english.tar.gz
-```
-Replace `5.0.4` with the newest version number.

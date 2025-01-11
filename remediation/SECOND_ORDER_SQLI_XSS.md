@@ -46,9 +46,3 @@ Add a Content Security Policy (CSP) header to your responses. This controls the 
 ```python
 response['Content-Security-Policy'] = "default-src 'self'"
 ``` 
-
-### Step 6: Regular Audits and Updates 
-
-Ensure that you're conducting regular audits on your codebase for potential security vulnerabilities and updating your software and frameworks regularly. This helps in catching security issues before exploitation. 
-
-Remember, the best strategy is defense in depth: using multiple layers of security.

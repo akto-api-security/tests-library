@@ -35,8 +35,3 @@ private void removeAllSensitiveData(User user) {
 
 ### Step 3: Implement Access Controls
 Ensure proper access controls are in place to safeguard sensitive information from unauthorized access. Follow the principle of least privilege (PoLP).
-
-### Step 4: Regular Audit and Update
-Continually audit your systems and promptly apply security patches and updates to fix known vulnerabilities. Implement regular vulnerability scanning and penetration testing to identify and remediate potential weaknesses.
-
-No matter the specifics of the vulnerability or the system in question, it is critically important to have a clear plan of action for addressing security vulnerabilities. A good remediation plan includes clear responsibilities and timelines, as well as a procedure for tracking progress. Regular testing and verification are crucial – not only after the remediation is complete, but also on an ongoing basis to spot new vulnerabilities as they arise.

@@ -43,10 +43,8 @@ Regularly update all dependencies, including the Rails library itself, to benefi
 ```bash
 bundle update
 ```
-### Step 4: Regular Penetration Testing
-Conduct regular penetration testing and code audits to find and patch any security vulnerabilities.
 
-### Step 5: Error Handling
+### Step 4: Error Handling
 Ensure appropriate error handling is in place for failed file access attempts, and do not reveal sensitive system information in error messages.
 
 For example:

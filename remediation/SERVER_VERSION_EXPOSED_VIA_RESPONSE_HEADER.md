@@ -42,8 +42,3 @@ Restart Nginx to apply the changes
 ```bash
 sudo service nginx restart
 ```
-
-### Step 3: Regular Audit and Update
-Keep your server version up to date and conduct regular audits to find and fix potential vulnerabilities. 
-
-Note: Even though the version number is hidden, there are ways an attacker might still detect service versions. They might exploit default characteristics of specific versions and sometimes server software might leak version information through other means. Therefore, hiding version numbers should be one component of a multi-layered security approach. The most important protective measure is to keep server software updated.

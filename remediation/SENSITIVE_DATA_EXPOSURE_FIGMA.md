@@ -21,7 +21,3 @@ Avoid making Figma files or projects public, especially if they contain sensitiv
 Figma allows for private commenting, making sure only certain people can view these comments. Utilizing this feature can be effective in preventing the exposure of sensitive data embedded in comments.
 
 In conclusion, remediation consists mainly of the right usage practices and diligent access oversight. There is no source code involved as Figma is a SaaS application.
-
-### Practical Note
-
-In case of suspected data breach or suspicious unauthorized activity report immediately to Figma's Trust & Security team: support@figma.com

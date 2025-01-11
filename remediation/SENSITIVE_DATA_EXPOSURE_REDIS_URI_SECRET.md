@@ -40,6 +40,3 @@ Using Hashicorp Vault's transit secrets engine:
 ```bash
 vault write transit/encrypt/my-key plaintext=$(base64 <<< "my plaintext string")
 ```
-
-### Step 4: Regular Audit and Update
-Always keep your software updated and perform regular audits to catch any potential security issues. Patch any security vulnerabilities as soon as possible. Regularly rotate sensitive data (like REDIS URI SECRET) as a part of good security hygiene.

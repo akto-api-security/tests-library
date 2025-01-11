@@ -41,6 +41,3 @@ axios({
     }
   })
 ```
-
-### Step 5: Monitor and Log Usage
-Regularly monitor and log usage of your API tokens. This will help to spot any malicious activities quickly and take appropriate action.

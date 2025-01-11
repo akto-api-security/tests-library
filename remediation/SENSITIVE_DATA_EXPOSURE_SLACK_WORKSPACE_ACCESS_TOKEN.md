@@ -40,16 +40,3 @@ response = client.oauth_v2_access(
     code="user-entered-code"
 )
 ```
-
-### Step 4: Regular Audit and Update
-Regularly audit and rotate your Slack tokens. This ensures that old, unused tokens do not remain active and do not pose a security risk.
-
-```python
-# Regenerate the token and store it securely
-new_slack_token = regenerate_token(my_token)
-os.environ["SLACK_API_TOKEN"] = new_slack_token
-```
-
-### References
-- [Slack API Documentation - OAuth Scopes](https://api.slack.com/scopes)
-- [Python Slack SDK](https://github.com/slackapi/python-slack-sdk)

@@ -26,6 +26,3 @@ public boolean validateInput(String input) {
 
 ### Step 4: Use Least Privileged Database Accounts
 Only allow the minimum permissions necessary for the application to function. This might prevent more serious damage if an SQL injection attack is successful.
-
-### Step 5: Regular Code Review and Use of Security Scanners
-Make regular audits of your codebase and use automated security checkers, which can catch SQL injections and other security vulnerabilities.

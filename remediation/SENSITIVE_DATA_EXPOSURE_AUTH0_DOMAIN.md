@@ -35,8 +35,3 @@ app.use(function(req, res, next) {
 
 ### Step 3: Encrypt data at rest
 It is also important to secure the data at rest in your databases. Implement Full Disk Encryption (FDE) or Transparent Data encryption (TDE) depending on the support of your Data Storage.
-
-### Step 4: Regularly Update and Audit
-Always keep track of the components you're using, keeping them updated, and removing those you no longer need.
-
-_Note: Languages used are Javascript and Node.js, respectively. Adjust to your known language appropriately._

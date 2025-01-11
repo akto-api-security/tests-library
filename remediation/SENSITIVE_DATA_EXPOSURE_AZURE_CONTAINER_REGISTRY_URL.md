@@ -34,16 +34,8 @@ Applying RBAC permissions ensures that only authorized users can access your Azu
 az role assignment create --assignee userAssignedIdentityId --role Reader --scope $(az acr show --name myAcr --query "id" --output tsv)
 ```
 
-### Step 4: Regularly Monitor & Update
 
-Regularly monitoring and updating the Azure Container Registry will stabilize the security of your Azure Container Registry. Activate Azure Security Center for detecting potential security vulnerabilities.
-
-```bash
-az security setting create --name MCAS
-az security setting create --name WDATP
-```
-
-### Step 5: Create Immutable Tags
+### Step 4: Create Immutable Tags
 
 Creating immutable tags ensure that an image tag cannot be overwritten with a new and possibly harmful image. By enforcing this at the registry level, you assist in preventing malicious activity.
 

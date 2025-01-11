@@ -50,14 +50,3 @@ After the changes, don't forget to restart the Nginx service.
 ```bash
 sudo systemctl restart nginx
 ```
-
-### Step 4: Regular Audit and Update
-
-Last but important, is to keep your Prometheus system and entire infrastructure updated and regularly audited.
-
-```bash
-sudo apt update
-sudo apt upgrade
-```
-
-This ensures that any freshly discovered vulnerabilities in these systems don't leave your metrics exposure to potential attackers.

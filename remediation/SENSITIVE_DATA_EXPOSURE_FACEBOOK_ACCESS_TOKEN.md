@@ -43,6 +43,3 @@ When asking for Facebook permissions, ask for the minimum required permissions. 
 
 ### Step 5: Token Expiration
 Facebook access tokens should be short-lived with expiration times. Make sure to implement token refresh mechanisms.
-
-### Step 6: Regular Audit and Update
-Audit your application regularly for any security vulnerabilities and apply updates accordingly. Keep the access tokens dynamic and change them periodically, and expire the old tokens.

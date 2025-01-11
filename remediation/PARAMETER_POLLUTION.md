@@ -54,12 +54,3 @@ if(accountAccessMap[currentUser].includes(requestedAccount)){
   // proceed with account access
 }
 ```
-
-### Step 5: Regular Audit and Update
-Keep auditing your code base and updating your servers and libraries frequently.
-
-```bash
-sudo apt-get update && sudo apt-get upgrade
-```
-
-Once these steps are done, your application should be better secured against BOLA and HTTP Parameter Pollution. Remember that securing an application is an ongoing process and staying updated with the latest security practices is essential.

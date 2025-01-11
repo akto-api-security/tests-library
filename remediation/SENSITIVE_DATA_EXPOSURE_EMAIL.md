@@ -48,6 +48,3 @@ app.post('/api/users', function (req, res) {
   });
 });
 ```
-
-### Step 4: Regularly audit databases and user roles
-Regularly auditing your databases for any unprotected sensitive data and ensuring that appropriate user roles permissions are in place is a security best practice. Depending upon the database you're using, there may be built-in auditing features that you can take advantage of.

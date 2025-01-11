@@ -35,10 +35,8 @@ vault secrets enable -path=secret kv
 vault kv put secret/my-secret my-value=s3cr3t
 ```
 
-### Step 5: Regular Audits
-Perform regular audits to ensure credentials are not unduly exposed.
 
-### Step 6: Avoid track secrets in version control systems
+### Step 5: Avoid track secrets in version control systems
 .gitignore file helps prevent tracking secrets:
 
 ```bash

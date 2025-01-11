@@ -62,11 +62,3 @@ const query = { username: new RegExp('^' + username + '$', "i") };
 
 User.find(query, function(error, users) { /* Your callback function here */ });
 ```
-
-### Step 4: Regularly Update Your Dependencies
-Regularly updating your dependencies can fix potential vulnerabilities that might exist in older versions. In Node.js you can use `npm` to update your packages.
-
-```bash
-npm update
-```
-Remember, security is a constant process and requires continuous effort and attention.

@@ -68,9 +68,3 @@ def get_secret():
 
     return secret
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly audit your application for exposure of sensitive data and ensure to update your security measures as necessary.  
-
-By following these steps, you will greatly reduce the risk of your Postgres Connection String being exposed and misused.

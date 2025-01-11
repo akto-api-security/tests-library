@@ -27,11 +27,7 @@ http
     .httpBasic();
 ```
 
-### Step 3: Regular Code Audit and Update
-
-Regularly audit your codebase to ensure that new actuator endpoints are not unintentionally exposed. Ensure you are familiar with all enabled endpoints and their potential risks.
-
-### Step 4: Use Spring 2.0 or higher versions
+### Step 3: Use Spring 2.0 or higher versions
 
 Spring Boot 2.0 changed the default behavior to not expose any endpoints over HTTP, therefore it is a good idea to use Spring 2.0 or higher versions.
 

@@ -40,7 +40,3 @@ app.use('/static', express.static('public'));
 
 app.listen(3000, () => console.log('Listening...'))
 ```
-### Step 3: Regular code audits
-Use a static code analysis tool to regularly scan your codebase for potential vulnerabilities. This will help you identify if potentially exploitable code has been introduced.
-
-As always, regular updates and maintenance of the system and its dependencies is paramount to maintain the security of the application. Ensure all packages are regularly updated and security practices are followed in your development team.

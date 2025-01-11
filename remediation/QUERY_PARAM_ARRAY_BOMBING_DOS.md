@@ -31,15 +31,3 @@ app.use(limiter);
 ```
 ### Step 3: Use a WAF (Web Application Firewall)
 A WAF can provide a more extensive protection, including against DoS attacks. Ensure that your WAF is configured to protect against this type of attack.
-
-### Step 4: Regular Monitoring and Patching
-Regularly monitor you application logs for abnormal traffic patterns and patch your application regularly to ensure that it's up to date with the latest security fixes.
-
-```bash
-# System update
-sudo apt-get update
-sudo apt-get upgrade
-# Server restart
-sudo service apache2 restart
-```
-Remember, these are just mitigations. There's no bullet-proof solution for DoS attacks. These practices can only diminish the risk or minimize the impact.

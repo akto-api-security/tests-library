@@ -57,14 +57,3 @@ failed_count += 1
 if failed_count > max_allowed_attempts:
     lock_account(user_id)
 ```
-
-### Step 4: Regular Audit and Update
-Keep your systems, especially your authentication and security systems, up-to-date with the latest patches and security updates.
-
-```bash
-# For Ubuntu systems
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-These steps should substantially mitigate the risk of an attacker gaining unauthorized access through brute-forcing a password change endpoint. Regular and timely review of authentication logs will also go a long way in identifying and stopping such attacks.

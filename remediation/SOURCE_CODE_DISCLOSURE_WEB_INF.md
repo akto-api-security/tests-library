@@ -29,10 +29,3 @@ You also need to ensure that your `web.xml` (usually located in WEB-INF director
     <!-- No sensitive data should be below -->
 </web-app>
 ```
-
-### Step 3: Regular Checks and Update
-Perform regular checks and updates on your server configuration, application configurations, and source code to prevent any potential exposures.
-
-```bash
-sudo service apache2 restart
-```

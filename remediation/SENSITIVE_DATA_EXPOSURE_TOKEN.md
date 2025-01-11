@@ -53,6 +53,3 @@ public class TokenManager {
     }
 }
 ```
-
-### Step 5: Regular Monitoring
-Monitor for exposed tokens regularly and have mechanisms in place to disable them when detected. Use intrusion detection and intrusion prevention systems (IDS/IPS) for this purpose.

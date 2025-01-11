@@ -47,8 +47,3 @@ except Exception as e:
     log_error("An error occurred", e)
     raise InternalServerError("An error occurred, please try again later")
 ```
-### Step 5: Regular Code Review
-
-A regular review of codebase is highly recommended, specifically focusing on areas where prompt injections are possible. Use of automated testing and vulnerability scanning tools can help in this.
-
-There's no specific source code to prevent prompt injections in STAN tests as it largely depends on the design and implementation of the software. However, these general guidelines should help in securing the application.

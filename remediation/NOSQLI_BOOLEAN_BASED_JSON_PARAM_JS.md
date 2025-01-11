@@ -42,12 +42,3 @@ For most applications, read, insert, update, and delete permissions are all that
 ```bash
 db.grantRolesToUser( "<username>",[{ role: "readWrite", db: "<database>" }] )
 ```
-
-### Step 4: Regular Update and Monitor
-
-Regularly update your packages and databases to the latest versions, as they may include essential security patches. Regular audits to your code and monitor your applications to ensure no invalid operations.
-
-```bash
-npm audit
-npm update
-```

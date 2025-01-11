@@ -33,9 +33,3 @@ ORM (Object Relational Mapping) tools can assist to prevent SQL injection by abs
 ### Step 3: Limit Database Privileges
 
 Another important security step is to limit the privileges of the database account used by your application. For instance, if your application only needs to perform SELECT operations, don't give it privileges to perform DELETE or DROP operations.
-
-### Step 4: Regular Code and Database Security Audits
-
-Regularly auditing your codebase for SQL injections and other vulnerabilities greatly reduces the risk of attack. Various tools exist to help with this process, depending on your specific programming language and framework.
-
-Finally, always ensure that your system and all of its components (like SQLite) are updated to their latest versions to benefit from the most recent security patches and improvements. Regularly testing your security measures and updating your software are of utmost importance.

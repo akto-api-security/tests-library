@@ -38,8 +38,3 @@ app.post('/reset_password', limiter, function(req, res) {
 ```
 ### Step 3: Implement Strong User Authentication
 Strong user authentication methods, such as multi-factor authentication or CAPTCHA on the password reset page, can further secure the endpoint.
-
-### Step 4: Regular Audit and Update
-It's crucial to regularly audit and update your application to address potential security issues.
-
-Remember, security is an ongoing process and needs continuous effort and update.

@@ -63,11 +63,3 @@ Ensure logrotate is correctly set up by checking its status:
 ```bash
 sudo logrotate --debug /etc/logrotate.d/nginx
 ```
-
-### Step 4: Regular Audit and Update
-Routinely check your logs to monitor for unusual activities and keep your Nginx server updated to the latest version to obtain new security patches.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade nginx
-```

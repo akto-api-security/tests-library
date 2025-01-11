@@ -33,10 +33,3 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
 ### Step 3: Use A Secrets Manager
 For further security, consider using a secrets manager, such as AWS Secrets Manager or HashiCorp Vault, to store sensitive data like connection strings. This helps in securely storing, retrieving, and managing secrets across your infrastructure.
-
-### Step 4: Regular Audit and Update
-Just like any other service or codebase, it is crucial to regularly audit usage and update any outdated or insecure parts of your code. It will help you to ensure that your application remains secure and robust.
-
-Remember, data security is a vital aspect of any kind of development, and MongoDB strings are crucial data which needs to be secured.
-
-Finally, your MongoDB connection string should never be exposed publicly. Hence, always make sure it is well protected and can't be accessed by unauthorized users.

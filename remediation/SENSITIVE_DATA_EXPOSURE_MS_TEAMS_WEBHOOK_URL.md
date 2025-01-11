@@ -64,9 +64,3 @@ public Program()
     Configuration = builder.Build();
 }
 ```
-
-### Step 4: Regular Auditing and Updates
-
-Monitor the usage of your Microsoft Teams webhook URLs regularly. If suspicious activity is noticed, update the URL immediately.
-
-Remember, a critical part of security is the consistent review and update of security processes and data access rights.

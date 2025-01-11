@@ -34,17 +34,3 @@ let userInput = getUserInput();
 let safeInput = escape(userInput);
 res.render('template', { input: safeInput });
 ```
-### Step 3: Regular Audits and Updates
-
-Always keep the Node.js environment and its packages updated. Outdated packages often have unfixed vulnerabilities.
-NPM provides auditing tools to identify packages with security issues. 
-
-```bash
-npm audit
-```
-
-This command will print a report of known vulnerabilities in the dependencies and will suggest how to fix them.
-
-In a continuous integration pipeline, consider using `npm audit` to fail the build when the code has vulnerabilities.
-
-Note: Always thoroughly test your application after any update or modification to ensure functionality is not broken.

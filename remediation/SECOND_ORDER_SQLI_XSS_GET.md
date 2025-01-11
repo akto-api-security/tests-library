@@ -53,5 +53,3 @@ fetch('/api/data', {
     body: JSON.stringify(data),
 })
 ```
-
-No single step will completely prevent SQL injection or XSS attacks, but the combination of these methods will dramatically reduce the risk. Regular audits should be done to ensure all precautions are continually being enforced and no new vulnerabilities have been introduced.

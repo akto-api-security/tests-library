@@ -26,5 +26,3 @@ Always securely store the DockerHub access tokens, and never expose them in publ
 
 ### Step 4: Regular Rotation and Audit of Tokens
 Regularly rotate your DockerHub access tokens and monitor their usage. Regular auditing and updating help in maintaining the secure posture of your systems.
-
-Note: Docker doesn't provide any Shell or Python script to automate these steps, and these steps mostly involve manual work. There are HTTP APIs available to automate some steps but due to lack of detailed public documentation by Docker, they are not included in the steps above. Regular token rotation and audit can be performed using the audit log of your token handling system.

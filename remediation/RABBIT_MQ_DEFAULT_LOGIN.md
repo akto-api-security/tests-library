@@ -24,8 +24,3 @@ rabbitmqctl change_password guest newpassword
 ```
 
 In both the above codes, replace `newuser` with your new username and replace `newpassword` with your new, strong password.
-
-### Step 3: Regular Audit and Update
-It's a good practice to change login credentials periodically and leverage access controls, where needed.
-
-Remember, the first step to a secure system is removing any default logins because they are a primary target for unauthorized users.

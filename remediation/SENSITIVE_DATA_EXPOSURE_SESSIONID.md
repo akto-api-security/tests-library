@@ -42,7 +42,3 @@ HttpSession session = request.getSession();
 // Set the session's timeout interval
 session.setMaxInactiveInterval(15*60); // 15 minute timeout
 ```
-
-### Step 4: Regular Audits and Updates
-
-Regularly update the server and all security systems. Conduct periodic audits to ensure all systems are functioning as expected and there are no possible vulnerabilities.

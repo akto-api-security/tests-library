@@ -51,5 +51,3 @@ If the test is successful, restart NGINX.
 ```bash
 sudo service nginx restart
 ```
-
-Now, the NGINX status disclosure should be remediated. To make sure, you can check again to see if the status page is absent.

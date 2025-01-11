@@ -43,18 +43,3 @@ db.createUser(
   }
 )
 ```
-
-### Step 4: Update and patch routinely
-
-Keep your database and its corresponding dependencies updated to the latest stable version.
-
-```bash
-sudo apt update
-sudo apt upgrade
-```
-
-### Step 5: Code Review and Security Testing
-
-Regularly review the codebase for potential flaws and fix them promptly. Apply security testing methodologies (like fuzzing, penetration testing) to discover potential security vulnerabilities.
-
-Please note, the provided examples are in Python language. The concept should be similar for different languages and frameworks.

@@ -28,9 +28,3 @@ Ensure network security by enabling firewall rules in your Azure Batch Account.
 $batchAccount = Get-AzureRmBatchAccount -ResourceGroupName "myResourceGroup" -Name "mybatchaccount"
 $batchAccount | Set-AzureRmBatchAccount -FirewallAllowAzureIps Enabled
 ```
-
-### Step 4: Routinely Audit and Update Security Measures
-
-Frequent revision of your Azure Batch Account and general application security is advised to protect you from new threats. Re-evaluate your security measures routinely to ensure they are up-to-date.
-
-Remember, never expose your Azure Batch keys or URL publicly. Always store sensitive information securely.

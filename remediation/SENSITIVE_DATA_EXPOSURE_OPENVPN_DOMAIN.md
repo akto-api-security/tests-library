@@ -38,14 +38,3 @@ Make sure to enable secure cipher algorithms for encryption and message authenti
 cipher AES-256-CBC
 auth SHA256
 ```
-
-### Step 4: Regular Update and Audit
-
-Regularly update your OpenVPN to the latest version in order to benefit from the latest security patches. Also, conduct security audits periodically to detect any vulnerabilities.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade openvpn
-```
-
-These steps should help in considerably reducing the risk of sensitive data exposure on your OpenVPN domain. Every setup is unique, so additional steps might be needed depending on your configuration.

@@ -67,5 +67,3 @@ function decrypt(token) {
     return jwt.verify(token, SECRETKEY);
 }
 ```
-
-Using these steps should provide substantial protection against the vulnerability of Overwriting Existing Resources by Manipulating Identifiers.

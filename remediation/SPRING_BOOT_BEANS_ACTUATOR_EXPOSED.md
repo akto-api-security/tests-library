@@ -69,9 +69,3 @@ management.endpoints.web.exposure.exclude=*
 ```
 
 In the example above, only the health and info endpoints are exposed. You can adjust the include and exclude properties as per your requirements.
-
-### Step 4: Regular Audit 
-
-Additionally, it is good practice to perform regular audits of your actuator endpoints to ensure they remain secure. Also, always keep your Spring Boot and other dependent libraries update to the latest versions to prevent any security breaches. 
-
-Remember, security is not a one time task but an ongoing process.

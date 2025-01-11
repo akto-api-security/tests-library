@@ -15,11 +15,3 @@ Ensure that your network firewall rules do not allow access to the debug API. Fo
 ```bash
 sudo iptables -A INPUT -p tcp -s ! x.x.x.x --dport 9090 -j DROP
 ```
-
-### Step 3: Regular Audit and Update
-Monitor the Prometheus logs on a regular basis to check if there are unauthorized access attempts and remediate or report if any are found.
-```bash
-journalctl -u prometheus
-```
-
-Finally, ensure that the Prometheus server is regularly updated to benefit from the latest security patches.

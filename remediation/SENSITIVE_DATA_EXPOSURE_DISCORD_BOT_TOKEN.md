@@ -46,7 +46,3 @@ export DISCORD_BOT_TOKEN=your_token
 ### Step 3: Apply Correct Permissions to the Usage of Bot
 
 Limit the permissions of the bot to decrease the impacts in case of token leakage. 
-
-### Step 4: Regular Audit and Update
-
-Regularly check your codebase for accidentally committed sensitive data. Use automated tools to detect such situations. Always update your tokens and keys regularly to limit the impact of any old keys that may have been exposed.

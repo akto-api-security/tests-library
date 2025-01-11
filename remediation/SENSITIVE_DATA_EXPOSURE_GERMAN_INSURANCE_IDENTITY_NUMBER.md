@@ -31,8 +31,3 @@ def hash_data(data):
 
 ### Step 4: Implement access control & principle of least privilege
 Only authorized and authenticated users should be able to access the encrypted data.
-
-### Step 5: Regular Audit and Update
-Regularly audit the code and databases to ensure data security. Update cryptographic libraries and other dependencies as necessary. 
-
-_*Please note that these steps alone are not enough to protect from all types of vulnerabilities and threats. Consider a comprehensive security review and apply appropriate measures based on the specific use case._

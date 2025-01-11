@@ -37,17 +37,3 @@ def safe_query(user_agent):
 
 ### Step 3: Least Privilege Principle
 Ensure that the database user used in the application does not have more privileges than necessary so that even if an attacker could inject SQL code, the potential damage would be limited.
-
-
-### Step 4: Regularly Update and Patch
-Reduce the attack surface by applying the most recent patches and updates to your database management system and any frameworks or libraries used in your application.
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-### Step 5: Use Web Application Firewalls
-Web Application Firewalls (WAFs) can be used to sanitize input and output data in HTTP requests and responses, providing an additional layer of security against SQL Injection attacks.
-```bash
-sudo apt-get install modsecurity-crs
-```

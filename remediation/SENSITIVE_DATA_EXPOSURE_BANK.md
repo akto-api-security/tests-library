@@ -56,14 +56,3 @@ bcrypt.hash('myPassword', saltRounds, function(err, hash) {
   // Store hash in your password DB. 
 });
 ```
-
-### Step 4: Regularly audit and update security protocols
-
-Have regular security audits and keep all systems updated. This includes updating to the latest versions of software libraries and regularly testing your systems for vulnerabilities. A command like the following can be used to update all the system packages in a Linux-based system:
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-These steps should help prevent sensitive data exposure for your bank.

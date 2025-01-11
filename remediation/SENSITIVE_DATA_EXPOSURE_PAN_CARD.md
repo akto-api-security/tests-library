@@ -63,14 +63,3 @@ real_data = "ABCDE1234F"
 entered_data = "ABCDE1234F"
 hashlib.sha256(real_data.encode()).hexdigest() == hashlib.sha256(entered_data.encode()).hexdigest() # Returns True
 ```
-
-### Step 5: Regular Audit and Update
-
-Ensure regular audit of your codebase and databases. Follow all the best practices and constraints to avoid any such exposures. 
-
-```bash
-# Audit for unused data and remove it.
-# Rehash the data on regular basis
-```
-
-Remember to always handle sensitive data with care and ensure the data's security at every step in your process.

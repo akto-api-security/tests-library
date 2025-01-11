@@ -23,15 +23,3 @@ With this, only the owner of the file can read, write, and execute the file.
 
 ### Step 3: Secure File Storage
 Consider storing your encrypted file in a secure location. If it is to be stored on a cloud storage, make sure that the storage account is secure and access is restricted.
-
-### Step 4: Regular Audit and Updates
-Regularly review and update your encryption and access control mechanisms. If possible, automate the encryption and decryption process through scripts or tools.
-
-```bash
-# To decrypt the file when needed
-gpg DATA_FILE.gpg
-``` 
-
-This will prompt you for the passphrase. After providing the correct passphrase, you will get access to the original data file. Implement a policy for secure passphrase storage and renewal.
-
-Please remember: encryption should not be the only control. It is merely one part of a holistic security strategy. Other security controls such as secure coding practices, secure network design, intrusion detection systems, etc., should also be implemented to protect sensitive data.

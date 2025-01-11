@@ -33,6 +33,3 @@ After changing your Nginx configuration, it's always a good idea to review your 
 sudo nginx -t
 sudo service nginx reload
 ```
-
-### Step 5: Regular Audit and Update
-As with any services, it's always important to ensure you are using the most recent version of Nginx to have the recent security patches. Also, regular audits of your configuration will help keep your server secure.

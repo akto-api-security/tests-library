@@ -30,13 +30,3 @@ $stmt->bind_param('s', $sanitized_input);
 
 $stmt->execute();
 ```
-
-### Step 4: Regularly Update PHP and Libraries
-Ensure your version of PHP and related libraries (such as libcurl) are regularly updated.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-Ensure these steps are applied throughout your application and repeated regularly to avoid Php-mod/curl Library Cross-Site Scripting vulnerability.

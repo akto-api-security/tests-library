@@ -40,7 +40,3 @@ If you believe your OpenAI token has been exposed, immediately contact OpenAI fo
 ### Step 5: RBAC (Role-Based Access Control)
 
 Implement RBAC to restrict the level of access provided to different roles/users in your application. 
-
-### Step 6: Regular Audit and Update
-
-Regularly update your dependencies, review access controls and perform audits to ensure the security of your data.

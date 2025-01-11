@@ -40,6 +40,3 @@ app.post('/process', function (req, res) {
 });
 ```
 In the code above, the `csurf` middleware is validates the "_csrf" parameter in the request body against the token it issued to the client. If the value is missing, or it doesn't match the expected value, an error is thrown.
-
-### Step 4: Regular Audit and Update
-Always ensure to update to the latest security patches of your framework or modules that you are consuming in your application and practice regular code audits focusing on authorization and authentication parts of your application.

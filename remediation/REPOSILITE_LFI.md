@@ -30,14 +30,3 @@ reposilite {
   }
 }
 ```
-
-### Step 3: Regular Audit and Update
-
-Be sure to regularly update and audit your Reposilite installation. 
-
-```bash
-wget https://github.com/dzikoysk/reposilite/releases/download/{latest-reposilite-version}/reposilite.jar
-```
-Replace `{latest-reposilite-version}` with the latest Reposilite version to update.
-
-By following these steps, your Reposilite installation will no longer have the Directory Traversal vulnerability. Remember to verify your configuration and keep your Reposilite version updated so that you can prevent future security issues.

@@ -52,23 +52,3 @@ cursor.execute("CREATE TABLE IF NOT EXISTS company_info (encrypted_ein TEXT)")
 cursor.execute("INSERT INTO company_info VALUES (?)", (encrypted_ein,))
 connection.commit()
 ```
-
-### Step 4: Regular Security Audits 
-
-Performing regular security audits and updating the security measures in place is necessary for protecting the sensitive data. 
-
-```python
-# A mock function representing a security audit
-def security_audit():
-    # Check for exposed sensitive data
-    # Check for weak encryption
-    # Check for insecure communication channels
-    # Check for vulnerabilities in the database
-    pass
-```
-
-### Step 5: Education and Awareness
-
-Make sure that all individuals and teams in the organization who handle sensitive data are aware of its importance and the necessary security measures.
-
-Note: All keys and sensitive information used in this example are for illustration purposes and should be rotated and controlled in a secure manner in a live system. The secret key should ideally not appear in the source code itself and should be stored securely.

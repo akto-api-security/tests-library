@@ -38,6 +38,3 @@ except Exception as e:
 ```
 ### Step 5: Grant Least Privilege
 Ensure that accounts associated with USERNAME have least privilege, they should only have access to information and commands necessary for their legitimate purpose.
-
-### Step 6: Regular Audit and Update
-Keep your system, especially your database management software and your application dependencies, updated to the latest secure versions. And conduct regular security audits to ensure the continued security of sensitive information.

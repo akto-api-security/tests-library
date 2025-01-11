@@ -50,7 +50,3 @@ def check_login_attempts(failed_attempts):
         return True  # Lock the account
     return False  # Don't lock the account
 ```
-
-### Conclusion
-
-This is not an exhaustive list of ways to secure PIN handling, but it should give a good foundation. Always stay updated on the latest best practices.

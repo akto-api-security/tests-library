@@ -44,8 +44,3 @@ public boolean isExceedingMaxAttempts(int userId) {
     return attempts >= MAX_ATTEMPTS;
 }
 ```
-
-### Step 5: Regular Audit
-Ensure regular audits and updates to keep track of all coupon and discount codes. Fix any issues that may arise promptly.
-
-By implementing these steps, you will make great strides in securing your system against code manipulation attacks.

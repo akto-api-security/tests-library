@@ -45,8 +45,3 @@ else:
 
 ### Step 3: Secure Storage of New Token
 Remember to securely store your refresh token, it should not be stored as a string in your source code, especially if it is posted publicly. 
-
-### Step 4: Regularly update your tokens
-Regularly updating your tokens is a good standard practice to follow. This limits the usefulness of any tokens that may have been leaked without your knowledge.
-
-Keep in mind all codes depend on your current implementation and language you are using, adapt it according to your needs. But the general idea stays the same: invalidate current token, generate new one, then store it securely and don't expose it.

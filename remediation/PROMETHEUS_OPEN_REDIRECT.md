@@ -37,6 +37,3 @@ if (!allowedHosts.includes(targetUrl.host)) {
 }
 ```
 In the above example, it checks if the host in target URL is in allowed hosts list.
-
-### Step 3: Regular Audits and Updates
-Regular audits of the Prometheus source should be conducted to detect and fix new instances of this vulnerability, if applicable.

@@ -46,13 +46,3 @@ except (TypeError, ValueError) as e:
 except Exception as e:
     log.error("Error performing transaction: " + str(e))
 ```
-
-### Step 4: Regular Review and Update
-
-Regularly review and update your code to identify and fix potential vulnerabilities as they evolve over time.
-
-```bash
-git pull origin master
-```
-
-By following these remediation steps, you can protect your application from the parameter manipulation attacks.

@@ -51,14 +51,3 @@ sudo apt-get install libapache2-mod-security2
 # Enable ModSecurity
 sudo a2enmod security2
 ```
-
-### Step 4: Regular Code Review and Update
-
-Regularly conduct code reviews and updates to ensure that new vulnerabilities have not been introduced into the codebase. 
-
-```bash
-# Review your code repository
-git log
-```
-
-In conclusion, always be careful with user input data, including cookies. Validate, sanitize, and, where possible, avoid directly incorporating user input into SQL queries.

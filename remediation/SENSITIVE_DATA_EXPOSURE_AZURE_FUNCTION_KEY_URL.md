@@ -35,10 +35,7 @@ public static class EnvironmentSettingConfigurator
 }
 ```
 
-### Step 4: Regular Audit
-Regularly review your code and cloud configurations to ensure that no sensitive information such as Function Keys are exposed.
-
-### Step 5: Rotating your Function Keys
+### Step 4: Rotating your Function Keys
 In case a key gets exposed, you should rotate your Function Key to minimize the impact. 
 
 ```csharp

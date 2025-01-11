@@ -31,5 +31,3 @@ def download
   send_file path, filename: "your_file_name"
 end
 ```
-### Step 5: Regular Security Audit
-Regularly test your Rails applications for file disclosure vulnerabilities, and ensure all  developer teams are aware of the issue and how to prevent it.

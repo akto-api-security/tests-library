@@ -54,6 +54,3 @@ def refresh_access_token(refresh_token, client_id, client_secret):
     response = requests.post(OAUTH_URL, data=data)
     return response.json()
 ```
-  
-### Step 5: Regular Audit and Update
-Regularly review your OAuth 2.0 Authorization server setup and apply any necessary security updates or patches in a timely manner.

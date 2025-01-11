@@ -39,7 +39,3 @@ mvn clean install
 # For Gradle
 gradle build
 ```
-### Step 4: Regular Audit and Update
-Consistently monitor any disclosed vulnerabilities in the libraries your software relies on and update them promptly. Modify your `pom.xml` or `build.gradle` periodically with the newer versions released.
-
-Please note that this process is not a definitive fix to the vulnerability, but a recommended mitigation strategy. It's crucial that all software dependencies stay updated as a rule to maintain robust security.

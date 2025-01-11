@@ -50,15 +50,3 @@ let user = userCredential.user;
 console.log(error); 
 });
 ```
-
-### Step 5: Regular Audit and Updates
-Regularly review your Firebase security rules and user permissions to prevent sensitive data exposure. Always keep your Firebase SDKs updated to the latest version. 
-
-```bash
-npm update firebase --save
-```
-
-Note: Replace <API_KEY>, <PROJECT_ID>, <DATABASE_NAME>, and "<BUCKET>" with your project's actual API key, Project ID, Database name, and bucket respectively.
-Always remember to keep these values secret and do not expose them publicly. 
-
-Remember, once your sensitive data is exposed on the internet it's nearly impossible to revoke access, always follow best practices to keep your data secure. Always make sure your security rules in Firebase are as tight and precise as possible.

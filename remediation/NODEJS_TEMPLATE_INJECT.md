@@ -26,10 +26,3 @@ Avoid using `<%=` which outputs the unescaped content into the template. Instead
 ```
 ### Step 3: Use a Template Engine with Built-in Protection
 Some template engines, like Handlebars and Jade, have built-in functions to handle potential Injection attacks. When using Handlebars, specify the var as `{{var}}`, this will treat the data as text, not HTML.
-
-### Step 4: Regular Review and Update
-Regularly reviewing the code base and updating necessary packages or libraries is essential in maintaining the security of the system.
-```bash
-npm audit
-npm update
-```

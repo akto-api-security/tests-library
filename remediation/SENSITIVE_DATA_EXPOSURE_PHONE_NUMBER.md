@@ -30,8 +30,6 @@ If you need to present the phone number to the user, consider masking part of th
 ### Step 3: Secure Data Transmission
 If transmitting phone numbers, always use HTTPS with TLS encryption rather than plain HTTP, ensuring the data is encrypted during transmission.
 
-### Step 4: Regular Auditing and Update
-Ensure your encryption methods and protocols are always up-to-date and undergo regular auditing to ensure there is no security vulnerability. 
 
-### Step 5: Access Control
+### Step 4: Access Control
 Strictly control and monitor who can access the sensitive data. Role-based access control (RBAC) may be helpful in this case. Enable logging to track down in case of any security breach.

@@ -43,14 +43,3 @@ Use a WAF that can detect directory traversal attempts and block them. This prov
 sudo apt-get install libapache2-mod-security2
 sudo a2enmod security2
 ```
-### Step 4: Regular Audit and Update
-
-Regularly update and audit your application, libraries, and environment, to address any newly discovered potential risks.
-
-```bash
-# Example: Update system and application (Python, pip)
-sudo apt-get update && sudo apt-get upgrade
-pip install --upgrade pip setuptools 
-```
-
-Remember to always backup your existing code and data before making any changes to your system. And ensure that all remediation steps have been thoroughly tested in a development or staging environment before implementing them in production.

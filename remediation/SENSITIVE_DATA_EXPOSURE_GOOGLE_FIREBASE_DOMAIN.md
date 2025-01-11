@@ -42,13 +42,3 @@ var config = {
 firebase.initializeApp(config);
 ```
 On Firebase Hosting, SSL is enabled by default, and cannot be turned off. This is a secure default configuration.
-
-### Step 4: Regular Audit and Update
-Make sure to regularly update your Firebase SDKs to the latest versions. Each update usually includes a number of bug fixes and improvements.
-
-```bash
-npm update firebase-functions
-npm update firebase-admin
-```
-
-Finally, remember that security is an ongoing process and not a one-time fix. Always keep abreast of the latest practices to keep your data secure.

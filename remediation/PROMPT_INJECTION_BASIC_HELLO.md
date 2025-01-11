@@ -38,9 +38,3 @@ It is important to regularly audit your code for potential vulnerabilities. This
 # Use grep to check for risky functions
 grep -rE "(system|exec|popen|proc_open|shell_exec|eval|passthru|`|create_function)" .
 ```
-
-### Step 4: Use Security Libraries
-
-Your programming language of choice may have a security library to assist with sanitizing user inputs and preventing injection attacks. Ensure you are utilizing these libraries to their fullest extent.
-
-For example, for PHP you could use PHP-CSRF or PHP-IDS. For Python, use cgi.escape() or html.escape().

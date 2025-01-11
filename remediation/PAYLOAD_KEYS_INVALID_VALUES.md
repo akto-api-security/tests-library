@@ -50,9 +50,3 @@ if (result.error) {
 ```
 
 Above, if the validation fails, a 400 status error is sent to the user with the relevant error message.
-
-### Step 4: Regular Code Review and Update
-
-It's crucial to regularly review and update your validation schemas to match the ever-changing requirements of your system. This helps ensure all new payload keys are correctly validated.
-
-In conclusion, the main strategy is to never trust user input implicitly, validate everything you receive, and handle all error cases properly.

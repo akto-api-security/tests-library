@@ -41,12 +41,3 @@ app.use(function(err, req, res, next) {
   res.status(500).send('An error occurred, please try again later.');
 });
 ```
-
-### Step 4: Regular Audit and Update
-Code base should be regularly audited to catch LFI or related vulnerabilities. Third party security auditing tools can be used to do these checks regularly.
-
-```bash
-npm audit 
-npm audit fix
-```
-Always ensure that the latest and secure version of packages are in use. Regularly update all dependencies.

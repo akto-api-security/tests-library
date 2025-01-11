@@ -42,15 +42,7 @@ import os
 gcp_api_key = os.environ.get('GCP_API_KEY')
 ```
 
-### Step 5: Regular Review and Rotation
 
-Regularly review your API keys and their usage. Rotate your API keys periodically to limit the impact of keys that are exposed.
-
-```bash
-# Regenerate a new key
-gcloud auth application-default rotate-secrets
-```
-
-### Step 6: Apply Principle of Least Privilege
+### Step 5: Apply Principle of Least Privilege
 
 Apply the principle of least privilege by restricting the permissions associated with your API credentials. This can help limit any potential damage should your GCP API keys become exposed. Only grant permissions that are absolutely necessary.

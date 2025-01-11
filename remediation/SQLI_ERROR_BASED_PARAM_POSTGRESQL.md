@@ -40,9 +40,3 @@ Using regular expressions to validate input data and restrict to alphanumeric ch
 
 ### Step 4: Least Privilege Principle
 Implementing the principle of least privilege for database accounts can protect the database even if a SQL injection attack occurs. Never connect to your database using an account with admin-level privileges, unless this is absolutely necessary.
-
-### Step 5: Update and Patch
-Regularly updating and patching the database management systems is also a critical step in preventing SQL Injection attacks. Most of the database software vendors regularly release patches that fix known vulnerabilities. 
-
-### Step 6: Use a Web Application Firewall
-A web application firewall (WAF) can help to detect and prevent SQL Injection attacks at the network level before it reaches your application. Usually, WAFs come with SQL Injection protection as part of their default rule set.

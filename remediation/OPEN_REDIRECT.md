@@ -39,9 +39,4 @@ if (!(url.getProtocol().equals("http") || url.getProtocol().equals("https"))
     response.sendRedirect(redirectUrl);
 }
 ```
-### Step 4: Constant Code Review
-
-Perform constant code reviews to ensure that safe practices are consistently applied across the codebase.
-
-Remember, Open redirect vulnerabilities can arise in any place where your application redirects to a URL specified in the user's request. Hence, it is beneficial to conduct regular security audits and fix any new issues that might pop up. 
 

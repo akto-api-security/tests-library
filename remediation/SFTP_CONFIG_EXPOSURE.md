@@ -38,13 +38,3 @@ Finally, restart the SSH service to apply the changes.
 sudo systemctl restart ssh
 ```
 Making these changes will prevent the disclosure of SFTP config files to unauthorized individuals. Regular audit and update of settings are required for optimum security. 
-
-### Step 4: Regular Audit and Update
-Ensure that you perform regular audits and updates on your system and always follow best practices.
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-These commands will ensure that your system is updated with the latest security patches. 
-
-Always check the SFTP configurations at regular intervals and modify according to the organization's policies and regulations.

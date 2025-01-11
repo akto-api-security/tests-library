@@ -31,10 +31,7 @@ Don't give your API permission to everything. Limit it only to what it needs to 
 ### Step 3: Use a WAF (Web Application Firewall)
 Web Application Firewalls can help detect and mitigate SQL Injection attacks by identifying malicious SQL queries.
 
-### Step 4: Regularly Review and Update Your Code
-Update your codebase regularly to patch any potential security issues and be aware of new attack vectors.
-
-### Step 5: Validate and Sanitize User Inputs
+### Step 4: Validate and Sanitize User Inputs
 Ensure that data entered into your system is valid and safe. Don't blindly trust user input. Use sanitization and validation techniques to ensure the safety of your data.
 
 ```python
@@ -49,5 +46,3 @@ try:
 except ValidationError as e:
     print(e)
 ```
-
-By following these steps, you can guard your PostgreSQL Payment Gateway API against SQL Injection attacks.

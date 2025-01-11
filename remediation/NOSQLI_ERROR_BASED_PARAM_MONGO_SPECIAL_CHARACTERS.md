@@ -41,15 +41,8 @@ User.find({userid: sanitize(req.body.userid)}, function(err, user) {
 });
 ```
 
-### Step 4: Regularly update your MongoDB version
-Ensure to always use the latest MongoDB version as every new release includes bug fixes and new security features.
 
-```bash
-sudo apt-get update
-sudo apt-get upgrade mongodb
-```
-
-### Step 5: Enable authentication in your MongoDB Database
+### Step 4: Enable authentication in your MongoDB Database
 Authentication controls who can access the MongoDB database.
 
 Edit your `mongodb-conf` file usually located at /etc/mongod.conf

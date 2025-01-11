@@ -45,10 +45,3 @@ catch(SQLException e){
     logger.error("Database error. Please try again later.");
 }
 ```
-
-### Step 4: Regular Auditing
-Audit regularly to ensure the safety and integrity of the invoice data. Log any unauthorized access attempts and regularly review these for any suspicious activity.
-
-```bash
-grep 'Failed password' /var/log/auth.log
-```

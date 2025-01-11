@@ -36,11 +36,3 @@ def authenticate_user(username, password):
     )
     return response['AuthenticationResult']['IdToken']
 ```
-
-### Step 4: Regular Audit and Update
-Always ensure to implement regular audits and software updates to prevent potential security vulnerabilities. If using AWS solutions, consider AWS Security Hub for automatic compliance checks and vulnerability scanning. The exact commands will depend on your specific setup, but AWS CLI can be used to manage Security Hub, like so:
-```bash
-aws securityhub batch-update-findings
-```
-
-Please replace `'us-east-1'` and `'example_client_id'` with your actual AWS region and client id. Also, be sure to securely manage your AWS credentials.

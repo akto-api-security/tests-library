@@ -40,9 +40,3 @@ def redirect_to_next(request):
     else:
         return HttpResponseRedirect('/default/url')
 ```
-
-### Step 4: Test your application
-
-Lastly, make sure to test your application after implementing those changes to ensure it behaves as expected and the vulnerability has been successfully fixed.
-
-Remember, the code above is only an example and should be adapted to match your use case or application.

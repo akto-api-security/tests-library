@@ -43,11 +43,8 @@ https.createServer(options, function (req, res) {
 }).listen(8000);
 ```
 
-### Step 3: Regular Auditing and Updates
 
-Stay up-to-date with the latest security patches for the systems you are using. Regularly auditing your system to check for possible vulnerabilities is recommended.
-
-### Step 4: Least Privilege Principle
+### Step 3: Least Privilege Principle
 
 Only grant essential system and data access rights to users and processes relevant to their roles. Unnecessary privileges should be avoided.
 

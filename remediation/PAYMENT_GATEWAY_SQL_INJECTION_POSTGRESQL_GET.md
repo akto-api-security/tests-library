@@ -49,14 +49,9 @@ In Java, you'd use `StringEscapeUtils.escapeSql()` from Apache Commons Lang Libr
 String safe = StringEscapeUtils.escapeSql( userSuppliedString );
 ```
 
-### Step 5: Regular Updates and Patching
-Regularly update and patch your database and application frameworks to ensure you have the latest security fixes.
-
-### Step 6: Least Privileged User
+### Step 5: Least Privileged User
 Use a least-privileged user account to connect to the database. This account should only have the minimum necessary permissions, limiting the potential damage of an attack. 
 
 ```sql
 CREATE USER myuser WITH LOGIN NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;
 ```
-
-Following these steps will help mitigate SQL injection vulnerabilities and protect your Payment Gateway API from potential security threats.

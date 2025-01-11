@@ -46,19 +46,3 @@ axios.get('https://example.com', {
   }
 })
 ```
-
-### Step 5: Regular Key Rotation
-Schedule regular Postman Key rotation. This means assigning a new key at regular time intervals and revoking the old key.
-
-```bash
-# reaching to postman's API or dashboard and create a new key and revoke the old one
-```
-
-### Step 6: Responding to a Key Leak
-In case of a leak, revoke the compromised key and issue a new one.
-
-```bash
-# reaching to postman's API or dashboard and create a new key and revoke the old one
-```
-
-Remember, prevention is always the best cure for sensitive data exposure. Therefore, always keep secrets secure and monitor their usage regularly to avoid any possible data breach or misuse.

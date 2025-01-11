@@ -48,11 +48,3 @@ dependencies {
 ```
 
 Replace `NEW_VERSION` with the specific version you are updating to.
-
-### Step 3:  Verify the Update
-Verify that the update is successful and the application works as expected.
-
-### Step 4: Regular Updates
-Regularly check for updates and patch as soon as updates become available. This can help avoid future vulnerabilities. 
-
-Remember, keeping your dependencies up-to-date is a crucial part of maintaining a secure codebase.

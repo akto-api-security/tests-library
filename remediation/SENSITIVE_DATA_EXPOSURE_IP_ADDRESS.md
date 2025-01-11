@@ -36,16 +36,3 @@ proxies = {
 
 requests.get('http://example.org', proxies=proxies)
 ```
-
-### Step 4: Regularly Check Your Security Settings
-
-Regularly check and update your security configurations to avoid any vulnerabilities.
-
-```bash
-nmap -v -sT localhost
-```
-
-This command will provide a report of your current security settings and any possible vulnerabilities. Update your configurations based on the results.
-
-
-Remember to always use strong, unique, and secure passwords for all of your systems and services, and keep them confidential. Update your passwords regularly as well. Education about potential security threats and how to handle them is also very beneficial.

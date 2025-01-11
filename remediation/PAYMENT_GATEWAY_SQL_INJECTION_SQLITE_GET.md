@@ -38,15 +38,3 @@ GRANT SELECT ON table_to_access TO limited_user;
 
 ### Step 4: Encryption
 Use encryption for all the sensitive data to add an extra level of security.
-
-### Step 5: Regular Code Review
-Regular code reviews can help identify potential SQL injection threats in a timely manner. Automated tools, such as static analysis tools, can also help in a large codebase.
-
-### Step 6: Regular Database Backup
-Regular backups of your database can help recover lost data in case of a successful SQL injection attack. Please note that this is a mitigation step rather than a prevention step. 
-
-```bash
-sqlite3 my_database.db ".backup 'backup.db'"
-```
-
-With these steps, you should be able to prevent most SQL Injection attempts on your payment gateway API.

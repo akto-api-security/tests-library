@@ -39,13 +39,3 @@ def home():
     if not username or not username.isalnum():
         abort(400, 'Invalid username provided.')
 ```
-
-### Step 4: Update and Monitor Your System
-
-Regular patches and updates are a key part of maintaining security. It's also important to monitor your system regularly for unusual activity that may indicate a DoS attack. Use monitoring and alerting tools that will notify you when suspicious activity occurs.
-
-```bash
-sudo apt-get update && sudo apt-get upgrade
-```
-
-Remember, these are broad steps and might need to be adapted to suit your particular system or server configuration. Careful consideration and understanding of the deployed environment are essential while implementing these remediation steps.

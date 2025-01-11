@@ -51,10 +51,3 @@ def get_secret():
 
     return secret
 ```
-
-### Step 4: Audit Security Practices
-It's important to regularly audit your security practices and ensure compliance with best practices, like minimum privilege access and regular key rotation.
-
-```bash
-aws iam generate-credential-report
-```

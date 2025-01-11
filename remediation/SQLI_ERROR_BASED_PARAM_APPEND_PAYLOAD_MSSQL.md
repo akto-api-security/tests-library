@@ -28,8 +28,3 @@ In the example above, the 'CustomerId' is automatically parameterized, which pre
 
 ### Step 3: Implementing a Web Application Firewall (WAF)
 A WAF can help protect your web application by monitoring HTTP traffic and blocking suspicious patterns that may suggest an SQL injection attempt.
-
-### Step 4: Regularly Update and Patch
-Ensure to patch and update your applications and also your SQL server on a regular basis. 
-
-**Note: Always avoid constructing SQL statements by concatenating user-controlled data as this may potentially allow a SQL Injection.**

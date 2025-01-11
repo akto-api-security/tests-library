@@ -30,12 +30,3 @@ system("echo #{params[:user_input]}")
 # Good
 system("echo", params[:user_input])
 ```
-
-### Step 4: Regular Code Reviews and Updates
-Conduct regular code reviews and audits to detect any potential security flaws. If a vulnerability is found, patch the code as soon as possible.
-
-```bash
-gem outdated
-```
-
-Please note that these remediation steps mitigate but do not completely eliminate the threat of Ruby on Rails Remote Code Execution, and it is essential to follow proper security procedures at all times when writing and deploying code. Always stay updated with the latest in security best practices and keep the software updated.

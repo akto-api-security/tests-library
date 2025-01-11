@@ -29,13 +29,3 @@ Introduce versioning to your APIs. Avoid breaking changes in old API versions by
 app.use('/api/v1', require('./v1'));
 app.use('/api/v2', require('./v2'));
 ```
-
-### Step 4: Regular Audits and Updates
-Implement regular security audits and patches to catch and fix potential vulnerabilities swiftly.
-
-```bash
-# Run vulnerability scanner regularly
-sh vulnerability_scanner.sh
-```
-
-By ensuring that proper security measures are in place and that these are updated and audited regularly, you can help to significantly reduce the risks of a BOLA vulnerability.

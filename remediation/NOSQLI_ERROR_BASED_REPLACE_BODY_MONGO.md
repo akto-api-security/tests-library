@@ -50,11 +50,3 @@ UserModel.findOne({ username: req.body.username }, function(err, user) {
   }
 });
 ```
-
-### Step 4: Regular Testing and Updates
-Ensuring your libraries and packages are up-to-date is another approach to limit vulnerabilities overall. Add regular penetration testing of your software. Utilize automated scanning tools and actively validate that mitigation steps are effectively implemented to ensure the system is shielded.
-```bash
-npm update
-```
-
-Avoid directly asking the MongoDB driver to execute queries on the database, as it could potentially lead to NoSQL Injection. Instead, rely on libraries and frameworks that handle these concerns for you where possible. This way, they act as another layer of security for your application.

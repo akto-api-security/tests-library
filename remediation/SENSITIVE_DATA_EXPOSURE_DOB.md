@@ -32,6 +32,3 @@ Use HTTPS protocol when transmitting the data between the client and server. HTT
 
 ### Step 3: Limit Data Exposure
 Limit the exposure of DOB and other sensitive data by not sending it in non-required API requests/responses. Have strong access controls and always validate user roles and rights before allowing access to sensitive data.
-
-### Step 4: Regular Audit and Update
-Regularly check and update the encryption algorithms according to the latest security standards. Also, regularly conduct vulnerability assessment and penetration testing (VAPT) to unearth any new security issues.

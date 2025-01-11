@@ -44,6 +44,3 @@ class User(UserMixin, db.Model):
 def contact():
     # ...
 ```
-
-### Step 5: Regular Security Audits
-Regularly audit and update your security measures. This should be a continuous process as new threats and vulnerabilities are found often.

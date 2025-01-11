@@ -52,5 +52,3 @@ try:
 except AccessDenied:
     logger.warning(f'Unauthorized access attempt by {user}')
 ```
-
-Remember, these are general guidelines and may need to be adapted to fit your specific environment and needs.

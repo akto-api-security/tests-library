@@ -42,17 +42,8 @@ function isTrustedUrl(url: URL) {
 }
 ```
 
-### Step 3: Keep Dependencies Updated
 
-Make sure all your dependencies are up to date. Often security patches will be implemented in later versions of software.
-
-```bash
-npm install
-npm audit
-npm audit fix
-```
-
-### Step 4: Apply Security Headers
+### Step 3: Apply Security Headers
 
 Setting `X-Content-Type-Options` to `nosniff` prevents the browser from trying to MIME-sniff the content type and forces it to use the type given in the `Content-Type` header.
 
@@ -64,11 +55,4 @@ function handler(req, res) {
   res.setHeader("X-Frame-Options", "SAMEORIGIN"); 
   // your handler code
 }
-```
-### Step 5: Regular Audit and Update
-
-Evaluate your application regularly for vulnerabilities, especially if it's exposed to the web.
-
-```bash
-npm audit
 ```

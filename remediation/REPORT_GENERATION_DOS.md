@@ -60,16 +60,3 @@ app.get("/report", (req, res) => {
   res.send(filterNecessaryData(report));
 });
 ```
-
-### Step 5: Regular Audit and Update
-
-The security of your report generation endpoint isn't a set-it-and-forget-it matter. Regular audits, updates and patching are required to maintain the security of the endpoint.
-
-```bash
-# Install updates
-sudo apt-get update
-sudo apt-get upgrade
-
-# Regularly review your audit logs
-cat /var/log/audit/audit.log | grep report-endpoint
-```

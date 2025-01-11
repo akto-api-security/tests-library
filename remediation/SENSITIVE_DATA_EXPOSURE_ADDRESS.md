@@ -52,6 +52,3 @@ def hash_address(address):
 # use this to save address in the database
 hashed_address = hash_address(actual_address)
 ```
-
-### Step 4: Regularly Update the System
-Often, patches and updates are released to cure known weaknesses. Make sure to keep every part of your system (OS, Web Server, Database, applications, plugins) up-to-date. This step would not involve writing code but would rather be handled by your security and DevOps team.

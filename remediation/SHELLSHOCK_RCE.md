@@ -35,14 +35,3 @@ sudo apt-get update && sudo apt-get install --only-upgrade bash
 ```bash
 sudo yum -y update bash
 ```
-
-### Step 4: Verify the Update
-After updating bash, run the vulnerability test command from Step 2 to ensure that the vulnerability has been corrected.
-
-In case a new version of Bash is not available or the system continues to be vulnerable after the update, you should consult with your operating system vendor for a patch or consider alternatives like using a different shell.
-
-### Step 5: Regular Auditing
-Regularly audit your systems for any known vulnerabilities and always keep your systems updated.
-
-### Step 6: Incident Response
-In case your system was compromised due to ShellShock, consider your incident response protocol to ensure system security.

@@ -39,15 +39,3 @@ Example: Deploy ModSecurity WAF with Apache:
 sudo apt-get install libapache2-mod-security2
 sudo a2enmod security2
 ```
-
-### Step 4: Regularly Update and Patch
-
-Ensure to regularly update and patch your database software to mitigate any known vulnerabilities.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade postgresql
-```
-Always test these patches in a controlled environment before deploying them into production. 
-
-Remember, no solution is bulletproof, and the best defense against SQL Injection is proper coding practices and regular code audits to find and fix security flaws.

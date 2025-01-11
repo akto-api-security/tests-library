@@ -40,15 +40,7 @@ srchIndexesAllowed = main;os;_audit
 srchIndexesDefault = main;os;_audit
 ```
 
-### Step 4: Regular Audit and Update
-
-Ensure that regular audits are performed on your system and Splunk application is kept up-to-date with the latest security patches and updates.
-
-```bash
-# command to update Splunk
-/opt/splunk/bin/splunk update
-```
-### Step 5: Use of SSL
+### Step 4: Use of SSL
 
 Ensure secure communication by using SSL for data transmission in Splunk to prevent sensitive information from being intercepted during transit.
 

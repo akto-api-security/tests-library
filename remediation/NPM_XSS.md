@@ -34,17 +34,3 @@ app.use(helmet.contentSecurityPolicy({
   }
 }));
 ```
-
-### Step 3: Update Dependencies
-Ensure to keep all dependencies up to date to include the latest security fixes. 
-```bash
-npm audit
-npm update
-```
-
-### Step 4: Regular Code Audit
-Establish a regular code auditing schedule to identify, fix and prevent any potential XSS vulnerabilities in future.
-
-Please note that these steps are a guideline and might not fully remediate all XSS vulnerabilities. Other steps could be required based on the package being used and its configuration.
-
-While remediation might reduce the impact of a vulnerability, the best solution would be to prevent its occurrence in the first place by following good security practices from the start of development.

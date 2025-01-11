@@ -41,12 +41,3 @@ Create the corresponding view for the controller and its action. Generally found
 </body>
 </html>
 ```
-
-### Step 4: Restart Your Server
-After making the changes, restart your Rails server to ensure your changes have been correctly implemented.
-
-```bash
-rails server
-```
-
-Now, when you navigate to your application's root URL, it will route to the specified controller and its action instead of displaying the Rails default homepage.

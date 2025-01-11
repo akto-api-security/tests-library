@@ -33,22 +33,7 @@ class User < ApplicationRecord
 end
 ```
 
-### Step 3: Regularly Update GitLab
-
-Keep your GitLab instance up-to-date. Regular updates will often include security patches and fixes.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade gitlab-ee
-```
-
-### Step 4: Regularly Audit and Update
-
-Conduct regular security audits and penetration testing to identify potential vulnerabilities and fix them. 
-
-Remember, security is not a one-time effort but a continuous process.
-
-### Step 5: Use Two-Factor Authentication (2FA)
+### Step 3: Use Two-Factor Authentication (2FA)
 
 Enabling 2FA adds an additional layer of security for your account, making it more difficult for an attacker even if they have access to the user's password.
 

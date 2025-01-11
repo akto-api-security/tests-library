@@ -32,15 +32,3 @@ All connections to the ServiceNow platform should be encrypted using SSL (Secure
 //Navigate to System Properties > Security
 //Enable the 'glide.ui.session_secure' parameter to enforce the use of secure HTTP connections
 ```
-
-### Step 4: Regular Audits and Updates
-
-It is important to conduct regular audits and updates to ensure that any potential vulnerabilities are identified and fixed promptly. Monitor your system logs and make sure the ServiceNow instance is updated with the latest security patches regularly.
-
-```javascript
-//Navigate to System Logs > Events
-//Regularly review system logs for any potential anomalies
-```
-Remember to also keep track of ServiceNow updates and apply patches as they become available.
-
-Be informed that these preventative measures are to mitigate the risk of unauthorized access via an exposed ServiceNow login panel but it's important to adopt a proactive approach towards securing your ServiceNow applications. Regular penetration testing, continuous monitoring, and following best security practices is advised for comprehensive protection.

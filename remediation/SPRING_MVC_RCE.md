@@ -38,14 +38,3 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 }
 ```
-
-### Step 4: Regular Patch and Update
-
-Keeping your Spring MVC application and its dependencies up-to-date is crucial to avoid being vulnerable to security issues.
-
-```bash
-mvn versions:display-dependency-updates
-```
-This Maven command can help you see which dependencies have newer versions available.
-
-Pay special attention to security notes and vulnerability details whenever you are updating your dependencies to ensure that the issues addressed include the remote code execution vulnerability.

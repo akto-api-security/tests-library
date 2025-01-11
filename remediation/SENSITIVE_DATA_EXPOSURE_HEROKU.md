@@ -37,15 +37,8 @@ All the data in transit should be encrypted. Heroku provides Automated Certifica
 heroku certs:auto:enable
 ```
 
-### Step 4: Regular Update and Audit
 
-Always make sure Heroku, as well as any other dependencies, are updated to the latest version. Regularly check the logs for any suspicious activity.
-
-```bash
-heroku logs --tail
-```
-
-### Step 5: Protect Heroku Authentication
+### Step 4: Protect Heroku Authentication
 
 Use a strong password and two-factor authentication for your Heroku account. Use the following command to enable two-factor authentication:
 

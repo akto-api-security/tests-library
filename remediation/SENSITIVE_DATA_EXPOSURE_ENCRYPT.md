@@ -32,9 +32,6 @@ print(plain_text)
 
 Use secure communication protocols like HTTPS, to ensure the data in transit is encrypted.
 
-### Step 4: Regular Checks and Updates
 
-Have a process in place to regularly check for any data that is not being encrypted or if the encryption algorithms used are out of date. Implement periodic audit and updates to these security checks.
-
-### Step 5: Access Controls
+### Step 4: Access Controls
 Implement strong access controls to ensure only authorized individuals can access the encrypted data.

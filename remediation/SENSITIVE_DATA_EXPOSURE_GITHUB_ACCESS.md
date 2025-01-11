@@ -36,9 +36,3 @@ token = os.environ.get('GITHUB_TOKEN')
 ### Step 4: Monitoring and Logging
 
 Implement logging and monitoring mechanism to detect unauthorized access to your GitHub repositories.
-
-### Step 5: Regular Audit and Update
-
-Regularly check your account for any exposed sensitive data and change your access tokens in a periodic manner to ensure security.
-
-Note: The exact commands depend on your operating system and the language your application is written in. The code provided here is for illustration purposes and may not be directly applicable without necessary adjustments. Always follow best security practices while handling sensitive data.

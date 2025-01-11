@@ -26,9 +26,3 @@ public Boolean isAccessible(String fieldName) {
 ### Step 4: Encrypt Sensitive Data
 
 Using Salesforce Shield or Platform Encryption to encrypt sensitive data at rest.
-
-### Step 5: Regular Audit and Update
-
-Regularly review and update your security configuration and perform security health checks.
-
-Remember, always apply the principle of least privilege. Only give the necessary access rights to users who need it to perform their job.

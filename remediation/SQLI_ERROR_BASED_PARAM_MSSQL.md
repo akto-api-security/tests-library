@@ -42,11 +42,3 @@ using (var connection = new SqlConnection(connectionString))
 ### Step 3: Least Privilege Principle
 
 Ensure that the database account used by your application to connect to the database has only those privileges which it absolutely needs. Don't grant it admin rights unless it's necessary.
-
-### Step 4: Regular Code Review and Update
-
-Regularly review your code to find potential SQL injection vulnerabilities, especially in the parts where SQL queries are executed. Updating your database and language frameworks can also help you prevent new types of SQL injection attacks.
-
-### Step 5: Use Database Firewall
-
-A database firewall can serve as an additional layer of protection. It blocks SQL injection attacks by analyzing the incoming SQL queries. Turning on logging on the firewall can help you identify and understand the attack patterns.

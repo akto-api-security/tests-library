@@ -50,5 +50,3 @@ def mask_sensitive_data(sensitive_data):
 masked_data = mask_sensitive_data('Sensitive data')
 print(masked_data)  # Output: **************
 ```
-### Step 5: Regular Audit and Update
-Regularly update and audit your systems for any possible leaks or breaches. Always keep your system and its security measures up to date.

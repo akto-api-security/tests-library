@@ -44,9 +44,3 @@ Set an expiration time for your ALIBABA TOKEN and rotate it regularly to minimiz
 ### Step 4: Employ Principle of Least Privilege
 
 Ensure that the ALIBABA TOKEN is assigned with just enough permissions to perform the required tasks, helping reduce the impact if the token is exposed.
-
-### Step 5: Monitor Activity
-
-Monitor the usage of your ALIBABA TOKEN to detect any potential malicious activity. This could be done through ALIBABA Cloud's built-in features or third-party solutions.
-
-Following these steps will help to significantly reduce the risk of sensitive data exposure for your ALIBABA TOKEN.

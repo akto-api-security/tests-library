@@ -41,6 +41,3 @@ Here's an example of how you can set this up in GitHub Actions:
   run: |
     curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' $SLACK_WEBHOOK_URL
 ```
-
-### Step 4: Regular Audit and Update
-Ensure regular audits of your codebase to look for sensitive information that should not be there. If a URL is accidentally committed, cycle the URL as soon as possible. Be sure to continuously educate your team about the risks and remediation steps to avoid exposing sensitive data in the future.

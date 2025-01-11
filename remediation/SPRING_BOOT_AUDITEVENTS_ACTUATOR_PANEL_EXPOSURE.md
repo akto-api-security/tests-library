@@ -78,7 +78,3 @@ management.endpoints.web.path-mapping.health=health
 management.endpoints.web.path-mapping.info=info
 ```
 These settings included only Health and Info endpoints and mapped them to the root path.
-
-### Step 4: Regular Audit And Update
-
-Always remember to regularly audit your configurations and keep your dependencies updated to ensure that all known vulnerabilities are patched, and exposure of sensitive information is minimized.

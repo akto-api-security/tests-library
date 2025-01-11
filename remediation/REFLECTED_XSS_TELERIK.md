@@ -33,10 +33,3 @@ The AntiXSS Library from Microsoft is one useful tool to prevent XSS attacks. It
 string input = "<img src=1 onerror='alert(1)'>"; //example
 string safe = Microsoft.Security.Application.Encoder.HtmlEncode(input);
 ```
-### Step 4: Regular Patching and Updating
-Always ensure your Telerik Reporting Module is up to date. Regular patching can help remediate known vulnerabilities and protect against attacks.
-
-```bash
-# In your local project directory, update the Telerik Reporting Module
-nuget update
-```

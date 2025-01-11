@@ -70,10 +70,3 @@ queue = sqs.create_queue(
     }
 )
 ```
-
-### Step 4: Regularly audit your AWS setup 
-Monitor any security deflections using AWS CloudTrail and CloudWatch. Always monitor IAM to see if there are any unnecessary permissions or roles.
-Keep track of any exposed AWS keys/secrets in your code repositories or unsecured databases.
-
-### Step 5: Use AWS Best Practices
-Always follow [AWS best practices](https://docs.aws.amazon.com/general/latest/gr/aws-security-best-practices.html) for securing data and protecting AWS resources. Regularly check AWS Security Bulletins and updates.

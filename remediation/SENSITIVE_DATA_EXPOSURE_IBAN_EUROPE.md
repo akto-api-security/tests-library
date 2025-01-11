@@ -31,7 +31,3 @@ In the user interface, sensitive data inputs like IBAN should be masked to prote
 <!-- in html -->
 <input type="password" id="iban" name="iban">
 ```
-### Step 4: Regular Audit and Update
-Perform regular security audits and updates to ensure secure handling of sensitive data. If any vulnerabilities are identified during audits, promptly take necessary remediation steps. 
-
-Remember, there's no perfect security measure. Always strive to follow best security practices and keep systems up to date. Keep an eye on any security reports related to tools and services used in your software/system.

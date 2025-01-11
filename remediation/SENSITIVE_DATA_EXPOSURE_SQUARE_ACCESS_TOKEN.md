@@ -72,5 +72,3 @@ public Response API_Request(Request request) {
     }
 }
 ```
-
-Remember, rotate tokens regularly and restrict the permissions of each token based on its purpose. Ensure secure storage and transmission of tokens at all times. Regular audits and updates for security are also necessary.

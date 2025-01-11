@@ -31,13 +31,3 @@ APP_SECRET='%env(resolve:APP_SECRET)%'
 # Add the secret to Symfony's Secret Vault
 symfony console secrets:set APP_SECRET
 ```
-
-### Step 4: Regular Audit and Update
-
-Be sure to periodically audit the access permissions of your sensitive files and directories.
-
-```bash
-sudo find / -name "parameters.yml" -exec ls -l {} \;
-```
-
-Making these changes can significantly increase the security of your Symfony application and protect against the dangers of file discovery.

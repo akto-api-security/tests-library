@@ -38,19 +38,3 @@ SQL accounts used by the application should have the least privileges necessary 
 CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
 GRANT SELECT, INSERT, UPDATE ON database_name.table_name TO 'newuser'@'localhost';
 ```
-
-### Step 4: Regular Update and Patching
-Always ensure your software, including application server, web server, database server, and APIs, is up to date.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get dist-upgrade
-```
-### Step 5: Security Testing and Review
-Use regular vulnerability scanning and penetration testing to ensure your defenses are sufficient.
-
-```bash
-openvas-start
-arachni http://yoursite.com
-```

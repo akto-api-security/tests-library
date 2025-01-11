@@ -24,13 +24,3 @@ def safe_input(user_input):
 ### Step 3: Use Web Application Firewalls
 
 Web Application Firewalls (WAFs) can detect and mitigate CRLF injection attacks. Make sure to enable and properly configure your WAF.
-
-### Step 4: Regular Audit and Update
-
-Regularly audit your software and applications for any security vulnerabilities and apply relevant patches and updates.
-
-```bash
-pip install --upgrade pypiserver
-```
-
-Remember, consistent updates and strong input validation measures are effective ways to protect the system from Pypiserver CRLF Injection vulnerability.

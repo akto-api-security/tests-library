@@ -53,6 +53,3 @@ Prometheus supports TLS. Please refer to the official documentation for implemen
 
 ### Step 3: Network Security Measures
 Ensure that your Prometheus server is not publicly accessible and only accessible from machines that require access. This can be achieved using firewall rules that restrict access based on IP address.
-
-### Step 4: Regular Audit and Update
-Regularly audit your Prometheus configurations and security settings, and always update Prometheus to the latest version to make use of the newest security patches.

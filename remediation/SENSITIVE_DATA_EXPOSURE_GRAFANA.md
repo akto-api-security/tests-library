@@ -57,17 +57,3 @@ Finally, restart the Grafana service to apply the changes:
 ```bash
 sudo systemctl restart grafana-server
 ``` 
-
-### Step 4: Regularly Update Grafana
-
-As a best practice, it is recommended to keep your Grafana instance up-to-date with the most recent versions as they often include security patches and enhancements:
-
-```bash
-# For Ubuntu and Debian
-sudo apt update && sudo apt upgrade grafana
-
-# For CentOS and RHEL
-sudo yum update grafana
-```
-
-Always remember to validate and test your changes to ensure Grafana is functioning as expected.

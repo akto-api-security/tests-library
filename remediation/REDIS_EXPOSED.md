@@ -58,6 +58,3 @@ Then restart Redis to apply changes:
 ```bash
 sudo service redis-server restart
 ```
-
-### Step 5: Regular Audit and Update
-Ensure you periodically check your Redis settings and keep your software component up to date to avoid vulnerabilities addressed in later versions.

@@ -37,17 +37,3 @@ function sanitizeInput(input) {
   return output;
 }
 ```
-
-### Step 3: Regularly Update ServiceNow Instance
-
-Ensure that your ServiceNow instance is up to date to benefit from any security patches and updates.
-
-```bash
-# Check the version of ServiceNow
-sn -v
-
-# Update ServiceNow
-sn update
-```
-
-Please make sure the validation and sanitization routines match with your application's requirements.

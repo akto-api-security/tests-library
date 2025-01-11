@@ -29,13 +29,3 @@ Regularly verifying your server and file permissions is a good habit.
 ls -l /etc/nginx/nginx.conf
 ```
 This command should only return the permission of the Nginx config file.
-
-### Step 4: Update Nginx Regularly
-Ensure your server is regularly updated as improvements and patches are released frequently.
-
-```bash
-sudo apt update
-sudo apt upgrade nginx
-```
-
-The `sudo apt update` command updates the package lists for upgrades. `sudo apt upgrade nginx` installs the newest versions of all installed Nginx.

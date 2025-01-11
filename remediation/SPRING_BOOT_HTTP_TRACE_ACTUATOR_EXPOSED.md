@@ -27,11 +27,3 @@ public class TraceMethodDisableConfig {
 }
 ```
 The above configuration will make your Tomcat instance reject HTTP TRACE requests.
-
-### Step 2: Test Your Application
-After applying the above changes, verify that the HTTP TRACE method is indeed disabled. Conduct necessary tests against the APIs to make sure no side effects are introduced due to this change.
-
-### Step 3: Regular Audit and Update
-Even after applying these remediation steps, always keep an eye on Spring Boot security advisories and regularly update your dependencies to avoid new vulnerabilities.
-
-Remember to always follow best practices and guidelines for securing your application.

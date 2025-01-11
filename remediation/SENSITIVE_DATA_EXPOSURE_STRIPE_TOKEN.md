@@ -38,13 +38,3 @@ In Node.js, you can use the [https module](https://nodejs.org/api/https.html) to
 ```javascript
 var https = require('https');
 ```
-
-### Step 4: Regularly Audit and Update
-Regularly audit your application for any potential security vulnerabilities. With Stripe, you should monitor your Dashboard for any unexpected or unusual activity. If you spot anything suspicious, contact Stripe Support immediately. Regularly updating your Stripe API version can also help keep your application secure. 
-
-```bash
-# update stripe npm package for Node.js:
-npm update stripe
-``` 
-
-Lastly, see Stripe's security best practices: https://stripe.com/docs/security/stripe.

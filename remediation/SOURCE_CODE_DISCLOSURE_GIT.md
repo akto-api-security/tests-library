@@ -44,16 +44,3 @@ Regular scanning of your web root helps keep track and ensure that Git configura
 # Recursively search for git config files
 find /path/to/web/root -name ".git*" -print
 ```
-
-### Step 4: Regularly Update Git
-
-Make sure to regularly update Git to the latest version to protect your code against vulnerabilities.
-
-```bash
-## For Ubuntu based systems
-sudo apt-get update
-sudo apt-get upgrade git
-
-## For systems running yum package manager
-sudo yum update git
-```

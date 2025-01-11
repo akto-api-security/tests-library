@@ -33,10 +33,7 @@ api_key = getpass('Enter your API key')
 # do NOT do this
 # api_key = "abc123"
 ```
-### Step 4: Regular Audits for Sensitive Data Exposure
-Regular audits for sensitive data exposure in logs, databases and APIs is essential. Automated tools for code scanning for sensitive data exposure can be used.
-
-### Step 5: Masking, Tokenization and Anonymization
+### Step 4: Masking, Tokenization and Anonymization
 Where possible, choose an approach to minimize the exposure of sensitive data. This can involve replacing raw values with substitutes, referred to as *tokenization*, or scrambling the data to make it unreadable, also known as *masking*. 
 
 In the case of large datasets, *anonymization* techniques can also be applied to ensure that individual records cannot be traced back to the people they correspond to.

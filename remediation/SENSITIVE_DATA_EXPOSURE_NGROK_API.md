@@ -31,6 +31,3 @@ conf.get_default().api_key = 'YOUR_API_KEY'
 public_url = ngrok.connect('8000')
 print(public_url)
 ```
-
-### Step 5: Regular Audit and Update
-Always update to the latest version as updated versions come with patches for known vulnerabilities. Regularly audit and monitor all API activities to detect any unusual activities. Optionally, implement a rate limiting policy to prevent automated attacks or brute-force attacks.

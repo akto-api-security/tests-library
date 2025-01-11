@@ -26,8 +26,5 @@ All sensitive data, including the Finnish Personal Identity Number, should be en
 ### Step 3: Restrict Access
 Restrict access to sensitive data only to authorized personnel. Implement appropriate user access controls and authentication mechanisms in your application.
 
-### Step 4: Regular Audits
-Regularly test and update your security measures. This includes checking for outdated encryption or hashing algorithms and replacing them with newer, more secure options.
-
-### Step 5: Data Masking
+### Step 4: Data Masking
 Implement data masking solutions for non-production environments. This involves creating a structurally similar, but inauthentic, version of the data for testing and development purposes.

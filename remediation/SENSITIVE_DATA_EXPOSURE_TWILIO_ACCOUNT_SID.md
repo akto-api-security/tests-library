@@ -48,6 +48,3 @@ Remember: `.env` files should *never* be checked into source control, add them t
 
 ### Step 4: Regularly Rotate Your Credentials
 It's a good practice to rotate your API keys and credentials periodically, thus limiting the harm of any potential exposure.
-
-### Step 5: Monitor and Audit
-Keep looking for any unauthorized usage of your service and opt for solutions like rate limiting, IP whitelisting etc. Regularly auditing and monitoring your application's usage can aid in detecting and mitigating such security vulnerabilities.

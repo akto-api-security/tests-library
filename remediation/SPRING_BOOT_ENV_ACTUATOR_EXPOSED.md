@@ -41,9 +41,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 }
 ```
-
-### Step 3: Regular Monitoring and Audit
-Regular monitoring and auditing of application usage and logs is necessary to detect unusual activity or security breaches. This could be set up depending on the specific technology or toolset utilized in your infrastructure.
-
-### Step 4: Update Spring Security Regularly
-Spring Security's team regularly releases patches and updates that address bugs and vulnerabilities. Keep your version updated to the latest stable release to ensure maximum security. Regularly check the official Spring Security website and follow their update guide accordingly.

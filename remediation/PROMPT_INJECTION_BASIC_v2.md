@@ -33,5 +33,3 @@ conn = psycopg2.connect("dbname=test user=postgres password=secret")
 cur = conn.cursor()
 cur.execute('SELECT * FROM table WHERE column=%s', (user_input,))
 ```
-### Step 4: Regular Audit and Update
-Regularly audit your codebase for injection vulnerabilities - especially when adding new features. Update your dependencies regularly, many security vulnerabilities come from outdated packages or libraries.

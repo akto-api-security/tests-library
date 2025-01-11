@@ -50,9 +50,3 @@ management:
     health:
       show-details: always
 ```
-### Step 6: Regular Audit and Update
-Ensure that the Spring Boot Actuator is regularly updated to include the latest security patches.
-```bash
-mvn clean install
-mvn versions:use-latest-versions
-```

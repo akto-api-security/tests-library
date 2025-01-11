@@ -35,9 +35,3 @@ The application code should validate that the CSRF token in the request matches 
 ### Step 4: Regenerate CSRF Tokens Regularly
 
 Ideally, CSRF tokens should be regenerated after each successful request. This helps to ensure that an attacker cannot replay a CSRF attack multiple times.
-
-### Step 5: Regular Audit and Update
-
-Regularly audit and update your vulnerability protections to ensure your CSRF protections are up-to-date and effective.
-
-Please remember, these remediation steps are provided as a guide and should be tailored to fit your specific technology stack and application needs.

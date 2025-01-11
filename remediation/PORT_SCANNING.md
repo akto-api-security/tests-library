@@ -39,9 +39,3 @@ This can reduce the attack surface.
 sudo netstat -tunl
 # Look for any unnecessary services and disable them
 ```
-
-### Step 5: Safe coding practices
-
-Developers should validate URLs if they accept URLs as input and should use safe APIs that offer protection against SSRF.
-
-Most importantly, regularly update your systems and actively monitor them for any potential threats or exploits.

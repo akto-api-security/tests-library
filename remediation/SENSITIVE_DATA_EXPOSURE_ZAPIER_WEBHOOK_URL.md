@@ -46,11 +46,3 @@ app.post('/webhook', (req, res) => {
 });
 ```
 Replace `app.post('/webhook', ...)` accordingly with your application's endpoint.
-
-### Step 4: Regularly Audit and Update
-
-Regularly audit your usage of Zapier webhooks and update any associated secrets or keys.
-
-To maintain security, consider revisiting your usage of Zapier webhooks and potential exposure risk. Iterate on your security policies and processes as needed.
-
-_Note: The actual implementations can vary based on the programming language and frameworks being used._

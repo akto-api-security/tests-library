@@ -29,8 +29,3 @@ function isAuthenticated(req, res, next) {
 
 ### Step 3: Save Images in Obscure Locations
 Save images not directly in the webroot, but in a location outside of it that isn't directly accessible. Direct references to files should not be predictable or enumerable.
-
-### Step 4: Regularly Update Security Patches
-Ensure to regularly update your server and software to the latest versions, this includes security patches that might be critical to preventing data breaches.
-
-Please note, that all these steps are generally necessary but they may not all be applicable in your situation. Tailor the solution to suit your specific requirements and context.

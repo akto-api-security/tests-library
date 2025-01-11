@@ -44,9 +44,3 @@ results = search_client.search("your-search-term")
 ### Step 3: Use HTTPS 
 
 Make sure you're using secure HTTP (HTTPS) for all communications between your app and Azure Search.
-
-### Step 4: Regular Audit and Update
-
-Regularly update and audit your application to ensure that the remediations are in place and effective.
-
-Do not forget to replace `<your-query-key>`, `your-service-name`, `your-index-name` and `your-search-term` with your own values.

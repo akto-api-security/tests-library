@@ -41,16 +41,8 @@ sudo ufw allow from trusted_IP_address to any port 5672
 ```
 Please replace the 'trusted_IP_address' with the IP address of the trusted entity.
 
-### Step 4: Regular Update and Audit
-Ensure running the latest version of RabbitMQ and Erlang/OTP as vulnerabilities are fixed in newer versions. Monitor and audit RabbitMQ logs regularly to detect any suspicious activities.
 
-```bash
-# To download the latest version of RabbitMQ
-sudo apt-get update
-sudo apt-get upgrade rabbitmq-server
-```
-
-### Step 5: User Credential Management
+### Step 4: User Credential Management
 Never use default credentials, create a strong password and change them regularly. Reverse proxy could be used to enable more restrictive authentication and permissions checks.
 
 ```bash

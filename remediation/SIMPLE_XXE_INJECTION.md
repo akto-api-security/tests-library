@@ -45,12 +45,3 @@ from lxml import etree
 parser = etree.XMLParser(resolve_entities=False)
 etree.fromstring(your_xml_string, parser)
 ```
-
-### Step 6: Regular Audit and Update
-
-Just like all software vulnerabilities, new XXE vulnerabilities can be discovered, so ensure to keep your systems, applications, and libraries updated. Perform code review and security testing regularly to spot possible vulnerabilities.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```

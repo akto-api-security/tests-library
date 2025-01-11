@@ -39,9 +39,3 @@ if (token.getUser().getId() == object.getUser().getId()) {
     // Allow action
 }
 ```
-
-### Step 5: Regular Code Audit
-
-Perform regular code audits to check for any possible vulnerabilities. Vulnerability scanning tools can also be used to automate this process.
-
-> No Remediation is Ongoing: Always fix the vulnerabilities as soon as they are discovered to prevent any possible unauthorized access or data breaches.

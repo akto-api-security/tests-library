@@ -44,14 +44,3 @@ db.collection.find( { qty: { $ne: 20 } } )
 ### Step 4: Use Database-Agnostic Code
 
 If possible, create your application code independent of your database software, such that it doesn't matter if you're using NoSQL or SQL, the queries sent to the database will always be secure.
-
-### Step 5: Regular Audit and Update
-
-Finally, regularly updating and patching your systems is an effective measure to prevent most types of security vulnerabilities. 
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-Avoiding NoSQL injections requires careful coding practices, updates and audits, combined with strong access control methods.

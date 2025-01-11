@@ -27,15 +27,3 @@ location ~* \.(engine|inc|info|install|make|module|profile|test|po|sh|.*sql|them
     deny all;
 }
 ```
-
-### Step 2: Regular Audit and Update
-
-It is best to review the server configuration and access logs to ensure the files with scripted extensions do not serve source code. 
-
-To check the Apache configuration files, use configuration test (`configtest`) command:
-```bash
-apachectl configtest
-```
-Always remember to keep your server software, including Apache or Nginx, updated to the latest security patches. 
-
-Please note that this solution only addresses a part of the problem of source code disclosure. Awareness among developers about the secure coding practices is equally important, and the code should always be written to avoid exposure in case of failures.

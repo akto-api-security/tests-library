@@ -40,7 +40,3 @@ RAILS_ENV=production bundle exec puma -C config/puma.rb
 ```
 
 By ensuring that Debug Mode is not enabled in your production environment, you can help keep your Rails application secure.
-
-### Step 4: Regular checks
-
-It's always a good practice to do regular checks to ensure that your application configuration remains in optimal and secure conditions. This helps to mitigate any potential risks that could lead to data exposure.

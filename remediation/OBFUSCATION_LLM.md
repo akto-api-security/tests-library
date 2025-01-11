@@ -37,12 +37,3 @@ Follow best security practices while coding, such as:
 npm outdated   // This command will check if your npm packages need to be updated
 npm update     // Update your npm packages
 ```
-
-### Step 4: Regular Audit and Update
-Consistently audit your LLMs security configurations and update the security policies and practices as per the best and latest guidelines.
-
-```bash
-sudo service yourService restart  // replace 'yourService' with your application or service name
-```
-
-Remember to replace the placeholders ('Your sensitive JS code here' and 'yourService') in the source code with the content relevant to your product or system.

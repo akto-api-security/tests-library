@@ -40,8 +40,3 @@ def get_secret():
 
 DB_URL = get_secret()
 ```
-### Step 4: Regular Audit and Update
-Monitor your application's connections regularly. Ensure that your RDS instances are not publicly accessible except for specific IP ranges as required. Review and rotate your secrets regularly.
-```bash
-aws rds describe-db-instances --query 'DBInstances[*].[DBInstanceIdentifier,PubliclyAccessible]'
-```

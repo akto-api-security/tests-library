@@ -54,5 +54,3 @@ def apply_csp(response):
     return response
 ```
 This way, even if your application is somehow vulnerable to host header injection, the browser would not allow for the redirect to unknown or untrusted hosts. 
-
-Remember that overcoming host header injections involves applying a number of defensive strategies, rather than relying on any single method. Always adhere to multi-layered security controls to improve your application's resiliency against such vulnerabilities.

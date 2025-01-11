@@ -45,12 +45,3 @@ def is_safe_url(url):
         return True
     return False
 ```
-
-### Step 4: Regularly Patch and Update
-Ensure that your PyTorch server and all related systems are kept up-to-date with the most current security patches. 
-
-Make use of PyTorch's automatic updates:
-```bash
-pip install --upgrade torch torchvision
-```
-These steps, while not comprehensive, will provide a solid starting point for protecting against Server-Side Request Forgery vulnerabilities in PyTorch Servers.

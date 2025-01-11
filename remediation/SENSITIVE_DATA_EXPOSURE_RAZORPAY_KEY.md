@@ -40,14 +40,3 @@ Restrict access to the codebase to trusted individuals in your team. Continually
 ### Step 5: Implement a solution like GitGuardian
 
 Implement automated secrets scanning solution such as GitGuardian to help avoid future accidental commits of secrets and keys. You can add GitGuardian to your repositories as a pre-commit hook so it can scan and warn you before the secrets get committed.
-
-### Step 6: Regular Audit 
-
-Regularly check and update your security protocol. This includes regularly updating keys and secrets, refreshing access controls, and keeping an eye out for accidental commits of keys or secrets.
-
-```bash
-# Consider setting up a cron job to remind you of key rotations
-0 0 1 * * echo "Remember to check and rotate your Razorpay keys" | mail -s "Monthly key audit" youremail@example.com
-```
-
-**IMPORTANT:** If your keys have been exposed, immediately contact Razorpay support to prevent potential misuse of your keys.

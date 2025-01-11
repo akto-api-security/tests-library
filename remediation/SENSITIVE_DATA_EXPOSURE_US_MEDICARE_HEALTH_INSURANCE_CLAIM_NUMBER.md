@@ -64,7 +64,3 @@ Implement proper user roles and access levels in databases, file systems, and ot
 CREATE ROLE read_only;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO read_only;
 ```
-
-Remember to maintain regular audits and updates to the security system to ensure its effectiveness. 
-
-However, no security solution is 100% secure, the above steps only minimize the risks. Make sure to always keep informed about the latest security practices and regulations and comply with them.

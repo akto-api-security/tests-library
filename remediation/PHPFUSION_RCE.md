@@ -39,15 +39,3 @@ Ensure that all user inputs are checked for any code injection attempts using in
 $clean_input = filter_input(INPUT_GET, 'data', FILTER_SANITIZE_STRING);
 ```
 This will help in filtering and sanitizing the data entered by the user.
-
-### Step 4: Regular Code Audits
-
-Regularly perform code audits to catch any potential vulnerabilities and rectify them.
-
-No code can be given for this step, it requires manual intervention.
-
-### Step 5: Use Professional Security Tools
-
-Last but not least, use professional security tools for scanning and detecting any security flaws.
-
-By taking these steps, you will be effectively mitigating and protecting your web application from PHP-Fusion Remote Code Execution vulnerability.

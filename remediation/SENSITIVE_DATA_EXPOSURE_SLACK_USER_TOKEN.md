@@ -41,8 +41,3 @@ Implement audit logging on user token use to track any misuse or unauthorized ac
 
 ### Step 6: Implement Rate Limiting
 Implement rate limiting on API methods that return user tokens to prevent brute forcing tokens. Slack doesn't provide a built-in rate limiting so it needs to be implemented in your server/application.
-
-### Step 7: Set up alerts
-Set up monitoring and alterts to notify when a token has been used irregularly or in suspicious patterns. This way you can respond quickly to potential token leaks or abuses. 
-
-Remember, protecting your tokens prohibits unauthorized access to your team's data including conversations, files, and other data.

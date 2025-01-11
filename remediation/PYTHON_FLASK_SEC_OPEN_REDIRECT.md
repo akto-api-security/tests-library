@@ -43,6 +43,3 @@ This code block creates a function `is_safe_url` that verifies if the redirect U
 By taking control of the redirection mechanism in your application, you can mitigate the risk of Python Flask-Security Open Redirect Vulnerability. 
 
 NOTE: Always check `next` request parameter to ensure the redirection URL is safe.
-
-### Step 3: Regular Code Audit and Update
-Implementing a regular code audit process to find any potential open redirect is critically important. The code should be updated as per new security standards and tested regularly.

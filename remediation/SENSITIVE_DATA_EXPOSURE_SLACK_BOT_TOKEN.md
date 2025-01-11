@@ -34,5 +34,3 @@ client = WebClient(token=slack_bot_token)
 const { WebClient } = require('@slack/web-api');
 const client = new WebClient(slackBotToken);
 ```
-### Step 4: Regular Audit and Update
-Regularly audit the usage of bot tokens. Rotate the bot token periodically as part of good security hygiene. Also, ensure your application is using the latest version of the Slack SDK to keep up with any security updates.

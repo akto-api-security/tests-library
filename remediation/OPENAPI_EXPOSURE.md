@@ -55,5 +55,3 @@ app.listen(3000);
 ```
 ### Step 4: Regular Review of OpenAPI Documentation
 Constantly review your OpenAPI documentation. Be sure to remove old and unused APIs which can become potential security loopholes.
-
-Note: Errors and successes should not relay any information that could be exploited by an attacker, such as detailed exception messages or stack traces.

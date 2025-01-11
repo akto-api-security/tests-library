@@ -28,6 +28,3 @@ totp = totp.TOTP('base32secret3232')
 print("Current OTP:", totp.now())
 ```
 Note: The 'base32secret3232' is a secret key that will be used to generate One Time Passwords.
-
-### Step 4: Regularly Review & Update Your Security Configurations
-Reviewing security configurations, as well as regular updating and testing of password policies, can help prevent any potential vulnerabilities.

@@ -53,18 +53,3 @@ public boolean applyDiscount(String couponHash) {
     }
 }
 ```
-
-### Step 4: Regular Audit and Update
-Ensure frequent system audits to identify and rectify any suspicious activity.
-Regularly updating the system is crucial to prevent potential security breaches.
-
-```java
-public void audit() {
-    List<Coupon> usedCoupons = couponDAO.findAllUsed();
-    for (Coupon coupon: usedCoupons) {
-        // Audit coupon usage
-    }
-}
-```
-
-Remember that these are general steps and might need to be adjusted depending on your specific use-case or system design. Always keep your software and libraries up-to-date, follow best practices, and consider seeking advice from security professionals. 

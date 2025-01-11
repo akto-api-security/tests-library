@@ -36,16 +36,3 @@ Below is an example configuration for a route in Apache via `.htaccess`:
 ```
 
 This directive will deny any request methods that are not `GET` or `POST` for the containing location.
-
-### Step 3: Regular code audit and update
-
-Review your code and update your access control mechanism regularly. This will help to prevent any potential security flaws in the future.
-
-If you need to restart your server, here is an example command for nginx:
-
-```bash
-sudo service nginx restart
-```
-This helps to ensure all changes and updates made are effectual. Before restarting, ensure to backup necessary data, if required. 
-
-Remember, prevention is always better than cure, especially when we are considering the security of a web application.

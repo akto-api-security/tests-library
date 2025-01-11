@@ -39,5 +39,3 @@ from django_ratelimit.decorators import ratelimit
 def my_view(request):
     # Your implementation here
 ```
-
-Through these steps, you can protect your server from DOS attacks caused by pagination misconfiguration. Do remember to test your updated code thoroughly and monitor server logs for any unusual activity.

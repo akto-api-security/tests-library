@@ -62,6 +62,3 @@ payload = {
 
 jwt_token = jwt.encode(payload, private_key, algorithm='RS256')
 ```
-
-### Step 5. Regular Audit and Update
-Regularly audit the status of the keys and monitor the access logs. Understand the usage pattern to identify any anomalies. If a key is found to be compromised, act swiftly to revoke and replace the key.

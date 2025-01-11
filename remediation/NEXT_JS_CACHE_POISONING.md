@@ -29,14 +29,3 @@ Control the caching behavior explicitly using `res.setHeader`. For example, you 
 ```javascript
 res.setHeader('Cache-Control', 'no-store');
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly audit your application's security, and update your dependencies.
-
-```bash
-npm audit
-npm update
-```
-
-As with any vulnerability, the remediation process might differ according to specific system and application needs. Always follow security best practices and consider security in every step of your software development life cycle.

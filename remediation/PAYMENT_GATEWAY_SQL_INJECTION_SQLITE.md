@@ -35,16 +35,7 @@ if username.contains('AND' | 'OR' | '--' | ';' | '/*' | '*/' | '@@' | '@' |'char
 ### Step 3: Least Privilege Principle
 Ensure the database user used by the application has the least privileges necessary. This can limit the impact of successful SQL injection attacks.
 
-### Step 4: Regularly Update and Patch
-Keep your SQLite and API software up-to-date to ensure you have the latest security patches.
-
-```bash
-# Example for updating sqlite3 in Ubuntu
-sudo apt-get update
-sudo apt-get upgrade sqlite3
-``` 
-
-### Step 5: Error Handling
+### Step 4: Error Handling
 Avoid revealing database errors to end-users, as this can give attackers hints about the SQL syntax and structure. Handle errors internally, and only provide necessary information to the user. 
 
 ```python
@@ -67,5 +58,3 @@ sudo mv /etc/modsecurity/modsecurity.conf-recommended /etc/modsecurity/modsecuri
 # Edit the configuration file to set SecRuleEngine On
 sudo vim /etc/modsecurity/modsecurity.conf
 ```
-
-Remember, no solution provides 100% security, and these steps should part of a multilayered security strategy.

@@ -40,6 +40,3 @@ Here's a simple example in Ruby on Rails:
 ```ruby
 protect_from_forgery with: :exception
 ```
-
-### Step 5: Regular Security Audit 
-Make sure to perform regular security audits in your application to identify and rectify potential security issues. This includes keeping a close eye on session management guidelines and following them. 

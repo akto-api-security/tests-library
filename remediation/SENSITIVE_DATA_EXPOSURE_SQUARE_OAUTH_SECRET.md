@@ -52,8 +52,3 @@ Ensure secure communication using HTTPS and store your secrets in encrypted form
 # OpenSSL command to encrypt file containing OAUTH secret
 openssl enc -aes-256-cbc -salt -in secrets.conf -out secrets.conf.enc
 ```
-
-### Step 5: Perform Regular Audits
-Regularly audit access to the SQUARE OAUTH SECRET and investigate any irregularities. 
-
-Remember: Treat your secrets like the keys to your kingdom. If they are exposed, your kingdom is at risk.

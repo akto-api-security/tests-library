@@ -58,6 +58,3 @@ def get_secret():
 
 API_KEY = get_secret()
 ```
-
-### Step 5: Regular Audit and Update
-Regularly check the usage logs of your Mailchimp to monitor any suspicious activities. Rotate your Mailchimp API keys regularly and whenever a key is suspected to be compromised.

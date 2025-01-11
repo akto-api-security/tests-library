@@ -43,16 +43,3 @@ def decrypt(token: str, key: str) -> str:
 # You can then encrypt the URI before storing and decrypt when needed.
 encrypted_rabbitmq_uri = encrypt(rabbitmq_uri, your_key)
 ```
-
-### Step 3: Regular Audit and Update
-
-Regularly audit and update your RABBITMQ configuration to ensure maximum security. 
-
-Replace your `RABBITMQ_URI` regularly. Even if an attacker gets hold of one at some point, it won’t be valid for long. 
-
-```bash
-RABBITMQ_URI=new_uri
-export RABBITMQ_URI
-```
-
-At all times, ensure utmost compliance with the best security practices and standards.

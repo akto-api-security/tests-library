@@ -40,13 +40,3 @@ You can do this by sending a request to your server and checking the headers in 
 ```bash
 curl -I http(s)://domain-name-or-ip
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly updating your server and auditing the Response Headers can help prevent exposing server details and reduce potential security flaws.
-
-```bash
-sudo service <your-server-software> restart
-```
-
-Where `<your-server-software>` should be replaced with the software you're using (e.g. apache or nginx).

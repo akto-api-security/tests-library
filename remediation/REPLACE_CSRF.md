@@ -63,7 +63,3 @@ public void doPost(HttpServletRequest req, HttpServletResponse resp) {
   }
 }
 ```
-
-### Step 4: Regular Audits and Updates
-
-It's also worth mentioning in this remediation that you should continually audit and evaluate the security protocols your application takes. Regular updates should be released to fix any existing vulnerabilities.

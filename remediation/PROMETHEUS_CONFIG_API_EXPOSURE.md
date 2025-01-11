@@ -38,14 +38,3 @@ server {
     } 
 }
 ```
-
-### Step 4: Regular Audit and Update
-
-Always keep Prometheus up-to-date and frequently monitor the logs for any suspicious activity. Focus on traffic from untrusted sources and prioritize network security enhancements.
-
-```bash
-sudo apt-get update
-sudo apt-get install prometheus
-```
-
-In conclusion, always take into account the increased attack surface when enabling APIs that could provide additional control or data to a potential attackers.

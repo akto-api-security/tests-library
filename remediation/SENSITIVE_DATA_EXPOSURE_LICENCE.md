@@ -38,18 +38,3 @@ git filter-branch --force --index-filter \
 'git rm --cached --ignore-unmatch LICENCE' \
 --prune-empty --tag-name-filter cat -- --all
 ```
-
-### Step 4: Regular Audit and Update
-Ensure that only authorized personnel can access sensitive files. Regularly audit for any exposed sensitive files and update software to fix any known security vulnerabilities.
-
-```bash
-# Check for exposed sensitive files
-find / -name "LICENCE" 2>/dev/null
-
-# Regularly update software
-sudo apt-get update
-sudo apt-get upgrade
-```
-Verify that sensitive files are not exposed by navigating to your project and confirming that the LICENCE file is not accessible. 
-
-Remember, regular audits, and software updates are necessary to maintain a secure environment.

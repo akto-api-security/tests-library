@@ -42,8 +42,3 @@ params = {
 
 response = requests.post(url, data=params, verify=True)
 ```
-
-### Step 5: Regular Audit
-Conduct regular audits of your data handling practices to ensure that you are in compliance with all relevant standards and laws, as well as any internal policies. 
-
-Remember, the most secure data is the data you never store! Anything that you do store needs to be properly secured, and unnecessary data should be safely discarded.

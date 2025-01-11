@@ -37,8 +37,3 @@ User.find({ name: 'john', password: 'secret' }, function (err, user) {
 
 ### Step 4: Database Software Security Features
 Ensure that the security features provided by the NoSQL database software are enabled and properly configured. These may include features such as TLS/SSL support, RBAC, and audit logging.
-
-### Step 5: Regular Security Auditing and Updates
-Regularly audit the database and application for security gaps. Update the database software and all related libraries to the latest versions to benefit from the latest security fixes and features.
-
-Please note that these are best practices for preventing NoSQL injection vulnerabilities. There is no guaranteed way to prevent all potential NoSQL injection attacks. As with all security issues, constant vigilance, regular code audits, and staying up-to-date with the latest security news and practices are essential.

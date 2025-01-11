@@ -31,7 +31,3 @@ Always make sure that the transmission of SINs is done over secure channels (lik
 ```bash
 openssl req -new -newkey rsa:4096 -days 365 -nodes -x509  -keyout server.key -out server.crt
 ```
-### Step 4: Regular Audit
-Regularly check your security systems for any signs of intrusion or SEL (security event log) abnormalities.
-
-Remember that it's often easier to prevent data leaks than to deal with the aftermath!

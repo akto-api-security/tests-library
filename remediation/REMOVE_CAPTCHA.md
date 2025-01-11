@@ -48,11 +48,3 @@ def is_human(captcha_response):
 ```
 
 The server must validate the user's captcha response with the reCAPTCHA API. Remember to replace 'your-secret-key' with your reCAPTCHA secret key.
-
-### Step 3: Regular Updates and Audits
-
-Keep your Captcha system regularly updated and perform audits to avoid any exploitation of potential vulnerabilities. It's important to realize that while Captcha adds an essential layer of protection, one must also implement other security measures to safeguard data and protect against attacks.
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```

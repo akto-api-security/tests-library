@@ -30,6 +30,3 @@ Monitor access logs regularly to the DISCORD WEBHOOK URL. Any unauthorized attem
 
 ### Step 5: Use HTTPS
 Always use HTTPS for data in transit. HTTPS encryption will protect your data from being exposed while it is being transmitted between your server and users.
-
-### Step 6: Update Dependecies
-Regularly update all your dependencies and ensure that your system is patched with the latest security updates. This will safeguard your system from known vulnerabilities which could lead to sensitive data exposure.

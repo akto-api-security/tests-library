@@ -38,17 +38,3 @@ Setting a strong password to the Redis Server and only allow authenticated users
 # in redis.conf
 requirepass YOUR_STRONG_PASSWORD
 ```
-
-### Step 5: Regular Audit and Update
-Make sure to update your Redis Server regularly for the latest security patches. Also, regularly perform an audit to find any potential security issues.
-
-```bash
-# Check Redis version
-redis-server -v
-
-# Update Redis
-sudo apt-get install update
-sudo apt-get install upgrade redis-server
-```
-
-Remember to replace `YOUR_STRONG_PASSWORD` with a secure password and `YOUR_SECURE_IP` with a valid IP address.

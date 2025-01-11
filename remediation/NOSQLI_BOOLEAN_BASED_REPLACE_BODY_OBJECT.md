@@ -48,11 +48,3 @@ if (error) {
   throw new Error('Invalid input');
 }
 ```
-
-### Step 4: Regular Update and Audit
-Keeping your frameworks and libraries updated is important. Regular audits of your packages can help you detect any known vulnerabilities. Use tools such as `npm audit` for auditing npm packages:
-
-```bash
-npm audit
-```
-Also, regularly review your codebase for any security anti-pattern that might creep in.

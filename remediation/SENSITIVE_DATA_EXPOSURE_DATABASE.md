@@ -32,19 +32,12 @@ innodb_encrypt_log=ON
 systemctl restart mysql
 ```
 
-### Step 4: Regular Updates and Patch Management
-Regularly update your database management system to get the latest security patches.
-```bash
-apt-get update && apt-get upgrade
-```
 
-### Step 5: Regularly Backup Your Database
+### Step 4: Regularly Backup Your Database
 Regular backups will help you to quickly recover from data breaches.
 ```bash
 mysqldump -u username -p database_name > backup.sql
 ```
 
-### Step 6: Monitor Database Activity
+### Step 5: Monitor Database Activity
 Set up monitoring to detect and respond to suspicious activities. You can use tools like MySQL Enterprise Monitor or VividCortex for this.
-
-**Remember:** No solution provides absolute security. Regular audits and updates are mandatory to maintain secure systems.

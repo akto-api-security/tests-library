@@ -29,29 +29,3 @@ server {
 ```
 
 In this case, "X-Content-Type-Options: nosniff" ensures that MIME types are not changed inappropriately, and "Content-Security-Policy: default-src 'self'" allows only the scripts of the same source to be executed.
-
-### Step 3: Update the Software
-Make sure to use the latest version of your software, as they often contain fixes for these kinds of vulnerabilities.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade nginx
-```
-
-### Step 4: Regular Audit and Updates
-
-Regularly audit the logs and keep your server updated to catch any potential vulnerabilities in the future. 
-
-```bash
-sudo tail -f /var/log/nginx/access.log
-sudo apt-get update
-sudo apt-get upgrade nginx
-```
-
-Remember to restart your Nginx server after each configuration change:
-
-```bash
-sudo service nginx restart
-```
-
-These steps help mitigate the risk of XSS attack through the Nginx Virtual Host Traffic Status Module.

@@ -45,11 +45,3 @@ def mask_ssn(ssn):
 ssn = "123-45-6789"
 masked_ssn = mask_ssn(ssn)
 ```
-
-### Step 5: Regular Audit and Update
-
-Perform regular audits of your security measures, keep your systems up-to-date, and patch vulnerabilities timely.
-
-Ensure developers have proper training in secure coding practices. Ensure tests for known vulnerabilities are included in the development lifecycle.
-
-Remember that securing sensitive data is not a one-time task, but an ongoing effort.

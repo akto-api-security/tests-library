@@ -63,13 +63,3 @@ The final step is to display our form in a template.
 ```
 
 Now the user input in the payment mode field is validated before it's processed. And thus, forming a defense line against injection attacks.
-
-### Step 5: Regular Audit and Update
-
-Keep your software updated, as vulnerabilities may be identified and fixed in new versions. Also, perform regular audits to check for possible security issues.
-
-```bash
-pip install --upgrade flask WTForms 
-```
-
-Please replace `'your-secret-key'` with your real secret key to protect the form against Cross-Site Request Forgery (CSRF) attacks.

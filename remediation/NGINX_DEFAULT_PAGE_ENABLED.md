@@ -46,9 +46,3 @@ sudo systemctl restart nginx
 ### Step 4: Verify That The Default Nginx Page No Longer Displays
 
 You can verify by visiting your site's URL in a web browser.
-
-### Step 5: Regular Audit and Update
-It's essential to perform regular audits of your configuration and to update Nginx regularly to avoid any potential vulnerabilities.
-```bash
-sudo apt update && sudo apt upgrade
-```

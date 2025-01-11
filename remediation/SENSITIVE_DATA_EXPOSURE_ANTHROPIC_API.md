@@ -34,21 +34,3 @@ Implement a strong Content Security Policy (CSP) to prevent unauthorized inline 
 CSP_DEFAULT_SRC = ("'none'", )
 CSP_STYLE_SRC = ("'self'", 'https://fonts.googleapis.com')
 ```
-
-### Step 4: Regularly update and patch systems
-Keep your systems and all the libraries leveraged by your app up to date to get better protection against known vulnerabilities.
-
-```bash
-# For Python use pip
-pip install --upgrade <package_name>
-# For Node.js use npm
-npm update <package_name>
-```
-
-### Step 5: Regular auditing of API access
-Regularly audit and monitor access to your API to detect unauthorized access or unusual activities.
-
-```bash
-# Log access in Apache
-CustomLog logs/access_log common
-```

@@ -31,8 +31,3 @@ const spawn = require('child_process').spawn;
 let args = ['arg1', 'arg2'];
 let child = spawn('command', args);
 ```
-
-### Step 4: Code Reviews and Regular Updates
-Carry out regular code reviews. Look out for usage of system and child process calls in the codebase, especially any which rely on untrusted input. Regularly updating your modules will also help mitigate future security threats.
-
-Remember that remediation plans are a starting point and additional steps may be needed depending on your specific deployment, codebase, and other factors.

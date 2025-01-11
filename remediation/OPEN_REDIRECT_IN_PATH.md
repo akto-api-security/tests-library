@@ -56,8 +56,3 @@ def safe_external_redirect(url)
   end
 end
 ```
-
-Remember to regularly review and update your whitelist.
-
-### Step 4: Regular Audit and Update
-Regularly audit your codebase for potential open redirect vulnerabilities and promptly apply patches as necessary. It is also recommended to include open redirect vulnerability checks in your automated testing suite.

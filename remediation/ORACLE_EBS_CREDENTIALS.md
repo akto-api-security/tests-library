@@ -54,5 +54,3 @@ DBMS_CRYPTO.ENCRYPT(
     key => UTL_I18N.STRING_TO_RAW('[encryption_key]', 'AL32UTF8'),
 );
 ```
-
-Hope these steps will guide you to secure your Oracle EBS.

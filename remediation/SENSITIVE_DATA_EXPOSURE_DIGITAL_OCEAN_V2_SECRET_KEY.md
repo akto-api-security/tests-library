@@ -53,7 +53,3 @@ One way to ensure this is to add a '.gitignore' file in your project root and in
 secret_key.txt
 /secret_directory/
 ```
-    
-### Step 6: Investigate potential data breach
-
-If you've exposed a secret key, you should consider the implication it may have. Review your logs and monitor your resources closely for any signs of unauthorized activities.

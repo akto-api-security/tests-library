@@ -33,11 +33,3 @@ Regular database checks can help ensure that parameters are within the expected 
 ```sql
 DELETE FROM Transactions WHERE param < 0;
 ```
-
-### Step 4: Regular Audit and Update
-Implement an audit system that logs the wrong inputs to determine if the breaches are deliberate or accidental.
-
-### Step 5: User Awareness
-Finally, make sure your users know what kind of input is expected from them. Provide clear instructions, and make use of helpful alert messages when incorrect input is detected.
-
-Remember to keep all the components of your system updated so that you can benefit from the latest security patches.

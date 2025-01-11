@@ -32,9 +32,3 @@ If you are using Apache, use the below configurations:
     Deny from all
 </DirectoryMatch>
 ```
-
-### Step 4: Review and Update Regularly
-Regularly review your source code and server configurations to make sure there are no .svn folders in your publicly accessible area.
-
-## Note
-This will not protect against developers accidentally committing sensitive data in other parts of the code. Remember to always keep sensitive data out of your version control repositories.

@@ -50,7 +50,3 @@ app.use((err, req, res, next) => {
   next(); // Continue to other error handlers if this isn't a SyntaxError
 });
 ```
-### Step 4: Regular Security Audit
-Regular application security audits are important to ensure the continued safety of your application. Tools such as Snyk and OWASP Dependency Check can help scan your codebase for vulnerabilities on an ongoing basis. 
-
-Remember that remediation is an ongoing process and it’s crucial to stay up-to-date with the latest security practices.

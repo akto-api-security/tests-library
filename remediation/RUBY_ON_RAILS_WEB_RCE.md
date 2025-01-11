@@ -34,13 +34,3 @@ console.whitelisted_ips = '192.168.0.1'
 ```
 
 Replace `'192.168.0.1'` with your development machine's IP.
-
-### Step 5: Test your configurations
-After making these changes, you need to test your application to ensure that the console is not accessible on other machine or environment. 
-
-```bash
-curl http://yourapp.com/console
-```
-It should return `Forbidden` if all configurations were done correctly.
-
-Always keep your Rails application updated and monitor any incoming requests for suspicious activities. Regular security audits and code reviews reduce the risk of potential vulnerabilities.

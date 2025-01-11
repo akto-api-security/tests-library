@@ -18,12 +18,8 @@ You must restrict access to the LICENSE file. Only the system user running your 
 chown your_user:your_user /path/to/safer/location/LICENSE
 chmod 400 /path/to/safer/location/LICENSE
 ```
-### Step 4: Regular Audit
-Continuously review your source code for any new references to the LICENSE file. Also, conduct regular audits of your access control lists for the LICENSE file.
-```bash
-find /path/to/your/code/ -type f -print0 | xargs -0 grep -l "LICENSE"
-```
-### Step 5: Use .gitignore (If LICENSE is stored in a Git repository)
+
+### Step 4: Use .gitignore (If LICENSE is stored in a Git repository)
 If your LICENSE file is stored in a Git repository, be sure to add it to your .gitignore file. This will prevent the LICENSE file from being tracked and pushed to the remote repository, thus preventing unauthorized access.
 1. Open or create a .gitignore file in the root directory of your Git repository.
 2. Type `LICENSE`, on a new line, and save the .gitignore file.
