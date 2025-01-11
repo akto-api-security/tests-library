@@ -42,7 +42,9 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-
+    contains_all:
+      - "{"
+      - "}"
 execute:
   type: multiple
   requests:
@@ -105,3 +107,9 @@ validate:
     not_contains:
       - <html>
       - </html>
+      - "unable"
+      - "fail"
+      - invalid
+    contains_all:
+      - "{"
+      - "}"

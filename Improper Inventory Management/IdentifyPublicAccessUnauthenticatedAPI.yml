@@ -1,0 +1,78 @@
+id: IDENTIFY_PUBLIC_ACCESS_UNAUTHENTICATED_API
+info:
+  name: "Improper Inventory test for identifying publicly accessible unauthenticated API"
+  description: "The Improper Inventory test identifies publicly accessible, unauthenticated APIs by analyzing API endpoints exposed to the internet without proper authentication or access control. This involves enumerating API inventory, testing for misconfigured permissions, and verifying if sensitive endpoints are accessible to unauthorized users. It helps mitigate data leaks and security risks."
+  details: "The Improper Inventory test aims to uncover API endpoints that are publicly exposed and lack proper authentication mechanisms. By mapping all accessible endpoints and analyzing their configurations, the test checks for misconfigurations or oversights that allow unauthorized access. It focuses on securing sensitive data and preventing exploitation by ensuring endpoints are restricted to authenticated and authorized users only."
+  impact: "Publicly accessible, unauthenticated APIs pose significant security risks, including unauthorized data exposure, system compromise, and exploitation of backend services. Attackers can exploit these endpoints to access sensitive information, manipulate application functionality, or perform malicious actions. Addressing this vulnerability helps prevent data breaches, safeguard user privacy, and protect organizational assets."
+  category:
+    name: IIM
+    shortName: Improper Inventory Management
+    displayName: Improper Inventory Management (IIM)
+  subCategory: IDENTIFY_PUBLIC_ACCESS_UNAUTHENTICATED_API
+  severity: HIGH
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/API-Security/editions/2023/en/0xa9-improper-inventory-management/
+  - https://www.akto.io/blog/3-new-ways-to-detect-improper-api-inventory-owasp-api9-2023
+  - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa9-improper-inventory-management.md
+  cwe:
+  - CWE-1059
+  cve:
+  - CVE-2022-3203
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+compliance_standards: compliance/improper-inventory-management.conf
+remediation: remediation/IDENTIFY_PUBLIC_ACCESS_API.md
+auth:
+  authenticated: true
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  api_access_type:
+    eq: private
+  query_param:
+    extract: queryVal
+  request_headers:
+    extract: headersVal
+  url:
+    extract: urlVal
+  method:
+    extract: methodVal
+execute:
+  type: single
+  requests:
+  - req:
+    - remove_auth_header: true
+    - modify_url: https://test-services.akto.io/validate-urls
+    - modify_method: POST
+    - add_header:
+        x-akto-key: "${akto_header}"
+    - replace_body: "{}"
+    - add_body_param:
+        queryParam: "${queryVal}"
+    - add_body_param:
+        headers: "${headersVal}"
+    - add_body_param:
+        url: "${urlVal}"
+    - add_body_param:
+        method: "${methodVal}"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    for_one:
+      key:
+        contains_either: isPublicAccess
+      value:
+        eq: true

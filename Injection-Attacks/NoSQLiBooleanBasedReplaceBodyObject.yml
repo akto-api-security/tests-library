@@ -130,7 +130,7 @@ execute:
     - req:
         - add_header:
             dummyHeader: dummyValue
-        - replace_body: "{ \"$where\" : \"return true\" }"
+        - replace_body: "{ \"$where\" : \"1 == 1\" }"
         - validate:
             response_payload:
               length:

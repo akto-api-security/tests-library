@@ -66,7 +66,16 @@ wordLists:
     - "../../../../../../inetpub/wwwroot/global.asa"
     - "../../../../../../windows/system32/drivers/etc/hosts"
     - "../../../../../../windows/win.ini%00.txt"
-
+    - C:\Windows\Microsoft.NET\Framework\v4.0.30319\Config\machine.config
+    - C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Config\web.config
+    - C:\inetpub\wwwroot\web.config
+    - C:\Program Files\dotnet\shared\Microsoft.NETCore.App\*\dotnet.exe
+    - C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\
+    - C:\Windows\System32\drivers\etc\hosts
+    - C:\Users\*\AppData\Local\Temp\*.dll
+    - C:\Windows\System32\inetsrv\config\applicationHost.config
+    - C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Temporary ASP.NET Files\
+    - C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Microsoft\ASP.NET\Temporary Internet Files\
 execute:
   type: single
   requests:
@@ -116,3 +125,17 @@ validate:
       - "NullPort="
       - "C:\\boot.ini"
       - "multi(0)disk(0)rdisk(0)"
+      - "<configuration>"         
+      - "<connectionStrings>"     
+      - "Data Source="            
+      - "Trusted_Connection="    
+      - "<appSettings>"           
+      - "<system.web>"           
+      - "localhost:8080"          
+      - "IIS://localhost/"                
+      - "<authorization>"        
+      - "<authentication mode="   
+      - "RequestFiltering"        
+      - "AllowUnlisted="         
+      - "<identity impersonate=" 
+      - "ASP.NET_SessionId" 
