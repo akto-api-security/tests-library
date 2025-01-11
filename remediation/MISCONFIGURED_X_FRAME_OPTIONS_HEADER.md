@@ -49,8 +49,3 @@ Ensure that your website's X-Frame Options Header is correctly set up by inspect
 The X-Frame-Options should be set to "SAMEORIGIN" or "DENY" to prevent your website from being framed and therefore defend against potential Clickjacking attacks.
 
 Note: "SAMEORIGIN" will allow the page to be framed by the site itself, while "DENY" will prevent any framing activities. Choose the best one according to your needs. 
-
-### Step 3: Regular Audit and Update
-It's important to regularly audit your headers and update them as per your application's requirement and security guidelines to ensure ongoing protection from threats. 
-
-Ensure to test your application after each change to verify nothing broke because of the change.

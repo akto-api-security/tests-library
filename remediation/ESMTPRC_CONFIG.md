@@ -28,15 +28,3 @@ Limit debugging information. This can help prevent information leakage.
 ```bash
 sudo postconf -e 'debug_peer_level = 2'
 ```
-
-### Step 4: Service Restart
-
-After making the configuration changes, ensure to restart your postfix service to apply the new settings.
-
-```bash
-service postfix restart
-```
-
-These steps help secure eSMTP from configuration discovery by reducing the information given out during session initialization and disabling commands that may lead to user discovery.
-
-Please note that these steps and commands may vary depending on the specific server software in use. Always consult your server software documentation for best practices relating to security and configuration.

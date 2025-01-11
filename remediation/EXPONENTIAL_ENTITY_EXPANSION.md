@@ -36,17 +36,3 @@ System.setProperty("entityExpansionLimit", "100");
 ### Step 3: Use Less Vulnerable Data Interchange Formats
 
 Where possible, employ data interchange formats that are less vulnerable to injection attacks, such as JSON.
-
-### Step 4: Regular Audit and Update
-
-Invest in regular auditing and updating of your XML Parser or libraries to ensure any new vulnerabilities are promptly addressed. Always use a secure version of libraries and ensure they are updated.
-
-**Python**
-
-```bash
-pip install --upgrade defusedxml
-```
-
-**Java**
-
-Regularly check and update your XML parser (e.g., Xerces2, JAXP) to the newest version.

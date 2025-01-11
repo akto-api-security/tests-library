@@ -42,10 +42,3 @@ app.delete('/api/user/:id', (req, res) => {
     }
 });
 ```
-### Step 3: Regular Review and Update
-
-Regularly review and update the endpoint as necessary to ensure that any changes in the data structure or user permissions are considered to maintain a secure implementation.
-
-```bash
-npm update
-```

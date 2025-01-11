@@ -21,7 +21,7 @@ client.query(text, values, (err, res) => {
 })
 ```
 
-### Step 2: Proper Input Valdiation
+### Step 2: Proper Input Validation
 
 You should validate and sanitize inputs before passing them to SQL queries. For JSON Web Tokens (JWT), you should make sure the token is valid and has been issued by your server before proceeding.
 
@@ -47,11 +47,3 @@ app.use(authenticate);
 ### Step 3: Least Privilege Principle
 
 Limit your PostgreSQL database user's permissions as much as possible without affecting the functioning of your application. This can prevent an attacker from performing disruptive actions even if they gain access to the database.
-
-### Step 4: Regular Patch and Update
-
-Ensure PostgreSQL is up-to-date with the latest security patches and updates. These software updates usually contain important fixes for any known security vulnerabilities.
-
-### Step 5: Periodic Security Audit
-
-It is essential to perform regular security audits of your application, including an extensive review of codes and checks for possible SQL vulnerabilities. It is recommended to use automated tools alongside manual review for effective detection.

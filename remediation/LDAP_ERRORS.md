@@ -49,9 +49,3 @@ Using a parameterized query like this one helps to ensure that any incoming data
 ### Step 3: Employ Least Privilege Principle:
 
 The application should use an account that has the fewest privileges to perform its job. This way, even if an attacker is able to use LDAP Injection to execute arbitrary commands, they will not be able to change any critical data.
-
-### Step 4: Regular Security Testing:
-
-Regularly test your applications for security vulnerabilities. Make sure to specifically test for LDAP Injection exploits.
-
-These steps, when implemented properly, can significantly aid in the prevention of LDAP Injection attacks.

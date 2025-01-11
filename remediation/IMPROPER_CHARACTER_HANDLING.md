@@ -38,8 +38,3 @@ if(isUsernameValid(username)){
 }
 ```
 Use these utility methods wherever the application is accepting the username input. 
-
-### Step 4: Regular Audit and Update
-As technologies and techniques evolve it is essential to regularly audit and update your codebase to improve the security of your application. As a part of regular audits, reviewing existing validation, sanitization, and encoding techniques is recommended.
-
-Please note, that these are just the first steps towards securing your application. Always consult professionals or organizations that specialize in application security for your specific technology stack.

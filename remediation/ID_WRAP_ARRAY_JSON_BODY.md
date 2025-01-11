@@ -34,15 +34,3 @@ app.post('/', [
 });
 ```
 In this example, the JSON parameter 'jsonParam' is checked to ensure it's an array.
-
-### Step 3: Regular Audit and Update
-Always maintain regular audits of your application and ensure to update your system with latest patches and updates.
-
-```bash
-npm outdated
-npm update
-```
-
-In these steps, `npm outdated` will show you all the outdated packages, and `npm update` will update all the packages to their latest version, thus incorporating any new security patches and updates.
-
-By following these steps, you can ensure a secure application that is mitigated against BOLA attacks related to turning a JSON parameter into an array.

@@ -42,8 +42,3 @@ end
 ```
 
 Please note that blacklisting is generally riskier than whitelisting, as new parameters could be added in the future that also need to be blacklisted.
-
-### Step 3: Regular Code Reviews
-It's essential to have regular code reviews and audits to ensure that these remedies are constantly applied.
-
-Preventing mass assignment vulnerabilities largely involves being aware of how your chosen programming language/framework handles this. As such, this must be a key part of any secure code training for your teams. Regular reviews help in keeping everyone aligned with secure coding practices and can help in identifying potential vulnerabilities early in the development process.

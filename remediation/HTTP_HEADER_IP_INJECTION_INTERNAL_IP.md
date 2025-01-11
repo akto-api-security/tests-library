@@ -34,13 +34,3 @@ server {
     }
 }
 ```
-
-### Step 3: Regular Audit and Updates
-You should regularly perform security audits to uncover and remedy any potential vulnerabilities. If new security patches or updates become available, install them promptly to ensure your systems remain secure.
-
-```bash
-# update all packages on a Linux system
-sudo apt-get update && sudo apt-get upgrade
-```
-
-Please remember, the above sections can be adjusted according to the specifics of your particular application or environment. Always follow best security practices and consult with a security expert if needed.

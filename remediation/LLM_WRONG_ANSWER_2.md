@@ -30,6 +30,3 @@ assert is_prime(29) == True
 Replace your current prime checking function with `is_prime` in your existing codebase. 
 
 Remember to apply adequate checks on the parameter input to the function to prevent unexpected errors.
-
-### Step 4: Regularly Test Your Code
-Ensure you have unit tests in place testing your function across a variety of scenarios. Regular testing and auditing can help catch any potential issues with the function, even with future code changes or updates.

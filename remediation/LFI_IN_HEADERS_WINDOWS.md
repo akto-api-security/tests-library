@@ -47,14 +47,3 @@ switch($_GET['page']) {
 }
 ?>
 ```
-
-### Step 4: Regular Update Security Patches
-
-Often, software providers will release patches or updates to their software which are designed to fix known security issues. Ensuring that your systems are always up-to-date with these patches can greatly help to reduce the risk of exploits like LFI. 
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-Be aware that complete prevention of LFI requires combination of the above-mentioned practices.

@@ -52,14 +52,3 @@ app.listen({ port: 4000 }, () =>
 );
 ```
 Again, replace 10 with the query depth that makes sense for your specific application.
-
-### Step 3: Regular Audit and Update
-Ensure that your GraphQL libraries and any related dependencies are kept up to date in order to take advantage of any potential security patches or fixes. Changes should be tested before deployment to ensure they do not break existing functionality.
-```bash
-npm update
-```
-
-### Step 4: Educate
-Educate your development team about this vulnerability, its consequences, and prevention. Offer guidelines for writing queries and the rationale behind those guidelines, so developers can contribute to the security of your GraphQL API.
-
-If these steps are implemented, the Denial of Service from GraphQL API with Default Field Overloading using Aliases can be mitigated. However, always ensure the security measures are updated as per the updates in your application and GraphQL.

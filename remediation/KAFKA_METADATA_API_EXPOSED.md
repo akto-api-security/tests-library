@@ -28,14 +28,3 @@ ACLs allow you to define which users (Principals) have access to read or write t
 ```bash
 kafka-acls --authorizer-properties zookeeper.connect=localhost:2181 --add --allow-principal User:Bob --topic topicA
 ```
-
-### Step 4: Regular Auditing and Monitoring
-
-Regularly audit your Kafka brokers. Keep your Kafka version updated and monitor your logs to detect any unauthorized access.
-
-
-Remember to restart your Kafka server to apply these configurations.
-
-```bash
-kafka-server-start /usr/local/etc/kafka/server.properties
-```

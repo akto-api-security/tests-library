@@ -54,7 +54,3 @@ fetch('/api/protected', {
 });
 ```
 In the example above, the token is attached to the 'Authorization' header in every request.
-
-### Step 4: Regular Audit and Update
-
-Always update your `jsonwebtoken` and other related modules to the latest version to make sure that you have the recent updates and security patches.

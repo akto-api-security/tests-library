@@ -55,9 +55,3 @@ def check_user(username, password):
 ```
 
 The code above replaces potential user-input in SQL query with placeholders (`?`), which are then substituted with actual data using the `execute` method. This method automatically escapes any special characters, thus preventing injection attacks.
-
-### Step 4: Regularly update and review your code for any security vulnerabilities:
-
-Regular updates and security reviews of your codebase can help catch and fix vulnerabilities as they develop. Consider implementing Static Code Analysis tools to fine-tune this process. 
-
-Remember, Security must be a proactive, never-ending process and not an afterthought.

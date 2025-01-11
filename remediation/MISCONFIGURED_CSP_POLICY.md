@@ -53,7 +53,3 @@ app.use((req, res, next) => {
   return next();
 });
 ```
-
-Remember to create the necessary route and logic to handle these CSP reports. 
-
-Finally, keep yourself updated with the latest industry best practices and incorporate them to continuously update your CSP.

@@ -32,14 +32,8 @@ Ensure that API keys to your currency conversion service are secured and not exp
 export API_KEY=your_api_key
 ```
 
-### Step 4: Regular Audit and Update
-Check regularly for updates and patches on the currency conversion service used and apply them in a timely manner.
 
-```bash
-# Add command to update currency conversion service
-```
-
-### Step 5: Server-Side Rate Limiting
+### Step 4: Server-Side Rate Limiting
 Implement rate limiting to prevent abusive or excessively high-frequency requests to your currency conversion API.
 
 ```python
@@ -51,5 +45,3 @@ limiter = Limiter(key_func=get_remote_address)
 def convert_currency():
     # Conversion code here
 ```
-
-These steps will drastically reduce the chances of your currency conversion rates being manipulated by unscrupulous parties.

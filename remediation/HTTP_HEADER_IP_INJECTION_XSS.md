@@ -29,9 +29,3 @@ Ensure that cookies are set with the “SECURE” and “HTTPOnly” flags. The 
 ```python
 response.set_cookie('name', 'value', secure=True, httponly=True)
 ```
-### Step 4: Regular Security Audits and Updates
-Regular security audits and updates are crucial in maintaining web application security. Using tools like OWASP ZAP or Nessus can help to identify potential security vulnerabilities and methods to remediate them.
-
-Ensure that all underlying server software (e.g. web servers, databases, CMS, plugins) remains up-to-date and patched for known vulnerabilities. This also applies to the programming languages, libraries, and frameworks used in the application development. Regular security updates help to fix critical vulnerabilities that could be exploited for XSS attacks.
-
-Remember to plan regular training for development staff to ensure they keep updated about safe coding practices. This would include guidelines on how to mitigate risks specific to the technologies and languages in use.

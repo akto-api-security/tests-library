@@ -43,11 +43,3 @@ const apiLimiter = rateLimit({
 
 app.use("/graphql", apiLimiter);
 ```
-
-### Step 4: Routine Service Update and Patching
-Keep your system up to date and apply the latest patches for known bugs and vulnerabilities. This can be accomplished using your package manager of choice. Here's an example for npm:
-
-```bash
-npm update
-```
-Regular monitoring and timely response to threats will also enhance the security of your GraphQL API.

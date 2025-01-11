@@ -26,9 +26,3 @@ When it is necessary to deal with system paths, ensure that sensitive informatio
 ### Step 3: Use Safe APIs 
 
 Use safe APIs or functions that do not reveal sensitive information. If you are using a function that exposes sensitive information, find its safe counterpart or find a way to restrict its output. 
-
-### Step 4: Regular Code Review 
-
-Ensure frequent code reviews for any change in the codebase to mitigate the risk of exposing sensitive information unintentionally in the future. Always keep security in mind during the development process. 
-
-Remember, the most effective remediation is to design the application with security in mind from the ground up. Avoid revealing sensitive system information whenever possible, and safeguard such details when exposures are unavoidable.

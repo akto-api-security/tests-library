@@ -38,8 +38,3 @@ public static boolean isValid(String name) {
 
 ### Step 3: Use Web Application Firewall 
 A proper WAF can block common web attacks, including LFI. 
-
-### Step 4: Regular Audit and Update
-Make sure that you frequently audit your system for any known vulnerabilities and apply necessary patches and updates.
-
-Remember, the primary protection against LFI attacks is good coding practices and validating all user inputs strictly. Improperly validated or unvalidated input allows an adversary to control the path and file name leading to arbitrary file executions and injections.

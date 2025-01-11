@@ -47,7 +47,3 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !==true){
 ### Step 4: Use HTTPS
 
 Utilize HTTPS to ensure that the connection between the client and the server is encrypted, preventing Man-in-the-Middle attacks.
-
-### Step 5: Regular Audit and Update
-
-Regularly audit your application for any security loophole and keep your system updated.

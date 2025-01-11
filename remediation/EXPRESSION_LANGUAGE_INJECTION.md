@@ -34,5 +34,3 @@ PreparedStatement statement = connection.prepareStatement("SELECT * FROM users W
 statement.setString(1, userId);
 ResultSet resultSet = statement.executeQuery();
 ```
-### Step 5: Regular Update and Patching
-Keep your libraries, dependencies and platforms updated to the latest version. This ensures that you have the most up-to-date security fixes.

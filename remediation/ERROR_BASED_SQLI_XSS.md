@@ -42,7 +42,3 @@ A very basic example of such a policy in PHP would be:
 header("Content-Security-Policy: default-src 'self';");
 ```
 Please note, CSP is an advanced technique with a high level of complexity. It requires detailed understanding of a system for proper implementation.
-
----
-
-Remember to keep your systems and libraries updated to protect against any known vulnerabilities which were patched.

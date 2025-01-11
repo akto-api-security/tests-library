@@ -63,5 +63,3 @@ public class PageRequest {
     }
 }
 ```
-
-With these steps, your application should now be safe from improper page size handling attacks. Regularly review and update your defenses as necessary.

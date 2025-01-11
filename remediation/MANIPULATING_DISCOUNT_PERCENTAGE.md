@@ -39,6 +39,3 @@ $stmt->execute();
 
 ### Step 3: Implement Strict Access Controls
 Access to features and functions that could potentially be exploited, like modifying discounts, should have strict access controls that limit who and what can modify these entities.
-
-### Step 4: Regular Audit and Update
-Frequently update and audit your systems and applications for any vulnerabilities or system glitches. Automated testing can be a useful tool in this regard.

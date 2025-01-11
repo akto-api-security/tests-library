@@ -53,6 +53,3 @@ dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
 // If you can't completely disable DTDs, at least disallow inline DTDs.
 dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 ```
-
-### Step 4: Regular updates and audits 
-Ensure to update your libraries and dependencies regularly to the latest versions provided by the vendors. Always make regular security audits to verify and validate the XML handling techniques implemented.

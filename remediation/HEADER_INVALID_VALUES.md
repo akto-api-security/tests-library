@@ -40,14 +40,3 @@ app.use(helmet.hsts({
   includeSubDomains: true
 }));
 ```
-### Step 3: Update and Patch
-
-Ensure your web server and/or application framework are up-to-date, and apply patches regularly whenever they are released. This helps avoid known vulnerabilities and bugs.
-
-```bash
-sudo apt update
-sudo apt upgrade
-```
-### Step 4: Regular Auditing 
-
-Regularly audit the headers and verify if the headers contained in the requests are accepted ones. Remove or block any unwanted headers.

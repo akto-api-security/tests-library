@@ -25,6 +25,3 @@ aws iam delete-access-key --access-key-id AKIAIOSFODNN7EXAMPLE --user-name myuse
 
 ### Step 5: Implement Policies To Prevent Future Exposure
 Determine how the exposure happened and implement policies to prevent future exposures. This could be through code review processes, utilizing secret management tools, or by using minimal privilege principles. 
-
-### Step 6: Regular Audit and Update
-Perform regular security audits to ensure no other credentials are exposed and keep your systems updated to prevent potential security vulnerabilities.

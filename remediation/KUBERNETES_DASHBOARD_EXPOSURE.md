@@ -39,12 +39,3 @@ spec:
   - Ingress
   - Egress
 ```
-
-### Step 5: Regular Audits and Updates
-
-Lastly, as with all aspects of cybersecurity, you should regularly review and update your settings to ensure that your security measures are up to date. This will ensure that potential vulnerabilities are closed before they can be exploited. 
-
-```bash
-kubectl get serviceaccounts -A
-kubectl get clusterrolebindings.rbac.authorization.k8s.io
-```

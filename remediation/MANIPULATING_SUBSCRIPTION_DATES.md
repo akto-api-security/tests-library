@@ -37,7 +37,3 @@ import logging
 logger = logging.getLogger("audit")
 logger.info("Trial started at %s and is expected to end at %s", trial_start_date, trial_end_date)
 ```
-### Step 4: Regular Software and Infrastructure Updates
-Ensure timely software and infrastructure updates to ensure you’re always using the most secure versions of your technology stack.
-
-Please also review and conduct regular security audits across your platforms to identify and resolve any security vulnerabilities on a continuous basis.

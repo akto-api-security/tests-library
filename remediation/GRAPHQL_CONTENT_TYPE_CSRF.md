@@ -60,5 +60,3 @@ fetch('/graphql', {
   body: JSON.stringify({ query: '' }) // your GraphQL query
 });
 ```
-### Step 3: Regular Audit and Update
-Regularly updating and auditing your codebase for new vulnerabilities is crucial. Always keep your server environment and libraries up-to-date.

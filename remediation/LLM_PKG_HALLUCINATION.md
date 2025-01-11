@@ -20,10 +20,3 @@ To ensure that the received modules are authentic, implement a hash verification
 # Example in Python using pip tool
 pip install --require-hashes -r requirements.txt
 ```
-### Step 4: Regular Audit and Update
-Always keep your dependencies up to date and regularly audit them for security concerns.
-```bash
-# Example for npm
-npm audit
-```
-Keep in mind that these actions alone may not fully eliminate the risk associated with overreliance on LLMs - Package Hallucination. A security-focused development methodology and thorough testing procedures are also needed.

@@ -35,7 +35,3 @@ function validateIPaddress(ipaddress) {
 ```
 
 Perform this check before adding IPs to the whitelist, and ensure you're not adding IPs with a leading zero.
-
-### Note: 
-
-Remember to always consider the security of your system, regularly check your application and packages for security vulnerabilities, and update them regularly.

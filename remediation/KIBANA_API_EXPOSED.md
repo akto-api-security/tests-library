@@ -36,16 +36,3 @@ sudo service kibana restart
 ```
 
 > Note: Kibana requires a restart for any changes made in the kibana.yml to take effect.
-
-### Step 5: Regular Audit and Update
-Use the latest patches and updates provided by the Elastic team to ensure that Kibana is secure against all known vulnerabilities.
-
-```bash
-sudo yum update kibana
-```
-Or if you are using APT for package management, you would run:
-
-```bash
-sudo apt-get update && sudo apt-get upgrade kibana
-```
-By following these steps, the risk associated with exposing Kibana APIs can be minimized. Always consider all levels of security for your infrastructure.

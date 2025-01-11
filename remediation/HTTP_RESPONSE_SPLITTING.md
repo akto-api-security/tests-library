@@ -41,8 +41,3 @@ def test_sanitize_input():
     assert sanitize_input("test\r\ninput") == "testinput"
     assert sanitize_input("test\rinput") == "testinput"
 ```
-### Step 4: Train Developers
-
-Teach the developers about this security vulnerability and how to avoid introducing it.
-
-The above steps help to prevent HTTP Response Splitting via CRLF Injection. It is essential, however, to understand that with a good framework and proper usage, you would never need to manually create HTTP responses. Always use trusted libraries for HTTP related needs, and you will avoid this issue.

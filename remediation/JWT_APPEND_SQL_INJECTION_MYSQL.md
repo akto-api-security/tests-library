@@ -53,13 +53,8 @@ User.findOne({
 });
 ```
 
-### Step 3: Use Web Application Firewall (WAF)
-Use a WAF to safeguard your app against SQL Injection attacks. Be sure to configure the WAF properly as it will inspect all incoming traffic to your app.
 
-### Step 4: Regularly update and audit your code
-Keep your codebase up to date and regularly check your code for potential vulnerabilities. Make sure all SQL queries are parameterized or handled by an ORM.
-
-### Step 5: Encode JWT Securely
+### Step 3: Encode JWT Securely
 Ensure that JWT tokens are encoded and decoded securely to prevent security attacks.
 
 ```javascript
@@ -69,5 +64,3 @@ const secret = 'SECURE_SECRET';
 const token = jwt.sign({ data: 'userData' }, secret, { expiresIn: '1h' });
 const decoded = jwt.verify(token, secret);
 ```
-
-Remember, security is multifaceted and these steps should be part of your overall strategy, not the entire strategy.

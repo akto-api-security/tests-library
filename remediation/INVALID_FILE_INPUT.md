@@ -44,13 +44,3 @@ This depends on your server settings. For instance, in a Flask application, you 
 ```python
 app.config['DEBUG'] = False
 ```
-
-### Step 4: Regular Audit and Update
-
-Make sure to periodically review your logs and the software's error handling procedures to ensure the data is securely kept and handled.
-
-```bash
-# Just an example (depends on your log rotation and retention settings)
-sudo logrotate -f /etc/logrotate.conf
-```
-A full audit of your error handling system is recommended. If anything needs to be updated or changed, this is much easier to address during these audits rather than afterwards during attack.

@@ -41,8 +41,3 @@ def query_db(input_string):
     c.execute('SELECT * FROM my_table WHERE name=?', (input_string,))
     return c.fetchall()
 ```
-
-### Step 4: Regular Code Reviews & Updates
-This step involves regular reviews of your code to identify potential vulnerabilities and updating your codebase to remediate them. This can be done manually or using automatic tools.
-
-Lastly, keep yourself up-to-date with the latest security practices and vulnerabilities to ensure your application's security.

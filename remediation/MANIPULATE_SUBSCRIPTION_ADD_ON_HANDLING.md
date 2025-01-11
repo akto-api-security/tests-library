@@ -56,15 +56,8 @@ const schema = Joi.object({
 });
 ```
 
-### Step 4: Regularly update system components
 
-Ensure that all the dependencies and system components are regularly updated to avoid any known vulnerabilities.
-
-```bash
-npm update
-```
-
-### Step 5: Data Encryption
+### Step 4: Data Encryption
 
 All sensitive data should be encrypted using up-to-date and strong encryption algorithms.
 

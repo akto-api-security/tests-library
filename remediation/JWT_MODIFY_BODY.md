@@ -61,13 +61,3 @@ cookie = SimpleCookie()
 cookie["jwt"] = jwt_token
 cookie["jwt"]["httponly"] = True
 ```
-
-### Step 5: Regular Auditing and Updating
-
-Keep the system and its dependencies up to date. Regularly review the code base to identify and address new security threats. 
-
-```bash
-# Using apt-get for updating the system
-sudo apt-get update
-sudo apt-get upgrade
-```

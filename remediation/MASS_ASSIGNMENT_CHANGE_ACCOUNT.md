@@ -39,15 +39,3 @@ class UsersController < ApplicationController
 end
 ```
 In the above Ruby on Rails example, only `:name`, `:password`, and `:password_confirmation` are permitted to be updated.
-
-### Step 3: Regular Code Review and Update
-
-Regularly review and update your code to ensure new attributes are properly whitelisted and not prone to mass assignment vulnerabilities. Ensuring updated and secure dependencies can also aid in prevention.
-
-### Note
-
-_This example is in the context of a Ruby on Rails application. Depending on your application's language and framework, the specific approach to mitigating mass assignment vulnerabilities may vary._
-
-## Conclusion
-
-Mass assignment is a serious issue that can lead to unauthorized modification of user accounts. Always ensure to whitelist attributes that can be changed in mass assignments to avoid such vulnerabilities.

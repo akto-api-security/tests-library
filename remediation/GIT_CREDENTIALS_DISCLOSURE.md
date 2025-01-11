@@ -35,14 +35,3 @@ Avoid storing credentials in your repository. Instead, consider using secure sto
 # Storing credentials with Git Credential Manager
 git config --global credential.helper manager
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly audit your repositories for any presence of sensitive information and ensure all team members follow best practices for credentials management.
-
-```bash
-# Setting up automated scans with truffleHog
-truffleHog --regex --entropy=False https://github.com/username/repo.git
-```
-
-Always make sure to follow security best practices and avoid committing passwords or other sensitive data to your repositories.

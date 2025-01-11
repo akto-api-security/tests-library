@@ -33,19 +33,3 @@ if (!isset($_SESSION['user_id'])) {
 }
 // process the request
 ```
-
-### Step 3: Regularly Audit and Update Your Security Measures
-
-Regularly update and patch your software to ensure that all known vulnerabilities are addressed. Additionally, perform regular security audits to identify potential areas of improvement.
-
-Example with Bash:
-
-```bash
-# Update the system
-sudo apt-get update
-sudo apt-get upgrade
-
-# Perform a security audit with Lynis
-sudo apt-get install -y lynis
-sudo lynis audit system
-```

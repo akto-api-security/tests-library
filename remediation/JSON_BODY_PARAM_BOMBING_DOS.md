@@ -40,19 +40,7 @@ app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 ```
 
-### Step 4: Regular Monitoring and Updates 
-
-Monitor the traffic patterns and check for unusually high volumes. Also, keep all systems, networking equipment, and applications up-to-date with patches and updates to fix known security vulnerabilities.
-
-### Step 5: Use Firewall or Security Groups 
-
-Configure the security groups or firewall to deny all traffic that isn't necessary for your application/service to work properly. 
-
-```bash
-iptables -A INPUT -p tcp --syn --dport 80 -m connlimit --connlimit-above 3 -j REJECT 
-```
-
-### Step 6: Load Balancing 
+### Step 4: Load Balancing 
 
 Use load balancing to distribute network traffic across multiple servers to ensure no single server becomes overwhelmed with traffic.
 

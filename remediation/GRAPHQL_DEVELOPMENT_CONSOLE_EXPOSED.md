@@ -46,8 +46,3 @@ const resolvers = {
   }
 }
 ```
-
-### Step 3: Regular Audit and Testing
-Conduct regular security audits and vulnerability assessments to discover and fix any potential weaknesses in the system. Regular updates and patches must also be applied to keep the system secure. 
-
-These are remediation steps that will improve the security posture of your app in relation to a GraphQL Development Console Exposure. Security however is a continual process that should be part of your app's lifecycle.

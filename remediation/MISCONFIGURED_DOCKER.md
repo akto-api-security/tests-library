@@ -40,19 +40,3 @@ Define CPU and memory limits to prevent resource exhaustion that may lead to a D
 ```bash
 docker run -d --name=nginx --memory=512m --cpu-shares=256 nginx
 ```
-
-### Step 5: Update Docker Regularly 
-To incorporate the latest security fixes and features, regularly update Docker.
-```bash
-sudo apt-get update
-sudo apt-get upgrade docker-ce
-```
-
-Ensure to restart the Docker service for the changes to take effect.
-```bash
-sudo systemctl restart docker
-```
-Validate the settings after Docker restart.
-```bash
-docker info
-```

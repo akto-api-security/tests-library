@@ -11,6 +11,7 @@ def validate_product_id(product_id):
     if not re.match(r'^[A-Za-z0-9]*$', product_id):
         raise ValueError("Invalid Product ID")
 ```
+
 ### Step 2: Implement Proper Error Handling
 Avoid exposing too much information in error messages. Instead, use generic error messages.
 ```python
@@ -19,6 +20,7 @@ try:
 except ValueError:
     return {"error": "An error occurred, please try again"}
 ```
+
 ### Step 3: Use Parameterized Statements
 Parameterized API queries ensure that SQL injection attacks cannot be performed, safeguarding the data if the Product ID is directly used in database lookups.
 ```python
@@ -26,6 +28,7 @@ from django.db import connection
 with connection.cursor() as cursor:
     cursor.execute("SELECT * FROM products WHERE product_id = %s", [product_id])
 ```
+
 ### Step 4: Implement proper access controls
 Implement Role-Based Access Control (RBAC) to ensure users can only access their own products or the products they have been explicitly granted access to.
 ```python
@@ -36,5 +39,3 @@ def check_user_access(user_id, product_id):
         return False
     return True
 ```
-### Step 5: Regular Auditing and Code Review
-Regularly review code for potential security vulnerabilities, ensuring data validation, error handling, parameterized queries and access controls are properly implemented throughout your application.

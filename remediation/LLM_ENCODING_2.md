@@ -46,11 +46,3 @@ def get_user(db_conn, user_id):
     cursor.execute('SELECT * FROM users WHERE id=?', (user_id,))
     return cursor.fetchall()
 ```
-
-### Step 4: Regular Scan and Update
-Use vulnerability scanners to regularly scan your codebase for injection flaws and update your codebase when such flaws are discovered.
-
-```bash
-# Example for running Bandit, a Python security linter
-bandit -r path/to/your/code
-```

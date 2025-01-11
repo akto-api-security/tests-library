@@ -39,10 +39,3 @@ if (!unauthorizedIds.isEmpty()) {
   log.error("Unauthorized access attempt by user " + user.getUsername() + " to: " + String.join(", ", unauthorizedIds));
 }
 ```
-### Step 4: Regularly Update and Patch Systems
-It's important to keep your systems and software versions updated and patched. This will help you prevent this type of vulnerabilities from exploiting any outdated components in your system.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```

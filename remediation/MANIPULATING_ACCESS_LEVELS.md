@@ -38,15 +38,8 @@ Depending on the user's access level, restrict what resources the user can inter
     });
 ```
 
-### Step 3: Regularly Update and Audit
-Regularly update the access control mechanisms to ensure they're adequate for the current user roles and permissions. Also, perform regular security audits.
 
-```bash
-    # Restart the server
-    sudo service api-server restart
-```
-
-### Step 4: Error Handling 
+### Step 3: Error Handling 
 Proper error handling should be implemented to prevent revealing sensitive information.
 ```javascript
     app.use(function (err, req, res, next) {

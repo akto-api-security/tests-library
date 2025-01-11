@@ -32,15 +32,3 @@ app.use('/graphql', (req, res, next) => {
     }
 }, graphqlHTTP({schema: MyGraphQLSchema}));
 ```
-### Step 3: Regularly Monitor and Patch Security Vulnerabilities
-Be sure to keep your packages and dependencies up to date to take advantage of the latest security patches and improvements. This includes updating your GraphQL server, JavaScript runtime (Node.js) and Middleware (Express). 
-
-For instance,
-```bash
-npm update
-```
-or
-```bash
-yarn upgrade
-```
-Note: Always thoroughly test your system after updates, to ensure overall functionality and security is maintained.

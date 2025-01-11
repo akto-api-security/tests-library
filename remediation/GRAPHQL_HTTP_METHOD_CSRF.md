@@ -57,7 +57,3 @@ def my_view(request):
     return HttpResponse('Hello, World!')
 ```
 CSRF tokens are automatically included in forms using the template context processors `django.template.context_processors.csrf` in Django.
-
-### Step 4: Regular Security Updates
-
-Always keep your framework(libraries) and dependencies updated to ensure they have the latest security patches applied.

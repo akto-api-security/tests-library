@@ -31,13 +31,3 @@ file_path = params[:file].gsub(/[^\w\.]/, '')
 
 ### Step 3: Least Privileges Principle
 Run your application with the minimum privileges that it needs to function correctly. This limits the possible damage in case of a vulnerability exploitation.
-
-### Step 4: Regular Update and Audit
-Regularly check your Ruby version and update it to include the latest security patches. Always review your code for unsafe use of Ruby Kernel functions. Moreover, consider using tools for detecting potential security issues in your Ruby codebase. 
-
-```bash
-# Update Ruby to the latest version
-rvm get stable
-```
-
-Remember, the best line of defense is always avoiding insecure coding practices.

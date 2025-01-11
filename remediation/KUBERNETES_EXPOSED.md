@@ -39,11 +39,3 @@ Audit logs provide a security-relevant chronological set of records documenting 
 ```bash
 kube-apiserver --audit-log-path=/var/log/kubernetes/apiserver/audit.log
 ```
-### Step 5: Regular Updates and Audit
-Keep your Kubernetes installation updated with the latest security patches and make sure you regularly audit your system to find and fix any potential vulnerabilities.
-```bash
-# check for updates
-kubectl version --short
-# Update kubernetes
-sudo apt-get update && sudo apt-get upgrade
-```

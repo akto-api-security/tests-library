@@ -30,13 +30,3 @@ dependencies {
     ...
 }
 ```
-
-### Step 3: Regular Updates and Audits
-Make sure to regularly update and audit your libraries. This not only helps in fixing the vulnerability but can also reduce the risk of version disclosure if newer versions of a library have addressed this issue.
-
-```bash
-./gradlew dependencyUpdates
-```
-With these steps, your application can avoid exposing Gradle library versions publicly and thus, reducing the attack surface for potential attackers. Remember, security is an ongoing process and needs to stay updated with the latest trends and threats. 
-
-This information shouldn't replace a full security audit, depending on the use case and nature of the application further security measures might be required.

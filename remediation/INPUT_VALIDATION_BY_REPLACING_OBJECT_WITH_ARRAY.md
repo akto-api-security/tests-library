@@ -49,5 +49,3 @@ app.post('/user', validate, (req, res) => {
 ```
 
 With this approach, if a client tries to replace an object with an array or any other non-conforming data constructs, the request will be immediately denied with an error message indicating what went wrong.
-
-Remember to apply similar input validation methodologies for all types of user input, not just request bodies, including URL parameters, query parameters, headers, cookies, and any other parts of the request that can be controlled by the client.

@@ -41,5 +41,3 @@ const app = new ApolloServer({
   persistedQueries,
 });
 ```
-### Step 4: Regular Audit and Update
-Ensure that you apply regular updates to your server and any dependencies to have the latest security patches and improvements.

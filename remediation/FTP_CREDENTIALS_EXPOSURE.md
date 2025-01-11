@@ -31,9 +31,3 @@ When possible, use SFTP or FTPS which encrypt the transmission of data, includin
 # Connect to SFTP with your credentials
 sftp username@hostname
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly audit your FTP server's access logs to check for any unauthorized access attempts. Also, always keep your server software up-to-date to ensure you have the latest security patches. 
-
-Remember that it's always better to be safe than sorry. Always protect your FTP credentials and regularly check your server for any signs of a breach.

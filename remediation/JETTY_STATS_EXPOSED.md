@@ -31,30 +31,3 @@ sudo ufw allow from trusted_ip to any port jetty_port
 sudo ufw deny from any to any port jetty_port
 ```
 Replace `trusted_ip` with the IP address you wish to allow and `jetty_port` with your server's Jetty port.
-
-### Step 4: Regular Server Audit
-
-Regularly auditing your Jetty web server for any unusual activity can help prevent potential security tenches.
-
-Consult with your hosting provider or internal IT department on running the audit based on your organization's standard operating procedures.
-
-### Step 5: Update Jetty to the Latest Version
-
-Ensure your Jetty server is updated to the latest stable version. Updates often contain important security patches.
-
-```bash
-sudo apt-get update && sudo apt-get upgrade jetty9
-```
-This command assumes you have Jetty installed via the apt package manager and the package's name is jetty9. Your command may vary depending on your environment and how Jetty was installed. Please, verify and adjust accordingly.
-
-### Step 6: Restart Jetty
-Finally, restart your Jetty server to enforce all changes:
-
-```bash
-sudo service jetty restart
-```
-Again, your command may vary depending on your system's configuration and how Jetty is installed and run.
-
-## Conclusion
-
-Following these steps will help mitigate the exposure of Jetty stats, solidify your web server, and increase the overall security of your application.

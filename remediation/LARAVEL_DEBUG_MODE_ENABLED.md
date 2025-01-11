@@ -29,5 +29,3 @@ php artisan config:cache
 ### Step 4: Verify debug mode is off
 
 Once you've completed the previous steps, verify that debug mode is off. Trying to access a non-existent route or creating another error that was previously visible because of debug mode is available, confirm that no debug information is exposed.
-
-Please note these steps improve your application's security posture by preventing the exposure of sensitive debugging information to the end-users. However, do not forget to follow best practices for securing your Laravel application more generally.

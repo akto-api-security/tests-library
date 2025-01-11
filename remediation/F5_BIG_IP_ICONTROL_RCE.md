@@ -38,18 +38,3 @@ Use secure protocols (like HTTPS) and enforce strong password policies for bette
 modify auth password-policy minimum-length 10
 modify auth password-policy enforce-complexity enabled
 ```
-
-### Step 4: Regular Monitoring and Audit
-
-Ensure regular system updates and conduct regular audits for suspicious activities.
-
-```bash
-show sys software
-show sys audit | i err
-```
-
-Sources:
-- [F5 Networks](https://support.f5.com/csp/article/K03009991)
-- [Vulnerability Note VU#772311](https://www.kb.cert.org/vuls/id/772311/)
-
-Please adapt the code snippets for your context as these are generic and may not work directly.

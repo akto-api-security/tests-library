@@ -54,11 +54,3 @@ Safe use:
 let potentiallyUnsafeVariable = "<script> potentially malicious script </script>"
 res.render('template', { title: '<%= potentiallyUnsafeVariable %>'})
 ```
-
-### Step 4: Use Artillery for Load & Testing 
-
-Artillery is great for testing your application against any potential EJS, XSS, or SQL injections, and it can help uncover any vulnerabilities.
-
-```bash
-npm install -g artillery
-```

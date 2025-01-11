@@ -36,8 +36,3 @@ app.put('/api/resource/:id', (req, res) => {
   // ... your code here ...
 });
 ```
-### Step 3: Regular Audit and Update
-Regular audits of the codebase and updates of all libraries will help to minimize the risk of any known vulnerability.
-
-### Note
-These are general remediation steps for the specific issue mentioned above; however, the actual implementation may vary based on different use cases and programming languages. Always follow best practices while developing APIs and perform regular security audits.

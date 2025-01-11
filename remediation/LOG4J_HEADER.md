@@ -48,6 +48,3 @@ Or, this can be done at the time of JVM start by adding this to the JVM paramete
 ```
 
 Please note that the above remediation steps do not cover all possible configurations and systems, and they might not be applicable to all environments. 
-
-### Step 4: Regularly Update and Monitor Systems
-Regular audits and updates of your systems can prevent future vulnerabilities. Check regularly for updates from the Apache Logging Services Project to ensure your Log4j Library is up-to-date. Also, be sure to monitor logs and network traffic for any signs of intrusion or suspicious activity.

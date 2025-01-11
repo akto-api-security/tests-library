@@ -54,10 +54,3 @@ This is an important measure to prevent Cross-Site Scripting (XSS) attacks. CSP 
 <!-- HTML Meta tag for CSP -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self';">
 ```
-
-### Step 6: Regular Auditing and Update
-
-Regular audits to the security system and code base ensures no newer vulnerabilities have been introduced during the development process. Make sure to apply updates to dependencies that may include security patches.
-
-
-Remember, Input should never be trusted implicitly and should always be properly validated and sanitized before being used in an SQL query or rendered in a web page.

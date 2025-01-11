@@ -30,15 +30,8 @@ response.addCookie(new Cookie("cookieName", "cookieValue") {{
 }});
 ```
 
-### Step 4: Regular Jenkins Updates
-Regularly update your Jenkins environment to include all the latest security patches and fixes.
 
-```bash
-sudo apt-get update
-sudo apt-get install jenkins
-```
-
-### Step 5: Regular Audit
+### Step 4: Regular Audit
 Conduct regular audits of your Jenkins environment to identify and remediate any vulnerabilities promptly.
 
 Make sure the Jenkins `jenkins.security.CookieDelegatingWebResponse` class is implemented correctly as it's responsible for adding these flags. 

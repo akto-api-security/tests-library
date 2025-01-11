@@ -49,8 +49,3 @@ keycloak:
         hosts:
         - localhost
 ```
-
-### Step 4: Regular Audit and Update
-Audit your application and environment regularly to keep up to date with the newest patches and fixes.
-
-The Keycloak provider can serve a crucial purpose in your application, so be aware of this vulnerability in your code and fix it as soon as possible. As with all software patches and updates, be sure to test the fixes in an appropriate, isolated environment before deploying to production.

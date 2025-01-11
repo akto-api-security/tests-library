@@ -39,17 +39,3 @@ Close the unused ports to prevent unauthorized data access.
 ```bash
 sudo ufw deny from any to any port 3000
 ```
-
-### Step 5: Regular Audit and Update
-Continuously monitor the access to your Grafana metrics to detect any suspicious activity. 
-
-```bash
-grafana_api.admin.stats()
-```
-
-Always make sure your Grafana version is up-to-date to protect against any known security vulnerabilities. 
-
-```bash
-sudo apt-get install --only-upgrade grafana
-```
-Keep in mind that, while these steps can significantly improve the security of your Grafana metrics, they don't provide complete protection against all types of attacks. A comprehensive security approach that covers all aspects of your system is always recommended.

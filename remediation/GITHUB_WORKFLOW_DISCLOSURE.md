@@ -28,6 +28,3 @@ Limit the usage of third party GitHub Actions as they may have access to the sam
 ```yml
 uses: actions/checkout@v2
 ```
-
-### Step 4: Regular Audit and Update
-Review and update Github workflow files periodically to ensure there is no exposure of sensitive information. Updates should also include checking for updates to Github Actions used and ensuring they are from a trusted source.

@@ -42,16 +42,3 @@ static_resources:
           http_filters:
           - name: envoy.filters.http.router
 ```
-
-### Step 3: Regularly Update Envoy
-Regularly update Envoy to the latest version to keep up with any patches or security fixes that have been introduced.
-```bash
-sudo apt-get update
-sudo apt-get upgrade envoy
-```
-
-### Step 4: Monitor Envoy
-Monitor Envoy continuously to prevent any unexpected behaviour. This can be done by using monitoring tools or by checking logs frequently.
-```bash
-tail -f /var/log/envoy.log
-```

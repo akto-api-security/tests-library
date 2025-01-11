@@ -47,13 +47,3 @@ def transaction(sender, receiver, amount):
             txn.rollback()
             print(f"Transaction failed due to {str(e)}")
 ```
-### Step 4: Regular Audit and Update
-Regularly auditing your codebase for possible vulnerabilities and keeping your application up-to-date with the latest security patches can help prevent exploitation of this nature.
-
-```Python
-# Regular Audit
-manage.py check --deploy
-
-# Update
-pip install --upgrade Django
-```

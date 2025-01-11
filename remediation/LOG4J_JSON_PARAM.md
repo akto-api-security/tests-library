@@ -37,15 +37,3 @@ System.setProperty("log4j2.formatMsgNoLookups", "true");
 ### Step 3: Limit Incoming Connections
 
 Limit incoming connections to your application as much as possible so that an attacker does not have the chance to exploit the vulnerability.
-
-### Step 4: Regular Audit and Update
-
-Keep an eye on the CVE and the discussion around this issue to ensure that you apply new mitigations as they come out.
-
-```bash
-<!-- Check for outdated dependencies (Maven) -->
-mvn versions:display-dependency-updates
-
-<!-- Check for outdated dependencies (Gradle) -->
-gradle dependencyUpdates
-```

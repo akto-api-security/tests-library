@@ -36,27 +36,3 @@ def downgrade_account(request):
     logout(request)
     return redirect('login')
 ```
-
-### Step 3: Enhance Monitoring and Logging
-
-Keep a close eye on system activity, logging any suspicious events such as multiple downgrades in a short time period or regular attempts to access higher privileges than the current user's account permits.
-
-```python
-import logging
-
-def downgrade_account(request):
-    #... rest of the code here
-   
-    logging.info('User {} downgraded to basic account.'.format(user.username))
-    
-    #... rest of the code here
-```
-
-### Step 4: Regular Audit and Update
-
-Consider regular security audits and updates to your system to ensure any loophole is not exploited.
-
-```bash
-# Assuming an imaginary update and audit command
-sudo update_and_audit_system
-```

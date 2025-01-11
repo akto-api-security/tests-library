@@ -34,11 +34,3 @@ PermitRootLogin no
 # Step 3: Restart your SSH service
 sudo service ssh restart
 ```
-### Step 4: Regular Audit and Update
-
-Perform regular audit of your network and update Kibana as well as your operating system to the latest security patches.
-```bash
-# Update your Ubuntu system
-sudo apt-get update -y 
-sudo apt-get upgrade -y
-```

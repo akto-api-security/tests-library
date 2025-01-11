@@ -38,14 +38,3 @@ def function_under_test(input_string):
         return error_message
     # Process the sanitized and validated input
 ```
-
-### Step 4: Regular Code Review and Audit
-
-Every modification should be code reviewed and any security-related modules should be audited on a regular basis for finding potential security issues. 
-
-```bash
-# Using a tool like SonarQube for regular code audits would be a good start
-mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin -Dsonar.password=admin
-```
-
-With these changes, overreliance on Location, Language, and Mapping - Glitch Test with Random Word and Whitespace can be addressed properly.

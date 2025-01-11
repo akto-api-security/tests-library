@@ -32,9 +32,3 @@ Set your server's `NODE_ENV` to `production` to turn off introspection in a prod
 ```bash
 export NODE_ENV=production
 ```
-
-### Step 3: Update and Regular Audit 
-
-It is crucial to regularly update your server and conduct security audits to ensure no new vulnerabilities have been introduced or discovered.
-
-Remember, while disabling introspection in production can improve your API’s security, it is not a silver-bullet solution for all security concerns associated with a GraphQL API. Always follow the principle of least privilege and employ other security practices, like proper input validation, encryption, and error handling, to ensure a secure system.

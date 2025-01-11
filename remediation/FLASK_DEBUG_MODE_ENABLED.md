@@ -27,6 +27,3 @@ It is safer to avoid hardcoding the debug status of your application in your cod
 ```bash
 export FLASK_DEBUG=0
 ```
-   
-### Step 4: Regular Audit and Update
-Regularly auditing your Flask application is a key aspect of maintaining security. Also, make a habit of updating Flask whenever a new version is available as updates often include patches for known security issues. Regular code reviews and using security analysis tools can also help identify and mitigate issues.

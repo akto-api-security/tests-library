@@ -48,5 +48,3 @@ app.use('/search', timeout('5s'), (req, res, next) => {
  // will end request if it hangs for longer than 5 seconds
 });
 ```
-
-These strategies should help safeguard your system's search functionality against potential Denial of Service attacks.

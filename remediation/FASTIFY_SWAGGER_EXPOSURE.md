@@ -52,13 +52,3 @@ async function validate (username, password, req, reply) {
   }
 }
 ```
-### Step 3: Regular Security Audit & Update
-
-Ensure to regularly audit and update your Swagger and Fastify Framework to prevent future vulnerabilities. Always check for any security advice or updates related to the framework or libraries in use. 
-
-```bash
-npm audit
-npm update
-```
-
-Note: The credentials for Basic Auth should be stored securely and not hardcoded. Also, the use of HTTPS is strongly recommended to prevent credentials from being transferred in plaintext.

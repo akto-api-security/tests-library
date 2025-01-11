@@ -59,20 +59,3 @@ def normalize_headers(headers):
 # Use it to normalize the "X-Forwarded-For" header
 x_forwarded_for = normalize_headers(request.headers)['X-Forwarded-For']
 ```
-
-### Step 3: Regular Audit and Update
-
-Regularly update your security measures to counter new potential exploits and vulnerabilities.
-
-Update your packages:
-
-```bash
-sudo apt update
-sudo apt upgrade
-```
-
-Or in case you're using Node.js:
-
-```bash
-npm update
-```

@@ -64,9 +64,3 @@ logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(level
 logging.warning('This is a Warning')
 logging.error('This is an error message')
 ```
-
-### Step 5: Regular Audit and Update
-
-Perform regular audit and post-transaction verifications to detect and resolve any discrepancies immediately. In case any unexpected behavior is detected, perform a full system check to identify any potential vulnerabilities. 
-
-Remember, security is an ongoing process and regular updates and audits are vital to maintaining a secure system.

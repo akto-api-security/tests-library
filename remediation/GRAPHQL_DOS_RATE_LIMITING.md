@@ -59,8 +59,3 @@ app.use('/graphql', graphqlHTTP({
 app.listen(4000);
 console.log('Running a GraphQL API server at http://localhost:4000/graphql');
 ```
-
-### Step 4: Test Rate Limiting
-You can then test that the rate limiting is working by hitting your `/graphql` endpoint and it should start limiting requests after 5 attempts in 1 minute for each field. 
-
-Please note that this approach provides simple rate limiting at the API level and isn't a comprehensive security solution. For more complex applications, you might need to use a combination of techniques including caching, load balancing, and using a real-time updating rate limiting system like Redis.

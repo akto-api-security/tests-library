@@ -30,9 +30,3 @@ from decimal import Decimal
 # Use Decimal instead of float for secure operations
 val = Decimal(user_input)
 ```
-
-### Step 3: Regular Audit and Update
-
-Regular code audits and updates are recommended to avoid exposure of such vulnerabilities.
-
-Finally, educating developers on potential dangers and consequences of type manipulation vulnerabilities is equally important as a proactive measure towards preventing such issues.

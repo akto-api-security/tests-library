@@ -48,12 +48,3 @@ app.use('/graphql', graphqlHTTP({
 
 app.listen(3000);
 ```
-
-### Step 3: Regular Monitoring and Update
-
-Regularly monitor your server logs for unusual or abnormally sized queries. Add updates accordingly to your GraphQL API to prevent further exploitation of this vulnerability.
-
-```bash
-sudo service graphqlapi restart
-```
-Remember, it's important to strike a balance between protective measures and providing a useful, flexible API for your users.

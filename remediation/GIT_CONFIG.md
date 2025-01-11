@@ -60,6 +60,3 @@ Ensure that the `.gitconfig` file is included in your `.gitignore` file to preve
 echo '.gitconfig' >> .gitignore
 git commit -a -m "Added .gitconfig to .gitignore"
 ```
-
-### Step 6: Regular Code Review
-Remember to conduct regular code reviews to ensure that no sensitive data is accidentally committed and pushed. For this, you can use various tools to automate the process and make it more effective.

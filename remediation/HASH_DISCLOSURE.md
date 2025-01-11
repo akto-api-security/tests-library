@@ -45,12 +45,3 @@ try {
     echo 'An error occurred. Please try again.';
 }
 ```
-
-### Step 5: Regular system auditing
-Ensure to monitor the systems for any points where secure hashing can be bypassed or forgotten.
-
-```bash
-grep -r 'password_hash(' .
-```
-
-By following these remediation steps, the disclosure of sensitive hash data should be prevented, improving the overall security health of your system.

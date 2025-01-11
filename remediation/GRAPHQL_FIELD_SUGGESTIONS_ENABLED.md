@@ -23,9 +23,3 @@ const server = new ApolloServer({
   introspection: process.env.NODE_ENV !== 'production', 
 });
 ```
-### Step 3: Regular Audit and Weekly Review
-Audit your codebase regularly and ensure that best security practices are in place. This includes having regular reviews of security policies and practices.
-
-### Step 4: Educate Teams
-In addition to the technical steps, it's also important to educate all development team members about the importance of security, to prevent such issues from being reintroduced in the future.
-

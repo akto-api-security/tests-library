@@ -28,8 +28,3 @@ Restrict the file permissions of sensitive files on your server to prevent unaut
 ```bash
 chmod 600 sensitive_file
 ```
-### Step 4: Regular Audit and Update
-Regularly audit your systems for vulnerabilities and keep your packages updated. Ensure that you have secure development practices in place to prevent such vulnerabilities. If you find a weak spot, address it immediately to minimize exposure.
-
-### Step 5: Enable Appropriate Security Controls
-If your environment supports it, consider using appropriate security controls like a Web Application Firewall (WAF), which can help detect and block exploit attempts.

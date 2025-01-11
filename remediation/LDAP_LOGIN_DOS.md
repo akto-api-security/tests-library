@@ -42,11 +42,3 @@ http {
     }
 }
 ```
-### Step 4: Regular Monitoring and Log Analysis
-Monitor server logs regularly to identify and stop any potential DoS attacks early on.
-
-```bash
-# Unix/Linux example
-tail -f /var/log/ldap.log
-```
-All these steps can help to prevent a Denial of Service attack on an LDAP login endpoint. It is recommended to regularly audit the system for potential vulnerabilities and patch them promptly.

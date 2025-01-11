@@ -44,8 +44,3 @@ This Python code utilizes Flask-Login to handle session management, ensuring tha
 
 ### Step 3: Use Two-Factor Authentication (2FA)
 The addition of 2FA significantly reduces the risk of an authentication bypass. This can be as simple as a code sent to the user's phone, or a biometric check.
-
-### Step 4: Regular Audit and Update
-This is a common final step for all remediations. Always keep your applications up-to-date and periodically check for potential security flaws. 
-
-Also, consider automated testing where possible to continuously verify that the authentication is not bypassed.

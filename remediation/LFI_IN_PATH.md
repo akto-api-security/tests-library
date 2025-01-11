@@ -40,11 +40,3 @@ PHP code often uses wrappers that present potential paths for LFI attacks. To pr
 ```ini
 open_basedir = "/var/www/html:/usr/lib/php:/tmp"
 ```
-### Step 5: Regular Code Review and Update
-Always review your code to detect LFI vulnerabilities. Regularly update your applications and systems to next stable versions.
-
-```bash
-sudo apt-get update && sudo apt-get upgrade
-```
-
-These remediation steps will help secure your application against Local File Inclusion vulnerabilities. Always remember, the most important thing is to sterilize inputs especially if they will be used in file operations.

@@ -74,5 +74,3 @@ const schema = new GraphQLSchema({
   }),
 });
 ```
-
-These remedies together can help mitigate the risk of DoS attacks on your GraphQL API. Regular security audits and updates also play vital roles in maintaining strong security hygiene. 

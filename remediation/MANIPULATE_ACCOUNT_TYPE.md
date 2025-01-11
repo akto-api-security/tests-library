@@ -43,15 +43,8 @@ public void adminFunction(Account account) {
     // continue with function
 } 
 ```
-### Step 3: Regular Audits and Updates
-Regularly audit and update security measures to ensure they are not outdated and can effectively guard against account type manipulation.
 
-```bash
-# perform system updates
-sudo apt update && sudo apt upgrade
-```
-
-### Step 4: Implement Usage of Prepared Statements
+### Step 3: Implement Usage of Prepared Statements
 Preventing SQL Injection
 
 ```java

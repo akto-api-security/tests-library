@@ -54,15 +54,3 @@ To apply this role binding, use `kubectl`:
 ```bash
 kubectl apply -f rolebinding.yaml
 ```
-
-### Step 3: Regular Audit and Update
-
-You should regularly review the RBAC policies and their bindings and update them as necessary. This can help in ensuring that the access control policies are up-to-date and secure. Regularly check cluster roles and role bindings using the following commands:
-
-```bash
-kubectl get clusterrolebindings
-kubectl get roles --all-namespaces
-kubectl get rolebindings --all-namespaces
-```
-
-Remember, the overall security of your Kubernetes deployment also depends on how well it's configured and maintained. Always follow best practices for Kubernetes security.

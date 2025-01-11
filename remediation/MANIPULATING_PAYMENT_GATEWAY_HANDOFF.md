@@ -50,6 +50,3 @@ An SSL certificate can be installed from the server-side:
 sudo a2enmod ssl
 sudo service apache2 restart
 ```
-### Step 5: Regular Audit and Update
-
-Ensure you have regular audits and updates to your systems and always ensure your payment systems follow the latest security standards and compliance.

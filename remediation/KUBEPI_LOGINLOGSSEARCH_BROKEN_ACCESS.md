@@ -61,12 +61,3 @@ roleRef:
   name: log-reader
   apiGroup: rbac.authorization.k8s.io
 ```
-
-### Step 5: Regular Audit & Update
-Regularly audit the logs and continually update your system for improvements and patches. This will ensure that the system stays updated with latest security standards.
-
-```bash
-kubectl audit2rbac check
-```
-
-Please note that the steps and code provided are based on general solutions and need to be customized based on the specific settings and requirements of your environment.

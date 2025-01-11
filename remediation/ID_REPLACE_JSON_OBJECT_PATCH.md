@@ -49,13 +49,3 @@ if(user.getRole() != Role.ADMIN) {
 }
 userUpdateRequest.processRequest();
 ```
-
-### Step 4: Regular Auditing and Updating
-
-Ensure that your applications are up-to-date and regularly checked for vulnerabilities. Have a strong reassessment of the codebase.
-
-```bash
-sudo apt-get update && sudo apt-get upgrade
-```
-
-Remember, never trust user-supplied input completely. Always verify and sanitize the data sent to the server.

@@ -25,11 +25,3 @@ echo 'ssl.key.password=test1234' >> /etc/kafka/server.properties
 echo 'ssl.truststore.location=/var/private/ssl/kafka.server.truststore.jks' >> /etc/kafka/server.properties
 echo 'ssl.truststore.password=test1234' >> /etc/kafka/server.properties
 ```
-### Step 4: Regular Audit and Update 
-Perform a regular audit and update of Kafka Broker configurations.
-```bash
-# example to start the Kafka broker and let it load the updated config
-sudo service kafka start
-```
-
-Note: Replace `'test1234'` with your secure passwords and `/var/private/ssl/kafka.server.keystore.jks, /var/private/ssl/kafka.server.truststore.jks` with your own generated key/truststore files in the commands provided above.

@@ -36,14 +36,3 @@ if (whitelistedPaths.contains(userInput)) {
     // Perform file operation
 }
 ```
-
-### Step 4: Regular Security Audits and Testing
-
-Make use of up-to-date automatic vulnerability scanning tools to regularly scan your applications for security vulnerabilities. Regular penetration testing by a skilled tester can also help unearthing vulnerabilities.
-
-```bash
-# Example with OWASP ZAP tool
-./zap.sh -quickurl http://target-app-url
-```
-
-Stay updated with new security best practices and refactor your code accordingly. Avoid the use of deprecated or insecure APIs or libraries.

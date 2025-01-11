@@ -33,15 +33,3 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
   }
 }
 ```
-
-### Step 3: Regular Updates
-
-Always make sure that you're using the most up-to-date version of Spring Framework. They routinely patch security vulnerabilities, and staying updated is one of the best defenses against exploits.
-
-```bash
-mvn versions:use-latest-versions
-```
-
-Finally, it's important to perform regular security audits on your application. This will help you stay aware of potential vulnerabilities as they arise and allow you to respond accordingly.
-
-**Remember, the above mentioned are preventative measures, the remediation steps may vary based on the specific vulnerability within Spring Framework that has been detected.**

@@ -33,9 +33,3 @@ app.get('/', function (req, res) {
   res.send('Custom Homepage') // replace 'Custom Homepage' with your code or message.
 })
 ```
-
-### Step 4: Test your changes
-```bash
-npm start
-```
-You can then navigate to `localhost:3000` and should now see your custom homepage instead of the Express default homepage.

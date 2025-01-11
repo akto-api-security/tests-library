@@ -39,14 +39,3 @@ JavaMelody provides an option to encrypt your monitoring data. You can set the p
 ```properties
 javamelody.obfuscation-password=yoursecurepassword
 ```
-
-### Step 3: Regular Audit and Update
-
-Lastly, regular code audits should be done to discover any potential security vulnerabilities. This also helps in making sure the applied security measures are working as expected. 
-
-Any available updates for your software and dependencies should be installed promptly, as these updates typically contain security patches for known vulnerabilities. 
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```

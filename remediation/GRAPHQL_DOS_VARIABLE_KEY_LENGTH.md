@@ -54,6 +54,3 @@ server.applyMiddleware({app});
 const httpServer = createServer(app);
 httpServer.listen({port: 3000}, ()=> console.log('Server started on port 3000'));
 ```
-
-### Step 4: Regular Review and Update
-Make sure to regularly review the size limits and update as necessary, depending on the needs of your application and also conduct frequent security audits.

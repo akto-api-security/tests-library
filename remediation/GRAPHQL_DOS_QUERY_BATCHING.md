@@ -53,8 +53,3 @@ const server = new ApolloServer({
   validationRules: [depthLimit(10)]
 });
 ```
-
-### Step 4: Load Testing
-Use load testing tools, such as [Artillery](https://artillery.io/), to validate the GraphQL API's performance under high load conditions.
-
-Remember to always monitor your server's performance and enhance your defenses according to your application's requirements.

@@ -29,19 +29,3 @@ module.exports = {
   //... other settings,
 };
 ```
-
-### Step 3: Regular Audit and Update
-Keeping the server up-to-date and regularly checking its activity is a good preventive step. Ensure your server is secure and no unauthorized access is detected.
-
-```bash
-npm audit
-```
-
-If the above steps do not remediate the issue, or if it is outside your technical capability or resources to do so, please consider migrating services to a more secure solution or hiring a professional cybersecurity firm to assist in securing your networks and systems.
-
-NOTE: As every infrastructure is unique, this general advice is meant to be adapted to each situation.
-
-### Reference:
-For a deeper dive into the vulnerability and its implications, the [Mongo-Express Remote Code Execution (CVE-2019-10758)](https://www.cvedetails.com/cve/CVE-2019-10758/) detailed report covers the vulnerability in depth.
-
-If you want a step-by-step guide about how to fix this issue in more depth, [How to fix the Mongo-Express Remote Code Execution (RCE) flaw](https://www.howtofixx.com/mongo-express-remote-code-execution-rce/) provides a more detailed outreach.

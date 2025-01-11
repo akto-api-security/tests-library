@@ -66,5 +66,3 @@ public class PromoCodeLogger {
   }
 }
 ```
-
-Follow up with these remediation steps by doing regular audits and updates. Make sure your system is up to date and continuously check for new vulnerabilities and patch them as soon as they appear. Regular penetration testing is also recommended to ensure the system's security robustness.

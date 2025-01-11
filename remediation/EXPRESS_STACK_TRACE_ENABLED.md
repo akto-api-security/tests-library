@@ -40,12 +40,3 @@ npm update express
 ```
 
 In addition, be sure to diligently monitor and respond to security announcements related to Express.js and your server software. This will ensure any future vulnerabilities are resolved promptly. 
-
-### Step 5: Audit Your Application
-Finally, regularly check your application for vulnerabilities using tools like the Node Security Platform's CLI tool. This can be a crucial step in finding and addressing potential security vulnerabilities.
-
-To audit your Node.js application you can run:
-```bash
-npm audit
-```
-You should frequently audit your system, as new vulnerabilities may be discovered in the libraries your project depends on.

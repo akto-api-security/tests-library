@@ -36,15 +36,3 @@ app.post('/api/users', (req, res, next) => {
 ```
 
 In the example above, we have a JSON object that must have a `name` and `age` property, if the parameters do not meet the requirements an error response is returned.
-
-### Step 3: Further Protection
-Never trust user input entirelly, always expect the worst case scenario. Some other good practices includes:
-
-   - Protect your application against XSS attacks by encoding output data.
-   - Use parameterized queries or prepared statements to avoid SQL Injection.
-   - Regular audit and update of the libraries used in the project.
-   - Limit the rate of requests to your API to prevent brute-force attacks.
-
-Remember that security is a process, not a state. Every change in your application can introduce a new vulnerability. Constant monitoring, updating, and revisiting your security procedures is the only way to keep your application secure. 
-
-Please refer to specific security guidelines for your language, frameworks and libraries. Each of them can have their own practices to follow to further secure your code.

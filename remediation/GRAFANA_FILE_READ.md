@@ -28,12 +28,3 @@ sudo chmod 700 /path/to/your/file
 ### Step 3: Configuration Checks
 
 Ensure all sensitive information is properly protected. This includes any information stored within the `grafana.ini` file, within environment variables, or within any of the dashboard json files.
-
-### Step 4: Regular Audit and Patch Management
-
-Regularly check for updates, patches and possible vulnerabilities. Follow the Grafana security guidelines and monitor the Grafana community for any updates.
-
-```bash
-sudo yum check-update grafana   // centos, rhel, openSuse, Fedora
-apt-get -u upgrade --assume-no  // Ubuntu or Debian
-```  

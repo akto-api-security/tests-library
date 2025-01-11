@@ -26,11 +26,3 @@ To set a Content Security Policy header, navigate to Jenkins -> Managed Jenkins 
 ```groovy
 System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "sandbox; default-src 'self';")
 ```
-### Step 4: Regular Audit and Update
-Keep your Jenkins and its plugins up-to-date to get the latest security patches.
-```bash
-# Check for any available Jenkins updates and apply them
-# Go to Managed Jenkins -> Manage Jenkins -> Check for updates
-```
-
-Note: These remediation steps only work if the Jenkins server environment allows for updates and changes to the CSP. If changes are restricted, you might need to involve the system administrators.

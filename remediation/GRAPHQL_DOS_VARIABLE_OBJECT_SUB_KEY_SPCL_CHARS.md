@@ -48,7 +48,3 @@ const limiter = rateLimit({
 // apply to all requests
 app.use(limiter);
 ```
-### Step 4: Regular Security Audits and Updates
-Keep your server-side software and libraries up to date. Regularly check and patch any security vulnerabilities. Also, consider doing regular security audits of your codebase. 
-
-Please note that depending on the architecture of your application, you might need to adapt these example codes. It is crucial to use these suggestions as building blocks to shape security measures that best fit your application.

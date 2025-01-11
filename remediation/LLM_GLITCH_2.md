@@ -45,13 +45,3 @@ def api_call():
   # Your LLM API call here
   pass
 ```
-### Step 5: Regular Audit and Update
-
-Regularly auditing and updating your environment is crucial for maintaining a secure system.
-
-```bash
-# Restart your LLM service
-sudo systemctl restart {your-LLM-service}
-```
-
-Always stay updated on the latest patches and updates for all components of your system to mitigate any new threats.

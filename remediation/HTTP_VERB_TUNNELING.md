@@ -53,5 +53,3 @@ Disable HTTP tunneling by turning off the `Allow HTTP Verb Tunneling` settings o
 ```
 
 These steps should provide robust protection against bypassing access controls using HTTP verb tunneling. Regularly audit and update your system to keep the security controls effective. 
-
-However, bear in mind that a truly effective system is layered, and defense-in-depth is always recommended. Always work to improve the depth and strength of your security against all possible vulnerabilities.

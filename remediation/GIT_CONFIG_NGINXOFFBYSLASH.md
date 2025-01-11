@@ -43,5 +43,3 @@ If the configuration is successful, restart the server to effect the changes.
 ```bash
   sudo systemctl restart nginx
 ```
-
-Remember to carry out regular audits and updates to make sure your server remains secure. Your `.git` directory should now be inaccessible to the public, effectively resolving the Git Configuration Exposure issue.

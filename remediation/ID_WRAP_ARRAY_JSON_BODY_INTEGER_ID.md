@@ -43,10 +43,3 @@ catch(err){
     res.status(500).send('An error occurred');
 }
 ```
-
-### Step 4: Regular Audit and Update
-Always be on the lookout for possible vulnerabilities. Regularly audit your application and keep it up-to-date with security patches and best practices.
-
-```bash
-npm audit
-```

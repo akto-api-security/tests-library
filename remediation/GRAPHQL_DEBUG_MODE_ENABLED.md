@@ -26,11 +26,3 @@ In this code, `graphiql` is set to `false`, which turns off the debug mode.
 ### Step 3: Validate Changes
 
 Validate that the debug mode has been turned off. 
-
-### Step 4: Regular Audit
-
-Regularly audit your application's configurations, to ensure that debug mode is not enabled on production servers.
-
-Please replace `MyGraphQLSchema` with your actual GraphQL schema. The `app` is your instance of the express application.
-
-Also note that the exact way to disable the debug mode depends on your implementation (i.e., which language or framework you are using). Refer to your specific GraphQL implementation's documentation for more details. 

@@ -33,12 +33,3 @@ router.delete('/api/delete', passport.authenticate('jwt', { session: false }), f
 
 ### Step 3: Limit API Response Data
 Limit the amount of data returned by the API to only what is necessary, thus reducing the chance of exposing sensitive information.
-
-### Step 4: Regular Audit and Update
-Your dev team should regularly audit their code for security vulnerabilities, make updates as needed and stay aware of the latest security standards and best practices.
-
-```bash
-# Update your package dependencies
-npm update
-``` 
-Remember, static code analysis tools and security audits are an essential part of the development cycle. Regular updates and patches help to keep your application secure.

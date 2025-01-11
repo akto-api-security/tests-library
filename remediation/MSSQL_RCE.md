@@ -37,7 +37,3 @@ Limit the access permissions to only those users who need it. This significantly
 -- Limit the access permissions to specific roles
 GRANT EXECUTE ON [Schema].[Your_Stored_Procedure] TO [User_Or_Role]
 ```
-
-References:
-- [Microsoft Security TechCenter](https://www.microsoft.com/security/blog/tech-community/)
-- [Microsoft Update Catalog](http://catalog.update.microsoft.com/v7/site/Home.aspx)

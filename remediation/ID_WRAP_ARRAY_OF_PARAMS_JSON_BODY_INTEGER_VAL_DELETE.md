@@ -42,11 +42,3 @@ To protect the API from brute force attacks, add rate limiting to your API. This
     # implementing rate limiting in Nginx
     limit_req_zone $binary_remote_addr zone=api:10m rate=10r/m;
 ```
-
-### Step 5: Regular Audit and Update
-Ensure regular audits of your API to identify and remediate any future vulnerabilities. Regularly update yourself with information on recent vulnerabilities and update your API accordingly. 
-
-```bash
-# restart your server after making changes
-sudo service servername restart
-```

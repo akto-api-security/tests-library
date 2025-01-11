@@ -23,11 +23,3 @@ Enable access control, to limit the accessible functionalities based on user rol
 java -jar jenkins-cli.jar -s ${JENKINS_URL} groovy = < 'println Jenkins.instance.getAuthorizationStrategy().allowsSignup()'
 java -jar jenkins-cli.jar -s ${JENKINS_URL} groovy = < 'Jenkins.instance.setSecurityRealm(hudson.security.HudsonPrivateSecurityRealm(false))'
 ```
-### Step 4: Regular Audit and Update
-Ensure your Jenkins is always updated to the latest version. Regular audit and monitoring your instance of Jenkins.
-
-```bash
-sudo service jenkins restart
-```
-
-These are basic remediation steps and excluding the fine-grained level, you must apply advance security measures based on your project or organization's needs. It may require regular monitoring, audits, and use of security plugins etc.

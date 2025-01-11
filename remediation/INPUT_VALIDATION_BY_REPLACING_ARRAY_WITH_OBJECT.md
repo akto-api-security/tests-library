@@ -45,9 +45,3 @@ app.post('/data', [
     // handle request
 });
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly review the code to ensure that the user inputs are validated and sanitised before processing. This could be enforced as part of the coding standards in the team, and could be periodically checked during code reviews.
-
-Also, always have the latest updates and patches for your programming language and its packages. This will ensure your application is protected against known vulnerabilities and provides the latest features and improvements that can aid in the enforcement of data validity.

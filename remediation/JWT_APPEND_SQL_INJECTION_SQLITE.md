@@ -40,6 +40,3 @@ jwt.verify(token, secret, function(err, decoded) {
   console.log(decoded);
 });
 ```
-
-### Step 5: Regular Audit and Update
-Regularly check for known vulnerabilities, and update your system, libraries and packages.

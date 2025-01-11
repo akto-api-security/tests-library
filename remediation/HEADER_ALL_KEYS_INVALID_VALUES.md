@@ -49,7 +49,3 @@ app.use(function(req, res, next){
     next();
 });
 ```
-
-These steps should help mitigate the issues raised with the security issue Header All Keys Invalid Values. 
-
-Please note that these are general suggestions, and you need to adapt them according to the specific requirements of your project and its stack. Always remember to tailor your security measures to your specific needs.

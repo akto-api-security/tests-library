@@ -56,14 +56,3 @@ app.use('/graphql', expressGraphQL(request => ({
 
 app.listen(4000);
 ```
-
-### Step 3: Regular Audit and Update
-
-Ensure that you regularly audit your GraphQL APIs, update dependencies and apply security patches to keep them secure.
-
-```bash
-npm audit
-npm update
-```
-
-By following these steps and implementing stringent validation and depth limiting, you should be able to protect your GraphQL API from DoS attacks that utilize the `Variables` key with a value array of special characters.

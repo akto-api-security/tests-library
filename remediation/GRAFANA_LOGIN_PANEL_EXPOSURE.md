@@ -50,16 +50,7 @@ server {
 }
 ```
 
-### Step 4: Regular Audit and Update
-
-Always update your Grafana to the latest version to ensure that the most recent security updates are in place. Maintaining this routine practice can strengthen your system:
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade grafana
-```
-
-### Step 5: Hide your login form
+### Step 4: Hide your login form
 
 If you do not want the login form to appear publicly, you can use the below configuration under the `[auth.anonymous]` section in `grafana.ini`
 

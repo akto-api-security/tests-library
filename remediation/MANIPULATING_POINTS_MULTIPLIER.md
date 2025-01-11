@@ -27,27 +27,8 @@ def update_multiplier(user, new_multiplier):
         raise PermissionError("User does not have the necessary permissions.")
 ```
 
-### Step 3: Logging and Auditing
 
-Track multiplier changes in application logs. Regular audits can help detect suspicious activity.
-
-```javascript
-let rewardMultiplier = 2.0;
-console.log(`[Application LOG] Initial Reward Multiplier Set: ${rewardMultiplier}`);
-...
-
-function setRewardMultiplier(newMultiplier, user) {
-    if(user.is_authorized) {
-        console.log(`[Audit LOG] Reward Multiplier changed from ${rewardMultiplier} to ${newMultiplier} by User - ${user.id}`);
-        rewardMultiplier = newMultiplier;
-    } else {
-        console.log(`[SECURITY LOG] Unauthorized attempt to change Reward Multiplier by User - ${user.id}`);
-        throw new Error('Unauthorized action');
-    }
-}
-```
-
-### Step 4: Encrypt Sensitive Data
+### Step 3: Encrypt Sensitive Data
 
 If the multiplier needs to be stored, ensure it's encrypted, and securely handled.
 
@@ -57,7 +38,3 @@ cipher_suite = Fernet(key) # key should be stored securely
 ciphered_text = cipher_suite.encrypt(b"2.0") # Assume 2.0 is the multiplier
 multiplier = ciphered_text
 ```
-
-### Step 5: Regularly Update Security Patches
-
-Regularly update your software to include the latest security patches.

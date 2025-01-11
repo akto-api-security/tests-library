@@ -28,16 +28,3 @@ Use `mod_sql_vhost` module of Lighttpd which provides automatic SQL Injection pr
 ```txt
 server.modules += ( "mod_sql_vhost" )
 ```
-
-### Step 4: Regularly Update Lighttpd and Its Components
-Always keep Lighttpd and its components updated to the latest stable version, which could include patches for known vulnerabilities.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade lighttpd
-```
-
-### Step 5: Audit Your System
-Regularly audit your system for potential vulnerabilities. Consider using tools specifically designed for SQL Injection detection such as SQLMap.
-
-Remember, these steps alone will not guarantee a completely secure system. Follow good security practices for Lighttpd configuration and other server-side security standards.

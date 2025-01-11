@@ -34,7 +34,3 @@ In the example above, we're using an absolute path, therefore limiting the file 
 
 ### Step 5: Limit File Permissions
 Limit permissions on the file system for web-facing applications as much as possible, to reduce impact if a security vulnerability in the application is exploited.
-
-
-### Step 6: Regular Audit and Update
-Regularly audit your code and update necessary patches. If a vulnerability is identified, ensure it is fixed in all the places where the vulnerable code is used.

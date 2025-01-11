@@ -35,13 +35,3 @@ app.use(helmet.contentSecurityPolicy({
   }
 }))
 ```
-
-### Step 4: Regular Security Reviews and Updates
-Perform regular security reviews and ensure the Grafana installation is up to date with the latest security patches and measures.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade grafana
-```
-
-> Note: The aforementioned solutions do not guarantee complete protection against XSS attacks, they simply minimize the risk. Always consider the security of your application from different angles.

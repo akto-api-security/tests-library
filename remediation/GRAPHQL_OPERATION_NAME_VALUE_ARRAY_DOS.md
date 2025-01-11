@@ -53,14 +53,3 @@ const apiLimiter = rateLimit({
 // only apply to requests that begin with /api/
 app.use('/graphql', apiLimiter);
 ```
-
-### Step 4: Regular Audit and Update
-
-Regular audits and updates are important to ensure that the server is not vulnerable to potential new threats. Consider using automated security tools for continuous monitoring and protection.
-
-```bash
-# update all the packages
-npm update
-```
-
-These steps can help in mitigating the risk and ensuring the integrity and availability of the GraphQL API service. Make sure to enable detailed security event logging and monitor logs carefully in a secure way.

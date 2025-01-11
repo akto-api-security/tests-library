@@ -40,8 +40,3 @@ const server = new GraphQLServer({
   middlewares: [permissions],
 })
 ```
-
-### Step 3: Regular Audit and Update
-Always monitor and audit the use of your GraphQL API. Ensure your security measures are up-to-date with the latest best practices. 
-
-Please make sure to adapt examples to your own tech stack, the principle stays similar across languages.

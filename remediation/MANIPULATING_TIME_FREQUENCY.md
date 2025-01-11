@@ -44,15 +44,3 @@ sudo nano /etc/ntp.conf
 #Restart the NTP service
 sudo service ntp restart
 ```
-
-### Step 4: Regular Audit and Update 
-Make sure to regularly audit the system and application logs for any potential issues and keep your systems updated.
-
-```bash
-#Check system logs
-sudo less /var/log/syslog
-#Update system
-sudo apt-get update && sudo apt-get upgrade
-```
-
-Following these steps can help in mitigating the risk associated with the manipulation of time frequency.

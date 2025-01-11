@@ -47,14 +47,3 @@ def create_order():
 ```
 
 This way, you can ensure that only valid orders, as defined by your schema, are processed by your system.
-
-### Step 4: Regular Auditing
-It's advised to conduct regular audits on your system to ensure everything works as expected and to proactively address potential vulnerabilities.
-
-```bash
-# command to run audit
-```
-
-The actual auditing command depends on your specific setup and system. It's just a placeholder here as an important security reminder. Regular security audit should be a part of any organization's security program.
-
-Note: The presented code and steps are a generalized example. The steps may differ based on your specific environment and implementation. Please adjust accordingly.

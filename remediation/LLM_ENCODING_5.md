@@ -24,14 +24,3 @@ cursor.execute("SELECT * FROM table WHERE field = %s", [user_input])
 ### Step 3: Limit The Scope of The Application
 
 In our application, we should use the least privilege method to conduct normal operational procedure. For example, only give read permission to those who only need to read. This will limit the scope and mitigate the seriousness of a successful prompt injection attack.
-
-### Step 4: Regular Audit and Update
-
-Perform regular updates of all software on your machines and perform code reviews to ensure security is maintained.
-
-```bash
-sudo apt update
-sudo apt upgrade
-```
-
-In any case, always prepare an incident response plan and have a plan ready for when an attack occurs.

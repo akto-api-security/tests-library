@@ -54,5 +54,3 @@ app.use(rateLimit({
 }));
 ```
 This code will limit each IP to 100 requests per 15 minutes. 
-
-By implementing these remediation steps, you can significantly reduce the risk of a Denial of Service attack on your GraphQL API service.

@@ -33,10 +33,3 @@ sudo ufw allow from trusted_IP_address to any port jupyter_port
 ```
 
 _Replace `trusted_IP_address` with your IP address and `jupyter_port` with the port your Jupyter server is running on._
-
-### Step 4: Regular Update and Audit
-Periodically update your server packages, and perform regular system audits to detect any signs of a breach in security.
-
-```bash
-pip install --upgrade jupyter
-```

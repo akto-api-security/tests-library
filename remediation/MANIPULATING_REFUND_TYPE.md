@@ -33,10 +33,3 @@ def log_refund_request(user, refund_type):
     # logic to write to a log file or logging service
     print(f"A refund request of type {refund_type} was made by {user.name}")
 ```
-
-### Step 4: Regular Audit and Update
-Regularly review the log data and update application rules according to new identified threats. 
-
-Following these steps should help in reducing the risk of refund type manipulation in your application.
-
-Please remember to replace the logic inside the functions to match your own application's design and requirements.

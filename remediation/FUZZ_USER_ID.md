@@ -49,9 +49,3 @@ app.use('/api/users/:userId', function(req, res, next) {
   // Continue processing ...
 });
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly audit your system to ensure that there are no bounds overruns, grant authorized access only, and change credentials frequently. Regularly updating your system can prevent potential security breaches.
-
-Remember to restart your servers for changes to take effect!

@@ -30,8 +30,3 @@ def validate_alg(jwt_token):
 
 ### Step 3: Use Secure JWK Set URI
 Do not use user-provided JWK Set URI, always use predetermined secure URIs to avoid JWK injection. 
-
-### Step 4: Regular Audit and Update
-Conduct regular security audits of your codebase and dependencies to identify and fix any potential security vulnerabilities. Update your libraries and frameworks regularly to receive the latest security patches. 
-
-Doing these steps should help to mitigate the risk of Authentication Bypass using JWT Header Param Injection with JWK.

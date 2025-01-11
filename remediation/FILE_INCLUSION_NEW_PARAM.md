@@ -44,13 +44,3 @@ sudo vim /etc/apache2/envvars
 
 sudo service apache2 restart
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly update your system and server software to the latest security patches to prevent known vulnerabilities.
-
-```bash
-sudo apt update && sudo apt upgrade
-```
-
-Always remember that attention to the above practices doesn't guarantee absolute security. Keep learning and applying security best practices. It's a continuous process. Appling all remediations together can often provide multiple layers of defense.

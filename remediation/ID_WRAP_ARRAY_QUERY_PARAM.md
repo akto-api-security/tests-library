@@ -38,6 +38,3 @@ import uuid
 # Instead of exposing and using ids like 1, 2, 3... use UUIDs
 example_uuid = uuid.uuid4()  # This will generate a UUID that you can associate to the user and resource
 ```
-
-### Step 4: Regular Audit and Update
-Ensure to regularly audit the codebase for BOLA vulnerabilities. Automated static code analysis tools and penetration testing can play a key role in detecting and mitigating these kinds of vulnerabilities, along with keeping dependencies up to date.

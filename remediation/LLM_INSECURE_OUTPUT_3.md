@@ -30,19 +30,3 @@ const app = express();
 
 app.use(helmet());
 ```
-
-### Step 3: Regular Code Review and Update
-
-Perform regular code reviews to identify and remedy insecure coding practices. It's also necessary to keep your application and its dependencies up to date.
-
-### Step 4: Deploy WAF (Web Application Firewall)
-
-```bash
-sudo apt-get install -y mod-security-crs
-sudo a2enmod security2
-sudo systemctl restart apache2
-```
-
-By deploying a Web Application Firewall (WAF) like ModSecurity, you can prevent attacks stemming from insecure output handling.
-
-Remember, security is not a one-time thing, but a continuous process. Regular auditing, updating, and employee training are essential parts of maintaining a secure system.

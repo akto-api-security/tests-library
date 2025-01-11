@@ -46,6 +46,3 @@ Add the following lines in your Nginx server block.
 add_header Content-Security-Policy "default-src 'self'";
 add_header X-Frame-Options "DENY";
 ```
-
-### Step 5: Regular Audit and Update
-Ensure to update the policies regularly based on your application needs and observe regulations to keep your application secure.

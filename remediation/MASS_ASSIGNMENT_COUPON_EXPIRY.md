@@ -39,11 +39,3 @@ public class Coupon {
 ```
 
 This ensures that the expiry date can't be set to a date in the past.
-
-### Step 3: Regular code review and testing
-Regularly review and test your code to ensure that no fields are mass assignable and that your security methods continue to be effective. For automated testing, you can use tools like Brakeman for Rails or OWASP ZAP for general web applications.
-
-### Step 4: Secure Coding Practices
-Encourage secure coding practices among your developers to minimize potential vulnerabilities. 
-
-Remember, JavaScript, and Python, among other languages, can also be secured against Mass Assignment by following similar principles. No remedy fits all situations and different applications may need different methods.

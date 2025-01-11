@@ -44,7 +44,3 @@ def safe_base64_decode(input_string):
     decoded_string = str(decoded_bytes, "utf-8")
     return sanitize(decoded_string)
 ```
-
-### Step 4: Regular Code Review and Audit
-
-Regularly review and update your security-related code to prevent potential exploits from prompt injection and other vulnerabilities.

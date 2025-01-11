@@ -42,11 +42,3 @@ Apply the RBAC rule to the Kubernetes server:
 ```bash
 kubectl apply -f limit-access-role.yaml
 ```
-
-### Step 3: Regular Scan and Monitoring
-Implement regular vulnerability scanning and monitoring system to track any unauthorized actions and update security patches timely.
-```bash
-kubectl get nodes -o json | jq -r '.items[] | "\(.status.addresses[0].address) \(.metadata.name)"' | while read HOSTNAME NODE_NAME; do ssh -o PasswordAuthentication=no $HOSTNAME 'echo $NODE_NAME: $(sudo systemctl is-active kubelet)'; done
-```
-
-Note: Always back up your Kubernetes configuration files before making any changes.

@@ -48,7 +48,3 @@ if(!validator.isEmail(userInput)) {
     throw new Error('Invalid email address');
 }
 ```
-
-Please note that each system and its associated vulnerabilities are unique. Therefore, remediation steps may not entirely apply or need to be adjusted based on the particular scenario.
-
-If you are unfamiliar with how to implement these changes, involve your development or security team to ensure the remediation steps are executed correctly.

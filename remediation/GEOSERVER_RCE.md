@@ -35,9 +35,3 @@ sudo apt-get update && sudo apt-get upgrade
 ### Step 5: Implement Web Application Firewalls
 
 Web Application Firewalls (WAFs) can also be immensely beneficial in protecting against remote code executions, as they can block suspicious activity and malicious traffic before it reaches your server.
-
-### Step 6: Regular Audit and Monitor
-
-Regular audits can help detect any potential vulnerability and data breaches early, thus preventing severe consequences.
-
-_Ensure these steps are undertaken by professionals or under professional guidance, as wrong configuration may lead to other vulnerabilities._

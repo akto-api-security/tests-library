@@ -38,12 +38,3 @@ Limit the permissions of the application on the server. This can stop potential 
 chown username:groupname /path/to/your/file
 chmod 0755 /path/to/your/file
 ```
-
-### Step 5: Regular Scanning and Auditing
-Regularly audit and monitor your files and logs for any signs of intrusion or suspicious activity. Various software tools can assist with this.
-
-```bash
-# assuming auditd is being used for auditing
-sudo service auditd start
-```
-In case the file server is a third-party product, it is necessary to follow the remediation steps recommended by the product's manufacturer or vendor.

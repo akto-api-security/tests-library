@@ -26,6 +26,3 @@ Route::group(['middleware' => ['auth']], function () {
    // Your routes here
 });
 ```
-### Step 4: Regular Audit and Update
-
-Keep your Laravel installation and packages up-to-date, and regularly review your application for any potential security issues.

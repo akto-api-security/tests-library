@@ -48,12 +48,3 @@ public ResponseEntity<Object> handleRequest(@RequestBody LogisticsRequest reques
    ...
 }
 ```
-
-### Step 4: Regular Audit and Update
-Regularly audit and update your API endpoints, looking for any risks or vulnerabilities. A combination of manual and automated testing can help ensure your APIs are secure.
-
-```bash
-# Use tools like OWASP ZAP for security auditing
-zap-cli quick-scan --self-contained -o '-config quickscan.showreport=true' https://api.yourservice.com
-```
-These steps, once implemented, should protect you from the threat of weight parameter manipulation in shipping or logistical related APIs.

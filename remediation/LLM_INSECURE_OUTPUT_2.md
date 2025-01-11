@@ -37,7 +37,3 @@ app.use(function(req, res, next) {
   next();
 });
 ```
-### Step 3: Test for success
-After the steps above are implemented, it's imperative to test if they work as expected. This includes asserting correct inputs get through the validation and sanitization logic, while incorrect inputs do not.
-
-If the steps above did not resolve the issue, please dig deeper into your specific LLMs setup. It could be that other specific configurations or issues are causing insecure output handling.

@@ -54,10 +54,3 @@ service cloud.firestore {
   }
 }
 ```
-
-### Step 4: Regular Audits
-
-Maintain regular audits of your codebase to ensure Firebase configurations are not exposed. Use tools like GitGuardian to detect leaked secrets in your code.
-
-
-By following these steps, you can significantly reduce the risk of Firebase Config Exposure.

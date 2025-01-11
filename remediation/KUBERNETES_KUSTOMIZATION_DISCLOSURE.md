@@ -47,16 +47,8 @@ spec:
             key: key1
 ```
 
-### Step 3: Regular Audit and Update
 
-Audit your Kubernetes cluster configuration regularly, check for any public repositories storing Kustomization files with sensitive data.
-
-```bash
-# Use kube-score for auditing the objects in your Kubernetes cluster
-kube-score score my-kubernetes-deployment.yaml
-```
-
-### Step 4: Use RBACs to Limit Access
+### Step 3: Use RBACs to Limit Access
 
 Ensure you are implementing Role-Based Access Control (RBAC) for restricting who can get Kustomization details via the 'kubectl get' command.
 

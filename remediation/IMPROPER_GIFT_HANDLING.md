@@ -65,13 +65,3 @@ def check_attempt(userId):
     # If attempts < MAX_ATTEMPTS, allow transaction
     return True
 ```
-
-### Step 4: Regular Audit and Update
-
-Always perform regular audits to find and address vulnerabilities in your application and keep the application updated with the latest security updates and patches.
-
-```bash
-# Steps to audit will depend on the auditing tools and process in place
-```
-
-These are a few steps to remediate the issue with improper handling of gift codes. Depending on the complexity and requirements of your system, more steps might be required.

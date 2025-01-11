@@ -38,12 +38,3 @@ func main() {
 	fmt.Println(ss)
 }
 ```
-### Step 3: Regular Audit and Update
-It is important to update the KubePi as well as the microservices it manages on a regular basis to stay protected from newly discovered vulnerabilities.
-
-```bash
-# Auditing and updating the KubePi
-kubectl apply -f https://github.com/KubePi/kubepi/releases/latest/download/install.yaml
-```
-        
-Remember to replace "your_new_secret_key" with a new strong secret key for JWT signing. Do not disclose this key. After updating the secret key, ensure all JWT tokens are regenerated.

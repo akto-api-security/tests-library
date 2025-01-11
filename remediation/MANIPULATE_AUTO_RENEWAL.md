@@ -42,15 +42,8 @@ def decrypt_data(cipher_text):
     return plain_text
 ```
 
-### Step 3: Regular Audit and Monitoring
-Conduct regular audits and monitoring of auto-renewal systems. Make sure to check for abnormal activities, like frequent changes in subscription, invalid card details etc.
 
-```bash
-# Audit log files regularly
-cat /var/log/subscription_system.log | grep -i "subscription changed"
-```
-
-### Step 4: Proper Access Control
+### Step 3: Proper Access Control
 Ensure that proper access controls are in place such that users can only manipulate their own subscriptions.
 
 ```python
@@ -61,7 +54,7 @@ def change_subscription(user, new_plan):
         raise PermissionError('User does not have permission to modify subscription')
 ```
 
-### Step 5: Notify Users
+### Step 4: Notify Users
 Always notify users when the status of their subscriptions is changed, especially in the case of auto-renewals.
 
 ```python

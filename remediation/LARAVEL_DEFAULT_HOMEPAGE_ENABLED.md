@@ -27,11 +27,3 @@ Route::get('/', function () {
 ```
 
 And you're done. Now instead of Laravel's default welcome page, Laravel will show the view you specified.
-
-### Step 3: Regular Audit and Update
-```bash
-php artisan route:cache
-php artisan config:cache
-```
-
-These commands will respectively cache the changes to the routes and configurations to ensure that the latest changes come into effect. Regularly audit and update your Laravel application to keep up with security best practices.

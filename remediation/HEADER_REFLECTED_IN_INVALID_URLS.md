@@ -33,7 +33,3 @@ app.use(helmet())
 ### Step 3: Avoid Reflection Where Possible
 
 Try to avoid reflection of headers where it's not needed as an extra measure of precaution. Make sure the headers you're setting don't contain any user controllable data.
-
-### Step 4: Regular Security Audits
-
-Always perform regular application security audits to find and fix any potential vulnerabilities as soon as possible. Regular penetration testing can help uncover such vulnerabilities.

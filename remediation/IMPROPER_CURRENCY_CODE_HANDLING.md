@@ -40,13 +40,3 @@ rescue Money::Currency::UnknownCurrency
   puts "Invalid currency code provided"
 end
 ```
-
-### Step 4: Regular Update
-
-Currency libraries handle most currency operations securely and reliably. However, as standards and codes evolve, these libraries should be kept updated.
-
-```bash
-bundle update money
-```
-
-By following these steps, currency manipulation vulnerabilities can be mitigated, protecting your financial data integrity and user interests.

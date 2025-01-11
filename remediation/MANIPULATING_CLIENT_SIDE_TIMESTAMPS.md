@@ -26,12 +26,3 @@ In this JavaScript example, the client timestamp is rejected if the absolute dif
 
 ### Step 3: Protect Timestamp Data during Transmission
 Finally, always secure timestamp data during transmission. SSL/TLS protocols can be used to securely transit these timestamps.
-
-### Step 4: Regular Audit and Update
-Ensure regular audits and updates on the system to maintain a secure environment against these manipulations.
-
-```bash
-// Regular system update
-sudo apt-get update && sudo apt-get upgrade
-```
-This bash command example periodically updates system packages to their latest versions.

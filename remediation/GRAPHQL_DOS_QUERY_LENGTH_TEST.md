@@ -70,5 +70,3 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Request failed due to server error');
 })
 ```
-
-This should help mitigate the potential DoS vulnerability caused by very long query names in a GraphQL API. These steps assume Express.js as the server technology, but the concepts can be adapted to other platforms as needed. Taking these precautions can help ensure the robustness and reliability of your GraphQL API.

@@ -52,6 +52,3 @@ Implement a Content Security Policy (CSP) to mitigate potential XSS attacks.
 ```http
 Content-Security-Policy: default-src 'self'
 ```
-
-### Step 4: Regular Audits
-Make sure you audit your code for any potential security issues regularly, and keep your libraries and dependencies updated.

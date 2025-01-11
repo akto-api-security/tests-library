@@ -28,8 +28,3 @@ Block access to JMX default port (usually 1099 or 9010) in the firewall. This is
 sudo ufw deny from any to any port 1099
 sudo ufw deny from any to any port 9010
 ```
-
-### Step 4: Regular Security Review
-Regularly review JMX exposure and perform updates to security measures according to changes in your environment. Review logs and monitor for any suspicious activities. This step involves no specific code, it is more of a due diligence practice on the server operations side. 
-
-To sum up, to fix JMX Console exposure, you need to disable remote JMX connections, implementing authentication and enabling SSL, also firewall measures are needed to protect JMX default ports, and finally, perform regular security reviews to stay protected against JMX Console exposure.

@@ -32,15 +32,8 @@ Configure your webserver to deny HTTP requests for Jetty's config files. Here is
 </Directory>
 ```
 
-### Step 4: Regular Audits and Updates
 
-Regularly audit and update Jetty and its configuration files to ensure they remain secure against vulnerabilities. Keep an eye on Jetty security advisories and apply the necessary patches or updates:
-
-```bash
-sudo apt-get install --only-upgrade jetty
-```
-
-### Step 5: Verify the Changes
+### Step 4: Verify the Changes
 
 Test the changes you made and verify that the configuration file is no longer accessible:
 

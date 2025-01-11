@@ -53,13 +53,3 @@ After validating the input, make sure that the authenticated user has permission
     # Continue processing...
 ```
 This will ensure that even if an attacker can manipulate the id_list parameter, they will not be able to modify resources that they are not authorized to modify.
-
-### Step 3: Regularly Update And Review Code
-
-In order to prevent issues similar to this one, it is vital to keep libraries and frameworks used in your application up-to-date. Regularly review your code to make sure any potential vulnerabilities have been addressed.
-
-```bash
-pip install --upgrade flask marshmallow psycopg2
-```
-
-In conclusion, by validating input and enforcing access control rules, you can mitigate the risk of BOLA attacks via PATCH/PUT API endpoints.

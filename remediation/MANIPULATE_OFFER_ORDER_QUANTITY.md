@@ -42,14 +42,3 @@ WHERE product_id = :product_id AND quantity >= :ordered_quantity;
 
 COMMIT;
 ```
-
-### Step 4: Regular Monitoring and Audits
-
-Ensure to routinely audit your web application transactions for any anomalies and to ensure that the implemented controls are working as intended.
-
-```bash
-# For example, you might want to monitor your server logs
-tail -f /var/log/server.log
-``` 
-
-Remember to always keep your server, application, and associated libraries up-to-date to ensure that all known vulnerabilities are patched.

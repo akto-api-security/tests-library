@@ -25,15 +25,8 @@ def purchase():
 ### Step 2: Use HTTPS for Transactions
 Ensure to use HTTPS for communication during transactions. By using HTTPS, you can prevent attackers from inspecting or modifying the transmitted data.
 
-### Step 3: Regularly Update and Audit
-Keep an eye on your transactions. Regular audits can help identify any unauthorized alternations. Updates to the transaction handling code should be tested thoroughly before deployment.
 
-```bash
-# Example of accessing log files
-cat /path/to/transaction/logfile.log
-```
-
-### Step 4: Encryption of sensitive data
+### Step 3: Encryption of sensitive data
 Ensure that the price details are encrypted while being stored and decrypted only when necessary. This would help against the attacks if the attacker gain access to your database.
 
 ```python

@@ -28,12 +28,3 @@ except Exception as e:
     # Handle your exception
     print(f"An error occurred: {e}")
 ```
-
-### Step 4: Regular Updates and Audits
-Ensure regular updating and auditing of tests, especially those which include LLMs. This will ensure that you can promptly identify an overreliance on LLMs during a Glitch Test with Random Word and take necessary measures.
-
-```bash
-# No specific source code as it depends on the context and auditing tools
-```
-
-Remember, even though there is no definitive source code to provide due to contextual differences arising mainly from the system being tested and the testing tools being used, these remediation steps can guide you to mitigate the security issue at hand.

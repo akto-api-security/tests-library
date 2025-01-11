@@ -34,13 +34,3 @@ class UsersController < ApplicationController
 end
 ```
 In the `user_params` private method, only the permitted attributes can be updated via mass assignment.
-
-### Step 3: Regular Code Audit and Update
-Regularly audit your codebase to ensure no unwanted parameters are in open to mass assignment. Update as necessary implementing strong parameters where applicable.
-```bash
-# pseudocode command for checking code
-check_code base_for_unwanted_parameters
-```
-
-**NOTE:**
-The code provided is an example with Ruby on Rails. Please adapt these principles to the language and framework your application is built with.

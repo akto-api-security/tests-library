@@ -26,20 +26,3 @@ $HTTP["url"] =~ "^/config/" {
 ```
 
 The above configuration will block direct HTTP access to any files or directories with ‘config’ in the URL, per lighttpd’s url.access-deny directive.
-
-### Step 3: Regular Audit and Update
-
-Perform audits and updates on a regular basis, to ensure the security settings are up-to-date:
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade lighttpd
-```
-
-This will upgrade Lighttpd if any updates are available.
-
-Be sure to restart the Lighttpd service when done updating:
-
-```bash
-sudo service lighttpd restart
-```

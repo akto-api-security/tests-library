@@ -45,10 +45,3 @@ const apiLimiter = rateLimit({
  
 app.use("/api/", apiLimiter);
 ```
-
-### Step 5: Regular Auditing and Updating
-Ensure the API logic is updated regularly as part of routine security audits.
-
-```bash
-npm update
-```

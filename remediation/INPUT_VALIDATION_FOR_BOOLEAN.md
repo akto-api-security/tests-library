@@ -38,11 +38,3 @@ public boolean paramCheck(Object user_input) {
     }
 }
 ```
-
-### Step 2: Regular Code Audits
-Conduct regular code audits to ensure that input validation is properly implemented and maintained.
-
-### Step 3: Use Secure Coding Guidelines
-Follow secure coding guidelines and practices that favor strong type checking.
-   
-Please note that these remediations steps are specific to ensuring input validation for Booleans. Depending on the context of your application, additional security measures may need to be in place to mitigate other risks such as SQL Injection, Cross-Site Scripting (XSS), etc.

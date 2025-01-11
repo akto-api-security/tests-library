@@ -64,37 +64,3 @@ def update_inventory(product_id, quantity):
         db.session.rollback()
         raise
 ```
-### Step 4: Regular Security Audits and Updates
-
-Regularly audit your application to detect any unusual or malicious activity. Regularly update your application to incorporate the latest security features and bug fixes. This step also includes conducting regular penetration tests and vulnerability assessments.
-
-```bash
-# Example of a command to update your application
-# This will differ based on your application and environment
-sudo apt-get update && sudo apt-get upgrade
-```
-### Step 5: Logging and Tracking
-
-Keep complete logs of all transactions and changes made in your inventory. Make sure you have proper alert mechanisms in place for any anomalies or unexpected changes. The logs can also be useful for future analysis in case of any security event.
-
-```python
-# Python Logging example
-import logging
-
-logging.basicConfig(filename='app.log', level=logging.INFO)
-
-def update_inventory(product_id, quantity):
-    try:
-        # Begin transaction
-        db.session.begin()
-        # Your code to update the inventory
-        # Log the change
-        logging.info(f'Inventory updated: Product ID - {product_id}, New Quantity - {quantity}')
-        # Commit the transaction
-        db.session.commit()
-    except:
-        # Something went wrong, rollback the transaction
-        db.session.rollback()
-        logging.error(f'Inventory update failed: Product ID - {product_id}, Intended Quantity - {quantity}')
-        raise
-```

@@ -24,13 +24,3 @@ app.get('/example', (req, res) => { /* ... */ });
 app.post('/example', (req, res) => { /* ... */ });
 // HEAD requests to /example will result in a 404 Not Found
 ```
-
-### Step 3: Regularly Update and Perform Audits
-Consistently update your server-side code to be aware of new exploits, and perform static and dynamic auditing of the code.
-
-```bash
-npm update
-npm audit
-```
-
-Remember to include these remediation steps as part of your secure coding practices and regular code audits.

@@ -55,7 +55,3 @@ if (!validKids.includes(jwtHeader.kid)) {
   throw new Error('Invalid kid in JWT header');
 }
 ```
-
-### Step 5: Regular Audit and Update
-
-Ensure that your application remains secure by routinely auditing the code, updating the dependencies, and keeping up-to-date with recent vulnerabilities and their patches.

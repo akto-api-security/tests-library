@@ -43,4 +43,3 @@ Click on the name of the existing API key that you want to secure.
 Under 'Key restrictions', choose 'HTTP referrers (websites)'.
 Then under 'Accept requests from these HTTP referrers (websites)', add the websites that you want to restrict your API to.
 ```
-By following these steps, the unauthorized usage of the API key can be mitigated. Regularly check your usage to ensure there isn't any abnormal activity.

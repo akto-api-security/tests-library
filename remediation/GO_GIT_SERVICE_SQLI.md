@@ -42,11 +42,3 @@ CREATE USER 'gogsdbuser'@'localhost' IDENTIFIED BY 'password';
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP ON gogs.* TO 'gogsdbuser'@'localhost';
 FLUSH PRIVILEGES;
 ```
-
-### Step 4: Regular Patching and Security Audits
-Make sure to apply patches to the Go Git Service and underlying database system. Also, regularly perform security audits on your application and database.
-
-```bash
-sudo apt update
-sudo apt upgrade
-```

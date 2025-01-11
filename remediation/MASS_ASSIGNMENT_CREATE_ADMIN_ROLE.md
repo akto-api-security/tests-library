@@ -30,8 +30,3 @@ In this example, the "user_params" function defines a whitelist of parameters th
 
 ### Step 3: Use Role-Based Access Control (RBAC)
 In role-based systems, roles are created for various job functions and permissions are assigned to the roles. Users are not granted permissions directly, but only acquire them through their role (or roles). Simply not provide roles that allow mass assignment of administrative privileges.
-
-### Step 4: Regularly Audit your Codebase
-Ensure to verify that access controls are correctly put in place and that mass assignment vulnerabilities are not present.
-
-Please note that this is a Ruby on Rails sample remediation, and your language or framework may have different methods for preventing mass assignment vulnerabilities.

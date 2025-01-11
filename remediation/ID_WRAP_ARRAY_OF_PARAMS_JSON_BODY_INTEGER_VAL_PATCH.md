@@ -35,12 +35,3 @@ if(user.getOwnedObjects().contains(object)){
     throw new UnauthorizedException();
 }
 ```
-  
-### Step 4: Regular Security Audits and Updates
-Conduct regular security audits to detect any potential vulnerabilities. Update and patch your systems and applications as soon as updates and security patches become available.
-```bash
-echo "Implementing regular security audits..."
-# Include respective commands for your environment.
-```
-
-The specific implementation to remediate this issue might vary depending on the application in question, language, and environment used.

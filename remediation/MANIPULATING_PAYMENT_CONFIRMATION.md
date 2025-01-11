@@ -58,9 +58,3 @@ def encryption(private_info):
     encoded = EncodeAES(cipher, private_info)
     return encoded
 ```
-
-### Step 5: Regular Audit and Update
-
-Run penetration tests and update your security measures regularly to ensure your transaction process is secure.
-
-These steps will greatly enhance the security of your payment processing and prevent attackers from manipulating your transaction APIs.

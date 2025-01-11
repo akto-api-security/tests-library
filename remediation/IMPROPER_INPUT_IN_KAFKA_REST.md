@@ -29,22 +29,3 @@ public String sanitize(String input) {
     return StringEscapeUtils.escapeJava(input);
 }
 ```
-
-### Step 3: Update Libraries and Dependencies
-
-Ensure all libraries and dependencies connected to your Kafka-REST usage are up-to-date. If a library or dependency is outdated, it may contain known security vulnerabilities that could be exploited.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-### Step 4: Regular Security Audits and Patching
-
-Lastly, always ensure that regular security audits are carried out to detect potential vulnerabilities early. Also, ensure the application is patched regularly with the latest updates from the official sources.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-Remember, there is no perfect security, but we can strive to make our software as secure as we can.

@@ -24,15 +24,3 @@ add_header Strict-Transport-Security 'max-age=31536000; includeSubDomains' alway
 
 ### Step 2: Check HSTS Header
 After setting the header, use an online tool such as SecurityHeaders.com to check if it was properly set up.
-
-### Step 3: Regularly Update Your Server
-Ensure that your server software is kept up to date as updates often contain important security patches.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-This would prevent potential vulnerabilities that might arise from outdated server software.
-
-In situations where you have no control over the server configuration (e.g., shared hosting), get in touch with your hosting provider and instruct them to enable HSTS. They are legally obligated (GDPR, COPPA, HIPAA, etc.) to do so when asked.

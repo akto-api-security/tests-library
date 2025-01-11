@@ -63,12 +63,3 @@ Continue to monitor and audit API usage going forward, ensuring all are used pro
 aws cloudtrail create-trail --name MyTrail
 aws cloudtrail start-logging --name MyTrail
 ```
-
-### Step 4: Regularly Review and Update This Process 
-Ensure to regularly review and update this process to remain in line with the latest API security best practices.
-
-```bash
-# Periodically rerun your API discovery script
-# Also keep your authorization practices up to date
-```
-This process isn't infallible, and new vulnerabilities can appear. Keep up to date on the latest security practices for managing and securing APIs.

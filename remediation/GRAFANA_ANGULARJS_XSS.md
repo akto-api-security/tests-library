@@ -31,19 +31,3 @@ sudo systemctl restart grafana-server
 # For Docker
 docker restart <container_id>
 ```
-
-### Step 3: Regular Audit and Update
-Perform regular checks for any available Grafana updates to keep your software and environment safe. Any further updates can then be installed following similar procedures.
-
-```bash
-# For CentOS/RHEL systems
-yum check-update grafana
-
-# For Ubuntu/Debian systems
-apt list --upgradable | grep grafana
-
-# For Docker
-docker pull grafana/grafana:latest
-```
-
-Remember, ALWAYS test updates in a safe environment before applying them to your production systems.

@@ -60,16 +60,3 @@ app.use(function(err, req, res, next) {
   res.status(500).send('Something broke!');
 });
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly audit your systems for any vulnerable packages and keep them updated.
-
-```bash
-npm audit
-npm update
-```
-
-## Caution
-
-These remediations steps greatly reduce the risk of DoS attacks due to OperationName overloading on GraphQL APIs, but no solution is completely infallible. In addition to these steps, maintain good security practices, such as regular audits and the use of secure connections.

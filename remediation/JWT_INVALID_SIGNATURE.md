@@ -59,6 +59,3 @@ try {
     // Handle the error here
 }
 ```
-
-### Step 5: Regular Audit and Update
-Carry out regular audits of your JWT usage and implementation. Ensure your JWT libraries are up to date and no insecure practices are being followed.

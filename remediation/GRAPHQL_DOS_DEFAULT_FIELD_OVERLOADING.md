@@ -51,12 +51,3 @@ app.use('/graphql', graphqlHTTP((request) => ({
 })));
 ```
 This will ensure that any query that lasts more than the given time will timeout.
-
-### Step 4: Regular Audit and Update
-
-Regularly audit and update your security rules for your API. Ensure that all security dependencies are kept up-to-date.
-
-```bash
-npm audit fix
-```
-This will fix all security issues related to packages being used in the project.

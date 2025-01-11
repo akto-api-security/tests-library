@@ -30,10 +30,3 @@ Implementing the principle of least privilege can limit the potential damage, sh
 ```bash
 sudo chmod 750 /path/to/file-or-directory
 ```
-### Step 4: Regular Auditing
-Regular auditing will ensure any possible breach or glitch is observed and addressed in time.
-
-```bash
-sudo auditd
-```
-Please note these steps are for general guidance and may only partially mitigate the risks depending on the specific circumstances. You may need a security consultant's help to address the particular vulnerability at the hardware level.

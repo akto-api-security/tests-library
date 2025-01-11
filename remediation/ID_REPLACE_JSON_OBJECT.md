@@ -33,6 +33,3 @@ Many modern libraries or Object-Relational Mapping (ORM) tools help prevent mass
 // Example: Sequelize (Node.js)
 const user = await User.create(req.body, { fields: ["name", "email"] });
 ```
-
-### Step 4: Regular Code Review and Update
-BOLA vulnerabilities may appear over time as the project develops, so it is important to conduct regular code reviews and update security practices as required.

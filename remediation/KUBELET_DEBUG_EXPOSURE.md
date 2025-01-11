@@ -34,15 +34,3 @@ You can restrict access by specifying the `--kubelet-certificate-authority` flag
 ```bash
 kube-apiserver ... --kubelet-certificate-authority=/path/to/ca.crt
 ```
-
-### Step 3: Regular Audit and Update
-
-Maintain a regular audit schedule, and ensure that you are using an updated version of Kubernetes. 
-
-```bash
-kubectl version
-```
-
-Regular audits help to track any changes and updates provide the latest security measures.
-
-Remember, disable any feature or service that's not necessary for your application to minimize exposure to potential threats.

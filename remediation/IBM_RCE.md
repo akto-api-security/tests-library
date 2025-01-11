@@ -35,15 +35,3 @@ These filters will block deserialization of untrusted object types.
 Implementing the principle of least privilege can significantly reduce the potential impact of an RCE vulnerability. An attacker can only exploit the privileges of the component that has been compromised. 
 
 Ensure that all services are running with the least privileges needed for their function.
-
-### Step 4: Regular Audit and Update
-
-Regularly perform audits to identify and fix potential vulnerabilities, and keep your system and applications up to date.
-
-```bash
-sudo yum update
-```
-
-### Note
-
-This cannot remove the vulnerability from an already compromised system. It is crucial to engage in incident response activities such as forensic investigation and system recovery if a breach is suspected.

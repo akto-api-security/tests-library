@@ -48,13 +48,3 @@ security = Security(app, user_datastore)
 def admin_home():
     return render_template('admin_home.html')
 ```
-### Step 3: Regular Audit and Update
-Auditing your APIs routinely and updating your security measures according to the latest standards and threats should be a part of your security regimen. 
-
-This may include code reviews, penetration testing, and dependancy checking etc. A common tool for security auditing and updates can be the OWASP Zap.
-
-```bash
-docker run -t owasp/zap2docker-stable zap-baseline.py -t https://yourwebsite.com
-```
-
-Always ensure to conform to the principles of least privilege while granting access controls.

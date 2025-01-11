@@ -52,8 +52,3 @@ refresh_token = create_refresh_token('username')
 ```
 
 Remember, when a user logs out, both the access token and the refresh token should be invalidated. 
-
-### Step 4: Regular Audit and Update
-Audit your systems regularly to ensure that security policies are being adhered to. Keep your authentication system up to date with the current best practices for token-based authentication.
-
-By following the above steps, you can minimize the chances of Authentication Bypass with Logged Out Tokens.

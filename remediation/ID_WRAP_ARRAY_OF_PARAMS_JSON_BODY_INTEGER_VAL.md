@@ -29,11 +29,3 @@ Each API end-point where possible should perform checks to ensure the authentica
 ### Step 3: Implement Proper Error Handling
 
 Implement proper error handling so that the application doesn't reveal sensitive information in error messages to the client.
-
-### Step 4: Regular Code Review
-
-Regular code reviews should be encouraged to identify any potential security flaws.
-
-Note: These steps presume that the environment is a Node.js server using Express.js, but the concepts can be applied in other environments using relevant methods.
-
-In conclusion, the best defense against BOLA is to apply rigorous access controls utilizing identity and permissions checks for each user-generated query to a data object. Additionally, automated testing tools can help detect BOLA vulnerabilities in codebase.

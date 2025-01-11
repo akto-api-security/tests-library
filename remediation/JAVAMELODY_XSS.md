@@ -50,16 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 The above code sets the CSP policy to only allow scripts and objects to be loaded from the same origin, and any policy violations to be reported to "/csp-report-endpoint/".
 
-### Step 4: Regular Audit
-Regularly inspect your code and perform necessary security audits to ensure you're not at risk for XSS attacks. Keep up with updates from the JavaMelody community for newer patches and updates to secure your application.
 
-```bash
-$ mvn verify
-```
-
-This runs a suite of tests against your application to verify that everything is operating as expected. Make sure to integrate such checks into your CI/CD pipeline.
-
-### Step 5: XSS Prevention in Headers
+### Step 4: XSS Prevention in Headers
 ```java
 http.headers().xssProtection().block(false);
 ```

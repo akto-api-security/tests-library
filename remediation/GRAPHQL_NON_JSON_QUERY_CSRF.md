@@ -65,9 +65,3 @@ app.use((req, res, next) => {
   }
 });
 ```
-
-### Step 5: Regularly review and update your security practices
-
-Regularly review and update your security practices as new vulnerabilities and better methods to combat them are discovered.
-
-For comprehensive documentation on CSRF prevention, refer to OWASP's [Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html).

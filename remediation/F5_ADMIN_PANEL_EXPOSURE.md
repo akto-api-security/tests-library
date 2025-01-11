@@ -31,12 +31,3 @@ data = '{"name":"admin_access", "source":"192.0.2.0/24", "destination":"any"}'
 
 response = requests.post('https://<Your_f5_Big-IP>/mgmt/tm/net/firewall/rule', headers=headers, data=data, auth=('admin', 'adminPassword'))
 ```
-
-### Step 3: Regular Audits and Updates
-Lastly, keep up with the latest F5 updates and security patches. Regular audits to check for unauthorized access can also help prevent security breaches.
-
-No source code is necessary for this step.
-
-Please replace `<Your_f5_Big-IP>`, `newUser`, `newPassword`, and `adminPassword` with your actual F5 Big-IP IP address, new username, new password, and admin password, respectively. Ensure that all changes are saved and reflected correctly.
-
-Depending on your circumstances, remember to consider additional measures as necessary for your security posture.

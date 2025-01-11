@@ -8,6 +8,7 @@ First, make sure that python and its 're' (regular expression) module is install
 sudo apt-get install python3
 pip install re
 ```
+
 ### Step 2: Define the validation function
 Create a function that will verify if the input is a primitive data type or not. Here we will use regular expressions to verify the input data.
 ```python
@@ -21,6 +22,7 @@ def validate_input(input_data):
 ```
 The function above uses regular expressions to verify if the input data is alphanumeric or not. If the data is alphanumeric an underscore is allowed too because many times these characters are used in inputs. 
 If the input data matches the pattern then `True` is returned else `False`.
+
 ### Step 3: Use the validation function
 Now, use this function for validating the input data before using it further in your application.
 ```python

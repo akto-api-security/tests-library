@@ -35,8 +35,3 @@ Here is what each of the 5 headers are doing:
 
 ### Step 2: Test HTTP Headers
 Use online tools like [SecurityHeaders](https://securityheaders.com) to analyze the HTTP response headers of your website.
-
-### Step 3: Regular Audit and Update
-Regularly review and update your security headers to conform to the latest security practices.
-
-Note that the security of your web application does not solely depend on HTTP headers. They are a part of many security measures you need to take to secure your web applications. Always follow the best security practices.

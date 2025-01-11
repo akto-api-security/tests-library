@@ -36,14 +36,3 @@ Configure file permissions restrictively. Sensitive files that do not need to be
 ```bash
 chmod 700 sensitive_file.txt
 ```
-
-### Step 4: Keep your Systems Updated
-
-Regularly update your systems to the latest version to help prevent LFI exploitation.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-Note: These steps can limit the possibilities of a LFI attack but might not eliminate all risks. Depending on your specific situation, additional customized steps might be necessary. Always ensure that your security measures are up-to-date and consider soliciting professional consultation if needed.

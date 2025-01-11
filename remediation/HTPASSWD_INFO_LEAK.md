@@ -33,7 +33,3 @@ Ensure that the file permissions are correctly set on the htpasswd file to avoid
 chmod 660 /path/to/your/.htpasswd
 ```
 This grants read and write permissions to the owner and group, but no permissions to anyone else.
-
-### Step 4: Regular audits and updates
-
-Conduct regular audits of your system files and update the passwords stored in the htpasswd file regularly.

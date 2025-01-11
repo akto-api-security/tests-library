@@ -48,7 +48,3 @@ Replace the `{username}` and `{password}` with a strong username and password.
 ${KAFKA_HOME}/bin/kafka-server-stop.sh
 ${KAFKA_HOME}/bin/kafka-server-start.sh ${KAFKA_HOME}/config/server.properties
 ```
-
-### Step 4: Regular Audit and Update
-
-It is also recommended to perform regular audits and update the systems, especially when security patches are available.

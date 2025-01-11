@@ -39,10 +39,3 @@ logfile ~/.msmtp.log
 
 ### Step 3: Regularly Rotate Passwords
 Make sure to regularly rotate passwords for your mail account to enhance security.
-
-### Step 4: Regular Audit and Update
-Ensure regular audits of your system for any vulnerability. Always keep your msmtp and associated software packages up-to-date.
-
-```bash
-sudo apt-get update && sudo apt-get upgrade
-```

@@ -43,11 +43,3 @@ app.use('/graphql', graphqlHTTP(async (request, response, graphQLParams) => {
   };
 }));
 ```
-
-### Step 3: Proactive Monitoring and Alerting
-
-Establish robust monitoring and alerting tools to quickly detect unusual patterns of usage. 
-
-### Step 4: Regular Auditing and Update
-
-Keep your GraphQL libraries and supporting infrastructure up-to-date, and frequently test your APIs for potential vulnerabilities.

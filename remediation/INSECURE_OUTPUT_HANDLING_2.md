@@ -38,12 +38,3 @@ Avoid SQL Injection by using parameterized queries or prepared statements.
 ```python
 cursor.execute("SELECT * FROM users WHERE username = %s AND password = %s", (user, password))
 ```
-
-### Step 5: Regularly Update And Patch Systems
-
-```bash
-sudo apt update
-sudo apt upgrade
-```
-
-This is not an exhaustive set of steps and the requirements may vary based on the architecture of your system. Always make sure to consult relevant, up-to-date security resources when dealing with vulnerabilities.

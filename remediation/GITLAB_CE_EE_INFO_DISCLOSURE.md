@@ -34,16 +34,3 @@ res.json({
   // Sensitive data should not be included here.
 });
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly check your codebase for security vulnerabilities and update your packages.
-
-```bash
-npm audit
-npm update
-```
-
-Please, notice the above examples are given in JavaScript, but equivalent logic applies in any language you are using. The exact implementation depends on your specific environment, framework, and version. 
-
-Source: GitLab CE/EE Documentation

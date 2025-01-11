@@ -38,12 +38,3 @@ After making the changes, ensure to restart the Grafana service for the changes 
 ```bash
 sudo service grafana-server restart
 ```
-
-### Step 5: Regular update
-Finally, keep Grafana up to date to ensure any newly discovered vulnerabilities are patched.
-```bash
-sudo apt-get update
-sudo apt-get upgrade grafana
-```
-
-For full documentation on Grafana security, refer [here](https://grafana.com/docs/grafana/latest/installation/security/).

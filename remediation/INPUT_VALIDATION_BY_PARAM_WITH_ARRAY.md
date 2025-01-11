@@ -48,16 +48,3 @@ class ImmutableDict(dict):
 #Usage
 params = ImmutableDict({'PARAM_KEY': 'PARAM_VALUE'})
 ```
-
-### Step 3: Regular Code Audits
-
-Regularly audit your application source code to search for potential security vulnerabilities, including improper input validation issues. Tools such as static code analysis tools or dynamic analysis tools can be helpful in identifying code issues.
-
-```bash
-# Sample usage of Python static code analysis tool (Bandit)
-bandit -r path/to/your/code
-```
-
-### Step 4: Regular Software Upgrade
-
-Regularly update the software dependencies and libraries used in your applications as they often include patches for discovered security vulnerabilities.

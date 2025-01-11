@@ -39,19 +39,3 @@ protected function gate()
 }
 ```
 Above code will allow access only for users with specified emails.
-
-### Step 4: Clear Compiled Files
-
-Once changes are made, clear and re-compile:
-
-```bash
-php artisan config:clear
-php artisan config:cache
-php artisan route:clear
-php artisan route:cache
-php artisan view:clear
-php artisan view:cache
-```
-This will make sure your updated configuration changes have taken effect across the application. 
-
-Remember to keep Laravel Telescope disabled in your production environment and limit access to Telescope in your local environment to authorized users only.

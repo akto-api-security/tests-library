@@ -29,8 +29,3 @@ PUT /_security/role/logstash_writer
   ]
 }
 ```
-### Step 4: Regular Audit and Update
-Much like any other security practice, it is crucial to regularly audit Logstash for any vulnerability and update it whenever necessary.
-```bash
-bin/logstash-plugin update 
-```

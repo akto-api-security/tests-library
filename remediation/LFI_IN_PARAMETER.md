@@ -28,10 +28,3 @@ mkdir /var/my_app
 chmod 700 /var/my_app
 chroot /var/my_app
 ```
-
-### Step 4: Update and Regularly Audit Your Code
-Update your code to incorporate the latest security updates and best practices. Regularly audit your code to detect vulnerabilities and fix them promptly.
-
-```bash
-git pull --rebase origin main
-```

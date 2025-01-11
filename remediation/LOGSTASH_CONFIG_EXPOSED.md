@@ -26,12 +26,3 @@ def encrypt_data(data):
 
 encrypted_password = encrypt_data('my_password')
 ```
-
-### Step 4: Regularly Update and Audit
-Ensure that you frequently update and audit your security settings.
-```bash
-# make sure logstash is updated regularly
-sudo apt-get update
-sudo apt-get upgrade logstash
-```
-Remember the principle of least privilege when granting access to your Logstash configuration files. Only give access to those who absolutely need it.
