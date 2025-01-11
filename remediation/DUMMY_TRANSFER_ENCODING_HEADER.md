@@ -23,12 +23,3 @@ In the code above, if a 'transfer-encoding' header is detected, the server respo
 
 ### Step 2: Implement Firewall Rules
 Make sure that your firewall is configured to block HTTP requests containing illegal headers. 
-
-### Step 3: Update Application or Web Server
-
-Make sure to keep your application, web server and all related components up to date with the latest security patches and updates. 
-
-It is worth noting that some web servers have built-in solutions to this problem, which can be utilized by simply updating to the latest version.
-
-## Regular Security Audit
-It's very crucial to periodically perform security audits of your application and infrastructure to detect and correct any security weakness promptly. This would help avert potential security threats. Also, subscribing to all related application, web server and OS-level security bulletins or newsletters could help you stay updated with the latest security concerns and patches. 

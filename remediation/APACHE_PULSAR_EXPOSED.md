@@ -53,15 +53,3 @@ Consumer<T> consumer = client.newConsumer(Schema.STRING)
                        .cryptoKeyReader(new RawFileKeyReader("path/pub_key_file", "path/priv_key_file")
                        .subscribe();
 ```
-
-### Step 4: Regular Update and Audit
-Regularly update your Apache Pulsar software to ensure you're using a version with the latest security patches. Also, conduct regular audits of logs for any unusual activity. 
-
-```bash
-# Check your version
-pulsar-admin brokers version
-# Update your software
-sudo apt-get install --only-upgrade pulsar
-```
-
-Remember, it's best to use multi-layered security, like using both authentication and encryption, to provide the most robust protection for your Pulsar setup.

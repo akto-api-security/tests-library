@@ -45,7 +45,3 @@ Set HTTP security headers such as Content-Security-Policy to prevent any redirec
 ### Step 5: Regular Patching and Updates 
 
 Always keep the Apache Tomcat server updated with the latest patches and updates released by the developers.
-
-### Step 6: Follow Secure Coding Practices 
-
-Always follow secure coding practices to avoid any security-related bugs in the application. Developers should be aware of the potential risks of insecure coding and should receive regular security trainings.

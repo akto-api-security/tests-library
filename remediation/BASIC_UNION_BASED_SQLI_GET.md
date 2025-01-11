@@ -44,6 +44,3 @@ Use a web application firewall (WAF) to detect and block SQL Injections.
 sudo apt-get install libapache2-mod-security2
 sudo service apache2 restart
 ```
-
-## Note:
-These examples are created for the Python language using Flask and SQLAlchemy for API development and a MySQL database. The implementation may vary on different languages and databases.

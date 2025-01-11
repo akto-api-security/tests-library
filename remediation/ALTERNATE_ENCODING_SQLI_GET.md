@@ -31,10 +31,3 @@ connection.query(sql, id, (error, results, fields) => {
 // error handling and use results
 });
 ```
-### Step 3: Least Privilege Principle
-Run your database queries with the minimal required privileges. Do not use the root or admin database user for your application. Create a separate user with privileges only to required tables.
-
-### Step 4: Regularly Update and Audit your Environment
-Make sure to keep your database and application environment up-to-date with the latest security patches. Regularly audit your logs and databases for unusual activities.
-
-Remember that security is a process, not a single task to finish. Be proactive in protecting against future threats.

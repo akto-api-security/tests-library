@@ -39,13 +39,3 @@ sudo apt-get install --only-upgrade jetty
 ```
 
 If an upgrade is not possible due to software dependencies, it is recommended to follow the vendor's specific instructions for mitigation.
-
-### Step 3: Regular Audit and Update
-
-It's recommended to regularly audit your application and keep your dependencies current.
-
-```bash
-sudo service jetty restart
-```
-
-Implementing these remediation steps correctly will help in resolving the Eclipse Jetty Information Disclosure vulnerability issue.

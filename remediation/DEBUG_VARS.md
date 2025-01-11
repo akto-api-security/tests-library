@@ -51,8 +51,3 @@ func main() {
 }
 ```
 The 'secretbox' package ensures data is encrypted and decrypted securely.
-
-### Step 4: Regular Audit and Update
-Regularly check and update your Go applications to keep them secure from new threats and exploits.
-
-Remember that 'expvar' is just a tool, and it's your responsibility to use it correctly. Keep your published variables to a minimum and avoid sending sensitive data to the client-side unless necessary.

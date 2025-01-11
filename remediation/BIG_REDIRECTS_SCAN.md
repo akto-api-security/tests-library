@@ -40,12 +40,3 @@ def handle_redirect():
     else:
         return 'Invalid URL'
 ```
-
-### Step 4: Regular Code Review and Update
-Regularly review the code for known vulnerabilities and update the code to minimize the risk of any exploits.
-  
-```bash
-# Python dependencies update
-pip install --upgrade pip
-pip list --outdated
-```

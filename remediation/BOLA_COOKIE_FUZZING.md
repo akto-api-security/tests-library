@@ -56,14 +56,3 @@ def get_user(user_id):
         abort(403)
     return jsonify(user.to_dict())
 ```
-
-### Step 4: Update and Audit 
-
-Ensure to update your libraries and frameworks with the latest versions and also conduct regular security audits on your application to catch and fix any new vulnerability.
-
-```python
-# Replace this with your code to update the libraries and frameworks
-# Replace this with your code to conduct regular security audits
-```
-
-Remember, your security strategy should not solely rely on coding practices, even the best written software can have vulnerabilities. It's essential to make sure other factors, such as secure deployment environments, least privilege access controls, and adequate training for the team are also taken into account.

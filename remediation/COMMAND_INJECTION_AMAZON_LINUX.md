@@ -58,5 +58,3 @@ if user_input not in allowed_values:
     raise ValueError('Invalid value: ' + user_input)
 os_info = subprocess.check_output(['uname', '-a', user_input])
 ```
-
-By following these steps, you can significantly reduce the likelihood of a command injection vulnerability in Amazon Linux OS specific operations. However, always perform regular audits to ensure your code remains secure as new vulnerabilities may emerge. Keep your runtime environment updated as well.

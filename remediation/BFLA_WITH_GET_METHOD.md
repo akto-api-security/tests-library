@@ -49,7 +49,3 @@ router.get('/:id', auth.isAuthenticated(), auth.hasRole('admin'), UserController
 ```
 
 In the above code, only users who are authenticated and have the role of `'admin'` can access the API endpoint.
-
-### Step 5: Regular Auditing
-
-Perform regular audits of the code base, looking for places where function level authorization might be weak or non-existent. Use static code analysis tools to automate some of this process.

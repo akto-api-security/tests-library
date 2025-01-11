@@ -46,6 +46,3 @@ os.system('ls ' + user_input)
 subprocess.run(['ls', user_input])
 ```
 In this Python code, the `subprocess.run()` function is much safer than `os.system()`, making it harder for command injection to occur.
-
-### Step 4: Regular Audit and Update
-Regularly updating and auditing your code can help discover potential command injection vulnerabilities so they can be fixed before an attacker exploits them. Keep frameworks and libraries updated to the latest secure versions and adopt security best practices in your development. Maintenance of your codebase and remaining abreast of the latest vulnerabilities is a crucial step in preventing command injection and other security risks.

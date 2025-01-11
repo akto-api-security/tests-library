@@ -39,4 +39,3 @@ if user_operation not in operations:
 else:
     subprocess.run(['systemctl', user_operation, 'my-service'], check=True)
 ```
-Again, the languages you'll use might differ, as might the improvements you'll find. But keystone best practices like these are critical in maintaining robustness against vulnerabilities like command injection. Regular audits and code revisions for ever-growing needs and insights is also suggested best practice.

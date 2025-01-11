@@ -43,12 +43,3 @@ if(user.role.equals("admin")) {
     throw new AccessDeniedException("Not authorized");
 }
 ```
-
-### Step 4: Regular Audit
-Regular audit of your security practices can further help to identify any possible entry point for unauthorized access.
-```java
-// Log all attempted object accesses
-log.info("User "+userId+" attempted to delete object "+objectId);
-```
-
-Remember to validate all these steps in your CI/CD pipeline to ensure all changes are compliant with these. A security breach can occur if any of these is skipped in new deployments.

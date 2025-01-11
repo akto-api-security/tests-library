@@ -52,9 +52,3 @@ try:
 except ValidationError as e:
     logger.exception(e)
 ```
-
-### Step 4: Regular Code Review
-
-Make sure to regularly review your code to identify any potential vulnerabilities or weaknesses, especially when dealing with user input and handling exceptions.
-
-There's no explicit method to prevent every possible exception caused by special characters, following these remediation steps should greatly reduce the risk of this vulnerability. It's always recommended to follow best practices and to sanitize and validate user inputs before using them in your system. Be sure to follow Django's documentation for the most current and recommended strategies.

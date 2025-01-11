@@ -59,14 +59,3 @@ server {
 }
 ```
 Replace `yourdomain.com` with your actual domain name, and replace the paths to your SSL certificate and key.
-
-### Step 4: Regular Update and Audit
-
-Regularly update your installation and monitor the logs for any suspicious activities.
-
-```bash
-pip install apache-superset --upgrade
-superset db upgrade
-superset init
-```
-Please make sure to test this in your development environment before deploying it to production, as it can directly affect your operations. It is always recommended to backup your data before making any changes.

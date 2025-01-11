@@ -37,7 +37,3 @@ void processUserInput(@NotNull String input){
   //process input further
 }
 ```
-### Step 4: Regular Audit and Update
-Regularly review your validation and sanitization processes, and update them as and when required.
-
-Please replace Java instructions with the equivalent ones for your actual technology stack. Using a comprehensive input validation and sanitization mechanism will help prevent vulnerabilities caused due to bypassing input validators with null values.

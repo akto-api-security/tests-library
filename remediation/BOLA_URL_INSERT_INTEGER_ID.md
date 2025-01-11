@@ -58,5 +58,3 @@ def get_resource(current_user, id):
 
     return jsonify(resource.serialize())
 ```
-### Step 4: Regular Audit and Update
-Regularly audit your application for security vulnerabilities, always update your systems, libraries, and dependencies to their latest stable version, and make sure your development team is aware of and trained to recognize and prevent security threats like BOLA exploit.

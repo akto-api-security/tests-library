@@ -28,14 +28,3 @@ If changing settings in PHP and Drupal do not suppress PHP error displays, anoth
 php_flag display_errors off
 ```
 This also needs to be followed by a server restart.
-
-### Step 4: Regular Drupal audit and update
-
-Ensure Drupal core and modules are regularly updated. This can reduce the risk of any vulnerabilities.
-
-```bash
-drush pm-update
-```
-This command is used by Drush, a command line shell and Unix scripting interface for Drupal. It updates the Drupal installation.
-
-> Note: Always remember to back up your website before making such changes. If anything goes wrong, you then have the option to return to a working version.

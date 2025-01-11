@@ -48,9 +48,3 @@ def user_change_password(username, old_password, new_password):
 ```
 
 Remember, adequate notifications should be provided to the users about the minimum password requirements at the time of registration/password change. 
-
-### Step 3: Regular Audit and Update 
-
-Regularly check and update the password rules as per the latest security standards and practices. Always evaluate whether the current minimum password requirements are strong enough to safeguard your users' accounts. 
-
-In addition, encourage users to regularly update their passwords and not to reuse old ones. Similarly, you may want to implement a way to enforce password changes every certain period of time, e.g., every 60 or 90 days.

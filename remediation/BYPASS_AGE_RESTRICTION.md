@@ -37,8 +37,3 @@ Access to restricted content should only be granted after the user has passed th
 This strategy isn't foolproof, as users can still provide faulty information, but doing so will typically constitute as a legal issue for them. 
 
 More sophisticated methods can be implemented accordingly to business needs, like integrating third-party ID verification services.
-
-### Step 4: Regular Audit and Update
-The system should be regularly audited to find potential loopholes and it should be updated to ensure the latest security patches are integrated. 
-
-In conclusion, these remediation steps provide a simple and quick solution to tackle the problem but in a more secure and critical environment, the application's access should be guarded with much advanced and sophisticated techniques.

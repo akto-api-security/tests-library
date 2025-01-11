@@ -34,10 +34,3 @@ DirectObjectReferenceMap map = new DirectObjectReferenceMap(user);
 int userControlledId = map.getInternalId(urlParamId);
 processDeleteRequest(userControlledId);
 ```
-
-### Step 4: Regularly Review Logs
-It is also highly recommended to regularly review security and system logs for irregular patterns or security anomalies, and keep the system up-to-date and patched.
-
-```bash
-tail -f /var/log/syslog
-```

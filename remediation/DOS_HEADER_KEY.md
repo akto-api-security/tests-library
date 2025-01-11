@@ -51,11 +51,3 @@ try:
 except Exception as e:
     app.logger.error(str(e))
 ```
-
-### Step 4: Regular Audit and Updates
-```python
-git pull origin master
-pip install --upgrade -r requirements.txt
-sudo service apache2 restart
-```
-This process involves regular monitoring of logs, identifying patterns, and keeping the system update with the latest security patches. This step is not limited to code remediation and requires regular security audits of your systems.

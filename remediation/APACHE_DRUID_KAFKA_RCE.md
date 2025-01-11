@@ -38,16 +38,3 @@ After you have performed the update or patch, ensure that the fix has been appli
 ```
 
 You should not see any errors resulting from the vulnerability after this step.
-
-### Step 4: Regular Monitoring and Updating
-
-Continuously monitor the state of Apache Druid and regularly update it to avoid missed vulnerabilities.
-
-```bash
-# Update regularly using similar process to Step 1
-wget https://downloads.apache.org/druid/druid-latest-bin.tar.gz
-tar -zxvf druid-latest-bin.tar.gz 
-cd druid-latest
-```
-
-Always download the latest version from the official Apache Druid website.

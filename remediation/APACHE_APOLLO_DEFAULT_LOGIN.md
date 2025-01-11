@@ -38,9 +38,3 @@ Restart the Apache Apollo service to apply the configuration changes
 ```bash
 sudo service apollo restart
 ```
-
-### Step 3: Regular Audit and Update
-
-Make sure to regularly audit and update your Apollo configurations and installations. Regular security practices like using strong passwords and changing them often apply as well.
-
-No source code is needed to fix this vulnerability. The aforementioned steps should be enough to mitigate the Apache Apollo Default Login Vulnerability.

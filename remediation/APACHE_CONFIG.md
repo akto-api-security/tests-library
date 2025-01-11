@@ -43,30 +43,3 @@ Add a rule to prevent access to the specific file. For example, to block access 
   Deny from all
 </Files>  
 ```
-
-### Step 4: Regularly Update and Audit 
-
-Ensure your Apache and operating system packages are regularly updated by running the following commands:
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-## Source Code
-
-Here is a sample Python script that could automate some of the remediation tasks (requiring sudo privileges to run):
-
-```python
-import os
-
-# Step 1: Update permissions
-os.system("sudo chown root:root /etc/apache2/apache2.conf")
-os.system("sudo chmod 640 /etc/apache2/apache2.conf")
-
-# Step 4: Regularly update and audit
-os.system("sudo apt-get update -y")
-os.system("sudo apt-get upgrade -y")
-```
-
-This script will help to ensure that the apache config permissions are updated and your system packages remain up-to-date. For other steps, manual intervention might be necessary.

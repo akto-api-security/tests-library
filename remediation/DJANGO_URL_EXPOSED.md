@@ -41,7 +41,3 @@ In the `local_settings.py` file:
 DEBUG = True
 ```
 This will allow you to maintain a production-safe settings file while easily keeping local settings that can differ between instances of the application.
-
-### Step 3: Regularly Audit Your Django Configuration
-
-Remember to periodically check your Django configurations to ensure that they follow security best practices, such as turning off debug mode for production environments. Regular updates and patches should also be performed to keep your application secure.

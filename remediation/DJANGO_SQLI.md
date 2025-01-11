@@ -40,15 +40,3 @@ MyModel.objects.extra(where=["name = 'MyName'"])
 ```
 
 This code is vulnerable to SQL injection if 'MyName' included user input. Avoid `extra()` whenever possible.
-
-### Step 4: Keep your Django version up to date
-
-Always keep your Django version up-to-date. Each new version of Django includes security patches and new features that can help keep your site secure. 
-
-To update Django, you can use pip, the Python package manager:
-
-```bash
-pip install --upgrade django
-```
-
-Remember, the foundation of Django's database layer is that SQL is neither generated nor executed until it absolutely has to be; that is, when data needs to be retrieved, saved, or updated. By using Django's database utilities and following these steps, you can help make your Django application more secure.

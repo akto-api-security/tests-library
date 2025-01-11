@@ -30,6 +30,3 @@ Run your application with the least privilege necessary, and restrict the comman
 
 ### Step 5: Input Validation
 Always validate user input to ensure it fits within expected parameters. This could be as simple as checking if a number entered is actually a number, to using something like a regular expression to check if a string matches certain patterns.
-
-### Step 6: Regular Update and Step up Monitoring
-Regularly update and patch all systems to ensure security vulnerabilities are fixed. This is crucial in avoiding exploitation. It's also necessary to invest in intrusion detection systems and/or set up logging to monitor for suspicious activity on your application.

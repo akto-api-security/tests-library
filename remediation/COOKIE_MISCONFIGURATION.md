@@ -45,6 +45,3 @@ In PHP:
 $encrypted_value = openssl_encrypt('cookie_value', 'encryption_method', 'encryption_key');
 setcookie('name', $encrypted_value, time()+3600);
 ```
-
-### Step 6: Regularly update and audit
-Frequently check for updates and patches for your platform to ensure increased security.

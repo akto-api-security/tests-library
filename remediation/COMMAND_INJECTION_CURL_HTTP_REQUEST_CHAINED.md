@@ -30,8 +30,3 @@ input = input.replace("&", "").replace(";", "");
 
 ### Step 4: Least Privilege Principle
 Enforce the principle of least privilege. Ensure that processes run with the least set of privileges necessary to complete their functions. By doing this, even if an attacker manages to inject a command, they won't be able to cause serious harm.
-
-### Step 5: Implement a Proper Security Patch Management
-Regularly update and patch all systems. This will keep your systems secure from known vulnerabilities that could be exploited with command injection attacks.
-
-Remember, prevention is key. Always follow good programming practices. Test systems regularly for vulnerabilities and rectify any that are found.

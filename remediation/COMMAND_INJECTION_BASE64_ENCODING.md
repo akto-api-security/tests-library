@@ -42,9 +42,3 @@ import subprocess
 result = subprocess.run(['echo', 'd2hvYW1p'], stdout=subprocess.PIPE)
 print(base64.b64decode(result.stdout).decode())
 ```
-
-### Step 4: Stay Updated and Regular Auditing 
-
-Always keep your python environment updated with the latest security patches and use regular code audits to identify and fix potential security flaws.
-
-With these steps, you can protect your system from command injection attacks that might occur from base64 encoding with the 'echo' command. Extra steps can and should be taken based on the specific needs of your system and the severity of the risk you’re willing to take.

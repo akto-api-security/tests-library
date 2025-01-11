@@ -39,5 +39,3 @@ def grant_access(user_id):
     # If status is not active, deny access
     deny_access(user_id)
 ```
-
-Remember to test your changes thoroughly before deployment. Unit tests, as well as end-to-end tests, should be performed to ensure the issue has been correctly remediated.

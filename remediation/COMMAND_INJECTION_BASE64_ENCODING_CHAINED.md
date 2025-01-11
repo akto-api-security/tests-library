@@ -47,7 +47,3 @@ def encode_to_base64(string):
 def decode_from_base64(encoded_string):
     return base64.b64decode(encoded_string.encode()).decode()
 ```
-
-### Step 4: Regular Code Review and Update
-
-Conduct regular security code reviews and system patch updates to ensure your application is always updated with the latest security updates and best practices.

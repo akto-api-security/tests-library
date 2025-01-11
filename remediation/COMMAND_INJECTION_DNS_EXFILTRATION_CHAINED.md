@@ -32,12 +32,3 @@ chmod o-x /path/to/important/files
 
 ### Step 4: Use a Web Application Firewall (WAF)
 A WAF can help to detect and mitigate command injection attacks. The configuration might vary based on the firewall, hence consult the corresponding documentation.
-
-### Step 5: Regular Audit and Update
-Regularly update and patch all systems to eliminate known vulnerabilities. This can generally be done through the system's package manager, like `apt` for Debian-based systems or `yum` for RHEL-based systems.
-
-```bash
-sudo apt update
-sudo apt upgrade
-```
-Remember, steps to remediation of security vulnerability may vary based on the operating system, language in use, supporting libraries, and system configuration. This guide provides a general direction and it's necessary to adapt it to your specific environment. Regular system audits, patches, and updates will help avoid such vulnerabilities.

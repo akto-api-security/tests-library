@@ -37,13 +37,3 @@ secdownload.document-root = "/var/www/files"
 secdownload.uri-prefix    = "/download/" 
 secdownload.timeout       = 60
 ```
-
-### Step 5: Regularly Monitor Logs
-While not a direct mitigation step, regularly monitoring logs for any suspicious activity and periodic auditing of your web server setup can assist in early detection and prevention of potential security threats.
-
-```bash
-tail -f /var/log/lighttpd/error.log 
-```
-Source Code has been provided in Bash and Lighttpd System Configuration Language.
-
-If this vulnerability still persists, kindly refer to the software vendor or a trusted security consultant for more specific guidance.

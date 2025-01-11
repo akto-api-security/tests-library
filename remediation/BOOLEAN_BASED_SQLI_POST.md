@@ -35,10 +35,3 @@ class Blog(models.Model):
 blog = Blog(name='My Blog')
 blog.save()
 ```
-### Step 3: Always Limit Database Permissions
-
-Does the code being executed really need complete access to the database? It's good security practice to only give as much power as necessary.
-
-### Step 4: Regular Code Review and Security Retesting 
-
-Regularly revisit your code and audit it for lapses in security, updating where necessary. Security is an ongoing effort, not a one-time fix.

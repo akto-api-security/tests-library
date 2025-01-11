@@ -50,10 +50,3 @@ Run applications with the least privileges necessary in order to reduce the pote
 RUN adduser --disabled-password --gecos '' mynonrootuser
 USER mynonrootuser
 ```
-
-### Step 6: Regular Code Review and Update
-Always review the application source code regularly and update any libraries or dependencies to their latest versions to ensure you have all the latest security fixes. Regular penetration testing can also help to identify and remediate potential vulnerabilities.
-```bash
-# Updating all packages to the latest version in Ubuntu
-sudo apt-get update && sudo apt-get upgrade
-```

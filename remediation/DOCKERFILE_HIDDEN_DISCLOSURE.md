@@ -56,9 +56,3 @@ To use the environment variable, you can reference it in the Dockerfile like so:
 ```bash
 docker run -e "YOUR_SECRET_KEY=<your-secret-key>" <your-image>
 ```
-
-### Step 3: Regular Audit
-
-Regularly check on your Dockerfiles and images to make sure that there is no sensitive information being exposed.
-
-This completes the dockerfile hidden disclosure remediation steps.

@@ -39,14 +39,3 @@ public void setPasswordPolicy(PasswordPolicy policy) {
     policy.setRequireUpperAndLowerCase(true);
 }
 ```
-
-### Step 5: Regular Updates and Security Audit
-It is pivotal to frequently update and maintain the security audit of your system to ensure there are no potential loopholes for an attacker.
-
-```java
-public void auditSecurity() {
-    // Insert your security auditing code here
-}
-```
-
-Remember, addressing security issues early reduces the potential damage being done, and keeping your settings and protocols updated will help maintain the security of your application.

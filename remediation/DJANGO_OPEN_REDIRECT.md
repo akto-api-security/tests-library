@@ -48,13 +48,3 @@ def redirect_to(request):
         # fallback, in case the provided URL is not safe
         return HttpResponseRedirect('/fallback-url/')
 ```
-
-### Step 5: Regular Audit and Update
-Always evaluate your Django applications for security vulnerabilities regularly and update your dependencies as needed.
-
-```bash
-pip install --upgrade pip
-pip install --upgrade django
-```
-
-Remember, Security is an Ongoing Process, Not a One-time Fix. Regular audits, updates, and knowledge of the latest security assessments and threats will help maintain the security of your Django apps.

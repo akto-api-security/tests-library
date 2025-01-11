@@ -22,8 +22,3 @@ header / {
     -Server
 }
 ```
-### Step 4: Regular Audit and Update
-Make sure you always use the latest version of Caddy as it may include important security patches. Regular audits of your setup can help identify any misconfigurations or exposure early.
-```bash
-caddy upgrade
-```

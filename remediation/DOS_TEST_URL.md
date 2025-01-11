@@ -25,9 +25,3 @@ const limiter = rateLimit({
 // apply to all requests
 app.use(limiter);
 ```
-### Step 4: Regular Monitoring
-Monitor server logs regularly. Unusual activity, like a sudden surge in requests, can be an early indication of a DoS attack. Inform your cybersecurity team promptly if you suspect a DoS attack.
-### Step 5: Staying Up-to-Date 
-Ensure that all your systems, applications, and plugins are using the latest versions available. Security patches are regularly provided by software developers to counters active threats and vulnerabilities.
-
-Implementing a multifaceted strategy to tackle Denial of Service Attacks is the best way of ensuring that your web application remains resilient against them.

@@ -43,9 +43,3 @@ Ensure that read/write permissions for the Nginx logs are only granted to truste
 sudo chmod 640 /var/log/nginx/*
 sudo chown www-data:www-data /var/log/nginx/*
 ```
-
-### Step 5: Regular Audit And Update
-Periodically review your Nginx settings to ensure they remain in line with your organizational security policies.
-Also, ensure to update your server regularly to receive the latest security patches and updates.
-
-Please, note: Disabling logs should only be a temporary measure during troubleshooting. Logs are critical for detecting and analyzing incidents.

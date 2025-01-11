@@ -52,10 +52,3 @@ services:
       - user=${DB_USER}
       - password=${DB_PASS}
 ```
-
-### Step 4: Regular Audit and Update
-Frequently audit your Docker Compose configuration file to ensure it is not introducing any vulnerabilities, and update where necessary. 
-
-```bash
-docker-compose config
-```

@@ -42,18 +42,3 @@ Implement CSP to prevent XSS attacks by disallowing inline scripts and external 
 ```txt
 Header set Content-Security-Policy "default-src 'self'; script-src 'self' trustedscripts.com;"
 ```
-
-### Step 5: Regular Security Audit  
-
-A regular security audit can help you find and resolve issues sooner. Use static analysis tools that are designed for detecting XSS vulnerabilities in your code. You should regularly update your Apache HTTP Server to utilize the most current security fixes and protocols offered by the Apache Software Foundation.
-
-```bash
-sudo apt-get update
-sudo apt-get install apache2
-```
-
-Remember to restart your Apache server after making these changes.
-
-```bash
-sudo service apache2 restart
-```

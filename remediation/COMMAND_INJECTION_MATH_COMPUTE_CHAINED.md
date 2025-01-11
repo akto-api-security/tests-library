@@ -44,13 +44,3 @@ Constrict the permissions of the applications, so even if a command gets injecte
 ```bash
 chmod 644 my_application
 ```
-
-### Step 5: Regular Security Audits and Patch Updates
-Conduct regular security audits of your code and server systems to find potential command injection security gaps. Update and patch your systems regularly to prevent exploitation of known vulnerabilities. 
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-Following these steps can help you to fix or mitigate the command injection with chaining system commands with arithmetic expression execution vulnerability.

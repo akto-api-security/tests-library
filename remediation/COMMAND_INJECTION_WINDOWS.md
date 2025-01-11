@@ -23,8 +23,3 @@ command.Parameters.Add(new SqlParameter("name", safeInput));
 
 ### Step 3: Implement Least Privilege Principle
 Your application should run with the least privilege necessary. This will limit the potential damage if a command injection does occur.
-
-### Step 4: Regular Audit and Update
-Regularly audit your code for security vulnerabilities and update your system/application to ensure it has all the latest security patches.
-
-These steps should help minimize the chance of command injection in Windows systems using system specific operations. Do understand that entirely preventing command injection depends on the situation and requirements, so one should always be vigilant and employ multiple defense strategies.

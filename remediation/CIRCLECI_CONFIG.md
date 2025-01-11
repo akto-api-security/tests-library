@@ -35,7 +35,3 @@ git push origin --force --all
 ### Step 4: Cycle Your Secrets
 
 Any secrets or sensitive information in the config.yml file should be considered compromised if it has been exposed. You should update these secrets as soon as possible within your CircleCI environment settings.
-
-### Note
-
-Remember the best practice of storing sensitive data using CircleCI context or environment variables instead of hardcoding them into your config.yml file.

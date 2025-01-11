@@ -69,11 +69,3 @@ public String deleteItem(@PathVariable("id") Integer id, Principal principal) {
     //...code
 }
 ```
-
-### Step 5: Regular Audit and Update
-Update and audit your system regularly. Stay on top of the latest security vulnerabilities and ensure your environment keeps up with security best practices.
-
-```bash
-apt-get update
-apt-get upgrade
-```

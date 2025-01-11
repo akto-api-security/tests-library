@@ -42,8 +42,3 @@ apm_config:
 ```bash
 sudo service datadog-agent restart
 ```
-
-### Step 5: Regular Audit and Update
-Regularly update your Datadog Agent and monitor your logs for any suspicious activity.
-
-Always keep in mind to never expose your Datadog Agent to the internet without proper security precautions. Firewalls and access controls should always be utilised.

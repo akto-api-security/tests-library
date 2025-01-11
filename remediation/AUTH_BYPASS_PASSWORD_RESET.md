@@ -49,9 +49,3 @@ def invalidate_token(user):
 
 ### Step 5: Secure Token Transmission 
 Use HTTPS for sending password reset emails which includes the token. This prevents network eavesdropping and the potential for token theft.
-
-Remember to keep your software components and servers up-to-date to ensure that any known vulnerabilities are patched.
-
-
-## Note
-The given code snippets are in Python, and are purely conceptual. The actual implementation may vary and might require additional security measures based on your particular scenario and requirements.

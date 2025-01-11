@@ -29,12 +29,3 @@ Limit the permissions of each user to the bare minimum that they require to perf
 
 ### Step 3: Avoid Direct-Object References
 Avoid using direct object references such as file identifiers. Instead, use indirect object references that are validated against the session ID of the user.
-
-### Step 4: Regular Audit and Update
-Regularly update your systems, monitoring and auditing them for any unauthorized access. This will help you to identify and fix potential security issues in a timely manner.
-
-```bash
-# The commands will depend on the system and the language of your application.
-# Example for Python applications:
-pip install --upgrade -r requirements.txt
-```

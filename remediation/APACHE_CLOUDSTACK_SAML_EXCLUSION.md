@@ -45,17 +45,3 @@ public void validateSAMLResponse(SAMLResponse response) throws SAMLException {
     }
 }
 ```
-
-### Step 3: Regular Patching and Vulnerability Assessment
-
-Keep your systems up-to-date with regular patching and ensure vulnerability assessments are conducted regularly to identify and fix such vulnerabilities promptly.
-
-```bash
-# Regular system update
-yum update
-
-# Regular patch install
-yum upgrade
-```
-
-Please note that this is a generalized guide, you should adjust commands according to your specific environment and setup. Always have a backup and test changes in a non-production environment first.

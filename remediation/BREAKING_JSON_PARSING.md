@@ -53,10 +53,3 @@ client.query(text, values, (error, result) => {
     }
 })
 ```
-### Step 4: Regular Audit and Update
-Regularly updating and auditing your code will help to fix any newly discovered vulnerabilities promptly.
-
-```bash
-npm audit
-npm update
-```

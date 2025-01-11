@@ -55,6 +55,3 @@ def confirm_email(token):
         flash('You have confirmed your account. Thanks!', 'success')
     return redirect(url_for('index'))
 ```
-
-### Step 4: Regular Monitoring and Audits
-Carry out regular audits and checks on this mechanism ensuring its security and efficiency.

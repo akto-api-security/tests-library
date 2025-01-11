@@ -36,10 +36,3 @@ from cryptography.fernet import Fernet
 cipher_suite = Fernet(key)
 cipher_text = cipher_suite.encrypt(data)
 ```
-
-### Step 5: Regularly Review Code and Update
-Carry out static code analysis, also have other team members peer review your code.
-
-```bash
-sonar-scanner
-```

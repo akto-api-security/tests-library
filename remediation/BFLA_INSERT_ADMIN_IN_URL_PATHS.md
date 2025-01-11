@@ -44,11 +44,3 @@ app.use(cors({
 }));
 ```
 Remember that a good security practice is to work on the principle of least privilege. Only extend permissions on a need-to-know basis.
- 
-### Step 4: Regular Audit and Update
-Audit your system regularly and keep your software updated to minimize the risk of new vulnerabilities.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```

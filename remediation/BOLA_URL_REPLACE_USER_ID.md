@@ -45,9 +45,3 @@ http
     .and()
     .formLogin();
 ```
-
-### Step 4: Regularly Review and Update Access Controls
-
-Regularly review and update the access controls. This includes checking for updates in the policies, roles, and enforcing strict policies where necessary.
-
-Keep in mind that the code above is written in high-level languages, in real-world applications, the use-cases would be more complex. Always seek assistance from an experienced security professional/team when dealing with security-related matters.

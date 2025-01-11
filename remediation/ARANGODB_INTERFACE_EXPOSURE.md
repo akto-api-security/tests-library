@@ -37,15 +37,3 @@ Make sure to configure your firewall to only allow ingress traffic on the Arango
 sudo ufw allow from trusted_ip to any port 8529
 ```
 Replace `trusted_ip` with the IP address that you want to allow.
-
-### Step 4: Regular Audit and Update
-
-ArangoDB, like any other software, should be regularly updated to ensure any known vulnerabilities are patched:
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade arangodb3
-```
-Don't forget to follow best practices regarding password management, privileges assignments, and data validation. 
-
-Even though the measures listed above will increase the security of your ArangoDB, it is recommended to have a professional penetration test conducted against your setup, especially for production environments.

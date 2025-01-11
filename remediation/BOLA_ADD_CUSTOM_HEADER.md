@@ -42,5 +42,4 @@ def handle_user_object(userId, objectId):
 
     # Your code when user is authorized...
 ```
-### Step 4: Regular Audit and Update
-Regularly audit, check and test your code against security vulnerabilities, update your code and security practices as needed.
+

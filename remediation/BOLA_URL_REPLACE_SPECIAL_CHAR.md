@@ -55,12 +55,3 @@ public class RateLimitConfig {
     }
 }
 ```
-
-### Step 5: Regular Audit and Monitoring
-Perform regular security audits to identify security vulnerabilities. Monitor application logs for suspicious behavior and respond promptly to any detected threats.
-
-```bash
-java -jar owasp-dependency-check.jar --scan .   # for Java projects
-```
-
-By implementing these measures, you can prevent the exploitation of the BOLA vulnerability in your applications. Ensure to always follow best security practices during application development and regularly update your knowledge on application security threats and mitigation measures.

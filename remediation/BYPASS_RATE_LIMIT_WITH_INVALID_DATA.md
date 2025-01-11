@@ -40,11 +40,3 @@ def index():
    
 ### Step 3: Monitor and Log Traffic
 Monitor and maintain logs of the traffic and continuously check for abnormal activities. If an IP is constantly hitting the rate limit, it could be a signal of malicious activities. 
-
-### Step 4: Regular Updates and Security Audits
-Regularly update the application and perform security audits to avoid any security flaws. Libraries and dependencies used for security purposes should be kept up-to-date. If a vulnerability is found, update it as soon as possible.
-
-```bash
-sudo apt update
-sudo apt upgrade
-```

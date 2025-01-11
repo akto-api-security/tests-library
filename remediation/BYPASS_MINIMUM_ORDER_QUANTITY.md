@@ -30,15 +30,3 @@ Here is an example using PostgreSQL:
 ALTER TABLE orders ADD CONSTRAINT check_quantity CHECK (quantity >= 5);
 ```
 This statement sets a constraint that ensures quantity cannot be less than 5.
-
-### Step 3: Regular Audit and Update
-Perform regular audits and updates of the system's rules and validations. Ensure that the system is updated as per the latest security recommendations and guidelines. 
-
-```bash
-php artisan migrate
-```
-
-### Step 4: User Education
-Inform users about the minimum order quantity requirements for free add-ons. Make it clear on the platform so that there is a lesser chance of vulnerability exploitation.
-
-Remember, all entry points of the application should be defended with layers of security checks. Most security issues arise because developers rely on a single layer of security like client-side validation or database constraints. Use all these measures together for a more robust solution.

@@ -28,23 +28,3 @@ app.use((req, res, next) => {
   next();
 });
 ```
-
-### Step 3: Regularly Monitor and Audit
-
-Regularly monitor and audit your application to maintain its security. Ensure to update the code whenever needed.
-
-```bash
-# Regular code update
-git pull
-```
-
-### Step 4: Test for Vulnerabilities
-
-Perform regular vulnerability checks using security testing tools to ensure that the Content-Type header is set for every response.
-
-```bash
-# Example using 'curl' command
-curl -I http://localhost:3000
-```
-
-Always make sure the security tests pass before and after making changes to your application.

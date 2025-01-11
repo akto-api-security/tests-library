@@ -24,13 +24,3 @@ def safe_redirect(url, next_url):
     return False
 ...
 ```
-### Step 3: Apply patches and updates regularly
-Always ensure that your Apache HTTP Server is updated with the latest patches. This ensures that you have the latest security fixes.
-```bash
-sudo apt-get update
-sudo apt-get upgrade apache2
-```
-### Step 4: Regularly check for vulnerabilities
-Regularly audit your codebase, making sure that you are not introducing new vulnerabilities. This can be done manually or through automated security testing tools.
-
-Always remember, your first line of defense against Open Redirect (or any security vulnerability) is a secure, well-audited codebase.

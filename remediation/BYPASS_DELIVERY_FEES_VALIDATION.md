@@ -41,14 +41,7 @@ if __name__ == '__main__':
     app.run(debug=True)
 ```
 
-### Step 3: Regular Audit and Update
-Regularly audit your code and logs to ensure the validation is functioning as intended. Any issue caught during these audits should be rectified immediately.
-
-```bash
-tail -f /var/log/your-app/your-app.log
-```
-
-### Step 4: Include Error Handling and Notifications
+### Step 3: Include Error Handling and Notifications
 Ensure to include ample error handling in your code to notify both the user and yourself (as an administrator or developer) if any validation issues occur.
 
 ```python

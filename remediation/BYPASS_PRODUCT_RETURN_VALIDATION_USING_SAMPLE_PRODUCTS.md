@@ -35,12 +35,3 @@ def handle_return(product):
     else:
         handle_regular_product_return(product)
 ```
-
-### Step 4: Regularly Update and Audit Your Systems
-
-Update your systems regularly to fix any security vulnerabilities. In addition, do an audit of product return procedures to ensure security.
-
-```bash
-# Run your security audit script
-bash run_audit.sh
-```

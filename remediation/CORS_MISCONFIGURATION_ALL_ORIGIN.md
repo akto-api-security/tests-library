@@ -51,6 +51,3 @@ app.listen(3000);
 
 ### Step 3: Test CORS
 After you modify the CORS policy, test the new CORS configuration using an automated testing tool.
-
-### Step 4: Monitor and Update
-Finally, ongoing monitor is required. As your web application evolves, make sure your CORS policy matches the allowed origins, providing updates when necessary.

@@ -44,5 +44,4 @@ Never store SSH keys in your Ansible playbooks or roles. Keep them in a secure l
 ssh-add /path/to/your/private.key
 ansible-playbook -i hosts playbook.yml --ask-vault-pass
 ```
-          
-Remember to replace `'your sensitive data'`, `'variable name'`, `/path/to/your/ansible.cfg` and `/path/to/your/private.key` in the above examples with your actual data, variable name, and paths respectively.
+        

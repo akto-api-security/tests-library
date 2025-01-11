@@ -47,11 +47,3 @@ limiter = Limiter(app, default="60/minute")
 def api():
     return jsonify(data='API response')
 ```
-
-### Step 5: Apply Regular Audit and Updates
-Based on vulnerabilities discovered, apply regular audits to your system and ensure a timely update and patching of identified security flaws. 
-
-```bash
-# Regular System Update
-sudo apt update && sudo apt upgrade -y
-```

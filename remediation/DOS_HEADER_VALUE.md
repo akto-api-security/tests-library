@@ -29,8 +29,3 @@ The number and size values can be modified according to your needs.
 
 ### Step 3: Use a Web Application Firewall (WAF)
 Use a Web Application Firewall (WAF) to protect your application. WAF can filter out malicious data, thus providing an additional line of defense against DoS attacks.
-
-### Step 4: Regular Monitoring and Updates
-Monitor your server logs regularly to identify any unusual patterns. Regularly updating your software and server configurations can also help maintain your system's security. 
-
-Remember, a layered approach to security is always best. Applying all these strategies together will provide the best defense against Denial of Service attacks.

@@ -61,6 +61,3 @@ try:
 except Exception:
     print("An error occurred.")
 ```
-It's better to handle general exceptions and not provide potential attackers with useful debugging information. 
-
-In conclusion, there is no foolproof way to prevent command injection. However, combining the above steps and continually updating your security practices will significantly reduce your vulnerability to this attack.

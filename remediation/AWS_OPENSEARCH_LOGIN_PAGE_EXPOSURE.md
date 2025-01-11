@@ -43,9 +43,3 @@ aws es update-elasticsearch-domain-config --domain-name my-domain --audit-log-op
 ```
 
 Replace "my-domain" with your OpenSearch domain name.
-
-### Step 5: Regularly Audit and Update
-
-Regularly review and update your access policy and settings to ensure it meets your current needs.
-
-Remember, keeping your login page private is crucial to system security, therefore avoid any exposure to the internet.

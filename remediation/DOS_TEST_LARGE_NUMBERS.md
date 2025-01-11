@@ -36,14 +36,3 @@ app.use(limiter);
 ### Step 3: Leverage DoS Protection Services
 
 Invest in DoS Protection Services like Cloudflare, AWS Shield, etc. These services can provide further security measures to thwart DoS attacks.
-
-### Step 4: Regular Audit and Update
-
-Monitor the application's performance and regularly update your codebase, ensuring you're running the most secure and stable versions of dependencies.
-
-```bash
-pip freeze > requirements.txt # Python
-npm outdated # Node.js
-```
-
-Remember, prevention is better than cure. Regularly monitoring and updating your applications can help mitigate such security issues.

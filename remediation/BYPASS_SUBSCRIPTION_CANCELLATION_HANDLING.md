@@ -58,5 +58,3 @@ cron.schedule("0 0 * * *", function() {
     );
 });
 ```
-### Step 4: Test Your Implementation 
-Always test these implementations to make sure they work as expected and successfully prevent subscription bypasses. Implement proper error handling to make it easy to debug and fix issues in your code. Lastly, keep systems updated and regularly check for new vulnerabilities.

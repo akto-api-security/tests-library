@@ -38,17 +38,3 @@ if (tokenService.isTokenValid(token)) {
     throw new InvalidTokenException("The token is invalid");
 }
 ```
-
-### Step 4: Regular Audit and Penetration Testing
-
-Conduct regular audits and penetration tests to ensure the system isn't susceptible to this vulnerability.
-
-```bash
-# This is just a symbolic command.
-# Replace this with your specific audit or penetration test command.
-audit_run --test all
-```
-
-By implementing these changes and practices, you'll reduce the risk of unauthorized account access through bypassing a locked account.
-
-Please note that the precise implementation of these steps will depend on the nature of your system and the programming language involved.

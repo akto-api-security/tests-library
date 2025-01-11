@@ -45,11 +45,3 @@ To enable it, uncomment the security manager block in your `conf/server.xml`
 ```xml
 <SecurityManager/>
 ```
-
-### Step 4: Regular Update and Patch Installation
-Keeping your Apache Tomcat server updated ensures you have the most recent security patches. Updating is similar to Step 1 where you replace your current server version with the updated one.
-```bash
-# Refer Step 1 for reference
-```
-
-Note: remember to backup your server configurations and application settings before doing an upgrade.

@@ -58,7 +58,3 @@ try {
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred.");
 }
 ```
-
-### Step 5: Regularly Test and Update Your Systems
-
-Ensure to perform regular security tests on your systems and push updates to remediate identified vulnerabilities.

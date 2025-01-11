@@ -41,14 +41,8 @@ app.post('/process-purchase', (req, res) => {
 })
 ```
 
-### Step 3: Regular Security Audits and Updates
-Always keep your server environment, API endpoints, and all related components updated and perform regular security audits.
 
-```bash
-sudo apt update && sudo apt upgrade
-```
-
-### Step 4: Implement Proper Testing
+### Step 3: Implement Proper Testing
 Make sure to implement proper test cases to cover all possible edge cases to prevent bypassing of minimum spend validation. You can use libraries such as Jest or Mocha for JavaScript. Here's an example using Jest:
 
 ```javascript

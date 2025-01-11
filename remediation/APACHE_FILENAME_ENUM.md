@@ -49,20 +49,3 @@ After the configuration changes, the Apache server needs to be restarted for the
 ```bash
 sudo service apache2 restart
 ```
-
-### Step 5: Regular Audit and Update
-
-Lastly, consistently update your Apache server to the latest version and frequently audit your server's security.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-Remember to restart your Apache server after updating.
-
-```bash
-sudo service apache2 restart
-```
-
-This can help in protecting your server from any known vulnerabilities that the Apache team has patched in later versions.

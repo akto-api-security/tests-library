@@ -49,11 +49,3 @@ Then, set correct permissions:
 find /var/www -type d -exec chmod 755 {} \;
 find /var/www -type f -exec chmod 644 {} \;
 ```
-
-### Step 4: Regularly Monitor Apache Access and Error Logs
-```bash
-tail -f /var/log/apache2/access.log
-tail -f /var/log/apache2/error.log
-```
-
-This monitors the logs in real-time and helps identify any potential unauthorized access attempts.

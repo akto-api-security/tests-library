@@ -35,15 +35,3 @@ Using UUIDs instead of sequential IDs for record identifiers makes it more diffi
 import uuid
 objectId = uuid.uuid4() # Generate a new universally unique identifier (UUID)
 ```
-
-### Step 4: Logging and Monitoring
-
-Monitor and log activity to identify unauthorized access attempts. This won't fix the security issue, but it greatly aids in detecting and investigating potential exploitation.
-
-```python
-def logUnauthorizedAccessAttempt(user, objectId):
-    # implement your logging schema here
-    pass
-```
-
-Remember, security should always be pervasive within the application development lifecycle. Always follow the latest security practices and guidelines to minimize the risk of any potential vulnerabilities and exposures.

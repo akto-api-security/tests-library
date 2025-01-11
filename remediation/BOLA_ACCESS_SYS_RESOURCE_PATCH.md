@@ -41,14 +41,3 @@ public Resource getResource(@AuthenticationPrincipal User currentUser) {
     return resourceService.findResourceByUser(currentUser);
 }
 ```
-
-### Step 4: Regular Audit and Update
-
-Consistently audit your application for potential security vulnerabilities and keep your systems and libraries up-to-date to the latest secure versions.
-
-```bash
-pip freeze > requirements.txt
-pip-review --local --interactive
-```
-
-Avoid exposing unnecessary information in responses and properly handle exceptions and errors to prevent information leaks.

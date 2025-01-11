@@ -43,12 +43,3 @@ app.post('/api-endpoint', (req, res, next) => {
 ```
 
 In this code, if validation fails, the API responds with an HTTP 400 status code and an error message.
-
-### Step 4: Regular Update 
-
-Always make sure that your packages are updated. You can update npm and the Joi package to their latest version by running:
-
-```bash
-npm update @hapi/joi
-```
-This preventive measure helps to ensure that you're operating with the most updated security and performance patches.

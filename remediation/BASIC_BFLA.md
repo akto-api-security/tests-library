@@ -79,7 +79,3 @@ curl --request GET \
   --url http://localhost:3000/admin \
   --header 'authorization: Bearer {YOUR_TOKEN}'
 ```
-
-If there are any issues during this step, revisit the previous steps to ensure proper implementation. 
-
-Remember, the code snippets provided above are just a guideline. For your final implementation, you would need to revise code as per your application's requirement. Proper testing is required to make sure the remediation has been implemented correctly.

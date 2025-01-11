@@ -43,9 +43,3 @@ Run your application processes with the least privileges necessary to perform th
 ```bash
 sudo -u limited_user yourProgram
 ```
-
-### Step 5: Regular Audit and Update
-
-Regularly update your system and third-party packages to benefit from the latest security patches. 
-
-No vulnerabilities are completely unavoidable, but these steps can greatly mitigate the risks associated with Command Injection attacks.

@@ -31,19 +31,3 @@ ResultSet results = pstmt.executeQuery();
 ### Step 3: Least Privilege Principle
 
 Ensure users have the minimum levels of access, or privileges, necessary to complete their job functions. This principle limits the damage that could result from accidents or inappropriate use.
-
-
-### Step 4: Update and Patch Regularly
-
-Ensure that your system, applications, and all dependencies are up-to-date. Regular updates and patches often address security flaws and vulnerabilities.
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-### Step 5: Regular Audit and Update
-To make sure your system is secure, perform regular audits and install security updates as necessary.
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-Gotchas: Remember, even following all the best practices can't guarantee absolute security. Maintaining security is a continuous process. Stay educated about the trends and new vulnerabilities in the world of information security.

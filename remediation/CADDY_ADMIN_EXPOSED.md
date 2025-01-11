@@ -25,14 +25,7 @@ This binds the Admin API to the localhost only, making it inaccessible to the ou
 ### Step 3: Secure Access Control
 If remote access to the admin interface is necessary, ensure that it is accessible only over a secure network or VPN, or use middleware that provides rigorous access control and authentication.
 
-### Step 4: Regular Auditing and Updates
-Regularly auditing and updating your installation of Caddy can help to prevent potential vulnerabilities from being exploited:
-
-```bash
-caddy upgrade
-```
-
-### Step 5: Firewall Configuration
+### Step 4: Firewall Configuration
 Use firewall rules to restrict access to the Caddy admin interface:
 ```bash
 sudo ufw deny from any to any port 2019

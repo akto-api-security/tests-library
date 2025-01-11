@@ -48,7 +48,3 @@ Certain languages provide functions to escape potentially hazardous characters. 
     system($command);
 ?>
 ```
-
-The above examples show that a combination of avoidance, input validation, parameterized queries, and escaping will provide you with a robust defense against command injection attacks. 
-
-Remember security is only as strong as its weakest point. Be cautious and protect your applications.

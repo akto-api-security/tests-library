@@ -51,13 +51,3 @@ xpack.security.authc:
       native1:
         order: 0
 ```
-
-### Step 5: Regular Audit and Update
-
-It's also vital to periodically review your ElasticSearch configurations, perform regular audits for any anomalies, and update ElasticSearch to the latest version.
-
-```bash
-sudo apt-get install --only-upgrade elasticsearch
-```
-
-Please refer to the [Elasticsearch official security best practices](https://www.elastic.co/guide/en/elasticsearch/reference/current/security.html) for more detailed information and updates.

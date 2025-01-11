@@ -43,7 +43,3 @@ def sanitize(input):
 ### Step 4: Limit Privileges of the Application
 
 Run the application with the least privileges necessary for performing its required functions. This can limit the damage from successful command injection attacks.
-
-### Step 5: Regular Audit and Update 
-
-Always keep your application up-to-date with the latest security patches and follow secure coding practices. A periodic security audit of your application can also help discover and fix vulnerabilities. Conducting code reviews, performing automated testing can also be part of the remediation process.

@@ -40,10 +40,7 @@ validated_input = escape(user_input)
 ### Step 4: Least Privilege Access
 Ensure that the account used in the application to connect to the database has least privilege access. This can minimize the potential damage.
 
-### Step 5: Regularly Update and Patch
-Always keep your system and software updated. This can prevent as-yet-unknown attacks from using known but unpatched vulnerabilities. 
-
-### Step 6: Error Handling
+### Step 5: Error Handling
 Avoid revealing internal system details or database schema in error messages. Make sure to always catch exceptions and safety output to users. 
 
 ```java

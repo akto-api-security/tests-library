@@ -59,16 +59,3 @@ class TransactionAPI(Resource):
             return {'message': 'User does not have required permissions'}, 403
         return {'message': 'Transaction processed'}
 ```
-
-### Step 3: Monitor and Update
-
-Regularly monitor the system for any unauthorized transaction attempts.
-
-Ensure you're patching and updating your system frequently to cover any security vulnerabilities that might have been discovered.
-
-```bash
-pip install -U pip 
-pip install -U Flask itsdangerous
-```
-
-Remember, security isn't a one-time thing. It's a process.

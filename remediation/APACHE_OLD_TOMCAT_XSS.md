@@ -47,7 +47,3 @@ cd /path/to/your/tomcat/bin
 ./shutdown.sh
 ./startup.sh
 ```
-
-Lastly, always conduct regular audits and updates to ensure the security of your server and applications. 
-
-Please note that these remedies are subject to the specific version of Tomcat that you are using, and the configuration of your web application. Always refer to the latest official Apache Tomcat documentation for the correct steps.

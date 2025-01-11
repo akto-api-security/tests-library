@@ -40,11 +40,3 @@ updateRequest.setParam("stream.url", "http://trusted-domain.com/resource");
 ...
 updateRequest.process(solrClient);
 ```
-
-### Step 4: Regular Monitoring and Audit
-
-Lastly, but not least, regular monitoring and audit practices are essential to maintaining the security of the system. 
-
-Implement regular audits to your system's logs to identify any suspicious activity.
-
-Remember, the ultimate defense against security vulnerabilities such as server-side request forgery, is to stay updated and follow security best practices.

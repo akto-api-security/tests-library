@@ -33,13 +33,3 @@ Ensure that the system clock on all of your servers are synced to maintain consi
 ```bash
 sudo apt-get install ntp
 ```
-
-### Step 4: Regular Audit and Update
-
-It's always a good practice to keep checking and updating the systems to keep up with the security standards. System audits need to be performed on a timely manner to enforce security.
-
-```bash
-sudo service apache2 restart
-```
-
-The outlined steps here are a guideline to help mitigate this issue, understand that security is a dynamic and continuous process that should adapt to the demands of your specific system or application.

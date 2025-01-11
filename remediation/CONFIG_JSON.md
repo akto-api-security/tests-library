@@ -40,8 +40,3 @@ You can change file permissions using the `chmod` command in Linux:
 chmod 600 path/to/config.file
 ```
 
-### Step 4: Regular Audit and Update
-Regularly audit your files and directories permissions, ensure to update your packages and dependencies to close any known configurational exposure. Finally, have a process to rotate secrets and credentials in case of a leak. 
-
-Providing proper user access controls, regular scanning for exposed sensitive files and promptly updating the security patches can help a great deal in avoiding the config file exposures. 
-

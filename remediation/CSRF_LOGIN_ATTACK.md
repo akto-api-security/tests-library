@@ -43,14 +43,3 @@ Making a cookie `HTTPOnly` ensures that it's not accessible by JavaScript and ca
 ini_set('session.cookie_httponly', 1);
 ini_set('session.cookie_secure', 1);
 ```
-
-### Step 5: Regular Audit and Update
-
-Continually audit your system for any CSRF vulnerabilities and keep your system updated with the latest security patches. 
-
-```bash
-sudo apt-get update 
-sudo apt-get upgrade
-```
-
-Remember, no security measures are 100% foolproof, but these steps can significantly decrease the chances of a CSRF attack in your system.

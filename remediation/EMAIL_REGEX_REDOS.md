@@ -48,6 +48,3 @@ try {
     // Handle regex test failure or timeout
 }
 ```
-
-### Step 4: Regular Code Audit and Update
-Regularly update your service to include the latest security patches and updates. Also perform regular code audits to catch any potential security flaws.

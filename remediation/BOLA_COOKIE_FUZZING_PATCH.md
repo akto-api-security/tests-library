@@ -31,12 +31,3 @@ app.use(session({
   cookie: { secure: true }
 }))
 ```
-
-### Step 4: Regular Security Audits
-Frequently conduct security audits of your API system to ensure its safety.
-
-```bash
-npm audit
-```
-
-While following these steps can't guarantee 100% security, it greatly helps in mitigating this security issue and reducing the risk of unauthorized access.

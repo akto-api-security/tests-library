@@ -28,20 +28,3 @@ execFile('ls', ['-l', userInput], (error, stdout, stderr) => { /* ... */ });
 const sanitizedUserInput = userInput.replace(/[^a-zA-Z0-9-_]/g, '');
 exec(`ls -l ${sanitizedUserInput}`, (error, stdout, stderr) => { /* ... */ });
 ```
-
-### Step 3: Regular Code Reviews
-Perform regular code reviews and use static code analysis tools for uncovering potential security vulnerabilities. 
-
-```bash
-npm install -g eslint
-eslint yourfile.js
-```
-
-### Step 4: Security Testing
-Perform routine automated security testing using tools like OWASP ZAP.
-
-```bash
-docker run -t owasp/zap2docker-stable zap-baseline.py -t https://yourWebApp.com
-```
-
-Remember, security is not something to be taken lightly. Always question the safety of your code and never trust user inputs.

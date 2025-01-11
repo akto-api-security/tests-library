@@ -52,12 +52,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 }
 ```
-
-### Step 4: Regular Audit and Update
-Lastly, conducting periodic security audits and updating your application regularly helps detect and mitigate newer threats.  
-
-```bash
-# Regular system update
-sudo apt-get update
-sudo apt-get upgrade
-```

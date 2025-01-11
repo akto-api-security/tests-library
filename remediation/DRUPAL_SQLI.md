@@ -43,15 +43,3 @@ db_query('SELECT n.nid, n.title, n.created
 
 In the above method, `:uid` is a placeholder for a value to be interpolated by `db_query()`.
 Note the use of curly braces `{}` around table names, this is a Drupal convention that allows the system to replace it with the actual table names.
-
-### Step 4: Regular Audit and Update 
-
-Perform regular checks on your website for any possible SQL injection vulnerabilities. It is also essential that you keep your Drupal installation up to date with the latest security patches.
-
-```bash
-drush pm-updatestatus
-```
-
-**References:**
-
-[Drupal SQL Injection](https://www.drupal.org/docs/7/security/writing-secure-code/sql-injection)

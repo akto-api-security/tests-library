@@ -41,7 +41,3 @@ Here's how to do that in PHP:
 ```php
 setcookie('CookieName', 'CookieValue', ['httponly' => true]);
 ```
-
-### Step 4: Regular Review 
-
-Finally, it is crucial to carry out regular audits and code reviews to monitor and eradicate potential command injection vulnerabilities from the codebase. Updating to the latest software and relying on strict coding practices will also help prevent such issues.

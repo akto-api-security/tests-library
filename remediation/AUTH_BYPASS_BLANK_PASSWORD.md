@@ -46,8 +46,3 @@ public boolean isValidPassword(String password) {
 
 ### Step 3: Implement 2-factor authentication
 Two-factor authentication is a secondary layer of security that uses something the user knows (password) and something the user has (email, phone number for OTP). Implementing this reduces the risk of successful brute force attacks.
-
-### Step 4: Regular audits and updates
-As part of a comprehensive security strategy, regular audits and updates should be conducted to identify and fix any vulnerabilities that might exist in the system.
-
-If allowing blank passwords is an intentional decision due to specific use cases, consider alternative methods of authorization, such as IP whitelisting or using specific, controlled environments.

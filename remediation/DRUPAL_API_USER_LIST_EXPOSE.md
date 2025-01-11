@@ -58,10 +58,3 @@ class UserAccessCheck {
 
 }
 ```
-
-### Step 4: Regular Audit and Update
-Keep monitoring Drupal security advisories and keep your Drupal core and contributed modules updated.
-
-```bash
-drush pm-update
-```

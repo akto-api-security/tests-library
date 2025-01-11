@@ -27,14 +27,7 @@ def check_user_has_access(user, resource_id):
         raise UnauthorizedAccessException('Operator is not allowed')
 ```
 
-### Step 3: Upgrade to the Latest Dependencies
-Always make sure your server dependencies are up-to-date. This will ensure you have the latest patches and security updates.
-
-```bash
-pip install --upgrade package-name
-```
-
-### Step 4: Use Prepared Statements for SQL queries
+### Step 3: Use Prepared Statements for SQL queries
 If the API is interacting with a database, always use prepared statements for SQL queries to prevent SQL Injection.
 
 ```python
@@ -55,6 +48,3 @@ try:
 except (Exception, psycopg2.Error) as error:
     print("Error fetching data from PostgreSQL table", error)
 ```
-
-### Step 5: Regular Audit
-Make sure to perform regular security audits and code reviews to catch and fix any security vulnerabilities.

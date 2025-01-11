@@ -46,9 +46,3 @@ var corsOptions = {
 ### Step 3: Avoid Reflective Origin Validation
 
 You should avoid reflective origin validation. If the server needs to support multiple origins, it should keep a whitelist of trusted origins and check each incoming Origin against the list.
-
-### Step 4: Regular Audit and Update
-
-Ensure that your CORS policy is audited regularly and keep your whitelist updated to minimize the risk of an attacker bypassing your CORS policy. Regularly update your dependencies to incorporate any new security patches. 
-
-Take note that no solution will offer 100% protection but applying these practices will significantly reduce your risk.

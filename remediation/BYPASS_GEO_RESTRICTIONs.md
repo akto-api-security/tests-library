@@ -38,8 +38,3 @@ You need to replace `country code` with ISO 3166-1 alpha-2 country code that you
 Many times, users use VPN and proxies to bypass Geo-restrictions. Blocking known VPN and proxy services can also help prevent bypass of geo-restrictions. 
 
 There are commercial databases available that provide lists of IP addresses that belong to known VPN and proxy services, which can be used to block requests. Please note that not all VPN and proxy services can be reliably detected or blocked.
-
-### Step 3: Regular Audit and Update
-IP addresses may change and new VPN and proxy services may come into existence over time. So, it is important to regularly update your IP-based Geo location databases and lists of known VPN and proxy services. 
-
-Please note country-based blocking may potentially block legitimate users from accessing your services, and so any Geo-restriction policies need to be carefully considered with your business needs.

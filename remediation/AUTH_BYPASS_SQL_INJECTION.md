@@ -43,12 +43,3 @@ Ensure that the database account your app uses to perform routine tasks has the 
 ```sql
 GRANT SELECT, INSERT, UPDATE ON database.table TO 'user'@'localhost';
 ```
-
-### Step 5: Regular Auditing and Update
-Keep track of and regularly update the dependencies and libraries that your application is using, as they may also harbor vulnerabilities that may lead to SQl Injection attacks. 
-
-```bash
-npm audit
-npm update
-```
-Be sure to incorporate these remediation steps in your application to prevent Authentication Bypass using SQL Injection attacks.

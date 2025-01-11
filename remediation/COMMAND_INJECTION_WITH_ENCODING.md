@@ -55,6 +55,3 @@ system($command);
 
 ### Step 5: Use of Least Privilege Principle
 Ensure that the code runs with the fewest privileges possible, reducing the potential damage if a command injection occurs.
-
-### Step 6: Regular Audit and Update
-Keep software, and especially the libraries and components your software depends on, updated to the latest versions, which often include security improvements and patches.

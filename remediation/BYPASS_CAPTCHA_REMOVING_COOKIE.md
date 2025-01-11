@@ -63,5 +63,3 @@ def refresh_captcha():
     session['captcha'] = new_captcha
     # return or render the new captcha
 ```
-
-These steps help in mitigating the risk associated with CAPTCHA bypass by removing cookies. Regular auditing and updates to the system security are required to ensure its smooth functioning.

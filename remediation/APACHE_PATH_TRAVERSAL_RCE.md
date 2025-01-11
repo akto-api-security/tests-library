@@ -33,12 +33,3 @@ Disable unnecessary Apache server modules that can be exploited for remote code 
 sudo a2dismod cgi
 sudo a2dismod autoindex
 ```
-
-### Step 5: Regular Update and Audit
-Regularly update your Apache server and perform audits to ensure that there aren’t any unpatched vulnerabilities.
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-I would recommend getting in touch with a security professional to help secure your Apache server. This is especially important when customer data is involved.

@@ -51,11 +51,3 @@ In your templates, use csrf_token within your forms.
     <!-- form fields here -->
 </form>
 ```
-
-### Step 4: Regularly Update Django 
-
-Regularly check for updates to Django and apply them promptly to benefit from latest security patches.
-
-```bash
-pip install --upgrade django
-```

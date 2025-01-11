@@ -40,13 +40,3 @@ Or
 ```bash
 sudo systemctl restart apache2
 ```
-### Step 4: Regular audit and patching 
-
-Keep the Apache server regularly audited and updated to prevent potential exploits. 
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-This suggests denying all access to the server status page by default and be sure to replace `<your-ip-address>` with the actual IP from where you will be viewing these stats.

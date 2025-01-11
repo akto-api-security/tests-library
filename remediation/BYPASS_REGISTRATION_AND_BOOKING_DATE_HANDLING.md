@@ -51,6 +51,3 @@ public class User {
 }
 ```
 In this example, only the admin users have a full access, while normal users are limited to the "book" action.
-
-### Step 4: Regular Audit and Update
-Regularly monitor and audit your software for any vulnerabilities. Regular updates of your software (language, framework, libraries) should also be part of your strategy for maintaining a secure environment.

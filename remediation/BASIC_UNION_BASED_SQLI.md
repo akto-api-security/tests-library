@@ -45,17 +45,7 @@ password = params[:password]
 user = User.where("username = ? AND password = ?", username, password).first
 ```
 
-### Step 3: Regular Security Audits
-
-Perform regular security audits on your codebase. Continuously update and patch your database software to address any known vulnerabilities. The use of static code analyzers and vulnerability scanners can also help in identifying potential security flaws in the code.
-
-### Step 4: Least Privilege Principle
-
-Follow the principle of least privilege, where database accounts used by your application should have the least permissions they need to do their work.
-
-This might not prevent SQL injections entirely, but it can help mitigate the potential damage that can be done.
-
-### Step 5: Database WAF 
+### Step 3: Database WAF 
 
 Deploy a Database Web Application Firewall (WAF) to add a layer of security and aid in detecting and blocking SQLi attempts. 
 

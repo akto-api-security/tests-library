@@ -32,23 +32,3 @@ Do not expose direct references like database IDs. Use indirect references such 
 // Java code example
 UUID objectId = UUID.randomUUID();
 ```
-
-### Step 4: Consistently Update and Review Access Policies
-
-Regularly review and update security policies to make sure that access controls are sufficient and are functioning as expected.
-
-```bash
-# Bash script for a hypothetical policy update
-sudo sh update-access-policies.sh
-```
-
-### Step 5: Extensive Logging and Monitoring
-
-Keep extensive logs of access to sensitive data and regularly audit them. 
-
-```bash
-# Bash script for starting a hypothetical log monitoring service
-sudo service log-monitor start
-```
-
-Remember to always run tests after implementing these changes to ensure that the changes actually resolve the vulnerability without disrupting other functionalities.

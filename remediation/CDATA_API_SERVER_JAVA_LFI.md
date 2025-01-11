@@ -33,13 +33,3 @@ Make sure file permissions are properly configured and restrictive. Regular user
 ```bash
 chmod 700 sensitive_file
 ```
-
-### Step 4: Regular Code Review
-
-Regularly review your code to ensure there's no security loophole.
-
-```bash
-git review
-```
- 
-These are the basic remediation steps but it is always recommended that an experienced security professional is involved in securing the systems.

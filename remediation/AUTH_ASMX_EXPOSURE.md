@@ -39,14 +39,3 @@ public class HomeController : ApiController
     //your code
 }
 ```
-
-### Step 4: Regular Audit and Update
-Do regular audit and update on your authentication process. Be sure all the system have the latest security patches. Also, remove user account which is no longer in use.
-
-```csharp
-//Code to remove inactive users
-IUserStore<User> store = new UserStore<User>(new UserDbContext());
-UserManager<User> manager = new UserManager<User>(store);
-User user = manager.FindByName(userName);
-manager.Delete(user);
-```

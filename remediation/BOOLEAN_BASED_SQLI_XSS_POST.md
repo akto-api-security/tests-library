@@ -39,8 +39,3 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     submit = SubmitField('Register')
 ```
-
-### Step 4: Regular Security Audits and Updates
-Regularly review code, use automated security tools, and update frameworks and libraries to detect and protect against new vulnerabilities. 
-
-Please note that the code snippet is given in Java and Python language for the respective prevention steps. Make sure to adapt it according to your application's programming language.

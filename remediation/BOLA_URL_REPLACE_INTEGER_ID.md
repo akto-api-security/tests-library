@@ -51,5 +51,3 @@ public User getUserByToken(String userToken) {
   return user;
 }
 ```
-
-These are some of the remediation steps to fix BOLA vulnerabilities. Regular security audits and updates are crucial, more complex applications would need additional layers of defense to secure against BOLA and other potential security threats.

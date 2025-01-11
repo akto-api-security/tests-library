@@ -41,13 +41,3 @@ def rate_limit(request):
     if request.number_of_requests > MAX_LIMIT_PER_MINUTE:
         raise RateLimitExceeded("You have exceeded the maximum number of requests per minute.")
 ```
-
-### Step 4: Regular Security Audits
-
-Lastly, conducting regular security audits is crucial to maintain a healthy and secure application. 
-
-```bash
-python manage.py check --deploy
-```
-
-These steps should provide a robust protection against BOLA/IDOR vulnerabilities. However, it's essential to keep up-to-date with the latest security best practices and continuously improve your security measures.

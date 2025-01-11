@@ -50,14 +50,3 @@ const fileUploadLimiter = rateLimit({
 
 app.use("/upload-file", fileUploadLimiter);
 ```
-
-### Step 4: Regular Audit And Update
-
-Regularly audit security measures and update code and packages for the most recent security patches. 
-
-```bash
-npm audit
-npm update
-```
-
-Always remember, security is an ongoing process and it requires regular checks and updates to ensure maximum protection.

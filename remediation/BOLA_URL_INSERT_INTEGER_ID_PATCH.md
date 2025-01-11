@@ -34,13 +34,3 @@ class ObjectModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     ...
 ```
-
-### Step 3: Regular Updates and Audits
-Always make it a practice to regularly update and audit your applications. Perform penetration testing, and do code reviews to identify any security loopholes.
-
-```bash
-# Restart your server after changes
-sudo service restart
-```
-
-Remember that data and system security is an ongoing process and not a one-time thing. Stay vigilant!

@@ -45,12 +45,3 @@ def get_resource():
     if resource_id is not None:
         # validate that the id is properly formed and does not contain illegal characters
 ```
-
-### Step 4: Regular Security Audits and Patch Updates
-
-Regular security audits can help to identify and fix any remaining vulnerabilities. Also, keep your system and software frameworks updated with the latest security patches. 
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```

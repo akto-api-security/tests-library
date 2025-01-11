@@ -41,5 +41,3 @@ Lastly, restart the Tomcat server for the changes to take effect.
 ```bash
 sudo service tomcat7 restart
 ```
-
-Please ensure to update your credentials regularly, monitor your log files, and perform regular security audits to ensure system integrity.

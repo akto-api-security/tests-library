@@ -44,12 +44,3 @@ limiter = Limiter(app, key_func=get_remote_address)
 def delete_resource():
     # your delete logic here
 ```
-
-### Step 5: Regular Audit and Update
-Make it a routine to conduct regular security audits and updates to your authorization and authentication systems. Remember to also log and monitor DELETE requests to prevent unauthorized access and modifications. 
-
-```log
-WARNING - DELETE request made on 2022-03-30 13:33:28 by user 1234, IP address 192.168.1.2
-```
-
-Regular updates and audits will ensure your systems are up-to-date with the recent security practices and no unauthorized deletions have been successful.

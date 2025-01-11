@@ -28,14 +28,3 @@ app.delete('/api/resource/:id', (req, res, next) => {
   deleteResource(req, res, next);
 });
 ```
-### Step 3: Regular Logging and Auditing
-Track and monitor API activity to identify and block suspicious behavior. 
-
-```bash
-# In NodeJS, one can use 'morgan' a HTTP request logger middleware for node.js
-const morgan = require('morgan');
-app.use(morgan('combined'));
-```
-Once BOLA is detected and the necessary precautions have been taken to mitigate its risk, it is crucial to conduct regular security audits on your system to ensure its safety.
-
-Remember, it is crucial to adopt a proper Access Control Policy across API endpoints to prevent BOLA vulnerabilities and other common security threats.

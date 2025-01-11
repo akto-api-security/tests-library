@@ -42,10 +42,3 @@ server {
     #...
 }
 ```
-
-### Step 4: Regular Audit and Update
-Frequently update your framework and libraries to the latest versions to stay protected against new vulnerabilities and attacks. 
-
-```bash
-npm update
-```

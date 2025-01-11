@@ -45,14 +45,3 @@ os.system(user_input)
 # Use this instead
 subprocess.run(['ls', '-l'])
 ```
-
-### Step 4: Regular Audit and Update
-
-Make sure to keep your system up-to-date and perform regular security audits to identify and fix any existing vulnerabilities. 
-
-```bash
-sudo apt-get update && sudo apt-get upgrade -y
-```
-This shall provide upgraded security patches for the system.
-
-Note: Sample examples are given in Python and bash scripts. You may have to change the code block according to your language stack.

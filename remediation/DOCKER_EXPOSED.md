@@ -34,12 +34,3 @@ To further secure your Docker, configure your firewall:
 sudo ufw deny from any to any port 2375
 sudo ufw deny from any to any port 2376
 ```
-
-### Step 4: Regular Auditing and Updates
-Regularly audit and update your Docker application. Following command will restart the docker service:
-
-```bash
-sudo systemctl start docker.service
-```
-
-Remember, keeping Docker, operating system, and all applications up to date is essential for a secure system. Regular system updates and patches will help prevent security issues.

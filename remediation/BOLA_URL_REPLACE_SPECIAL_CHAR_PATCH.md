@@ -51,5 +51,3 @@ app.put('/api/path/:id', verifyToken, (req, res) => {
   // remainder of logic
 });
 ```
-### Step 4: Regular Audit and Update
-Review your APIs regularly to ensure all security measures are updated and working properly. This may involve updating packages, libraries, and server configurations.

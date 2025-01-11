@@ -50,6 +50,3 @@ def validate_custom_header(custom_header):
     # replace with actual validation logic
     return True
 ```
-
-### Step 3: Regular Audit and Update
-Regularly update and patch the services to maintain the latest security measures. Also, conducting periodic audits will help identify potential risks and threats in the earliest stages.

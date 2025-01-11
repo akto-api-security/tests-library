@@ -29,8 +29,3 @@ In some cases, you may want to set a default format if the incoming accept heade
 if accept_header not in valid_headers:
     accept_header = 'application/json'
 ```
-
-### Step 3: Regular Audit and Update
-It's critical to keep your code and libraries up-to-date. If a new vulnerability in the handling of headers is discovered, an upgrade of your libraries or code update may be required to mitigate it. Take care to review the changes in each upgrade and update as they may introduce their own issues. 
-
-Remember, security is not a one-time event but a continuous process. Keep checking and updating your validation according to your needs.

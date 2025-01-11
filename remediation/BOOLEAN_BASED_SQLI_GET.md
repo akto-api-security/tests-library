@@ -29,10 +29,3 @@ CREATE USER 'limitedUser'@'localhost' IDENTIFIED BY 'your-password';
 GRANT SELECT, INSERT, UPDATE ON your_database.* TO 'limitedUser'@'localhost';
 FLUSH PRIVILEGES;
 ```
-
-### Step 4: Regular Code Review and Update
-Make sure you conduct regular code reviews and updates to keep your application secure. A penetration test can also help discover and fix vulnerabilities before they can be exploited.
-
-```python
-# Manual Code review or automated tools can be used for the same.
-```

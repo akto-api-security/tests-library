@@ -33,13 +33,3 @@ Use tested and standard libraries for validation, parsing and decoding where eve
 
 ### Step 5: Apply Appropriate Sanitizers
 Apply appropriate sanitizer on required fields to guard against any encoding/decoding attack. 
-
-### Step 6: Regular Audit and Update
-Regularly audit the return process. Check logs and look for any suspicious activity. Make sure you apply updates as soon as they become available. 
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-  
-Remember, security should be built in, not bolted on. Creating secure applications should be a priority, not an afterthought.

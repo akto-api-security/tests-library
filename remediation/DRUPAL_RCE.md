@@ -31,20 +31,3 @@ Custom and third-party code can also introduce the Drupal Remote Code Execution 
 ### Step 4 - Enable secure configuration
 
 Ensure that your Drupal site is configured to run securely by following the recommendations in Drupal's [security guide](https://www.drupal.org/security/secure-configuration).
-
-### Step 5 - Regular Audit and Update
-
-It is imperative to constantly monitor your Drupal site for any unusual activity. Regular audits can help you to identify a Remote Code Execution attack and take remedial action immediately. This also includes the regular update of modules, themes, and core files.
-
-```bash
-cd /path/to/your/drupal/root
-drush pm-updatestatus
-```
-
-Input `drush pm-updatestatus` command will show you the status of your updates and if any are necessary to apply.
-
-## Resources
-
-[Drupal.org security updates](https://www.drupal.org/security) - An invaluable source of information on security patches and updates. This tool will inform you of the latest patches that could secure your site against the Drupal Remote Code Execution vulnerability. 
-
-Remember, all sites are unique and may require additional steps to fully secure against all threats.

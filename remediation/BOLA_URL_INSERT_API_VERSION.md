@@ -41,7 +41,3 @@ OAuthService service = new ServiceBuilder()
    .scope("permissions_you_want")
    .build();
 ```
-### Step 4: Regular Audit and Software Update
-Always ensure that your software versions are updated. Carry out regular audits and penetration tests to identify any security issues. Make use of security tools and resources available in the market to conduct these audits. 
-
-Please note that this issue is contextual and the above steps are just a general guideline. The remediation steps may vary depending on how your API works and the programming language that it has been built with.

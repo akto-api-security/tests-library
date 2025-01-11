@@ -43,11 +43,3 @@ protected void configure(HttpSecurity http) throws Exception {
         .httpBasic();
 }
 ```
-
-### Step 4: Regular Audit and Update
-Regularly review your APIs and update your security configurations.
-
-**To update your Java project:**
-```bash
-mvn clean install
-```

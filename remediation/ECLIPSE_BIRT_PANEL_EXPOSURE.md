@@ -56,14 +56,3 @@ mvn versions:use-latest-versions
 ```
 
 This Maven command can assist in regularly updating your Java dependencies.
-
-### Step 4: Monitor your Logs
-Monitor your application logs regularly to identify any suspicious activity.
-
-```bash
-tail -f /path/to/your/logfile
-```
-
-Monitoring logs can help detect unauthorized requests to your BIRT Viewer.
-
-Remember, periodic security audits and system updates are necessary to ensure your security measures are up to date and effective.

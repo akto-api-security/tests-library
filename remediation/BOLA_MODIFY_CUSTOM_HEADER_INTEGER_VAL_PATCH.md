@@ -29,22 +29,3 @@ Use random and unpredictable values for object IDs. This greatly reduces the cha
 ```java
 String objectId = UUID.randomUUID().toString();
 ```
-
-### Step 4: Use of Rate Limiting 
-Rate limiting can prevent an attacker from continually guessing object IDs. After a certain number of failed calls, you can lock out the user.
-
-```bash
-iptables -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --set
-iptables -A INPUT -p tcp --dport 80 -i eth0 -m state --state NEW -m recent --update --seconds 60 --hitcount 10 -j DROP
-```
-
-### Step 5: Regular Audit and Update
-Keep track of your application logs and audit them regularly. Update your system and API in response to new vulnerability and threat reports.
-
-```bash
-tail -f /var/log/my-api.log;
-//Update system regularly
-sudo yum update -y
-```
-
-Note that the code snippets are illustrative and may need to be adjusted for your specific environment or language. Seek expert advice if you are unsure about implementation.

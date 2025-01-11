@@ -54,9 +54,3 @@ public ResponseEntity<?> deleteData(@CookieValue("user") String userCookie, @Pat
   
 }
 ```
-
-### Step 4: Regular Code Review and Update
-
-Regular source code reviews can help spot potential security vulnerabilities early in the development life cycle. Ensure that your team follows a strict development methodology that incorporates security practices. Automated tools can be used for source code analysis. Update your code regularly to address any new security threats. 
-
-Remember to avoid any unnecessary exposure of sensitive information in your codebase and to keep your secrets (API keys, passwords, etc.) secure.

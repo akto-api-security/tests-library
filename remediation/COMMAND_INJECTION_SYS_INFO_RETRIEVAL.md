@@ -38,4 +38,3 @@ sudo adduser --no-create-home --disabled-login --gecos "" limiteduser
 # Run the application using the limiteduser
 sudo -u limiteduser the-application
 ```
-By integrating these practices, you limit the risk of command injection attacks on your application, creating a more robust software environment.

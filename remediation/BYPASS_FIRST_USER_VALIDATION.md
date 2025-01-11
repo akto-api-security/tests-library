@@ -45,6 +45,3 @@ $username = $_POST['username'];
 $email = $_POST['email'];
 $stmt->execute();
 ```
-
-### Step 4: Regular Audit and Update
-Regularly audit your code and update your validation logic to ensure its efficiency and reliability. Also, consider using automated tools to detect any vulnerabilities that might be present. Keep your systems and frameworks updated to take advantage of latest security patches and improvements. Regular updates and deploying patches promptly goes a long way in reducing the attack surface.

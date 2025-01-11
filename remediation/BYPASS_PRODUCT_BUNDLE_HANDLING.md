@@ -54,9 +54,3 @@ public IActionResult CreateProductBundle([FromBody] BundleModel model)
     // bundle creation logic
 }
 ```
-
-### Step 5: Regular Audit and Update
-
-Regularly audit your security system to ensure there are no potential security threats. Keep your system updated with security patches and updates. 
-
-Finally, remember to test the security measures after implementing them.

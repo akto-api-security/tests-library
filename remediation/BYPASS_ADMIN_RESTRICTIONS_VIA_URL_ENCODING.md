@@ -35,10 +35,3 @@ app.use(validateUrl);
 
 ### Step 3: Configure Server to Deny Encoded URLs
 With the validation function in place, the server will now deny any client requests with mischievous URL encoding.
-
-### Step 4: Regular Audit and Update
-Ensure to audit your system regularly and update your URL validation packages for any new encoded characters that hackers may come up with. 
-
-```bash
-npm update urijs
-```

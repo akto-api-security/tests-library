@@ -39,14 +39,3 @@ Whenever possible, use language constructs that support parameterization, which 
 $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ? AND status=?');
 $stmt->execute([$email, $status]);
 ```
-
-### Step 4: Regular Code Audit and Update
-
-Regularly review your codebase and update your system to fix any security holes. Ensure the operating system patches and application updates are installed in a timely manner.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-Always remember that preventing command injection vulnerabilities is all about validating user input and controlling what can be executed by your application.

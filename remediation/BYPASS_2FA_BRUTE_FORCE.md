@@ -49,14 +49,3 @@ Here's a basic example in Python, using Django's `django-axes` package:
 AXES_LOCK_OUT_AT_FAILURE = True
 AXES_COOLOFF_TIME = 1  # time in hours
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly update and audit your 2FA system to ensure it is secure against newer vulnerabilities and threats. 
-
-Ensure all components and systems are patched and up-to-date, and continually monitor logs for signs of attempted or successful authentication attacks.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```

@@ -18,14 +18,3 @@ script.inline: false
 script.stored: false
 ```
 Location of the Elasticsearch configuration file (`elasticsearch.yml`) depends on the method of installation but typically it’s located at `/etc/elasticsearch/elasticsearch.yml`.
-
-### Step 3: Restart Elasticsearch Service
-After applying configuration changes, don’t forget to restart Elasticsearch service for changes to take effect.
-```bash
-sudo systemctl restart elasticsearch
-```
-If the service restart command raises any error then consult Elasticsearch log files for troubleshooting.
-
-These steps will help to fix the Elasticsearch RCE vulnerability. For heightened security, enforce access control, enable secure HTTPS communications in Elasticsearch, and carry out regular audits and updates. 
-
-Remember to always keep backup before updating any software or making changes to configuration files.

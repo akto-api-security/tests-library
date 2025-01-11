@@ -39,4 +39,3 @@ Ensure your Apache Struts is regularly updated and frequently undergoes security
 # Regularly update Struts to the latest versions to get security patches
 java -jar struts2-showcase.war --update
 ```
-It's vital to remember that using Showcase or other demo applications in a production environment is never recommended.

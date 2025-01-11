@@ -46,9 +46,3 @@ def sanitize(input):
 Ensure that the software is running with the minimum rights necessary in order to function. This limits the damage that can be done through a command injection.
 
 You can adjust these settings in the software's documentation or relevant configuration files.
-
-### Step 5: Regular Audit and Update
-
-Update your application regularly, and also review the code informally for vulnerabilities related to command injection. This will catch many cases of potential command injection and allow you to patch them before they become security issues.
-
-**Note:** These steps are not exhaustive and may not completely eliminate all risks associated with command injection, but they are a good starting point for securing your application.

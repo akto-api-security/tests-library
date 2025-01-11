@@ -46,10 +46,3 @@ http {
 }
 ```
 In this example, Nginx permits up to four 8KB buffers for the request line and headers, which should be adequate for most situations.
-
-### Step 4: Regular Audit and Update
-Regularly audit your application for potential new vulnerabilities and ensure that it is always updated with the latest patches and security fixes.
-
-If you allow third-party integrations, ensure they follow the same restrictions. 
-
-"Denial of Service attacks by entering long and random strings in Query Param Keys" can be mitigated by following these steps. However, security is a continually evolving field, and as such you should regularly revisit your security policies and practices. Make sure to stay informed about the latest techniques and methodologies used in the industry.

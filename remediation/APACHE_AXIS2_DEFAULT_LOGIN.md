@@ -19,13 +19,3 @@ sed -i 's/<parameter name="password">axis2<\/parameter>/<parameter name="passwor
 ```
 
 Please replace `/path/to/your/axis2.xml` with the actual directory path to your `axis2.xml` file, and replace "safeUser" and "safePass" with your new chosen credentials.
-
-### Step 3: Regularly Updating and Auditing
-
-Regularly update Apache Axis2 to the latest version to maximize your protection against vulnerabilities. Regularly audit your system for unusual activities or signs of unauthorized access.
-
-```bash
-service apache2 restart
-```
-
-Remember to restart Apache service for the changes to take effect.

@@ -42,7 +42,3 @@ app.put(apiVersions[req.params.versionId], function(req, res) {
   }
 });
 ```
-### Step 4: Regular Audit and Update
-Conduct regular audits to identify any abnormalities or potential leaks. This should include scrutinizing access logs for any signs of suspicious activity. 
-
-Always keep your application up to date with the latest security patches. Continuously monitor and fix any new vulnerabilities found.

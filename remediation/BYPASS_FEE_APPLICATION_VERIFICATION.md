@@ -36,12 +36,3 @@ function validateInput(amount, userBalance, fee) {
   }
 }
 ```
-### Step 3: Regular Audit and Update
-
-Regularly audit the transaction logic to find and fix potential weaknesses. Always keep the software up to date and apply patches regularly.
-
-```bash
-echo "Starting regular audit and update..."
-# Your regular audit and update command goes here. It will depend on your system and software. 
-```
-By following these steps, vulnerability to bypassing fee applications can be mitigated. Implementing regular audits and system updates can further guide in identifying and fixing the vulnerability promptly.

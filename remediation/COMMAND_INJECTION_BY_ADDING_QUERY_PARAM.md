@@ -50,6 +50,3 @@ $query = sprintf("SELECT * FROM users WHERE id='%s'", $safe_variable);
 
 ### Step 4: Least Privilege Principle
 The principle of least privilege (POLP) implies giving an account or process the bare minimum privileges it needs to perform its intended function. For database accounts, this could mean limiting the types of queries the account can run.
-
-### Step 5: Regular Audit and Update
-Regularly review your applications and check for potential security vulnerabilities. Keep your applications and libraries up to date to benefit from the latest security patches.

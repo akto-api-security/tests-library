@@ -36,15 +36,3 @@ def verify_captcha(response):
     response = requests.post(URL, payload)
     return response.json()['success']
 ```
-
-### Step 3: Audit and Update Regularly
-
-Frequent audits and timely updates to captcha-based protection are essential. Regularly perform penetration testing and address found vulnerabilities.
-
-Remember, regardless of which programming language or framework you are using, it is crucial to validate and sanitize all inputs and incorporate server-side captcha validation.
-
-```bash
-# Insert command to perform regular security audit
-```
-
-Valid remediation measures are necessarily dependent on the specifics of your architecture, and these steps should be adapted to fit the specifics of the system in question. This example uses Python and reCAPTCHA for illustration purposes only.

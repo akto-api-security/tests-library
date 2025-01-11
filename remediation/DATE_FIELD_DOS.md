@@ -54,5 +54,3 @@ app.use((error, req, res, next) => {
     }
 });
 ```
-
-Following these steps will help mitigate the risks from a potential Denial of Service attack on Date Type Fields in your API endpoint.

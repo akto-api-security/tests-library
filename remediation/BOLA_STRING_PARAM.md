@@ -34,8 +34,3 @@ MessageFormat form = new MessageFormat(userSearch);
 Object[] args = {username, password};
 o.search("", form.format(args), searchCtls);
 ```
-### Step 4: Least Privilege Principle
-Follow the principle of least privilege by limiting what users can do on the LDAP server to only what they require for their work.
-
-### Step 5: Regular Audit and Update
-Regularly update and patch LDAP service libraries and servers. Review user permissions, and rectify any over-privileged access rights. Update the remediation steps as new patches or practices become available.

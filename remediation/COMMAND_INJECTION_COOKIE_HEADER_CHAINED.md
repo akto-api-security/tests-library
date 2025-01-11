@@ -46,13 +46,3 @@ conn.query('SELECT * FROM users WHERE id = ?', [req.cookies.userId], function(er
   // Process results here
 });
 ```
-
-### Step 4: Use a Web Application Firewall (WAF)
-A WAF can provide another layer of security by helping to detect and block command injections.
-
-### Step 5: Regular Audit and Update
-Ensure your system is regularly audited and updated.
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```

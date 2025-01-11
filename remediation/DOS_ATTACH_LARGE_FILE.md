@@ -49,12 +49,3 @@ public class ThreadPoolConfig {
     }
 }
 ```
-
-### Step 4: Regular Audit and Update
-Keep your system updated with patches against all known vulnerabilities of the services being used in your application. This could be regarding the file upload feature or other features of your application.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-This can help you prevent unforeseen security issues by using safe, up-to-date versions of your dependencies and services.

@@ -27,13 +27,3 @@ You can configure your site to prevent user enumeration in the "Account settings
 Under "REGISTRATION AND CANCELLATION", ensure that "Visitors, but administrator approval is required" or "Administrators only" is selected.
 
 Additionally, under "Administrator approval required", ensure that "Require e-mail verification when a visitor creates an account" is checked.
-
-### Step 4: Regular Audit and Update
-
-Constantly check for updates to the core and installed modules, and apply them as soon as possible.
-
-```bash
-drush up
-```
-
-Remember, regular updates and audits of your Drupal site play a significant role in preventing and mitigating vulnerabilities.

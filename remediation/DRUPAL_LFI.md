@@ -37,17 +37,3 @@ Avoid using PHP’s file inclusion functions like `include`, `include_once`, `re
 ### Step 5: Use Correct File Permissions
 
 Ensure correct file permissions on the server. In general, directories should be 755 and files should be 644 except `settings.php` which should be 444.
-
-### Step 6: Install Security Modules
-
-Consider installing Drupal security modules such as ‘Paranoia’ which can help to prevent potential Local File Inclusion (LFI) vulnerabilities. 
-
-```bash
-drush en paranoia -y
-```
-
-### Step 7: Regular Audit and Update
-
-Regularly check your website and server logs for signs of LFI attacks and take necessary actions immediately.
-
-Remember, every Drupal site has different needs and no solution is one-size-fits-all. Always test any changes in a development environment before applying to your live site.

@@ -58,9 +58,3 @@ def apply_caching(response):
     response.headers["Content-Security-Policy"] = "default-src 'self'"
     return response
 ```
-
-### Step 5: Regular Audit and Update
-
-Similar to other aspects of security, it's necessary to keep your software up to date, conduct regular code reviews, and perform penetration testing. 
-
-By following these steps, you can greatly reduce the risk of XSS attacks in your applications.

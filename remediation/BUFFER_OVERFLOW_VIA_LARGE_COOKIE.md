@@ -33,18 +33,3 @@ app.use(function (req, res, next) {
   }
 });
 ```
-
-### Step 3: Regularly Monitor and Log Abnormal Activity 
-
-Ensure that your system records any attempts to send oversized cookies, which can be a sign of a hacking attempt. Set up regular logs monitoring for any suspicious activity. Additionally, set up alarms or notifications when an attempt is detected.
-
-### Step 4: Regularly Update and Patch System
-
-Regularly updating and patching your systems will help prevent most known vulnerabilities, including buffer overflows. Ensure that all components of your system - operating system, runtime environments, web servers, libraries, etc are always updated to their latest versions.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-Please keep in mind that while these steps can mitigate the risk of a buffer overflow via large cookies, no solution is 100% effective and constant monitoring and updating of your defenses will still be necessary.

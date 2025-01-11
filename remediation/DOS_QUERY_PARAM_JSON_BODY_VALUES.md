@@ -47,8 +47,3 @@ aws wafv2 create-regex-pattern-set \
     --regular-expression-string "\\b((?i)attack-target-string1|(?i)attack-target-string2)\\b" \
     --region us-west-2
 ```
-
-### Step 4: Regular Monitoring and Audit
-Regular monitoring of server logs to identify abnormal patterns and routinely checking and updating your software for latest security patches can also significantly reduce the impact of DoS or any other attacks.
-
-> Note: These are just remediation steps and may require modification based on the application or service context. Always consult with your security advisor or team for a comprehensive security solution.

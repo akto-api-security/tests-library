@@ -58,11 +58,3 @@ PUT /_security/role/my_admin_role
   ]
 }
 ```
-### Step 5: Regular Audit and Update 
-
-Keep monitoring and performing regular updates on your Elasticsearch to prevent any vulnerability issues in future.
-
-```bash
-sudo service elasticsearch restart
-```
-Remember to always test your changes across multiple environments before deploying the changes to a production environment.

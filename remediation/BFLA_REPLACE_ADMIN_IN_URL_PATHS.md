@@ -48,5 +48,3 @@ function roleValidationMiddleware(req: Request, res: Response, next: NextFunctio
   }
 }
 ```
-
-Please note that you must replace the code parts to fit your actual use case. The code provided here is only for reference and is written in TypeScript for a NodeJS backend. All strings and variables should be substituted accordingly in a real-world case.

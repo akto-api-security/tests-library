@@ -49,11 +49,3 @@ function withdraw(account, amount) {
   });
 }
 ```
-
-### Step 3: Test Your Code
-The changes in the calculation method should be thoroughly tested to ensure no miscalculations occur. This can be achieved using automated testing.
-
-### Step 4: Code Reviews and Regular Audits
-Lastly, regular code audits and constant reviews can help ensure that any flaws introduced in the future are quickly identified and corrected. 
-
-Make sure to pay special attention to the critical code sections that handle account balance computations and transactions.

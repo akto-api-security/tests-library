@@ -35,7 +35,3 @@ app.use(limiter);
 ### Step 3: Use Load Balancers or Proxies
 
 Load balancers or proxies can be used to distribute network traffic and prevent any single node from being overwhelmed by too many requests. They often come with features like body size limits and rate limiting. Configure your load balancer or proxy to protect against oversized payloads and frequent requests.
-
-### Step 4: Regular Monitoring and Update
-
-Monitor your application's performance regularly and update your rate limits or request body size limits as required based on your application's usage patterns.

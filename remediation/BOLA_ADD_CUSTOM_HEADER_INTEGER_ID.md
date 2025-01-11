@@ -51,7 +51,3 @@ app.use(function (err, req, res, next) {
   res.status(500).send('An error occurred, our technical team has been notified.')
 })
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly check for updates and patches in your API framework and dependencies. Patch any available updates immediately to prevent the exploitation of known vulnerabilities.

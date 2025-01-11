@@ -59,5 +59,3 @@ Finally, restart your Django server for these changes to take effect.
 ```bash
 python3 manage.py runserver
 ```
-
-Remember to revisit these settings whenever you update your app or Django itself.

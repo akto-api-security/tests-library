@@ -47,13 +47,3 @@ def get_pw(username):
 def secret_endpoint():
     return {'Secret': 'Endpoint'}
 ```
-
-### Step 4: Regular Audit and Update
-Ensure a regular schedule of system audits and security updates to prevent any future vulnerabilities.
-
-```bash
-# Use APT for package and update management
-sudo apt update
-sudo apt upgrade
-```
-Remember to regularly review and revise the system access permissions, firewall rules, and authentication mechanisms. This will help to maintain the integrity of both staging and production environments.

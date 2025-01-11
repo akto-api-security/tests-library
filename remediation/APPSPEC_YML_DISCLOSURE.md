@@ -29,12 +29,3 @@ Finally, to ensure all changes are reflected in the remote repository, it must b
 git push origin --force --all
 git push origin --force --tags
 ```
-
-### Step 5: Regular Audit and Update
-Continually check and make sure no sensitive information gets committed into the codebase.
-
-```bash
-git diff --cached
-```
-
-These steps will help ensure that the `Appspec.yml` file does not get committed to a public repository, thereby preventing unintended sensitive data exposure.

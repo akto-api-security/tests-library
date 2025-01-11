@@ -27,16 +27,3 @@ mv apache-druid-0.21.1 druid
 ```
 
 _Replace 0.21.1 with the latest Apache Druid version._
-
-### Step 2: Regular Audit and Update
-
-It's also crucial to get notified about the latest vulnerabilities and updates, so regularly check the official Apache Druid website or the Apache mailing list for any updates or security patches.
-
-```bash
-#Check Apache Druid version
-./bin/druid version
-```
-
-Always remember to backup your data before upgrading to a new version. 
-
-_Remember that security is an ongoing process and it's always a good idea to regularly audit and update your application and the underlying infrastructure to stay a step ahead from potential attackers._

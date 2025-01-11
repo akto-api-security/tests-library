@@ -42,15 +42,3 @@ PUT /_security/role_mapping/THIS_IS_JUST_AN_EXAMPLE
   "enabled": false
 }
 ```
-
-### Step 4: Regular Audit and Update
-
-Continual security audits and version updates are crucial for maintaining vigilant protection.
-
-```bash
-sudo systemctl restart elasticsearch
-```
-
-This will restart the Elasticsearch service after performing the configuration changes.
-
-Remember, only actively maintained Elasticsearch versions receive regular security updates to prevent known vulnerabilities, so regular upgrades to the latest version are essential as part of your security strategy.

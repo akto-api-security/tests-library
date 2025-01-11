@@ -34,14 +34,9 @@ To mitigate CGI variables injections, inputs should be properly validated and sa
 $userInput = $_GET['userInput'];
 $cleanUserInput = filter_var($userInput, FILTER_SANITIZE_STRING);
 ```
-### Step 4: Patch and Update Regularly
-Ensure to patch your systems and scripts regularly and install updates as soon as they are available. This can help fix any known bugs or vulnerabilities that can be exploited.
 
-```bash
-sudo apt update
-sudo apt upgrade
-```
-### Step 5: Principle of Least Privilege
+
+### Step 4: Principle of Least Privilege
 Run your scripts and processes with the least privilege necessary to perform its function, limit the capabilities of potential attacks.
 ```bash
 # For a process running as 'user'

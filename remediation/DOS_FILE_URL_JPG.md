@@ -49,14 +49,3 @@ const apiLimiter = rateLimit({
 
 app.use("/api/", apiLimiter); // Only applies to requests that begins with /api/
 ```
-
-### Step 4: Regular Audit and Update
-
-Ensure that your server software and libraries are regularly updated, as updates often include security patches that could prevent DoS attacks.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-By implementing these steps, you could help prevent your system from being overloaded by a large JPG file or other potentially harmful files.

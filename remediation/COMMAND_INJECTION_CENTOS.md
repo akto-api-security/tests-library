@@ -42,9 +42,3 @@ Ensure that all system components are regularly updated and patched. Many vulner
 ```bash
 sudo yum update
 ```
-
-### Step 4: Education and Code Review 
-
-Educate your development team about the risks of command injection and reinforce secure coding practices. Regular code reviews can also help to identify potential vulnerabilities and their fixes. 
-
-Always remember, prevention is better than cure.

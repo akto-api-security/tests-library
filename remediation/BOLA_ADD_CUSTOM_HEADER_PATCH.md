@@ -40,13 +40,3 @@ def process_request(request):
         logging.error(f"Unauthorized PATCH/PUT attempt by user: {request.user}")
         raise
 ```
-
-### Step 4: Regularly Update and Patch
-Always keep your system updated with the latest security patches. Regularly review your code to ensure it is secure against emerging threats.
-
-```bash
-# Using a package manager like apt
-sudo apt update && sudo apt upgrade
-```
-
-Remaining vigilant against potential exploits and maintaining up-to-date security practices will drastically reduce the risk of BOLA vulnerabilities in your code base.

@@ -53,5 +53,3 @@ con = sqlite3.connect(":memory:")
 cur = con.cursor()
 cur.execute("SELECT * FROM Users WHERE Name=?", (userInput,))
 ```
-
-Remember, security is an ongoing practice. Audit your code regularly, keep your software updated and always follow good security practices.

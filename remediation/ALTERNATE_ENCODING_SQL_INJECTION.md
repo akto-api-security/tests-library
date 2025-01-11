@@ -38,14 +38,3 @@ GRANT connect ON DATABASE mydb TO dbuser;
 GRANT USAGE ON SCHEMA public TO dbuser;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO dbuser;
 ```
-
-### Step 4: Regular Audit and Update
-Regularly audit the database and application logs, test the database for SQL injection vulnerabilities, and update the security patches.
-
-```bash
-# Check for updates and upgrade
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-These steps should greatly reduce the vulnerability to SQL Injection attacks.

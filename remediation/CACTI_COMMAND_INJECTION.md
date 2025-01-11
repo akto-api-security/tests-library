@@ -36,10 +36,3 @@ CREATE USER 'cacti'@'localhost' IDENTIFIED BY 'your_password_here';
 GRANT SELECT, INSERT, UPDATE, DELETE ON cacti.* TO 'cacti'@'localhost';
 FLUSH PRIVILEGES;
 ```
-### Step 4: Regularly Check and Update
-Conduct regular audits to spot vulnerabilities as and when they arrive. Always keep your installation up-to-date with the latest security patches and updates from Cacti.
-
-```bash
-sudo apt update
-sudo apt upgrade cacti
-```

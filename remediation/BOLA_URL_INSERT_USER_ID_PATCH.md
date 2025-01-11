@@ -51,7 +51,3 @@ public ResponseEntity<?> updateUser(@RequestHeader("user-id") long id) {
     //... codes to update user
 }
 ```
-
-### Step 4: Regular Code Review and Update
-
-Regularly review the code as a regular part of development and security practices to ensure there isn't any potential risk of exposing sensitive data.

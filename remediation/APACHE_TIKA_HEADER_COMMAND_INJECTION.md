@@ -40,11 +40,3 @@ for (Enumeration<String> e = request.getHeaders(); e.hasMoreElements();) {
   }
 }
 ```
-
-### Step 3: Regularly audit and update
-
-To ensure the security of your system, take the time to perform a regular audit of your dependencies and apply updates as they are available.
-
-Also, be sure to follow best practices for secure coding and application security overall. This involves proper input validation, least privilege principles, ensuring confidentiality with encryption, and maintaining integrity and availability of the application.
-
-Remember, preventing command injections should be considered a high priority in your security strategy. Always sanitize user input and never trust incoming data implicitly. This holds true whether it's an HTTP header, a form submission, an API call, or anything else.

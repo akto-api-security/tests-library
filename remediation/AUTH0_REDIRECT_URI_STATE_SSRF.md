@@ -33,13 +33,3 @@ app.get('/redirect', function(req, res) {
   }
 });
 ```
-
-### Step 4: Regular Monitoring and Update
-
-Monitor logs regularly and update your safe-list and security measures to respond to detected threats.
-
-Remember to also educate your team about this concern and include it in your Code Review checklist to ensure code merges do not bypass these security measures.
-
-Note: SSRF is a severe and complex security flaw. Remediation steps may vary depending on your specific use case. If unsure, consider engaging a security professional. It is also essential to keep all involved software components up to date and adopt secure coding principles. 
-
-Always perform regular security reviews and use vulnerability scanning tools to help identify any potential threats in your applications.

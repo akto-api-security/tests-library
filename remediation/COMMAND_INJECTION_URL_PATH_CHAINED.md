@@ -29,18 +29,6 @@ Whenever you output the data received as input from users, make sure to encode t
 ### Step 3: Use Least Privilege Principle
 Run applications with as few privileges as possible to reduce the effect of any successful attacks. 
 
-### Step 4: Employ Code Analyzers
-Use static code analyzers to detect potential command injections, and resolve them.
 
-### Step 5: Patch Management
-Regularly update and patch all systems to ensure known vulnerabilities are fixed.
-
-### Step 6: Restrict Inputs
+### Step 4: Restrict Inputs
 If possible, avoid allowing user-defined fields to accept special characters.
-
-### Step 7: Regular Audit and Update
-```bash
-sudo apt update
-sudo apt upgrade
-```
-Remember to schedule a regular security review for your application.

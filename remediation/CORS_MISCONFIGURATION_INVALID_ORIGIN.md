@@ -41,9 +41,3 @@ Not every feature of your API needs to support every verb. CORS should be as str
 ```Javascript
 app.options('/data', cors()) // enable pre-flight request for /data route
 ```
-
-### Step 4: Regular Audit
-
-Continuously review your CORS policy. Be cautious while exposing new endpoints or data. Implement warnings when changes on CORS policy occur.
-
-NOTE: While CORS is defense strategy against certain classes of attacks (broadly speaking, it's server-side protection from misuse of resources), enforcing HTTPS in conjunction with a strong Content Security Policy (CSP) provides a more robust defense.

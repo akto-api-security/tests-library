@@ -37,16 +37,3 @@ def start_process(file):
 start_process("large_file.csv")
 ```
 Please adjust the maximum file size and processing time according to your system's capacity.
-
-### Step 3: Regular Audit and Update
-
-Regular monitoring and analysis of system behavior and logs can help identify any unusual or potentially harmful activity. If any instance of Denial of Service attack is observed, system configurations and implementation should be immediately reviewed and updated, if required. 
-
-Always ensure your security measures are up-to-date to counter latest security threats. 
-
-### Step 4: Education and Awareness
-
-Educate your team members and users about the potential risks and impacts of Denial of Service attacks and how to recognize and avoid such attacks. This will increase security awareness and help in early detection of suspicious activities.
-
-### Note: 
-These are mitigation steps, Denial of Service attacks exploit different vulnerabilities in your system and can often be persistently carried out with varying volumes and techniques. They might not be completely evitable, full prevention often requires a combination of methods and constant vigilance.

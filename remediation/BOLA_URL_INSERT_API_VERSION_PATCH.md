@@ -51,14 +51,4 @@ app.put('/api/version/:id', apiLimiter, (req, res) => {
   // perform API operation
 });
 
-``` 
-
-### Step 4: Regular Auditing and Updating
-
-Review your APIs regularly. It is crucial to keep your API documentation up to date and conduct regular API security audits.
-
-```bash
-npm audit
 ```
-
-In addition to these steps, ensure other security measures like HTTPS, JWT tokens, etc., are used to secure your APIs further. Maintain a secure, hash/salted mapping table for object IDs to mitigate the risk of BOLA.

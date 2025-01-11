@@ -42,9 +42,3 @@ For example, in Unix-based systems you could use this:
 ```bash
 sudo -u leastprivilegeuser command
 ```
-### Step 5: Regular Audit and Update
-Update software regularly and review your code for any potential command injection vulnerabilities.
-```bash
-sudo apt-get update && sudo apt-get upgrade
-```
-Remember, even though these remediation steps can mitigate the risk of a command injection attack, no single approach is complete or guaranteed. It is important to adopt multiple approaches for securing your systems.

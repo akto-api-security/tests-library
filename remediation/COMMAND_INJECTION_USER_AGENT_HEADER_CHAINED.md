@@ -35,5 +35,3 @@ if valid_user_agent(user_agent):
 else:
   raise ValueError("Invalid User-Agent")
 ```
-
-By applying input validation and sanitization, we can prevent Command injection in User-Agent Header with Chained system instructions.

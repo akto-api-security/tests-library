@@ -33,18 +33,3 @@ If you wish to use mod_userdir, you can adjust the server directives to prevent 
 ```
 
 Replace this line in the existing apache configuration file.
-
-### Step 4:  Regular Audit and Update
-
-In order to keep your system secure, it's recommended to constantly monitor and update your software.
-
-```bash
-sudo apt-get update && sudo apt-get upgrade
-```
-
-Remember: replace the above command specific to your package manager.
-
-### Source
-
-1. [Apache HTTP Server 2.4 vulnerabilities](https://httpd.apache.org/security/vulnerabilities_24.html)
-2. [Apache mod_userdir documentation](https://httpd.apache.org/docs/2.4/mod/mod_userdir.html)

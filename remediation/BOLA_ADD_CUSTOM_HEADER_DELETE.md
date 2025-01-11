@@ -46,13 +46,3 @@ public MyResource getResource(long resourceId, User user)
     return resource;
 }
 ```
-
-### Step 4: Regular Audit and Update
-Always ensure to regularly audit and update your security systems, patches, and hiccups. Keep up to date with new threats and vulnerabilities, and counter them proactively.
-
-```bash
-# Appropriate command for security audits & updates vary greatly depending on system & application specifics.
-# Implement a strategy involving regular audits, updates and security scans.
-``` 
-
-**Endnote**: Don't forget to include error handling, logging the necessary information, and keeping the user's experience in mind while designing your checks.

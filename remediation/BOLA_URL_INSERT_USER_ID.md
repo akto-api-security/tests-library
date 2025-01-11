@@ -45,13 +45,3 @@ def validate_access(user, requested_object):
     if requested_object not in accessible_objects:
         raise AccessDeniedError("You do not have access to this object.")
 ```
-
-### Step 4: Regularly update and audit
-Regularly update your systems to ensure they are not exposed to known vulnerabilities. Continuous auditing of access logs can help in identifying suspicious activity.
-
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-These steps will mitigate the risk of exploiting BOLA by inserting User IDs in the URL path for unauthorized access. However, security is a continuous process, and regular audit and vulnerability assessment are necessary to stay ahead of potential threats.

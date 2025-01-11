@@ -46,22 +46,11 @@ By enabling the `ssl://` prefix in your broker URL, you can enforce SSL. It shou
 ssl://b-example-1.mq.us-east-2.amazonaws.com:61617
 ```
 
-### Step 4: Regular Review and Update
-Regularly review and update your AmazonMQ settings and IAM policies to make sure they meet your current requirements. Regular audits can help prevent exposed AmazonMQ issues. 
 
-Here's a simple command to list brokers:
- 
-```bash
-aws mq list-brokers
-```
-
-Make sure you review the details of each broker and its users.
-
-### Step 5: Encrypt Data at Rest
+### Step 4: Encrypt Data at Rest
 Use AWS Key Management Service (AWS KMS) managed keys (CMK) to encrypt your data at rest. This protects your data and configurations stored in the broker.
 
 You can specify the `KmsKeyId` parameter when you create a broker:
 ```bash
 aws mq create-broker --broker-name MyBroker --engine-type ActiveMQ --engine-version 5.15.10 --host-instance-type mq.t2.micro --auto-minor-version-upgrade --deployment-mode SINGLE_INSTANCE --kms-key-id alias/aws/mq
 ```
-By doing this, you've used AWS managed CMK to encrypt the data at rest. If you want to use your own CMK, replace `alias/aws/mq` with your own key ID or alias.

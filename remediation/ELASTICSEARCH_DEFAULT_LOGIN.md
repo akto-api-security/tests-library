@@ -38,12 +38,3 @@ Then, point Elasticsearch to where your certificate and private key are located 
 xpack.security.transport.ssl.keystore.path: certs/elastic-certificates.p12
 xpack.security.transport.ssl.truststore.path: certs/elastic-certificates.p12
 ```
-
-### Step 4: Restart Elasticsearch
-Finally, restart Elasticsearch to apply these changes:
-
-```bash
-sudo service elasticsearch restart
-```
-
-Remember to review Elasticsearch security settings regularly and promptly apply any security updates or patches released by Elasticsearch.

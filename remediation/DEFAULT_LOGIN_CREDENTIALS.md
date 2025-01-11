@@ -34,8 +34,3 @@ from pyotp import totp
 totp = pyotp.TOTP('base32secret3232')
 print("Current OTP:", totp.now())
 ```
-
-### Step 5: Regular Audit and Update
-Regularly audit user accounts, remove unused accounts, and update passwords. 
-
-Note: Replace 'username' and 'base32secret3232' with your actual username and secret key respectively where necessary.

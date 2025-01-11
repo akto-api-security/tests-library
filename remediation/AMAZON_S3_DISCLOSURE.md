@@ -50,6 +50,3 @@ This helps track requests for access to your bucket for auditing purposes.
 ```bash
 aws s3api put-bucket-logging --bucket my-bucket --bucket-logging-status file://logging.json
 ```
-
-### Step 6: Regular Audit and Updates
-AWS Trusted Advisor and AWS CloudTrail can be used to regularly audit your security status and update as necessary.

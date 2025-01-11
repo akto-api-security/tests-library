@@ -53,7 +53,3 @@ To list all services and disable unnecessary ones:
 sudo systemctl list-unit-files --type=service
 sudo systemctl disable <unnecessary_service>
 ``` 
-
-### Step 5: Regular Audit and Update
-
-Regularly review and update your security measures, keeping an eye on the latest best practices and threats.

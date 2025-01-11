@@ -62,8 +62,3 @@ Or:
 ```bash
 sudo systemctl restart httpd
 ```
-
-### Step 5: Test
-Finally, trigger an error or request a non-existent page to verify that Apache no longer discloses its version number.
-
-Remember to regularly review your Apache configuration and keep the server software updated to help prevent further issues.

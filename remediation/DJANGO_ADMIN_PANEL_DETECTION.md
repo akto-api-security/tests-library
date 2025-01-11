@@ -66,7 +66,3 @@ This ensures that passwords must be at least 12 characters long and cannot be to
 ### Step 4: Enable HTTPS
 
 Secure the admin panel by enabling HTTPS. Django’s built-in server does not support HTTPS, so deploying it securely would likely involve configuring a separate reverse proxy server to serve the Django application over HTTPS.
-
-### Step 5: Regular Audit and Update
-
-Regularly audit your Django project and update the Django admin panel accordingly to mitigate any new vulnerabilities.

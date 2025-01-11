@@ -46,14 +46,3 @@ const authLimiter = rateLimit({
 
 app.use("/auth/", authLimiter);
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly audit your code for any vulnerabilities and keep your packages and libraries updated. Use tools to scan your application such as `npm-audit` for Node.js, `safety` for Python, `brakeman` for Ruby on Rails, etc.
-
-As an example, to run `npm-audit` for Node.js, navigate to your project directory and type:
-```bash
-npm audit
-```
-
-This will give a quick report of any known vulnerabilities in your installed packages.

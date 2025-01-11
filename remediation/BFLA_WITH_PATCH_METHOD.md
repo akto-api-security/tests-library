@@ -25,7 +25,3 @@ Enforce the principle of least privilege. Each user should be given the least am
 ### Step 3: Sever-side validation
 
 Always replicate all client-side validation on server side. Apply the same validation of input and enforce authentication and authorization checks again, including data from API and service endpoints that may not have a user interface.
-
-### Step 4: Regular Audit and Update
-
-Ensure your function level authorization logic is regularly updated and tested for any possible security loopholes. Continuous integration and delivery, including regular audits, will help maintain a secure environment.

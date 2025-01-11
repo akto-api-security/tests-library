@@ -57,9 +57,3 @@ cipher.init(Cipher.ENCRYPT_MODE, secretkey);
 byte[] cipherText = cipher.doFinal(plainText.getBytes("UTF8"));
 String encryptedText = new String(Base64.encodeBase64(cipherText),"UTF-8");
 ```
-
-### Step 4: Regularly Review and Update Your Security Configurations
-
-To maintain the best possible security, regular checks and updates of security configurations are necessary. This includes checking validation systems, updating encryption standards, and fixing any newly discovered vulnerabilities.
-
-In conclusion, the key remediation to prevent bypass account linking validation is correct implementation of validation functions, encryption, and regular updates.

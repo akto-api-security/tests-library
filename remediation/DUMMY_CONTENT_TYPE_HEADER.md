@@ -29,14 +29,8 @@ def handle_input(user_input):
     # process the safe_input as required
 ```
 
-### Step 3: Regular Audit and Update
-Remaining vigilant for any new vulnerabilities that could arise and ensuring your systems are kept up to date is a good security practice. Consider using automated security tools that can regularly scan your codebase for known vulnerabilities and suggest plausible fixes. Always apply patches and security updates as soon as they are released.
 
-```bash
-sudo apt update && sudo apt upgrade -y
-```
-
-### Step 4: Use Security Headers
+### Step 3: Use Security Headers
 Finally, use appropriate security headers (like `Content-Security-Policy`, `X-Content-Type-Options`, etc.) to prevent various attacks. Below is an example in Node.js Express application:
 
 ```javascript
@@ -44,7 +38,3 @@ var helmet = require('helmet');
 
 app.use(helmet());
 ```
-
-Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
-
-Remember, the dummy Content-Type header is a serious security issue, but with these preventive measures, you could mitigate the risks associated.

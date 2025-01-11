@@ -29,9 +29,3 @@ const isWhitelisted = (url) => {
     return whitelistURLs.includes(getHostname(url));
 }
 ```
-### Step 3: Regular Audit of Redirect URIs
-Review the Redirect URIs in your Auth0 applications on a regular basis. Remove any that are no longer needed to minimize the attack surface.
-
-Unfortunately, Auth0 does not provide an automated method or tool to do this, so you need to manually check it on the dashboard or periodically use the Management API to get a list of all applications and their Redirect URIs. 
-
-_This remediation assumes an understanding of programming concepts and practices, and edits should only be made by experienced programmers due to the potential negative impact on application functionality._

@@ -28,9 +28,3 @@ if(input.length() > MAX_LENGTH || !input.matches("[a-zA-Z0-9]*")) {
     throw new IllegalArgumentException("Invalid input.");
 }
 ```
-### Step 4: Regular Audit and Update
-Perform regular audit on the APIs and ensure they are up to date. Monitor logs to detect abnormal user behaviors or potential attacks.
-```java
-//Java Code
-auditService.logAPICall(user, arguments, result);
-```

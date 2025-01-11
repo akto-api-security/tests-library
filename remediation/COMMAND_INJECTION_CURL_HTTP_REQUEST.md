@@ -37,11 +37,3 @@ This way, command injection is impossible because there's no shell that interpre
 The principle of least privilege is a important principle to adhere to in system security. Under this principle, a user is given the minimum levels of access necessary to perform his/her job functions. In the case of a web service or application, this can involve implementing thorough access controls to ensure that only the necessary parts of a system are available to a user.
 
 In addition, it may be prudent to use a low-privileged user to run your web server or app, to limit what a command injection attack can do.
-    
-### Step 4: Regular Code Review and Update
-
-Regular audits, especially code reviews focused on security, can help spot command injection vulnerabilities. Keeping your software stack up-to-date, and following secure coding practices are also highly recommended. Regular routine updates involving security patches should be done to prevent attacks. Using security focused linters or static analysis tools could also prove beneficial.
-```bash
-git pull origin master
-sudo apt-get update && sudo apt-get upgrade
-```

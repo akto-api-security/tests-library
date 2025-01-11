@@ -36,9 +36,3 @@ Eliminate any unnecessary components in your web application, as these can often
 // good practice
 <constant name="struts.devMode" value="false" />
 ```
-
-### Step 4: Regular Audit and Update
-
-Regularly perform audits of your environment and upgrade steps 1, 2 and 3 as and when required.
-
-It's always best to stay up to date with the latest security enhancements and vulnerability reports for Apache Struts2.

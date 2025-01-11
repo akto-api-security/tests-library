@@ -50,15 +50,3 @@ if (!in_array($user_role, $roles_allowed_for_this_request)) {
     die('Forbidden');
 }
 ```
-
-### Step 4: Regular Audit
-
-Conducting regular code reviews and penetration tests can help find and fix any existing vulnerabilities.
-
-```bash
-# Code analysis tool for languages such as Python, JavaScript, and TypeScript
-npm install -g semgrep
-semgrep --config=p/r2c-ci path/to/code
-```
-
-Keep in mind that these are just the remediation steps. The implementation will vary based on the programming language and the specific application needs.

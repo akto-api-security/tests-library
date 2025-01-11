@@ -52,9 +52,3 @@ Save the file and exit, then test the configuration and reload Nginx service.
 sudo nginx -t
 sudo service nginx reload
 ```
-
-### Step 3: Regular Review and Audit
-
-Regularly check your server configuration to ensure that the directory listing remains disabled. This is especially important if multiple people have access to server configurations. 
-
-Please note that these are generalized instructions, your environment may require additional steps or different commands. Consult your web server’s documentation if needed.

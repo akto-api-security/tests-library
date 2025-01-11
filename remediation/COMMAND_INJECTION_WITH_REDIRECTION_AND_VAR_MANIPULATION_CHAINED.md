@@ -42,11 +42,3 @@ execFile('command', userArgs, (error, stdout, stderr) => {
 ### Step 4: Use of least privileges
 
 Limit the permissions of the executing process. Always adhere to the principle of least privilege. If the process does not need to perform system commands, then the process does not need the ability to do so. 
-
-### Step 5: Enabled system auditing
-
-It's also important to enable and correctly configure logging and auditing. Robust log management can help in identifying attack attempts and managing the actions of privileged users.
-
-### Step 6: Regular Code Review and Security Testing
-
-Conduct regular code reviews and penetration testing to check for any potential flaws or vulnerabilities.

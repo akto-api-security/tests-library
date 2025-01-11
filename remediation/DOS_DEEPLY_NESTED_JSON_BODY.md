@@ -42,13 +42,3 @@ Most of the JSON parsing libraries, including body-parser for express.js provide
     app.use(limiter);
 ```
 Rate limiting restricts the number of requests a client can make to the API within a certain period. Here we limit the number of requests to 100 every 15 minutes.
-
-### Step 4 : Regular Audit and Update
-Ensure to regularly update your dependencies and apply patches. You can use npm-check-updates or dependabot for automatically checking and updating outdated dependencies.
-
-```bash
-    npm install -g npm-check-updates
-    ncu -u
-    npm install
-```
-These steps help you prevent a DoS attack through a deeply nested JSON body effectively.

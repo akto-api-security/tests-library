@@ -42,8 +42,3 @@ In production environment, store sensitive data in environment variables:
 ```bash
 export SECRET_TOKEN=your_secret_token
 ```
-
-### Step 4: Regular Audits and Updates
-Regularly perform code audits and update your system to ensure security vulnerabilities related to configuration files are mitigated. 
-
-These steps can help you secure your Ruby configuration files and prevent sensitive data disclosure.

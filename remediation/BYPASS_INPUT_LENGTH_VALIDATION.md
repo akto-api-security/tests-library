@@ -27,6 +27,3 @@ In your code, you can use this function to validate user inputs before processin
       # continue processing
   ```
   In this sample code, if the input length validation fails, the error message "Error: input length exceeded." is displayed and the processing of the input is stopped.
-
-### Step 3: Regular Testing and Code Review
-You should perform regular code reviews to maintain code quality and to verify that all inputs are properly validated. Automated testing can also be used to find and eliminate possible sources of input length validation bypasses. These practices will help ensure that your system remains secure.

@@ -29,18 +29,11 @@ $name = trim($_POST['name']);
 $name = strip_tags($name);
 $name = htmlspecialchars($name);
 ```
-### Step 4: Update and Patch Regularly
-Make sure all your system's software, frameworks and plugins are up to date. Patches are regularly released to fix known security issues.
 
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
-
-### Step 5: Use HTTPOnly cookies
+### Step 4: Use HTTPOnly cookies
 Use HTTPOnly cookies to mitigate the risk of a client-side script accessing the protected cookie.
 
-### Step 6: Encode Data on Output
+### Step 5: Encode Data on Output
 At the point where user-controllable data is output in HTTP responses, encode the outputs to prevent XSS attacks.
 
 In PHP, use the `htmlentities()` or `htmlspecialchars()` functions:
@@ -50,7 +43,7 @@ $username = $_POST['username'];
 echo 'Welcome, '.htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
 ```
 
-### Step 7: Use Least Privilege Principle
+### Step 6: Use Least Privilege Principle
 Enforce the principle of least privilege, where a process should accept only the privileges which are essential to its function.
 
 For example, most web applications do not need the permission to DROP tables in the database. By restricting privileges, you can reduce the damage potential of an SQL Injection attack.

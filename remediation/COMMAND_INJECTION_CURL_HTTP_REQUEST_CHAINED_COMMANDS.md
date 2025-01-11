@@ -36,11 +36,3 @@ Ensure to utilize parameterized inputs when setting up your HTTP requests. This 
 import subprocess
 subprocess.check_output(['curl', userInput])
 ```
-
-### Step 4: Least Privilege Principle
-
-Follow the principle of least privilege. Always run the application with the least privileges necessary. This limits what can be done if command injection is successful.
-
-By following these remediation steps, one can successfully rule out command injection attacks during HTTP requests. In the context of penetration testing, an application would be considered to be not vulnerable to command injection if it correctly implements all these measures. 
-
-Lastly, it's important to regularly update and patch your systems to prevent potential command injection vulnerabilities.

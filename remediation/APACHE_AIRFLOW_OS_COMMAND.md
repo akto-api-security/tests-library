@@ -32,16 +32,3 @@ from airflow.models import Variable
 
 user_password = Variable.get('user_password')
 ```
-
-### Step 4: Limit Privileges
-Limit the privileges of the account running the Airflow service. If an attacker manages to execute commands, they will only have the same privileges as the compromised service.
-
-### Step 5: Regular Audit and Update
-Make sure to regularly audit your Airflow instance(s) and apply updates as they are released by Apache Airflow.
-
-```bash
-pip install --upgrade apache-airflow
-```
-
-### Note: 
-Do regular audits to detect any unauthorized changes or anomalous behavior in the environment. We cannot entirely rule out the existence of a zero-day exploit in Apache Airflow. Therefore, always be vigilant about your environment, run the latest software, and implement the industry's best practices.

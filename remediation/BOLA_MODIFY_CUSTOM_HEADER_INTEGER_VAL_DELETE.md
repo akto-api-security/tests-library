@@ -46,8 +46,3 @@ In this code, each request comes with a token in headers that is used to verify 
 
 ### Step 3: Apply Principle of Least Privilege
 Always stick to the "Principle of Least Privilege" where every module (such as a process, a user, or a program, depending on the subject) must be able to access only the information and resources that are necessary for its legitimate purpose. This limits the scope of potential damage.
-
-### Step 4: Regular Audit and Monitoring
-Ensure there are effective logging and monitoring mechanisms in place to detect unusual and potentially harmful activities. Regular auditing can also help identify any potential weak spots. 
-
-By implementing these measures, one can prevent unauthorized access to DELETE based APIs by exploiting BOLA.

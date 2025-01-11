@@ -74,5 +74,3 @@ app.post('/api/transaction', (req, res) => {
   }
 });
 ```
-
-Remember, regular audits and updates are required to ensure continued security in dealing with transaction limits. Always keeping your dependencies and libraries up to date also help to prevent breaches from known vulnerabilities.

@@ -40,6 +40,3 @@ except Exception as e:
     logging.error(e, exc_info=True)
     return {"error": "An unexpected error occurred"}, 500
 ```
-
-### Step 4: Regular Audit and Update
-Regularly review and update your error handling logic to ensure it doesn't divulge any sensitive information. You can also use automated tools to check for information leakage through error messages.

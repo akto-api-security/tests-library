@@ -43,7 +43,3 @@ URLConnection conn = url.openConnection();
 conn.setConnectTimeout(5000);
 conn.setReadTimeout(5000);
 ```
-
-### Step 5: Regular Audit and Update
-
-It is crucial to keep your software and dependencies up-to-date and review your security settings regularly to protect your system from new vulnerabilities.

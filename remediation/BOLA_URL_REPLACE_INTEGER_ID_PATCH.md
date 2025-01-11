@@ -44,11 +44,3 @@ router.put('/resource/:id', (req, res, next) => {
   res.send('Resource updated successfully');
 });
 ```
-
-### Step 3: Regularly Auditing and Updating the System
-```bash
-npm audit
-npm update
-```
-
-Remember, the specifics of your authorization checks will depend on your application and how you've structured your resources and permissions. It is critical that you thoroughly test this system to ensure that it prevents unauthorized access as expected.

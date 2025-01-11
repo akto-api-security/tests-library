@@ -39,5 +39,3 @@ CREATE TABLE Coupons(
       ExpiryDate DATE
 );
 ```
-### Step 4: Regular Audit and Update
-Regularly audit and update the system to patch any potential security flaws and keep your validation rules up-to-date. Performing regular audits of your systems will improve overall security by allowing early detection and remediation of vulnerabilities. This generally includes server logs reviews, database audits, and so on. If administrators perform these audits and identify attempts to bypass validation of coupon expiry dates, they should implement appropriate countermeasures, such as stronger validation mechanisms or prosecution of the individuals involved.

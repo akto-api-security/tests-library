@@ -47,11 +47,3 @@ Ensure the correct file permissions are set for your configuration files. They s
 ```bash
 chmod 600 filename
 ```
-
-### Step 5: Regular Audit and Update
-Urbanize the schedule of auditing and updating the security policies and practices, ensuring that your sensitive configuration files are well protected.
-
-```bash
-# Start by checking file permissions and ownership
-ls -la /path/to/your/config/file
-```

@@ -38,7 +38,3 @@ metadata = requests.get("http://169.254.169.254/latest/meta-data", headers = {"X
 
 print(metadata)
 ```
-
-### Step 3: Regular Audit and Update
-
-Carry out regular audits to identify any unauthorized access attempts or any abnormal behaviors related to instance metadata. Ensure your security policies and configurations are regularly updated to defend against new threats and potential vulnerabilities.

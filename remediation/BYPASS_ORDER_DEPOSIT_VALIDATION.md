@@ -52,11 +52,3 @@ server {
   ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
 }
 ```
-
-### Step 4: Regularly Update & Audit Your System
-
-To ensure the security of your system, it's important to constantly run security audits and update your system regularly. This could be achieved by using automated security testing tools such as OWASP ZAP, Nessus, etc.
-
-```bash
-sudo apt update && sudo apt upgrade
-```

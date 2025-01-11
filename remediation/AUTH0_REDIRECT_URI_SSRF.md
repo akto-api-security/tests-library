@@ -23,15 +23,3 @@ ALLOWED_REDIRECT_URI_REGEX = re.compile(r"https:\/\/known-safe-[0-2]\.com")
 def is_redirect_uri_allowed(uri: str) -> bool:
     return bool(ALLOWED_REDIRECT_URI_REGEX.match(uri))
 ```
-
-### Step 3: Regular Audit and Update
-Regularly check your codebase and Auth0 dashboard settings for any new and unforeseen SSRF vulnerabilities and update the allowed URIs list whenever necessary.
-
-```bash
-# just a hypothetical command hinting at the need for regular audits
-sudo service auth0-audit start
-```
-
-Perform these remediation steps carefully to fix this vulnerability and ensure the security of your server and application.
-
-Remember, these examples are in Python; you should adapt these remedies to fit the server-side language you use in your particular application.

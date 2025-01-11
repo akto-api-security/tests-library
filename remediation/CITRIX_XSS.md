@@ -49,15 +49,3 @@ app.post('/example', [
   // rest of your logic goes here
 });
 ```
-
-### Step 3: Regular Security Audit 
-
-Carry out regular audits of your software and systems to identify and quickly address potential vulnerabilities.
-
-```bash
-bash
-# Use 'nikto', a popular web server scanner, to scan Citrix Gateway for vulnerabilities
-nikto -host https://your-citrix-gateway-ip-address
-```
-  
-Remember, remediation steps may vary depending on the version of Citrix Gateway software and the exact nature of the vulnerability. Always consult with your IT department or a cybersecurity professional when dealing with serious vulnerabilities like XSS.
