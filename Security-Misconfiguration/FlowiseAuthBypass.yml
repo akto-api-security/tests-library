@@ -1,0 +1,63 @@
+id: FLOWISE_AUTH_BYPASS
+info:
+  name: "Flowise Authentication Bypass Test"
+  description: "The Flowise Authentication Bypass Test checks for vulnerabilities in Flowise where unauthorized users may be able to bypass the authentication mechanisms. This vulnerability could allow attackers to gain access to the Flowise platform without proper credentials, potentially exposing sensitive data, workflows, or system configurations. Exploiting this flaw could lead to unauthorized changes in workflow automation, data access, or system manipulation. Ensuring strong authentication controls, proper session handling, and regular updates can help mitigate such risks."
+  details: "The Flowise Authentication Bypass Test focuses on identifying weaknesses in Flowise’s authentication process that may allow attackers to gain unauthorized access. Potential issues could include improper session handling, insecure default configurations, or flaws in the login mechanism that enable users to bypass authentication. Once bypassed, attackers could modify workflows, access sensitive data, or perform actions within the platform without proper authorization. Securing the application with robust authentication protocols and input validation is critical to prevent such vulnerabilities."
+  impact: "The impact of a Flowise Authentication Bypass vulnerability is significant, as it allows unauthorized users to access and manipulate sensitive workflows and data within the platform. Attackers could alter or disrupt automated processes, access confidential information, or perform malicious actions. This could lead to data leaks, service disruptions, or system manipulation. Implementing strong authentication, secure session management, and access controls is essential to prevent unauthorized access and protect the integrity of the system."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: FLOWISE_AUTH_BYPASS
+  severity: LOW
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-213
+  cve:
+    - CVE-2018-10245
+
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+wordLists:
+  paths:
+    - '/api/v1/apikey?/api/v1/ping'
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
+        - modify_header:
+            accept: "application/json, text/plain, */*"
+        - modify_header:
+            referer: "${urlVar}/document-stores"
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "apiKey"
+      - "apiSecret"
+strategy:
+  run_once: /

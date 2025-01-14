@@ -1,0 +1,173 @@
+id: NOSQLI_BOOLEAN_BASED_JSON_PARAM_JS
+info:
+  name: "Boolean Based NoSQL Injection test for JSON body Parameters with Javascript"
+  description: >
+    "Boolean-based NoSQL injection testing for JSON body parameters with JavaScript involves injecting JavaScript expressions into a NoSQL query to manipulate its logical evaluation. By altering the JSON payload with JavaScript code that returns boolean values, testers can determine if the application is vulnerable to injection attacks. This method helps identify security flaws by observing how the application handles injected code, which always evaluates to true if vulnerable."
+  details: >
+    "Boolean-based NoSQL injection testing for JSON body parameters with JavaScript involves injecting JavaScript expressions that modify query logic to always return true or false. For example, sending a payload tests if the application executes the injected code. If the query always returns data regardless of the actual field value, it indicates vulnerability. This technique helps assess if the system correctly sanitizes and validates input, revealing potential security weaknesses in NoSQL databases."
+  impact: >
+    "The impact of Boolean-based NoSQL injection testing for JSON body parameters with JavaScript can be severe. If the application is vulnerable, attackers can manipulate queries to bypass authentication, access unauthorized data, and alter database content. This can lead to data breaches, exposure of sensitive information, and compromise of the application's integrity. Identifying such vulnerabilities highlights significant security risks, emphasizing the need for robust input validation and sanitization to protect against injection attacks."
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: NOSQLI_BOOLEAN_BASED_JSON_PARAM_JS
+  severity: MEDIUM
+  tags:
+    - Injection Attack
+    - OWASP Top 10
+    - HackerOne Top 10
+  references:
+    - "https://github.com/Charlie-belmer/nosqli"
+    - "https://owasp.org/www-community/Injection_Flaws"
+  cwe:
+    - CWE-943
+    - CWE-89
+  cve:
+    - CVE-2020-35847
+    - CVE-2021-22911
+    - CVE-2023-28359
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - cloudflare
+
+  method:
+    eq: "POST"
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extract: changed_body_key
+      value:
+        extract: changed_body_value
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            changed_body_key: !!str ${changed_body_value} && 'a' != 'a' && 'a' != 'a
+        - validate:
+            or:
+              - response_code:
+                  gte: 400
+                  lt: 410
+              - response_payload:
+                  length:
+                    gt: 0
+                  not_contains:
+                    - Error
+                    - fail
+                    - invalid
+                    - expired
+                    - not found
+                    - account is locked
+                    - account is blocked
+                    - rate-limit
+                    - rate_limit
+                    - rate limit
+                    - multiple failed attempt
+                    - cloudflare
+                    - " && 'a' != 'a' && 'a' != 'a"
+                    - rejected
+                    - "u0027a"
+                    - "u003d"
+                    - "||"
+                    - <html>
+                    - </html>
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            changed_body_key: !!str ${changed_body_value} || 'a' == 'a' || 'a
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              neq: "${x1.response.body}"
+              not_contains:
+                - rate-limit
+                - rate limit
+                - rate_limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+                - cloudflare
+                - invalid
+                - fail
+                - "'a' == 'a"
+                - "u0027a"
+                - "u003d"
+                - <html>
+                - </html>
+
+        - success: x3
+        - failure: exit
+    - req:
+        - add_header:
+            dummyHeader: dummyValue
+        - modify_body_param:
+            changed_body_key: !!str ${changed_body_value} || 'a' == 'a' || 'a
+        - validate:
+            response_payload:
+              eq: "${x2.response.body}"
+              length:
+                gt: 0
+              not_contains:
+                - rate-limit
+                - rate limit
+                - rate_limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+                - cloudflare
+                - invalid
+                - fail
+                - "'a' == 'a"
+                - "u0027a"
+                - "u003d"
+                - <html>
+                - </html>
+        - success: vulnerable
+        - failure: exit

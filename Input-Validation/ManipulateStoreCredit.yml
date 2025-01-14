@@ -1,0 +1,167 @@
+id: MANIPULATE_STORE_CREDIT
+info:
+  name: "Abusing Store Credit Refund Policies"
+  description: |
+    "This test investigates the potential for abuse in store credit refund policies by manipulating refund amounts. The objective is to determine if users can exploit vulnerabilities to gain excessive store credit through fraudulent refund requests."
+  details: |
+    "The test involves submitting refund requests for the same order with varying amounts and observing how the system handles the addition of store credit."
+  impact: |
+    "Abusing store credit refund policies can lead to significant financial losses and operational issues. If users can manipulate refund amounts to receive more store credit than warranted, it undermines the integrity of the refund process and the effectiveness of store credit policies. This could result in substantial financial losses for the company, damage to customer trust, and increased potential for fraud. Ensuring robust policy enforcement and validation is essential to prevent abuse and protect the company's financial interests."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: MANIPULATE_STORE_CREDIT
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+    - CWE-20
+  cve:
+    - CVE-2018-20679
+    - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+    for_one:
+      key:
+        regex: "${probableOutputParameters}"
+        extract: outputUserKey
+      value:
+        extract: outputUserValue
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        extract: userVal
+
+wordLists:
+  probableInputParameters:
+    - refundAmount
+    - refund
+    - surplus
+
+  probableOutputParameters:
+    - creditAvailable
+    - creditAdded
+    - credit
+    - balance
+
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            userKey: 100
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${responseErrorList}
+              for_one:
+                key:
+                  regex: "${probableOutputParameters}"
+                  extract: outputUserKey1
+                value:
+                  extract: outputUserValue1
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: 200
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${responseErrorList}
+              for_one:
+                key:
+                  eq: "${outputUserKey1}"
+                value:
+                  neq: "${outputUserValue1}"
+        - success: vulnerable

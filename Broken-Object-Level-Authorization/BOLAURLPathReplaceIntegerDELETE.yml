@@ -1,0 +1,159 @@
+id: BOLA_URL_REPLACE_INTEGER_ID_DELETE
+info:
+  name: "Exploiting BOLA by replacing URL path with Integer IDs for Unauthorized Access with DELETE based APIs"
+  description: >
+    "In this specific test (with DELETE based APIs), attackers attempt unauthorized access by substituting Integer IDs in the URL path. By doing so, the test aims to uncover weaknesses in the authorization mechanisms, revealing potential security lapses in how the application manages user privileges and access controls."
+  details: >
+    "This test (with DELETE based APIs) aims to uncover vulnerabilities in applications relying on user-input like URL paths for access control. By substituting Integer IDs in the URL path, attackers exploit this weakness to gain unauthorized access. This test helps identify and rectify flaws in authorization mechanisms, exposing potential security risks in managing user privileges and access controls."
+  impact: >
+    "Manipulating Integer IDs in URL paths to exploit Broken Object Level Authorization (BOLA) can result in significant impacts. Unauthorized access may lead to data breaches, compromising sensitive information and user privacy. This security vulnerability not only jeopardizes the application's reputation but also exposes it to legal consequences. Effectively addressing BOLA is crucial for preventing these severe repercussions and ensuring the overall security of the system."
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: BOLA_URL_REPLACE_INTEGER_ID_DELETE
+  severity: CRITICAL
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://www.akto.io/blog/bola-exploitation-using-unauthorized-uuid-on-api-endpoint"
+    - "https://www.akto.io/blog/what-is-broken-object-level-authorization-bola"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md"
+    - "https://cwe.mitre.org/data/definitions/284.html"
+    - "https://cwe.mitre.org/data/definitions/285.html"
+    - "https://cwe.mitre.org/data/definitions/639.html"
+  cwe:
+    - CWE-284
+    - CWE-285
+    - CWE-639
+  cve:
+    - CVE-2022-34770
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: DELETE
+  response_payload:
+    length:
+      eq: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - "failure"
+      - "not available"
+      - "not found"
+
+wordLists:
+  integerIDs:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - replace_auth_header: true
+        - modify_url:
+            token_replace:
+              location: 1
+              replace_with: ${integerIDs}
+        - success: vulnerable
+        - failure: x2
+    - req:
+        - replace_auth_header: true
+        - modify_url:
+            token_replace:
+              location: 2
+              replace_with: ${integerIDs}
+        - success: vulnerable
+        - failure: x3
+    - req:
+        - replace_auth_header: true
+        - modify_url:
+            token_replace:
+              location: 3
+              replace_with: ${integerIDs}
+        - success: vulnerable
+        - failure: x4
+    - req:
+        - replace_auth_header: true
+        - modify_url:
+            token_replace:
+              location: 4
+              replace_with: ${integerIDs}
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      eq: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - "failure"
+      - "not available"
+      - "not found"

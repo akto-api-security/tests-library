@@ -1,0 +1,132 @@
+id: ID_WRAP_ARRAY_QUERY_PARAM
+info:
+  name: "BOLA: Turning Query Parameters into Arrays for Unauthorized Access"
+  description: >
+    "With this test, attackers manipulate the system by wrapping query parameters as arrays,  aiming to exploit vulnerabilities and gain unauthorized access. By transforming these parameters,  adversaries seek to circumvent security measures and potentially compromise the integrity of  the system. This method underscores the importance of secure input handling and highlights  the risks associated with BOLA abuse, emphasizing the need for robust security  practices to thwart such unauthorized access attempts."
+  details: >
+    "In this test, attackers exploit BOLA vulnerabilities by manipulating query parameters,  transforming them into arrays. This manipulation aims to bypass security measures,  potentially leading to unauthorized access and compromises in system integrity.  Understanding and mitigating these risks is essential for maintaining robust security  practices and preventing unauthorized access through exploitation of BOLA vulnerabilities."
+  impact: >
+    "The impact of this test can be severe, introducing the risk of unauthorized access  and compromising system integrity. By exploiting BOLA vulnerabilities, attackers may  gain unauthorized entry, potentially leading to data breaches, unauthorized disclosures,  and a degradation of overall system security. Addressing and mitigating these  vulnerabilities promptly is crucial to prevent unauthorized access and protect  the system from potential exploitation."
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: ID_WRAP_ARRAY_QUERY_PARAM
+  severity: CRITICAL
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://www.akto.io/blog/bola-exploitation-using-unauthorized-uuid-on-api-endpoint"
+    - "https://www.akto.io/blog/what-is-broken-object-level-authorization-bola"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md"
+    - "https://cwe.mitre.org/data/definitions/284.html"
+    - "https://cwe.mitre.org/data/definitions/285.html"
+    - "https://cwe.mitre.org/data/definitions/639.html"
+  cwe:
+    - CWE-284
+    - CWE-285
+    - CWE-639
+  cve:
+    - CVE-2023-39349
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  query_param:
+    for_one:
+      key:
+        regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|username|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
+        extract: userKey
+wordLists:
+  random_ids:
+    source: sample_data
+    key:
+      regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|username|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
+    all_apis: true
+execute:
+  type: single
+  requests:
+    - req:
+        - delete_query_param: ${userKey}
+        - add_query_param:
+            "${userKey}[]": ${random_ids}
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      lt: 10
+    percentage_match_schema:
+      gte: 90
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts

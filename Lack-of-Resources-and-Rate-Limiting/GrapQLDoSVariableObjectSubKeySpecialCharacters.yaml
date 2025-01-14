@@ -1,0 +1,90 @@
+id: GRAPHQL_DOS_VARIABLE_OBJECT_SUB_KEY_SPCL_CHARS
+info:
+  name: "Denial of Service Test on GraphQL API with special Characters in variable's object key field"
+  description: "This test involves sending a GraphQL query that includes variables with keys containing special characters. This test evaluates the API's ability to process such unconventional input without encountering performance issues or crashes. The goal is to identify potential vulnerabilities that could be exploited to disrupt the service, ensuring the API can handle a variety of inputs robustly."
+  details: "This test involves crafting GraphQL queries with variables containing keys featuring special characters. This test assesses how the API processes such non-standard inputs, probing for vulnerabilities that could cause server overload or crashes. By exploiting this weakness, attackers may disrupt service availability, leading to performance degradation or complete downtime, highlighting the importance of robust input validation mechanisms."
+  impact: "The impact of this test can be significant, potentially leading to server resource exhaustion, increased latency, or even service downtime. Exploiting this vulnerability could allow attackers to disrupt normal API operations, leading to degraded performance or complete unavailability of services. Mitigating this issue is crucial to maintaining the stability, reliability, and security of the GraphQL API."
+  category:
+    name: RL
+    shortName: Lack of Resources & Rate Limiting
+    displayName: Lack of Resources & Rate Limiting (RL)
+  subCategory: GRAPHQL_DOS_VARIABLE_OBJECT_SUB_KEY_SPCL_CHARS
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa4-unrestricted-resource-consumption.md"
+  cwe:
+    - CWE-400
+  cve:
+    - CVE-2023-4647
+    - CVE-2023-38254
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+
+
+wordLists:
+  specialValues:
+    - "999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"
+    - "; : ! @ # $ % ^ & * ( ) < > ? | { } [ ] ~"
+    - "%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s"
+    - "你好你好你好你好你好你好你好你好你好你好你好"
+    - "\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0"
+    - "😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇"
+    - "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  url:
+    regex: graphql
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - error
+      - issue
+      - UserNotAuthorizedError
+      - INTERNAL_SERVER_ERROR
+      - "GRAPHQL_VALIDATION_FAILED"
+      - "graphQL syntax error"
+      - "Syntax Error: Expected Name, found <EOF>."
+      - "GRAPHQL_PARSE_FAILED"
+      - "Bad Request"
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - add_header:
+            dummyKey: dummyVal
+        - validate:
+            response_payload:
+              percentage_match:
+                gte: 80
+        - success: x2
+        - failure: exit
+
+    - req:
+        - replace_body: '{"variables": {"${specialValues}":"testData"},"query": "query getDummy{__typename}"}'
+
+      
+        - validate:
+            response_code:
+              gt: 505
+
+validate:
+  and:
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - 5001
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 5
+strategy:
+  run_once: /

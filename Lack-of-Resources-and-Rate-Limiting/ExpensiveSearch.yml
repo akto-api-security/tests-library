@@ -1,0 +1,83 @@
+id: EXPENSIVE_SEARCH
+info:
+  name: "Denial of Service test by entering long strings in search field of an endpoint"
+  description: "In this Denial of Service (DoS) test, excessively long strings are entered into the search field of an endpoint to evaluate the system's resilience against overload. By inundating the search functionality with extended inputs, testers assess how the system handles and processes such requests. This method helps uncover potential vulnerabilities in the search feature's implementation, aiding in the enhancement of defenses against DoS attacks targeting search functionalities."
+  details: "In this Denial of Service (DoS) test, the search field of an endpoint is bombarded with unusually long strings to evaluate the system's resilience under heavy loads. Such prolonged inputs may strain system resources, leading to performance degradation or unresponsiveness. Consequently, users may experience delays or disruptions in search functionality. By simulating these scenarios, testers can identify vulnerabilities and enhance the system's defenses against potential DoS attacks targeting the search feature."
+  impact: "The impact of successful Denial of Service (DoS) attacks targeting the search functionality of an endpoint can be substantial. It may result in system slowdowns or unavailability, hindering users' ability to perform essential tasks. Additionally, prolonged disruptions can erode user trust and damage the organization's reputation, leading to potential financial losses and diminished customer satisfaction."
+  category:
+    name: RL
+    shortName: Lack of Resources & Rate Limiting
+    displayName: Lack of Resources & Rate Limiting (RL)
+  subCategory: EXPENSIVE_SEARCH
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa4-unrestricted-resource-consumption.md"
+  cwe:
+    - CWE-400
+  cve:
+    - CVE-2023-4647
+    - CVE-2023-38254
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: "(^q$|^query$|^search$|^keyword$)"
+            extract: searchKey
+    - query_param:
+        for_one:
+          key:
+            regex: "(^q$|^query$|^search$|^keyword$)"
+            extract: searchKey
+wordLists:
+  searchParamValues:
+    - "999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"
+    - "; : ! @ # $ % ^ & * ( ) < > ? | { } [ ] ~"
+    - "%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s"
+    - "你好你好你好你好你好你好你好你好你好你好你好"
+    - "\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0"
+    - "😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇"
+    - "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+execute:
+  type: multiple
+  requests:
+    - req:
+        - add_header:
+            dummy_Header_Key: "dummyValue"
+        - validate:
+            percentage_match:
+              gte: 90
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_query_param:
+            searchKey: ${searchParamValues}
+        - modify_body_param:
+            searchKey: ${searchParamValues}
+        - validate:
+            response_code:
+              gt: 505
+validate:
+  and:
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - 5001
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 5

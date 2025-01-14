@@ -1,0 +1,178 @@
+id: JWT_APPEND_SQL_INJECTION_POSTGRESQL
+info:
+  name: "SQL Injection test on JWT for PostgreSQL"
+  description: >
+    "SQL Injection test on JWT for PostgreSQL involves attempting to exploit vulnerabilities in the way JSON Web Tokens (JWTs) are processed and stored in a PostgreSQL database. Attackers may manipulate JWT payloads to inject malicious SQL queries, aiming to compromise the database through unauthorized access or data manipulation. This test focuses on identifying and mitigating security weaknesses in how JWTs are handled within PostgreSQL-backed applications to prevent SQL injection vulnerabilities."
+  details: >
+    "SQL Injection testing on JWT for PostgreSQL involves probing for vulnerabilities where JWTs are mishandled and stored directly in a PostgreSQL database. Attackers may attempt to inject SQL queries into JWT fields, exploiting insecure parsing or insufficient sanitization, potentially gaining unauthorized access or manipulating data within the database. This test aims to uncover and rectify such vulnerabilities to safeguard against SQL injection attacks targeting JWT-based authentication systems."
+  impact: >
+    "The impact of SQL Injection on JWT for PostgreSQL can be severe, compromising the security of authentication systems reliant on JWTs. Successful exploitation could lead to unauthorized access, data leakage, or modification of sensitive information stored in the PostgreSQL database. Additionally, it may result in the compromise of user credentials, session hijacking, and disruption of application functionality, posing significant risks to data confidentiality, integrity, and overall system security."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: JWT_APPEND_SQL_INJECTION_POSTGRESQL
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+auth:
+  authenticated: true
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_headers:
+    for_one:
+      key:
+        contains_either:
+          - authorization
+          - auth-token
+          - access-token
+        extract: headerKey
+      value:
+        contains_jwt: true
+wordLists:
+  JWTPayloads:
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCAnaW5qZWN0ZWRfdmFsdWUiLCJyb2xlIjoiYWRtaW4ifQ."
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBOVUxMLCBDT05DQVQodXNlbmFtZSwgJzonLCBwYXNzd2QpIEZST00gcGdfc2hhZG93LS0iLCJyb2xlIjoiYWRtaW4ifQ."
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCB0YWJsZV9uYW1lIEZST00gaW5mb3JtYXRpb25fc2NoZW1hLnRhYmxlcy0tIiwicm9sZSI6ImFkbWluIn0."
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBjb2x1bW5fbmFtZSBGUk9NIHJ3aW5mb3JtYXRpb25fc2NoZW1hLmNvbHVtbnMgV0hFUkUgdGFibGVfbmFtZSA9ICd1c2Vycy0tIiwicm9sZSI6ImFkbWluIn0."
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCB2ZXJzaW9uKCktLSIsInJvbGUiOiJhZG1pbiJ9."
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBjdXJyZW50X3VzZXItLSIsInJvbGUiOiJhZG1pbiJ9."
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4nIFVOSU9OIFNFTEVDVCBjdXJyZW50X2RhdGFiYXNlKCktLSIsInJvbGUiOiJhZG1pbiJ9."
+  negativeJWTPayloads:
+    - "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZ3Vlc3QiLCJyb2xlIjoidXNlciJ9."
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_header:
+            headerKey: "Bearer ${JWTPayloads}"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_header:
+            headerKey: "Bearer ${negativeJWTPayloads}"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              neq: "${x1.response.body}"
+              not_contains:
+                - rate-limit
+                - rate limit
+                - rate_limit
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+        - success: vulnerable

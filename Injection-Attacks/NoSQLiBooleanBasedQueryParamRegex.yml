@@ -1,0 +1,166 @@
+id: NOSQLI_BOOLEAN_BASED_QUERY_PARAM_REGEX
+info:
+  name: "Boolean Based NoSQL Injection test for Query Parameters with Regex Function"
+  description: >
+    "A Boolean-based NoSQL injection test for query parameters with the Regex function involves manipulating query parameters to inject Boolean expressions and using regular expressions to evaluate server responses. This technique aims to identify vulnerabilities in NoSQL databases by observing true or false responses based on the injected queries, indicating whether the database is susceptible to injection attacks. The method relies on analyzing server behavior to determine if malicious queries can bypass security measures."
+  details: >
+    "Boolean-based NoSQL injection tests with the Regex function involve injecting Boolean expressions into query parameters and using regular expressions to interpret server responses. By observing changes in server behavior—true or false outcomes—these tests can identify vulnerabilities in NoSQL databases. The goal is to determine if the database improperly processes injected queries, revealing potential security flaws."
+  impact: >
+    "The impact of Boolean-based NoSQL injection using the Regex function can be significant, potentially allowing attackers to bypass authentication, access unauthorized data, and manipulate database contents. Exploiting these vulnerabilities can lead to data breaches, loss of sensitive information, and compromised system integrity, ultimately damaging an organization's reputation and financial standing."
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: NOSQLI_BOOLEAN_BASED_QUERY_PARAM_REGEX
+  severity: CRITICAL
+  tags:
+    - Injection Attack
+    - OWASP Top 10
+    - HackerOne Top 10
+  references:
+    - "https://github.com/Charlie-belmer/nosqli"
+    - "https://owasp.org/www-community/Injection_Flaws"
+  cwe:
+    - CWE-943
+    - CWE-89
+  cve:
+    - CVE-2020-35847
+    - CVE-2021-22911
+    - CVE-2023-28359
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+inactive: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+  method:
+    eq: "GET"
+  query_param:
+    for_one:
+      key:
+        regex: .*
+        extract: changed_query_key
+      value:
+        regex: .*
+        extract: changed_query_value
+execute:
+  type: multiple
+  requests:
+    - req:
+        - delete_query_param: ${changed_query_key}
+        - add_query_param:
+            !!str ${changed_query_key}[$regex]: "a^"
+        - validate:
+            or:
+              - response_code:
+                  gte: 400
+                  lt: 410
+              - response_payload:
+                  length:
+                    gt: 0
+                  not_contains:
+                    - Error
+                    - fail
+                    - invalid
+                    - expired
+                    - not found
+                    - account is locked
+                    - account is blocked
+                    - rate-limit
+                    - rate_limit
+                    - rate limit
+                    - multiple failed attempt
+                    - <html>
+                    - </html>
+        - success: x2
+        - failure: exit
+    - req:
+        - delete_query_param: ${changed_query_key}
+        - add_query_param:
+            !!str ${changed_query_key}[$regex]: ".*"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              neq: "${x1.response.body}"
+              not_contains:
+                - rate-limit
+                - rate limit
+                - rate_limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+                - cloudflare
+                - invalid
+                - fail
+                - <html>
+                - </html>
+        - success: x3
+        - failure: exit
+    - req:
+        - add_header:
+            dummyHeader: dummyValue
+        - delete_query_param: ${changed_query_key}
+        - add_query_param:
+            !!str ${changed_query_key}[$regex]: ".*"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              eq: "${x2.response.body}"
+              not_contains:
+                - rate-limit
+                - rate limit
+                - rate_limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+                - cloudflare
+                - invalid
+                - fail
+                - <html>
+                - </html>
+        - success: vulnerable
+        - failure: exit

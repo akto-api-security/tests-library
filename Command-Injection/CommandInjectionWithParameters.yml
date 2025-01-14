@@ -1,0 +1,140 @@
+id: COMMAND_INJECTION_WITH_OPERATORS
+info:
+  name: "Command injection by using operators"
+  description: "Command injection by using operators involves exploiting vulnerabilities in applications to execute unauthorized commands. Attackers manipulate input fields to introduce command operators, enabling them to chain commands or execute multiple commands simultaneously. This can lead to unauthorized access, data breaches, or system compromise if user inputs are not properly sanitized, highlighting the need for robust input validation and security measures."
+  details: >
+    "Command injection using operators exploits vulnerabilities where user inputs are improperly sanitized, allowing attackers to insert command operators into application inputs. This can result in unauthorized command execution, enabling attackers to chain multiple commands or run background processes. Such exploits can lead to significant security breaches, unauthorized access, and data compromise, emphasizing the importance of thorough input validation and secure coding practices."
+  impact: "The impact of command injection using operators can be severe, leading to unauthorized system access, data theft, and complete system compromise. Attackers can execute arbitrary commands, potentially gaining control over the server, manipulating or deleting data, and disrupting services. This can result in significant financial losses, reputational damage, and legal consequences for affected organizations."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_WITH_OPERATORS
+  severity: CRITICAL
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+          value:
+            extract: changed_body_value
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+          value:
+            regex: .*
+            extract: changed_query_value
+wordLists:
+  specialOSPayloads:
+    - "id"
+    - "id; id"
+    - "id | id"
+    - "id && id"
+    - "id || id"
+    - "`id`"
+    - "\"id\""
+    - "'id'"
+    - "$(id)"
+    - "id && id || echo \"failed\""
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            changed_body_key: ${specialOSPayloads}
+        - modify_query_param:
+            changed_query_key: ${specialOSPayloads}
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "uid="
+      - "gid="
+      - "groups="
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - <html>
+      - </html>

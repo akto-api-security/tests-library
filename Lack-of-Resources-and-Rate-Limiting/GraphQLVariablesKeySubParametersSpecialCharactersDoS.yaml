@@ -1,0 +1,95 @@
+id: GRAPHQL_VARIABLES_KEY_SUB_PARAMETERS_VALUE_DOS
+info:
+  name: "Denial of Service Test on GraphQL API having Variables Key Sub Parameters with Special Characters"
+  description: "A Denial of Service (DoS) test on a GraphQL API having Variables Key Sub Parameters and Special Characters involves assessing the API's resilience against overload attempts by sending requests with variables containing special characters. Testers inject various special characters into variables to determine if the API handles them appropriately without crashing or experiencing performance degradation. This test ensures the GraphQL API can withstand potential DoS attacks involving maliciously crafted input."
+  details: "In a Denial of Service (DoS) test on a GraphQL API with Variables Key Sub Parameters and Special Characters, testers craft requests with variables containing special characters such as quotes, slashes, or other escape sequences. By injecting these characters, they aim to stress the API's parsing and execution capabilities, simulating potential attack scenarios. This test helps identify any vulnerabilities in the API's handling of special characters in variables, ensuring it can resist DoS attacks effectively."
+  impact: "If a Denial of Service (DoS) test on a GraphQL API with Variables Key Sub Parameters and Special Characters reveals vulnerabilities, attackers could exploit them to overload the server with malicious requests, potentially leading to service disruption or downtime. The API may become unresponsive, causing degraded performance or even crashes, impacting users' ability to access the system. The consequences may include financial losses, reputational damage, and loss of user trust, emphasizing the importance of addressing such weaknesses to maintain system reliability and availability."
+  category:
+    name: RL
+    shortName: Lack of Resources & Rate Limiting
+    displayName: Lack of Resources & Rate Limiting (RL)
+  subCategory: GRAPHQL_VARIABLES_KEY_SUB_PARAMETERS_VALUE_DOS
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa4-unrestricted-resource-consumption.md"
+  cwe:
+    - CWE-400
+  cve:
+    - CVE-2023-4647
+    - CVE-2023-38254
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+
+
+wordLists:
+  specialValues:
+    - "999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"
+    - "; : ! @ # $ % ^ & * ( ) < > ? | { } [ ] ~"
+    - "%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s"
+    - "你好你好你好你好你好你好你好你好你好你好你好"
+    - "\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0"
+    - "😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇"
+    - "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  url:
+    regex: graphql
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - error
+      - issue
+      - UserNotAuthorizedError
+      - INTERNAL_SERVER_ERROR
+      - "GRAPHQL_VALIDATION_FAILED"
+      - "graphQL syntax error"
+      - "Syntax Error: Expected Name, found <EOF>."
+      - "GRAPHQL_PARSE_FAILED"
+      - "Bad Request"
+  request_payload:
+    for_one:
+      key:
+        regex: ^(?!.*\b(operationName|query)\b).*
+        extractMultiple: terminalKeys
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - add_header:
+            dummyKey: dummyVal
+        - validate:
+            response_payload:
+              percentage_match:
+                gte: 80
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            ${terminalKeys}: ${specialValues}
+
+validate:
+  or:
+    - and:
+        - compare_greater:
+            - ${x2.response.stats.median_response_time}
+            - 5001
+        - compare_greater:
+            - ${x2.response.stats.median_response_time}
+            - ${x1.response.stats.median_response_time} * 5
+    - response_payload:
+        length:
+          gt: 0
+        contains_either:
+          - "Maximum call stack size exceeded"
+strategy:
+  run_once: /

@@ -1,0 +1,144 @@
+id: COMMAND_INJECTION_TIME_DELAY
+info:
+  name: "Command injection using Time delay sleep command"
+  description: "Command injection using the time delay sleep command is a technique where an attacker exploits a vulnerability to execute a sleep command, causing the server to pause for a specified duration. This method helps attackers verify the presence of the vulnerability by observing the response delay. Successful exploitation can lead to unauthorized command execution, allowing further malicious activities on the server."
+  details: >
+    "Command injection using the time delay sleep command involves an attacker inserting a sleep command into vulnerable input fields. When executed, the command causes the server to pause for a set time, confirming the vulnerability through the delayed response. This technique helps attackers probe and exploit the system further, leading to unauthorized actions and potential compromise of the server."
+  impact: "The impact of command injection using the time delay sleep command includes confirmation of a vulnerability, which can be exploited for further malicious activities. Attackers can use this to perform unauthorized actions, potentially leading to data breaches, system downtime, and compromised server integrity. This vulnerability can also facilitate more sophisticated attacks, posing significant security risks to the application."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_TIME_DELAY
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+          value:
+            extract: changed_body_value
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+          value:
+            regex: .*
+            extract: changed_query_value
+wordLists:
+  specialOSPayloads:
+    - "sleep 5"
+execute:
+  type: multiple
+  requests:
+    - req:
+        - add_header:
+            dummyKey: dummyVal
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            changed_body_key: ${specialOSPayloads}
+        - modify_query_param:
+            changed_query_key: ${specialOSPayloads}
+        - validate:
+            response_code:
+              eq: 429
+validate:
+  and:
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - 5001
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 5
