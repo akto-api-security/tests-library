@@ -1,0 +1,99 @@
+id: CADDY_ADMIN_EXPOSED
+info:
+  name: Caddy Admin Exposed
+  description: >
+    The Caddy admin API is responsible for managing the Caddy web server and its configurations. If exposed, it can lead to unauthorized access and control over the server.
+  details: >
+    This vulnerability arises when the Caddy admin API is accessible to unauthorized users, allowing them to view or modify server configurations, manage sites, and potentially disrupt services. The admin API should be properly secured to ensure that only authorized personnel can access it.
+  impact: >
+    Exposing the Caddy admin API can lead to significant security risks, including unauthorized configuration changes, denial of service, and potential server takeover. Attackers gaining access to the admin API may manipulate server settings, create or delete sites, or disrupt services, jeopardizing the integrity and availability of the applications running on the server.
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: CADDY_ADMIN_EXPOSED
+  severity: LOW
+  references:
+    - https://caddyserver.com/docs/api
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-16
+    - CWE-200
+    - CWE-538
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  request_headers:
+    for_one:
+      key:
+        eq: Host
+      value:
+        extract: hostVal
+
+wordLists:
+  attemptValues:
+    - "http://${hostVal}:2019/config"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: ${attemptValues}
+        - modify_method: GET
+        - replace_body: '{}'
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - apps
+      - servers
+      - routes
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
+
+strategy:
+  run_once: /

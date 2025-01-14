@@ -1,0 +1,55 @@
+id: KAFKA_METRICS
+info:
+  name: Exposed Kafka metrics
+  description: "Exposed Kafka metrics endpoint found."
+  details: >
+    "The Kafka metrics endpoint is publicly accessible, allowing anyone to access and view detailed system and application metrics, potentially revealing sensitive information."
+  impact: "Exposing Kafka metrics can provide insights into the system, potentially aiding attackers in identifying vulnerabilities and exploiting them."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: KAFKA_METRICS
+  severity: LOW
+  references:
+    - https://docs.confluent.io/cloud/current/monitoring/metrics-api.html
+  cwe:
+    - CWE-16
+    - CWE-200
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: /metrics
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>
+    contains_either:
+      - 'kafka_server_broker'
+      - 'kafka_producer'
+      - 'kafka_broker'
+      - 'kafka_network'
+
+strategy:
+  run_once: /

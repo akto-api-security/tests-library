@@ -1,0 +1,64 @@
+id: JETTY_OLD_INFO_LEAKAGE
+info:
+  name: "Eclipse Jetty v9.2.9 Sensitive Information Leakage"
+  description: "The Eclipse Jetty v9.2.9 Sensitive Information Leakage vulnerability allows unauthorized users to access sensitive information through misconfigured web applications. When Jetty servers do not properly restrict access to sensitive files or directory listings, attackers can exploit this flaw to view confidential data, such as configuration files or internal documentation. This exposure can lead to significant security risks, including data breaches and unauthorized system access. Proper configuration and access controls are essential to mitigate this vulnerability."
+  details: "The Eclipse Jetty v9.2.9 Sensitive Information Leakage vulnerability occurs when the server fails to restrict access to sensitive files or resources due to misconfigurations in the server settings. Attackers can exploit this flaw by crafting requests that access unsecured endpoints or improperly protected directories. This can expose critical information, including application configuration files, logs, or even sensitive user data. To mitigate this risk, administrators should ensure proper access controls and security settings are implemented for all web applications running on Jetty."
+  impact: "The impact of the Eclipse Jetty v9.2.9 Sensitive Information Leakage vulnerability can be significant, as unauthorized access to sensitive information can lead to data breaches and exploitation of system vulnerabilities. Exposed configuration files or logs may provide attackers with insights into the application's architecture and security measures, facilitating further attacks. This leakage can compromise user privacy and undermine the overall security posture of the organization, highlighting the need for stringent access controls and secure configurations."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: JETTY_OLD_INFO_LEAKAGE
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2015-2080
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: "/"
+        - modify_method: POST
+        - replace_body: '{}'
+        - add_header:
+            referer: "\0"
+validate:
+  response_code:
+    eq: 400
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>
+    contains_either:
+      - "Illegal character 0x0 in state"
+strategy:
+  run_once: /

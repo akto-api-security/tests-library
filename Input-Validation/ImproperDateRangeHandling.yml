@@ -1,0 +1,174 @@
+id: IMPROPER_DATE_RANGE_HANDLING
+info:
+  name: "Improper Handling of Date Range in Parameters"
+  description: |
+    "This test involves evaluating how the application processes and validates date range parameters, such as start and end dates, to ensure they are correctly handled. The objective is to identify vulnerabilities or errors that may arise from improper validation, incorrect formatting, or logical inconsistencies in date-related inputs."
+  details: |
+    "The test focuses on scenarios where date range parameters may be improperly formatted, logically inconsistent (e.g., end date before start date), or exceed acceptable limits (e.g., future dates beyond a reasonable timeframe). It includes testing for invalid date formats, out-of-bound dates, leap year handling, and edge cases like time zone differences. This test aims to ensure that the application accurately validates and processes date ranges to prevent errors, incorrect data processing, or potential security vulnerabilities."
+  impact: |
+    "Improper handling of date range parameters can lead to significant issues, including data corruption, logical errors in business operations, unauthorized access, or even denial of service. For example, if an application allows logically inconsistent date ranges, it may cause incorrect reporting, flawed analytics, or unauthorized access to time-sensitive data. Ensuring robust validation and handling of date range parameters is essential to maintain data integrity, ensure accurate functionality, and protect against potential exploits."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: IMPROPER_DATE_RANGE_HANDLING
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+    - CWE-20
+  cve:
+    - CVE-2018-20679
+    - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  and:
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableStartInputParameters}"
+            extract: userKey
+          value:
+            extract: userVal
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableEndInputParameters}"
+            extract: userKey2
+          value:
+            extract: userVal2
+wordLists:
+  probableStartInputParameters:
+    - start
+    - date
+    - startDate
+    - begin
+    - beginDate
+    - from
+    - fromDate
+    - initialDate
+    - dateFrom
+    - commencementDate
+    - startingDate
+    - earliestDate
+    - startTime
+    - timestampStart
+    - launchDate
+    - openDate
+
+  probableEndInputParameters:
+    - end
+    - endDate
+    - finish
+    - finishDate
+    - to
+    - date
+    - toDate
+    - until
+    - untilDate
+    - finalDate
+    - dateTo
+    - closingDate
+    - completionDate
+    - deadlineDate
+    - endTime
+    - timestampEnd
+    - expiryDate
+    - closeDate
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            userKey: ${userVal2}
+        - modify_body_param:
+            userKey2: ${userVal}
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      - gte: 90
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
+      - "failure"
+      - "not found"

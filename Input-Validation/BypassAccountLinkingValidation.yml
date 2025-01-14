@@ -1,0 +1,179 @@
+id: BYPASS_ACCOUNT_LINKING_VALIDATION
+info:
+  name: "Bypass Account Linking Validation"
+  description: |
+    "This test evaluates the system's ability to handle and validate the linking of multiple accounts properly. The objective is to identify vulnerabilities that could allow users to link unauthorized or invalid accounts, potentially leading to unauthorized access or misuse of linked account privileges."
+  details: |
+    "The test involves sending API requests with different values to check if the system correctly validates whether an account can be linked to another. For instance, users might attempt to link an account that should not be authorized for linking, such as linking a personal account to a joint account without proper authorization. The test checks whether the application enforces appropriate validation rules to prevent unauthorized or inappropriate account linking."
+  impact: |
+    "Bypassing account linking validation can result in unauthorized access to sensitive information, misuse of funds, and potential fraud. If users can link accounts without proper validation, they might gain access to another user's account or perform unauthorized transactions, leading to security breaches and financial losses. Ensuring robust validation of account linking requests is critical to maintaining security, preventing fraud, and protecting user privacy."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_ACCOUNT_LINKING_VALIDATION
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+    - CWE-20
+  cve:
+    - CVE-2018-20679
+    - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  and:
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+            extract: userKey
+          value:
+            extract: userVal
+    - url:
+        contains_either: ${probableInputValidationParameters}
+
+wordLists:
+  probableInputParameters:
+    - linkedAccount
+    - linkAccountTo
+    - associateAccount
+    - connectAccount
+    - accountToLink
+    - secondaryAccount
+    - addAccountLink
+    - targetAccount
+    - accountLinkRequest
+    - linkWithAccount
+    - externalAccount
+    - beneficiaryAccount
+    - jointAccount
+    - partnerAccount
+
+  probableInputValidationParameters:
+    - link
+    - join
+    - connect
+    - associate
+    - merge
+    - unify
+    - bind
+    - linkAccount
+    - validateLink
+    - combine
+    - requestLink
+    - addLink
+    - registerLink
+
+  probableOutputParameters:
+    - success
+    - accountsLinked
+    - accountsJoined
+    - linkConfirmed
+    - accountLinked
+    - linkEstablished
+    - linkApproved
+    - connectionSuccess
+    - linkageComplete
+    - linkingValidated
+    - mergeSuccess
+    - accountConnected
+    - joinSuccessful
+
+  accountValues:
+    source: sample_data
+    key:
+      regex: accountId|linkedAccountId|targetAccount|secondaryAccount
+    location: payload
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            userKey: ${accountValues}
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
+    contains_either: ${probableOutputParameters}

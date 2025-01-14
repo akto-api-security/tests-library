@@ -1,0 +1,62 @@
+id: APACHE_KAFKA_CENTER_DEFAULT_LOGIN
+info:
+  name: "Apache Kafka Center Default Login Vulnerability"
+  description: "The Apache Kafka Center Default Login Vulnerability occurs when the Kafka monitoring and management interface is left accessible with default credentials. If administrators do not change these default usernames and passwords, attackers can exploit this weakness to gain unauthorized access to the Kafka management console. This can lead to the manipulation of topics, consumer groups, and configurations, potentially exposing sensitive data or disrupting messaging workflows. To mitigate this risk, it's essential to change default credentials immediately upon installation and enforce strong security practices."
+  details: "The Apache Kafka Center Default Login Vulnerability arises when installations of the Kafka management interface are left with default credentials, such as admin/admin. This vulnerability allows unauthorized users to log into the console and access administrative functionalities without proper authentication. Attackers can exploit this to create, delete, or alter topics and consumer groups, and even access sensitive configuration settings. To mitigate this risk, administrators must ensure that default credentials are changed during setup and implement strong password policies and access controls."
+  impact: "The impact of the Apache Kafka Center Default Login Vulnerability can be significant, as unauthorized access to the management interface enables attackers to manipulate messaging systems. This can lead to the unauthorized deletion or modification of topics and consumer groups, resulting in data loss or corruption. Additionally, attackers could access sensitive configuration information, potentially exposing the organization to further security risks. Such breaches can undermine system integrity and lead to reputational damage, making it crucial to secure access controls immediately."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: APACHE_KAFKA_CENTER_DEFAULT_LOGIN
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2021-43798
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: "/login/system"
+        - modify_method: POST
+        - replace_body: '{"name":"admin","password":"admin","checkbox":false}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - '"code":200'
+      - '"name":"admin"'
+    not_contains:
+      - <html>
+      - </html>
+strategy:
+  run_once: /

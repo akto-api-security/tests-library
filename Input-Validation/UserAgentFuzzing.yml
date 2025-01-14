@@ -1,0 +1,92 @@
+id: USER_AGENT_FUZZING
+info:
+  name: "User Agent Fuzzing"
+  description: >
+    "This test involves sending HTTP requests with various fuzzed User-Agent headers to identify differences in the server's response. By manipulating the User-Agent string, attackers can determine if the application behaves differently depending on the client's identity (e.g., mobile user, search engine crawler, outdated browser)."
+  details: >
+    "User Agent fuzzing tests how the application responds to different User-Agent headers, which are typically used by browsers to identify themselves to the server. Attackers may attempt to impersonate search engine crawlers, mobile devices, or other client types to gain unauthorized access to certain content, bypass security mechanisms, or trigger alternative functionality. The scan compares the status code and response body of the server when different User-Agent strings are used, detecting potential discrepancies."
+  impact: >
+    "If the application serves different content or grants different levels of access based on the User-Agent header, it may be vulnerable to exploitation. Attackers could bypass security controls by pretending to be a trusted client (e.g., a search engine crawler or a privileged mobile app user). This could lead to unauthorized access to hidden content, altered functionality, or the exposure of sensitive data. Ensuring that User-Agent headers are not relied upon for critical security decisions helps protect against such attacks."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: USER_AGENT_FUZZING
+  severity: LOW
+  tags:
+    - security
+    - owasp-top10
+
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/
+  cwe:
+    - CWE-693
+  cve:
+    - CVE-2024-21255
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+
+wordLists:
+  userAgent:
+    - "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)"
+    - "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)"
+    - "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"
+    - "Mozilla/5.0 (Windows NT 10.0; Trident/7.0; rv:11.0) like Gecko"
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3739.0 Safari/537.36 Edg/75.0.109.0"
+    - "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+    - "msnbot/1.1 (+http://search.msn.com/msnbot.htm)"
+    - "Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)"
+    - "Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16"
+    - "Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A366 Safari/600.1.4"
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/91.0"
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+
+execute:
+  type: multiple
+  requests:
+    - req:
+      - add_header:
+          dummyHeader: dummyKey
+      - validate:
+          response_payload:
+            percentage_match:
+              gte: 50
+              lt: 90
+            length:
+              gt: 0
+      - success: x2
+      - failure: exit
+    - req:
+        - modify_header:
+            user-agent: ${userAgent}
+      - validate:
+          response_code:
+            gte: 200
+            lt: 300
+          response_payload:
+            percentage_match:
+              lte: 50
+            percentage_match_schema:
+              gte: 90
+            length:
+              gt: 0
+            not_contains:
+              - <html>
+              - </html>
+      - success: vulnerable
+      - failure: exit       

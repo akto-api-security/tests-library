@@ -1,0 +1,141 @@
+id: MANIPULATE_NUMBER_DATA_TYPE
+info:
+  name: "Manipulate Number Data Type"
+  description: >
+    "This test evaluates the system's ability to correctly handle and validate numeric data types, particularly when users attempt to submit non-numeric or incorrectly formatted values in place of expected numeric inputs. The objective is to identify vulnerabilities that could allow users to cause application errors, bypass checks, or exploit data type mismatches by providing invalid data types."
+  details: >
+    "The test involves sending API requests with manipulated parameters where numeric fields are replaced with non-numeric or incorrectly formatted values, such as submitting 'TWO' instead of '2' or using an invalid identifier like 'INVALID_ID' in place of a product ID. The test checks whether the application enforces proper validation of data types and can effectively handle or reject inappropriate inputs that do not match the expected numeric format."
+  impact: >
+    "Manipulating number data types can lead to application errors, unexpected behavior, or security vulnerabilities, such as injection attacks or denial of service. If users can input non-numeric data into fields that require numeric values, it can disrupt normal operations, cause data corruption, or even compromise system security. Ensuring robust validation of numeric data types is crucial to maintaining data integrity, preventing potential attacks, and ensuring application stability."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: MANIPULATE_NUMBER_DATA_TYPE
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+    - CWE-20
+  cve:
+    - CVE-2018-20679
+    - CVE-2019-14271
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extract: userKey
+      value:
+        regex: "^\\d{1}$"
+        extract: userVal
+
+wordLists:
+  attemptList:
+    - zero
+    - one
+    - two
+    - three
+    - four
+    - five
+    - six
+    - seven
+    - eight
+    - nine
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            userKey: ${attemptList}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      gte: 90
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"

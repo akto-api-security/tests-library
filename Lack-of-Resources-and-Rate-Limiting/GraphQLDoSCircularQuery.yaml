@@ -1,0 +1,85 @@
+id: GRAPHQL_DOS_CIRCULAR_QUERY_DEFAULT_OBJECT
+info:
+  name: "Denial of Service Test on GraphQL API with Circular Query"
+  description: "This test on a GraphQL API with Circular Query involves intentionally overwhelming the API with recursive or nested queries, causing it to become unresponsive or crash. By exploiting the circular query feature of GraphQL, this test simulates a scenario where an attacker floods the API with requests that exhaust its resources, potentially disrupting service for legitimate users."
+  details: "In this test on a GraphQL API with Circular Query, attackers exploit GraphQL's ability to perform nested queries by crafting queries that call themselves recursively. This causes an infinite loop, consuming server resources and rendering the API unresponsive. Such attacks can overwhelm the server's processing capabilities, leading to service disruption or downtime for legitimate users."
+  impact: "The impact of a Denial of Service Test on a GraphQL API with Circular Query can be severe. It can lead to service degradation or complete unavailability, affecting users' ability to access the API's resources. Additionally, it may cause financial losses for businesses relying on the API, damage to reputation, and potential legal liabilities due to service disruptions."
+  category:
+    name: RL
+    shortName: Lack of Resources & Rate Limiting
+    displayName: Lack of Resources & Rate Limiting (RL)
+  subCategory: GRAPHQL_DOS_CIRCULAR_QUERY_DEFAULT_OBJECT
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa4-unrestricted-resource-consumption.md"
+  cwe:
+    - CWE-400
+  cve:
+    - CVE-2023-4647
+    - CVE-2023-38254
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: SLOW
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  url:
+    regex: graphql
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - error
+      - issue
+      - UserNotAuthorizedError
+      - INTERNAL_SERVER_ERROR
+      - "GRAPHQL_VALIDATION_FAILED"
+      - "graphQL syntax error"
+      - "Syntax Error: Expected Name, found <EOF>."
+      - "GRAPHQL_PARSE_FAILED"
+      - "Bad Request"
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - add_header:
+            dummyKey: dummyVal
+        - validate:
+            response_payload:
+              percentage_match:
+                gte: 80
+        - success: x2
+        - failure: exit
+
+    - req:
+        - modify_body_param:
+            operationName: "getDummy"
+        - modify_body_param:
+            query: "query getDummy { ...A} fragment A on Type { __typename ...B} fragment B on Type{ __typename ...A}"
+
+validate:
+  or:
+    - and:
+        - compare_greater:
+            - ${x2.response.stats.median_response_time}
+            - 5001
+        - compare_greater:
+            - ${x2.response.stats.median_response_time}
+            - ${x1.response.stats.median_response_time} * 5
+    - response_payload:
+        length:
+          gt: 0
+        contains_either:
+          - "Maximum call stack size exceeded"
+          - "INTERNAL_SERVER_ERROR"
+strategy:
+  run_once: /

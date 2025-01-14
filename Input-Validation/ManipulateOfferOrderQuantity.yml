@@ -1,0 +1,180 @@
+id: MANIPULATE_OFFER_ORDER_QUANTITY
+info:
+  name: "Manipulate Order Quantity for Products Under Offer"
+  description: >
+    "This test evaluates whether the system correctly handles and applies promotional offers based on order quantities. The goal is to identify potential vulnerabilities that could allow users to manipulate product quantities in their order to exploit or unfairly maximize promotional offers."
+  details: >
+    "The test involves sending API requests with different product quantities for orders that are eligible for promotional offers, such as 'buy 2, get 1 free' or 'buy 2, get 2 free.' For example, by modifying the quantity from '3' to '6,' the system should verify whether the appropriate offer is applied and ensure that users do not manipulate quantities to receive more benefits than intended. The test checks if the application accurately validates offer conditions and enforces the correct application of promotions based on the specified quantities."
+  impact: >
+    "Improper handling of order quantities under promotional offers can lead to significant financial losses due to the abuse of discounts and promotions. If users can manipulate the quantities to obtain more free products or discounts than intended, it undermines the effectiveness of promotional strategies and can result in a direct revenue loss. Ensuring robust validation of order quantities and the proper application of offers is essential to maintaining fair pricing, protecting revenue, and preserving the integrity of promotional campaigns."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: MANIPULATE_OFFER_ORDER_QUANTITY
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+    - CWE-20
+  cve:
+    - CVE-2018-20679
+    - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+  and:
+    - or:
+        - request_payload:
+            contains_either: ${probableReferenceParameters}
+        - response_payload:
+            contains_either: ${probableReferenceParameters}
+    - or:
+        - request_payload:
+            for_one:
+              key:
+                regex: "${probableInputParameters}"
+                extract: userKey
+              value:
+                datatype: number
+                extract: userVal
+        - request_payload:
+            for_one:
+              key:
+                regex: "${probableInputParameters}"
+                extract: userKey2
+              value:
+                regex: "\b([1-9][0-9]*)\b"
+                extract: userVal2
+wordLists:
+  probableInputParameters:
+    - quantity
+    - items
+    - amount
+    - productQuantity
+    - numberOfItems
+    - itemCount
+    - totalUnits
+    - units
+    - purchaseQuantity
+    - orderAmount
+    - orderSize
+    - quantityOrdered
+    - totalItems
+    - count
+
+  probableReferenceParameters:
+    - offer
+    - offer_applied
+    - offerApplied
+    - discountApplied
+    - promoCode
+    - promotion
+    - specialOffer
+    - appliedOffer
+    - discountType
+    - discount
+    - promotionalOffer
+    - appliedPromotion
+    - activeOffer
+    - currentOffer
+    - campaignApplied
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}*10
+        - modify_body_param:
+            userKey2: "${userVal2}0"
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
+  or:
+    - request_payload:
+        contains_either: ${probableReferenceParameters}
+    - response_payload:
+        contains_either: ${probableReferenceParameters}

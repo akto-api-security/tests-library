@@ -1,0 +1,84 @@
+id: SOURCE_CODE_DISCLOSURE_SVN
+info:
+  name: "Source Code Disclosure Using SVN"
+  description: >
+    "Source code disclosure via SVN occurs when sensitive Subversion (SVN) repository files, such as `.svn` directories, are exposed in web applications. These files can provide access to the application's source code, version history, and potentially sensitive information, such as credentials or internal configurations."
+  details: >
+    "When SVN repository files are unintentionally exposed in public-facing directories, attackers can download these files and reconstruct the repository, exposing the entire source code and commit history. This exposure can lead to the leakage of sensitive data, security flaws, or internal documentation that was never intended to be publicly accessible. The scan checks for the presence of SVN repository files like `.svn/entries` in the application directory."
+  impact: >
+    "The exposure of SVN repository files can result in severe security risks, including source code theft, exposure of sensitive information, and the discovery of potential vulnerabilities. Attackers could exploit this information to identify security weaknesses or access proprietary software. Ensuring that SVN repository files are secured and not exposed to the public is essential for maintaining application security."
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: SOURCE_CODE_DISCLOSURE_SVN
+  severity: LOW
+  references:
+    - https://owasp.org/www-community/attacks/Forced_browsing
+    - https://cwe.mitre.org/data/definitions/425.html
+    - https://infosecwriteups.com/exposing-source-code-via-svn-a-400-discovery-9fc54b3f3f31
+  cwe:
+    - CWE-16
+  cve:
+    - CVE-2023-29007
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  url:
+    extract: urlVar
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: ${urlVar}/.svn/wc.db
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    percentage_match:
+      lt: 10
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
+      - <html>
+      - </html>

@@ -1,0 +1,146 @@
+id: COMMAND_INJECTION_WITH_OPERATORS_ADVANCED
+info:
+  name: "Command injection by using operators and chained system instructions"
+  description: "Command injection using operators and chained system instructions involves exploiting vulnerabilities to execute multiple commands in sequence. Attackers can use operators like `;`, `&&`, or `||` to chain commands together, allowing them to execute a series of system instructions. This technique can be used to bypass security measures, escalate privileges, and perform a variety of malicious actions, ultimately compromising the target system's integrity and security."
+  details: >
+    "Command injection by using operators and chained system instructions exploits vulnerabilities to execute multiple commands in a sequence. Attackers utilize operators such as `;` to run commands consecutively, `&&` to execute subsequent commands only if the preceding one succeeds, and `||` to run the next command only if the previous one fails. This method allows attackers to perform complex operations, manipulate system behavior, and achieve their objectives more effectively by combining multiple commands in a single injection."
+  impact: "The impact of command injection using operators and chained system instructions can be severe, as it allows attackers to execute multiple, potentially harmful commands on the target system. This can lead to unauthorized data access, data loss, or system modification. By chaining commands, attackers can perform complex operations like installing malware, creating backdoors, or exfiltrating sensitive information, significantly compromising the security and functionality of the affected system."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_WITH_OPERATORS_ADVANCED
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains_either:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+          value:
+            extract: changed_body_value
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+          value:
+            regex: .*
+            extract: changed_query_value
+wordLists:
+  specialOSPayloads:
+    - "id && (id && date +\"%d-%B-%Y\")"
+    - "id && date +\"%d-%B-%Y\""
+    - "id; date +\"%d-%B-%Y\";"
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            changed_body_key: ${specialOSPayloads}
+        - modify_query_param:
+            changed_query_key: ${specialOSPayloads}
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "uid="
+      - "gid="
+      - "groups="
+    contains_either:
+      - "-January-"
+      - "-February-"
+      - "-March-"
+      - "-April-"
+      - "-May-"
+      - "-June-"
+      - "-July-"
+      - "-August-"
+      - "-September-"
+      - "-October-"
+      - "-November-"
+      - "-December-"
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - <html>
+      - </html>

@@ -1,0 +1,61 @@
+id: TOMCAT_SERVER_VERSION_DISCLOSED
+info:
+  name: Tomcat Server Version Disclosed
+  description: >
+    "This vulnerability occurs when a web server exposes its version information, allowing attackers to determine the exact version of the server software being used."
+  details: >
+    "Exposing the server version can provide valuable information to potential attackers, who can use it to identify known vulnerabilities associated with that specific version. For example, if the server is running an outdated version of Apache Tomcat, attackers may exploit known vulnerabilities to gain unauthorized access or execute arbitrary code."
+  impact: >
+    "The disclosure of server version information can lead to targeted attacks on the server, increasing the risk of exploitation. If the exposed version has known vulnerabilities, attackers may leverage this information to compromise the server, leading to data breaches, service disruptions, or unauthorized access to sensitive data."
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: TOMCAT_SERVER_VERSION_DISCLOSED
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-16
+    - CWE-200
+  cve:
+    - CVE-2017-7529
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+
+execute:
+  type: single
+  requests:
+    - req: []
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>
+  response_headers:
+    regex: .*Apache-Coyote.*
+
+strategy:
+  run_once: /

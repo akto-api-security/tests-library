@@ -1,0 +1,202 @@
+id: BYPASS_PAYMENT_PROCESSING_WITH_MALFORMED_DATA
+info:
+  name: "Bypass Payment Processing with Malformed Data"
+  description: |
+    "This test evaluates the system's ability to correctly handle and validate payment data, particularly when malformed or incomplete payment details are submitted. The objective is to identify vulnerabilities that could allow users to bypass payment processing checks and potentially gain access to products or services without completing a valid transaction."
+  details: |
+    "The test involves sending API requests with malformed or missing payment details, such as null values for critical fields like 'card_number,' 'expiry,' or 'cvv.' For example, a user might attempt to submit a payment request with incomplete or incorrect data to bypass validation and authorization checks. The test checks whether the application properly validates payment details, rejects malformed data, and ensures that payment processing is secure and accurate."
+  impact: |
+    "Bypassing payment processing with malformed data can lead to unauthorized transactions, revenue loss, and potential fraud. If users can manipulate payment details to bypass validation checks, it undermines the integrity of the payment system and affects profitability. Ensuring robust validation of payment data is crucial to maintain secure and reliable payment processing, protect against unauthorized access, and prevent exploitation of the payment system."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_PAYMENT_PROCESSING_WITH_MALFORMED_DATA
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+    - CWE-20
+  cve:
+    - CVE-2018-20679
+    - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  url:
+    contains_either: "${probableInputValidationParameters}"
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters1}"
+            extract: userKey1
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters2}"
+            extract: userKey2
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters3}"
+            extract: userKey3
+wordLists:
+  probableInputParameters1:
+    - credit_card
+    - card_number
+    - cardNum
+    - cardNumber
+    - ccNumber
+    - creditCardNumber
+    - paymentCardNumber
+    - primaryAccountNumber
+    - pan
+    - cc
+    - cardID
+    - cardIDNumber
+
+  probableInputParameters2:
+    - cvv
+    - card_cvv
+    - security_code
+    - cardCode
+    - cvvCode
+    - cardVerificationValue
+    - card_security_code
+    - cardVerificationNumber
+    - card_cvv_code
+
+  probableInputParameters3:
+    - expiry
+    - expiration_date
+    - expiryDate
+    - expDate
+    - cardExpiry
+    - cardExpiryDate
+    - expiration
+    - cardExpiryMonthYear
+    - exp_month_year
+    - exp_date
+
+  probableInputValidationParameters:
+    - pay
+    - payment
+    - transfer
+    - transaction
+    - processPayment
+    - initiatePayment
+    - completePayment
+    - validatePayment
+    - paymentGateway
+    - fundTransfer
+
+  attemptValues:
+    - "null"
+    - NaN
+    - undefined
+    - ""
+    - empty
+    - malformedData
+    - corruptedInput
+    - invalid
+    - false
+    - notANumber
+    - fakeCardNumber
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            userKey1: "${attemptValues}"
+        - modify_body_param:
+            userKey2: "${attemptValues}"
+        - modify_body_param:
+            userKey3: "${attemptValues}"
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      gt: 90
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"

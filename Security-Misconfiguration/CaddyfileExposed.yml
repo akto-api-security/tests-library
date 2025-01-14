@@ -1,0 +1,95 @@
+id: CADDYFILE_EXPOSED
+info:
+  name: Caddyfile Exposed
+  description: >
+    The Caddyfile, which is the configuration file for the Caddy web server, can contain sensitive information and configuration details. If exposed, it may provide attackers with insights into the server's configuration and potential vulnerabilities.
+  details: >
+    This vulnerability occurs when the Caddyfile is improperly secured and accessible via the web, allowing unauthorized users to view its contents. The Caddyfile may include directives for routing, SSL certificates, and other sensitive configurations that should not be publicly available.
+  impact: >
+    Exposing the Caddyfile can lead to security risks such as unauthorized access to sensitive data, exploitation of misconfigurations, or even server takeover. Attackers can use the information gleaned from the Caddyfile to perform further attacks against the server or its applications. Proper access controls and file permissions should be enforced to protect the Caddyfile from unauthorized access.
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: CADDYFILE_EXPOSED
+  severity: LOW
+  references:
+    - https://caddyserver.com/docs/caddyfile
+    - https://caddyserver.com/docs/conventions
+    - https://docs.apigee.com/api-platform/troubleshoot/debugging/enable-nginx-debug-logs-on-routers
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-16
+    - CWE-200
+  cve:
+    - CVE-2020-11959
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+
+wordLists:
+  attemptList:
+    - "/etc/caddy/Caddyfile"
+    - "/var/lib/caddy/Caddyfile"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: ${attemptList}
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - directive
+      - localhost
+      - respond
+      - file_server
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
+
+strategy:
+  run_once: /

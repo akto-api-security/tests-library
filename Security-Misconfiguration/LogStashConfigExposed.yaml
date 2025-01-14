@@ -1,0 +1,112 @@
+id: LOGSTASH_CONFIG_EXPOSED
+info:
+  name: Logstash config files exposed
+  description: >
+    Exposure of Logstash can lead to unauthorized access to logging data and configuration. When Logstash endpoints are not secured, sensitive information can be leaked, leading to potential data breaches.
+  details: >
+    When Logstash is exposed, unauthorized users may gain access to logs, configurations, and monitoring endpoints. This can allow malicious actors to modify configurations, access sensitive log data, or even disrupt logging processes. Proper access controls and secure configurations are essential to mitigate these risks.
+  impact: >
+    Unauthorized access to Logstash can result in data leaks, manipulation of logging data, and disruptions in log processing. Implementing security measures such as authentication, authorization, and network security best practices is crucial to protect Logstash instances from exposure.
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: LOGSTASH_CONFIG_EXPOSED
+  severity: LOW
+  references:
+    - https://www.elastic.co/guide/en/logstash/current/config-setting-files.html
+    - https://elastic.co/guide/en/logstash/current/hot-threads-api.html
+
+  cwe:
+    - CWE-16
+    - CWE-200
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  request_headers:
+    for_one:
+      key:
+        eq: host
+      value:
+        extract: hostVal
+
+wordLists:
+  attemptPaths:
+    - /logstash.yml
+    - /logstash.yaml
+    - /pipelines.yml
+    - /pipelines.yaml
+
+  probableOutputParams1:
+    - "pipeline"
+    - "node"
+
+  probableOutputParams2:
+    - "pipeline"
+    - "config"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_method: GET
+        - remove_auth_header: true
+        - replace_body: "{}"
+        - modify_url: ${attemptPaths}
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    or:
+      - contains_all: ${probableOutputParams1}
+      - contains_all: ${probableOutputParams2}
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
+
+strategy:
+  run_once: /

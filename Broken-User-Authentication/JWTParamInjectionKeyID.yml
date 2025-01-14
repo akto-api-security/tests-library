@@ -1,0 +1,120 @@
+id: JWT_HEADER_PARAM_INJECTION_KID
+info:
+  name: "Authentication Bypass using JWT Header Param Injection with Key ID"
+  description: >
+    "Authentication Bypass using JWT Header Param Injection with Key ID is a security  vulnerability where attackers manipulate the Key ID (kid) in JSON Web Token  (JWT) headers to compromise authentication. By injecting malicious content  and manipulating the Key ID, attackers can exploit weaknesses in signature  verification, potentially leading to unauthorized access. Prevention involves  thorough validation of JWT signatures, secure Key ID management, and adherence  to best practices for robust authentication security."
+  details: >
+    "In Authentication Bypass using JWT Header Param Injection with Key ID, attackers  manipulate the Key ID (kid) within JSON Web Token (JWT) headers to compromise  the authentication process. This manipulation exploits vulnerabilities in  signature verification, potentially granting unauthorized access to systems  or resources. Mitigation strategies include stringent validation of JWT  signatures, careful Key ID management, and the implementation of security  measures to prevent exploitation of this specific authentication bypass technique."
+  impact: >
+    "The impact of Authentication Bypass using JWT Header Param Injection with Key  ID can be significant, leading to unauthorized access and potential compromise  of sensitive information. Exploiting this vulnerability allows attackers  to manipulate authentication processes, potentially gaining control over  systems or accounts. The consequence may include unauthorized data access,  privacy breaches, and a compromised security posture, emphasizing the  critical need for thorough security measures and vigilant monitoring to  detect and prevent such attacks."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: JWT_HEADER_PARAM_INJECTION_KID
+  severity: CRITICAL
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+auth:
+  authenticated: true
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  request_headers:
+    for_one:
+      value:
+        contains_jwt: true
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+execute:
+  type: single
+  requests:
+    - req:
+        replace_auth_header: "${auth_context.kid_added_token}"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match_schema:
+      gte: 90
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+strategy:
+  run_once: /

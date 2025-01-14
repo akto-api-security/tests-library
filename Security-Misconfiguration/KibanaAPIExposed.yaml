@@ -1,0 +1,126 @@
+id: KIBANA_API_EXPOSED
+info:
+  name: Kibana API Exposed
+  description: >
+    Exposure of the Kibana API can lead to unauthorized access to sensitive data and analytics. When the API is not secured, it can allow malicious actors to interact with the Kibana interface, potentially compromising data integrity and confidentiality.
+  details: >
+    When the Kibana API is exposed, unauthorized users may gain access to dashboards, visualizations, and underlying Elasticsearch data. This exposure can lead to data leaks, unauthorized modifications, and potential disruptions in data analysis and monitoring. It is crucial to implement proper security measures to restrict access and protect sensitive information.
+  impact: >
+    Unauthorized access to the Kibana API can result in significant security risks, including data breaches, unauthorized data manipulation, and loss of trust in the data analytics process. Implementing robust authentication, authorization, and network security measures is essential to safeguard the Kibana environment from exposure.
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: KIBANA_API_EXPOSED
+  severity: LOW
+  references:
+    - https://www.elastic.co/guide/en/kibana/current/kibana-authentication.html
+    - https://www.elastic.co/guide/en/kibana/current/api.html
+    - https://docs.search-guard.com/latest/kibana-authentication-http-basic
+
+  cwe:
+    - CWE-16
+    - CWE-200
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  request_headers:
+    for_one:
+      key:
+        eq: Host
+      value:
+        extract: hostVal
+
+wordLists:
+  attemptPaths:
+    - "http://${hostVal}:5601/api/task_manager/_health"
+    - "/api/task_manager/_health"
+    - "http://${hostVal}:5601/api/features"
+    - "/api/features"
+    - "http://${hostVal}:5601/api/uptime/settings"
+    - "/api/uptime/settings"
+
+  probableOutputParams1:
+    - "configuration"
+    - "value"
+    - "workload"
+
+  probableOutputParams2:
+    - "id"
+    - "name"
+    - "kibana"
+
+  probableOutputParams3:
+    - "heartbeatIndices"
+    - "certAgeThreshold"
+    - "defaultConnectors"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_method: GET
+        - remove_auth_header: true
+        - replace_body: "{}"
+        - modify_url: ${attemptPaths}
+        - add_header:
+          # defaults : kibanaserver:kibanaserver
+            authorization: Basic a2liYW5hc2VydmVyOmtpYmFuYXNlcnZlcg==
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    or:
+      - contains_all: ${probableOutputParams1}
+      - contains_all: ${probableOutputParams2}
+      - contains_all: ${probableOutputParams3}
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
+
+strategy:
+  run_once: /

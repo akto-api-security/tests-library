@@ -1,0 +1,122 @@
+id: COMMAND_INJECTION_MULTIPART_FORM_DATA_HEADER
+info:
+  name: "Command injection in Content-Type headers having Multipart form data value"
+  description: "Command injection in Content-Type headers with multipart form data occurs when an attacker manipulates the Content-Type header of an HTTP request that includes multipart form data. By injecting malicious commands into this header, the attacker can exploit how the server processes and handles multipart data. This can lead to unauthorized command execution, data breaches, and potential control over the server if the server fails to properly validate and sanitize the header."
+  details: >
+    "Command injection in Content-Type headers with multipart form data involves an attacker embedding malicious commands within the Content-Type header of an HTTP request that uses multipart form data. If the server processes this header without proper validation or sanitization, it may inadvertently execute the injected commands. This can be exploited in scenarios where multipart data is handled dynamically, leading to potential security breaches, unauthorized access, or server compromise. Ensuring thorough input validation and sanitization is critical to prevent such vulnerabilities."
+  impact: "The impact of command injection in Content-Type headers with multipart form data can be severe, potentially leading to unauthorized command execution on the server. Attackers can exploit this vulnerability to access or alter sensitive data, disrupt server operations, or gain control over the server. This can result in data breaches, system compromise, operational disruptions, and significant reputational damage. Implementing stringent input validation and sanitization measures is crucial to mitigate these risks."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_MULTIPART_FORM_DATA_HEADER
+  severity: CRITICAL
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_headers:
+    for_one:
+      key:
+        regex: "^Content-Type$|^content-type$"
+        extract: userKey
+      value:
+        regex: "multipart/form-data"
+        extract: userVal
+wordLists:
+  specialOSPayloads:
+    - " && id"
+    - " || id"
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_header:
+            userKey: ${userVal}${specialOSPayloads}
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "uid="
+      - "gid="
+      - "groups="
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - <html>
+      - </html>

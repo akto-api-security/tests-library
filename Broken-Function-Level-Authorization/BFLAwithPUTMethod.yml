@@ -1,0 +1,72 @@
+id: BFLA_WITH_PUT_METHOD
+info:
+  name: "Broken Function Level Authorization - Vertical Privilege Escalation test with PUT method"
+  description: >
+    "In this test, attackers exploit weaknesses in user privilege verification by using HTTP PUT requests to access higher-level functionalities. By manipulating URL parameters or endpoint identifiers, they bypass authorization controls to gain unauthorized access to privileged resources or actions. This vulnerability can lead to unauthorized data exposure, system compromise, and potential escalation of user privileges within the application."
+  details: >
+    "In this test, attackers leverage vulnerabilities in user privilege checks to elevate their access within an application. By manipulating parameters in PUT requests, they attempt to access functionalities typically restricted to higher privileged users. This technique enables unauthorized users to exploit weaknesses in authorization controls, potentially accessing sensitive data or performing privileged actions."
+  impact: >
+    "The impact of this test can be significant. Attackers can exploit this vulnerability to gain unauthorized access to privileged functionalities, leading to data breaches, system compromise, and unauthorized actions. This can result in the exposure of sensitive information, compromise of user accounts, and damage to the organization's reputation and trust."
+
+  category:
+    name: BFLA
+    shortName: Broken Function Level Authorization
+    displayName: Broken Function Level Authorization (BFLA)
+  subCategory: BFLA_WITH_PUT_METHOD
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/API-Security/editions/2023/en/0xa5-broken-function-level-authorization/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa5-broken-function-level-authorization.md"
+  cwe:
+    - CWE-285
+  cve:
+    - CVE-2022-48341
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    contains_either:
+      - "POST"
+      - "PATCH"
+  include_roles_access:
+    param: ADMIN
+  exclude_roles_access:
+    param: MEMBER
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_header:
+            ${roles_access_context.MEMBER}: 1
+        - modify_method: PUT
+        - add_header:
+            new_test_header: test_val
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      lt: 10
+    percentage_match_schema:
+      gte: 90
+    not_contains:
+      - <html>
+      - </html>
+

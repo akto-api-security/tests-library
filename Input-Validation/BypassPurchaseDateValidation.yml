@@ -1,0 +1,261 @@
+id: BYPASS_PURCHASE_DATE_VALIDATION
+info:
+  name: "Bypass Purchase Date Validation"
+  description: |
+    "This test evaluates the system's ability to properly handle and validate purchase dates, particularly in scenarios involving warranty claims, returns, or other time-sensitive conditions. The objective is to identify vulnerabilities that could allow users to manipulate purchase dates to gain unauthorized benefits or services."
+  details: |
+    "The test involves sending API requests with modified purchase dates to check if the system accurately validates the date against time-sensitive rules, such as warranty periods or return deadlines. For example, a warranty claim made for a product with a purchase date outside the warranty period should be rejected, but changing the purchase date to fall within the warranty period might bypass this restriction. The test checks whether the application correctly enforces validation rules for purchase dates, even when users attempt to manipulate them, using both standard date formats and epoch timestamps."
+  impact: |
+    "Bypassing purchase date validation can lead to unauthorized benefits, financial losses, and abuse of warranty or return policies. If users can manipulate purchase dates to submit claims or returns beyond the allowed period, it compromises the fairness and integrity of the business's policies. Ensuring robust validation of purchase dates is crucial to prevent exploitation, maintain fair practices, and protect the business from fraudulent activities."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_PURCHASE_DATE_VALIDATION
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+    - CWE-20
+  cve:
+    - CVE-2018-20679
+    - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+            extract: userKey1
+          value:
+            regex: "\b\\d{4}-\\d{2}-\\d{2}\b"
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+            extract: userKey2
+          value:
+            datatype: number
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+            extract: userKey3
+          value:
+            regex: "\b\\d{10}\b"
+
+wordLists:
+  probableInputParameters:
+    - purchaseDate
+    - boughtOn
+    - dateOfPurchase
+    - acquisitionDate
+    - orderDate
+    - productPurchasedOn
+    - transactionDate
+    - salesDate
+    - invoiceDate
+    - receiptDate
+    - purchaseTimestamp
+    - procurementDate
+    - boughtDate
+    - dateAcquired
+    - warrantyStartDate
+    - date
+
+  probableFailOutputParameters:
+    - expired
+    - no warranty
+    - out of scope
+    - warrantyExpired
+    - claimDenied
+    - warrantyInvalid
+    - outsideWarranty
+    - notCovered
+    - notEligible
+    - returnPeriodExpired
+    - claimRejected
+    - pastWarranty
+    - warrantyOutdated
+    - invalidClaim
+    - expirationExceeded
+
+  probablePassOutputParameters:
+    - claim accepted
+    - success
+    - warrantyValid
+    - withinWarranty
+    - claimApproved
+    - eligibleForClaim
+    - covered
+    - accepted
+    - warrantyActive
+    - returnAuthorized
+    - claimProcessed
+    - validClaim
+    - returnApproved
+    - authorizationGranted
+    - warrantyConfirmed
+
+  attemptValues1:
+    - "2024-01-01"
+    - "2023-01-01"
+    - "2022-01-01"
+  attemptValues2:
+    - 1704067200
+    - 1672531200
+    - 1640995200
+
+  attemptValues3:
+    - "2026-12-12"
+    - "2027-12-12"
+    - "2028-12-12"
+  attemptValues4:
+    - 1797033600
+    - 1828569600
+    - 1860192000
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            userKey2: "1*${attemptValues2}"
+        - modify_body_param:
+            userKey3: "${attemptValues2}"
+        - modify_body_param:
+            userKey1: ${attemptValues1}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - "Sorry, you have been blocked"
+              contains_either: ${probableFailOutputParameters}
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey2: "1*${attemptValues4}"
+        - modify_body_param:
+            userKey3: "${attemptValues4}"
+        - modify_body_param:
+            userKey1: ${attemptValues3}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - "Sorry, you have been blocked"
+              contains_either: "${probablePassOutputParameters}"
+        - success: vulnerable

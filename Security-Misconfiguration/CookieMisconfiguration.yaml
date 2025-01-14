@@ -1,0 +1,72 @@
+id: COOKIE_MISCONFIGURATION
+info:
+  name: Cookie misconfiguration
+  description: "This test verifies if the 'secure' attribute is properly set in HTTP response header 'set-cookie' field to ensure secure cookie transmission."
+  details: >
+    "Validates presence of 'secure' attribute in HTTP response headers' 'set-cookie' field. If not found, sensitive cookie data may be transmitted over insecure connections, exposing it to potential interception and compromising the security and privacy of user information."
+  impact: "Without the secure flag in the set-cookie header, sensitive cookie data can be intercepted, potentially leading to unauthorized access, session hijacking, and compromise of user privacy and security."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: COOKIE_MISCONFIGURATION
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://hackerone.com/reports/58679"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-614
+    - CWE-1004
+    - CWE-315
+  cve:
+    - CVE-2023-4654
+    - CVE-2023-28708
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_headers:
+    for_one:
+      key:
+        eq: Set-Cookie
+      value:
+        contains_all:
+          - secure;
+          - httponly;
+
+execute:
+  type: single
+  requests:
+    - req: []
+
+validate:
+  response_headers:
+    for_one:
+      key:
+        eq: Set-Cookie
+      value:
+        and:
+          - contains_all:
+              - secure;
+              - httponly;
+          - contains_either:
+              - samesite;
+              - SameSite;
+          - not_contains:
+              - samesite=None
+              - samesite=none
+              - SameSite=none
+              - SameSite=None

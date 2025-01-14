@@ -1,0 +1,115 @@
+id: PYLOAD_FLASK_CONFIG_ACCESS_CONTROL
+info:
+  name: "Pyload Flask Config Unauthenticated Access"
+  description: "This test refers to a security vulnerability in Pyload, a download management system using Flask. This issue arises when the configuration endpoint of Pyload's Flask application is exposed without proper authentication, potentially allowing unauthorized users to access sensitive configuration settings. Exploiting this vulnerability could lead to unauthorized changes or exposure of critical information."
+  details: "This vulnerability occurs when the Flask-based Pyload application exposes its configuration interface without requiring user authentication. This can allow attackers to access or modify sensitive configuration settings, such as API keys or server credentials. Exploiting this flaw can lead to unauthorized access to the system, potentially compromising its security and integrity."
+  impact: "The impact of this vulnerability can be significant, as it allows unauthorized users to access or alter critical configuration settings. This exposure can lead to unauthorized control over the Pyload application, potentially compromising data security, altering system settings, or enabling further attacks. The vulnerability increases the risk of system compromise and data breaches."
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: PYLOAD_FLASK_CONFIG_ACCESS_CONTROL
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2024-21644
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  url:
+    extract: urlVar
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_method: GET
+        - modify_url: ${urlVar}/render/info.html
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "&#39;SECRET_KEY&#39;:"
+      - "&#39;pyload_session&#39;"
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - failure
+      - cloudflare
+      - <html>
+      - </html>

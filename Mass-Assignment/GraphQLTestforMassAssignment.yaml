@@ -1,0 +1,74 @@
+id: GRAPHQL_MASS_ASSIGNMENT
+info:
+  name: "Mass Assignment Test for GraphQL APIs"
+  description: >
+    "This test involves evaluating GraphQL endpoints for vulnerabilities related to mass assignment. This occurs when an API allows users to set or modify attributes of objects without proper authorization, potentially leading to unauthorized data changes. The test aims to identify and mitigate such risks by ensuring that only permitted fields can be modified by users, thus securing the API against exploitation."
+  details: >
+    "This test involves assessing the API's resilience against mass assignment vulnerabilities, where unauthorized users can modify sensitive attributes. It includes verifying that only specified fields can be altered, ensuring robust role-based access control (RBAC) is in place, and checking for proper input validation and filtering to prevent unauthorized data changes. This test is crucial for maintaining the security and integrity of the API."
+  impact: >
+    "The impact of performing this test includes enhanced security by preventing unauthorized data modifications, thereby protecting sensitive information. It ensures compliance with security best practices and regulatory requirements, reducing the risk of data breaches. Additionally, it helps maintain the integrity and reliability of the API, fostering trust among users and stakeholders."
+  category:
+    name: MA
+    shortName: Mass Assignment
+    displayName: Mass Assignment (MA)
+  subCategory: GRAPHQL_MASS_ASSIGNMENT
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa3-broken-object-property-level-authorization.md"
+  cwe:
+    - CWE-915
+  cve:
+    - CVE-2023-32079
+    - CVE-2023-42768
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+wordLists:
+  ${nonTerminalKeys}:
+    for_all:
+      ${iteratorKey}.wordList:
+        all_apis: true
+        sample_data: true
+        location: terminal_keys
+        key: "${iteratorKey}"
+api_selection_filters:
+
+  response_code:
+    gte: 200
+    lt: 300
+    extract: resp_code
+  url:
+    regex: graphql
+  method:
+    not_contains:
+      - GET
+      - OPTIONS
+  response_payload:
+    for_one:
+      key:
+        valueType: object
+        extractMultiple: nonTerminalKeys
+execute:
+  type: single
+  requests:
+    - req:
+        - ${nonTerminalKeys}:
+            for_all:
+              - add_unique_graphql_field:
+                  ${iteratorKey}: "${iteratorKey}.wordList"
+validate:
+  response_code:
+    eq: "${resp_code}"
+  response_payload:
+    percentage_match:
+      gte: 90
+strategy:
+  run_once: /

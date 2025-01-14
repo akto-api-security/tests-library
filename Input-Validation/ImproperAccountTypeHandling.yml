@@ -1,0 +1,171 @@
+id: IMPROPER_ACCOUNT_TYPE_HANDLING
+info:
+  name: "Improper Account Type Handling for Downgrade"
+  description: |
+    "This test evaluates how the application manages changes to an account's type, specifically when downgrading from a higher-tier account (e.g., PREMIUM) to a lower-tier account (e.g., BASIC). The objective is to identify vulnerabilities or logical flaws that may occur during the handling of account type changes, ensuring that the system correctly enforces business rules and access controls."
+  details: |
+    "The test focuses on scenarios where users attempt to change or downgrade their account type, such as moving from a PREMIUM to a BASIC account, and checks how the application validates and processes these changes. It includes testing whether the system correctly verifies the user's permissions, maintains data integrity, and enforces any restrictions associated with different account types. For example, the system should prevent unauthorized downgrades, ensure that all privileges and features are adjusted accordingly, and maintain accurate records of the account's current status."
+  impact: |
+    "Improper handling of account type changes can lead to several issues, including unauthorized access to restricted features, loss of data, incorrect billing, or service disruption. If an application fails to manage downgrades correctly, users might retain access to premium features despite being on a basic plan, or experience unexpected changes to their account capabilities. Ensuring robust validation and management of account type transitions is crucial for maintaining service integrity, enforcing compliance with business policies, and protecting both the user and the organization from potential misuse or financial loss."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: IMPROPER_ACCOUNT_TYPE_HANDLING
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+    - CWE-20
+  cve:
+    - CVE-2018-20679
+    - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+    for_one:
+      key:
+        regex: "${probableOutputParameters}"
+        extract: outputUserKey
+      value:
+        extract: outputUserValue
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  probableInputParameters:
+    - accountType
+    - newAccountType
+    - requestedAccountType
+    - desiredAccountType
+    - changeAccountType
+    - upgradeType
+    - downgradeType
+    - subscriptionLevel
+    - membershipTier
+    - planType
+
+  probableOutputParameters:
+    - accountType
+    - newAccountType
+    - currentAccountType
+    - updatedAccountType
+    - resultingAccountType
+    - finalAccountType
+    - userPlanType
+    - membershipStatus
+    - subscriptionStatus
+
+  attemptDowngradeEnums:
+    - BASIC
+    - STANDARD
+    - FREE
+    - TRIAL
+    - LIMITED
+    - STARTER
+    - BRONZE
+    - SILVER
+    - ESSENTIAL
+    - LITE
+
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            userKey: ${attemptDowngradeEnums}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
+    for_one:
+      key:
+        eq: "${outputUserKey}"
+      value:
+        neq: "${outputUserValue}"

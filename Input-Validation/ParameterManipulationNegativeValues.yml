@@ -1,0 +1,202 @@
+id: PARAMETER_MANIPULATION_NEGATIVE_VALUES
+info:
+  name: Parameter manipulation by using negative values in transactions
+  description: >
+    "This test involves manipulating parameters by introducing negative values in transactional inputs to check how the system responds to such unexpected data. It ensures the application properly validates input fields and prevents unauthorized actions or errors caused by negative values, such as refund manipulation, bypassing quantity restrictions, or altering calculation results."
+  details: >
+    "The test focuses on inserting negative values into various input fields, such as quantities, prices, or other numeric parameters, to assess whether the application handles these inputs correctly. Scenarios may include using negative amounts in transactions, discounts, or fees, and testing if the system prevents or improperly processes these inputs. This test is designed to reveal weaknesses in validation logic, particularly where negative values could lead to incorrect calculations, unauthorized refunds, or other unexpected behaviors."
+  impact: >
+    "Improper handling of negative values in input fields can result in serious consequences, such as financial fraud, data corruption, or unauthorized access. For example, an attacker might exploit a vulnerability to issue false refunds, bypass purchase limitations, or manipulate transaction totals. Ensuring robust validation against negative value manipulation protects the system's integrity, prevents financial losses, and maintains the application's overall reliability."  
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: PARAMETER_MANIPULATION_NEGATIVE_VALUES
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+    - CWE-20
+  cve:
+    - CVE-2018-20679
+    - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+    # Here we check for the modified values of contextual keys in response.
+    for_one:
+      key:
+        regex: "${probableOutputParameters}"
+        extract: outputUserKey
+      value:
+        datatype: number
+        extract: outputUserValue
+  or:
+  # In case the amount is being sent as a number
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+            extract: userKey
+          value:
+            datatype: number
+            extract: userVal
+  # In case the amount is being sent as a string
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+            extract: userKey2
+          value:
+            regex: "\b([1-9][0-9]*)\b"
+            extract: userVal2
+wordLists:
+  probableInputParameters:
+    - amount
+    - amounts
+    - price
+    - cost
+    - total
+    - quantity
+    - qty
+    - fee
+    - discount
+    - charge
+    - tax
+    - payment
+    - deposit
+    - withdrawal
+    - limit
+    - threshold
+    - minAmount
+    - maxAmount
+    - credit
+    - debit
+    - interest
+    - surcharge
+    - penalty
+    - refund
+    - shippingCost
+    - handlingFee
+  probableOutputParameters:
+    - balance
+    - amountLeft
+    - totalAmount
+    - remainingAmount
+    - availableCredit
+    - outstandingBalance
+    - dueAmount
+    - finalAmount
+    - discountedPrice
+    - calculatedTax
+    - processedAmount
+    - adjustedAmount
+    - refundedAmount
+    - paidAmount
+    - receivedAmount
+    - netAmount
+    - payableAmount
+    - settlementAmount
+    - accruedInterest
+    - clearedBalance
+    - unsettledBalance
+    - transactionAmount
+    - billedAmount
+    - costAfterDiscount
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            userKey: "-1 * ${userVal}"
+        - modify_body_param:
+            userKey2: "-${userVal2}"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
+    for_one:
+      key:
+        eq: "${outputUserKey}"
+      value:
+        neq: "${outputUserValue}"

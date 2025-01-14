@@ -1,0 +1,95 @@
+id: SQUID_PROXY_CONFIG_EXPOSED
+info:
+  name: Squid Proxy Config Exposed
+  description: >
+    The configuration files for Squid Proxy can contain sensitive information such as access control lists, authentication credentials, and cache settings. If these configurations are exposed, it can lead to security vulnerabilities.
+  details: >
+    This vulnerability occurs when the Squid proxy configuration files are accessible through the web server or are improperly secured. Exposure of these files can provide attackers with detailed insights into proxy behavior, allowed domains, and network access rules, which could be exploited for unauthorized access or manipulation of traffic.
+  impact: >
+    Exposed Squid configuration can result in unauthorized access to internal resources, cache poisoning, and potential data leaks. Attackers may leverage this information to bypass security measures or disrupt service operations.
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: SQUID_PROXY_CONFIG_EXPOSED
+  severity: LOW
+  references:
+    - https://wiki.squid-cache.org/SquidFaq/ConfiguringSquid
+    - https://blog.lighttpd.net/articles/2006/04/02/log-condition-handling-the-hidden-feature-for-debuging/
+  cwe:
+    - CWE-16
+    - CWE-200
+  cve:
+    - CVE-2020-11959
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+
+wordLists:
+  attemptList:
+    - /etc/squid/squid.conf
+    - /usr/local/squid/etc/squid.conf
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: ${attemptList}
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - http
+      - server
+      - location
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
+
+strategy:
+  run_once: /

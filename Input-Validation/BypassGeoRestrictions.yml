@@ -1,0 +1,142 @@
+id: BYPASS_GEO_RESTRICTIONs
+info:
+  name: "Bypass Geo-Restrictions"
+  description: |
+    "This test evaluates the system's ability to enforce geo-restrictions correctly, ensuring that users cannot manipulate location parameters to access region-specific content that is restricted based on geographical location. The objective is to identify vulnerabilities that could allow users to bypass location-based restrictions by altering or spoofing location data in their requests."
+  details: |
+    "The test involves sending API requests with manipulated location parameters, such as adding or modifying the 'location' query string or header to access geo-restricted content. For example, a user might attempt to change their location from a restricted region to an allowed region by altering client-side parameters like 'location=US'. The test checks whether the application properly verifies the client's location data and enforces geo-restrictions to prevent unauthorized access."
+  impact: |
+    "Bypassing geo-restrictions can lead to unauthorized access to content or services, potential copyright violations, and breach of licensing agreements. If users can manipulate location data to bypass restrictions, it undermines the content provider's regional access controls and can result in legal or financial repercussions. Ensuring robust validation and enforcement of geo-restrictions is crucial to protect against unauthorized access and maintain compliance with geographical licensing requirements."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_GEO_RESTRICTIONs
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+    - CWE-20
+  cve:
+    - CVE-2018-20679
+    - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+    contains_either: ${probableOutputParameters}
+  query_param:
+    for_one:
+      key:
+        regex: ${probableInputParameters}
+        extract: userKey
+
+wordLists:
+  probableInputParameters:
+    - location
+    - region
+    - locationCode
+    - regionCode
+
+  probableOutputParameters:
+    - not available in your region
+    - restricted content
+
+  sampleValues:
+    source: sample_data
+    key:
+      regex: location|region|locationCode|regionCode
+    location: query_param
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_query_param:
+            userKey: ${sampleValues}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  and:
+    - response_payload:
+        length:
+          gt: 0
+        not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - "Sorry, you have been blocked"
+    - response_payload:
+        not_contains: ${probableOutputParameters}

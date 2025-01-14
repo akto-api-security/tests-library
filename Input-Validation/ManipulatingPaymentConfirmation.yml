@@ -1,0 +1,166 @@
+id: MANIPULATING_PAYMENT_CONFIRMATION
+info:
+  name: "Manipulating Payment Confirmation in Transaction APIs"
+  description: |
+    "This test assesses how the application handles and validates payment confirmation statuses in transaction APIs. The goal is to identify potential vulnerabilities that could allow unauthorized manipulation of payment statuses, affecting order processing and financial transactions."
+  details: |
+    "The test involves sending API requests to manipulate payment confirmation statuses and observe how the system responds."
+  impact: |
+    "Manipulating payment confirmation statuses can lead to serious issues, such as unauthorized order processing, financial discrepancies, or fraud. If an attacker can alter payment statuses, they may bypass payment requirements, confirm orders without proper payment, or cause inconsistencies in financial records. This could result in financial losses for the company, damage to the integrity of transaction processing, and potential legal or regulatory repercussions. Ensuring secure and accurate handling of payment confirmations is crucial to maintaining trust and operational integrity."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: MANIPULATING_PAYMENT_CONFIRMATION
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+    - CWE-20
+  cve:
+    - CVE-2018-20679
+    - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_payload:
+    for_one:
+      key:
+        regex: "${probableInputParameters}"
+        extract: userKey
+
+wordLists:
+  probableInputParameters:
+    - status
+    - confirmation
+
+  probableFailOutputParameters:
+    - awaiting
+    - awaiting_confirmation
+    - pending
+
+  probablePassOutputParameters:
+    - successful
+    - confirmed
+    - completed
+    - done
+
+  passValues:
+    - confirmed
+    - success
+    - done
+    - complete
+
+  failValues:
+    - pending
+    - left
+    - waiting
+    - awaiting
+
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            userKey: "${failValues}"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${responseErrorList}
+              contains_either: ${probableFailOutputParameters}
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: "${passValues}"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${responseErrorList}
+              contains_either: "${probablePassOutputParameters}"
+        - success: vulnerable

@@ -1,0 +1,68 @@
+id: PHPMOD_CURL_XSS
+info:
+  name: "Php-mod/curl Library Cross-Site Scripting"
+  description: "This vulnerability allows attackers to inject malicious scripts into web applications using the PHP cURL library. This occurs when user input is not properly sanitized before being reflected back to the user, enabling the execution of harmful scripts in the context of the user's browser. Exploitation can lead to session hijacking, data theft, and defacement of web content. It primarily affects applications that rely on user-generated content without adequate validation."
+  details: "This vulnerability affects versions of the library where user input is not adequately validated or sanitized. Attackers can exploit this flaw by crafting requests that include malicious scripts, which are then processed and returned by the application. The vulnerability typically arises in scenarios where dynamic content is generated based on user input, such as forms or URL parameters. Developers are encouraged to implement strict input validation and encoding to mitigate this risk."
+  impact: "The impact of this vulnerability can be significant, as it allows attackers to inject malicious scripts into web pages viewed by users. This can lead to unauthorized actions being performed on behalf of users, theft of sensitive information (like cookies or session tokens), and redirection to phishing sites. Additionally, successful exploitation can damage the credibility of the affected application, resulting in loss of user trust and potential legal repercussions."
+  category:
+    name: XSS
+    shortName: XSS
+    displayName: Cross-site scripting (XSS)
+  subCategory: PHPMOD_CURL_XSS
+  severity: MEDIUM
+  references:
+    - "https://owasp.org/www-community/attacks/xss/"
+  cwe:
+    - CWE-79
+  cve:
+    - CVE-2021-30134
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: "/vendor/curl/curl/tests/server/php-curl-test/post_file_path_upload.php"
+        - modify_method: GET
+        - replace_body: '{}'
+        - add_query_param:
+            key: "<img%20src%20onerror%3dalert(document.domain)>"
+
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "key\":\"<img src onerror=alert(document.domain)>\""
+  response_headers:
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        eq: "text/html"

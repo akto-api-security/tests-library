@@ -1,0 +1,214 @@
+id: BYPASS_PAYMENT_DEFERENCE_HANDLING
+info:
+  name: "Bypass Payment Deference Handling"
+  description: |
+    "This test evaluates the system's ability to correctly handle and validate payment deferral options, ensuring that users cannot manipulate the deferment period to delay or avoid payments improperly. The objective is to identify vulnerabilities that could allow users to exploit lenient payment terms or system limitations, deferring payments beyond acceptable limits."
+  details: |
+    "The test involves sending API requests with manipulated parameters related to payment deferment, such as extending the 'deferredUntil' date far beyond the allowed period. For example, a user might attempt to set a deferment date that is significantly later than the standard or permissible period to avoid making payments for an extended time. The test checks whether the application enforces payment deferment rules consistently, validating the deferment period and preventing unauthorized manipulation of payment schedules."
+  impact: |
+    "Bypassing payment deference handling can lead to financial losses, cash flow disruptions, and abuse of payment policies. If users can manipulate deferment options to delay or avoid payments, it may result in unintended extensions of credit, increased risk of default, and potential legal or contractual disputes. Ensuring robust validation of payment deferment requests is crucial to maintain fair payment practices, protect revenue, and prevent exploitation of deferred payment options."
+
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: BYPASS_PAYMENT_DEFERENCE_HANDLING
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+    - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+    - CWE-20
+  cve:
+    - CVE-2018-20679
+    - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: OPTIONS
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+    contains_either: ${probableOutputParameters}
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+            extract: userKey1
+          value:
+            regex: "\b\\d{4}-\\d{2}-\\d{2}\b"
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+            extract: userKey2
+          value:
+            datatype: number
+    - request_payload:
+        for_one:
+          key:
+            regex: "${probableInputParameters}"
+            extract: userKey3
+          value:
+            regex: "\b\\d{10}\b"
+
+wordLists:
+  probableInputParameters:
+    - deferredUntil
+    - deferPaymentTimestamp
+    - paymentDefermentDate
+    - paymentDueDate
+    - deferredDate
+    - postponementDate
+    - paymentDelayUntil
+    - deferralEndDate
+    - deferUntil
+    - delayPaymentUntil
+    - paymentExtensionDate
+    - deferralTimestamp
+    - postponePaymentDate
+    - deferDate
+    - deferredPaymentUntil
+    - date
+
+  probableOutputParameters:
+    - nextPaymentDue
+    - nextBillingCycle
+    - upcomingPaymentDate
+    - nextDueDate
+    - paymentDueNext
+    - futurePaymentDate
+    - nextPaymentCycle
+    - deferredPaymentDate
+    - subsequentPaymentDate
+    - nextInstallmentDue
+    - paymentCycleDate
+    - billingDate
+    - paymentDeadline
+    - nextScheduledPayment
+    - upcomingBillingDate
+
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+  attemptValues1:
+    - "2026-12-12"
+    - "2027-12-12"
+    - "2028-12-12"
+  attemptValues2:
+    - 1797033600
+    - 1828569600
+    - 1860192000
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - add_header:
+            x-akto-ignore: 0
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${responseErrorList}
+              for_one:
+                key:
+                  regex: "${probableOutputParameters}"
+                  extract: outputUserKey1
+                value:
+                  extract: outputUserValue1
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey2: "1*${attemptValues2}"
+        - modify_body_param:
+            userKey3: "${attemptValues2}"
+        - modify_body_param:
+            userKey1: ${attemptValues1}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${responseErrorList}
+              for_one:
+                key:
+                  eq: "${outputUserKey1}"
+                value:
+                  neq: "${outputUserValue1}"
+        - success: vulnerable

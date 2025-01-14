@@ -1,0 +1,67 @@
+id: HTACCESS_INFO_LEAK
+info:
+  name: "Htaccess Information Leak"
+  description: >
+    ".htaccess files are used by web servers like Apache to control access to directories and files. This scan detects instances where `.htaccess` files are exposed, which can lead to the leakage of sensitive server configuration data and access control rules."
+  details: >
+    "The `.htaccess` file is often used to define access control settings, such as restricting access to certain directories or implementing authentication mechanisms. If this file is accidentally exposed due to misconfiguration or lack of proper permissions, it can leak important details such as directory protection rules, file permissions, or security policies. Attackers can use this information to bypass security measures or find weak points in the server configuration."
+  impact: >
+    "The exposure of `.htaccess` files can result in severe security risks. It may disclose sensitive server configurations, file paths, and security rules that are meant to be hidden from users. With this information, attackers can gain insight into the server's structure and security mechanisms, potentially allowing them to bypass authentication or access restricted areas. This could lead to unauthorized access, data leaks, or even full server compromise if exploited."
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: HTACCESS_INFO_LEAK
+  severity: LOW
+  references:
+    - https://cwe.mitre.org/data/definitions/200.html
+  cwe:
+    - CWE-200
+    - CWE-213
+  cve:
+    - CVE-2018-10245
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  url:
+    extract: urlVar
+
+execute:
+  type: single
+  requests:
+    - req:
+        modify_url: ${urlVar}/.htaccess
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - <html>
+      - </html>
+  response_headers:
+    for_one:
+      key:
+        eq: content-type
+      value:
+        not_contains:
+          - xml
+          - json
+          - html
+
+strategy:
+  run_once: /

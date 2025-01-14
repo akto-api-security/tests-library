@@ -1,0 +1,86 @@
+id: SOURCE_CODE_DISCLOSURE_GIT
+info:
+  name: "Source Code Disclosure Using Git"
+  description: >
+    "Source code disclosure via Git occurs when sensitive Git repository files, such as `.git` directories, are exposed in web applications. This can give attackers access to the application's source code, commit history, and potentially sensitive information such as API keys, passwords, and other credentials."
+  details: >
+    "When Git repository files are unintentionally left accessible in publicly facing directories, attackers can download these files and reconstruct the repository's contents, exposing the full source code of the application. This can reveal vulnerabilities, secrets, and other sensitive details that should not be publicly accessible. The scan checks for the presence of Git repository files, such as `.git/config` or `.git/HEAD`, in web applications."
+  impact: >
+    "Exposing Git repository files can have significant consequences, including the leakage of proprietary code, disclosure of sensitive information, and enabling attackers to find and exploit vulnerabilities. An attacker with access to the Git history may be able to identify security issues in previous commits or retrieve sensitive information accidentally committed to the repository. Properly securing these files and ensuring that they are not exposed is critical to maintaining the security of the application."
+
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: SOURCE_CODE_DISCLOSURE_GIT
+  severity: LOW
+  references:
+    - https://pentester.land/blog/source-code-disclosure-via-exposed-git-folder/
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-16
+  cve:
+    - CVE-2023-29007
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  url:
+    extract: urlVar
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: ${urlVar}/.git/index
+
+validate:
+  response_code:
+    eq: 200
+  response_payload:
+    not_contains:
+      - '<html'
+      - '<body'
+      - '<HTML'
+      - '<BODY'
+      - '<Html'
+      - '<Body'
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
+      - </html>

