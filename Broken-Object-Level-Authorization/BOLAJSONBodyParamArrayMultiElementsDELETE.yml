@@ -1,0 +1,132 @@
+id: ID_WRAP_ARRAY_OF_PARAMS_JSON_BODY_DELETE
+info:
+  name: "BOLA: Turning JSON Param into Array of Params for Unauthorized Access for DELETE method APIs"
+  description: >
+    "This manipulation involves converting JSON parameter into array of multiple elements to potentially circumvent security measures and gain unauthorized entry (for requests with DELETE method). Such actions underscore the importance of securing input validation and emphasize the risks associated with broken object-level authorization, necessitating robust security practices to thwart unauthorized access attempts."
+  details: >
+    "Attackers exploit vulnerabilities by manipulating the system through this test. This involves converting JSON parameter into array of multiple elements, aiming to exploit weaknesses in object-level authorization and gain unauthorized entry (for requests with DELETE method). This method highlights the critical need for secure input validation and emphasizes the risks associated with unauthorized access, reinforcing the importance of robust security measures to prevent and mitigate potential exploitation."
+  impact: >
+    "The impact of this test can be significant, posing a risk of unauthorized entry and potential compromise of sensitive data. By exploiting broken object-level authorization through JSON parameter manipulation, attackers may gain unauthorized access, leading to data  breaches and compromising the overall integrity of the system. Promptly addressing and mitigating these vulnerabilities is crucial to prevent unauthorized access and safeguard against the potential consequences of broken object-level authorization exploitation."
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: ID_WRAP_ARRAY_OF_PARAMS_JSON_BODY_DELETE
+  severity: CRITICAL
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://www.akto.io/blog/bola-exploitation-using-unauthorized-uuid-on-api-endpoint"
+    - "https://www.akto.io/blog/what-is-broken-object-level-authorization-bola"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md"
+    - "https://cwe.mitre.org/data/definitions/284.html"
+    - "https://cwe.mitre.org/data/definitions/285.html"
+    - "https://cwe.mitre.org/data/definitions/639.html"
+  cwe:
+    - CWE-284
+    - CWE-285
+    - CWE-639
+  cve:
+    - CVE-2023-39349
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+compliance_standards: compliance/bola.conf
+
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: DELETE
+  response_payload:
+    length:
+      eq: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_payload:
+    for_one:
+      key:
+        regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|username|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
+        extract: userKey
+      value:
+        extract: userVal
+
+wordLists:
+  random_ids:
+    source: sample_data
+    key:
+      regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|username|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
+    all_apis: true
+execute:
+  type: single
+  requests:
+    - req:
+        modify_body_param:
+          userKey:
+            - ${random_ids}
+            - ${userVal}
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      eq: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts

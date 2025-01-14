@@ -1,0 +1,115 @@
+id: REPLACE_AUTH_TOKEN_DELETE
+info:
+  name: BOLA by changing auth token for DELETE method APIs
+  description: "Broken Object Level Authorization (BOLA) by changing the auth token with the DELETE method involves manipulating an API request to replace the authorization token in the request header or body. If the API lacks proper checks, this can allow attackers to modify or access data for unauthorized users. It's a critical vulnerability that arises due to insufficient validation of user permissions at the object level."
+  details: "In this BOLA attack, the attacker intercepts a DELETE request and replaces their auth token with another user's token, aiming to update or manipulate resources they don’t own. If the API doesn’t validate the user’s ownership of the resource, the unauthorized change is accepted. This vulnerability often occurs due to inadequate access control checks for object-level operations."
+  impact: "The impact of this BOLA vulnerability can be severe, as it allows unauthorized users to modify or manipulate sensitive data belonging to other users. This can lead to data breaches, unauthorized changes to critical records, and potential escalation of privileges. It undermines trust in the application's security and may result in regulatory non-compliance and financial loss."
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: REPLACE_AUTH_TOKEN_DELETE
+  severity: CRITICAL
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://www.akto.io/blog/bola-exploitation-using-unauthorized-uuid-on-api-endpoint"
+    - "https://www.akto.io/blog/what-is-broken-object-level-authorization-bola"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md"
+    - "https://cwe.mitre.org/data/definitions/284.html"
+    - "https://cwe.mitre.org/data/definitions/285.html"
+    - "https://cwe.mitre.org/data/definitions/639.html"
+  cwe:
+    - CWE-284
+    - CWE-285
+    - CWE-639
+  cve:
+    - CVE-2023-39349
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+compliance_standards: compliance/bola.conf
+
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: "DELETE"
+  response_payload:
+    length:
+      eq: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  private_variable_context:
+    gt: 0
+execute:
+  type: single
+  requests:
+    - req:
+        - replace_auth_header: true
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      eq: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts

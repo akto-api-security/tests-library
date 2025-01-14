@@ -1,0 +1,137 @@
+id: BOLA_MODIFY_CUSTOM_HEADER_INTEGER_VAL_PATCH
+info:
+  name: "Exploiting BOLA by fuzzing Custom Header with Integer for Unauthorized Access with PUT/PATCH based APIs"
+  description: >
+    "Attackers exploit Broken Object Level Authorization (BOLA) by employing header fuzzing techniques with Integer, systematically testing variations to gain unauthorized access (for PUT/PATCH based APIs). This method highlights vulnerabilities in the system's authorization mechanisms,  underscoring the importance of robust security assessments, secure header handling with Integer, and comprehensive testing to mitigate the risks associated with unauthorized access and BOLA vulnerabilities introduced through custom header manipulation."
+  details: >
+    "Attackers exploit Broken Object Level Authorization (BOLA) by fuzzing custom headers with Integer, systematically testing variations to gain unauthorized access (for PUT/PATCH based APIs). This method exposes vulnerabilities in the system's authorization mechanisms, highlighting the crucial need for robust security assessments and secure header handling with Integer to mitigate the risks associated with unauthorized access and BOLA vulnerabilities introduced through custom header fuzzing."
+  impact: >
+    "The impact of exploiting Broken Object Level Authorization through custom header fuzzing can be significant. Successful manipulation may lead to unauthorized access, potentially compromising sensitive data and enabling malicious actions within the system. This method underscores the critical importance of implementing stringent security measures, including robust access controls, secure header handling, and thorough testing, to prevent unauthorized access and mitigate the risks associated with Broken Object Level Authorization vulnerabilities introduced through custom header fuzzing."
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: BOLA_MODIFY_CUSTOM_HEADER_INTEGER_VAL_PATCH
+  severity: CRITICAL
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://www.akto.io/blog/bola-exploitation-using-unauthorized-uuid-on-api-endpoint"
+    - "https://www.akto.io/blog/what-is-broken-object-level-authorization-bola"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md"
+    - "https://cwe.mitre.org/data/definitions/284.html"
+    - "https://cwe.mitre.org/data/definitions/285.html"
+    - "https://cwe.mitre.org/data/definitions/639.html"
+  cwe:
+    - CWE-284
+    - CWE-285
+    - CWE-639
+  cve:
+    - CVE-2022-34770
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+compliance_standards: compliance/bola.conf
+
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    contains_either:
+      - PUT
+      - PATCH
+  response_payload:
+    length:
+      eq: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  request_headers:
+    for_one:
+      key:
+        contains_either:
+          - X-User-ID
+          - Customer
+          - Member
+          - Client-ID
+          - Account
+          - Subscriber
+          - User-Hash
+        extract: headerValue
+wordLists:
+  specialHeaders:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_header:
+            headerValue: "${specialHeaders}"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      eq: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
