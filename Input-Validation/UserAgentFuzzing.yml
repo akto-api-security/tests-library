@@ -74,19 +74,19 @@ execute:
     - req:
         - modify_header:
             user-agent: ${userAgent}
-      - validate:
-          response_code:
-            gte: 200
-            lt: 300
-          response_payload:
-            percentage_match:
-              lte: 50
-            percentage_match_schema:
-              gte: 90
-            length:
-              gt: 0
-            not_contains:
-              - <html>
-              - </html>
-      - success: vulnerable
-      - failure: exit       
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              percentage_match:
+                lte: 50
+              percentage_match_schema:
+                gte: 90
+              length:
+                gt: 0
+              not_contains:
+                - <html>
+                - </html>
+        - success: vulnerable
+        - failure: exit       
