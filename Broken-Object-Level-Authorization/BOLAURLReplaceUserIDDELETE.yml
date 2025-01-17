@@ -1,0 +1,158 @@
+id: BOLA_URL_REPLACE_USER_ID_DELETE
+info:
+  name: "Exploiting BOLA by replacing URL path with User IDs for Unauthorized Access with DELETE method"
+  description: >
+    "This test involves exploiting security vulnerabilities by manipulating the URL path  and substituting it with User IDs (APIs having DELETE Method). This unauthorized access allows attackers to  bypass proper authorization mechanisms, potentially gaining unauthorized entry  to sensitive data or functionalities. The test aims to identify and rectify  weaknesses in object-level authorization, ensuring that only authorized users  can access specific resources or perform certain actions within an application or system."
+  details: >
+    "In this test, attackers exploit security weaknesses by manipulating the URL path (APIs having DELETE method),  substituting it with User IDs to gain unauthorized access. By doing so, they  can bypass proper authorization controls, potentially accessing sensitive data  or functionalities. This test helps identify and address vulnerabilities in  object-level authorization, ensuring that only authorized users have legitimate  access to specific resources or actions within a system or application."
+  impact: >
+    "The impact of a Broken Object Level Authorization (BOLA) test exploit can be severe,  as unauthorized access to sensitive data or functionalities may compromise the  confidentiality and integrity of a system. Attackers could potentially retrieve  or manipulate critical information, leading to data breaches, unauthorized  transactions, or even the compromise of user privacy. Addressing BOLA  vulnerabilities is crucial to prevent these far-reaching consequences and  maintain the security and trustworthiness of the system."
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: BOLA_URL_REPLACE_USER_ID_DELETE
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://www.akto.io/blog/bola-exploitation-using-unauthorized-uuid-on-api-endpoint"
+    - "https://www.akto.io/blog/what-is-broken-object-level-authorization-bola"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md"
+    - "https://cwe.mitre.org/data/definitions/284.html"
+    - "https://cwe.mitre.org/data/definitions/285.html"
+    - "https://cwe.mitre.org/data/definitions/639.html"
+  cwe:
+    - CWE-284
+    - CWE-285
+    - CWE-639
+  cve:
+    - CVE-2022-34770
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    eq: 204
+  method:
+    eq: "DELETE"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - failure
+      - not available
+      - not found
+
+wordLists:
+  random_ids:
+    source: sample_data
+    key:
+      regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|username|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
+    all_apis: true
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_url:
+            token_replace:
+              location: 1
+              replace_with: ${random_ids}
+        - success: vulnerable
+        - failure: x2
+    - req:
+        - modify_url:
+            token_replace:
+              location: 2
+              replace_with: ${random_ids}
+        - success: vulnerable
+        - failure: x3
+    - req:
+        - modify_url:
+            token_replace:
+              location: 3
+              replace_with: ${random_ids}
+        - success: vulnerable
+        - failure: x4
+    - req:
+        - modify_url:
+            token_replace:
+              location: 4
+              replace_with: ${random_ids}
+validate:
+  response_code:
+    eq: 204
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      lt: 10
+    percentage_match_schema:
+      gte: 90
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - failure
+      - not available
+      - not found
+      - "<html>"
+      - "</html>"
