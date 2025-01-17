@@ -1,4 +1,4 @@
-# Remediation for TIME_BASED_SQLI_SQLITE_GET
+
 
 ## Remediation Steps for Time Based SQL Injection in SQLite DB for GET Method APIs
 

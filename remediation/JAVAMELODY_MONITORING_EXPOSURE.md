@@ -1,4 +1,4 @@
-# Remediation for JAVAMELODY_MONITORING_EXPOSURE
+
 
 ## Remediation Steps for JavaMelody Monitoring Exposure
 

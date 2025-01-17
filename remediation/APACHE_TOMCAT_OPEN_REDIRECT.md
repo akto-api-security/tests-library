@@ -1,4 +1,4 @@
-# Remediation for APACHE_TOMCAT_OPEN_REDIRECT
+
 
 ## Remediation Steps for Apache Tomcat Open Redirect
 Apache Tomcat Open Redirect Vulnerability is a web security issue where an attacker can trick users to unknowingly navigate malicious, third-party sites that could potentially be harmful. This can lead to serious consequences like sensitive information theft.

@@ -1,4 +1,4 @@
-# Remediation for FILE_INCLUSION_NEW_PARAM
+
 
 ## Remediation Steps for LFI by adding new parameter
 

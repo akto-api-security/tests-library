@@ -1,4 +1,4 @@
-# Remediation for BYPASS_SIGNUP_EMAIL_VALIDATION
+
 
 ## Remediation Steps for Bypass Signup Email Validation
 Bypassing email validation at signup can lead to a variety of security issues, ranging from the creation of spam accounts to more serious breaches involving unauthorized access and fraudulent activity.

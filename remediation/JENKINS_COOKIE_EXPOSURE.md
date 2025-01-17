@@ -1,4 +1,4 @@
-# Remediation for JENKINS_COOKIE_EXPOSURE
+
 
 ## Remediation Steps for Jenkins Cookie Exposure
 Jenkins cookie exposure is a significant security issue. If left unaddressed, attackers may intercept these cookies to gain unauthorized access to Jenkins applications, thus compromising your environment.

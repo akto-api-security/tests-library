@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_AWS_DYNAMODB_URL
+
 
 ## Remediation Steps for AWS DynamoDB Sensitive Data Exposure
 

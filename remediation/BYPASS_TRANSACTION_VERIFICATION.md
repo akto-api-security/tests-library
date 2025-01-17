@@ -1,4 +1,4 @@
-# Remediation for BYPASS_TRANSACTION_VERIFICATION
+
 
 ## Remediation Steps for Bypassing User Verification on Transaction APIs
 

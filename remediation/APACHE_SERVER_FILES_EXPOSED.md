@@ -1,4 +1,4 @@
-# Remediation for APACHE_SERVER_FILES_EXPOSED
+
 
 ## Remediation Steps for Apache Server Files Exposure
 Apache Server Files exposure can significantly impact the security of your server. Unauthorized individuals may gain access to sensitive files, which could lead to a potential data breach. Therefore, it is crucial to properly secure your Apache Server Files.

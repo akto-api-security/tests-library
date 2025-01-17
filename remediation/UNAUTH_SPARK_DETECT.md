@@ -1,4 +1,4 @@
-# Remediation for UNAUTH_SPARK_DETECT
+
 
 ## Remediation Steps for Unauthenticated Spark REST API Detection Test
 

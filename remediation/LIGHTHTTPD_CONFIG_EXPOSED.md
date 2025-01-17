@@ -1,4 +1,4 @@
-# Remediation for LIGHTHTTPD_CONFIG_EXPOSED
+
 
 ## Remediation Steps for Lighttpd Config Exposed
 

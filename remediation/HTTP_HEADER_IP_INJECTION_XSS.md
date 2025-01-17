@@ -1,4 +1,4 @@
-# Remediation for HTTP_HEADER_IP_INJECTION_XSS
+
 
 ## Remediation Steps for XSS in HTTP Headers Containing IP Address
 Cross Site Scripting (XSS) in HTTP headers is a serious security issue. Exploiting this vulnerability, attackers can execute malicious scripts in the victim's web browser, thereby gaining access to sensitive information and potentially gaining unauthorized control over their interactions with the web application.

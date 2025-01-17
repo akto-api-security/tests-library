@@ -1,4 +1,4 @@
-# Remediation for XXE_SERVER_INFORMATION_LEAK
+
 
 ## Remediation Steps for XML External Entity (XXE) Test for Server Information Leak
 XML External Entity (XXE) is an severe security issue. XXE attacks exploit a property of XML parsers to allow attackers to interfere with the application's processing of XML data, causing disclosure of internal files, denial of service, server side request forgery, port scanning from the device hosting the parser, and other system impacts.

@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_CURL_HTTP_REQUEST
+
 
 ## Remediation Steps for Command Injection via Curl
 Command injection via Curl is a serious security flaw. Taking right precautions during the development of the application should minimize the risks of such vulnerability. 

@@ -1,4 +1,4 @@
-# Remediation for BASIC_UNION_BASED_SQLI_POST
+
 
 ## Remediation Steps for Basic Union Based SQL Injection On POST Method APIs
 

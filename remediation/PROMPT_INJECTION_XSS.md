@@ -1,4 +1,4 @@
-# Remediation for PROMPT_INJECTION_XSS
+
 
 ## Remediation Steps for Prompt Injection Test on LLMs for XSS
 

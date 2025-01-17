@@ -1,4 +1,4 @@
-# Remediation for LLM_ENCODING_4
+
 
 ## Remediation Steps for Prompt Injection with encoding on LLMs - Base64 Sample Long String
 

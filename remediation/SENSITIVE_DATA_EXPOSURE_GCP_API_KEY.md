@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_GCP_API_KEY
+
 
 ## Remediation Steps for GCP API Key Exposure
 

@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_ALIBABA_TOKEN
+
 
 ## Remediation Steps for Sensitive Data Exposure for ALIBABA TOKEN
 

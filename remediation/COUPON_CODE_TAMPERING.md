@@ -1,4 +1,4 @@
-# Remediation for COUPON_CODE_TAMPERING
+
 
 ## Remediation Steps for Coupon Code Tampering
 

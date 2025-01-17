@@ -1,4 +1,4 @@
-# Remediation for SQLI_ERROR_BASED_PARAM_MYSQL
+
 
 ## Remediation Steps for Error Based SQL Injection in MySQL Parameters
 

@@ -1,4 +1,4 @@
-# Remediation for TIME_BASED_NOSQLI_JSON_PARAM
+
 
 ## Remediation Steps for Time-based NoSQL Injection in JSON Body Parameters with Javascript
 

@@ -1,4 +1,4 @@
-# Remediation for SPRING_OAUTH2_RCE
+
 
 ## Remediation Steps for Spring Security OAuth2 Remote Command Execution
 

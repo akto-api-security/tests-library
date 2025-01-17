@@ -1,4 +1,4 @@
-# Remediation for OVERRIDE_DEFAULT_PAYMENT_METHODS
+
 
 ## Remediation Steps for Override Default Payment Methods
 Overriding default payment methods could pose a security risk as it exposes your application to fraudulent activity and payment bypass schemes. The following steps and code example will guide you on how to avoid this issue by validating payment methods correctly.

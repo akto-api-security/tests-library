@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_LICENCE
+
 
 ## Remediation Steps for Sensitive data exposure for LICENCE
 Sensitive data exposure is a serious security issue. Sensitive data, such as software license information, can be unintentionally exposed and may lead to unauthorized access and licence violation.

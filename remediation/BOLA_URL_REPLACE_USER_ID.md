@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_REPLACE_USER_ID
+
 
 ## Remediation Steps for Exploiting BOLA (Broken Object Level Authorization) by Replacing URL Path with User IDs for Unauthorized Access
 

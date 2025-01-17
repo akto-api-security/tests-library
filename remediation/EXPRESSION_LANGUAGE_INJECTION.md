@@ -1,4 +1,4 @@
-# Remediation for EXPRESSION_LANGUAGE_INJECTION
+
 
 ## Remediation Steps for Expression Language Injection
 Expression Language (EL) Injection is a critical security issue where an attacker is able to use expression language to execute arbitrary code within the application. Here are the steps to mitigate this vulnerability:

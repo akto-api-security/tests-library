@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_UNITED_KINGDOM_NATIONAL_INSURANCE_NUMBER
+
 
 ## Remediation Steps for Sensitive Data Exposure - UK National Insurance Number
 

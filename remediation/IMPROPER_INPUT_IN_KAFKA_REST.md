@@ -1,4 +1,4 @@
-# Remediation for IMPROPER_INPUT_IN_KAFKA_REST
+
 
 ## Remediation Steps for Improper Input Validation in Kafka-REST
 

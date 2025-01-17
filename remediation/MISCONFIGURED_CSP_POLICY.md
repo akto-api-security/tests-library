@@ -1,4 +1,4 @@
-# Remediation for MISCONFIGURED_CSP_POLICY
+
 
 ## Remediation Steps for Misconfigured Content Security Policy
 

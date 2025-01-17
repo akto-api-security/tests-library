@@ -1,4 +1,4 @@
-# Remediation for LLM_GLITCH_6
+
 
 ## Remediation Steps for Overreliance on LLMs - Glitch Test with Special Word
 Overreliance on Low-Level Microarchitectures (LLMs) may result in serious security flaws. A glitch test with a special word being a particular case where an attacker may provide specifically crafted inputs to cause incorrect behavior or reveal sensitive data.

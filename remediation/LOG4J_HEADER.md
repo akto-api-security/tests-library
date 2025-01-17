@@ -1,4 +1,4 @@
-# Remediation for LOG4J_HEADER
+
 
 ## Remediation Steps for Log4j Vulnerability in HTTP Request Headers
 

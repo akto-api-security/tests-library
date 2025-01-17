@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DOS_MULTI_VARIABLE_KEYS
+
 
 ## Remediation Steps for Denial of Service Test on GraphQL APIs
 

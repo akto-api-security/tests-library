@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_INSERT_SPECIAL_CHAR_DELETE
+
 
 ## Remediation Steps for BOLA (Broken Object Level Authorization) Exploitation through Special Characters in URL Path 
 

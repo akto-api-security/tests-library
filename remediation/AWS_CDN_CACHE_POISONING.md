@@ -1,4 +1,4 @@
-# Remediation for AWS_CDN_CACHE_POISONING
+
 
 ## Remediation Steps for AWS Misconfigured CDN Cache Poisoning
 AWS Misconfigured CDN Cache Poisoning is a serious security issue which can compromise clients' sensitive data by serving malicious content when they requests data from your AWS CloudFront distribution.

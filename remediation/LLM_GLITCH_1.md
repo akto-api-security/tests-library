@@ -1,4 +1,4 @@
-# Remediation for LLM_GLITCH_1
+
 
 ## Remediation Steps for Overreliance Test on LLMs - Glitch Test with EstreamFrame
 EstreamFrame is an SQL query tool, and overreliance on LLM (Low-Level Modeller) may potentially expose the system to unauthorized actions or raise security concerns. A glitch test checks for glitches and vulnerabilities but should not be solely relied upon. Here are the remediation steps:

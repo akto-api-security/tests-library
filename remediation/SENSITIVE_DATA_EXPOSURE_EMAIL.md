@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_EMAIL
+
 
 ## Remediation Steps for Sensitive Data Exposure for EMAIL
 

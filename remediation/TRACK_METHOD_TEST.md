@@ -1,4 +1,4 @@
-# Remediation for TRACK_METHOD_TEST
+
 
 ## Remediation Steps for TRACK Method Vulnerability Test
 The TRACK method vulnerability can put the security of your web server at risk by allowing potential attackers to intercept HTTP requests. Therefore, it is crucial to disable the TRACE and TRACK methods to minimize this risk.

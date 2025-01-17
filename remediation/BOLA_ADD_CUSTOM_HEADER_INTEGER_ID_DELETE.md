@@ -1,4 +1,4 @@
-# Remediation for BOLA_ADD_CUSTOM_HEADER_INTEGER_ID_DELETE
+
 
 ## Remediation Steps for Exploiting BOLA (Broken Object Level Authorization) By Adding Custom Header with Integer IDs 
 

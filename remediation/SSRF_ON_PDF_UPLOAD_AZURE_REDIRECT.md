@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_PDF_UPLOAD_AZURE_REDIRECT
+
 
 ## Remediation Steps for Azure SSRF Exposure
 

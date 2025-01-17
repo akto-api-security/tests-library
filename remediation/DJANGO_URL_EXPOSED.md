@@ -1,4 +1,4 @@
-# Remediation for DJANGO_URL_EXPOSED
+
 
 ## Remediation Steps for Django URL Exposure Due to Debug Mode Enablement
 

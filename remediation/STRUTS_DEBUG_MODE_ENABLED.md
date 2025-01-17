@@ -1,4 +1,4 @@
-# Remediation for STRUTS_DEBUG_MODE_ENABLED
+
 
 ## Remediation Steps for Struts Debug Mode Enabled
 Struts Debug Mode Enabled is a serious security vulnerability. This mode, when enabled, may disclose sensitive information that could aid an attacker in exploiting the application. 

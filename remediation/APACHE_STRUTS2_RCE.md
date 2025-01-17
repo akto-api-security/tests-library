@@ -1,4 +1,4 @@
-# Remediation for APACHE_STRUTS2_RCE
+
 
 ## Remediation Steps for Apache Struts2 Remote Code Execution
 

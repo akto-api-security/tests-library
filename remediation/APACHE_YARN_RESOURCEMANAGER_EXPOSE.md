@@ -1,4 +1,4 @@
-# Remediation for APACHE_YARN_RESOURCEMANAGER_EXPOSE
+
 
 ## Remediation Steps for Apache Yarn Resource Manager Exposure
 

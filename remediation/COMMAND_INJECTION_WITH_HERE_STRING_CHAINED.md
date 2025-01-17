@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_WITH_HERE_STRING_CHAINED
+
 
 ## Remediation Steps for Command Injection using Here String and Chained System Commands
 

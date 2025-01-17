@@ -1,4 +1,4 @@
-# Remediation for NODE_JS_SYS_INFO_RCE
+
 
 ## Remediation Steps for Node.JS System Information Library Remote Command Injection
 Node.JS System Information Library Remote Command Injection is a severe security vulnerability. If not appropriately mitigated, an attacker can inject malicious commands remotely, potentially leading to privilege escalation or unauthorized system access.

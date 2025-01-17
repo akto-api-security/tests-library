@@ -1,4 +1,4 @@
-# Remediation for PHP_CGI_RCE
+
 
 ## Remediation Steps for PHP CGI Remote Code Execution
 PHP CGI remote code execution is a critical security risk where an attacker could execute arbitrary code on the server. This typically involves exploiting the PHP-CGI application by sending a manipulated query string to it. 

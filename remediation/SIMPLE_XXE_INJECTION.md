@@ -1,4 +1,4 @@
-# Remediation for SIMPLE_XXE_INJECTION
+
 
 ## Remediation Steps for Basic XML External Entity (XXE) Vulnerability Test in API Endpoints
 

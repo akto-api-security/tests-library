@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_AWS_S3_BUCKET_URL
+
 
 ## Remediation Steps for AWS S3 Bucket URL Sensitive Data Exposure
 

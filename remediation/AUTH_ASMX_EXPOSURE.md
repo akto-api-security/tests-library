@@ -1,4 +1,4 @@
-# Remediation for AUTH_ASMX_EXPOSURE
+
 
 ## Remediation Steps for Authentication.asmx Detection Test
 Authentication.asmx detection can be a security issue as it exposes methods for applications to login users. Without proper measures, attackers can gain unauthorized access or user information.

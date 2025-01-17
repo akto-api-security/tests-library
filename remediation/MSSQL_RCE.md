@@ -1,4 +1,4 @@
-# Remediation for MSSQL_RCE
+
 
 ## Remediation Steps for SQL Server Reporting Services Remote Code Execution
 

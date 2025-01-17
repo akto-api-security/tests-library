@@ -1,4 +1,4 @@
-# Remediation for DRUPAL_FULL_PATH_DISCLOSURE
+
 
 ## Remediation Steps for Drupal Full Path Disclosure
 

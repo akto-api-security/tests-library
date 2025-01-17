@@ -1,4 +1,4 @@
-# Remediation for GEOSERVER_RCE
+
 
 ## Remediation Steps for GeoServer Library Remote Code Execution
 

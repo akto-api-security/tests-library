@@ -1,4 +1,4 @@
-# Remediation for APACHE_PULSAR_EXPOSED
+
 
 ## Remediation Steps for Exposed Apache Pulsar 
 

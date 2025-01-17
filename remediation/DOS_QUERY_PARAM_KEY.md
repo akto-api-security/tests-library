@@ -1,4 +1,4 @@
-# Remediation for DOS_QUERY_PARAM_KEY
+
 
 ## Remediation Steps for Denial of Service attacks via Long and Random strings in Query Param Keys
 Denial of Service (DoS) attacks can make your application unresponsive by overloading it with long and random strings in Query Param Keys. To prevent these attacks, you need to enforce restrictions on the input by implementing input validation, rate limiting, and size limiting.

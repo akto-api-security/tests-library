@@ -1,4 +1,4 @@
-# Remediation for DUMMY_CONTENT_LENGTH_HEADER
+
 
 ## Remediation Steps for Dummy Content-Length Header
 

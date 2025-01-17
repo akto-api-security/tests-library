@@ -1,4 +1,4 @@
-# Remediation for JWT_HEADER_PARAM_INJECTION_KID
+
 
 ## Remediation Steps for Authentication Bypass using JWT Header Param Injection with Key ID
 

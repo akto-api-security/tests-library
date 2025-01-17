@@ -1,4 +1,4 @@
-# Remediation for KAFKA_METADATA_API_EXPOSED
+
 
 ## Remediation Steps for Kafka Metadata API Exposure
 Kafka Metadata API exposure is a significant security threat. Proper securing of the Kafka Metadata API is crucial to prevent unauthorized access to Kafka metadata, which can cause significant harm to your data flow and indirectly your entire system.

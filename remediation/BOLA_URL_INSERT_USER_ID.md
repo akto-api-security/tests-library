@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_INSERT_USER_ID
+
 
 ## Remediation Steps for Unauthorized Access Via BOLA Exploitation
 Exploiting Broken Object Level Authorization (BOLA) by inserting User IDs in URL path for unauthorized access is a significant security issue. Insecure direct object references can lead to unauthorized access or modification of data.

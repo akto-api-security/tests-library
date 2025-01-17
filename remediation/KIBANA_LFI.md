@@ -1,4 +1,4 @@
-# Remediation for KIBANA_LFI
+
 
 ## Remediation Steps for Kibana Local File Inclusion (LFI)
 Kibana local file inclusion (LFI) is a serious security issue that can lead to exposure of sensitive information. An attacker can use LFI to read local files on the server that Kibana is hosted on.

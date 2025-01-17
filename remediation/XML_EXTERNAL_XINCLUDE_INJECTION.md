@@ -1,4 +1,4 @@
-# Remediation for XML_EXTERNAL_XINCLUDE_INJECTION
+
 
 ## Remediation Steps for XML External XInclude Injection
 

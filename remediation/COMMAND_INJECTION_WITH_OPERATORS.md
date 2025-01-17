@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_WITH_OPERATORS
+
 
 ## Remediation Steps for Command Injection via Operators
 Command injection is a serious security concern, where an attacker may inject commands that are executed by an application. This typically happens when user input is not properly sanitized or escaped, and it is passed into command line instructions.

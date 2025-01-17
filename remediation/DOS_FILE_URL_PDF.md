@@ -1,4 +1,4 @@
-# Remediation for DOS_FILE_URL_PDF
+
 
 ## Remediation Steps for Denial of Service (DoS) via Large PDF File URL
 

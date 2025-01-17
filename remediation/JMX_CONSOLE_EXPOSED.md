@@ -1,4 +1,4 @@
-# Remediation for JMX_CONSOLE_EXPOSED
+
 
 ## Remediation Steps for JMX Console Exposure
 JMX Console exposure is a serious security problem that can lead to remote code execution and unauthorized access to sensitive data. Protecting the JMX console is necessary to ensure security.

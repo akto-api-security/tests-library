@@ -1,4 +1,4 @@
-# Remediation for SAP_NETWEAVER_SERVER_LFI
+
 
 ## Remediation Steps for Local File Inclusion Vulnerability in SAP NetWeaver Application Server Java
 

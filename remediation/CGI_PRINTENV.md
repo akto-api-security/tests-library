@@ -1,4 +1,4 @@
-# Remediation for CGI_PRINTENV
+
 
 ## Remediation Steps for CGI Script Environment Variable Issues
 

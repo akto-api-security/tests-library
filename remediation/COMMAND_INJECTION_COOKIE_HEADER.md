@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_COOKIE_HEADER
+
 
 ## Remediation Steps for Command Injection in Cookie Header
 

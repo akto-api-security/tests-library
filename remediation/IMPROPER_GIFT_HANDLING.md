@@ -1,4 +1,4 @@
-# Remediation for IMPROPER_GIFT_HANDLING
+
 
 ## Remediation Steps for Improper Gift Code Handling for Transactions
 

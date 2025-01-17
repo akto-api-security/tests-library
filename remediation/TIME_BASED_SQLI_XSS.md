@@ -1,4 +1,4 @@
-# Remediation for TIME_BASED_SQLI_XSS
+
 
 ## Remediation Steps for Time based SQL Injection Test with XSS
 

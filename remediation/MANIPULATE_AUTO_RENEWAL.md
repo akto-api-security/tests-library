@@ -1,4 +1,4 @@
-# Remediation for MANIPULATE_AUTO_RENEWAL
+
 
 ## Remediation Steps for Manipulate Auto Renewal in Subscriptions
 

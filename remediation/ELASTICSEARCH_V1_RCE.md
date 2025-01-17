@@ -1,4 +1,4 @@
-# Remediation for ELASTICSEARCH_V1_RCE
+
 
 ## Remediation Steps for ElasticSearch v1.1.1/1.2 Remote Code Execution
 Elasticsearch versions 1.1.1 and 1.2 RCE is a serious security vulnerability. Attackers can exploit this weakness to carry out remote code execution attacks, thereby affecting the security of data and resources.

@@ -1,4 +1,4 @@
-# Remediation for BOLA_MODIFY_CUSTOM_HEADER_DELETE
+
 
 ## Remediation Steps for Exploiting BOLA by Fuzzing Custom Header for Unauthorized Access
 Exploiting BOLA (Broken Object Level Authorization) by fuzzing custom header for unauthorized access, especially for DELETE based APIs, is an serious security vulnerability. If not properly addressed, attackers may gain unauthorized access to modify or delete resources.

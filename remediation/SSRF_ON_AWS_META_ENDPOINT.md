@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_AWS_META_ENDPOINT
+
 
 ## Remediation Steps for AWS Details Exposed Due to SSRF
 AWS (Amazon Web Services) details exposed due to SSRF (Server Side Request Forgery) is a serious security concern. A successful SSRF attack can allow an attacker to read sensitive data from services that are behind firewalls and carry out tasks on the server.

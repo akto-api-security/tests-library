@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_XML_UPLOAD
+
 
 ## Remediation Steps for AWS Sensitive Details Exposure via XML param replacement due to SSRF
 

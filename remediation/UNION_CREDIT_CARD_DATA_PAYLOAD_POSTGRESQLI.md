@@ -1,4 +1,4 @@
-# Remediation for UNION_CREDIT_CARD_DATA_PAYLOAD_POSTGRESQLI
+
 
 ## Remediation Steps for Union Based SQL Injection to Extract Credit Card Data in PostgreSQL
 

@@ -1,4 +1,4 @@
-# Remediation for HTTP_RESPONSE_SPLITTING
+
 
 ## Remediation Steps for HTTP Response Splitting using CRLF
 

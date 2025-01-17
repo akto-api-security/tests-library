@@ -1,4 +1,4 @@
-# Remediation for PHPFASTCACHE_PHPINFO_EXPOSURE
+
 
 ## Remediation Steps for phpfastcache phpinfo Resource Exposure
 Exposure of phpinfo Resource in phpfastcache is a severe security issue. Without properly securing the phpinfo resource, attackers may gain unauthorized access to sensitive information such as PHP Environment, HTTP Headers, etc.

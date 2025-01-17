@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_PDF_UPLOAD
+
 
 ## Remediation Steps for Exposed AWS Details via Replace PDF Param due to SSRF
 

@@ -1,4 +1,4 @@
-# Remediation for PROMPT_INJECTION_STAN
+
 
 ## Remediation Steps for Prompt Injection with STAN Test on LLMs
 

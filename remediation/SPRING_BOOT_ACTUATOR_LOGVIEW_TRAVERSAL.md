@@ -1,4 +1,4 @@
-# Remediation for SPRING_BOOT_ACTUATOR_LOGVIEW_TRAVERSAL
+
 
 ## Remediation Steps for Spring Boot Actuator Logview Directory Traversal
 

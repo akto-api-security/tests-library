@@ -1,4 +1,4 @@
-# Remediation for DOS_TEST_URL
+
 
 ## Remediation Steps for Denial of Service Test by Entering Long Strings in URL
 The entry of long strings in URLs can lead to denial of service (DoS) attacks. In these, a malicious user can overwhelm a system by sending more data than it can handle, causing it to slow down or even crash, denying service to legitimate users.

@@ -1,4 +1,4 @@
-# Remediation for KUBELET_DEBUG_EXPOSURE
+
 
 ## Remediation Steps for Kubelet Debug Endpoint Exposure Detection
 

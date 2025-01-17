@@ -1,4 +1,4 @@
-# Remediation for REDIS_CONFIG
+
 
 ## Remediation Steps for Redis Configuration File Exposure
 Redis configuration file exposure is an important security issue. It occurs when Redis server configurations are left exposed, potentially allowing unauthorized users to exploit and tamper these settings, which can lead to unauthorized access or a security breach.

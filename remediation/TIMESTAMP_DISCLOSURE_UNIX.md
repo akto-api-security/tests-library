@@ -1,4 +1,4 @@
-# Remediation for TIMESTAMP_DISCLOSURE_UNIX
+
 
 ## Remediation Steps for Timestamp Disclosure - Unix
 

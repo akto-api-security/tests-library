@@ -1,4 +1,4 @@
-# Remediation for XXE_PUBLIC_DOCUMENT_TYPE_DEFINITION
+
 
 ## Remediation Steps for XML External Entity (XXE) Vulnerability
 XML External Entity (XXE) refers to vulnerabilities that exploit applications processing XML inputs from untrusted sources. These exploits can lead to the disclosure of internal files in the server, denial of service, port scanning from the perspective of the machine, and other system impacts.

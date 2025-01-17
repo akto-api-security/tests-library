@@ -1,4 +1,4 @@
-# Remediation for ID_REPLACE_JSON_OBJECT
+
 
 ## Remediation Steps for BOLA: Turning Parameters into JSON Objects for Unauthorized Access
 BOLA (Blind Object Injection), also known as Mass Assignment, is a serious security issue. Without properly handling input parameters, attackers may inject unauthorized parameters to gain access or manipulate data within your application.

@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_LOCALHOST
+
 
 ## Remediation Steps for Exposed Localhost Details due to SSRF (Server Side Request Forgery)
 

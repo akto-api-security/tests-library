@@ -1,4 +1,4 @@
-# Remediation for ANSIBLE_CONFIG_EXPOSURE
+
 
 ## Remediation Steps for Ansible Configuration Page Exposure
 

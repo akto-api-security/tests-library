@@ -1,4 +1,4 @@
-# Remediation for GRAFANA_ANGULARJS_XSS
+
 
 ## Remediation Steps for Grafana Angularjs Rendering Cross-Site Scripting
 Cross-Site Scripting (XSS) vulnerabilities within Grafana AngularJS rendering could potentially allow an attacker to inject unauthorized JavaScript code, therefore making it a serious security issue.

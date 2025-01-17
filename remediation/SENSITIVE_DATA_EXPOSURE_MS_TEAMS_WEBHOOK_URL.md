@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_MS_TEAMS_WEBHOOK_URL
+
 
 ## Remediation Steps for Sensitive Data Exposure (MS TEAMS WEBHOOK URL)
 

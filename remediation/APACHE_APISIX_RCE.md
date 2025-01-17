@@ -1,4 +1,4 @@
-# Remediation for APACHE_APISIX_RCE
+
 
 ## Remediation Steps for Apache APISIX Remote Code Execution
 

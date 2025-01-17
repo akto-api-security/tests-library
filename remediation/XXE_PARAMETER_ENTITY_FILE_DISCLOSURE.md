@@ -1,4 +1,4 @@
-# Remediation for XXE_PARAMETER_ENTITY_FILE_DISCLOSURE
+
 
 ## Remediation Steps for XML External Entity (XXE) Vulnerability with Parameter Entity for File Disclosure in API Endpoints
 

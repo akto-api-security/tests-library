@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_XML_UPLOAD_GCP_REDIRECT
+
 
 ## Remediation Steps for Sensitive GCP Details Exposure
 

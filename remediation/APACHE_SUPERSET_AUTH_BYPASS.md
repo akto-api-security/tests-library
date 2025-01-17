@@ -1,4 +1,4 @@
-# Remediation for APACHE_SUPERSET_AUTH_BYPASS
+
 
 ## Remediation Steps for Apache Superset Authentication Bypass
 

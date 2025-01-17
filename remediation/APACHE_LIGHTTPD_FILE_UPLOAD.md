@@ -1,4 +1,4 @@
-# Remediation for APACHE_LIGHTTPD_FILE_UPLOAD
+
 
 ## Remediation Steps for Apache lighttpd Arbitrary File Upload
 

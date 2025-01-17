@@ -1,4 +1,4 @@
-# Remediation for DOCKERFILE_HIDDEN_DISCLOSURE
+
 
 ## Remediation Steps for Dockerfile Hidden Disclosure
 Dockerfile Hidden Disclosure can become a serious security issue as it could potentially expose sensitive data like passwords or API keys in the Dockerfile. The best practice is to use Docker secrets or environment variables to handle sensitive data. 

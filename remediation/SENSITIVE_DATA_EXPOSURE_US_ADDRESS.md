@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_US_ADDRESS
+
 
 ## Remediation Steps for Sensitive Data Exposure: US Address
 Sensitive data exposure is a serious security concern. This can include data such as US addresses, which can be utilized inappropriately if exposed.  

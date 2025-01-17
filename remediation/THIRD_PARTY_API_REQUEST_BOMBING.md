@@ -1,4 +1,4 @@
-# Remediation for THIRD_PARTY_API_REQUEST_BOMBING
+
 
 ## Remediation Steps for Denial of Service Test on 3rd Party API Endpoints
 Third party API endpoints must be properly secured to prevent Denial of Service (DoS) attacks. An attacker can attempt a DoS attack by excessively replaying requests, which can overwhelm the API server and cause a service outage or slowdown. 

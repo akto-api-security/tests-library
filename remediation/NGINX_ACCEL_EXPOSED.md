@@ -1,4 +1,4 @@
-# Remediation for NGINX_ACCEL_EXPOSED
+
 
 ## Remediation Steps for Nginx Accel Header Data Exposed
 

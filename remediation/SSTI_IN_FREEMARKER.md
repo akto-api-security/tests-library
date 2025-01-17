@@ -1,4 +1,4 @@
-# Remediation for SSTI_IN_FREEMARKER
+
 
 ## Remediation Steps for SSTI in Freemarker
 Server-Side Template Injection (SSTI) in Freemarker is a serious vulnerability. Without addressing this issue, an attacker could inject malicious code that can be executed on the server.

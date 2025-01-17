@@ -1,4 +1,4 @@
-# Remediation for SWAGGER_API_EXPOSURE
+
 
 ## Remediation Steps for Swagger API Documentation Exposure
 Swagger API documentation exposure can become a severe security issue. Unauthorized individuals might gain detailed knowledge about the structure of your API, which might be exploited for malicious activities.

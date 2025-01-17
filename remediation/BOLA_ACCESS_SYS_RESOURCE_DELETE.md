@@ -1,4 +1,4 @@
-# Remediation for BOLA_ACCESS_SYS_RESOURCE_DELETE
+
 
 ## Remediation Steps for File System Resource Retrieval: Exploiting BOLA through Direct Parameter Value Manipulation for DELETE based APIs
 

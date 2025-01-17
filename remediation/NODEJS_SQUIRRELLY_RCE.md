@@ -1,4 +1,4 @@
-# Remediation for NODEJS_SQUIRRELLY_RCE
+
 
 ## Remediation Steps for Nodejs Squirrelly Remote Code Execution
 

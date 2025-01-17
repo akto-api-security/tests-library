@@ -1,4 +1,4 @@
-# Remediation for TIME_BASED_MYSQLI_GET
+
 
 ## Remediation Steps for Time based SQL Injection Test for MySQL DB for GET method APIs
 

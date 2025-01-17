@@ -1,4 +1,4 @@
-# Remediation for KAFKA_METRICS
+
 
 ## Remediation Steps for Exposed Kafka Metrics
 

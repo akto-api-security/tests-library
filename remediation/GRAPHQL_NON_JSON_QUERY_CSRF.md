@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_NON_JSON_QUERY_CSRF
+
 
 ## Remediation Steps for CSRF test with Non-JSON Queries in HTTP GET Query Parameters in GraphQL
 

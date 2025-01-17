@@ -1,4 +1,4 @@
-# Remediation for BALANCE_CALCULATION_HANDLING
+
 
 ## Remediation Steps for Account Balance Calculation Flaw
 Account Balance Calculation Flaw is a critical issue which can lead to financial loss if not rectified as soon as possible. This flaw may allow unauthorized modification of account balances, leading to transactions that overdraw accounts or incorrect account balances being displayed.

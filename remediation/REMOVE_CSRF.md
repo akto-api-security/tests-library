@@ -1,4 +1,4 @@
-# Remediation for REMOVE_CSRF
+
 
 ## Remediation Steps for CSRF Token Removal
 

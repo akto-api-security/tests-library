@@ -1,4 +1,4 @@
-# Remediation for APACHE_CONFIG
+
 
 ## Remediation Steps for Apache Config File Disclosure 
 

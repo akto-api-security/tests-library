@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_POSTGRES_CONNECTION_STRING
+
 
 ## Remediation Steps for Postgres Connection String Exposure
 

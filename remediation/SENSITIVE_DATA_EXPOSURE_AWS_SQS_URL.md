@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_AWS_SQS_URL
+
 
 ## Remediation Steps for Sensitive Data Exposure - AWS SQS URL
 

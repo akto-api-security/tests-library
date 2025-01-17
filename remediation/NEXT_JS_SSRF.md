@@ -1,4 +1,4 @@
-# Remediation for NEXT_JS_SSRF
+
 
 ## Remediation Steps for Next.JS Server-Side Request Forgery
 

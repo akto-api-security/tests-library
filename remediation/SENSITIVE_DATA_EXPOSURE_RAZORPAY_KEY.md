@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_RAZORPAY_KEY
+
 
 ## Remediation Steps for Sensitive Data Exposure (Razorpay Key)
 

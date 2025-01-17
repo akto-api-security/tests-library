@@ -1,4 +1,4 @@
-# Remediation for ALTERNATE_ENCODING_SQLI_GET
+
 
 ## Remediation Steps for SQL Injection via GET Method APIs Using Alternate Encoding
 

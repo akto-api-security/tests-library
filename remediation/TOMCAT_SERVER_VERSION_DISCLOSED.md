@@ -1,4 +1,4 @@
-# Remediation for TOMCAT_SERVER_VERSION_DISCLOSED
+
 
 ## Remediation Steps for Tomcat Server Version Disclosure
 Tomcat Server's version disclosure can pose a security risk as it can provide a hacker with helpful information that may assist them in exploiting a known vulnerability in the server version that is in use.

@@ -1,4 +1,4 @@
-# Remediation for NGINX_VTS_XSS
+
 
 ## Remediation Steps for Nginx Virtual Host Traffic Status Module XSS Test
 

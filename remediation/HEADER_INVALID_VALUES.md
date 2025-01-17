@@ -1,4 +1,4 @@
-# Remediation for HEADER_INVALID_VALUES
+
 
 ## Remediation Steps for Header Invalid Values
 Potential security issues arise when the application does not validate or verify the HTTP headers properly. This could make the application susceptible to attacks like HTTP Response Splitting, Cross-site scripting (XSS), Clickjacking and other Injection Attacks. 

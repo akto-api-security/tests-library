@@ -1,4 +1,4 @@
-# Remediation for SPRING_BOOT_HTTP_TRACE_ACTUATOR_EXPOSED
+
 
 ## Remediation Steps for Spring Boot HTTP Trace Actuator Exposed
 Having Spring Boot HTTP Trace Actuator exposed is a serious security issue. This can potentially allow attackers to execute cross-site tracing attacks, and get unauthorized access to sensitive data. It is highly advised to disable the HTTP TRACE method for all applications.

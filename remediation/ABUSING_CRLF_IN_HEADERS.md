@@ -1,4 +1,4 @@
-# Remediation for ABUSING_CRLF_IN_HEADERS
+
 
 ## Remediation Steps for HTTP Header Abuse using CRLF Injection
 

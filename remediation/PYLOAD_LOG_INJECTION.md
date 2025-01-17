@@ -1,4 +1,4 @@
-# Remediation for PYLOAD_LOG_INJECTION
+
 
 ## Remediation Steps for Pyload Flask Log Injection
 

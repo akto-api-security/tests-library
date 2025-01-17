@@ -1,4 +1,4 @@
-# Remediation for ALTERNATE_ENCODING_SQLI_POST
+
 
 ## Remediation Steps for SQL Injection using Alternate Encoding for POST method APIs
 

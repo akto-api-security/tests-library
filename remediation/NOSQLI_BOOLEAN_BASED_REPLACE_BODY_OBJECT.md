@@ -1,4 +1,4 @@
-# Remediation for NOSQLI_BOOLEAN_BASED_REPLACE_BODY_OBJECT
+
 
 ## Remediation Steps for Boolean Based NoSQL Injection
 Boolean-Based NoSQL Injection can compromise data, allowing attackers unauthorized access to sensitive data that can lead to serious security issues.

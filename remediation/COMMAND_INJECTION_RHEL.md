@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_RHEL
+
 
 ## Remediation Steps for Command Injection in Red Hat Linux Systems
 Command injection is a serious security flaw that can allow an attacker to execute arbitrary commands on the host operating system. This can lead to unauthorized access to system resources, data leakage, data corruption, and other negative impacts.

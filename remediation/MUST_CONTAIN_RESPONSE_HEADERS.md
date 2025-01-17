@@ -1,4 +1,4 @@
-# Remediation for MUST_CONTAIN_RESPONSE_HEADERS
+
 
 ## Remediation Steps for Missing HTTP Response Headers 
 Missing HTTP response headers could potentially expose sensitive client information to cyber attacks. A proper inclusion of HTTP security headers strengthens the overall security of any web application by applying various security policies.

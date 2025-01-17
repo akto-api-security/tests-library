@@ -1,4 +1,4 @@
-# Remediation for UNWANTED_RESPONSE_HEADERS
+
 
 ## Remediation Steps for Unwanted Response Headers
 

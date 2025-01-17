@@ -1,4 +1,4 @@
-# Remediation for XXE_INTERNAL_FILE_DISCLOSURE
+
 
 ## Remediation Steps for XML External Entity (XXE) File Disclosure Vulnerability 
 

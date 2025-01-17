@@ -1,4 +1,4 @@
-# Remediation for UNION_INLINE_COMMENT_BASED_MYSQLI_GET
+
 
 ## Remediation Steps for Union-Based SQL Injection Test with Inline Comments for MySQL on GET Method APIs
 

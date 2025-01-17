@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_INSERT_USER_ID_PATCH
+
 
 ## Remediation Steps for Exploiting BOLA (Broken Object Level Authorization) by Inserting User IDs in URL Path for Unauthorized Access for PUT/PATCH Based APIs
 

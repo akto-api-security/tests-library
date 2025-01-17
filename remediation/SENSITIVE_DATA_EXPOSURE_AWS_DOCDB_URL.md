@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_AWS_DOCDB_URL
+
 
 ## Remediation Steps for Sensitive Data Exposure for AWS DOCDB URL
 

@@ -1,4 +1,4 @@
-# Remediation for LLM_ENCODING_1
+
 
 ## Remediation Steps for Prompt Injection with Encoding on LLMs - Display Word "Pwned"
 Prompt Injections are security vulnerabilities where an attacker is able to inject arbitrary commands that can be executed by the system. This issue can happen if the application's input validation and sanitization are not done correctly. 

@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_USER_AGENT_HEADER
+
 
 ## Remediation Steps for Command Injection in User-Agent Header
 Command injection in User-Agent Header is a critical security flaw. This issue occurs when an application passes unsafe user supplied data (forms, cookies, HTTP headers, etc.) to a system shell. The issue may allow an attacker to execute arbitrary commands in the system.

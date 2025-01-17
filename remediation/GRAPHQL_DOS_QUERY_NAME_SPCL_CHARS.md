@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DOS_QUERY_NAME_SPCL_CHARS
+
 
 ## Remediation Steps for Denial of Service Test on GraphQL API with Special Character Strings in Query Name
 

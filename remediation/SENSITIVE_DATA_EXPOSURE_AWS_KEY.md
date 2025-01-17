@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_AWS_KEY
+
 
 ## Remediation Steps for Sensitive Data Exposure in LLMs - AWS Keys
 

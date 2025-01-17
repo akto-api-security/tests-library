@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_TIME_DELAY
+
 
 ## Remediation Steps for Command Injection Using Time Delay Sleep Command
 Command injection is a form of security vulnerability in an application where an attacker can execute arbitrary OS commands. 

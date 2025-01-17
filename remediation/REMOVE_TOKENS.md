@@ -1,4 +1,4 @@
-# Remediation for REMOVE_TOKENS
+
 
 ## Remediation Steps for Broken Authentication by Removing Auth Token
 Broken authentication involving auth tokens can lead to unauthorized access if not addressed correctly. Below is a simple remediation strategy using Java with Spring Security.

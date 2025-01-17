@@ -1,4 +1,4 @@
-# Remediation for PARAMETERS_CONFIG
+
 
 ## Remediation Steps for Parameters.yml - File Discovery
 

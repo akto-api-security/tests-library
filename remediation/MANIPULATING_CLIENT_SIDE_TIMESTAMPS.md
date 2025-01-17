@@ -1,4 +1,4 @@
-# Remediation for MANIPULATING_CLIENT_SIDE_TIMESTAMPS
+
 
 ## Remediation Steps for Manipulating Client-Side Timestamps
 Manipulating Client-side timestamps is a security issue that can result in impaired application performance or unauthorized behaviours. This manipulation mainly happens when an application trusts timestamps sent by the client without proper validation. Here is a way to secure your system against such vulnerabilities.

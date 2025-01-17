@@ -1,4 +1,4 @@
-# Remediation for BOOLEAN_BASED_SQLI_XSS_GET
+
 
 ## Remediation Steps for Boolean based SQL Injection Test with XSS and GET method APIs
 

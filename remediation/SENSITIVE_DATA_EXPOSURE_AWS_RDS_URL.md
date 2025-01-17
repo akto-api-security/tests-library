@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_AWS_RDS_URL
+
 
 ## Remediation Steps for Sensitive data exposure for AWS RDS URL
 

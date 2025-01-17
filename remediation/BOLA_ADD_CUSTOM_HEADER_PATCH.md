@@ -1,4 +1,4 @@
-# Remediation for BOLA_ADD_CUSTOM_HEADER_PATCH
+
 
 ## Remediation Steps for BOLA Exploitation via Custom Header for Unauthorized Access for PATCH/PUT method APIs
 

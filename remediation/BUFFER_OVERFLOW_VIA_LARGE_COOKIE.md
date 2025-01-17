@@ -1,4 +1,4 @@
-# Remediation for BUFFER_OVERFLOW_VIA_LARGE_COOKIE
+
 
 ## Remediation Steps for Buffer Overflow via Large Cookie
 

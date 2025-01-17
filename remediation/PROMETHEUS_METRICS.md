@@ -1,4 +1,4 @@
-# Remediation for PROMETHEUS_METRICS
+
 
 ## Remediation Steps for Exposed Prometheus Metrics
 Exposed Prometheus metrics can leak sensitive information and reveal the internal state of your applications which can be used for malicious intent. Therefore, it is crucial to secure your Prometheus metrics.

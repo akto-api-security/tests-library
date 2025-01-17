@@ -1,4 +1,4 @@
-# Remediation for REPLACE_AUTH_TOKEN_DELETE
+
 
 ## Remediation Steps for BOLA by Changing Auth Token for DELETE Method APIs
 BOLA (Broken Object Level Authorization) is a serious security issue. If not handled correctly, attackers may exploit it to perform unauthorized actions or access sensitive data.

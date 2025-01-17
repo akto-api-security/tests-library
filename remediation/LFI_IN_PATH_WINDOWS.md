@@ -1,4 +1,4 @@
-# Remediation for LFI_IN_PATH_WINDOWS
+
 
 ## Remediation Steps for Local File Inclusion (LFI) in URL Path for Windows
 

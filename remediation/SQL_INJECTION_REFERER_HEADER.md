@@ -1,4 +1,4 @@
-# Remediation for SQL_INJECTION_REFERER_HEADER
+
 
 ## Remediation Steps for SQL Injection Test on Referer Header
 SQL Injection in headers is a severe security issue that could allow an attacker to manipulate or exploit your database. SQL Injection can happen if you directly use data from the header in a SQL query.

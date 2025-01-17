@@ -1,4 +1,4 @@
-# Remediation for NPM_SHRINKWRAP_EXPOSURE
+
 
 ## Remediation Steps for NPM ShrinkWrap Exposure
 

@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_WITH_HERE_STRING
+
 
 ## Remediation Steps for Command Injection Using Here String
 

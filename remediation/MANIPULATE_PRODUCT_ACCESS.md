@@ -1,4 +1,4 @@
-# Remediation for MANIPULATE_PRODUCT_ACCESS
+
 
 ## Remediation Steps for Manipulating Product Access Using Unverified Time Periods
 

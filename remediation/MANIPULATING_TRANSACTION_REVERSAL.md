@@ -1,4 +1,4 @@
-# Remediation for MANIPULATING_TRANSACTION_REVERSAL
+
 
 ## Remediation Steps for Manipulating Transaction Reversal
 

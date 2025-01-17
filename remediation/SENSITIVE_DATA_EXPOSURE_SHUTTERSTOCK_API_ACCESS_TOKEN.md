@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_SHUTTERSTOCK_API_ACCESS_TOKEN
+
 
 ## Remediation Steps for Shutterstock API Access Token Exposure
 Sensitive data exposure is a serious security risk. If the Shutterstock API Access Token is exposed, it could lead to unauthorized usage, possibly causing financial loss or data breach. Follow the steps below to secure your API Access Token:

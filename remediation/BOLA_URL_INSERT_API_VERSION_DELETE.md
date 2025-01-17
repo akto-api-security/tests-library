@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_INSERT_API_VERSION_DELETE
+
 
 ## Remediation Steps for Exploiting BOLA by Inserting API Version IDs in URL path for Unauthorized Access with DELETE Based APIs
 Exploiting BOLA (Broken Object Level Authorization) can potentially lead to unauthorized access of sensitive data and functions. It happens if APIs are not properly secured and version IDs can be inserted into the URL path to gain access. 

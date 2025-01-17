@@ -1,4 +1,4 @@
-# Remediation for XXE_REVEAL_NETWORK_CONFIG
+
 
 ## Remediation Steps for XML External Entity (XXE) Test for Revealing Network Configuration in API Response
 

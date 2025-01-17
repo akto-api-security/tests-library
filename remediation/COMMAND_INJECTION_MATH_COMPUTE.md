@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_MATH_COMPUTE
+
 
 ## Remediation Steps for Command Injection via Arithmetic Expression Execution with Echo
 

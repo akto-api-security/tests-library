@@ -1,4 +1,4 @@
-# Remediation for BOOLEAN_BASED_SQLI
+
 
 ## Remediation Steps for Boolean Based SQL Injection on Login Endpoints
 

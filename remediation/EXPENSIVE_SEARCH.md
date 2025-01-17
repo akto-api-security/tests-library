@@ -1,4 +1,4 @@
-# Remediation for EXPENSIVE_SEARCH
+
 
 ## Remediation Steps for Denial of Service Attacks on Endpoint Search Fields
 Denial of Service attacks by entering long strings in the search field of an endpoint is a common security issue. Attackers use this method to overwhelm the system with extensive data requests, rendering it unavailable for use.

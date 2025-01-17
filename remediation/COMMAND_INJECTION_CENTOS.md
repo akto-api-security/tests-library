@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_CENTOS
+
 
 ## Remediation Steps for Command Injection in CentOS
 

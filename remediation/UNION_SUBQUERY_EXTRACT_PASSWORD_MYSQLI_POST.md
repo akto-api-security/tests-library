@@ -1,4 +1,4 @@
-# Remediation for UNION_SUBQUERY_EXTRACT_PASSWORD_MYSQLI_POST
+
 
 ## Remediation Steps for Union Based SQL Injection Test
 

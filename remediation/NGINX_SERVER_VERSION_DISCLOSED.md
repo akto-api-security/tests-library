@@ -1,4 +1,4 @@
-# Remediation for NGINX_SERVER_VERSION_DISCLOSED
+
 
 ## Remediation Steps for Nginx Server Version Disclosure
 

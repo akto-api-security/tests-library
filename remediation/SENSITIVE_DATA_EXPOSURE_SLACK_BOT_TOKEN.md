@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_SLACK_BOT_TOKEN
+
 
 ## Remediation Steps for Slack Bot Token Exposure
 Exposure of Slack bot tokens can lead to unauthorized access to private conversations, files, and sensitive data. By following these steps, this security risk can be mitigated.

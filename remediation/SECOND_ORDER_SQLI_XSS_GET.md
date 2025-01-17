@@ -1,4 +1,4 @@
-# Remediation for SECOND_ORDER_SQLI_XSS_GET
+
 
 ## Remediation Steps for Second Order SQL Injection with XSS and GET method APIs
 

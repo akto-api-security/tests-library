@@ -1,4 +1,4 @@
-# Remediation for XXE_SOAP_API_DB_CONFIG_DISCLOSURE
+
 
 ## Remediation Steps for XML External Entity (XXE) on SOAP API for Database Configuration Disclosure
 

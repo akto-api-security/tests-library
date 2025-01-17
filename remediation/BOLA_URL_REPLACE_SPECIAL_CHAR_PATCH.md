@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_REPLACE_SPECIAL_CHAR_PATCH
+
 
 ## Remediation Steps for Exploiting BOLA with PUT/PATCH APIs
 Broken Object Level Authorization (BOLA) exploits occur when an API exposes an object identifier (like a URL or internal ID) that an attacker can manipulate. Special characters can further disrupt the authorization, allowing for unauthorized access.

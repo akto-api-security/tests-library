@@ -1,4 +1,4 @@
-# Remediation for XML_RPC_RCE
+
 
 ## Remediation Steps for XML-RPC Server Remote Code Execution
 XML-RPC Server Remote Code Execution is a serious security vulnerability. This vulnerability allows attackers to remotely execute commands/actions in your server/application, leading to potential unauthorized data access or system compromise.

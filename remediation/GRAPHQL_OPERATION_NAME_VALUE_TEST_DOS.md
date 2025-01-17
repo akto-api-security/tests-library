@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_OPERATION_NAME_VALUE_TEST_DOS
+
 
 ## Remediation Steps for Denial of Service Test on GraphQL API 
 Denial of Service attacks on a GraphQL API can bring your service to its knees. This particular issue is triggered by passing special characters in the `Operation Name` field. By properly validating and sanitizing inputs, you can mitigate this threat. 

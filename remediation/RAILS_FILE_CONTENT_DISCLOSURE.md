@@ -1,4 +1,4 @@
-# Remediation for RAILS_FILE_CONTENT_DISCLOSURE
+
 
 ## Remediation Steps for Rails File Content Disclosure
 Rails File Content Disclosure is a serious security issue. If the issue is exploited, it may allow attackers to gain unauthorized access to sensitive information that may be contained in files within your Rails application's file system. 

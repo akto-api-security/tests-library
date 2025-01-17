@@ -1,4 +1,4 @@
-# Remediation for PAYMENT_GATEWAY_SQL_INJECTION_MYSQL_GET
+
 
 ## Remediation Steps for SQL Injection in Payment Gateway API and GET method APIs
 

@@ -1,4 +1,4 @@
-# Remediation for SSL_ENABLE_CHECK
+
 
 ## Remediation Steps for Bypass Authentication by Modifying URL to HTTP
 Bypassing Authentication by modifying a URL from HTTPS to HTTP is a potential security vulnerability that may give a malicious user unauthorized access to sensitive pages or resources. The security of the site can be compromised if proper safety measures aren't implemented.

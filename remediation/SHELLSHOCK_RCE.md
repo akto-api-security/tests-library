@@ -1,4 +1,4 @@
-# Remediation for SHELLSHOCK_RCE
+
 
 ## Remediation Steps for ShellShock Remote Code Execution
 ShellShock is a security vulnerability that allows Remote Code Execution (RCE) which can potentially allow an attacker to gain unauthorized access and control over a network.

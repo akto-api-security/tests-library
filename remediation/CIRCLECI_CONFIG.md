@@ -1,4 +1,4 @@
-# Remediation for CIRCLECI_CONFIG
+
 
 ## Remediation Steps for CircleCI config.yml Exposure
 

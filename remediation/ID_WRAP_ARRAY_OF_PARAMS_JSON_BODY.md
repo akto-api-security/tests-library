@@ -1,4 +1,4 @@
-# Remediation for ID_WRAP_ARRAY_OF_PARAMS_JSON_BODY
+
 
 ## Remediation Steps for BOLA Vulnerability: Turning JSON Param into Array of Params
 

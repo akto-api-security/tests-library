@@ -1,4 +1,4 @@
-# Remediation for LLM_INSECURE_OUTPUT_1
+
 
 ## Remediation Steps for Insecure Output Handling Test for LLMs - Display Antivirus Test String Issue
 

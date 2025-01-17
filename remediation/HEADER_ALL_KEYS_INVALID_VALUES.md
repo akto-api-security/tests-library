@@ -1,4 +1,4 @@
-# Remediation for HEADER_ALL_KEYS_INVALID_VALUES
+
 
 ## Remediation Steps for Header All Keys Invalid Values
 This security issue relates to the inability to process requests where all header keys contain invalid values. These requests could potentially lead to erratic system behavior and security vulnerabilities.

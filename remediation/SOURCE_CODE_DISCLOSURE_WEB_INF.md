@@ -1,4 +1,4 @@
-# Remediation for SOURCE_CODE_DISCLOSURE_WEB_INF
+
 
 ## Remediation Steps for Source Code Disclosure via WEB-INF
 

@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_INSERT_INTEGER_ID
+
 
 ## Remediation Steps for Exploiting BOLA by inserting Integer IDs in URL Path
 

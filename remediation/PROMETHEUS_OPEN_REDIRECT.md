@@ -1,4 +1,4 @@
-# Remediation for PROMETHEUS_OPEN_REDIRECT
+
 
 ## Remediation Steps for Prometheus Open Redirect
 Prometheus open redirect is a security issue where an attacker can lead a user towards an untrusted site which would appear to be legitimate as it has a trusted domain in the URL. To prevent this, we should not let user-supplied input dictate the location of resources in Location header.

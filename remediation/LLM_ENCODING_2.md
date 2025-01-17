@@ -1,4 +1,4 @@
-# Remediation for LLM_ENCODING_2
+
 
 ## Remediation Steps for Prompt Injection with Encoding on LLMs - Base64 String with Names
 Prompt Injection is a form of security vulnerability where an attacker can inject malicious code in an input field or prompt meant for user interaction. If the application handles Base64-encoded strings and names, this vulnerability may lead to unauthorized access to sensitive data.

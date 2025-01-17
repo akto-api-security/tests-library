@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_NPM_ACCESS
+
 
 ## Remediation Steps for Sensitive Data Exposure in NPM ACCESS
 

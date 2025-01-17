@@ -1,4 +1,4 @@
-# Remediation for JWT_APPEND_SQL_INJECTION_MYSQL
+
 
 ## Remediation Steps for SQL Injection Test on JWT for MySQL
 

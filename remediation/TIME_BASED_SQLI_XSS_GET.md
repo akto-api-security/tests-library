@@ -1,4 +1,4 @@
-# Remediation for TIME_BASED_SQLI_XSS_GET
+
 
 ## Remediation Steps for Time Based SQL Injection With XSS for GET Method APIs
 Time-Based SQL Injection with Cross-Site Scripting (XSS) is a significant security issue for your API. Your application could be vulnerable to hackers who could steal data, perform actions on behalf of your users, and potentially gain full control of your systems. 

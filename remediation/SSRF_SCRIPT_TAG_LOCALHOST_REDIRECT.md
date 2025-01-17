@@ -1,4 +1,4 @@
-# Remediation for SSRF_SCRIPT_TAG_LOCALHOST_REDIRECT
+
 
 ## Remediation Steps for SSRF (Server-Side Request Forgery) Test Via Parameter Replacement
 

@@ -1,4 +1,4 @@
-# Remediation for TIME_BASED_NOSQLI_JSON_BODY_REPLACE
+
 
 ## Remediation Steps for Time Based NoSQL Injection
 The Time based NoSQL Injection involves no-standard and tricky approach to perform SQL Injection. Any interaction with the database should be done with validated, escaped, and/or safe parameters to avoid injection.

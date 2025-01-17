@@ -1,4 +1,4 @@
-# Remediation for APACHE_HTTP_SERVER_OPEN_REDIRECT
+
 
 ## Remediation Steps for Apache HTTP Server Open Redirect
 

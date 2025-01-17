@@ -1,4 +1,4 @@
-# Remediation for BOLA_MODIFY_CUSTOM_HEADER
+
 
 ## Remediation Steps for BOLA (Broken Object Level Authorization) Exploitation
 

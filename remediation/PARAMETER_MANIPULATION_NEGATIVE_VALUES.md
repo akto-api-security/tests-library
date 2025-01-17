@@ -1,4 +1,4 @@
-# Remediation for PARAMETER_MANIPULATION_NEGATIVE_VALUES
+
 
 ## Remediation Steps for Parameter Manipulation Using Negative Values in Transactions
 Parameter manipulation using negative values in transactions is a frequent security issue, and it can lead to unwanted behavior or effect on your software. This can happen, for instance, when a user inputs a negative value in a transaction where only positive values are expected.

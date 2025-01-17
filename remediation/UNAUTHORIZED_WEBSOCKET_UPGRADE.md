@@ -1,4 +1,4 @@
-# Remediation for UNAUTHORIZED_WEBSOCKET_UPGRADE
+
 
 ## Remediation Steps for Unauthorized WebSocket Upgrade
 

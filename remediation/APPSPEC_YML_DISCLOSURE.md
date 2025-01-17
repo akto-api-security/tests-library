@@ -1,4 +1,4 @@
-# Remediation for APPSPEC_YML_DISCLOSURE
+
 
 ## Remediation Steps for Appspec Yml Disclosure
 Appspec Yml file disclosure is a grave security issue. Add uncommitted .yml files to your `.gitignore` to prevent exposing sensitive information in your commits.

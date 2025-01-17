@@ -1,4 +1,4 @@
-# Remediation for UNION_INLINE_COMMENT_BASED_MYSQLI
+
 
 ## Remediation Steps for Union based SQL Injection with Inline Comments for MySQL on Login Endpoints
 

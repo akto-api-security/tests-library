@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_NOTION_API_TOKEN
+
 
 ## Remediation Steps for Sensitive Data Exposure of NOTION API TOKEN
 Sensitive data exposure like the NOTION API TOKEN can lead to unauthorized access to the systems or database. Implementing measures to secure your tokens, keys and sensitive data can prevent exposing them.

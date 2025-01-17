@@ -1,4 +1,4 @@
-# Remediation for ACTIVE_MQ_DEFAULT_LOGIN
+
 
 ## Remediation Steps for ActiveMQ Default Login  
 ActiveMQ default login is a security risk that offers attackers an easy route to unauthorized access and potential manipulation of data. By default, ActiveMQ uses the username 'admin' and the password 'admin', which is common knowledge and thus a vulnerability. 

@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_MS_SQL_SERVER_CONNECTION_STRING
+
 
 ## Remediation Steps for MS SQL Server Connection String Sensitive Data Exposure
 Sensitive data exposure for MS SQL Server connection strings can lead to unwanted access to your database resulting in data leakages and potential dangers to the integrity of your data. Here's how you can mitigate it.

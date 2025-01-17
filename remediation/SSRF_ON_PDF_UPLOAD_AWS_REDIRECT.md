@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_PDF_UPLOAD_AWS_REDIRECT
+
 
 ## Remediation Steps for Sensitive AWS Details Exposure
 Exposure of sensitive AWS details is a major security concern. Due to Server Side Request Forgery (SSRF), replacing PDF param with redirection can inadvertently expose these details. Here are the steps to remediate this issue:

@@ -1,4 +1,4 @@
-# Remediation for DOS_HEADER_VALUE
+
 
 ## Remediation Steps for Denial of Service attacks via Header Parameter Values
 A Denial of Service attack (DoS attack) by flooding an application with long, random strings in header parameter values, may crash or render the application unresponsive. The attacker can exploit this vulnerability to hamper normal operation of the application, affecting the system's performance and availability.

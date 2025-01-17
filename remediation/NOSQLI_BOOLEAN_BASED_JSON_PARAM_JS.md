@@ -1,4 +1,4 @@
-# Remediation for NOSQLI_BOOLEAN_BASED_JSON_PARAM_JS
+
 
 ## Remediation Steps for Boolean Based NoSQL Injection
 

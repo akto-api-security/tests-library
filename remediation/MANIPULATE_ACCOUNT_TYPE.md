@@ -1,4 +1,4 @@
-# Remediation for MANIPULATE_ACCOUNT_TYPE
+
 
 ## Remediation Steps for Manipulating Account Type
 

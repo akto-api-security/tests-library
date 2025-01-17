@@ -1,4 +1,4 @@
-# Remediation for SPRING_CLOUD_GATEWAY_CODE_INJECTION
+
 
 ## Remediation Steps for Spring Cloud Gateway Code Injection Vulnerability
 

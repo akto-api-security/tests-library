@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_URL_PATH
+
 
 ## Remediation Steps for Command Injection in URL Path
 

@@ -1,4 +1,4 @@
-# Remediation for NOSQLI_ERROR_BASED_PARAM_MONGO_SPECIAL_CHARACTERS
+
 
 ## Remediation Steps for NoSQL Injection Error in JSON Body Parameters for Mongo
 

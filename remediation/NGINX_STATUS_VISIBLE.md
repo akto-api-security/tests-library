@@ -1,4 +1,4 @@
-# Remediation for NGINX_STATUS_VISIBLE
+
 
 ## Remediation Steps for NGINX Status Disclosure
 

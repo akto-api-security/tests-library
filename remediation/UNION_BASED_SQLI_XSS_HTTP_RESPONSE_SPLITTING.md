@@ -1,4 +1,4 @@
-# Remediation for UNION_BASED_SQLI_XSS_HTTP_RESPONSE_SPLITTING
+
 
 ## Remediation Steps for Union based SQL Injection Test with XSS and HTTP Response Splitting
 

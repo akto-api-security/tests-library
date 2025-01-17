@@ -1,4 +1,4 @@
-# Remediation for XXE_PATH_TRAVERSAL
+
 
 ## Remediation Steps for XML External Entity (XXE) Test for Path Traversal
 

@@ -1,4 +1,4 @@
-# Remediation for IMPROPER_ACCOUNT_TYPE_HANDLING
+
 
 ## Remediation Steps for Improper Account Type Handling for Downgrade
 

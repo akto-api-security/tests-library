@@ -1,4 +1,4 @@
-# Remediation for KAFKA_BROKER_CONFIG_EXPOSED
+
 
 ## Remediation Steps for Exposed Kafka Broker Config
 Exposed Kafka Broker Config represents a serious security concern. If not properly secured, the Kafka Broker can be compromised and unauthorized activities may take place.

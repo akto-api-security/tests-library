@@ -1,4 +1,4 @@
-# Remediation for FUZZ_USER_ID_PATCH
+
 
 ## Remediation Steps for BOLA by Accessing Existing User Data Through User ID Fuzzing for PATCH/PUT Method APIs
 

@@ -1,4 +1,4 @@
-# Remediation for DOS_JSON_BODY_KEY
+
 
 ## Remediation Steps for Denial of Service Through JSON Body Keys 
 

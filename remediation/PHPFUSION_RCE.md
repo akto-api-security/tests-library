@@ -1,4 +1,4 @@
-# Remediation for PHPFUSION_RCE
+
 
 ## Remediation Steps for PHP-Fusion Remote Code Execution
 

@@ -1,4 +1,4 @@
-# Remediation for TIME_BASED_MYSQLI
+
 
 ## Remediation Steps for Time-Based SQL Injection in MySQL DB
 

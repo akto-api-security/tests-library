@@ -1,4 +1,4 @@
-# Remediation for USER_ENUM_ACCOUNT_LOCK
+
 
 ## Remediation Steps for User Enumeration using Locked Account Role
 User Enumeration using Locked Account Role is a security issue where an attacker is able to determine valid users based on the response from a locked account. This knowledge can aid an attacker in hacking attempts. To mitigate this, we should unify the message returned for either case so that an attacker is not able to confirm whether an account is locked or not.

@@ -1,4 +1,4 @@
-# Remediation for CITRIX_XSS
+
 
 ## Remediation Steps for Citrix Gateway Cross-Site Scripting
 

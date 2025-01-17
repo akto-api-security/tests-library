@@ -1,4 +1,4 @@
-# Remediation for XML_INTERNAL_ENTITY_TEST
+
 
 ## Remediation Steps for XML Internal Entity Vulnerability in API Endpoints
 

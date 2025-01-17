@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_BASE64_ENCODING
+
 
 ## Remediation Steps for Command Injection via Base64 Encoding with echo
 

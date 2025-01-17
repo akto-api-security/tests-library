@@ -1,4 +1,4 @@
-# Remediation for FUZZ_USER_ID
+
 
 ## Remediation Steps for BOLA by Accessing Existing User Data Through User ID Fuzzing
 

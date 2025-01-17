@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_CONTENT_TYPE_CSRF
+
 
 ## Remediation Steps for CSRF Test with Content-Type Header in GraphQL
 

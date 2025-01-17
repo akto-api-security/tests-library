@@ -1,4 +1,4 @@
-# Remediation for MANIPULATING_ACCESS_LEVELS
+
 
 ## Remediation Steps for Manipulating Access Levels in Resource Consumption APIs
 Manipulating Access Levels in Resource Consumption APIs is a critical security vulnerability that can expose sensitive data or allow unauthorized operations to be performed. Proper measures should be taken to correct this issue.

@@ -1,4 +1,4 @@
-# Remediation for SERVER_PRIVATE_KEYS
+
 
 ## Remediation Steps for Detecting Private SSH, TLS, and JWT Keys Exposure
 

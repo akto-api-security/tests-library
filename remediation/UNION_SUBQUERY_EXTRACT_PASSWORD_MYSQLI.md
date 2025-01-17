@@ -1,4 +1,4 @@
-# Remediation for UNION_SUBQUERY_EXTRACT_PASSWORD_MYSQLI
+
 
 ## Remediation Steps for Union based SQL Injection on Login Endpoint
 

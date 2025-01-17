@@ -1,4 +1,4 @@
-# Remediation for APACHE_STRUTS_SHOWCASE_EXPOSURE
+
 
 ## Remediation Steps for Apache Struts - ShowCase Application Exposure
 

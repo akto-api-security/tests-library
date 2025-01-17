@@ -1,4 +1,4 @@
-# Remediation for REDIS_EXPOSED
+
 
 ## Remediation Steps for Exposed Redis
 

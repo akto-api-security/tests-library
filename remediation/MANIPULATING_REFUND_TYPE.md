@@ -1,4 +1,4 @@
-# Remediation for MANIPULATING_REFUND_TYPE
+
 
 ## Remediation Steps for Manipulating Refund Type 
 

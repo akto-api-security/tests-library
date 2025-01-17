@@ -1,4 +1,4 @@
-# Remediation for NOSQLI_ERROR_BASED_QUERY_PARAM_MONGOOSE
+
 
 ## Remediation Steps for Error Based NoSQL Injection in Mongoose Query Parameters
 

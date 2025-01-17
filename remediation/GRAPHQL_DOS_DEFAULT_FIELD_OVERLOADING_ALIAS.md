@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DOS_DEFAULT_FIELD_OVERLOADING_ALIAS
+
 
 ## Remediation Steps for Denial of Service on GraphQL API with Default Field Overloading Using Aliases
 Denial of Service attacks on GraphQL APIs with default field overloading can be critical, causing disruptions to service. Attackers may overload specific resource-intense fields multiple times in a query by using aliases, leading to a significant impact on the performance. 

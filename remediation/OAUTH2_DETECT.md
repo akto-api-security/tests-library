@@ -1,4 +1,4 @@
-# Remediation for OAUTH2_DETECT
+
 
 ## Remediation Steps for OAuth 2.0 Authorization Server Detection
 

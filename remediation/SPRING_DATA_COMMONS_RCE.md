@@ -1,4 +1,4 @@
-# Remediation for SPRING_DATA_COMMONS_RCE
+
 
 ## Remediation Steps for Spring Data Commons Remote Code Execution
 Spring Data Commons Remote Code Execution is a serious security concern. It is important to protect from Remote Code Execution vulnerabilities to maintain the integrity of your server. 

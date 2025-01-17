@@ -1,4 +1,4 @@
-# Remediation for XML_INJECTION
+
 
 ## Remediation Steps for XML Tag and Attribute Injection
 

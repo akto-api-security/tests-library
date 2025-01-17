@@ -1,4 +1,4 @@
-# Remediation for ID_REPLACE_JSON_OBJECT_PATCH
+
 
 ## Remediation Steps for BOLA: Turning Parameters into JSON Objects for Unauthorized Access
 

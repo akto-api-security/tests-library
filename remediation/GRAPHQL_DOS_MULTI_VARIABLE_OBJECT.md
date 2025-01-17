@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DOS_MULTI_VARIABLE_OBJECT
+
 
 ## Remediation Steps for Denial of Service Attack on GraphQL API
 

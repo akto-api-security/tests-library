@@ -1,4 +1,4 @@
-# Remediation for AUTH_BYPASS_SQL_INJECTION
+
 
 ## Remediation Steps for Authentication Bypass using SQL Injection
 

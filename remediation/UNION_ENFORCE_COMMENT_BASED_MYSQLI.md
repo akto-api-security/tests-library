@@ -1,4 +1,4 @@
-# Remediation for UNION_ENFORCE_COMMENT_BASED_MYSQLI
+
 
 ## Remediation Steps for Union-based SQL Injection Tests with Enforcing Comment Character Payloads for MySQL on Login Endpoints
 

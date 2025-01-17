@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DOS_QUERY_BATCHING
+
 
 ## Remediation Steps for Denial of Service Test on GraphQL API with High Amount of Queries / Query Batching in Single Request
 Denial of Service (DoS) in GraphQL can occur when an attacker sends more queries/complex queries than the application can handle. Here are some steps to remediate this issue:

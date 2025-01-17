@@ -1,4 +1,4 @@
-# Remediation for GRAFANA_SNAPSHOT_CREATION
+
 
 ## Remediation Steps for Grafana Unauthenticated Snapshot Creation
 

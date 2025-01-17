@@ -1,4 +1,4 @@
-# Remediation for STRUTS_OLD_VERSION_OPEN_REDIRECT
+
 
 ## Remediation Steps for Apache Struts Old Version Open Redirect Vulnerability
 

@@ -1,4 +1,4 @@
-# Remediation for HEADER_REFLECTED_IN_INVALID_URLS
+
 
 ## Remediation Steps for Header Reflection in Invalid URLs
 

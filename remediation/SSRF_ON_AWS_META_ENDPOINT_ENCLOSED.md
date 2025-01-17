@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_AWS_META_ENDPOINT_ENCLOSED
+
 
 ## Remediation Steps for Exposure of Sensitive AWS Details
 

@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_INSERT_API_VERSION
+
 
 ## Remediation Steps for Exploiting BOLA by inserting API Version IDs in URL path for Unauthorized Access
 BOLA (a.k.a Broken Object Level Authorization) vulnerability can allow an attacker to substitute API version IDs in the URL path, bypassing restrictions and gaining unauthorized access to sensitive data.

@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_INDIAN_UNIQUE_HEALTH_IDENTIFICATION
+
 
 ## Remediation Steps for Sensitive Data Exposure of Unique Health Identification in India
 

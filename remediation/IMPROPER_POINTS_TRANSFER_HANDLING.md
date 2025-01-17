@@ -1,4 +1,4 @@
-# Remediation for IMPROPER_POINTS_TRANSFER_HANDLING
+
 
 ## Remediation Steps for Improper Loyalty/Referral Points Transfer Handling
 Improper handling of loyalty or referral points can lead to unauthorized access to and manipulation of these points. This can compromise the integrity of the loyalty program and the trust users have in it. 

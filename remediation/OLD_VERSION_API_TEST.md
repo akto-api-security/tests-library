@@ -1,4 +1,4 @@
-# Remediation for OLD_VERSION_API_TEST
+
 
 ## Remediation Steps for Old API Version Test for Detecting Shadow APIs
 Shadow APIs refer to APIs that remain in the system unnoticed and no longer maintained or updated. They pose as security risks as hackers can exploit them. Hence, it's crucial to regularly discover and manage these APIs. Below are the steps to mitigate this issue:

@@ -1,4 +1,4 @@
-# Remediation for DATE_FIELD_DOS
+
 
 ## Remediation Steps for Denial of Service Test on Date Type Fields in API endpoint using extreme values
 

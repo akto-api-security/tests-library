@@ -1,4 +1,4 @@
-# Remediation for LLM_GLITCH_5
+
 
 ## Remediation Steps for Overreliance Test on LLMs - Glitch Test with Random Word
 

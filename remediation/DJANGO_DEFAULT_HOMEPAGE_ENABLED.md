@@ -1,4 +1,4 @@
-# Remediation for DJANGO_DEFAULT_HOMEPAGE_ENABLED
+
 
 ## Remediation Steps for Django Default Homepage Enabled
 Default Django homepage can reveal significant details about your server configuration to attackers. It is generally advisable to disable it before deploying your application to production.

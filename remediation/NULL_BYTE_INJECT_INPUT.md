@@ -1,4 +1,4 @@
-# Remediation for NULL_BYTE_INJECT_INPUT
+
 
 ## Remediation Steps for Input Validation test using Null Byte Injection
 

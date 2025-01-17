@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_REPLACE_SPECIAL_CHAR
+
 
 ## Remediation Steps for Exploiting BOLA by Replacing URL Path with Special Characters for Unauthorized Access
 

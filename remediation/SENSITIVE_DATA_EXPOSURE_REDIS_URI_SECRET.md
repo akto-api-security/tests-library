@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_REDIS_URI_SECRET
+
 
 ## Remediation Steps for Sensitive Data Exposure for REDIS URI SECRET
 

@@ -1,4 +1,4 @@
-# Remediation for BYPASS_COUPON_EXPIRY_VALIDATION
+
 
 ## Remediation Steps for Bypass Coupon Expiry Validation
 Bypass coupon expiry validation can potentially allow expired coupons to be used, causing possible loss of revenues. This issue arises due to faulty validations or lack of proper security checks before applying a coupon.

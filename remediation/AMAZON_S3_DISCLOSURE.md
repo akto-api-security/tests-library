@@ -1,4 +1,4 @@
-# Remediation for AMAZON_S3_DISCLOSURE
+
 
 ## Remediation Steps for Amazon S3 Key Disclosure
 

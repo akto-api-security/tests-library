@@ -1,4 +1,4 @@
-# Remediation for LLM_WRONG_ANSWER_2
+
 
 ## Remediation Steps for Overreliance on LLMs Generating Wrong Answer for Prime Check
 Overreliance on Low-Level Modules (LLMs) while generating prime check can introduce vulnerabilities in your code by providing incorrect results. Following is a way to mitigate this issue using Python:

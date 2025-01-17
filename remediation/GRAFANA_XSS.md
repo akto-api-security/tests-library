@@ -1,4 +1,4 @@
-# Remediation for GRAFANA_XSS
+
 
 ## Remediation Steps for Grafana Cross-Site Scripting Issue
 Grafana Cross-Site Scripting (XSS) issue is a security vulnerability that allows attackers to inject malicious scripts into web pages viewed by other users. 

@@ -1,4 +1,4 @@
-# Remediation for SPRING_MVC_RCE
+
 
 ## Remediation Steps for Spring MVC Remote Code Execution
 

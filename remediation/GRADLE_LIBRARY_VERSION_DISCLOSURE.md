@@ -1,4 +1,4 @@
-# Remediation for GRADLE_LIBRARY_VERSION_DISCLOSURE
+
 
 ## Remediation Steps for Gradle Library Version Disclosure
 

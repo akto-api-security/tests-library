@@ -1,4 +1,4 @@
-# Remediation for APACHE_TIKA_HEADER_COMMAND_INJECTION
+
 
 ## Remediation Steps for Apache Tika Header Command Injection
 

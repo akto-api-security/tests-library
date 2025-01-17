@@ -1,4 +1,4 @@
-# Remediation for NODEJS_TEMPLATE_INJECT
+
 
 ## Remediation Steps for Node.js Embedded JavaScript - Template Injection
 Node.js Embedded JavaScript (EJS) Template Injection allows attackers to execute arbitrary code on affected systems, leading to various security issues. This vulnerability can be mitigated by applying input validation measures and by proper encapsulation of data within the EJS templates.

@@ -1,4 +1,4 @@
-# Remediation for BOLA_MODIFY_CUSTOM_HEADER_PATCH
+
 
 ## Remediation Steps for BOLA Exploitation by Fuzzing Custom Header 
 

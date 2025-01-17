@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_INVOICE
+
 
 ## Remediation Steps for Sensitive Data Exposure for INVOICE
 Sensitive data exposure for INVOICE is a serious security issue. When sensitive data such as invoice details are exposed, attackers could gain unauthorized access to critical data causing large financial losses and GDPR violations.

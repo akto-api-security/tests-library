@@ -1,4 +1,4 @@
-# Remediation for QUANTITY_TAMPERING
+
 
 ## Remediation Steps for Input Validation Using Quantity Tampering
 

@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_NGROK_API
+
 
 ## Remediation Steps for NGROK API's Sensitive Data Exposure
 Sensitive data exposure via NGROK API is a serious security issue. Without proper safeguards, attackers may gain unauthorized access to sensitive information, leading to serious implications.

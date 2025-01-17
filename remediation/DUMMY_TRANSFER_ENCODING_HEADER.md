@@ -1,4 +1,4 @@
-# Remediation for DUMMY_TRANSFER_ENCODING_HEADER
+
 
 ## Remediation Steps for Dummy Transfer-Encoding Header
 The dummy Transfer-Encoding header is a well-known security issue. An attacker may manipulate the header of an HTTP request by leveraging the "Transfer-Encoding: chunked" technique to bypass security mechanisms or create potential denial-of-service threats.

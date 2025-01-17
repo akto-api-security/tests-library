@@ -1,4 +1,4 @@
-# Remediation for PROMPT_INJECTION_BASIC_HELLO
+
 
 ## Remediation Steps for Basic Prompt Injection in LLMs
 

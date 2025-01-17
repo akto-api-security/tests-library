@@ -1,4 +1,4 @@
-# Remediation for LARAVEL_DEFAULT_HOMEPAGE_ENABLED
+
 
 ## Remediation Steps for Laravel Default Homepage Enabled
 Having Laravel Default Homepage enabled could be a security issue. It can give the potential attacker insights about the technology in use, thus making it easier to craft targeted attacks.

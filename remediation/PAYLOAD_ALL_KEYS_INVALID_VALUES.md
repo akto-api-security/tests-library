@@ -1,4 +1,4 @@
-# Remediation for PAYLOAD_ALL_KEYS_INVALID_VALUES
+
 
 ## Remediation Steps for Payload All Keys Invalid Values
 Payload with all keys having invalid values is a security issue wherein the application is passing insecure, unauthenticated, or inappropriate requests which can lead to potential security vulnerabilities.

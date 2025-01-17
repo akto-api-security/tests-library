@@ -1,4 +1,4 @@
-# Remediation for DRUPAL_SQLI
+
 
 ## Remediation Steps for Drupal SQL Injection
 

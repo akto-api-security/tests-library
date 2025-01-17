@@ -1,4 +1,4 @@
-# Remediation for JWT_MODIFY_BODY
+
 
 ## Remediation Steps for JWT Token Tampering: Modifying User IDs for Unauthorized Access
 

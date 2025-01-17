@@ -1,4 +1,4 @@
-# Remediation for SQL_INJECTION_USER_AGENT_HEADER
+
 
 ## Remediation Steps for SQL Injection on User Agent Header
 

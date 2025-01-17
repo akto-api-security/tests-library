@@ -1,4 +1,4 @@
-# Remediation for TIME_BASED_POSTGRESQLI_POST
+
 
 ## Remediation Steps for Time-based SQL Injection in PostgreSQL DB for POST method APIs
 

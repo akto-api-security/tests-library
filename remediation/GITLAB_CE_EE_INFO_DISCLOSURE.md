@@ -1,4 +1,4 @@
-# Remediation for GITLAB_CE_EE_INFO_DISCLOSURE
+
 
 ## Remediation Steps for Gitlab CE/EE Information Disclosure
 

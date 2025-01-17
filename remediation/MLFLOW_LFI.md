@@ -1,4 +1,4 @@
-# Remediation for MLFLOW_LFI
+
 
 ## Remediation Steps for MLFlow Local File Inclusion
 MLFlow Local File Inclusion is a security vulnerability that happens when an attacker has the ability to read files that they should not be able to read on the server through the MLFlow.

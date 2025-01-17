@@ -1,4 +1,4 @@
-# Remediation for LOGSTASH_CONFIG_EXPOSED
+
 
 ## Remediation Steps for Logstash Config Files Exposure
 Exposing Logstash configuration files is a serious issue as it can provide attackers unauthorized access to sensitive data. Here are some steps you can follow to mitigate this vulnerability.

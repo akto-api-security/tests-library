@@ -1,4 +1,4 @@
-# Remediation for INPUT_VALIDATION_BY_REPLACING_ARRAY_WITH_OBJECT
+
 
 ## Remediation Steps for Input Validation by Replacing Array with Object
 

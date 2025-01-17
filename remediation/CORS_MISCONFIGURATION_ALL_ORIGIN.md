@@ -1,4 +1,4 @@
-# Remediation for CORS_MISCONFIGURATION_ALL_ORIGIN
+
 
 ## Remediation Steps for All Origin CORS Misconfiguration Detection
 

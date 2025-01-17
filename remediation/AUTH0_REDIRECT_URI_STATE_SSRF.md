@@ -1,4 +1,4 @@
-# Remediation for AUTH0_REDIRECT_URI_STATE_SSRF
+
 
 ## Remediation Steps for SSRF test for Redirect URI with State Parameter in Auth0 Authentication
 

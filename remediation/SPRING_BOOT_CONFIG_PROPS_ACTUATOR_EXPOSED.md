@@ -1,4 +1,4 @@
-# Remediation for SPRING_BOOT_CONFIG_PROPS_ACTUATOR_EXPOSED
+
 
 ## Remediation Steps for Spring Boot Configuration Properties Actuator Exposure
 

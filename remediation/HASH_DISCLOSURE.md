@@ -1,4 +1,4 @@
-# Remediation for HASH_DISCLOSURE
+
 
 ## Remediation Steps for Hash Disclosure
 

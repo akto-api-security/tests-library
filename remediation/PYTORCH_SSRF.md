@@ -1,4 +1,4 @@
-# Remediation for PYTORCH_SSRF
+
 
 ## Remediation Steps for PyTorch Server-Side Request Forgery Test
 Server-Side Request Forgery, or SSRF, is a vulnerability that allows an attacker to make requests on behalf of the server. In the context of a PyTorch server, without proper security measures, attackers might exploit such a vulnerability to gain unauthorized access to services that are internal to your network.

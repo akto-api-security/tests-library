@@ -1,4 +1,4 @@
-# Remediation for NODEJS_DIRECTORY_TRAVERSAL
+
 
 ## Remediation Steps for Node.js Local File Inclusion
 

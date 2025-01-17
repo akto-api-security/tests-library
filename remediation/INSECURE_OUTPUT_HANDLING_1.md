@@ -1,4 +1,4 @@
-# Remediation for INSECURE_OUTPUT_HANDLING_1
+
 
 ## Remediation Steps for Insecure Output Handling Test on LLMs: Display Present Working Directory
 

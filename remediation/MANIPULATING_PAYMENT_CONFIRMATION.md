@@ -1,4 +1,4 @@
-# Remediation for MANIPULATING_PAYMENT_CONFIRMATION
+
 
 ## Remediation Steps for Manipulating Payment Confirmation in Transaction APIs
 

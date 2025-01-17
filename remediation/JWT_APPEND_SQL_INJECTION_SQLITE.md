@@ -1,4 +1,4 @@
-# Remediation for JWT_APPEND_SQL_INJECTION_SQLITE
+
 
 ## Remediation Steps for SQL Injection test on JWT for SQLite
 SQL Injection is a serious security issue. Without properly validating and encoding input, an attacker might be able to manipulate SQL queries in malicious ways. 

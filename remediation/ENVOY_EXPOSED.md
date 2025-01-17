@@ -1,4 +1,4 @@
-# Remediation for ENVOY_EXPOSED
+
 
 ## Remediation Steps for Envoy Configuration Exposure
 Envoy Configuration Exposure can lead to potential security issues. It can allow attackers to acquire unauthorized and valuable information about your systems which may lead to further exploitations.

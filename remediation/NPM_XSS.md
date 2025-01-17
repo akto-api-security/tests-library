@@ -1,4 +1,4 @@
-# Remediation for NPM_XSS
+
 
 ## Remediation Steps for Cross-Site Scripting in npm Packages
 

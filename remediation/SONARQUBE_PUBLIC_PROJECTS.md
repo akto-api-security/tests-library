@@ -1,4 +1,4 @@
-# Remediation for SONARQUBE_PUBLIC_PROJECTS
+
 
 ## Remediation Steps for Sonarqube Public Projects Exposure
 Exposing Sonarqube public projects can lead to potential security issues. It can reveal sensitive data or insider information about the project, and attackers may exploit vulnerabilities in the code to gain unauthorized access or induce security breaches.

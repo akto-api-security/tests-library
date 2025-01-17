@@ -1,4 +1,4 @@
-# Remediation for BIG_REDIRECTS_SCAN
+
 
 ## Remediation Steps for Big Redirects Scan Issue
 A Big Redirect vulnerability involves sending large amounts of data in redirection response effectively affecting application performance or even triggering possible overflow issues.

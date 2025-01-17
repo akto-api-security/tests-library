@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_SESSIONID
+
 
 ## Remediation Steps for Sensitive Data Exposure for SESSIONID
 

@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_CURL_HTTP_REQUEST_CHAINED_COMMANDS
+
 
 ## Remediation Steps for Command Injection in HTTP Requests
 

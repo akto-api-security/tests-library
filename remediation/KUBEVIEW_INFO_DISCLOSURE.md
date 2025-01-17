@@ -1,4 +1,4 @@
-# Remediation for KUBEVIEW_INFO_DISCLOSURE
+
 
 ## Remediation Steps for KubeView Information Disclosure
 

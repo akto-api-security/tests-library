@@ -1,4 +1,4 @@
-# Remediation for XML_DEBUG_MODE_INJECTION
+
 
 ## Remediation Steps for XML Debug Mode Injection
 

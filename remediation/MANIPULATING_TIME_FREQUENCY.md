@@ -1,4 +1,4 @@
-# Remediation for MANIPULATING_TIME_FREQUENCY
+
 
 ## Remediation Steps for Manipulating Time Frequency
 Manipulation of the system time frequency can lead to a variety of security issues. It might allow attackers to interfere with time-dependent functionalities or manipulate the outputs of a system.

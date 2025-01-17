@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_AMAZON_ADVERTISING_SERVICES_URL
+
 
 ## Remediation Steps for Sensitive Data Exposure in Amazon Advertising Services URL
 

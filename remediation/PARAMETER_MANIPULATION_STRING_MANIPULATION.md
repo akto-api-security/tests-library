@@ -1,4 +1,4 @@
-# Remediation for PARAMETER_MANIPULATION_STRING_MANIPULATION
+
 
 ## Remediation Steps for Parameter Manipulation by String Manipulation in Transactions
 

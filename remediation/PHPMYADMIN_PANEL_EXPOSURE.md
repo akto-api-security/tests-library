@@ -1,4 +1,4 @@
-# Remediation for PHPMYADMIN_PANEL_EXPOSURE
+
 
 ## Remediation Steps for phpMyAdmin Panel Exposure
 PhpMyAdmin Panel Exposure is a critical security issue as it exposes your database to the possibilities of unauthorized access and manipulations. Below are the recommended remediation steps to secure your phpMyAdmin panel:

@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_OPENAI_TOKEN
+
 
 ## Remediation Steps for Sensitive Data Exposure - OpenAI Token
 

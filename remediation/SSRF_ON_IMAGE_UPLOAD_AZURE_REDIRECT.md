@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_IMAGE_UPLOAD_AZURE_REDIRECT
+
 
 ## Remediation Steps for Sensitive Azure Details Exposure
 Sensitive Azure details exposure through Image param replacement with redirection due to Server Side Request Forgery (SSRF) is of great concern. 

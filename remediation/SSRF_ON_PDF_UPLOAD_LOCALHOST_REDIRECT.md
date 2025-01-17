@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_PDF_UPLOAD_LOCALHOST_REDIRECT
+
 
 ## Remediation Steps for Sensitive Localhost details exposed via SSRF
 

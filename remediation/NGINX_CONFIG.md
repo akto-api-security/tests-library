@@ -1,4 +1,4 @@
-# Remediation for NGINX_CONFIG
+
 
 ## Remediation Steps for Nginx Config File Disclosure
 Nginx Config file disclosure can lead to serious security issues as unauthorized users might get sensitive information. Following the steps below will help in preventing this vulnerability.

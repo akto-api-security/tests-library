@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_PAN_CARD
+
 
 ## Remediation Steps for Sensitive Data Exposure for PAN CARD
 

@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_AMAZON_LINUX
+
 
 ## Remediation Steps for Command Injection Vulnerability on Amazon Linux OS Identification 
 

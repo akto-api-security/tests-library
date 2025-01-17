@@ -1,4 +1,4 @@
-# Remediation for OPEN_REDIRECT_HOST_HEADER_INJECTION
+
 
 ## Remediation Steps for Open Redirect Using Host Header Injection
 Open redirect via host header injection is a significant security issue that could compromise your application's security. The attacker can use it for phishing attacks by redirecting to malicious sites or stealing confidential information from the user. 

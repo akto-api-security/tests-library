@@ -1,4 +1,4 @@
-# Remediation for NGINX_PLUS_REST_API_EXPOSURE
+
 
 ## Remediation Steps for NGINX Plus REST API Exposure
 

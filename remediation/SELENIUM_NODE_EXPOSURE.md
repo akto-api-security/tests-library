@@ -1,4 +1,4 @@
-# Remediation for SELENIUM_NODE_EXPOSURE
+
 
 ## Remediation Steps for Selenium Node Exposure
 

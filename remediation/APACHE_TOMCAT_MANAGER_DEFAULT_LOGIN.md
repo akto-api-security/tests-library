@@ -1,4 +1,4 @@
-# Remediation for APACHE_TOMCAT_MANAGER_DEFAULT_LOGIN
+
 
 ## Remediation Steps for Apache Tomcat Manager Default Login Vulnerability 
 

@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_BY_ADDING_QUERY_PARAM
+
 
 ## Remediation Steps for Command Injection via Query Parameters
 Command injection via query parameters is a common security vulnerability. If not properly mitigated, an attacker could execute arbitrary commands on the server.

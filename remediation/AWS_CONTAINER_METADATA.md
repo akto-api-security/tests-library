@@ -1,4 +1,4 @@
-# Remediation for AWS_CONTAINER_METADATA
+
 
 ## Remediation Steps for AWS Container Metadata Content Exposure
 

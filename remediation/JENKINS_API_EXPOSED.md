@@ -1,4 +1,4 @@
-# Remediation for JENKINS_API_EXPOSED
+
 
 ## Remediation Steps for Jenkins API Exposure
 Exposing Jenkins API is a serious security issue. Without properly securing Jenkins APIs, attackers may gain unauthorized access to project's data and environment. Follow the steps below to fix the vulnerability:

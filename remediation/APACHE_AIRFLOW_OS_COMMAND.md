@@ -1,4 +1,4 @@
-# Remediation for APACHE_AIRFLOW_OS_COMMAND
+
 
 ## Remediation Steps for Apache Airflow OS Command Injection
 

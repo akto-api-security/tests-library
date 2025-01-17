@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_EIN
+
 
 ## Remediation Steps for Sensitive Data - EIN Exposure
 

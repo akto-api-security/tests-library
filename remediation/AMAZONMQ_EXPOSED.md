@@ -1,4 +1,4 @@
-# Remediation for AMAZONMQ_EXPOSED
+
 
 ## Remediation Steps for Exposed AmazonMQ
 Exposed AmazonMQ is a severe security issue. Without proper configurations, unauthorized users could potentially gain access to your sensitive data.

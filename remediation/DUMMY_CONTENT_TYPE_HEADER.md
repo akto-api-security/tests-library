@@ -1,4 +1,4 @@
-# Remediation for DUMMY_CONTENT_TYPE_HEADER
+
 
 ## Remediation Steps for Dummy Content-Type Header
 

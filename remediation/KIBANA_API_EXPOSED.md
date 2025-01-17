@@ -1,4 +1,4 @@
-# Remediation for KIBANA_API_EXPOSED
+
 
 ## Remediation Steps for Kibana API Exposure
 Kibana API exposure can lead to serious security issues. If not properly secured, attackers might gain unauthorized access to your Elasticsearch data. To avoid this, follow the steps below.

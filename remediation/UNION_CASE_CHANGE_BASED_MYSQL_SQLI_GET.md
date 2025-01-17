@@ -1,4 +1,4 @@
-# Remediation for UNION_CASE_CHANGE_BASED_MYSQL_SQLI_GET
+
 
 ## Remediation Steps for Union based SQL Injection test with case change variations for MySQL on GET method APIs
 

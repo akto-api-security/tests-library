@@ -1,4 +1,4 @@
-# Remediation for JETTY_CONFIG_EXPOSED
+
 
 ## Remediation Steps for Jetty Config Exposure
 Jetty Config Exposure represents a critical security issue. Config files may contain sensitive data that, if exposed, can lead to unauthorized access or information leakage that may further compromise the application's environment.

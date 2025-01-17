@@ -1,4 +1,4 @@
-# Remediation for BOLA_ADD_CUSTOM_HEADER_DELETE
+
 
 ## Remediation Steps for Exploiting BOLA by adding Custom Header for Unauthorized Access for DELETE method APIs
 Broken Object Level Authorization (BOLA) often allows attackers to bypass authorization and perform unauthorized tasks. This issue could lead to huge data theft and unwanted data manipulation.

@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_URL_PATH_CHAINED
+
 
 ## Remediation Steps for Command Injection in URL Path with Chained System Instructions
 

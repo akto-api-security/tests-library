@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_LOCALHOST_ENCODED
+
 
 ## Remediation Steps for Sensitive Localhost Details Exposure via SSRF
 

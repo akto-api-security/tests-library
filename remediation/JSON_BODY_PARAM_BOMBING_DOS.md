@@ -1,4 +1,4 @@
-# Remediation for JSON_BODY_PARAM_BOMBING_DOS
+
 
 ## Remediation Steps for Denial of Service Test by Bombing Multiple JSON Body Parameters in Request 
 

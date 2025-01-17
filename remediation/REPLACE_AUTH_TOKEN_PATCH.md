@@ -1,4 +1,4 @@
-# Remediation for REPLACE_AUTH_TOKEN_PATCH
+
 
 ## Remediation Steps for Broken Object Level Authorization (BOLA) vulnerabilities
 

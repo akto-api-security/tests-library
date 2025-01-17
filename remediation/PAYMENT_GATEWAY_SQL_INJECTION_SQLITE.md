@@ -1,4 +1,4 @@
-# Remediation for PAYMENT_GATEWAY_SQL_INJECTION_SQLITE
+
 
 ## Remediation Steps for SQL Injection on Payment Gateway API for SQLite
 

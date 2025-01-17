@@ -1,4 +1,4 @@
-# Remediation for RAY_STATIC_LFI
+
 
 ## Remediation Steps for Ray AI Compute Engine Directory Traversal
 

@@ -1,4 +1,4 @@
-# Remediation for ACTIVEMQ_SERVER_VERSION_DISCLOSED
+
 
 ## Remediation Steps for ActiveMQ Server Version Disclosure
 ActiveMQ Server version disclosure can lead to potential security threats. An attacker may exploit known vulnerabilities for specific ActiveMQ versions if the version is publicly disclosed. Here's how you can mitigate this issue:

@@ -1,4 +1,4 @@
-# Remediation for INPUT_VALIDATION_FOR_BOOLEAN
+
 
 ## Remediation Steps for Input Validation for Boolean
 Lack of input validation for Booleans can lead to type juggling vulnerabilities where input is freely interpreted which can lead to logical flaws in the application. 

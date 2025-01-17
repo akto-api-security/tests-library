@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_SLACK_WORKSPACE_REFRESH_TOKEN
+
 
 ## Remediation Steps for Sensitive Data Exposure of Slack Workspace Refresh Token
 Sensitive data exposure is a serious security issue where unauthorized individuals may acquire access to critical data, in this case your Slack Workspace Refresh Token. Follow these steps to rectify the issue.

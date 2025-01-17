@@ -1,4 +1,4 @@
-# Remediation for STRUTS_OGNL_CONSOLE_ENABLED
+
 
 ## Remediation Steps for Struts OGNL Console Enabled
 

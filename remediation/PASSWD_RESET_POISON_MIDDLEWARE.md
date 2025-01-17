@@ -1,4 +1,4 @@
-# Remediation for PASSWD_RESET_POISON_MIDDLEWARE
+
 
 ## Remediation Steps for Password Reset Endpoint Poisoning via Middleware
 

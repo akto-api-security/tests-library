@@ -1,4 +1,4 @@
-# Remediation for CADDYFILE_EXPOSED
+
 
 ## Remediation Steps for Caddyfile Exposure
 Caddyfile Exposure is a dangerous security issue. If the Caddyfile is left exposed, it can result in unauthorized access or changes to the web server configuration. 

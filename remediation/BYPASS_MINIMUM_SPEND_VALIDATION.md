@@ -1,4 +1,4 @@
-# Remediation for BYPASS_MINIMUM_SPEND_VALIDATION
+
 
 ## Remediation Steps for Bypass Minimum Spend Validation
 

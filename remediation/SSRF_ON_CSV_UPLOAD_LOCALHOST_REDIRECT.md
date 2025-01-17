@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_CSV_UPLOAD_LOCALHOST_REDIRECT
+
 
 ## Remediation Steps for Sensitive Localhost Details Exposure via Redirection
 

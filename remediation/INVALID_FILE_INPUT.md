@@ -1,4 +1,4 @@
-# Remediation for INVALID_FILE_INPUT
+
 
 ## Remediation Steps for Invalid File Input Leaking Sensitive Details Via Verbose Error Message
 

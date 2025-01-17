@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_AZURE_FUNCTION_KEY_URL
+
 
 ## Remediation Steps for Azure Function Key URL Sensitive Data Exposure
 Sensitive data exposure through Azure Function Key URL is a critical security issue. If an attacker gains unauthorized access to the function key, they can effectively compromise the function and gain access to the underlying resources.

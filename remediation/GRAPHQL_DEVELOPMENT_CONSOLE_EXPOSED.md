@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DEVELOPMENT_CONSOLE_EXPOSED
+
 
 ## Remediation Steps for GraphQL Development Console Exposure
 

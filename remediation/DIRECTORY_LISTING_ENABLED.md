@@ -1,4 +1,4 @@
-# Remediation for DIRECTORY_LISTING_ENABLED
+
 
 ## Remediation Steps for Directory Listing Enabled
 

@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_FACEBOOK_ACCESS_TOKEN
+
 
 ## Remediation Steps for Sensitive Data Exposure - Facebook Access Token
 Sensitive data exposure of Facebook Access Token can lead to serious breaches as it can provide unauthorized access to a user's Facebook data. It is essential to secure these tokens to prevent misuse.

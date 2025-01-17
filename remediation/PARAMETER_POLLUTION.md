@@ -1,4 +1,4 @@
-# Remediation for PARAMETER_POLLUTION
+
 
 ## Remediation Steps for BOLA by HTTP Parameter Pollution
 Also known as Blind Object Locator Attacks, BOLA, combined with HTTP Parameter Pollution (HPP), could pave way for dangerous information leaks or manipulation of sensitive content. Let's look at ways to secure your system.

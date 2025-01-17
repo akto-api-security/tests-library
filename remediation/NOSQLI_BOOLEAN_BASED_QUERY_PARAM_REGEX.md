@@ -1,4 +1,4 @@
-# Remediation for NOSQLI_BOOLEAN_BASED_QUERY_PARAM_REGEX
+
 
 ## Remediation Steps for Boolean Based NoSQL Injection
 NoSQL injection refers to manipulation of query parameters that exploits an improperly secured NoSQL database. This can allow unauthorized access to sensitive information. Here we give the necessary steps to prevent such NoSQL injections when working with regular expressions (Regex).

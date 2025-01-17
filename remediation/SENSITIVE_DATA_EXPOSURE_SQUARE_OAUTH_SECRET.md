@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_SQUARE_OAUTH_SECRET
+
 
 ## Remediation Steps for Sensitive Square OAUTH Secret Exposure
 Sensitive data exposure, particularly of Square OAuth secrets, can lead to unauthorized access and manipulation of Square resources. Therefore, it's crucial to secure these secrets to ensure data integrity and confidentiality.

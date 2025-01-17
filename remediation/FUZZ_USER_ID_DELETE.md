@@ -1,4 +1,4 @@
-# Remediation for FUZZ_USER_ID_DELETE
+
 
 ## Remediation Steps for BOLA through User ID Fuzzing for DELETE method APIs
 

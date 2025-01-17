@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DOS_VARIABLE_KEY_LENGTH
+
 
 ## Remediation Steps for Denial of Service Test on GraphQL API with Very Long Key Name
 

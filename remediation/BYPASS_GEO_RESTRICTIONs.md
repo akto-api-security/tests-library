@@ -1,4 +1,4 @@
-# Remediation for BYPASS_GEO_RESTRICTIONs
+
 
 ## Remediation Steps for Bypass Geo-Restrictions
 Bypassing Geo-Restrictions is a security issue often leveraged by attackers to gain unauthorized access to content, data or services in regions where they are not physically located. Properly implementing Geo-restrictions can prevent unauthorized access.

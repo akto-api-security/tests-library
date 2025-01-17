@@ -1,4 +1,4 @@
-# Remediation for REMOVE_CAPTCHA
+
 
 ## Remediation Steps for Removing Captcha from Request
 

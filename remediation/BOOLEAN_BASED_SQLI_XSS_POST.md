@@ -1,4 +1,4 @@
-# Remediation for BOOLEAN_BASED_SQLI_XSS_POST
+
 
 ## Remediation Steps for Boolean-based SQL Injection with XSS and POST Method APIs
 

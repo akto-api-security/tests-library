@@ -1,4 +1,4 @@
-# Remediation for LLM_PKG_HALLUCINATION
+
 
 ## Remediation Steps for Overreliance on LLMs - Package Hallucination
 Overreliance on Low-Level Modules (LLMs) - Package Hallucination is a critical security concern. This vulnerability happens when a system approves non-authentic packages, which could lead potentially to the execution of malicious code.

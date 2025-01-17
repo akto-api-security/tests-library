@@ -1,4 +1,4 @@
-# Remediation for JWT_SIGNING_IN_CLIENT_SIDE
+
 
 ## Remediation Steps for JWT Signing in Client Side
 

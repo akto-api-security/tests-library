@@ -1,4 +1,4 @@
-# Remediation for HTPASSWD_INFO_LEAK
+
 
 ## Remediation Steps for Htpasswd Information Leak
 

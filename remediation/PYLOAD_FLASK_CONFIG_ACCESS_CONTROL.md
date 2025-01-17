@@ -1,4 +1,4 @@
-# Remediation for PYLOAD_FLASK_CONFIG_ACCESS_CONTROL
+
 
 ## Remediation Steps for Pyload Flask Config Unauthenticated Access
 Access to the Flask server's configuration in PyLoad without authentication is a severe security vulnerability. This can give an attacker crucial system details that can be exploited. Here's how to remediate this issue.

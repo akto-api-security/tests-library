@@ -1,4 +1,4 @@
-# Remediation for EMAIL_REGEX_REDOS_SMALL_INPUT
+
 
 ## Remediation Steps for ReDOS Test on Email Parameters with Small Input
 

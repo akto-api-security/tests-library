@@ -1,4 +1,4 @@
-# Remediation for SQLI_ERROR_BASED_PARAM_MSSQL
+
 
 ## Remediation Steps for Error Based SQL Injection for Parameters in MS SQL Server
 

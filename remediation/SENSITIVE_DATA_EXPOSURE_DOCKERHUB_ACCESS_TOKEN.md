@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_DOCKERHUB_ACCESS_TOKEN
+
 
 ## Remediation Steps for DockerHub Access Token Exposure
 Sensitive data exposure, like DockerHub access token, can lead to unauthorized access and activities in your DockerHub repository. To mitigate this security issue, please follow the steps below:

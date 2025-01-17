@@ -1,4 +1,4 @@
-# Remediation for RUBY_DRAGONFLY_RCE
+
 
 ## Remediation Steps for Ruby Dragonfly Remote Code Execution
 

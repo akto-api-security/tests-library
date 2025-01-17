@@ -1,4 +1,4 @@
-# Remediation for MONGO_EXPRESS_RCE
+
 
 ## Remediation Steps for Mongo-Express Remote Code Execution
 The remote code execution issue in Mongo-Express allows an authenticated user, by sending a crafted HTTP request, to execute arbitrary JavaScript code with the privileges of the Mongo-Express service.

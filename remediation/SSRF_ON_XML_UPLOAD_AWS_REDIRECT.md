@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_XML_UPLOAD_AWS_REDIRECT
+
 
 ## Remediation Steps for Sensitive AWS Details Exposure due to SSRF
 

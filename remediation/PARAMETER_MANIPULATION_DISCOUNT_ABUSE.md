@@ -1,4 +1,4 @@
-# Remediation for PARAMETER_MANIPULATION_DISCOUNT_ABUSE
+
 
 ## Remediation Steps for Parameter Manipulation: Abusing Discount Coupons
 

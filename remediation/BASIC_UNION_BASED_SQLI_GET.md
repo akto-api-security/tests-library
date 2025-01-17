@@ -1,4 +1,4 @@
-# Remediation for BASIC_UNION_BASED_SQLI_GET
+
 
 ## Remediation Steps for Basic Union based SQL Injection on GET method APIs
 

@@ -1,4 +1,4 @@
-# Remediation for BYPASS_AGE_RESTRICTION
+
 
 ## Remediation Steps for Bypassing Age Restrictions
 Bypassing age restrictions is crucially an ethical issue as well as a legal liability and can be prevented by enforcing strict methods for age verification.

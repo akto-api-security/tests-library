@@ -1,4 +1,4 @@
-# Remediation for ECLIPSE_JETTY_CONCATSERVLET_INFO_DISCLOSURE
+
 
 ## Remediation Steps for Eclipse Jetty ConcatServlet Information Disclosure
 

@@ -1,4 +1,4 @@
-# Remediation for EXPIRES_MAX_AGE_CHECK
+
 
 ## Remediation Steps for Session Token Storing via Persistent Cookie Test
 Storing a session token in a persistent cookie is a security risk that may lead to session hijacking. Implementing proper storage for session tokens is a key defense against unauthorized access to your application.

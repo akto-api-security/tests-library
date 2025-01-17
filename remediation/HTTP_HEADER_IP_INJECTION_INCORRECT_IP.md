@@ -1,4 +1,4 @@
-# Remediation for HTTP_HEADER_IP_INJECTION_INCORRECT_IP
+
 
 ## Remediation Steps for Incorrect IP Injection in HTTP Headers
 

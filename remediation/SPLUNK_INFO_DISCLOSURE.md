@@ -1,4 +1,4 @@
-# Remediation for SPLUNK_INFO_DISCLOSURE
+
 
 ## Remediation Steps for Splunk Information Disclosure
 

@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_POSTMAN_KEY
+
 
 ## Remediation Steps for Sensitive Data Exposure: Postman Key
 

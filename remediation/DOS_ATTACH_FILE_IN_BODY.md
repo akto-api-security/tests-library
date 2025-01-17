@@ -1,4 +1,4 @@
-# Remediation for DOS_ATTACH_FILE_IN_BODY
+
 
 ## Remediation Steps for Denial of Service by Large File in Request Body
 

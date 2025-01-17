@@ -1,4 +1,4 @@
-# Remediation for INSUFFICIENT_FUNDS_CHECK
+
 
 ## Remediation Steps for Exploiting Transactions APIs by Passing Values Over Sufficient Funds
 Exploiting Transactions APIs by Passing Values Over Sufficient Funds is a severe security issue. When not properly validated, attackers may perform transactions with insufficient balance, causing financial loss and data integrity issues.

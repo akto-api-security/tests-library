@@ -1,4 +1,4 @@
-# Remediation for AMAZON_DOCKER_CONFIG
+
 
 ## Remediation Steps for Dockerrun AWS Configuration Exposure
 

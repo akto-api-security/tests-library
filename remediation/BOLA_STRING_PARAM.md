@@ -1,4 +1,4 @@
-# Remediation for BOLA_STRING_PARAM
+
 
 ## Remediation Steps for Exploiting BOLA (Binding of LDAP Attributes)
 

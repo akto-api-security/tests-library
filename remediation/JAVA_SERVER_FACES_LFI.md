@@ -1,4 +1,4 @@
-# Remediation for JAVA_SERVER_FACES_LFI
+
 
 ## Remediation Steps for Java Server Faces Local File Inclusion
 

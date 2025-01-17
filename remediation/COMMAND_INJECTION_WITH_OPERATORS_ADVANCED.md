@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_WITH_OPERATORS_ADVANCED
+
 
 ## Remediation Steps for Command Injection Prevention 
 

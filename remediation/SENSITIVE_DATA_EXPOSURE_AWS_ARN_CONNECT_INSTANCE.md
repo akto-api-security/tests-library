@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_AWS_ARN_CONNECT_INSTANCE
+
 
 ## Remediation Steps for Sensitive Data Exposure for AWS ARN CONNECT INSTANCE 
 

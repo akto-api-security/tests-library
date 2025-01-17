@@ -1,4 +1,4 @@
-# Remediation for JS_ENV_CONFIG_DETECT
+
 
 ## Remediation Steps for JavaScript Environment Configuration Detection Test
 JavaScript Environment Configuration Test vulnerability arises due to the exposure of sensitive configuration information about the runtime environment. This could potentially be utilized by an attacker to exploit known vulnerabilities specific to the environment. 

@@ -1,4 +1,4 @@
-# Remediation for LFI_IN_PARAMETER_WINDOWS
+
 
 ## Remediation Steps for Local File Inclusion (LFI) in Parameter for Windows
 Local File Inclusion (LFI) exploits are a serious security issue that can potentially allow an attacker unauthorized access to files. These attacks can be avoided through the proper evaluation of file references within your application code before they're used. 

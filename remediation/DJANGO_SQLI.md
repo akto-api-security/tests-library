@@ -1,4 +1,4 @@
-# Remediation for DJANGO_SQLI
+
 
 ## Remediation Steps for Django SQL Injection
 

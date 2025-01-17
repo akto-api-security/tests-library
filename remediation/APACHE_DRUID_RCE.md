@@ -1,4 +1,4 @@
-# Remediation for APACHE_DRUID_RCE
+
 
 ## Remediation Steps for Apache Druid Remote Code Execution
 

@@ -1,4 +1,4 @@
-# Remediation for MANIPULATING_XML
+
 
 ## Remediation Steps for Manipulating XML Vulnerability
 Manipulating XML is a serious security issue. If not properly handled, it may lead to information disclosure, denial of service, server side request forgery, port scanning from the perspective of the machine where the parser is located, and other system impacts.

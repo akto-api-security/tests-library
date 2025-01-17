@@ -1,4 +1,4 @@
-# Remediation for RUBY_ON_RAILS_LFI
+
 
 ## Remediation Steps for Ruby On Rails Local File Inclusion
 

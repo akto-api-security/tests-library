@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_GRAFANA
+
 
 ## Remediation Steps for Sensitive Data Exposure in Grafana
 

@@ -1,4 +1,4 @@
-# Remediation for MANIPULATING_PAYMENT_GATEWAY_HANDOFF
+
 
 ## Remediation Steps for Manipulating Payment Gateway Handoff
 Manipulating Payment Gateway Handoff is a serious security issue. In a web application, secure handling of payment transactions is vital to maintain trust and integrity. The issue can be remediated by ensuring that transaction data is immutable and by verifying the transaction data both before and after the transaction.

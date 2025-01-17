@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_REPLACE_INTEGER_ID_PATCH
+
 
 ## Remediation Steps for Unauthorized Access Exploiting BOLA with PUT/PATCH based APIs
 

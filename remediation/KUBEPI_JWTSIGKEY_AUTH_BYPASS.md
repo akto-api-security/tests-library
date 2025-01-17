@@ -1,4 +1,4 @@
-# Remediation for KUBEPI_JWTSIGKEY_AUTH_BYPASS
+
 
 ## Remediation Steps for KubePi JwtSigKey Admin Authentication Bypass
 KubePi JwtSigKey Admin Authentication Bypass is a critical security issue. If not addressed, attackers may bypass the need for proper administrator authentication, leading to potential unauthorized access and manipulation of your Kubernetes resources.

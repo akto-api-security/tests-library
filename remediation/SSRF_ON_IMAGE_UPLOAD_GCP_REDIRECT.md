@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_IMAGE_UPLOAD_GCP_REDIRECT
+
 
 ## Remediation Steps for GCP Details Exposure due to SSRF
 

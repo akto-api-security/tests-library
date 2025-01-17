@@ -1,4 +1,4 @@
-# Remediation for MANIPULATE_CURRENCY_CONVERSION_RATE
+
 
 ## Remediation Steps for Manipulation of Currency Conversion Rate
 

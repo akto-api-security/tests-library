@@ -1,4 +1,4 @@
-# Remediation for MANIPULATING_PROMO_CODE_APPLICATION
+
 
 ## Remediation Steps for Manipulating Promo Code Application
 Manipulating Promo Code Application is a severe security issue. Hackers can capitalize on vulnerabilities to change promo rules or to take promo codes they're not entitled to, causing financial losses and credibility damage.

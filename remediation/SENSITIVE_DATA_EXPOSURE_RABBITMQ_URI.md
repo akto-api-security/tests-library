@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_RABBITMQ_URI
+
 
 ## Remediation Steps for Sensitive Data Exposure for RABBITMQ URI
 

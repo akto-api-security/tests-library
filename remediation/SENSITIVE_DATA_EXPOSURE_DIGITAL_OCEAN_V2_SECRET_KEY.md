@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_DIGITAL_OCEAN_V2_SECRET_KEY
+
 
 ## Remediation Steps for Sensitive Data Exposure in Digital Ocean V2 Secret Key
 

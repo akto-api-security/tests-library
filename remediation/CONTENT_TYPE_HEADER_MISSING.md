@@ -1,4 +1,4 @@
-# Remediation for CONTENT_TYPE_HEADER_MISSING
+
 
 ## Remediation Steps for Content-Type Header Missing
 

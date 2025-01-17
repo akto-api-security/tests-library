@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_TWILIO_ACCOUNT_SID
+
 
 ## Remediation Steps for TWILIO ACCOUNT SID Data Exposure
 

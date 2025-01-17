@@ -1,4 +1,4 @@
-# Remediation for ALTERNATE_ENCODING_SQL_INJECTION
+
 
 ## Remediation Steps for SQL Injection test using Alternate Encoding
 SQL Injection using alternate encoding is a serious security issue. Attackers can manipulate SQL queries through input fields in your application and alter encoding to bypass basic security controls. This risk can be mitigated by using parameterized queries, prepared statements, or stored procedures, and validating and sanitizing inputs.

@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_MATH_COMPUTE_CHAINED
+
 
 ## Remediation Steps for Command Injection with Chaining System Commands
 

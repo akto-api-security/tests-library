@@ -1,4 +1,4 @@
-# Remediation for SECOND_ORDER_SQLI_XSS
+
 
 ## Remediation Steps for Second Order SQL Injection Test with XSS
 

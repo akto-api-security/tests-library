@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_TIME_DELAY_CHAINED
+
 
 ## Remediation Steps for Command Injection using Time Delay Sleep Command
 

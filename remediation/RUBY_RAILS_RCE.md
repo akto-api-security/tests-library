@@ -1,4 +1,4 @@
-# Remediation for RUBY_RAILS_RCE
+
 
 ## Remediation Steps for Ruby on Rails Remote Code Execution
 

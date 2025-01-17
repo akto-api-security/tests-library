@@ -1,4 +1,4 @@
-# Remediation for JWT_INVALID_SIGNATURE
+
 
 ## Remediation Steps for JWT Failed to verify Signature
 JWT (JSON Web Tokens) failing to verify signature is a critical issue. This could mean an attacker has tampered with the token, potentially leading to unauthorized access. 

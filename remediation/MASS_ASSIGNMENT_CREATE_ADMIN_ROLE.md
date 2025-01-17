@@ -1,4 +1,4 @@
-# Remediation for MASS_ASSIGNMENT_CREATE_ADMIN_ROLE
+
 
 ## Remediation Steps for Mass Assignment Leading to Creation of Admin Role
 Mass Assignment is a vulnerability that is found in applications where an attacker can update all the fields of a data object for which it has no permissions. This vulnerability can lead to the creation of a user with an admin role if not handled properly.

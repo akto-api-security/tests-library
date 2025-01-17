@@ -1,4 +1,4 @@
-# Remediation for APACHE_SOLR_SSRF
+
 
 ## Remediation Steps for Apache Solr Server-Side Request Forgery
 

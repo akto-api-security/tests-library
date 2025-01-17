@@ -1,4 +1,4 @@
-# Remediation for APACHE_DRUID_KAFKA_RCE
+
 
 ## Remediation Steps for Apache Druid Kafka Connect Remote Code Execution
 

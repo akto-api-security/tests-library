@@ -1,4 +1,4 @@
-# Remediation for ERROR_BASED_SQLI_XSS
+
 
 ## Remediation Steps for Error based SQL Injection Test with XSS
 

@@ -1,4 +1,4 @@
-# Remediation for WPCONFIG_AWS_KEY
+
 
 ## Remediation Steps for AWS S3 Keys Leak
 AWS S3 keys leak is a serious security vulnerability as it allows unauthorized access to the content of the S3 buckets. This can happen if the S3 keys are exposed through code, configuration files, or any other mediums. Here are the remediation steps to handle this concern:

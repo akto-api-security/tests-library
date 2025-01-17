@@ -1,4 +1,4 @@
-# Remediation for USER_ENUM_FOLDER_ACCESS
+
 
 ## Remediation Steps for User Enumeration using Directory Access
 

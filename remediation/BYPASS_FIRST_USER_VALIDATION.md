@@ -1,4 +1,4 @@
-# Remediation for BYPASS_FIRST_USER_VALIDATION
+
 
 ## Remediation Steps for Bypassing First User Validation
 Bypassing First User Validation is a serious security issue. If not properly validated, attackers could bypass the system's first user validation leading to unauthorized access.

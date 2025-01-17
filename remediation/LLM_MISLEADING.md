@@ -1,4 +1,4 @@
-# Remediation for LLM_MISLEADING
+
 
 ## Remediation Steps for Overreliance on LLMs - Misleading Claims
 Overreliance on live location models (LLMs) can lead to misleading claims which may compromise the authenticity and reliability of applications. This poses a great risk, especially for applications that depend on location data for their operations.

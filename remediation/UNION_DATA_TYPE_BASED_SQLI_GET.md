@@ -1,4 +1,4 @@
-# Remediation for UNION_DATA_TYPE_BASED_SQLI_GET
+
 
 ## Remediation Steps for Union Based SQL Injection Test with Data Type Variations on GET method APIs
 

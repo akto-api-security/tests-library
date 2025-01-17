@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_REPLACE_SPECIAL_CHAR_DELETE
+
 
 ## Remediation Steps for Exploiting BOLA
 

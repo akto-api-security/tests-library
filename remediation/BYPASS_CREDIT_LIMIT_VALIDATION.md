@@ -1,4 +1,4 @@
-# Remediation for BYPASS_CREDIT_LIMIT_VALIDATION
+
 
 ## Remediation Steps for Bypass Credit and Buy-Now-Pay-Later Limits in Transaction APIs
 Bypassing credit and Buy-Now-Pay-Later limits in Transaction APIs poses significant security and business risks, and steps should be taken to address these vulnerabilities. The remediation strategy should focus on strengthening the server-side control, input validation, and ensuring that every transaction request is authenticated and authorized.

@@ -1,4 +1,4 @@
-# Remediation for BOLA_MODIFY_CUSTOM_HEADER_INTEGER_VAL_DELETE
+
 
 ## Remediation Steps for Exploiting BOLA (Broken Object level Authorization) by Fuzzing Custom Header with Integer for Unauthorized Access with DELETE based APIs
 

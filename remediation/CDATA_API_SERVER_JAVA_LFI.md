@@ -1,4 +1,4 @@
-# Remediation for CDATA_API_SERVER_JAVA_LFI
+
 
 ## Remediation Steps for CData API Server Java Local File Inclusion
 

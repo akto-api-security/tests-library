@@ -1,4 +1,4 @@
-# Remediation for CSRF_LOGIN_ATTACK
+
 
 ## Remediation Steps for CSRF Login Attack
 

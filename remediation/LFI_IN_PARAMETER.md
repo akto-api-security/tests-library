@@ -1,4 +1,4 @@
-# Remediation for LFI_IN_PARAMETER
+
 
 ## Remediation Steps for Local File Inclusion (LFI) in Parameter
 Local File Inclusion (LFI) is a common security vulnerability that can occur when user-supplied input is not properly sanitized. This allows an attacker to access sensitive files or even execute arbitrary code.

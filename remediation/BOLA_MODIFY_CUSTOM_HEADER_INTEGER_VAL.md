@@ -1,4 +1,4 @@
-# Remediation for BOLA_MODIFY_CUSTOM_HEADER_INTEGER_VAL
+
 
 ## Remediation Steps for Exploiting BOLA by Fuzzing Custom Header with Integer for Unauthorized Access
 

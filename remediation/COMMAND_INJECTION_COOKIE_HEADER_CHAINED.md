@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_COOKIE_HEADER_CHAINED
+
 
 ## Remediation Steps for Command Injection In Cookie Header
 Command injections in a cookie header is a severe security issue where an attacker can send commands that can potentially get executed on the server as a part of the http request process. This can be devastating as it opens up a path for unauthorized actions.

@@ -1,4 +1,4 @@
-# Remediation for APACHE_APOLLO_DEFAULT_LOGIN
+
 
 ## Remediation Steps for Apache Apollo Default Login Vulnerability
 

@@ -1,4 +1,4 @@
-# Remediation for GIT_CREDENTIALS_DISCLOSURE
+
 
 ## Remediation Steps for Git Credentials Disclosure
 

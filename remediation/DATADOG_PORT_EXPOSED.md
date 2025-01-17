@@ -1,4 +1,4 @@
-# Remediation for DATADOG_PORT_EXPOSED
+
 
 ## Remediation Steps for Datadog Port Exposure
 Datadog port exposure can lead to security vulnerabilities. Attackers might be able to sniff network traffic or attack the monitoring system directly. Here is the step by step guide to fix this vulnerability:

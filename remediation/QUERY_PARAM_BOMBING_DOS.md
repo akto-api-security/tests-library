@@ -1,4 +1,4 @@
-# Remediation for QUERY_PARAM_BOMBING_DOS
+
 
 ## Remediation Steps for Denial of Service Attacks via Query Parameters
 

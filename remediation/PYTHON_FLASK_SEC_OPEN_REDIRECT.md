@@ -1,4 +1,4 @@
-# Remediation for PYTHON_FLASK_SEC_OPEN_REDIRECT
+
 
 ## Remediation Steps for Python Flask-Security Open Redirect
 Open Redirect is a security issue where a user can be redirected to an untrusted site without their knowledge. It occurs when an application does not validate if the redirect target is a trusted server or not.

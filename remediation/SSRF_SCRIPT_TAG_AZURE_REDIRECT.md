@@ -1,4 +1,4 @@
-# Remediation for SSRF_SCRIPT_TAG_AZURE_REDIRECT
+
 
 ## Remediation Steps for SSRF Via Scripts Tags With Redirect URLs on Azure
 

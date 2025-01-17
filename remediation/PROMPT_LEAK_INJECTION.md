@@ -1,4 +1,4 @@
-# Remediation for PROMPT_LEAK_INJECTION
+
 
 ## Remediation Steps for Prompt Leak Injection Test on LLMs
 

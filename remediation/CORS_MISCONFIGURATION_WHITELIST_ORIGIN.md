@@ -1,4 +1,4 @@
-# Remediation for CORS_MISCONFIGURATION_WHITELIST_ORIGIN
+
 
 ## Remediation Steps for CORS Whitelist Origin Validation
 

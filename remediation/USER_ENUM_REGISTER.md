@@ -1,4 +1,4 @@
-# Remediation for USER_ENUM_REGISTER
+
 
 ## Remediation Steps for Broken Authentication Test - Username Enumeration via Registration Endpoint
 

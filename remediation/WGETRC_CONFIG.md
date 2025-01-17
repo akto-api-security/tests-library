@@ -1,4 +1,4 @@
-# Remediation for WGETRC_CONFIG
+
 
 ## Remediation Steps for Wgetrc Configuration File Exposure
 

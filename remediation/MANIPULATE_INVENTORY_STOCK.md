@@ -1,4 +1,4 @@
-# Remediation for MANIPULATE_INVENTORY_STOCK
+
 
 ## Remediation Steps for Manipulate Inventory Stock Vulnerability
 

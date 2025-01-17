@@ -1,4 +1,4 @@
-# Remediation for DOS_FILE_URL_MP4
+
 
 ## Remediation Steps for Denial of Service Test with Large MP4 File
 

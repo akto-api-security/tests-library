@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_IP_ADDRESS
+
 
 ## Remediation Steps for Sensitive Data Exposure (IP Address)
 
