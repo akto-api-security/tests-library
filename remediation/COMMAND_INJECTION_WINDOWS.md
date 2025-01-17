@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_WINDOWS
+
 
 ## Remediation Steps for Command Injection on Windows Systems
 

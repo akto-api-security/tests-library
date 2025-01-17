@@ -1,4 +1,4 @@
-# Remediation for APACHE_FILENAME_ENUM
+
 
 ## Remediation Steps for Apache Filename Enumeration Test
 

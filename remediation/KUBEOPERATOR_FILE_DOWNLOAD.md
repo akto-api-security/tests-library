@@ -1,4 +1,4 @@
-# Remediation for KUBEOPERATOR_FILE_DOWNLOAD
+
 
 ## Remediation Steps for KubeOperator kubeconfig - Arbitrary File Download
 KubeOperator kubeconfig Arbitrary File Download is a high-risk vulnerability that allows attackers to download arbitrary files. The files can exist anywhere on the disk where the Kubernetes server has read access. This can lead to sensitive information disclosure.

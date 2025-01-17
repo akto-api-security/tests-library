@@ -1,4 +1,4 @@
-# Remediation for ID_WRAP_ARRAY_OF_PARAMS_JSON_BODY_INTEGER_VAL_DELETE
+
 
 ## Remediation Steps for BOLA: Turning JSON Param into Array of Params with Integer
 

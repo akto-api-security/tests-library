@@ -1,4 +1,4 @@
-# Remediation for NOSQLI_BOOLEAN_BASED_REPLACE_BODY
+
 
 ## Remediation Steps for Boolean Based NoSQL Injection
 

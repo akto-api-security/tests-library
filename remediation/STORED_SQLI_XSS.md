@@ -1,4 +1,4 @@
-# Remediation for STORED_SQLI_XSS
+
 
 ## Remediation Steps for Stored SQL Injection & XSS
 Stored SQL Injection and Cross-Site Scripting (XSS) are serious security issues that can lead to data breaches and unauthorized access to data. Here are remediation steps to protect against these vulnerabilities:

@@ -1,4 +1,4 @@
-# Remediation for TRACE_METHOD_TEST
+
 
 ## Remediation Steps for TRACE Method Vulnerability
 

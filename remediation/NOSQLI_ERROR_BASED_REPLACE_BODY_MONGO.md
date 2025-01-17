@@ -1,4 +1,4 @@
-# Remediation for NOSQLI_ERROR_BASED_REPLACE_BODY_MONGO
+
 
 ## Remediation Steps for Error Based NoSQL Injection Test for Replacing JSON Body Parameters 
 

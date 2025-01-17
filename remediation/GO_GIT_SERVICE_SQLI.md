@@ -1,4 +1,4 @@
-# Remediation for GO_GIT_SERVICE_SQLI
+
 
 ## Remediation Steps for Go Git Service SQL Injection Test
 

@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_PDF_UPLOAD_GCP_REDIRECT
+
 
 ## Remediation Steps for Exposed Sensitive GCP Details via SSRF
 

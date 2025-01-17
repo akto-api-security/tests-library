@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_OKTA_DOMAIN
+
 
 ## Remediation Steps for OKTA DOMAIN Sensitive Data Exposure
 

@@ -1,4 +1,4 @@
-# Remediation for BOLA_ADD_CUSTOM_HEADER_INTEGER_ID_PATCH
+
 
 ## Remediation Steps for Exploiting BOLA by Adding Custom Header with Integer IDs for Unauthorized Access for PATCH/PUT method APIs
 

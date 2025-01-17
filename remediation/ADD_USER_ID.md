@@ -1,4 +1,4 @@
-# Remediation for ADD_USER_ID
+
 
 ## Remediation Steps for IDOR by adding User ID in Query Params 
 

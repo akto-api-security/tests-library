@@ -1,4 +1,4 @@
-# Remediation for SQL_INJECTION_URL_PATH
+
 
 ## Remediation Steps for SQL Injection Test via Special Inputs for Verbose Error Messages
 SQL Injection through special inputs resulting in verbose error messages is a critical vulnerability which allows potential attackers to gain insights into the database structure and data. 

@@ -1,4 +1,4 @@
-# Remediation for LOG4J_JSON_PARAM
+
 
 ## Remediation Steps for Log4j Vulnerability
 

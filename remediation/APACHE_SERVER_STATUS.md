@@ -1,4 +1,4 @@
-# Remediation for APACHE_SERVER_STATUS
+
 
 ## Remediation Steps for Apache Server Status Exposure
 

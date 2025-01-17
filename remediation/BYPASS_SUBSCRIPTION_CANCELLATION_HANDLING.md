@@ -1,4 +1,4 @@
-# Remediation for BYPASS_SUBSCRIPTION_CANCELLATION_HANDLING
+
 
 ## Remediation Steps for Bypass Subscription Cancellation Handling
 Bypass Subscription Cancellation is a serious security issue. It allows users to continue utilizing services even after their subscription period has ended. This vulnerability can potentially cause financial loss and misuse of services.

@@ -1,4 +1,4 @@
-# Remediation for UNION_SUBQUERY_EXTRACT_PASSWORD_MYSQLI_GET
+
 
 ## Remediation Steps for Union Based SQL Injection Test with Subquery to Extract Passwords Payload for MySQL on GET method APIs
 

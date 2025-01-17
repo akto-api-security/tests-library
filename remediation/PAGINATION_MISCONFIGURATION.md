@@ -1,4 +1,4 @@
-# Remediation for PAGINATION_MISCONFIGURATION
+
 
 ## Remediation Steps for Possible DOS Attack by Pagination Misconfiguration
 

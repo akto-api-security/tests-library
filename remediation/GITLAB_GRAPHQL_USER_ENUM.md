@@ -1,4 +1,4 @@
-# Remediation for GITLAB_GRAPHQL_USER_ENUM
+
 
 ## Remediation Steps for GitLab GraphQL API User Enumeration
 

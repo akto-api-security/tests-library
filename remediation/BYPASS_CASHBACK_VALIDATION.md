@@ -1,4 +1,4 @@
-# Remediation for BYPASS_CASHBACK_VALIDATION
+
 
 ## Remediation Steps for Bypass Cashback Validation
 Bypassing the cashback validation potentially allows attackers to exploit this vulnerability to manipulate the system and earn unauthorized cashbacks.

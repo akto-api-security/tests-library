@@ -1,4 +1,4 @@
-# Remediation for USER_ENUM_HTTP_CODES
+
 
 ## Remediation Steps for Username Enumeration via Different HTTP Response Codes
 

@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_SQUARE_ACCESS_TOKEN
+
 
 ## Remediation Steps for Sensitive Data Exposure of SQUARE ACCESS TOKEN 
 

@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_DISCORD_WEBHOOK_URL
+
 
 ## Remediation Steps for Sensitive Data Exposure for DISCORD WEBHOOK URL
 Exposing sensitive information such as DISCORD WEBHOOK URLs can leave your system vulnerable to attacks. Therefore, it is important to secure this sensitive data.

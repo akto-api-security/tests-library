@@ -1,4 +1,4 @@
-# Remediation for AUTH_BYPASS_MULTI_CREDENTIAL_SINGLE_PARAM
+
 
 ## Remediation Steps for Authentication Bypass Vulnerability
 

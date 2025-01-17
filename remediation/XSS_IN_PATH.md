@@ -1,4 +1,4 @@
-# Remediation for XSS_IN_PATH
+
 
 ## Remediation Steps for XSS by Changing Path
 

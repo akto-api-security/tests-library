@@ -1,4 +1,4 @@
-# Remediation for EMAIL_REGEX_REDOS
+
 
 ## Remediation Steps for ReDOS Vulnerability in Email Parameters
 

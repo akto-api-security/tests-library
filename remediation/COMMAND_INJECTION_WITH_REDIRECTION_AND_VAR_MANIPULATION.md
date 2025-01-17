@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_WITH_REDIRECTION_AND_VAR_MANIPULATION
+
 
 ## Remediation Steps for Command Injection using Redirection and Variable Manipulation
 Command injection is a serious security flaw which can allow an attacker to execute arbitrary commands on the host operating system via a vulnerable application. Security misconfigurations or poorly designed applications can lead to this issue. Following is an example of how to remediate this vulnerability:

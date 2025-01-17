@@ -1,4 +1,4 @@
-# Remediation for GIT_CONFIG
+
 
 ## Remediation Steps for Git Config Disclosure
 Git Config disclosure could be a harmful security issue. It can expose sensitive information which could be used maliciously. 

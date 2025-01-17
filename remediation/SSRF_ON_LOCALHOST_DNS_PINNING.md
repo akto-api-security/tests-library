@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_LOCALHOST_DNS_PINNING
+
 
 ## Remediation Steps for SSRF Vulnerability
 

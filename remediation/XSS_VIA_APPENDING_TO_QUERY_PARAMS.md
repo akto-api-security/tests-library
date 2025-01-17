@@ -1,4 +1,4 @@
-# Remediation for XSS_VIA_APPENDING_TO_QUERY_PARAMS
+
 
 ## Remediation Steps for XSS by appending to query parameters
 

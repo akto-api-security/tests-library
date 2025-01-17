@@ -1,4 +1,4 @@
-# Remediation for GITHUB_WORKFLOW_DISCLOSURE
+
 
 ## Remediation Steps for Github Workflow Disclosure
 

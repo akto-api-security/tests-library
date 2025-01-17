@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_DNS_EXFILTRATION_CHAINED
+
 
 ## Remediation Steps for Command Injection in DNS Exfiltration
 

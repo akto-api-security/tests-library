@@ -1,4 +1,4 @@
-# Remediation for NODE_ECSTATIC_INTERNAL_PATH_EXPOSURE
+
 
 ## Remediation Steps for Node.js Ecstatic Package - Internal Path Exposure
 

@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_HUGGINGFACE
+
 
 ## Remediation Steps for Sensitive Data Exposure for HUGGINGFACE
 Sensitive data exposure is the unintentional exposure of sensitive data like user credentials. Below are the steps to prevent sensitive data exposure for HUGGINGFACE.

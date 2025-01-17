@@ -1,4 +1,4 @@
-# Remediation for VARNISH_CONFIG_EXPOSED
+
 
 ## Remediation Steps for Varnish Config Exposure
 Varnish Config exposure is a severe security issue. It can allow attackers to access sensitive user information and possibly execute arbitrary commands. It's crucial to secure Varnish Config to prevent unnecessary exposure.

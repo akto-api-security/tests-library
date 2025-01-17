@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DOS_OPERATION_NAME_OVERLOADING
+
 
 ## Remediation Steps for Denial of Service Test on GraphQL API with OperationName Overloading 
 

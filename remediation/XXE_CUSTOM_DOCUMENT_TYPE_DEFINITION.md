@@ -1,4 +1,4 @@
-# Remediation for XXE_CUSTOM_DOCUMENT_TYPE_DEFINITION
+
 
 ## Remediation Steps for XML External Entity (XXE) Vulnerability with Custom Document Type Definition in API Endpoints
 

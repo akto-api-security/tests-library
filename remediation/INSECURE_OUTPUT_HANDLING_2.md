@@ -1,4 +1,4 @@
-# Remediation for INSECURE_OUTPUT_HANDLING_2
+
 
 ## Remediation Steps for Insecure Output Handling in Local Least Privilege Services (LLMs): Remote Code Execution (RCE) with Terminal Command 
 

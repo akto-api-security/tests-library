@@ -1,4 +1,4 @@
-# Remediation for LOGSTASH_API_EXPOSED
+
 
 ## Remediation Steps for Exposed Logstash
 Exposed Logstash is a critical security issue that can leave sensitive data exposed to unauthorized individuals. Therefore, it is vital to properly secure Logstash to maintain data integrity and prevent data leaks.

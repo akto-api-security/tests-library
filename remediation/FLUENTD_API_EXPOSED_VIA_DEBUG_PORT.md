@@ -1,4 +1,4 @@
-# Remediation for FLUENTD_API_EXPOSED_VIA_DEBUG_PORT
+
 
 ## Remediation Steps for Fluentd Monitoring API Exposed via Debug Port
 

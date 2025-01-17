@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_FILES
+
 
 ## Remediation Steps for Exposed AWS Details via SSRF
 

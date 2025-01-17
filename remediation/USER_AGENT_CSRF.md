@@ -1,4 +1,4 @@
-# Remediation for USER_AGENT_CSRF
+
 
 ## Remediation Steps for Authentication Bypass Using API Replay
 

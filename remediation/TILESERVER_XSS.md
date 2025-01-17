@@ -1,4 +1,4 @@
-# Remediation for TILESERVER_XSS
+
 
 ## Remediation Steps for Tileserver API XSS
 

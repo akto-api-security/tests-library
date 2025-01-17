@@ -1,4 +1,4 @@
-# Remediation for AUTH_BYPASS_BLANK_PASSWORD
+
 
 ## Remediation Steps for Authentication Bypass with Blank Password
 Authentication bypass issues occur when system vulnerabilities allow unauthorized users to gain system access without providing valid authentication credentials. The following remediation steps outline how to prevent an 'Authentication Bypass with Blank Password' issue.

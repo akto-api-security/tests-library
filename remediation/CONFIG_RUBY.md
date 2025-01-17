@@ -1,4 +1,4 @@
-# Remediation for CONFIG_RUBY
+
 
 ## Remediation Steps for Config Ruby File Disclosure
 Config Ruby File Disclosure is a serious security issue that can lead to a disclosure of sensitive information, which an attacker can use to get unauthorized access to your system.

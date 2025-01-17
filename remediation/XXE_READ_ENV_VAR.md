@@ -1,4 +1,4 @@
-# Remediation for XXE_READ_ENV_VAR
+
 
 ## Remediation Steps for XML External Entity (XXE) Reading Environment Variables
 An XML External Entity (XXE) attack is a serious security vulnerability that can result in disclosure of internal files, denial of service, server side request forgery, etc. Here are the steps to mitigate the issue of XXE that reads Environment Variables:

@@ -1,4 +1,4 @@
-# Remediation for STRUTS2_OGNL_RCE
+
 
 ## Remediation Steps for Apache Struts 2 DefaultActionMapper Prefixes OGNL Code Execution
 

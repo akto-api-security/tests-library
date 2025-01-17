@@ -1,4 +1,4 @@
-# Remediation for FETCH_SENSITIVE_FILES
+
 
 ## Remediation Steps for Sensitive Files Exposed Due to SSRF
 

@@ -1,4 +1,4 @@
-# Remediation for MASS_ASSIGNMENT_CHANGE_ADMIN_ROLE
+
 
 ## Remediation Steps for Mass Assignment Granting Low Privilege User Admin Role Access
 Mass assignment is a common security issue where an attacker is able to assign values to unintended model attributes through mass assignment. This is especially critical when it comes to user roles, where a low privilege user could gain admin access.

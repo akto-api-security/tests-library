@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_USER_AGENT_HEADER_CHAINED
+
 
 ## Remediation Steps for Command Injection in User-Agent Header
 

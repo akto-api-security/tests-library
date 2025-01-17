@@ -1,4 +1,4 @@
-# Remediation for KIBANA_LOGIN_PANEL_EXPOSE
+
 
 ## Remediation Steps for Kibana Login Panel Exposure
 Kibana Login Panel Exposure is a potential security risk that allows unauthorized users to gain access to Kibana dashboards. By properly securing the Kibana Login Panel, you can prevent unauthorized access to sensitive information.

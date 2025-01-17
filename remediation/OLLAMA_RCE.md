@@ -1,4 +1,4 @@
-# Remediation for OLLAMA_RCE
+
 
 ## Remediation Steps for Remote Code Execution Vulnerability in Ollama
 

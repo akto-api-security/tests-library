@@ -1,4 +1,4 @@
-# Remediation for EXPRESS_HANDLEBARS_LFI
+
 
 ## Remediation Steps for Express-handlebars Local File Inclusion
 

@@ -1,4 +1,4 @@
-# Remediation for LLM_ENCODING_5
+
 
 ## Remediation Steps for Prompt Injection with Encoding - Base64 Encoded Vulnerable String
 

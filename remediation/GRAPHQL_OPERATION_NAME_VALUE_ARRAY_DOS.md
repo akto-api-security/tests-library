@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_OPERATION_NAME_VALUE_ARRAY_DOS
+
 
 ## Remediation Steps for Denial of Service Test on GraphQL API with Operation Name Value Array Test
 

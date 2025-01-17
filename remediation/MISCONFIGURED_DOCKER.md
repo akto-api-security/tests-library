@@ -1,4 +1,4 @@
-# Remediation for MISCONFIGURED_DOCKER
+
 
 ## Remediation Steps for Docker Container Misconfiguration Exposure
 Misconfigured Docker containers can lead to unauthorized access and potential information exposure, therefore it's necessary to enforce security practices. 

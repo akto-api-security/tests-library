@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_CREDIT_CARD
+
 
 ## Remediation Steps for Sensitive Data Exposure - Credit Card Information
 

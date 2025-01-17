@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_INSERT_API_VERSION_PATCH
+
 
 ## Remediation Steps for Exploiting BOLA (Broken Object Level Authorization) through API Version IDs in URL Path
 

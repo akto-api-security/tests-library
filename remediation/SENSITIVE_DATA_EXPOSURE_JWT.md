@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_JWT
+
 
 ## Remediation Steps for Sensitive Data Exposure for JWT (JSON Web Tokens)
 Sensitive data exposure for JWT means an attacker can potentially access or manipulate the information encoded in the token. Loss of confidentiality, integrity and availability can be the result of such exposure.

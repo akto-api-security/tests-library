@@ -1,4 +1,4 @@
-# Remediation for OVERWRITING_EXISTING_RESOURCES_BY_MANIPULATING_IDENTIFIERS
+
 
 ## Remediation Steps for Overwriting Existing Resources by Manipulating Identifiers
 This is a common security issue where an attacker might exploit the predictable or enumerable nature of resource identifiers (IDs) and manipulate them to access or overwrite resources.

@@ -1,4 +1,4 @@
-# Remediation for BREAKING_JSON_PARSING
+
 
 ## Remediation Steps for Breaking JSON Parsing
 Breaking JSON Parsing is a security vulnerability where an attacker might manipulate the data structure of the JSON objects, and if not properly validated, can compromise the application's data flow.

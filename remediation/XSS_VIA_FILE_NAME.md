@@ -1,4 +1,4 @@
-# Remediation for XSS_VIA_FILE_NAME
+
 
 ## Remediation Steps for XSS by Changing File Names
 

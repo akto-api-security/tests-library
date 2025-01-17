@@ -1,4 +1,4 @@
-# Remediation for HTTP_HEADER_IP_INJECTION_DOS
+
 
 ## Remediation Steps for Denial of Service Test by Long and Random IP Address in Headers
 

@@ -1,4 +1,4 @@
-# Remediation for BYPASS_CAPTCHA_REMOVING_COOKIE
+
 
 ## Remediation Steps for Bypass CAPTCHA Protection by Removing Cookie
 

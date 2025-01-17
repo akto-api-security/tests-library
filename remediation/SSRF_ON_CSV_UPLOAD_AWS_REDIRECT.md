@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_CSV_UPLOAD_AWS_REDIRECT
+
 
 ## Remediation Steps for Sensitive AWS Details Exposure due to SSRF
 Exposure of sensitive AWS details due to Server-Side Request Forgery (SSRF) is a potentially severe security issue. Attackers can take advantage of SSRF vulnerabilities to bypass access controls, such as firewalls, that are intended to prevent client requests from reaching internal networks.

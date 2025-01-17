@@ -1,4 +1,4 @@
-# Remediation for DJANGO_ADMIN_PANEL_DETECTION
+
 
 ## Remediation Steps for Django Admin Panel Detection
 

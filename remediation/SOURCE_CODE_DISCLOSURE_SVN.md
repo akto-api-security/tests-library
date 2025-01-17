@@ -1,4 +1,4 @@
-# Remediation for SOURCE_CODE_DISCLOSURE_SVN
+
 
 ## Remediation Steps for Source Code Disclosure Using SVN
 

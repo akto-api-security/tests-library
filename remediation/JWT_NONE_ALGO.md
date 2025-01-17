@@ -1,4 +1,4 @@
-# Remediation for JWT_NONE_ALGO
+
 
 ## Remediation Steps for JWT None Algorithm Vulnerability
 The JWT None Algorithm Vulnerability can allow an attacker to bypass the authentication system of an application, leading to unauthorized access to sensitive data.

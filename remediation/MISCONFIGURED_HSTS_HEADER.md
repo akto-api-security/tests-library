@@ -1,4 +1,4 @@
-# Remediation for MISCONFIGURED_HSTS_HEADER
+
 
 ## Remediation Steps for Misconfigured HTTP Strict-Transport-Security Header
 The HTTP Strict-Transport-Security (HSTS) header ensures that all communication from a user's browser to the website is done over a secure HTTPS connection.

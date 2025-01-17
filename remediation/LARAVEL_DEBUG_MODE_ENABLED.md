@@ -1,4 +1,4 @@
-# Remediation for LARAVEL_DEBUG_MODE_ENABLED
+
 
 ## Remediation Steps for Laravel Debug Mode Enabled
 

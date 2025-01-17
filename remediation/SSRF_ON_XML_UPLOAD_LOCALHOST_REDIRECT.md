@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_XML_UPLOAD_LOCALHOST_REDIRECT
+
 
 ## Remediation Steps for SSRF Exposing Sensitive Localhost Details
 

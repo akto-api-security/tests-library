@@ -1,4 +1,4 @@
-# Remediation for ID_WRAP_ARRAY_QUERY_PARAM
+
 
 ## Remediation Steps for BOLA: Turning Query Parameters into Arrays for Unauthorized Access
 

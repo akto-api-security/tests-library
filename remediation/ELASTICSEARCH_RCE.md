@@ -1,4 +1,4 @@
-# Remediation for ELASTICSEARCH_RCE
+
 
 ## Remediation Steps for ElasticSearch Remote Code Execution
 

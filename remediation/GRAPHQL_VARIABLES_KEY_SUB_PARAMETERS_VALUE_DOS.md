@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_VARIABLES_KEY_SUB_PARAMETERS_VALUE_DOS
+
 
 ## Remediation Steps for Denial of Service Test on GraphQL API having Variables Key Sub Parameters with Special Characters
 

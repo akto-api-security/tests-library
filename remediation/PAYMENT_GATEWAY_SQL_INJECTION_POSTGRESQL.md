@@ -1,4 +1,4 @@
-# Remediation for PAYMENT_GATEWAY_SQL_INJECTION_POSTGRESQL
+
 
 ## Remediation Steps for SQL Injection on Payment Gateway API for PostgreSQL
 SQL Injection in Payment Gateway API is a critical security issue. If not properly dealt with, malicious actors could inject their own malicious SQL code into your queries, potentially stealing sensitive data or even altering your database.

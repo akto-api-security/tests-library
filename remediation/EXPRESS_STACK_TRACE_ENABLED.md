@@ -1,4 +1,4 @@
-# Remediation for EXPRESS_STACK_TRACE_ENABLED
+
 
 ## Remediation Steps for Express Stack Trace Enabled
 Leaving Express stack trace enabled is a serious security vulnerability as it can expose important application details to potential attackers. This information can be utilized to exploit discovered vulnerabilities more effectively. Follow the steps below to disable Express stack trace.

@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_GOOGLE_FIREBASE_DOMAIN
+
 
 ## Remediation Steps for Sensitive Data Exposure in Google Firebase Domain
 

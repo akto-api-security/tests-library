@@ -1,4 +1,4 @@
-# Remediation for LARAVEL_ENV
+
 
 ## Remediation Steps for Laravel - Sensitive Information Disclosure
 Sensitive information disclosure from Laravel could potentially leak sensitive data associated with your application which can include user credentials and other private components of your application. To prevent this, it's important to ensure that app debugging is turned off in production and that error messages are logged instead of being displayed.

@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_FIELD_SUGGESTIONS_ENABLED
+
 
 ## Remediation Steps for Graphql Field Suggestions Enabled
 The primary risk of enabling Graphql field suggestions is that it may expose potentially sensitive data to malicious or unauthorized users.

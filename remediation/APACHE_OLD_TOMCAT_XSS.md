@@ -1,4 +1,4 @@
-# Remediation for APACHE_OLD_TOMCAT_XSS
+
 
 ## Remediation Steps for Apache Old Version Tomcat Cross-Site Scripting
 

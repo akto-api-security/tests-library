@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_IBAN_EUROPE
+
 
 ## Remediation Steps for Sensitive Data Exposure of IBAN EUROPE
 Sensitive data exposures happen when an application does not adequately protect sensitive information. For IBAN in Europe, this is typically in the form of improper encryption or protection of financial or personal user data.

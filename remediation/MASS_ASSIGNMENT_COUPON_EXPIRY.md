@@ -1,4 +1,4 @@
-# Remediation for MASS_ASSIGNMENT_COUPON_EXPIRY
+
 
 ## Remediation Steps for Mass Assignment Coupon Expiry Validation
 Mass Assignment is a widespread vulnerability that occurs when too many user-controlled fields are exposed in applications. In the context of a coupon expiry validation, an attacker could exploit this to change the expiration date of a coupon. 

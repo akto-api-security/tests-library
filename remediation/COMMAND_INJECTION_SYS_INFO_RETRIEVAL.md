@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_SYS_INFO_RETRIEVAL
+
 
 ## Remediation Steps for Command Injection for System Info Retrieval
 Command injection is a security vulnerability that allows an attacker to execute arbitrary commands on the host operating system via a vulnerable application. This security breach can be managed by adopting several measures.

@@ -1,4 +1,4 @@
-# Remediation for LFI_IN_HEADERS_LINUX
+
 
 ## Remediation Steps for LFI in Headers for Linux
 

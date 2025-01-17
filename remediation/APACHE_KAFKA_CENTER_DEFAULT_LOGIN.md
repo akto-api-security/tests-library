@@ -1,4 +1,4 @@
-# Remediation for APACHE_KAFKA_CENTER_DEFAULT_LOGIN
+
 
 ## Remediation Steps for Apache Kafka Center Default Login Vulnerability
 The default login vulnerability in Apache Kafka Center is a serious security issue. Unchanged default login details may allow unauthorized users to gain access to the specific Kafka cluster, performing unauthorized operations and gaining access to sensitive constant streams.

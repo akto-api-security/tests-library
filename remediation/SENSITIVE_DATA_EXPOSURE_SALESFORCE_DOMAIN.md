@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_SALESFORCE_DOMAIN
+
 
 ## Remediation Steps for Sensitive Data Exposure in Salesforce Domain  
 

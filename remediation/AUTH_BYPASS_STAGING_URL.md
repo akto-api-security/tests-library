@@ -1,4 +1,4 @@
-# Remediation for AUTH_BYPASS_STAGING_URL
+
 
 ## Remediation Steps for Authentication Bypass by hitting Staging URLs for Login endpoints
 Authentication Bypass by hitting staging URLs for Login endpoints is a serious security vulnerability that allows unauthorized parties to gain access to the system bypassing the login process.

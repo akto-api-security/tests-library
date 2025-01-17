@@ -1,4 +1,4 @@
-# Remediation for MANIPULATE_STORE_CREDIT
+
 
 ## Remediation Steps for Abusing Store Credit Refund Policies
 

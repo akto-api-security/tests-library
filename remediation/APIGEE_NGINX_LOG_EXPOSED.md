@@ -1,4 +1,4 @@
-# Remediation for APIGEE_NGINX_LOG_EXPOSED
+
 
 ## Remediation Steps for Apigee Nginx Log Exposure
 

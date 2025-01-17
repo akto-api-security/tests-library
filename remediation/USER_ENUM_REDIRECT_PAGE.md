@@ -1,4 +1,4 @@
-# Remediation for USER_ENUM_REDIRECT_PAGE
+
 
 ## Remediation Steps for Username Enumeration using Redirect Page Analysis
 

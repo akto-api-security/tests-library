@@ -1,4 +1,4 @@
-# Remediation for VERTAAI_MODELDB_LFI
+
 
 ## Remediation Steps for VertaAI ModelDB Directory Traversal Test
 Directory traversal is a vulnerability that allows attackers to access restricted directories by using the .. symbol to move into parent directories. For ModelDB, one way to mitigate such vulnerabilities is by enforcing strong input validation measures, especially in places where user-supplied input is used to access files or directories.

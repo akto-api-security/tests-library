@@ -1,4 +1,4 @@
-# Remediation for NEXT_JS_CACHE_POISONING
+
 
 ## Remediation Steps for Next.JS Cache Poisoning
 

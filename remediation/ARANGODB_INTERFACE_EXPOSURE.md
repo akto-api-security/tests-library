@@ -1,4 +1,4 @@
-# Remediation for ARANGODB_INTERFACE_EXPOSURE
+
 
 ## Remediation Steps for ArangoDB Web Interface Exposure
 

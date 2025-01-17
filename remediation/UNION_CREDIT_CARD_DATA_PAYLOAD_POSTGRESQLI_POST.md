@@ -1,4 +1,4 @@
-# Remediation for UNION_CREDIT_CARD_DATA_PAYLOAD_POSTGRESQLI_POST
+
 
 ## Remediation Steps for Union based SQL Injection
 

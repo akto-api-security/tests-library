@@ -1,4 +1,4 @@
-# Remediation for DOS_ATTACH_LARGE_FILE
+
 
 ## Remediation Steps for Denial of Service by Large Input Files
 Denial of Service (DoS) by providing a large file as input is a significant security issue. Application must have proper checks in place to deal with such situations.

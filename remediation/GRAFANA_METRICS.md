@@ -1,4 +1,4 @@
-# Remediation for GRAFANA_METRICS
+
 
 ## Remediation Steps for Exposed Grafana Metrics
 Exposed Grafana metrics can be a major security concern as these metrics could contain sensitive data that should be kept confidential. 

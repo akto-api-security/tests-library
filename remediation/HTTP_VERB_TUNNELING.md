@@ -1,4 +1,4 @@
-# Remediation for HTTP_VERB_TUNNELING
+
 
 ## Remediation Steps for Bypassing Access Controls Using HTTP Verb Tunneling
 This security issue revolves around an attacker exploiting HTTP methods such as PUT, DELETE, or CONNECT to bypass firewall and proxy restrictions. These are usually implemented to allow specific HTTP methods for their services. In many scenarios, only safe HTTP methods like GET and POST are allowed but not others like DELETE or PUT.

@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_INSERT_SPECIAL_CHAR_PATCH
+
 
 ## Remediation Steps for BOLA with PATCH/PUT APIs
 Exploiting a Broken Object-Level Authorization (BOLA) by inserting Special Characters in URL path is a security vulnerability where attackers can bypass authorization and perform operations on resources they don't actually own. These operations could be carried out through PATCH/PUT APIs.

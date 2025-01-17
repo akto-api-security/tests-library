@@ -1,4 +1,4 @@
-# Remediation for DRUPAL_LFI
+
 
 ## Remediation Steps for Drupal Local File Inclusion
 

@@ -1,4 +1,4 @@
-# Remediation for FASTIFY_SWAGGER_EXPOSURE
+
 
 ## Remediation Steps for Fastify Swagger UI Exposure
 Fastify Swagger UI exposure is a serious security issue. Without properly securing Swagger UI, attackers may gain unauthorized access to your APIs structure and its sensitive data, potentially causing a significant compromise of your application.

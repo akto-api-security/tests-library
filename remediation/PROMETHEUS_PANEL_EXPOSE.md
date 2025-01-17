@@ -1,4 +1,4 @@
-# Remediation for PROMETHEUS_PANEL_EXPOSE
+
 
 ## Remediation Steps for Prometheus Panel Exposure
 

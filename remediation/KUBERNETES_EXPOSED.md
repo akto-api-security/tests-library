@@ -1,4 +1,4 @@
-# Remediation for KUBERNETES_EXPOSED
+
 
 ## Remediation Steps for Kubernetes APIs Exposure
 

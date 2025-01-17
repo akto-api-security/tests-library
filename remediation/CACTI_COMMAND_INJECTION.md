@@ -1,4 +1,4 @@
-# Remediation for CACTI_COMMAND_INJECTION
+
 
 ## Remediation Steps for Cacti Command Injection Test
 

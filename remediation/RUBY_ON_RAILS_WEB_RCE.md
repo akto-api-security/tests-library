@@ -1,4 +1,4 @@
-# Remediation for RUBY_ON_RAILS_WEB_RCE
+
 
 ## Remediation Steps for Ruby on Rails Web Console Remote Code Execution
 Ruby on Rails Web Console Remote Code Execution is a high-risk vulnerability. Attackers who exploit this vulnerability can execute arbitrary code in the context of the affected system.

@@ -1,4 +1,4 @@
-# Remediation for HTTP_HEADER_IP_INJECTION_INTERNAL_IP
+
 
 ## Remediation Steps for Internal IP Injection in HTTP Headers
 An internal IP injection in HTTP headers can expose internal network details to potential attackers. This vulnerability can be exploited to perform advanced attacks such as Server Side Request Forgery (SSRF). The steps below outline how to remediate this vulnerability.

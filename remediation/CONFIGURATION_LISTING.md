@@ -1,4 +1,4 @@
-# Remediation for CONFIGURATION_LISTING
+
 
 ## Remediation Steps for Sensitive Configuration Files Listing
 Sensitive configuration files listing is a pressing issue where confidential information and secrets in configuration files are publicly visible. It allows potential attackers to gain knowledge about the system, increasing cybersecurity risks.

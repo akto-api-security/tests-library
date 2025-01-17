@@ -1,4 +1,4 @@
-# Remediation for REPLACE_CSRF
+
 
 ## Remediation Steps for CSRF Test with Invalid CSRF Token
 

@@ -1,4 +1,4 @@
-# Remediation for OPEN_REDIRECT
+
 
 ## Remediation Steps for Open Redirect Vulnerability
 

@@ -1,4 +1,4 @@
-# Remediation for ELASTICSEARCH_DEFAULT_LOGIN
+
 
 ## Remediation Steps for ElasticSearch Default Login Vulnerability
 

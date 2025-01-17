@@ -1,4 +1,4 @@
-# Remediation for ESMTPRC_CONFIG
+
 
 ## Remediation Steps for eSMTP - Config Discovery
 

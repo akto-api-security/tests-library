@@ -1,4 +1,4 @@
-# Remediation for SSTI_IN_TWIG
+
 
 ## Remediation Steps for Server Side Template Injection (SSTI) in Twig
 

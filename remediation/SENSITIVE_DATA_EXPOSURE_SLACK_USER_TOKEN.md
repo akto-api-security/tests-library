@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_SLACK_USER_TOKEN
+
 
 ## Remediation Steps for Sensitive Data Exposure of SLACK USER TOKEN
 

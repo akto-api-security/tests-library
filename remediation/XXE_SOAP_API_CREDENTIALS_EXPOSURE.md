@@ -1,4 +1,4 @@
-# Remediation for XXE_SOAP_API_CREDENTIALS_EXPOSURE
+
 
 ## Remediation Steps for XML External Entity (XXE) Exploit in SOAP API for Credentials Exposure
 

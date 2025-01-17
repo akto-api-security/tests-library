@@ -1,4 +1,4 @@
-# Remediation for JENKINS_BUILD_METRICS_XSS
+
 
 ## Remediation Steps for Jenkins build-metrics Cross-Site Scripting 
 

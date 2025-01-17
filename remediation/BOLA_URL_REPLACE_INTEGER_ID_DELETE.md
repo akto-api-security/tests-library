@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_REPLACE_INTEGER_ID_DELETE
+
 
 ## Remediation Steps for Exploiting BOLA (Broken Object Level Authorization) with DELETE based APIs Vulnerability
 

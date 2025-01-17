@@ -1,4 +1,4 @@
-# Remediation for SQLI_ERROR_BASED_PARAM_POSTGRESQL
+
 
 ## Remediation Steps for Error Based SQL Injection Test for Parameters for PostgreSQL
 SQL injection is a code injection technique that attackers exploit to gain unauthorized access to a database or to retrieve/sabotage sensitive information. Attackers use malicious SQL codes to bypass the application security measures, thereby accessing, modifying, and deleting the content of a database.

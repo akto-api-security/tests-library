@@ -1,4 +1,4 @@
-# Remediation for SPRING_BOOT_THREAD_DUMP_ACTUATOR_EXPOSED
+
 
 ## Remediation Steps for Spring Boot Thread Dump Actuator Exposure
 Spring Boot Actuator provides several built-in endpoints, including Thread Dump for debugging. If the thread dump actuator is exposed over an insecure network, it can lead to sensitive information disclosure. 

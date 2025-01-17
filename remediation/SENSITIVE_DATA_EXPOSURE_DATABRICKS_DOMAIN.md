@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_DATABRICKS_DOMAIN
+
 
 ## Remediation Steps for Sensitive Data Exposure on Databricks Domain
 

@@ -1,4 +1,4 @@
-# Remediation for SERVICENOW_INPUT_VALIDATION
+
 
 ## Remediation Steps for ServiceNow Incomplete Input Validation Test
 

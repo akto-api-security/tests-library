@@ -1,4 +1,4 @@
-# Remediation for BYPASS_PAYMENT_PROCESSING_WITH_MALFORMED_DATA
+
 
 ## Remediation Steps for Bypass Payment Processing with Malformed Data
 

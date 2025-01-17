@@ -1,4 +1,4 @@
-# Remediation for PARAMETER_MANIPULATION_BOUNDARY_COUPON
+
 
 ## Remediation Steps for Parameter Manipulation by Boundary Values in Coupon and Discount Codes
 Manipulation of coupon or discount codes is a vulnerability that can lead to severe financial impact on applications. This is usually achieved by manipulating the boundary values and exploiting the weakness in the application's logic. To mitigate against this vulnerability, proper validation checks must be put in place.

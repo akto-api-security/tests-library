@@ -1,4 +1,4 @@
-# Remediation for SOURCE_CODE_DISCLOSURE_GIT
+
 
 ## Remediation Steps for Source Code Disclosure Using Git
 

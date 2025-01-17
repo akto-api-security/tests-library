@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_GITLAB_ACCESS
+
 
 ## Remediation Steps for GitLab Sensitive Data Exposure
 

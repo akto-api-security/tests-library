@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DOS_CIRCULAR_QUERY_DEFAULT_OBJECT
+
 
 ## Remediation Steps for Denial of Service Test on GraphQL API with Circular Query
 A circular query presents recursive or endlessly repeating data structures and can be used in an attack to cause Denial of Service (DoS) by overloading the server's memory and CPU resources. The following steps will help you mitigate this issue by limiting the depth and complexity of GraphQL queries.

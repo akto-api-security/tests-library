@@ -1,4 +1,4 @@
-# Remediation for DJANGO_DEBUG_PAGE_XSS
+
 
 ## Remediation Steps for Django Debug Page Cross-Site Scripting
 

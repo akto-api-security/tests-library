@@ -1,4 +1,4 @@
-# Remediation for ELASTICSEARCH_LFI
+
 
 ## Remediation Steps for Elasticsearch Local File Inclusion
 

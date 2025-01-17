@@ -1,4 +1,4 @@
-# Remediation for QUERY_PARAM_ARRAY_BOMBING_DOS
+
 
 ## Remediation Steps for Denial of Service Test by Bombing Multiple Query Parameter Arrays in Request
 A possible way to attempt a Denial of Service (DoS) attack is by bombing multiple query parameter arrays in a request. This can potentially overload the system, rendering it unable to process further requests.

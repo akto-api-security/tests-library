@@ -1,4 +1,4 @@
-# Remediation for JETTY_STATS_EXPOSED
+
 
 ## Remediation Steps for Jetty Stats Exposed
 

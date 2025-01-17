@@ -1,4 +1,4 @@
-# Remediation for MUST_CONTAIN_REQUEST_HEADERS
+
 
 ## Remediation Steps for Missing HTTP Request Headers
 Missing or improperly configured HTTP request headers can lead to various security issues such as Cross-Site Scripting (XSS), ClickJacking, and other code injection attacks. Here is a basic guideline on how to add the necessary HTTP headers: 

@@ -1,4 +1,4 @@
-# Remediation for LLM_INSECURE_OUTPUT_2
+
 
 ## Remediation Steps for Insecure Output Handling: Display Email Vulnerable String in LLMs
 LLMs (Language Learning Management Systems) may sometimes have insecure output handling which can potentially lead to Cross-Site Scripting (XSS) vulnerabilities. In this case, the insecure handling of displaying email strings needs to be addressed.

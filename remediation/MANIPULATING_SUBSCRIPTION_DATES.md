@@ -1,4 +1,4 @@
-# Remediation for MANIPULATING_SUBSCRIPTION_DATES
+
 
 ## Remediation Steps for Manipulating Subscription Dates for Trial Extensions
 

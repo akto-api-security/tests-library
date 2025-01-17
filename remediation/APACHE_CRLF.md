@@ -1,4 +1,4 @@
-# Remediation for APACHE_CRLF
+
 
 ## Remediation Steps for Apache mod_userdir CRLF Injection
 Apache mod_userdir CRLF injection is a serious security issue. To handle this, Apache HTTP server should be upgraded to the version that fixes this vulnerability immediately. Alternatively, use of mod_userdir can be disabled.

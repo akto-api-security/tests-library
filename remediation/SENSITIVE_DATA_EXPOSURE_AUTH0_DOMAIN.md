@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_AUTH0_DOMAIN
+
 
 ## Remediation Steps for Sensitive Data Exposure for Auth0 Domain
 Sensitive data exposure is a significant security flaw that could allow an attacker to access confidential information. 

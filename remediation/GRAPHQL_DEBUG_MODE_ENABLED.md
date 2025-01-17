@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DEBUG_MODE_ENABLED
+
 
 ## Remediation Steps for Graphql Debug Mode Enabled
 

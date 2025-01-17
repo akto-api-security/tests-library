@@ -1,4 +1,4 @@
-# Remediation for ID_WRAP_ARRAY_OF_PARAMS_JSON_BODY_DELETE
+
 
 ## Remediation Steps for BOLA: Turning JSON Param into Array of Params for Unauthorized Access (DELETE method APIs)
 

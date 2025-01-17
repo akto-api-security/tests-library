@@ -1,4 +1,4 @@
-# Remediation for TIMESTAMP_TAMPERING
+
 
 ## Remediation Steps for Timestamp Tampering
 

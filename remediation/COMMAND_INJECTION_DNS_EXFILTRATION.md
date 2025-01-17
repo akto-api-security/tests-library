@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_DNS_EXFILTRATION
+
 
 ## Remediation Steps for Command Injection for DNS Exfiltration in HTTP Request Parameters
 

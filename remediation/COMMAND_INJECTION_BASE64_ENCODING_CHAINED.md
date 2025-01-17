@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_BASE64_ENCODING_CHAINED
+
 
 ## Remediation Steps for Command Injection via Base64 Encoding
 Command injection via base64 encoding is a critical security vulnerability. If not properly sanitized, it could allow attackers to execute arbitrary commands on the host machine. The vulnerability stems from the use of unsanitized input in a system command.

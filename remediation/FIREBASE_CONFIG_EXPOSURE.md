@@ -1,4 +1,4 @@
-# Remediation for FIREBASE_CONFIG_EXPOSURE
+
 
 ## Remediation Steps for Firebase Config Exposure
 

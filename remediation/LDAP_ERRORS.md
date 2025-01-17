@@ -1,4 +1,4 @@
-# Remediation for LDAP_ERRORS
+
 
 ## Remediation Steps for LDAP Injection
 

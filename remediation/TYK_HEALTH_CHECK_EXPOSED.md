@@ -1,4 +1,4 @@
-# Remediation for TYK_HEALTH_CHECK_EXPOSED
+
 
 ## Remediation Steps for Tyk Health Check Exposure
 Tyk Health Check exposure is a serious security concern. If not adequately protected, attackers may fetch sensitive information about the system, which can be exploited further for more sophisticated attacks.

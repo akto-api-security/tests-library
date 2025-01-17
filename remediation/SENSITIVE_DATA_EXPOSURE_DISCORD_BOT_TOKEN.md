@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_DISCORD_BOT_TOKEN
+
 
 ## Remediation Steps for Sensitive Data Exposure of DISCORD BOT TOKEN
 

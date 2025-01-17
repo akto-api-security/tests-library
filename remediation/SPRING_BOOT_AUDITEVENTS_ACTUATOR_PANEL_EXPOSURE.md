@@ -1,4 +1,4 @@
-# Remediation for SPRING_BOOT_AUDITEVENTS_ACTUATOR_PANEL_EXPOSURE
+
 
 ## Remediation Steps for Spring Boot AuditEvents Actuator Panel Exposure
 Exposure of the Spring Boot Actuator's AuditEvents panel can provide an attacker with sensitive information about the state of your application, potentially increasing the security risk.

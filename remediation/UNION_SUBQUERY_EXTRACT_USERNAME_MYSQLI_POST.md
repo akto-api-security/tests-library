@@ -1,4 +1,4 @@
-# Remediation for UNION_SUBQUERY_EXTRACT_USERNAME_MYSQLI_POST
+
 
 ## Remediation Steps for Union based SQL Injection with Subquery for MySQL
 

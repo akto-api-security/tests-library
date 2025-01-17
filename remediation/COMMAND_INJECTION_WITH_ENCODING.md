@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_WITH_ENCODING
+
 
 ## Remediation Steps for Command Injection through Encoding and Character Manipulation
 

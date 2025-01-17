@@ -1,4 +1,4 @@
-# Remediation for SQLI_ERROR_BASED_PARAM_APPEND_PAYLOAD_ORACLE
+
 
 ## Remediation Steps for Error Based SQL Injection
 

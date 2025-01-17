@@ -1,4 +1,4 @@
-# Remediation for GRAFANA_EXPOSED
+
 
 ## Remediation Steps for Grafana Exposure
 

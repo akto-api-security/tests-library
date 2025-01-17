@@ -1,4 +1,4 @@
-# Remediation for ADVANCED_UNION_BASED_SQLI_GET
+
 
 ## Remediation Steps for Advanced Union based SQL Injection 
 

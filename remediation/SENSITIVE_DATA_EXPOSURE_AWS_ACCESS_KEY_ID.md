@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_AWS_ACCESS_KEY_ID
+
 
 ## Remediation Steps for AWS ACCESS KEY ID Data Exposure
 Exposure of AWS ACCESS KEY ID can provide unauthorized access to your AWS resources, causing major security threats. It's critical to protect these keys by not exposing them in source code or environment files and use secure methods to store and retrieve these.

@@ -1,4 +1,4 @@
-# Remediation for UNION_URL_ENCODED_BASED_MYSQLI_POST
+
 
 ## Remediation Steps for Union based SQL Injection with URL Encoded Payloads in MySQL on POST method APIs.
 SQL injection is a web security vulnerability that allows an attacker to interfere with the queries that an application makes to its database. It happens when a developer accepts input from a user and directly uses it in a SQL Query. 

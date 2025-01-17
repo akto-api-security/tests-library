@@ -1,4 +1,4 @@
-# Remediation for INPUT_VALIDATION_BY_REPLACING_PARAM_WITH_JSON_OBJECT
+
 
 ## Remediation Steps for Input Validation by Replacing Param with JSON Object
 

@@ -1,4 +1,4 @@
-# Remediation for MANIPULATE_OFFER_ORDER_QUANTITY
+
 
 ## Remediation Steps for Manipulate Order Quantity for Products Under Offer
 

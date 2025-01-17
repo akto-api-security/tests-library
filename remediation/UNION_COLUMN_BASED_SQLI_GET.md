@@ -1,4 +1,4 @@
-# Remediation for UNION_COLUMN_BASED_SQLI_GET
+
 
 ## Remediation Steps for Union Based SQL Injection Test with Column Variations on GET Method APIs
 Union Based SQL Injection is a common vulnerability where an attacker can inject SQL commands in user input areas, potentially gaining unauthorized access to your database. Here are some remediation steps you can follow to prevent this vulnerability.

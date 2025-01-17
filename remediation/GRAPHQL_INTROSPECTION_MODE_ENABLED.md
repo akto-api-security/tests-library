@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_INTROSPECTION_MODE_ENABLED
+
 
 ## Remediation Steps for GraphQL Introspection Mode Enabled
 

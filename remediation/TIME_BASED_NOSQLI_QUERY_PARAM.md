@@ -1,4 +1,4 @@
-# Remediation for TIME_BASED_NOSQLI_QUERY_PARAM
+
 
 ## Remediation Steps for Time-Based NoSQL Injection Test for Query Parameters with Javascript
 

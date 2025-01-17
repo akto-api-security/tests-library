@@ -1,4 +1,4 @@
-# Remediation for UNION_CASE_CHANGE_BASED_MYSQL_SQLI
+
 
 ## Remediation Steps for Union based SQL Injection on Login Endpoints (MySQL)
 

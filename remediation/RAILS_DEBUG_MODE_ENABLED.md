@@ -1,4 +1,4 @@
-# Remediation for RAILS_DEBUG_MODE_ENABLED
+
 
 ## Remediation Steps for Rails Debug Mode Enabled
 

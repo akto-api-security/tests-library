@@ -1,4 +1,4 @@
-# Remediation for XPATH_INJECTION
+
 
 ## Remediation Steps for XPath Injection
 

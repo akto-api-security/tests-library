@@ -1,4 +1,4 @@
-# Remediation for LLM_INSECURE_OUTPUT_3
+
 
 ## Remediation Steps for Insecure Output Handling in LLMs - Display Phish Test String
 

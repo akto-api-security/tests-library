@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_CONTACT
+
 
 ## Remediation Steps for Sensitive Data Exposure for CONTACT
 

@@ -1,4 +1,4 @@
-# Remediation for SSRF_SCRIPT_TAG_GCP_REDIRECT
+
 
 ## Remediation Steps for SSRF Test via Replacing Parameters with Script Tags
 

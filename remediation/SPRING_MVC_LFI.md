@@ -1,4 +1,4 @@
-# Remediation for SPRING_MVC_LFI
+
 
 ## Remediation Steps for Spring MVC Local File Inclusion
 

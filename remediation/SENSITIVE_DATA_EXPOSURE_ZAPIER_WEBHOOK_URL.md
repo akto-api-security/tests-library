@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_ZAPIER_WEBHOOK_URL
+
 
 ## Remediation Steps for Sensitive Data Exposure in ZAPIER WEBHOOK URL
 

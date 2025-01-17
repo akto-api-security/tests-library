@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_MULTIPART_FORM_DATA_HEADER
+
 
 ## Remediation Steps for Command Injection in Content-Type Headers
 

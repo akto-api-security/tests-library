@@ -1,4 +1,4 @@
-# Remediation for SSRF_SCRIPT_TAG_AWS_REDIRECT
+
 
 ## Remediation Steps for SSRF Test Via Replacing Parameters with Script Tags
 

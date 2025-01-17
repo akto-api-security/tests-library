@@ -1,4 +1,4 @@
-# Remediation for DOCKER_COMPOSE_CONFIG
+
 
 ## Remediation Steps for Docker-Compose.yml Exposure 
 

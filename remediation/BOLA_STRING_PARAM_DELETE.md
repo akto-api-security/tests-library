@@ -1,4 +1,4 @@
-# Remediation for BOLA_STRING_PARAM_DELETE
+
 
 ## Remediation Steps for Exploiting BOLA: Direct System Operation Using String Parameter Values with DELETE Based APIs
 

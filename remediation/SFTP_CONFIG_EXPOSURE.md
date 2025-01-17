@@ -1,4 +1,4 @@
-# Remediation for SFTP_CONFIG_EXPOSURE
+
 
 ## Remediation Steps for SFTP Config File Disclosure
 SFTP config file disclosure can lead to serious security issues as unauthorized individuals may gain access to sensitive information. Here's how you can mitigate this issue.

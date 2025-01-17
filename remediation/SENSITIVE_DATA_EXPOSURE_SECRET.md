@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_SECRET
+
 
 ## Remediation Steps for Sensitive Data Exposure for SECRET
 Exposing sensitive data, such as SECRET, is a severe security flaw, potentially allowing unauthorized access to critical data and systems. Following the steps below can help mitigate the risks associated with this vulnerability.

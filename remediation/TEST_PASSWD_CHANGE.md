@@ -1,4 +1,4 @@
-# Remediation for TEST_PASSWD_CHANGE
+
 
 ## Remediation Steps for Authentication Bypass with Replaying Password Change Endpoint
 

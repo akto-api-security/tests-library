@@ -1,4 +1,4 @@
-# Remediation for KEYCLOAK_OPEN_REDIRECT
+
 
 ## Remediation Steps for Keycloak Open Redirect Vulnerability
 The open redirect vulnerability can allow attackers to misdirect users to malicious websites. Remediation steps involve validating and whitelisting URLs, as well as ensuring the client application handles redirects correctly.

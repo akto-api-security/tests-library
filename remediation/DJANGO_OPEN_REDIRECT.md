@@ -1,4 +1,4 @@
-# Remediation for DJANGO_OPEN_REDIRECT
+
 
 ## Remediation Steps for Django Open Redirect
 

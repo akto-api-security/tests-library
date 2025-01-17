@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_MACOS
+
 
 ## Remediation Steps for Command Injection in MacOS Identification 
 

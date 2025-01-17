@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_UBUNTU
+
 
 ## Remediation Steps for Command Injection in Ubuntu
 

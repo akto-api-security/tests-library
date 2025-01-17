@@ -1,4 +1,4 @@
-# Remediation for ZERO_WIDTH_PAYLOAD_KEYS_HANDLING
+
 
 ## Remediation Steps for Zero Width Payload Keys Handling
 The issue of Zero Width Payload Keys Handling vulnerability occurs when an attacker uses Zero Width Spaces (ZWSPs) to obfuscate harmful payloads. Some applications don't properly handle zero-width characters hidden in user inputs, causing undesired behaviors and potential security threats.

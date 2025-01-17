@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_ANTHROPIC_API
+
 
 ## Remediation Steps for Sensitive Data Exposure for ANTHROPIC API
 

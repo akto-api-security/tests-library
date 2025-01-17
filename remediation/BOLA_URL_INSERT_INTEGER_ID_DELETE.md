@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_INSERT_INTEGER_ID_DELETE
+
 
 ## Remediation Steps for BOLA Exploitation Using Integer IDs in URL Path 
 BOLA (Broken Object Level Authorization) exploits can be a severe security issue when combined with DELETE operations in an unsecured API. Malicious users may manipulate the application by directly accessing the API's object IDs. Here's how you can address this vulnerability. 

@@ -1,4 +1,4 @@
-# Remediation for APACHE_TOMCAT_INSTANCE_EXPOSURE
+
 
 ## Remediation Steps for Apache Tomcat Instance Exposure Detection
 

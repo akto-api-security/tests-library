@@ -1,4 +1,4 @@
-# Remediation for ADV_UNION_BASED_SQLI_XSS_POST
+
 
 ## Remediation Steps for Advanced Union Based SQL Injection Attacks with XSS for POST method APIs 
 

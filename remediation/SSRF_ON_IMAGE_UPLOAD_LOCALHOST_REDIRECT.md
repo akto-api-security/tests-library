@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_IMAGE_UPLOAD_LOCALHOST_REDIRECT
+
 
 ## Remediation Steps for SSRF Exposing Localhost Details
 Sensitive localhost details being exposed via replacing Image param with redirection due to Server-Side Request Forgery (SSRF) is a serious security issue. Without proper checks, an attacker might be able to perform operations that they are not authorized to perform, like accessing local/internal resources which are otherwise not reachable from outside.

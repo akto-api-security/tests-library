@@ -1,4 +1,4 @@
-# Remediation for XXE_URL_ENCODED
+
 
 ## Remediation Steps for XML External Entity (XXE) Vulnerability with URL Encoded Payload in API Endpoints
 The XML External Entity vulnerability allows an attacker to cause Denial of Service or potentially access local or remote content and services. Here are the measures you can take to address this issue:

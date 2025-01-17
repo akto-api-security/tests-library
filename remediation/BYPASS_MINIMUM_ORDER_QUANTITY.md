@@ -1,4 +1,4 @@
-# Remediation for BYPASS_MINIMUM_ORDER_QUANTITY
+
 
 ## Remediation Steps for Bypass Minimum Order Quantity Requirements to Exploit Free Add-Ons
 

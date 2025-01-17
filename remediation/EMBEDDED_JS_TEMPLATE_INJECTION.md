@@ -1,4 +1,4 @@
-# Remediation for EMBEDDED_JS_TEMPLATE_INJECTION
+
 
 ## Remediation Steps for Embedded Javascript Template Injection
 

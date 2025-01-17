@@ -1,4 +1,4 @@
-# Remediation for HTTP_FILE_SERVER_RCE
+
 
 ## Remediation Steps for HTTP File Server Remote Code Execution
 HTTP File Server Remote Code Execution is a serious security issue. Attackers may exploit this vulnerability to execute arbitrary code in the context of the application. Such a vulnerability typically applies to applications using unsafe server-side scripting, allowing injection of untrusted data.

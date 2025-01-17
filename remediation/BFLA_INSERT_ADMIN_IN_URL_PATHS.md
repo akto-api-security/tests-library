@@ -1,4 +1,4 @@
-# Remediation for BFLA_INSERT_ADMIN_IN_URL_PATHS
+
 
 ## Remediation Steps for Broken Function Level Authorization
 Broken Function Level Authorization, particularly vertical privilege escalation, is a critical security vulnerability. It can grant unauthorized users access to admin-level privileges by merely altering the URL path. This mechanical error can lead to malicious actors exploiting sensitive endpoints and data which should only be accessible to authorized users.

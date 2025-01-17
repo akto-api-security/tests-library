@@ -1,4 +1,4 @@
-# Remediation for REPLAY_CAPTCHA
+
 
 ## Remediation Steps for Replaying Request With Same Captcha
 

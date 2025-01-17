@@ -1,4 +1,4 @@
-# Remediation for PUPPETEER_RENDERER_LFI
+
 
 ## Remediation Steps for Puppeteer Renderer Directory Traversal Test
 

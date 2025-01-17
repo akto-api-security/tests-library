@@ -1,4 +1,4 @@
-# Remediation for MANIPULATING_POINTS_MULTIPLIER
+
 
 ## Remediation Steps for Manipulating Reward/Cashback/User Points Multiplier
 

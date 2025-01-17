@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_MONGODB_CONNECTION_STRING
+
 
 ## Remediation Steps for MongoDB Connection String Exposure
 Exposing sensitive information, such as MongoDB connection strings, can lead to unauthorized access to databases. This can have serious implications on data privacy and the integrity of your application. Therefore, it is of utmost importance to keep such details hidden and secure.

@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_CURL_HTTP_REQUEST_CHAINED
+
 
 ## Remediation Steps for Command Injection with HTTP Requests with Curl and Chained System Instructions
 

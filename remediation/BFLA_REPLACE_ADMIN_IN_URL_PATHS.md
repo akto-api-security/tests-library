@@ -1,4 +1,4 @@
-# Remediation for BFLA_REPLACE_ADMIN_IN_URL_PATHS
+
 
 ## Remediation Steps for Broken Function Level Authorization - Vertical Privilege Escalation Test
 Broken function level authorization can lead to unauthorized users gaining access to functionalities they should not have access to. One way of exploiting this is through vertical privilege escalation by replacing URL subpaths with the 'admin' keyword. To remediate this, you should implement Role-Based Access Control (RBAC) and thoroughly validate the user role before providing specific functionality.

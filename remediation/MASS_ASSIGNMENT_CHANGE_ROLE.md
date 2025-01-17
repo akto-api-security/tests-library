@@ -1,4 +1,4 @@
-# Remediation for MASS_ASSIGNMENT_CHANGE_ROLE
+
 
 ## Remediation Steps for Mass Assignment leading to modification of role
 Mass Assignment is a security issue that can lead to undesired modifications of data such as user roles. An attacker could potentially modify the role of a user to gain greater access rights if mass assignment is not properly handled within your applications.

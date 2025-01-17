@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_REPLACE_INTEGER_ID
+
 
 ## Remediation Steps for Unauthorized Access through BOLA by replacing URL path with Integer IDs
 Broken Object Level Authorization (BOLA) exploits can lead to unauthorized access to sensitive data. Attackers can manipulate references to other resources by replacing the URL path with integer IDs. Following are the remediation steps to prevent BOLA exploits.

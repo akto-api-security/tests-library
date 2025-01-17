@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_TOKEN
+
 
 ## Remediation Steps for Sensitive Data Exposure of TOKEN
 Sensitive data exposure of tokens could lead to unauthorized access of user accounts, or worse, administrative privileges. A token should never be exposed in plain text, written to logs, or exposed in URL parameters as this could lead to sensitive information being compromised.

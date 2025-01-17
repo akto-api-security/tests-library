@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_PASSPORT
+
 
 ## Remediation Steps for Sensitive Data Exposure of Passport Information
 

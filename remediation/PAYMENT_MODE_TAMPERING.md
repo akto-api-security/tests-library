@@ -1,4 +1,4 @@
-# Remediation for PAYMENT_MODE_TAMPERING
+
 
 ## Remediation Steps for Input Validation Using Payment Mode Field
 

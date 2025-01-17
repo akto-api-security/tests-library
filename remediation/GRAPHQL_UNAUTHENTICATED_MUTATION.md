@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_UNAUTHENTICATED_MUTATION
+
 
 ## Remediation Steps for Unauthenticated Mutation Query in GraphQL
 Unauthenticated Mutation Query in GraphQL can be a serious security vulnerability. If not properly managed, malicious actors may perform unauthorized operations or mutate data, creating inconsistencies in the system.

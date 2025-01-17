@@ -1,4 +1,4 @@
-# Remediation for LIGHTTPD_SQLI
+
 
 ## Remediation Steps for Lighttpd SQL Injection
 Lighttpd SQL Injection is a critical security flaw that could allow a potential attacker to inject malicious SQL code into your application, and possibly manipulate and extract data from your database. Protecting your application against SQL injection involves both secure coding practices and properly configured SQL database.

@@ -1,4 +1,4 @@
-# Remediation for RABBIT_MQ_EXPOSED
+
 
 ## Remediation Steps for RabbitMQ Exposure
 RabbitMQ exposure is a significant security concern. If not properly secured, RabbitMQ could be exploited by hackers leading to unauthorized access and potential data breaches.

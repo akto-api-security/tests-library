@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DOS_QUERY_DEPTH_CHECK
+
 
 ## Remediation Steps for Denial of Service Attack on GraphQL API with Deeply Nested Query
 

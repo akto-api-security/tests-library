@@ -1,4 +1,4 @@
-# Remediation for UNION_SUBQUERY_EXTRACT_USERNAME_MYSQLI
+
 
 ## Remediation Steps for Union Based SQL Injection in MySQL on Login Endpoint
 

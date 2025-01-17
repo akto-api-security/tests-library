@@ -1,4 +1,4 @@
-# Remediation for SSL_ENABLE_CHECK_AUTH
+
 
 ## Remediation Steps for Bypass Authentication via URL Modification to HTTP only
 

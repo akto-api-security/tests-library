@@ -1,4 +1,4 @@
-# Remediation for DRUPAL_USER_ENUM_REDIRECTION
+
 
 ## Remediation Steps for Drupal User Enumeration with Redirection
 

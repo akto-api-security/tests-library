@@ -1,4 +1,4 @@
-# Remediation for UNION_COLUMN_BASED_SQLI_POST
+
 
 ## Remediation Steps for Union based SQL Injection test with column variations on POST method APIs
 Union-based SQL Injection, especially with column variations targeting POST method APIs, is a critical security issue. An attacker may use this exploit to view, modify, or delete records in your database.

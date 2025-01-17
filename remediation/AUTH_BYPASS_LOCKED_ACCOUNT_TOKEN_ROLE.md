@@ -1,4 +1,4 @@
-# Remediation for AUTH_BYPASS_LOCKED_ACCOUNT_TOKEN_ROLE
+
 
 ## Remediation Steps for Authentication Bypass with Locked Account Token Role Test
 

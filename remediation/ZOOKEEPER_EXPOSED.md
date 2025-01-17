@@ -1,4 +1,4 @@
-# Remediation for ZOOKEEPER_EXPOSED
+
 
 ## Remediation Steps for Zookeeper APIs Exposure
 Zookeeper APIs exposure can lead to serious security issues. Without proper security measures, attackers can gain unauthorized access to vital system components, leading to service disruption or confidential data theft. 

@@ -1,4 +1,4 @@
-# Remediation for APACHE_HTTP_SERVER_XSS
+
 
 ## Remediation Steps for Apache HTTP Server Cross-Site Scripting (XSS)
 

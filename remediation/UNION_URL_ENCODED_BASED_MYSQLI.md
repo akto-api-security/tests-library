@@ -1,4 +1,4 @@
-# Remediation for UNION_URL_ENCODED_BASED_MYSQLI
+
 
 ## Remediation Steps for Union-based SQL Injection Test with URL Encoded Payloads on MySQL Login Endpoints
 

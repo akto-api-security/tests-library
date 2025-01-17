@@ -1,4 +1,4 @@
-# Remediation for JETTY_OLD_INFO_LEAKAGE
+
 
 ## Remediation Steps for Jetty v9.2.9 Sensitive Information Leakage
 

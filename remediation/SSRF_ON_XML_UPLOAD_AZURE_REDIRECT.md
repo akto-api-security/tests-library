@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_XML_UPLOAD_AZURE_REDIRECT
+
 
 ## Remediation Steps for Sensitive Azure Details Exposure via SSRF (Server Side Request Forgery)
 Exposing sensitive Azure details due to Server Side Request Forgery (SSRF) is a severe security issue. Attackers can exploit this vulnerability to gain unauthorized access to Azure assets. 

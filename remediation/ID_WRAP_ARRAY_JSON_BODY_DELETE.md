@@ -1,4 +1,4 @@
-# Remediation for ID_WRAP_ARRAY_JSON_BODY_DELETE
+
 
 ## Remediation Steps for BOLA JSON Parameter Vulnerability
 

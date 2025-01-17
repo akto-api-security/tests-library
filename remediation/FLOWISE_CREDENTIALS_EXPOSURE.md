@@ -1,4 +1,4 @@
-# Remediation for FLOWISE_CREDENTIALS_EXPOSURE
+
 
 ## Remediation Steps for Flowise Credentials Exposure Test
 Flowise Credentials Exposure Test is a critical security concern. When Flowise credentials are exposed, it could potentially give unauthorized access to sensitive data and services. The following steps are suggested to remediate this:

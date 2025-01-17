@@ -1,4 +1,4 @@
-# Remediation for OPEN_REDIRECT_IN_PATH
+
 
 ## Remediation Steps for Open Redirect in Path
 

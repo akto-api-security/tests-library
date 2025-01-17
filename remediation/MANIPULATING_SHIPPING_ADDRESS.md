@@ -1,4 +1,4 @@
-# Remediation for MANIPULATING_SHIPPING_ADDRESS
+
 
 ## Remediation Steps for Manipulating Shipping Address Issue
 

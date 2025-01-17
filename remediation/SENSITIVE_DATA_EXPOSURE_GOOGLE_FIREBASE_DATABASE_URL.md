@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_GOOGLE_FIREBASE_DATABASE_URL
+
 
 ## Remediation Steps for Sensitive Data Exposure for Google Firebase Database URL
 

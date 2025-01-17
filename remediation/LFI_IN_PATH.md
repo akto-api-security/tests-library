@@ -1,4 +1,4 @@
-# Remediation for LFI_IN_PATH
+
 
 ## Remediation Steps for Local File Inclusion (LFI) in Path
 Local File Inclusion (LFI) is a serious security issue that allows an attacker to read and potentially execute files on the server. LFI can occur when user input that is used in file operations is not properly validated. 

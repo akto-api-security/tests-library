@@ -1,4 +1,4 @@
-# Remediation for MANIPULATING_DISCOUNT_PERCENTAGE
+
 
 ## Remediation Steps for Manipulating Discount Percentage
 Manipulating discount percentage is a substantive security issue. Without proper validation on the server-side, attackers are able to manipulate client-side JavaScript and modify the discount percentage on products. This can result in revenue loss. 

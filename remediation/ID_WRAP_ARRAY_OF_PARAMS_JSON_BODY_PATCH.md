@@ -1,4 +1,4 @@
-# Remediation for ID_WRAP_ARRAY_OF_PARAMS_JSON_BODY_PATCH
+
 
 ## Remediation Steps for BOLA via JSON Param
 

@@ -1,4 +1,4 @@
-# Remediation for DOS_FILE_URL_XML
+
 
 ## Remediation Steps for Denial of Service Test by Providing a Large XML File URL as Input
 

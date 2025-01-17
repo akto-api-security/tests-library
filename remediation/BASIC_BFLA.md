@@ -1,4 +1,4 @@
-# Remediation for BASIC_BFLA
+
 
 ## Remediation Steps for Broken Function Level Authorization
 

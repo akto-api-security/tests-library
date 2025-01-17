@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_FIGMA
+
 
 ## Remediation Steps for Sensitive Data Exposure in Figma
 

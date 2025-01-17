@@ -1,4 +1,4 @@
-# Remediation for MANIPULATE_FEES
+
 
 ## Remediation Steps for Manipulating Fees or Price in Transactions
 Manipulating Fees or Price in Transactions is a severe security issue. Without accurate management of prices and fees, attackers could alter these amounts leading to financial fraud and loss. Solving this issue involves both server-side and client-side securities.

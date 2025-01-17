@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_AZURE_REDIS_CACHE_INSTANCE
+
 
 ## Remediation Steps for Sensitive Data Exposure in Azure Redis Cache Instance
 

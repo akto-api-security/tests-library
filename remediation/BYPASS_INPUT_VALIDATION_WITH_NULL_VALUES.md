@@ -1,4 +1,4 @@
-# Remediation for BYPASS_INPUT_VALIDATION_WITH_NULL_VALUES
+
 
 ## Remediation Steps for Bypassing Input Validation with Null Values
 When an input validation control has been bypassed with null values, this potentially opens the system to a myriad of vulnerabilities, such as SQL Injection, XSS, and Buffer-Overflow attacks. Therefore, it is vital that you ensure null values aren't used to bypass your validation.

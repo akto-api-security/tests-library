@@ -1,4 +1,4 @@
-# Remediation for HEAD_METHOD_TEST
+
 
 ## Remediation Steps for Access Control Bypass by Changing Request Method to HEAD
 Access control bypass by changing the request method is a significant security risk that allows attackers to bypass intended restrictions and potentially gain unauthorized access to resources.

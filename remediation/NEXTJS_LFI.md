@@ -1,4 +1,4 @@
-# Remediation for NEXTJS_LFI
+
 
 ## Remediation Steps for Next.js Local File Inclusion
 

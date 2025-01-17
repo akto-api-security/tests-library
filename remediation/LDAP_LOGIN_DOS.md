@@ -1,4 +1,4 @@
-# Remediation for LDAP_LOGIN_DOS
+
 
 ## Remediation Steps for Denial of Service on LDAP Login Endpoint
 

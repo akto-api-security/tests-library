@@ -1,4 +1,4 @@
-# Remediation for BYPASS_ADMIN_RESTRICTIONS_VIA_URL_ENCODING
+
 
 ## Remediation Steps for Bypass Admin Restrictions via URL Encoding
 Bypass Admin Restrictions via URL Encoding is a critical security issue where attackers manipulate URLs with encoded characters to bypass security checks. Here, we will highlight a simple method of validating URL encoding at server side – this can be done in many languages, including JavaScript (Node.js).

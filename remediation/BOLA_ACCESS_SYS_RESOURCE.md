@@ -1,4 +1,4 @@
-# Remediation for BOLA_ACCESS_SYS_RESOURCE
+
 
 ## Remediation Steps for File System Resource Retrieval: Exploiting BOLA through Direct Parameter Value Manipulation
 File System Resource Retrieval, or Broken Object Level Authorization (BOLA), is a serious security vulnerability which occurs when an API exposes endpoints allowing object identifiers to be manipulated directly. This could potentially result in unauthorized access.

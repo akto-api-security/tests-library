@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DOS_QUERY_LENGTH_TEST
+
 
 ## Remediation Steps for Denial of Service Test on GraphQL API with Very Long Query Name
 

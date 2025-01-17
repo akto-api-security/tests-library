@@ -1,4 +1,4 @@
-# Remediation for MANIPULATE_WEIGHT
+
 
 ## Remediation Steps for Manipulating Weight Input Parameters in Shipping or Logistic Related APIs
 

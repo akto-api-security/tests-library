@@ -1,4 +1,4 @@
-# Remediation for SERVER_VERSION_EXPOSED_VIA_RESPONSE_HEADER
+
 
 ## Remediation Steps for Server Version Exposure Via Response Headers
 

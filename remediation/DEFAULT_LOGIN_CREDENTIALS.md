@@ -1,4 +1,4 @@
-# Remediation for DEFAULT_LOGIN_CREDENTIALS
+
 
 ## Remediation Steps for Default Login Credentials
 Default login credentials are a major security risk. If not changed, attackers can use these default credentials to gain unauthorized access to systems, applications, or services.

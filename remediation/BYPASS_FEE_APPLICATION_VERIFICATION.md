@@ -1,4 +1,4 @@
-# Remediation for BYPASS_FEE_APPLICATION_VERIFICATION
+
 
 ## Remediation Steps for Bypassing Fee Application on Transactions
 

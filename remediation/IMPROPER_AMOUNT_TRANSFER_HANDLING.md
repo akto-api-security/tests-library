@@ -1,4 +1,4 @@
-# Remediation for IMPROPER_AMOUNT_TRANSFER_HANDLING
+
 
 ## Remediation Steps for Improper Amount Transfer Handling
 Improper amount transfer handling is a severe security issue. If left unaddressed, it could lead to potential unauthorized transactions and amounts. 

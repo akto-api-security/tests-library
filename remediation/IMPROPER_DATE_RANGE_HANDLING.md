@@ -1,4 +1,4 @@
-# Remediation for IMPROPER_DATE_RANGE_HANDLING
+
 
 ## Remediation Steps for Improper Handling of Date Range in Parameters
 

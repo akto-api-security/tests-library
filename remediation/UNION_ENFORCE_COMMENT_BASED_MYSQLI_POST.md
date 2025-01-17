@@ -1,4 +1,4 @@
-# Remediation for UNION_ENFORCE_COMMENT_BASED_MYSQLI_POST
+
 
 ## Remediation Steps for Union based SQL Injection test on POST method APIs
 Union based SQL Injection is a critical security issue that can allow an attacker to inject malicious SQL statements, which could execute unlawful commands in a database.

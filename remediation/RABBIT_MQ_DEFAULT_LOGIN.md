@@ -1,4 +1,4 @@
-# Remediation for RABBIT_MQ_DEFAULT_LOGIN
+
 
 ## Remediation Steps for RabbitMQ Default Login
 

@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_JAPANESE_SOCIAL_INSURANCE_NUMBER
+
 
 ## Remediation Steps for Sensitive data exposure of Japanese Social Insurance Number
 Sensitive data exposure, especially of personal identifiers like a Japanese Social Insurance Number, is a serious security concern. A data breach can lead to significant problems, such as identity theft. Here are the steps to mitigate the risk of such exposure.

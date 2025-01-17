@@ -1,4 +1,4 @@
-# Remediation for UNION_BASED_SQLI_XSS_POST
+
 
 ## Remediation Steps for Union Based SQL Injection Test with XSS for POST Method APIs
 

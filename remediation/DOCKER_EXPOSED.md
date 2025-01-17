@@ -1,4 +1,4 @@
-# Remediation for DOCKER_EXPOSED
+
 
 ## Remediation Steps for Docker API Exposure
 Unprotected Docker APIs can result in severe security vulnerabilities if not addressed promptly. The following steps provide assistance in mitigating the exposure of Docker APIs.

@@ -1,4 +1,4 @@
-# Remediation for BOLA_ADD_CUSTOM_HEADER
+
 
 ## Remediation Steps for BOLA (Broken Object Level Authorization) Exploitation by Adding Custom Header
 BOLA (Broken Object Level Authorization) is a security vulnerability that can be exploited when an attacker manipulates object id's in the endpoint path. Using unauthorized access techniques such as adding custom headers can exacerbate the problem. The remediation steps are mentioned below -

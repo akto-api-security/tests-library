@@ -1,4 +1,4 @@
-# Remediation for FTP_CREDENTIALS_EXPOSURE
+
 
 ## Remediation Steps for FTP Credentials Exposure
 Exposure of FTP credentials, typically the username and password, constitutes a serious security vulnerability. If these credentials fall into the wrong hands, it can lead to unauthorized access to sensitive data and possible manipulation of that data. Here are the remediation steps:

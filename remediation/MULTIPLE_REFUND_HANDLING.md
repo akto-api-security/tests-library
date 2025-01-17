@@ -1,4 +1,4 @@
-# Remediation for MULTIPLE_REFUND_HANDLING
+
 
 ## Remediation Steps for Exchange or Return Fraud via Filling Multiple Refunds
 

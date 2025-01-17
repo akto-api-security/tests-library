@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_DATABASE
+
 
 ## Remediation Steps for Sensitive Data Exposure for Database
 Sensitive data exposure for databases is a significant security concern. Without proper security measures in place, attackers can gain unauthorized access to sensitive data stored in databases. Here, we'll demonstrate how to secure a MySQL database, but the general principles are applicable to most databases.

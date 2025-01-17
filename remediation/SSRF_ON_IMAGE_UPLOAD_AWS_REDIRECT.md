@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_IMAGE_UPLOAD_AWS_REDIRECT
+
 
 ## Remediation Steps for Sensitive AWS Details Exposed via Replacing Image param with Redirection Due to SSRF
 The exposure of Sensitive AWS details is a serious security issue. Attackers can gain unauthorized access to AWS assets, effectively compromising your environment.

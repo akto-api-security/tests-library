@@ -1,4 +1,4 @@
-# Remediation for MANIPULATE_NUMBER_DATA_TYPE
+
 
 ## Remediation Steps for Manipulate Number Data Type Vulnerability
 

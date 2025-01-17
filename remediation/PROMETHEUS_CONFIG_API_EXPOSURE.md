@@ -1,4 +1,4 @@
-# Remediation for PROMETHEUS_CONFIG_API_EXPOSURE
+
 
 ## Remediation Steps for Prometheus Config API Endpoint Exposure
 

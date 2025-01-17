@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DOS_RATE_LIMITING
+
 
 ## Remediation Steps for Denial of Service Test on GraphQL API
 A Denial of Service (DoS) attack on GraphQL API can result in server overload due to repeated requests and can disrupt your services. To avoid this, you can implement rate limiting.

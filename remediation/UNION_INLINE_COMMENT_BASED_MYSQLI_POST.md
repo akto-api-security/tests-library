@@ -1,4 +1,4 @@
-# Remediation for UNION_INLINE_COMMENT_BASED_MYSQLI_POST
+
 
 ## Remediation Steps for Union Based SQL Injection with Inline Comments on POST method APIs for MySQL
 Union Based SQL Injection is a serious security vulnerability. Attackers can use this to extract valuable information from databases, modify data, or execute administrative operations on the database. Here are remedies to follow to fix this vulnerability.

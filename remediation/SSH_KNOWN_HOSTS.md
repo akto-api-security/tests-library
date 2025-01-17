@@ -1,4 +1,4 @@
-# Remediation for SSH_KNOWN_HOSTS
+
 
 ## Remediation Steps for SSH Known Hosts Vulnerability
 The SSH Known Hosts vulnerability occurs when an attacker can gain unauthorized access to your system by manipulating the known hosts file. It is important to regularly maintain and update the SSH known hosts file to prevent SSH spoofing or man-in-the-middle attacks.

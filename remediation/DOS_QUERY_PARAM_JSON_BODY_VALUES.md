@@ -1,4 +1,4 @@
-# Remediation for DOS_QUERY_PARAM_JSON_BODY_VALUES
+
 
 ## Remediation Steps for Denial of Service via Query Param or JSON Body Param Values
 

@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_CSV_UPLOAD_GCP_REDIRECT
+
 
 ## Remediation Steps for Exposed Sensitive GCP Details
 Sensitive GCP (Google Cloud Platform) details, when exposed due to Server-Side Request Forgery (SSRF), can pose a severe security risk. Unauthorized users may gain access to confidential data or manipulate GCP resources. This commonly arises when a CSV parameter is replaced with a redirection.

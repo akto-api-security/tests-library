@@ -1,4 +1,4 @@
-# Remediation for IMPROPER_CURRENCY_CODE_HANDLING
+
 
 ## Remediation Steps for Improper Currency Code Handling
 

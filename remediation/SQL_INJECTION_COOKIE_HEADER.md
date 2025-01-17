@@ -1,4 +1,4 @@
-# Remediation for SQL_INJECTION_COOKIE_HEADER
+
 
 ## Remediation Steps for SQL Injection Test on Cookie Header
 

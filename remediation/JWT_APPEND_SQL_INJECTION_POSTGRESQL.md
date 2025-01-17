@@ -1,4 +1,4 @@
-# Remediation for JWT_APPEND_SQL_INJECTION_POSTGRESQL
+
 
 ## Remediation Steps for SQL Injection test on JWT for PostgreSQL
 

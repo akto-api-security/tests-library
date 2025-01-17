@@ -1,4 +1,4 @@
-# Remediation for STORED_SQLI_XSS_GET
+
 
 ## Remediation Steps for Stored SQL Injection Test with XSS and GET method APIs
 

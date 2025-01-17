@@ -1,4 +1,4 @@
-# Remediation for OPEN_REDIRECT_SUBDOMAIN_WHITELIST
+
 
 ## Remediation Steps for Open Redirect Subdomain Whitelist
 

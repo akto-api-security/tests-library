@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_REPLACE_API_VERSION
+
 
 ## Remediation Steps for Exploiting BOLA by replacing URL path with API Version IDs for Unauthorized Access
 

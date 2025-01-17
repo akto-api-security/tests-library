@@ -1,4 +1,4 @@
-# Remediation for TOMCAT_MANAGER_PATH_NORMALIZATION_EXPOSURE
+
 
 ## Remediation Steps for Apache Tomcat Manager Path Normalization Panel Exposure
 

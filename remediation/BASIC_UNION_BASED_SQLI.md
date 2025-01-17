@@ -1,4 +1,4 @@
-# Remediation for BASIC_UNION_BASED_SQLI
+
 
 ## Remediation Steps for Basic Union Based SQL Injection Test on Login Endpoints
 

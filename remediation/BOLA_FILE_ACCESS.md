@@ -1,4 +1,4 @@
-# Remediation for BOLA_FILE_ACCESS
+
 
 ## Remediation Steps for BOLA by Accessing Files of other Users
 

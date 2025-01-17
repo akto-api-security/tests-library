@@ -1,4 +1,4 @@
-# Remediation for SQUID_PROXY_CONFIG_EXPOSED
+
 
 ## Remediation Steps for Squid Proxy Config Exposure
 Exposure of Squid Proxy configuration files may pose a significant security threat. Attackers with access to these files can view sensitive information, causing a potential breach to your system's security. The following steps can help remediate this issue.

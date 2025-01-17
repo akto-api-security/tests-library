@@ -1,4 +1,4 @@
-# Remediation for SOURCE_CODE_DISCLOSURE
+
 
 ## Remediation Steps for Source Code Disclosure
 Source code disclosure is a serious security issue that could potentially leak sensitive system internals and configurations. This can provide attackers with valuable information that they can use to exploit the system.

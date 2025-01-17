@@ -1,4 +1,4 @@
-# Remediation for FIREBASE_UNAUTHENTICATED
+
 
 ## Remediation Steps for Firebase Collection Exposed Data 
 Firebase Collection exposing data to the public is a serious security issue. Without proper rules, attackers can gain unauthorized access to your database and can even modify your data.

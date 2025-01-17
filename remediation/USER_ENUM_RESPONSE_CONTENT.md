@@ -1,4 +1,4 @@
-# Remediation for USER_ENUM_RESPONSE_CONTENT
+
 
 ## Remediation Steps for Broken Authentication - Username Enumeration via Different Response Content
 

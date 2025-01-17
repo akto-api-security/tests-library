@@ -1,4 +1,4 @@
-# Remediation for DUMMY_ACCEPT_HEADER
+
 
 ## Remediation Steps for Dummy Accept Header
 A Dummy Accept Header security issue could arise when an application fails to validate or restricts the Accept request HTTP header to known media types. This can be exploited by attackers in multiple ways including causing the server to return unexpected data, causing errors in the application, or initiating attacks like content-type spoofing. 

@@ -1,4 +1,4 @@
-# Remediation for NODE_ECSTATIC_DIRECTORY_LISTING
+
 
 ## Remediation Steps for Node.js Ecstatic Package - Directory Listing
 Ecstatic package is a static file server middleware for Node.js. This includes servers created with http & express. It is crucial to avoid directory listing to prevent unauthorized access to directories as it can lead to sensitive data exposure.

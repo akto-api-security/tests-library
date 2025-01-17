@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_CSV_UPLOAD_AZURE_REDIRECT
+
 
 ## Remediation Steps for Exposed Sensitive Azure Details
 

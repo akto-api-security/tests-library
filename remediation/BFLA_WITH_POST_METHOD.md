@@ -1,4 +1,4 @@
-# Remediation for BFLA_WITH_POST_METHOD
+
 
 ## Remediation Steps for Broken Function Level Authorization - Vertical Privilege Escalation
 

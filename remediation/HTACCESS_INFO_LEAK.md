@@ -1,4 +1,4 @@
-# Remediation for HTACCESS_INFO_LEAK
+
 
 ## Remediation Steps for Htaccess Information Leak
 A .htaccess information leak is a security issue where the server inadvertently serves the .htaccess file instead of processing it. This can expose confidential information like file locations, redirection rules and optionally, passwords. Here are the steps to remediate this issue:

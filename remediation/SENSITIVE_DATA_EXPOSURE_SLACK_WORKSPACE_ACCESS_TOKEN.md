@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_SLACK_WORKSPACE_ACCESS_TOKEN
+
 
 ## Remediation Steps for Slack Workspace Access Token Exposure
 Exposure of Slack Workspace Access Tokens can lead to unauthorized access to your Slack workspace. This data is sensitive and should always be stored securely. Here are steps to remediate this security issue:

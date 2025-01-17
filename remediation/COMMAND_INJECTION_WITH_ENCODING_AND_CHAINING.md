@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_WITH_ENCODING_AND_CHAINING
+
 
 ## Remediation Steps for Command Injection Vulnerability
 

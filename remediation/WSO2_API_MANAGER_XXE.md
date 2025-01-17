@@ -1,4 +1,4 @@
-# Remediation for WSO2_API_MANAGER_XXE
+
 
 ## Remediation Steps for WSO2 API Manager Blind XXE Test
 

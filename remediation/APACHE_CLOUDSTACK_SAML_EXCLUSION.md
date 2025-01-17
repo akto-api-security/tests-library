@@ -1,4 +1,4 @@
-# Remediation for APACHE_CLOUDSTACK_SAML_EXCLUSION
+
 
 ## Remediation Steps for Apache Cloudstack SAML Signature Exclusion Vulnerability
 

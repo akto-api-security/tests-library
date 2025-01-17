@@ -1,4 +1,4 @@
-# Remediation for USER_ENUM_PASSWORD_RESET
+
 
 ## Remediation Steps for Broken Authentication Test - Username Enumeration on Password Reset Endpoint
 

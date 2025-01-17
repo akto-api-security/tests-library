@@ -1,4 +1,4 @@
-# Remediation for REPOSILITE_LFI
+
 
 ## Remediation Steps for Reposilite Directory Traversal Test
 

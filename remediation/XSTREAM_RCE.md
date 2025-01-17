@@ -1,4 +1,4 @@
-# Remediation for XSTREAM_RCE
+
 
 ## Remediation Steps for XStream API Remote Code Execution
 XStream is a simple library to serialize objects to XML and back again, which can lead to Remote Code Execution if not properly used. Here, we provide some steps to mitigate these vulnerabilities.

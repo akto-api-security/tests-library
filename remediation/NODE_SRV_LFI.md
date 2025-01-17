@@ -1,4 +1,4 @@
-# Remediation for NODE_SRV_LFI
+
 
 ## Remediation Steps for Node-srv Local File Inclusion
 

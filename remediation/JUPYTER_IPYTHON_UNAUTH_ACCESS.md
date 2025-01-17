@@ -1,4 +1,4 @@
-# Remediation for JUPYTER_IPYTHON_UNAUTH_ACCESS
+
 
 ## Remediation Steps for Jupyter ipython Authorization Bypass
 

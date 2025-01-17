@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DOS_VARIABLES_VALUE_ARRAY_OF_SPECIAL_VALUES
+
 
 ## Remediation Steps for Denial of Service Test on GraphQL API having Variables Key with value Array of Special Characters
 

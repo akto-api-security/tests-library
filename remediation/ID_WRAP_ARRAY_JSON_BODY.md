@@ -1,4 +1,4 @@
-# Remediation for ID_WRAP_ARRAY_JSON_BODY
+
 
 ## Remediation Steps for BOLA: Turning JSON Param into Array for Unauthorized Access
 

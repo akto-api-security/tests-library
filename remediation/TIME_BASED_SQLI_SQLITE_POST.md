@@ -1,4 +1,4 @@
-# Remediation for TIME_BASED_SQLI_SQLITE_POST
+
 
 ## Remediation Steps for Time Based SQL Injection in SQLITE DB for POST method APIs
 

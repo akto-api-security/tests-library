@@ -1,4 +1,4 @@
-# Remediation for BASIC_XSS
+
 
 ## Remediation Steps for XSS By Changing Request Parameters
 

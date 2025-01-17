@@ -1,4 +1,4 @@
-# Remediation for APACHE_MOD_PROXY_SSRF
+
 
 ## Remediation Steps for Apache Mod_Proxy Server-Side Request Forgery
 Server-Side Request Forgery (SSRF) in Apache Mod_Proxy is a security vulnerability that could potentially allow an attacker to make requests to internal resources behind the firewall.

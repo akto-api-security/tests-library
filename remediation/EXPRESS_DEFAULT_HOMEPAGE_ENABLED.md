@@ -1,4 +1,4 @@
-# Remediation for EXPRESS_DEFAULT_HOMEPAGE_ENABLED
+
 
 ## Remediation Steps for Express Default Homepage Enabled
 Having the Express default homepage enabled can lead to exposure of detailed error stack traces which can lead to potential attack vectors. It is therefore recommended to disable this feature.

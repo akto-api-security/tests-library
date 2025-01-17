@@ -1,4 +1,4 @@
-# Remediation for ID_REPLACE_JSON_OBJECT_DELETE
+
 
 ## Remediation Steps for BOLA: Turning Parameters into JSON Objects for Unauthorized Access for DELETE method APIs
 In the context of APIs, BOLA (Broken Object Level Authorization) vulnerabilities can potentially allow unauthorized users to gain access to sensitive data or perform unauthorized operations. 

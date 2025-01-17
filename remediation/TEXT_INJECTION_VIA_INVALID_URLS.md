@@ -1,4 +1,4 @@
-# Remediation for TEXT_INJECTION_VIA_INVALID_URLS
+
 
 ## Remediation Steps for Text Injection via Invalid URLs
 

@@ -1,4 +1,4 @@
-# Remediation for PORT_SCANNING
+
 
 ## Remediation Steps for Server Side Request Forgery (SSRF) in Port Scanning
 SSRF in port scanning is a serious security issue where the attacker can abuse functionality on the server to read or update internal resources.

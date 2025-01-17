@@ -1,4 +1,4 @@
-# Remediation for DRUPAL_API_USER_LIST_EXPOSE
+
 
 ## Remediation Steps for Drupal JSON API Username Listing Endpoint Exposure
 Drupal JSON API Username Listing Endpoint Exposure is a severe security vulnerability. If left exposed, attackers could potentially retrieve a list of all usernames, compromising user's data privacy.

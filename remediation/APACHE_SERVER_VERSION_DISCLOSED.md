@@ -1,4 +1,4 @@
-# Remediation for APACHE_SERVER_VERSION_DISCLOSED
+
 
 ## Remediation Steps for Apache Server Version Disclosure
 Disclosing the Apache server version can be a serious security issue. This information might potentially be used by attackers to adapt their attack strategy to the specific version, increasing the chance of successful exploitation.

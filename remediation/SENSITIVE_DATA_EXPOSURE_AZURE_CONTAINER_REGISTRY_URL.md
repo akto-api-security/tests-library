@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_AZURE_CONTAINER_REGISTRY_URL
+
 
 ## Remediation Steps for Azure Container Registry Sensitive Data Exposure
 

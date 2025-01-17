@@ -1,4 +1,4 @@
-# Remediation for DRUPAL_RCE
+
 
 ## Remediation Steps for Drupal Remote Code Execution
 

@@ -1,4 +1,4 @@
-# Remediation for NGINX_LOG_EXPOSED
+
 
 ## Remediation Steps for Nginx Log Exposure
 Nginx log exposure is a serious security issue. If your logs are exposed, they can provide attackers with valuable information about your system and its vulnerabilities. 

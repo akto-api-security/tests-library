@@ -1,4 +1,4 @@
-# Remediation for AUTH_BYPASS_LDAP
+
 
 ## Remediation Steps for Authentication Bypass using LDAP payloads
 

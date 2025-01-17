@@ -1,4 +1,4 @@
-# Remediation for SPRING_CLOUD_RCE
+
 
 ## Remediation Steps for Spring Cloud Remote Code Execution Vulnerability
 

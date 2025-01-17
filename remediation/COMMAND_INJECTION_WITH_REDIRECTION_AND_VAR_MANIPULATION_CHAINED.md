@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_WITH_REDIRECTION_AND_VAR_MANIPULATION_CHAINED
+
 
 ## Remediation Steps for Command Injection using Redirection and Variable Manipulation
 

@@ -1,4 +1,4 @@
-# Remediation for SPRING_BOOT_BEANS_ACTUATOR_EXPOSED
+
 
 ## Remediation Steps for Spring Boot Beans Actuator Exposure
 

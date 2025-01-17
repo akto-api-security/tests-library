@@ -1,4 +1,4 @@
-# Remediation for PROMPT_INJECTION_BASIC_v2
+
 
 ## Remediation Steps for Basic Prompt Injection Test on LLMs: Print Hello
 

@@ -1,4 +1,4 @@
-# Remediation for COMMAND_INJECTION_VARIABLE_ASSIGN_CHAINED
+
 
 ## Remediation Steps for Command Injection by Variable Assignment with Chained System Commands
 Command Injection by variable assignment with chained system commands is a serious security issue as it may allow attackers to execute arbitrary commands. One way to prevent this is to use a secure coding approach that avoids direct execution of system commands whenever possible.

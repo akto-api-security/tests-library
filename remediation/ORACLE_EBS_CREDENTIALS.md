@@ -1,4 +1,4 @@
-# Remediation for ORACLE_EBS_CREDENTIALS
+
 
 ## Remediation Steps for Oracle EBS Credentials Disclosure
 

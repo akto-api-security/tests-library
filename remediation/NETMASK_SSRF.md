@@ -1,4 +1,4 @@
-# Remediation for NETMASK_SSRF
+
 
 ## Remediation Steps for Netmask NPM Package Server-Side Request Forgery
 

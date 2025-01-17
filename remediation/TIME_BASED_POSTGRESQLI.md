@@ -1,4 +1,4 @@
-# Remediation for TIME_BASED_POSTGRESQLI
+
 
 ## Remediation Steps for Time based SQL Injection in PostgreSQL DB
 Time based SQL injection is a serious security issue. Such type of SQL Injection relies on the database's response time to infer information. To protect your PostgreSQL DB from time-based SQLi, consider the following steps: 

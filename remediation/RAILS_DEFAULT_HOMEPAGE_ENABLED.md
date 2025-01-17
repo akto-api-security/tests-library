@@ -1,4 +1,4 @@
-# Remediation for RAILS_DEFAULT_HOMEPAGE_ENABLED
+
 
 ## Remediation Steps for Rails Default Homepage Enabled
 

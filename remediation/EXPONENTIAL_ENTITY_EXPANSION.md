@@ -1,4 +1,4 @@
-# Remediation for EXPONENTIAL_ENTITY_EXPANSION
+
 
 ## Remediation Steps for Exponential Entity Expansion (XML Bomb) Issue
 

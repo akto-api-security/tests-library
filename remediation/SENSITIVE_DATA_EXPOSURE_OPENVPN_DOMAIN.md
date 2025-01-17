@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_OPENVPN_DOMAIN
+
 
 ## Remediation Steps for Sensitive Data Exposure in OPENVPN DOMAIN
 

@@ -1,4 +1,4 @@
-# Remediation for USER_ENUM_RESPONSE_TIME
+
 
 ## Remediation Steps for Broken Authentication - Username Enumeration via Response Time
 

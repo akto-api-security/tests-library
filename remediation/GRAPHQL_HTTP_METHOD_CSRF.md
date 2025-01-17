@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_HTTP_METHOD_CSRF
+
 
 ## Remediation Steps for CSRF test with HTTP Method in GraphQL
 

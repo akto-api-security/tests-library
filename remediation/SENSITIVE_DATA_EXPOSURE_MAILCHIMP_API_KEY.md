@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_MAILCHIMP_API_KEY
+
 
 ## Remediation Steps for Sensitive Data Exposure (Mailchimp API Key)
 Exposing sensitive data like the Mailchimp API key can potentially allow malicious entities to misuse the key, which may lead to unauthorized access or execution of operations associated with your Mailchimp account.

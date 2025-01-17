@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_IMAGE
+
 
 ## Remediation Steps for Sensitive Image Data Exposure
 

@@ -1,4 +1,4 @@
-# Remediation for DOS_FILE_URL_PNG
+
 
 ## Remediation Steps for Denial of Service Attacks via Large PNG File Upload
 

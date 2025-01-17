@@ -1,4 +1,4 @@
-# Remediation for SSTI_IN_FLASK_AND_JINJA
+
 
 ## Remediation Steps for Server-side Template Injection (SSTI) in Flask and Jinja
 Server-side Template Injection (SSTI) in Flask and Jinja can allow an attacker to inject malicious code into your server, which can lead to serious consequences if not properly addressed.

@@ -1,4 +1,4 @@
-# Remediation for BYPASS_CAPTCHA_ADDING_HEADER
+
 
 ## Remediation Steps for Bypassing Captcha-Based Protection by Adding Headers
 

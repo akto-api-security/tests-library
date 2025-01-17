@@ -1,4 +1,4 @@
-# Remediation for FILE_INCLUSION_NEW_PARAM_WINDOWS
+
 
 ## Remediation Steps for Local File Inclusion (LFI) by Adding New Parameter for Windows
 Local File Inclusion (LFI) is a serious security vulnerability that allows attackers to include files on a server through the web browser.

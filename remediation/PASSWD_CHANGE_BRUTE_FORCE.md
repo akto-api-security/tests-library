@@ -1,4 +1,4 @@
-# Remediation for PASSWD_CHANGE_BRUTE_FORCE
+
 
 ## Remediation Steps for Authentication Bypass by Brute Forcing Password Change Endpoint
 

@@ -1,4 +1,4 @@
-# Remediation for JWT_HEADER_PARAM_INJECTION_JWK
+
 
 ## Remediation Steps for Authentication Bypass using JWT Header Param Injection with JWK
 

@@ -1,4 +1,4 @@
-# Remediation for NODEJS_ST_MODULE_DIRECTORY_TRAVERSAL
+
 
 ## Remediation Steps for Node.js `st` Module Directory Traversal
 

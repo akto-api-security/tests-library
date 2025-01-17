@@ -1,4 +1,4 @@
-# Remediation for PYTHON_EXPOSED_METRICS
+
 
 ## Remediation Steps for Python Exposed Metrics Detection Test
 

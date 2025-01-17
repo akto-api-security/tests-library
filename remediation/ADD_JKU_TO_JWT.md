@@ -1,4 +1,4 @@
-# Remediation for ADD_JKU_TO_JWT
+
 
 ## Remediation Steps for JWT Authentication Bypass Via JKU Header Injection
 

@@ -1,4 +1,4 @@
-# Remediation for GIT_CONFIG_NGINXOFFBYSLASH
+
 
 ## Remediation Steps for Nginx - Git Configuration Exposure
 

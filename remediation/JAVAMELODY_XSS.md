@@ -1,4 +1,4 @@
-# Remediation for JAVAMELODY_XSS
+
 
 ## Remediation Steps for JavaMelody Cross-Site Scripting Vulnerability
 

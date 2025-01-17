@@ -1,4 +1,4 @@
-# Remediation for SERVICENOW_LOGIN_PANEL_EXPOSE
+
 
 ## Remediation Steps for ServiceNow Login Panel Exposure
 

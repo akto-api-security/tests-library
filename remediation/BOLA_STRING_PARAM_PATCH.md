@@ -1,4 +1,4 @@
-# Remediation for BOLA_STRING_PARAM_PATCH
+
 
 ## Remediation Steps for Exploiting BOLA: Direct System Operation Using String Parameter Values with PATCH/PUT Based APIs
 

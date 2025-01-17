@@ -1,4 +1,4 @@
-# Remediation for XXE_BASIC_SOAP_API_INJECTION
+
 
 ## Remediation Steps for XML External Entity (XXE) Test for Basic SOAP API Injection
 

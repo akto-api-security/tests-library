@@ -1,4 +1,4 @@
-# Remediation for NGINX_DEFAULT_PAGE_ENABLED
+
 
 ## Remediation Steps for Nginx Default Page Enabled
 

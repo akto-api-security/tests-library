@@ -1,4 +1,4 @@
-# Remediation for BOOLEAN_BASED_SQLI_GET
+
 
 ## Remediation Steps for Boolean Based SQL Injection
 Boolean based SQL injection on GET method APIs allows an attacker to manipulate queries. Without proper input validation, an attacker can potentially view, modify and delete data.

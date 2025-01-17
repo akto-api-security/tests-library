@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_AZURE_SEARCH_QUERY_KEY_URL
+
 
 ## Remediation Steps for Azure Search Query Key URL Sensitive Data Exposure
 

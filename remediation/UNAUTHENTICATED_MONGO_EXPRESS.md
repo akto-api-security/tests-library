@@ -1,4 +1,4 @@
-# Remediation for UNAUTHENTICATED_MONGO_EXPRESS
+
 
 ## Remediation Steps for Mongo Express Unauthenticated Access
 

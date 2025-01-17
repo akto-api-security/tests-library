@@ -1,4 +1,4 @@
-# Remediation for PHPMOD_CURL_XSS
+
 
 ## Remediation Steps for Php-mod/curl Library Cross-Site Scripting
 Cross-Site Scripting (XSS) vulnerabilities occur when data entered by a user is interpreted as code by the browser. This can allow attackers to execute malicious scripts.

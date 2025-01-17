@@ -1,4 +1,4 @@
-# Remediation for APACHE_HTTP_SERVER_ACL_BYPASS
+
 
 ## Remediation Steps for Apache HTTP Server ACL Bypass Test
 

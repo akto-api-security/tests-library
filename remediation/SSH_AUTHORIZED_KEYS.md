@@ -1,4 +1,4 @@
-# Remediation for SSH_AUTHORIZED_KEYS
+
 
 ## Remediation Steps for SSH Authorized Keys
 

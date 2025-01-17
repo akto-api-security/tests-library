@@ -1,4 +1,4 @@
-# Remediation for XXE_LFI
+
 
 ## Remediation Steps for XML External Entity (XXE) Test for Local File Inclusion
 An XML External Entity attack is a type of attack against an application that analyzes XML input. This particular security issue can lead to the disclosure of internal files, denial of service, server side request forgery, port scanning from the perspective of the machine where the parser is located.

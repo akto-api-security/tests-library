@@ -1,4 +1,4 @@
-# Remediation for ECLIPSE_BIRT_PANEL_EXPOSURE
+
 
 ## Remediation Steps for Eclipse BIRT Panel Exposure
 

@@ -1,4 +1,4 @@
-# Remediation for IDENTIFY_PUBLIC_ACCESS_API
+
 
 ## Remediation Steps for Improper Inventory Management - Publicly Accessible APIs 
 

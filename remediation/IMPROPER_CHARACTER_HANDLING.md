@@ -1,4 +1,4 @@
-# Remediation for IMPROPER_CHARACTER_HANDLING
+
 
 ## Remediation Steps for Improper Character Handling in Username
 

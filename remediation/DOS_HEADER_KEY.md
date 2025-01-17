@@ -1,4 +1,4 @@
-# Remediation for DOS_HEADER_KEY
+
 
 ## Remediation Steps for Denial of Service with Long Random Strings in Header Parameter Keys
 An uncontrolled input can lead to Denial of Service (DoS) by crashing the system or excessively consuming its resources. This is a serious security issue, and needs to be addressed promptly. 

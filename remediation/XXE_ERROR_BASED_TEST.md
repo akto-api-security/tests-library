@@ -1,4 +1,4 @@
-# Remediation for XXE_ERROR_BASED_TEST
+
 
 ## Remediation Steps for XML Error Based Vulnerability Test in API Endpoints
 

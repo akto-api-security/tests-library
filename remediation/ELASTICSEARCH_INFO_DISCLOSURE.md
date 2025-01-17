@@ -1,4 +1,4 @@
-# Remediation for ELASTICSEARCH_INFO_DISCLOSURE
+
 
 ## Remediation Steps for Elasticsearch Information Disclosure
 

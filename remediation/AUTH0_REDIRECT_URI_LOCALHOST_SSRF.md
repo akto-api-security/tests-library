@@ -1,4 +1,4 @@
-# Remediation for AUTH0_REDIRECT_URI_LOCALHOST_SSRF
+
 
 ## Remediation Steps for SSRF test with Localhost URLs for Redirect URI Parameter in Auth0 Authentication 
 

@@ -1,4 +1,4 @@
-# Remediation for PROMETHEUS_DEBUG_EXPOSED
+
 
 ## Remediation Steps for Prometheus Debug Exposure
 Prometheus debug exposure is a serious security issue that can allow unauthorized access to debug endpoints. Therefore, it's important to ensure these are not exposed in a production environment.

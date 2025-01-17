@@ -1,4 +1,4 @@
-# Remediation for BOOLEAN_BASED_SQLI_XSS
+
 
 ## Remediation Steps for Boolean Based SQL Injection Test with XSS
 

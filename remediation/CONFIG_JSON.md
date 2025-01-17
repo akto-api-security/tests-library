@@ -1,4 +1,4 @@
-# Remediation for CONFIG_JSON
+
 
 ## Remediation Steps for Config File Exposure
 

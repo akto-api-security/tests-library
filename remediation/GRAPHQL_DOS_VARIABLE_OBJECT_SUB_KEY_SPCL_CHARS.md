@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DOS_VARIABLE_OBJECT_SUB_KEY_SPCL_CHARS
+
 
 ## Remediation Steps for Denial of Service Tests on GraphQL API with Special Characters in Variable's Object Key Field
 Highlighted below are proposed steps to prevent the vulnerability of Denial of Service (DoS) attacks on a GraphQL API by introducing special characters in a variable's key field. A malformed key field can cause the API server to crash, creating a Denial of Service.

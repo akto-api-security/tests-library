@@ -1,4 +1,4 @@
-# Remediation for TOMCAT_RCE
+
 
 ## Remediation Steps for Apache Tomcat Remote Code Execution
 

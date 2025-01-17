@@ -1,4 +1,4 @@
-# Remediation for OPENAPI_EXPOSURE
+
 
 ## Remediation Steps for OpenAPI Documentation Exposure
 OpenAPI Documentation Exposure can expose details about the underlying software architecture of an application. An attacker may use this information to identify potential vulnerabilities and craft specialized attacks.

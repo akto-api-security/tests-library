@@ -1,4 +1,4 @@
-# Remediation for TIME_BASED_SQLI_SQLITE
+
 
 ## Remediation Steps for Time-Based SQL Injection in SQLite DB
 

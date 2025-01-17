@@ -1,4 +1,4 @@
-# Remediation for DETECT_DJANGO_EXCEPTION
+
 
 ## Remediation Steps for Django API Exception Error Detection using Special Characters
 

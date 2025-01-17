@@ -1,4 +1,4 @@
-# Remediation for KUBERNETES_KUSTOMIZATION_DISCLOSURE
+
 
 ## Remediation Steps for Kubernetes Kustomization Disclosure
 

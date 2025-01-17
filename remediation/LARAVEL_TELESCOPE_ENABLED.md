@@ -1,4 +1,4 @@
-# Remediation for LARAVEL_TELESCOPE_ENABLED
+
 
 ## Remediation Steps for Laravel Telescope Enabled
 

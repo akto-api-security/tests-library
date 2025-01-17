@@ -1,4 +1,4 @@
-# Remediation for SSRF_ON_IMAGE_UPLOAD
+
 
 ## Remediation Steps for Sensitive AWS details exposed via replacing image param due to SSRF
 Server-Side Request Forgery (SSRF) attacks are a way to carry out actions on behalf of the server. This becomes a serious security issue when sensitive details such as AWS credentials are exposed.

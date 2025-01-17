@@ -1,4 +1,4 @@
-# Remediation for KERNEL_OPEN_COMMAND_INJECTION
+
 
 ## Remediation Steps for Kernel Open Command Injection in Ruby
 

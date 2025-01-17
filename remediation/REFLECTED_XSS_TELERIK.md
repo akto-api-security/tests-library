@@ -1,4 +1,4 @@
-# Remediation for REFLECTED_XSS_TELERIK
+
 
 ## Remediation Steps for Reflected XSS Telerik Reporting Module
 Reflected XSS (Cross-Site Scripting) vulnerabilities allow an attacker to inject their own script into web pages viewed by other users. The Telerik Reporting Module can be particularly vulnerable to this type of attack, but there are steps that can be taken to mitigate this.

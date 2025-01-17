@@ -1,4 +1,4 @@
-# Remediation for MISCONFIGURED_X_FRAME_OPTIONS_HEADER
+
 
 ## Remediation Steps for Misconfigured X-Frame-Options Header
 A misconfigured X-Frame-Options header can lead to attacks such as Clickjacking. The attacker tricks the user into clicking something different from what the user perceives, potentially revealing confidential information or taking control of the user's actions. To prevent this threat, it is important to properly configure this header.

@@ -1,4 +1,4 @@
-# Remediation for UNION_COLUMN_BASED_SQLI
+
 
 ## Remediation Steps for Union Based SQL Injection on Login Endpoints
 

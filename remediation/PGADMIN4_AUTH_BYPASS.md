@@ -1,4 +1,4 @@
-# Remediation for PGADMIN4_AUTH_BYPASS
+
 
 ## Remediation Steps for pgAdmin 4 Authentication Bypass
 pgAdmin 4 Authentication Bypass is a critical security vulnerability. It can allow attackers to bypass the authentication process and gain unauthorized access to the database. Below are the remediation steps:

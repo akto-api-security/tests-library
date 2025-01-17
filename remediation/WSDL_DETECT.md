@@ -1,4 +1,4 @@
-# Remediation for WSDL_DETECT
+
 
 ## Remediation Steps for WSDL File Exposure
 WSDL (Web Services Description Language) file exposure can be a serious security issue. If the WSDL file is exposed, it could potentially allow attackers to discover the services that the system exposes which might lead to unauthorized actions or information exposure.

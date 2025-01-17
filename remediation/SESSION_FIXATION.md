@@ -1,4 +1,4 @@
-# Remediation for SESSION_FIXATION
+
 
 ## Remediation Steps for Session Fixation
 Session fixation is a security issue where a malicious client can manipulate a session ID in a manner that allows subsequent requests to be identified as part of that particular session ID. This allows an attacker to eavesdrop on a user session and capture private data.

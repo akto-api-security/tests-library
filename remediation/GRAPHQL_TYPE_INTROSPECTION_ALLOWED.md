@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_TYPE_INTROSPECTION_ALLOWED
+
 
 ## Remediation Steps for Graphql Type Introspection Allowed
 

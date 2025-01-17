@@ -1,4 +1,4 @@
-# Remediation for LLM_GLITCH_2
+
 
 ## Remediation Steps for Overreliance on LLMs - Glitch Test with InstoreAndOnline
 

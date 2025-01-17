@@ -1,4 +1,4 @@
-# Remediation for JAVA_SPRING_DETECTION
+
 
 ## Remediation Steps for Java Spring Framework Detection
 

@@ -1,4 +1,4 @@
-# Remediation for REPLACE_AUTH_TOKEN
+
 
 ## Remediation Steps for Broken Object Level Authorization (BOLA) by Changing Auth Token
 

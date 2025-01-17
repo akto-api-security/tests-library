@@ -1,4 +1,4 @@
-# Remediation for AIRFLOW_CONFIGURATION_EXPOSURE
+
 
 ## Remediation Steps for Apache Airflow Configuration Exposure
 Apache Airflow configuration exposure can lead to serious security issues. It can provide unauthorized users with sensitive information, potentially leading to broader system access. To mitigate this issue, we need to configure Airflow correctly. 

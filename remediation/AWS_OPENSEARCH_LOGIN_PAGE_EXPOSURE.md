@@ -1,4 +1,4 @@
-# Remediation for AWS_OPENSEARCH_LOGIN_PAGE_EXPOSURE
+
 
 ## Remediation Steps for AWS OpenSearch Login Page Exposure
 

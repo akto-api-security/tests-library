@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_DOB
+
 
 ## Remediation Steps for Sensitive Data Exposure - DOB
 

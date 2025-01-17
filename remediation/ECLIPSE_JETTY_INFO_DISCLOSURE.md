@@ -1,4 +1,4 @@
-# Remediation for ECLIPSE_JETTY_INFO_DISCLOSURE
+
 
 ## Remediation Steps for Eclipse Jetty Information Disclosure
 

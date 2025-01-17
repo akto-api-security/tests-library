@@ -1,4 +1,4 @@
-# Remediation for BYPASS_PURCHASE_DATE_VALIDATION
+
 
 ## Remediation Steps for Bypass Purchase Date Validation
 

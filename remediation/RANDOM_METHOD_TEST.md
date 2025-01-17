@@ -1,4 +1,4 @@
-# Remediation for RANDOM_METHOD_TEST
+
 
 ## Remediation Steps for Access Control Bypass
 

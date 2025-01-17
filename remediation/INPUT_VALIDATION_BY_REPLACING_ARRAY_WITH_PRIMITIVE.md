@@ -1,4 +1,4 @@
-# Remediation for INPUT_VALIDATION_BY_REPLACING_ARRAY_WITH_PRIMITIVE
+
 
 ## Remediation Steps for Input Validation by Replacing Array with Primitive
 The misuse of arrays and primitives in input validation can lead to security issues. This relates to how data is treated, with unvalidated or improperly validated inputs causing potential issues. The example below is provided in Python.

@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_SHOPIFY_SHARED_SECRET
+
 
 ## Remediation Steps for Shopify Shared Secret Data Exposure
 Exposure of Shopify's Shared Secret can lead to serious security risks, as it can give attackers unauthorized access to sensitive data. This precious information is used for authenticating applications and webhooks ensuring the secure transmission of data.  

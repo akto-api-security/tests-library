@@ -1,4 +1,4 @@
-# Remediation for REPORT_GENERATION_DOS
+
 
 ## Remediation Steps for Denial of Service Test on Report Generation Endpoint
 Denial of Service (DoS) attacks can render report generation endpoints unresponsive or degrade services. A common pattern for preventing this is to implement rate limiting on the endpoint to prevent an attacker from overwhelming the server.

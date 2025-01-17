@@ -1,4 +1,4 @@
-# Remediation for DEBUG_VARS
+
 
 ## Remediation Steps for Golang expvar Information Disclosure
 The Golang 'expvar' package can release environment sensitive data. If you're not careful, attackers can exploit this vulnerability to retrieve information about your application that was supposed to be secret. This can lead to compromising the security of your applications.

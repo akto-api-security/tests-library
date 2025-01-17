@@ -1,4 +1,4 @@
-# Remediation for HTTP_HEADER_IP_INJECTION_OBFUSCATED_IP
+
 
 ## Remediation Steps for Obfuscated IP Injection in HTTP headers
 

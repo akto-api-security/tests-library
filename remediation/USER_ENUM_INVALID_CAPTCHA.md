@@ -1,4 +1,4 @@
-# Remediation for USER_ENUM_INVALID_CAPTCHA
+
 
 ## Remediation Steps for Broken Authentication Test - Username Enumeration on Captcha Endpoint
 Username enumeration allows an attacker to determine the existence of a specific user on a system. This could be exploited to attempt 'password guessing' for existing accounts. Therefore, protecting endpoints from username enumeration is crucial for enhancing security.

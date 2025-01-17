@@ -1,4 +1,4 @@
-# Remediation for SOURCE_CODE_DISCLOSURE_USING_FILE_EXTENSIONS
+
 
 ## Remediation Steps for Source Code Disclosure Using File Extensions
 

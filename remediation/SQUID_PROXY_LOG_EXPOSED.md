@@ -1,4 +1,4 @@
-# Remediation for SQUID_PROXY_LOG_EXPOSED
+
 
 ## Remediation Steps for Squid Proxy Log Exposure
 

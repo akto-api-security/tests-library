@@ -1,4 +1,4 @@
-# Remediation for SQLI_ERROR_BASED_PARAM_SQLITE
+
 
 ## Remediation Steps for Error-Based SQL Injection for SQLite Parameters
 Error-based SQL injection vulnerabilities are a serious threat to any web application as they allow malicious actors to manipulate SQL queries to gain unauthorized access to data and potentially cause data loss or corruption. Follow the steps below to secure your SQLite parameters.

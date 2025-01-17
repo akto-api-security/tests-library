@@ -1,4 +1,4 @@
-# Remediation for AUTH_BYPASS_MULTI_CREDENTIAL
+
 
 ## Remediation Steps for Authentication Bypass by Sending Multiple Credentials in Parameters
 

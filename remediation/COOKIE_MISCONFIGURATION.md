@@ -1,4 +1,4 @@
-# Remediation for COOKIE_MISCONFIGURATION
+
 
 ## Remediation Steps for Cookie Misconfiguration
 Cookie misconfiguration can lead to unauthorized access of user data, session hijacking and other serious security issues.

@@ -1,4 +1,4 @@
-# Remediation for TIME_BASED_SQLI_XSS_POST
+
 
 ## Remediation Steps for Time Based SQL Injection with XSS for POST Method APIs
 

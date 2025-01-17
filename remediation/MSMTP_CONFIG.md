@@ -1,4 +1,4 @@
-# Remediation for MSMTP_CONFIG
+
 
 ## Remediation Steps for Msmtp Config Exposure
 

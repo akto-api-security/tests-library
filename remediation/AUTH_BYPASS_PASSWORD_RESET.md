@@ -1,4 +1,4 @@
-# Remediation for AUTH_BYPASS_PASSWORD_RESET
+
 
 ## Remediation Steps for Authentication Bypass via Password Reset Endpoint
 

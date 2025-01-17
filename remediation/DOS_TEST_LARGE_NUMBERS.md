@@ -1,4 +1,4 @@
-# Remediation for DOS_TEST_LARGE_NUMBERS
+
 
 ## Remediation Steps for Denial of Service Test by Entering Numbers
 This type of Denial of Service (DoS) attack threatens the availability of your application and it occurs when numerous large numeric payloads are entered into a specific input field or parameter. 

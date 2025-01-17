@@ -1,4 +1,4 @@
-# Remediation for GRAFANA_FILE_READ
+
 
 ## Remediation Steps for Grafana Arbitrary File Read
 

@@ -1,4 +1,4 @@
-# Remediation for REPLACE_AUTH_TOKEN_OLD_VERSION
+
 
 ## Remediation Steps for BOLA in Old API Versions
 Broken Object Level Authorization (BOLA) is a common vulnerability that can lead to unauthorized access of sensitive data. By exploiting BOLA, an attacker can access other users’ resources using the presented ID.

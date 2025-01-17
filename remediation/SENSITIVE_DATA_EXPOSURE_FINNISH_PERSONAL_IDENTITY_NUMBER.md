@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_FINNISH_PERSONAL_IDENTITY_NUMBER
+
 
 ## Remediation Steps for Sensitive Data Exposure for Finnish Personal Identity Number
 Sensitive data exposure is a severe security issue. Without properly securing such data, attackers may gain unauthorized access to confidential information. In this instance we will focus on the Finnish Personal Identity Number (FINNISH PERSONAL IDENTITY NUMBER). 

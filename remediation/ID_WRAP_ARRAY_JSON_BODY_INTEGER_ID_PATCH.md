@@ -1,4 +1,4 @@
-# Remediation for ID_WRAP_ARRAY_JSON_BODY_INTEGER_ID_PATCH
+
 
 ## Remediation Steps for BOLA: Turning JSON Param into Integer Array for Unauthorized Access with PATCH/PUT method APIs
 

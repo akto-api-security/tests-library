@@ -1,4 +1,4 @@
-# Remediation for UNION_DATA_TYPE_BASED_SQLI_POST
+
 
 ## Remediation Steps for Union based SQL Injection test with data type variations on POST method APIs
 

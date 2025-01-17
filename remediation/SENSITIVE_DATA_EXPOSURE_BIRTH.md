@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_BIRTH
+
 
 ## Remediation Steps for Sensitive Data Exposure of Birth Information
 

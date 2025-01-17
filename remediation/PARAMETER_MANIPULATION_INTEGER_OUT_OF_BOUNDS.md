@@ -1,4 +1,4 @@
-# Remediation for PARAMETER_MANIPULATION_INTEGER_OUT_OF_BOUNDS
+
 
 ## Remediation Steps for Parameter Manipulation with Out of Bound Integers in Transactions
 

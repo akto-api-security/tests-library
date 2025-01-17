@@ -1,4 +1,4 @@
-# Remediation for GOOGLE_API_KEY_DISCLOSURE
+
 
 ## Remediation Steps for Google API Key Disclosure
 

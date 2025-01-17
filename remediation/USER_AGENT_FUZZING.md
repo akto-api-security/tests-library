@@ -1,4 +1,4 @@
-# Remediation for USER_AGENT_FUZZING
+
 
 ## Remediation Steps for User Agent Fuzzing
 User Agent Fuzzing can introduce a security vulnerability by attempting to trick the server into revealing sensitive data or gain unauthorized access by passing various manipulated versions of the User Agent string in the HTTP request.

@@ -1,4 +1,4 @@
-# Remediation for IBM_RCE
+
 
 ## Remediation Steps for IBM WebSphere Java Object Deserialization RCE
 

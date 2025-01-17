@@ -1,4 +1,4 @@
-# Remediation for REMOVE_XSRF
+
 
 ## Remediation Steps for Broken Authentication by Removing XSRF Token
 

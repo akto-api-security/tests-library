@@ -1,4 +1,4 @@
-# Remediation for APACHE_HUGEGRAPH_SERVER_RCE
+
 
 ## Remediation Steps for Remote Code Execution Vulnerability in Apache HugeGraph Server
 

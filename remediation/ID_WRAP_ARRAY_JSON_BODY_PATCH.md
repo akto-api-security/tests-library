@@ -1,4 +1,4 @@
-# Remediation for ID_WRAP_ARRAY_JSON_BODY_PATCH
+
 
 ## Remediation Steps for BOLA via JSON Param Array Manipulation with PATCH/PUT methods
 BOLA, or Broken Object Level Authorization, using JSON parameter array manipulation is a critical security issue. If unchecked, attackers can exploit this vulnerability to gain unauthorized access. Here are the steps to safeguard your API from this vulnerability.

@@ -1,4 +1,4 @@
-# Remediation for KUBEPI_LOGINLOGSSEARCH_BROKEN_ACCESS
+
 
 ## Remediation Steps for KubePi LoginLogsSearch Unauthorized Access
 

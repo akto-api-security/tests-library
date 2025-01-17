@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_DOS_DEFAULT_FIELD_OVERLOADING
+
 
 ## Remediation Steps for Denial of Service Test on GraphQL API with Default Field Overloading
 Denial of Service (DoS) on GraphQL API with Default Field Overloading is a critical security issue. If GraphQL APIs are not properly protected, attackers can execute a DoS attack where the server resources are overloaded, significantly impacting the API availability.

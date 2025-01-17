@@ -1,4 +1,4 @@
-# Remediation for CADDY_ADMIN_EXPOSED
+
 
 ## Remediation Steps for Caddy Admin Exposed
 

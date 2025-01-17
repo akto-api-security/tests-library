@@ -1,4 +1,4 @@
-# Remediation for SENSITIVE_DATA_EXPOSURE_AZURE_BATCH_URL
+
 
 ## Remediation Steps for Sensitive Data Exposure for Azure Batch URL
 

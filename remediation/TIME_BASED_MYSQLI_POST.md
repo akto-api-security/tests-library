@@ -1,4 +1,4 @@
-# Remediation for TIME_BASED_MYSQLI_POST
+
 
 ## Remediation Steps for Time Based SQL Injection in MySQL for POST method APIs
 

@@ -1,4 +1,4 @@
-# Remediation for SSRF_SCRIPT_TAG_BASIC
+
 
 ## Remediation Steps for SSRF Test via Replacing Parameters
 Server-Side Request Forgery (SSRF) attacks occur when an attacker is able to make a request to a server from the victim's system. One form of SSRF attack vectors involves substituting legitimate parameters in a request with script tags containing harmful URLs.

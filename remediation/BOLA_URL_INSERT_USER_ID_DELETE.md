@@ -1,4 +1,4 @@
-# Remediation for BOLA_URL_INSERT_USER_ID_DELETE
+
 
 ## Remediation Steps for Exploiting BOLA via UserIDs in URL Path
 

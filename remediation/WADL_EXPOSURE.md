@@ -1,4 +1,4 @@
-# Remediation for WADL_EXPOSURE
+
 
 ## Remediation Steps for WADL File Exposure
 WADL (Web Application Description Language) file exposure can potentially allow an attacker to have a detailed view of your web service methods and operations, which can lead to attacks exploiting these methods.

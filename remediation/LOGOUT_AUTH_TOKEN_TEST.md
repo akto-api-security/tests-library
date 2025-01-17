@@ -1,4 +1,4 @@
-# Remediation for LOGOUT_AUTH_TOKEN_TEST
+
 
 ## Remediation Steps for Authentication Bypass with Logged Out Token in APIs
 

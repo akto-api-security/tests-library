@@ -1,4 +1,4 @@
-# Remediation for UNION_BASED_SQLI_XSS
+
 
 ## Remediation Steps for Union based SQL Injection Test with XSS
 

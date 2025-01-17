@@ -1,4 +1,4 @@
-# Remediation for NGINX_PROXY_MGR_DEFAULT_LOGIN
+
 
 ## Remediation Steps for Nginx Proxy Manager Default Login
 The default administrator account for the Nginx Proxy Manager is a security vulnerability, as it can potentially grant an attacker unauthorized access if not properly secured.

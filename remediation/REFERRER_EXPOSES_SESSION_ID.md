@@ -1,4 +1,4 @@
-# Remediation for REFERRER_EXPOSES_SESSION_ID
+
 
 ## Remediation Steps for Referer Exposes Session ID
 Exposing the session ID in the referer header is a significant security risk as it may lead to session hijacking. Promptly addressing this issue is essential to protecting the user's session and maintaining secure communication. 

@@ -1,4 +1,4 @@
-# Remediation for OBFUSCATION_LLM
+
 
 ## Remediation Steps for Obfuscation Test on LLMs (Low-Level Microservices)
 Obfuscation tests on LLMs are executed to verify the level of security in handling data. If not properly conducted, this might lead to serious vulnerability issues such as unauthorized access to sensitive data.

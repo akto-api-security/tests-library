@@ -1,4 +1,4 @@
-# Remediation for BYPASS_2FA_BRUTE_FORCE
+
 
 ## Remediation Steps for 2FA Bypass with Brute-force Attack
 

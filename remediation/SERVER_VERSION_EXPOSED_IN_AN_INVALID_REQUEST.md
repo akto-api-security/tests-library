@@ -1,4 +1,4 @@
-# Remediation for SERVER_VERSION_EXPOSED_IN_AN_INVALID_REQUEST
+
 
 ## Remediation Steps for Server Version Exposure Via Response Header
 

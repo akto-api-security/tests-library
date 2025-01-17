@@ -1,4 +1,4 @@
-# Remediation for KUBERNETES_DASHBOARD_EXPOSURE
+
 
 ## Remediation Steps for Kubernetes Dashboard Exposure by Authentication Bypass
 

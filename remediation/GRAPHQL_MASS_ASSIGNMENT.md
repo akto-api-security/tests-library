@@ -1,4 +1,4 @@
-# Remediation for GRAPHQL_MASS_ASSIGNMENT
+
 
 ## Remediation Steps for Mass Assignment Test for GraphQL APIs
 

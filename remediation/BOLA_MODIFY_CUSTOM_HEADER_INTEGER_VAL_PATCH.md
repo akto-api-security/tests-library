@@ -1,4 +1,4 @@
-# Remediation for BOLA_MODIFY_CUSTOM_HEADER_INTEGER_VAL_PATCH
+
 
 ## Remediation Steps for Exploiting BOLA by Fuzzing Custom Header with Integer for Unauthorized Access with PUT/PATCH based APIs
 

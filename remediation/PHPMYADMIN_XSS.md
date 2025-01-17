@@ -1,4 +1,4 @@
-# Remediation for PHPMYADMIN_XSS
+
 
 ## Remediation Steps for phpMyAdmin Cross-Site Scripting
 

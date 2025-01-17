@@ -1,4 +1,4 @@
-# Remediation for 2FA_BROKEN_LOGIC_AUTH_TOKEN_TEST
+
 
 ## Remediation Steps for Authentication Bypass with 2FA Broken Logic Auth Token
 Authentication bypass using Broken Logic Auth Token for 2FA is a severe security issue that could allow an attacker to gain unauthorized access by exploiting the broken logic in the Auth token system.

@@ -1,4 +1,4 @@
-# Remediation for XXE_QUERY_PARAMS
+
 
 ## Remediation Steps for XML External Entity (XXE) Vulnerability Test with URL Encoded Payload in API Endpoints
 

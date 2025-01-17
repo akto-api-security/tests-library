@@ -1,4 +1,4 @@
-# Remediation for BOLA_COOKIE_FUZZING
+
 
 ## Remediation Steps for Fuzzing Cookie Data: Exploiting BOLA for Unauthorized Access
 
