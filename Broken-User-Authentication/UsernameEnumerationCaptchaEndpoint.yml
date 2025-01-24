@@ -116,7 +116,7 @@ execute:
             captchaKey: "0000"
         - validate:
             response_payload:
-              neq: "${x1.response.body}"
+              neq_obj: "${x1.response.body}"
               not_contains:
                 - account is locked
                 - account is blocked

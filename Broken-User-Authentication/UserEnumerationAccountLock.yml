@@ -105,7 +105,7 @@ execute:
             ${roles_access_context.LOCKED_ACCOUNT_SYSTEM_ROLE}: 1
         - validate:
             response_payload:
-              neq: "${x1.response.body}"
+              neq_obj: "${x1.response.body}"
               not_contains:
                 - rate-limit
                 - rate_limit

@@ -126,7 +126,7 @@ execute:
         - follow_redirect: true
         - validate:
             response_payload:
-              neq: "${x1.response.body}"
+              neq_obj: "${x1.response.body}"
               not_contains:
                 - account is locked
                 - account is blocked
@@ -148,7 +148,7 @@ execute:
         - follow_redirect: true
         - validate:
             response_payload:
-              eq: "${x2.response.body}"
+              eq_obj: "${x2.response.body}"
               not_contains:
                 - account is locked
                 - account is blocked

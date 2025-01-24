@@ -185,6 +185,7 @@ execute:
                 - CloudFlare
                 - Sorry, you have been blocked
                 - " INSERT INTO "
+                - "INSERT"
                 - "<script>alert(\"XSS\")</script>"
                 - "<svg/onload=alert(\"XSS\")>"
                 - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
@@ -192,6 +193,58 @@ execute:
                 - "<svg/onload=alert(\"Stored XSS\")>"
                 - "<img src=\"x\" onerror=\"alert('Stored XSS')\">"
 
-              neq: "${x1.response.body}"
+              neq_obj: "${x1.response.body}"
+        - success: x3
+        - failure: exit
+    - req:
+        - modify_query_param:
+            userKey: ${storedXSSNegativePayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - Attention Required!
+                - CloudFlare
+                - Sorry, you have been blocked
+                - " INSERT INTO "
+                - "INSERT"
+                - "<script>alert(\"XSS\")</script>"
+                - "<svg/onload=alert(\"XSS\")>"
+                - "<img/src=\"x\"/onerror=\"alert('XSS')\">"
+                - "<script>alert(\"Stored XSS\")</script>"
+                - "<svg/onload=alert(\"Stored XSS\")>"
+                - "<img src=\"x\" onerror=\"alert('Stored XSS')\">"
+
+              eq_obj: "${x2.response.body}"
         - success: vulnerable
         - failure: exit

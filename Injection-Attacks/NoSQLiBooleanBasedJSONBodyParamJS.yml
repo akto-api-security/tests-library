@@ -125,7 +125,7 @@ execute:
             response_payload:
               length:
                 gt: 0
-              neq: "${x1.response.body}"
+              neq_obj: "${x1.response.body}"
               not_contains:
                 - rate-limit
                 - rate limit
@@ -151,7 +151,7 @@ execute:
             changed_body_key: !!str ${changed_body_value} || 'a' == 'a' || 'a
         - validate:
             response_payload:
-              eq: "${x2.response.body}"
+              eq_obj: "${x2.response.body}"
               length:
                 gt: 0
               not_contains:

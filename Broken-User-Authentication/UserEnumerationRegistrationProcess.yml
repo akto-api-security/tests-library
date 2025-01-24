@@ -119,7 +119,7 @@ execute:
         - validate:
             or:
               - response_payload:
-                  neq: "${x1.response.body}"
+                  neq_obj: "${x1.response.body}"
                   not_contains:
                     - rate limit
                     - rate_limit
@@ -139,7 +139,7 @@ execute:
         - validate:
             or:
               - response_payload:
-                  eq: "${x2.response.body}"
+                  eq_obj: "${x2.response.body}"
                   not_contains:
                     - rate limit
                     - rate_limit
@@ -149,3 +149,4 @@ execute:
                     - multiple failed attempt
 
         - success: vulnerable
+        - failure: exit

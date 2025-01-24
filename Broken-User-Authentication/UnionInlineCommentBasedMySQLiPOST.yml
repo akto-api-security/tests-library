@@ -192,7 +192,7 @@ execute:
                 - " WHERE "
                 - <html>
                 - </html>
-              neq: "${x1.response.body}"
+              neq_obj: "${x1.response.body}"
         - success: x3
         - failure: exit
     - req:
@@ -240,6 +240,6 @@ execute:
                 - " WHERE "
                 - <html>
                 - </html>
-              eq: "${x2.response.body}"
+              eq_obj: "${x2.response.body}"
         - success: vulnerable
         - failure: exit
