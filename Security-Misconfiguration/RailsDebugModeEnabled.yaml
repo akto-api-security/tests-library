@@ -1,16 +1,9 @@
 id: RAILS_DEBUG_MODE_ENABLED
 info:
-  name: Rails Debug Mode Enabled 
+  name: Rails Debug Mode Enabled
   description: "Rails debug mode enabled misconfiguration can expose sensitive information, potentially leading to security vulnerabilities."
   details: >
-          The Rails Debug Mode Enabled misconfiguration occurs when the Ruby on Rails framework is 
-          configured to run in debug mode, allowing detailed error information to be displayed in 
-          responses. This can expose sensitive information, such as full file paths, database details, 
-          and stack traces, to potential attackers. By analyzing the debug output, attackers can gain 
-          insights into the application's internals and potentially exploit vulnerabilities. This 
-          misconfiguration falls under the Security Misconfiguration category and has a low severity 
-          level. Disabling debug mode in production environments is essential to prevent information 
-          disclosure and enhance the application's security posture.
+    The Rails Debug Mode Enabled misconfiguration occurs when the Ruby on Rails framework is  configured to run in debug mode, allowing detailed error information to be displayed in  responses. This can expose sensitive information, such as full file paths, database details,  and stack traces, to potential attackers. By analyzing the debug output, attackers can gain  insights into the application's internals and potentially exploit vulnerabilities. This  misconfiguration falls under the Security Misconfiguration category and has a low severity  level. Disabling debug mode in production environments is essential to prevent information  disclosure and enhance the application's security posture.
   impact: "Enabling Rails debug mode can expose sensitive information, increasing the risk of security vulnerabilities and potential attacks."
   category:
     name: SM
@@ -18,7 +11,7 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: Server Misconfiguration
   severity: LOW
-  tags: 
+  tags:
     - Rails
     - Business logic
     - OWASP top 10
@@ -31,6 +24,12 @@ info:
     - CWE-215
   cve:
     - CVE-2019-5420
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -45,10 +44,10 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}/cy8Ku20LH6V6Yc0q0pJX
+        - modify_url: ${urlVar}/cy8Ku20LH6V6Yc0q0pJX
 
 validate:
   response_payload:
-    contains_all: 
+    contains_all:
       - "Rails.root"
       - "Trace"

@@ -1,7 +1,7 @@
 id: SQL_INJECTION_USER_AGENT_HEADER
 info:
   name: "SQL Injection test on User Agent Header"
-  description: > 
+  description: >
     "SQL Injection testing on the User Agent Header involves probing for vulnerabilities in web applications where the User-Agent HTTP header is improperly sanitized or directly used in SQL queries. Attackers manipulate the User-Agent header to inject malicious SQL commands, aiming to exploit backend databases such as MySQL. This test helps uncover and mitigate security weaknesses to prevent unauthorized database access and data breaches through user input manipulation."
   details: >
     "SQL Injection testing on the User Agent Header targets vulnerabilities in web applications where the User-Agent HTTP header, containing client information, is mishandled. Attackers exploit this by injecting SQL queries into the header's input, potentially compromising the MySQL database. This technique aims to identify and rectify vulnerabilities in how user input from headers is processed to prevent unauthorized database access and data manipulation."
@@ -27,6 +27,12 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 inactive: true
 api_selection_filters:
   method:
@@ -39,7 +45,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -84,10 +90,10 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - modify_header:
-        userKey: ${userVal}${userAgentPayloads}
-        
+    - req:
+        - modify_header:
+            userKey: ${userVal}${userAgentPayloads}
+
 validate:
   or:
     - response_payload:
@@ -130,4 +136,4 @@ validate:
               - "' OR 1=1 LIMIT 1 --"
               - "' UNION SELECT null,null,null --"
               - "' AND 1=0 --"
-              - "'; SELECT 1; --" 
+              - "'; SELECT 1; --"

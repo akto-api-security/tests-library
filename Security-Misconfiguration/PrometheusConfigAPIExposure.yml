@@ -2,7 +2,7 @@ id: PROMETHEUS_CONFIG_API_EXPOSURE
 info:
   name: "Prometheus Config API Endpoint Exposure"
   description: "Prometheus Config API Endpoint Exposure refers to a security risk where the configuration API endpoints of Prometheus are exposed without adequate protection. These endpoints allow access to sensitive configuration settings, including scrape targets, alert rules, and credentials for external services. If left unsecured, attackers can modify configurations, access confidential information, or disrupt monitoring services, potentially leading to system instability or unauthorized access to sensitive data. Proper authentication and access controls are necessary to mitigate this risk."
-  details:  "Prometheus Config API Endpoint Exposure occurs when the API endpoints responsible for managing and retrieving configuration details in Prometheus are left unprotected. These endpoints can provide access to critical settings such as scrape targets, alert configurations, and credentials used to monitor external systems. If exposed, attackers can modify or view these configurations, potentially disabling monitoring, tampering with alerts, or accessing sensitive information. To prevent such exposure, organizations should secure the API endpoints with strong authentication, restrict access to trusted users, and regularly review configurations for vulnerabilities."
+  details: "Prometheus Config API Endpoint Exposure occurs when the API endpoints responsible for managing and retrieving configuration details in Prometheus are left unprotected. These endpoints can provide access to critical settings such as scrape targets, alert configurations, and credentials used to monitor external systems. If exposed, attackers can modify or view these configurations, potentially disabling monitoring, tampering with alerts, or accessing sensitive information. To prevent such exposure, organizations should secure the API endpoints with strong authentication, restrict access to trusted users, and regularly review configurations for vulnerabilities."
   impact: "The impact of Prometheus Config API Endpoint Exposure can be significant, allowing attackers to alter or disable critical monitoring configurations, leading to a loss of visibility into system health and performance. Malicious actors could modify alert rules, disable monitoring of key services, or access sensitive credentials, potentially causing operational disruptions or escalating attacks on other systems. This exposure can result in undetected outages, data breaches, or compliance violations, ultimately leading to financial losses, reputational damage, and legal consequences for the affected organization."
   category:
     name: SM
@@ -17,6 +17,12 @@ info:
     - CWE-16
   cve:
     - CVE-2021-43798
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -34,9 +40,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

@@ -1,22 +1,18 @@
 id: APACHE_SERVER_VERSION_DISCLOSED
 info:
-  name: Apache Server Version Disclosed 
+  name: Apache Server Version Disclosed
   description: Detection of Apache server version disclosure misconfiguration, potentially aiding attackers in identifying vulnerable versions.
   details: >
-       The Apache Server Version Disclosed test identifies a security misconfiguration where the Apache server 
-       version is disclosed in the response headers. The test checks if the response headers contain a version 
-       string matching the regular expression "apache/[0-9.]+". Disclosing the server version can aid attackers in 
-       identifying potentially vulnerable versions and targeting specific exploits. This misconfiguration falls 
-       under the Security Misconfiguration category with a low severity level. Concealing the server version in the
-       response headers enhances security by reducing the exposure of potentially sensitive information.
+    The Apache Server Version Disclosed test identifies a security misconfiguration where the Apache server  version is disclosed in the response headers. The test checks if the response headers contain a version  string matching the regular expression "apache/[0-9.]+". Disclosing the server version can aid attackers in  identifying potentially vulnerable versions and targeting specific exploits. This misconfiguration falls  under the Security Misconfiguration category with a low severity level. Concealing the server version in the
+    response headers enhances security by reducing the exposure of potentially sensitive information.
   impact: Disclosing Apache server version exposes potentially vulnerable versions, aiding attackers in identifying exploits and targeting specific vulnerabilities.
   category:
-      name: SM
-      shortName: Misconfiguration
-      displayName: Security Misconfiguration (SM)
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
   subCategory: Server Misconfiguration
   severity: LOW
-  tags: 
+  tags:
     - APACHE
     - Business logic
     - OWASP top 10
@@ -30,6 +26,12 @@ info:
     - CWE-200
   cve:
     - CVE-2017-7529
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -53,5 +55,5 @@ validate:
       - <html>
       - </html>
   response_headers:
-      regex: apache/[0-9.]+
-        
+    regex: apache/[0-9.]+
+

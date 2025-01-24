@@ -5,8 +5,7 @@ info:
   details: >
     "HTTP header injection is a technique where attackers insert CRLF characters to add headers or inject content, enabling actions like redirection to malicious websites or executing XSS attacks.
     By manipulating the header structure, attackers can deceive web browsers and bypass server content, potentially leading to phishing attempts or defacement of websites."
-  impact: "The impact of CRLF injections varies depending on the attack context, but will typically cover all the consequences of cross-site scripting and information disclosure that the injection allowed.
-          The technique can also be used to deactivate certain security restrictions like XSS filters and same-origin policy in the victim’s browser, paving the way for other malicious attacks."
+  impact: "The impact of CRLF injections varies depending on the attack context, but will typically cover all the consequences of cross-site scripting and information disclosure that the injection allowed. The technique can also be used to deactivate certain security restrictions like XSS filters and same-origin policy in the victim’s browser, paving the way for other malicious attacks."
   category:
     name: CRLF
     shortName: CRLF Injection
@@ -25,6 +24,12 @@ info:
   cve:
     - CVE-2023-41834
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   response_code:
     gte: 200
@@ -36,7 +41,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -92,7 +97,7 @@ validate:
     contains_either: "<script>alert(1)</script>"
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

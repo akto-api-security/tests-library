@@ -2,20 +2,26 @@ id: TOMCAT_RCE
 info:
   name: "Apache Tomcat Remote Code Execution"
   description: "Apache Tomcat Remote Code Execution vulnerabilities allow attackers to execute arbitrary code on the server by exploiting weaknesses in the application’s handling of requests. This can occur through crafted input, improper validation, or misconfigured security settings. Successful exploitation can lead to unauthorized access, data theft, or complete system takeover. Organizations running affected versions of Tomcat must take immediate action to mitigate these risks and protect their environments."
-  details:  "Apache Tomcat Remote Code Execution vulnerabilities typically arise from improper input validation, especially in features like the web application deployment interface or custom servlets. Attackers may craft malicious requests to exploit these flaws, allowing them to execute commands on the underlying operating system. The issue often affects specific versions of Tomcat and can be exacerbated by insecure configurations. Regular updates and patches are crucial to mitigate such risks."
+  details: "Apache Tomcat Remote Code Execution vulnerabilities typically arise from improper input validation, especially in features like the web application deployment interface or custom servlets. Attackers may craft malicious requests to exploit these flaws, allowing them to execute commands on the underlying operating system. The issue often affects specific versions of Tomcat and can be exacerbated by insecure configurations. Regular updates and patches are crucial to mitigate such risks."
   impact: "Successful exploitation of Apache Tomcat Remote Code Execution vulnerabilities can lead to complete system compromise, allowing attackers to execute arbitrary code with the same privileges as the Tomcat server. This may result in unauthorized access to sensitive data, manipulation of server configurations, and potential lateral movement within the network. Such incidents can severely impact the integrity, confidentiality, and availability of affected applications and services."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
     displayName: Command Injection
-  subCategory:  TOMCAT_RCE
-  severity: MEDIUM
+  subCategory: TOMCAT_RCE
+  severity: CRITICAL
   references:
     - "https://twitter.com/trbughunters/status/1283133356922884096"
   cwe:
     - CWE-77
   cve:
     - CVE-2020-9484
+
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -39,11 +45,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/index.jsp"
-      - modify_method: GET
-      - replace_body: '{}'
-      - modify_header:
-          cookie: "JSESSIONID=../../../../../usr/local/tomcat/groovy"
+        - modify_url: "/index.jsp"
+        - modify_method: GET
+        - replace_body: '{}'
+        - modify_header:
+            cookie: "JSESSIONID=../../../../../usr/local/tomcat/groovy"
 validate:
   response_code:
     eq: 500

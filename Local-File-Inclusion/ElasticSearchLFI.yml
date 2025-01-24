@@ -2,7 +2,7 @@ id: ELASTICSEARCH_LFI
 info:
   name: "Elasticsearch Local File Inclusion"
   description: "Elasticsearch Local File Inclusion (LFI) is a security vulnerability that arises when an Elasticsearch application allows unvalidated user input to specify file paths. If attackers can manipulate these inputs, they may include arbitrary files from the server's filesystem, potentially exposing sensitive information such as configuration files, logs, or user data. This unauthorized access can lead to serious security risks, including information disclosure and further exploitation of the Elasticsearch server. To mitigate this risk, it is crucial to implement strict input validation and prevent the inclusion of user-defined file paths in requests."
-  details:  "Elasticsearch Local File Inclusion (LFI) occurs when an Elasticsearch instance improperly handles user-supplied input for file paths, allowing attackers to exploit this weakness to include local files from the server’s filesystem. By crafting malicious requests, attackers can access sensitive files, such as configuration files, environment variables, or logs, which may contain critical information about the system. This unauthorized access can facilitate further attacks, including privilege escalation and data exfiltration. To prevent LFI, developers should enforce stringent input validation, implement file path whitelisting, and follow secure coding practices within the Elasticsearch application."
+  details: "Elasticsearch Local File Inclusion (LFI) occurs when an Elasticsearch instance improperly handles user-supplied input for file paths, allowing attackers to exploit this weakness to include local files from the server’s filesystem. By crafting malicious requests, attackers can access sensitive files, such as configuration files, environment variables, or logs, which may contain critical information about the system. This unauthorized access can facilitate further attacks, including privilege escalation and data exfiltration. To prevent LFI, developers should enforce stringent input validation, implement file path whitelisting, and follow secure coding practices within the Elasticsearch application."
   impact: "The impact of Elasticsearch Local File Inclusion (LFI) can be significant, as it allows attackers to access sensitive files on the server, leading to potential information disclosure and compromise of the Elasticsearch instance. By exposing critical data such as configuration files, API keys, or user credentials, attackers can leverage this information to escalate privileges, manipulate the system, or launch further attacks on interconnected services. Such breaches can result in reputational damage, financial losses, and regulatory penalties for the organization. Additionally, LFI vulnerabilities may serve as a stepping stone for more advanced attacks, increasing the overall security risk to the application's infrastructure."
   category:
     name: LFI
@@ -25,6 +25,12 @@ info:
     - CVE-2023-22973
 
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -41,9 +47,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

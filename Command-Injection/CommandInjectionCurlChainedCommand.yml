@@ -10,7 +10,7 @@ info:
     shortName: Command Injection
     displayName: Command Injection
   subCategory: COMMAND_INJECTION_CURL_HTTP_REQUEST_CHAINED
-  severity: MEDIUM
+  severity: CRITICAL
   tags:
     - Business logic
     - OWASP top 10
@@ -23,6 +23,12 @@ info:
     - CVE-2023-25826
     - CVE-2023-41031
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   response_code:
     gte: 200
@@ -34,7 +40,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -84,10 +90,10 @@ execute:
   type: single
   requests:
     - req:
-        - modify_body_param: 
-            changed_body_key:  ${specialOSPayloads}
+        - modify_body_param:
+            changed_body_key: ${specialOSPayloads}
         - modify_query_param:
-            changed_query_key:  ${specialOSPayloads}
+            changed_query_key: ${specialOSPayloads}
 validate:
   response_payload:
     length:
@@ -103,7 +109,7 @@ validate:
       - "time_total"
       - "size_download"
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

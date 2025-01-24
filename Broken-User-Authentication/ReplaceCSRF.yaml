@@ -3,8 +3,8 @@ info:
   name: "CSRF test by replacing with invalid csrf token"
   description: "Vulnerability assessment by replacing the CSRF token with an invalid one"
   details: >
-            "Evaluating the effectiveness of the web application's CSRF protection mechanism by intentionally replacing the CSRF token"
-            "and assessing if unauthorized actions can be successfully executed, potentially exposing the system to security risks and breaches."
+    "Evaluating the effectiveness of the web application's CSRF protection mechanism by intentionally replacing the CSRF token"
+    "and assessing if unauthorized actions can be successfully executed, potentially exposing the system to security risks and breaches."
   impact: >
     "Successful execution of unauthorized actions due to the absence of CSRF token may result in severe consequences,"
     "such as unauthorized data modification, account hijacking, or sensitive information disclosure,"
@@ -29,6 +29,12 @@ info:
     - CVE-2023-27495
     - CVE-2020-27379
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   response_code:
     gte: 200
@@ -42,7 +48,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -69,69 +75,69 @@ api_selection_filters:
       - multiple failed attempts
   and:
     - or:
-      - method:
-          neq: GET
-      - or:
-          - request_payload:
-              for_one:
-                key:
-                  regex: .*
-          - query_param:
-              for_one:
-                key:
-                  regex: .*
+        - method:
+            neq: GET
+        - or:
+            - request_payload:
+                for_one:
+                  key:
+                    regex: .*
+            - query_param:
+                for_one:
+                  key:
+                    regex: .*
     - or:
-      - request_headers:
-          for_one:
-            key:
-              contains_either: csrf
-              extract: csrf_key
-            value:
-              not_contains:
-                - ":"
-                - ";"
-      - request_payload:
-          for_one:
-            key:
-              contains_either: csrf
-              extract: csrf_key
-            value:
-              not_contains:
-                - ":"
-                - ";"
-      - query_param:
-          for_one:
-            key:
-              contains_either: csrf
-              extract: csrf_key
-            value:
-              not_contains:
-                - ":"
-                - ";"
+        - request_headers:
+            for_one:
+              key:
+                contains_either: csrf
+                extract: csrf_key
+              value:
+                not_contains:
+                  - ":"
+                  - ";"
+        - request_payload:
+            for_one:
+              key:
+                contains_either: csrf
+                extract: csrf_key
+              value:
+                not_contains:
+                  - ":"
+                  - ";"
+        - query_param:
+            for_one:
+              key:
+                contains_either: csrf
+                extract: csrf_key
+              value:
+                not_contains:
+                  - ":"
+                  - ";"
 
 execute:
   type: single
   requests:
     - req:
-      - modify_header:
-          csrf_key: NRZ1M9Q4Yotd-mV7MyzwQNiiMCDLjd-RRLUWzV4A
-      - modify_query_param:
-          csrf_key: NRZ1M9Q4Yotd-mV7MyzwQNiiMCDLjd-RRLUWzV4A
-      - modify_body_param:
-          csrf_key: NRZ1M9Q4Yotd-mV7MyzwQNiiMCDLjd-RRLUWzV4A
+        - modify_header:
+            csrf_key: NRZ1M9Q4Yotd-mV7MyzwQNiiMCDLjd-RRLUWzV4A
+        - modify_query_param:
+            csrf_key: NRZ1M9Q4Yotd-mV7MyzwQNiiMCDLjd-RRLUWzV4A
+        - modify_body_param:
+            csrf_key: NRZ1M9Q4Yotd-mV7MyzwQNiiMCDLjd-RRLUWzV4A
 
 validate:
   response_code:
     gte: 200
     lt: 300
   response_payload:
-    percentage_match: 
+    percentage_match:
       gt: 80
     length:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

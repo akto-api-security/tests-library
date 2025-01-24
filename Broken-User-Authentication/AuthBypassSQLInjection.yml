@@ -1,27 +1,12 @@
 id: AUTH_BYPASS_SQL_INJECTION
 info:
   name: "Authentication Bypass using SQL Injection"
-  description: > 
-    "Authentication Bypass via SQL Injection involves exploiting vulnerabilities in 
-    poorly sanitized user inputs to inject malicious SQL code. By manipulating authentication 
-    queries, attackers can gain unauthorized access to systems, circumventing login mechanisms 
-    and potentially compromising sensitive data. Prevention requires robust input validation 
-    and secure coding practices to thwart SQL Injection attempts and safeguard system integrity."
+  description: >
+    "Authentication Bypass via SQL Injection involves exploiting vulnerabilities in  poorly sanitized user inputs to inject malicious SQL code. By manipulating authentication  queries, attackers can gain unauthorized access to systems, circumventing login mechanisms  and potentially compromising sensitive data. Prevention requires robust input validation  and secure coding practices to thwart SQL Injection attempts and safeguard system integrity."
   details: >
-    "Authentication Bypass via SQL Injection is a security vulnerability wherein attackers 
-    manipulate input fields to inject malicious SQL code into authentication queries. By 
-    exploiting poorly sanitized inputs, unauthorized access is granted, enabling attackers 
-    to bypass login mechanisms and potentially compromise sensitive data. Mitigation 
-    involves implementing strict input validation and utilizing parameterized queries 
-    to fortify against SQL Injection attacks."
+    "Authentication Bypass via SQL Injection is a security vulnerability wherein attackers  manipulate input fields to inject malicious SQL code into authentication queries. By  exploiting poorly sanitized inputs, unauthorized access is granted, enabling attackers  to bypass login mechanisms and potentially compromise sensitive data. Mitigation  involves implementing strict input validation and utilizing parameterized queries  to fortify against SQL Injection attacks."
   impact: >
-    "Authentication Bypass via SQL Injection can result in significant consequences, such 
-    as unauthorized access to sensitive systems and potential data breaches. The impact 
-    includes compromised confidentiality, integrity, and the risk of malicious manipulation 
-    of critical information. Organizations may face reputational damage, financial losses, 
-    and legal repercussions. Mitigation involves implementing strong input validation, 
-    utilizing parameterized queries, and conducting regular security assessments to 
-    prevent and detect SQL Injection vulnerabilities."
+    "Authentication Bypass via SQL Injection can result in significant consequences, such  as unauthorized access to sensitive systems and potential data breaches. The impact  includes compromised confidentiality, integrity, and the risk of malicious manipulation  of critical information. Organizations may face reputational damage, financial losses,  and legal repercussions. Mitigation involves implementing strong input validation,  utilizing parameterized queries, and conducting regular security assessments to  prevent and detect SQL Injection vulnerabilities."
 
   category:
     name: NO_AUTH
@@ -43,6 +28,12 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   response_code:
     gte: 200
@@ -54,7 +45,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -94,10 +85,9 @@ api_selection_filters:
 execute:
   type: single
   requests:
-  - req:
-    - modify_body_param:
-        userKey: "'"
-        
+    - req:
+        - modify_body_param:
+            userKey: "'"
 validate:
   response_payload:
     length:

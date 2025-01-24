@@ -3,7 +3,7 @@ info:
   name: Msmtp - Config Exposure
   description: "Msmtp configuration was discovered."
   details: >
-              "The Msmtp Config Exposure vulnerability occurs when Msmtp configuration files (.msmtprc) are accessible to unauthorized users. These files store email account settings, including the email host, credentials, and TLS configurations. If exposed, attackers can gain access to email accounts, potentially leading to unauthorized email sending and compromising sensitive information. It is essential to secure these configuration files to prevent unauthorized access and protect email account integrity."
+    "The Msmtp Config Exposure vulnerability occurs when Msmtp configuration files (.msmtprc) are accessible to unauthorized users. These files store email account settings, including the email host, credentials, and TLS configurations. If exposed, attackers can gain access to email accounts, potentially leading to unauthorized email sending and compromising sensitive information. It is essential to secure these configuration files to prevent unauthorized access and protect email account integrity."
   impact: "Exposure of Msmtp configuration files can lead to unauthorized access and compromise of email accounts."
   category:
     name: SM
@@ -19,6 +19,12 @@ info:
   cve:
     - CVE-2019-8337
 
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -32,8 +38,8 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}/.msmtprc
-      
+        - modify_url: ${urlVar}/.msmtprc
+
 validate:
   response_code:
     eq: 200

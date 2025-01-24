@@ -3,8 +3,8 @@ info:
   name: JWT signing in client side
   description: "This test checks for JWT client side signing"
   details: >
-            "Client-side JWT signing test: verifies if the code includes JWT signing functions.
-            This ensures the implementation of secure token signing mechanisms within the client-side application."
+    "Client-side JWT signing test: verifies if the code includes JWT signing functions.
+    This ensures the implementation of secure token signing mechanisms within the client-side application."
   impact: "An attacker could potentially exploit the client-side JWT signing vulnerability to manipulate or forge JWT tokens, leading to unauthorized access, privilege escalation, session hijacking, or impersonation attacks. It is crucial to address this vulnerability promptly to protect the integrity and security of the system."
   category:
     name: SM
@@ -12,7 +12,7 @@ info:
     displayName: Security Misconfiguration (SM)
   subCategory: JWT_SIGNING_IN_CLIENT_SIDE
   severity: LOW
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -22,11 +22,17 @@ info:
     - CWE-287
     - CWE-347
 
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
   response_payload:
-    contains_either: 
+    contains_either:
       - "jwt.sign("
       - "jose.JWS.createSign("
       - "JWTSimple.encode("
@@ -39,7 +45,7 @@ execute:
 
 validate:
   response_payload:
-    contains_either: 
+    contains_either:
       - "jwt.sign("
       - "jose.JWS.createSign("
       - "JWTSimple.encode("

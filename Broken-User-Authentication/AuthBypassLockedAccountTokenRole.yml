@@ -1,30 +1,12 @@
 id: AUTH_BYPASS_LOCKED_ACCOUNT_TOKEN_ROLE
 info:
   name: "Authentication Bypass with Locked Account Token Role Test"
-  description: > 
-    "Authentication Bypass with Locked Account Token Role Test involves attempting to 
-    access authenticated APIs using a token associated with a locked user account. 
-    Attackers exploit flaws in the authentication system by leveraging tokens that 
-    retain unauthorized access even after an account is locked. This security 
-    vulnerability can lead to unauthorized actions, underscoring the importance 
-    of robust account lockout policies and secure token management to prevent 
-    potential authentication bypass threats."
+  description: >
+    "Authentication Bypass with Locked Account Token Role Test involves attempting to  access authenticated APIs using a token associated with a locked user account.  Attackers exploit flaws in the authentication system by leveraging tokens that  retain unauthorized access even after an account is locked. This security  vulnerability can lead to unauthorized actions, underscoring the importance  of robust account lockout policies and secure token management to prevent  potential authentication bypass threats."
   details: >
-    "In Authentication Bypass with Locked Account Token Role Test, attackers exploit 
-    weaknesses in the authentication system by using tokens associated with locked 
-    user accounts to access authenticated APIs. Despite account lockout status, 
-    these tokens enable unauthorized access, highlighting a critical security 
-    flaw. Mitigation involves enhancing account lockout policies and implementing 
-    secure token management practices to prevent unauthorized actions and bolster 
-    the overall integrity of the authentication process."
+    "In Authentication Bypass with Locked Account Token Role Test, attackers exploit  weaknesses in the authentication system by using tokens associated with locked  user accounts to access authenticated APIs. Despite account lockout status,  these tokens enable unauthorized access, highlighting a critical security  flaw. Mitigation involves enhancing account lockout policies and implementing  secure token management practices to prevent unauthorized actions and bolster  the overall integrity of the authentication process."
   impact: >
-    "The impact of Authentication Bypass with Locked Account Token Role Test can be 
-    significant, allowing attackers to access authenticated APIs despite a user 
-    account being locked. This security vulnerability may result in unauthorized 
-    actions, potential data breaches, or compromise of sensitive information. 
-    Addressing this issue requires strengthening account lockout policies and 
-    implementing secure token management practices to prevent unauthorized access 
-    and maintain the overall security of the authentication system."
+    "The impact of Authentication Bypass with Locked Account Token Role Test can be  significant, allowing attackers to access authenticated APIs despite a user  account being locked. This security vulnerability may result in unauthorized  actions, potential data breaches, or compromise of sensitive information.  Addressing this issue requires strengthening account lockout policies and  implementing secure token management practices to prevent unauthorized access  and maintain the overall security of the authentication system."
 
   category:
     name: NO_AUTH
@@ -45,6 +27,12 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 auth:
   authenticated: true
 api_selection_filters:
@@ -58,7 +46,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -87,8 +75,8 @@ execute:
   type: single
   requests:
     - req:
-      - modify_header:
-          ${roles_access_context.LOCKED_ACCOUNT_SYSTEM_ROLE}: 1       
+        - modify_header:
+            ${roles_access_context.LOCKED_ACCOUNT_SYSTEM_ROLE}: 1
 validate:
   response_code:
     gte: 200
@@ -100,7 +88,7 @@ validate:
       gte: 90
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

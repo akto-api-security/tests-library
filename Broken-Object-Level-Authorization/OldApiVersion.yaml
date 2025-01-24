@@ -9,19 +9,25 @@ info:
     shortName: Improper Inventory Management
     displayName: Improper Inventory Management (IIM)
   subCategory: OLD_VERSION_API_TEST
-  severity: HIGH
+  severity: CRITICAL
   tags:
-  - Business logic
-  - OWASP top 10
-  - HackerOne top 10
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
   references:
-  - https://owasp.org/API-Security/editions/2023/en/0xa9-improper-inventory-management/
-  - https://www.akto.io/blog/3-new-ways-to-detect-improper-api-inventory-owasp-api9-2023
-  - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa9-improper-inventory-management.md
+    - https://owasp.org/API-Security/editions/2023/en/0xa9-improper-inventory-management/
+    - https://www.akto.io/blog/3-new-ways-to-detect-improper-api-inventory-owasp-api9-2023
+    - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa9-improper-inventory-management.md
   cwe:
-  - CWE-1059
+    - CWE-1059
   cve:
-  - CVE-2022-3203
+    - CVE-2022-3203
+
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   response_code:
@@ -34,7 +40,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -64,11 +70,11 @@ api_selection_filters:
 execute:
   type: single
   requests:
-    - req: 
-      - modify_url:
-          regex_replace:
-            regex: v([2-9]\d*|\d{2,})/
-            replace_with: v1/
+    - req:
+        - modify_url:
+            regex_replace:
+              regex: v([2-9]\d*|\d{2,})/
+              replace_with: v1/
 validate:
   response_code:
     gte: 200
@@ -78,7 +84,7 @@ validate:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

@@ -3,7 +3,7 @@ info:
   name: Config Ruby File Disclosure
   description: "Config Ruby File Disclosure is a vulnerability where sensitive configuration files in Ruby applications, such as `config/database.yml`, are exposed to unauthorized users. These files often contain credentials, API keys, or sensitive settings that attackers can exploit to gain unauthorized access or escalate privileges. Proper access controls and avoiding exposure of such files in web directories can mitigate this risk."
   details: >
-              "Config Ruby File Disclosure refers to the vulnerability where Ruby configuration files, such as config.rb, .chef/config.rb, and assets/config.rb, are exposed due to misconfiguration. Unauthorized access to these files can reveal sensitive information about the application's configuration, including directory paths for images and CSS. Attackers can leverage this information to gain insights into the application's structure, potentially enabling further attacks such as path traversal or unauthorized file access. Promptly addressing this vulnerability is essential to prevent unauthorized access and protect the security and integrity of the application."
+    "Config Ruby File Disclosure refers to the vulnerability where Ruby configuration files, such as config.rb, .chef/config.rb, and assets/config.rb, are exposed due to misconfiguration. Unauthorized access to these files can reveal sensitive information about the application's configuration, including directory paths for images and CSS. Attackers can leverage this information to gain insights into the application's structure, potentially enabling further attacks such as path traversal or unauthorized file access. Promptly addressing this vulnerability is essential to prevent unauthorized access and protect the security and integrity of the application."
   impact: "Enables attackers to gain insights into the application's structure, potentially leading to path traversal or unauthorized file access."
   category:
     name: SM
@@ -14,11 +14,17 @@ info:
   references:
     - https://www.broadcom.com/support/security-center/attacksignatures/detail?asid=31405
     - https://www.acunetix.com/vulnerabilities/web/ruby-on-rails-database-configuration-file/
-    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"  
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
   cwe:
     - CWE-538
   cve:
     - CVE-2019-5418
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -34,12 +40,12 @@ wordLists:
     - ${urlVar}/config.rb
     - ${urlVar}/.chef/config.rb
     - ${urlVar}/assets/config.rb
-  
+
 execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlPaths}
+        - modify_url: ${urlPaths}
 
 validate:
   response_code:

@@ -18,6 +18,12 @@ info:
   cve:
     - CVE-2017-12794
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -31,11 +37,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: GET
-      - modify_url: "/create_user/"
-      - replace_body: '{}'
-      - add_query_param:
-          username: "%3Cscript%3Ealert(document.domain)%3C%2Fscript%3E"
+        - modify_method: GET
+        - modify_url: "/create_user/"
+        - replace_body: '{}'
+        - add_query_param:
+            username: "%3Cscript%3Ealert(document.domain)%3C%2Fscript%3E"
 
 
 validate:

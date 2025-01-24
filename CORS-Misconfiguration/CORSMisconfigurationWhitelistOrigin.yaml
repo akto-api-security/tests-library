@@ -27,6 +27,12 @@ info:
     - CVE-2021-27786
 
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 auth:
   authenticated: true
 
@@ -47,8 +53,8 @@ execute:
   type: single
   requests:
     - req:
-      - add_header:
-          origin:  ${host_val}.evil.com
+        - add_header:
+            origin: ${host_val}.evil.com
 
 validate:
   response_code:

@@ -1,7 +1,7 @@
 id: COUPON_CODE_TAMPERING
 info:
   name: "Input Validation test using Coupon Code Tampering"
-  description: > 
+  description: >
     "This test involves testing how well a system handles attempts to manipulate or exploit coupon codes during transactions. This test checks whether the system can prevent unauthorized modifications, such as altering the coupon value, expiry date, or restrictions, which could lead to undesired discounts or benefits. By validating input, the test ensures that only legitimate, untampered coupon codes are accepted, safeguarding the system against fraudulent activities and maintaining the integrity of promotional offers."
   details: >
     "This test focuses on ensuring that coupon codes cannot be altered or misused during transactions. This test examines scenarios where users might attempt to manipulate coupon codes by changing values, formats, or parameters to gain unauthorized discounts or advantages. It checks the system's ability to validate the authenticity and integrity of coupon codes, including expiration dates, usage limits, and eligibility criteria. The test also assesses the system’s resilience against attacks like code injections or API manipulation, ensuring that only valid and untampered codes are processed correctly."
@@ -28,6 +28,12 @@ info:
     - CVE-2018-20679
     - CVE-2019-14271
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   response_code:
     gte: 200
@@ -39,7 +45,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -98,10 +104,10 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - modify_body_param:
-        userKey: ${paymentValues}
-        
+    - req:
+        - modify_body_param:
+            userKey: ${paymentValues}
+
 validate:
   response_code:
     gte: 200
@@ -111,7 +117,7 @@ validate:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

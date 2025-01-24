@@ -1,30 +1,12 @@
 id: EXPIRES_MAX_AGE_CHECK
 info:
   name: "Session Token storing via Persistent Cookie test"
-  description: > 
-    "If a session token is stored as a persistent cookie, it can potentially pose a 
-    security risk, constituting a broken authentication issue. Persistent cookies 
-    remain on a user's device for an extended period, making them susceptible 
-    to theft or unauthorized access. An attacker could exploit this vulnerability 
-    by obtaining the persistent session token, leading to unauthorized account 
-    access and compromise of user authentication, emphasizing the importance 
-    of secure session management practices to mitigate such risks."
+  description: >
+    "If a session token is stored as a persistent cookie, it can potentially pose a  security risk, constituting a broken authentication issue. Persistent cookies  remain on a user's device for an extended period, making them susceptible  to theft or unauthorized access. An attacker could exploit this vulnerability  by obtaining the persistent session token, leading to unauthorized account  access and compromise of user authentication, emphasizing the importance  of secure session management practices to mitigate such risks."
   details: >
-    "Storing a session token as a persistent cookie raises security concerns, 
-    potentially constituting a broken authentication issue. Persistent cookies, 
-    lasting beyond a single session, may be vulnerable to theft or unauthorized 
-    access. Exploiting this vulnerability could allow attackers to gain 
-    unauthorized entry, compromising user authentication. To mitigate such risks, 
-    it is crucial to adopt secure session management practices, including 
-    using short-lived session tokens and implementing robust security measures."
+    "Storing a session token as a persistent cookie raises security concerns,  potentially constituting a broken authentication issue. Persistent cookies,  lasting beyond a single session, may be vulnerable to theft or unauthorized  access. Exploiting this vulnerability could allow attackers to gain  unauthorized entry, compromising user authentication. To mitigate such risks,  it is crucial to adopt secure session management practices, including  using short-lived session tokens and implementing robust security measures."
   impact: >
-    "The impact of storing a session token as a persistent cookie, leading to a 
-    broken authentication scenario, can be severe. It exposes users to the 
-    risk of unauthorized access, allowing attackers to exploit stolen session 
-    tokens for prolonged periods. This could result in compromised user accounts, 
-    unauthorized transactions, and potential breaches of sensitive information, 
-    underscoring the critical need for secure session management to safeguard 
-    user authentication and privacy."
+    "The impact of storing a session token as a persistent cookie, leading to a  broken authentication scenario, can be severe. It exposes users to the  risk of unauthorized access, allowing attackers to exploit stolen session  tokens for prolonged periods. This could result in compromised user accounts,  unauthorized transactions, and potential breaches of sensitive information,  underscoring the critical need for secure session management to safeguard  user authentication and privacy."
 
   category:
     name: NO_AUTH
@@ -45,6 +27,12 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   response_code:
     gte: 200
@@ -56,7 +44,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -88,7 +76,7 @@ api_selection_filters:
 execute:
   type: single
   requests:
-  - req: []
+    - req: []
 validate:
   response_code:
     gte: 200
@@ -104,7 +92,7 @@ validate:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

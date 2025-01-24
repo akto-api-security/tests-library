@@ -1,7 +1,7 @@
 id: HTTP_HEADER_IP_INJECTION_INTERNAL_IP
 info:
   name: "Internal IP Injection in HTTP headers containing IP address"
-  description: > 
+  description: >
     "This test refers to exploiting a vulnerability where an attacker injects malicious IP addresses into HTTP headers. This can manipulate how internal services or systems interpret the IP address information, potentially allowing unauthorized access or bypassing security mechanisms. By tampering with headers like X-Forwarded-For, attackers can deceive backend services into treating the injected IP address as a legitimate internal source, which could lead to security breaches or misconfigurations."
   details: >
     "In this attack, an attacker injects malicious IP addresses into HTTP headers such as X-Forwarded-For or X-Real-IP. This manipulation can trick internal systems into accepting or trusting the injected IP address as if it were from a legitimate source. It may enable the attacker to bypass IP-based security controls, gain unauthorized access to internal resources, or spoof the origin of network requests, compromising the security of internal network configurations and applications."
@@ -28,6 +28,12 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -39,7 +45,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -96,10 +102,10 @@ wordLists:
 execute:
   type: single
   requests:
-  - req:
-    - modify_header:
-        userKey: ${IPPayloads}
-        
+    - req:
+        - modify_header:
+            userKey: ${IPPayloads}
+
 validate:
   or:
     - response_payload:
@@ -109,7 +115,7 @@ validate:
           gte: 90
         not_contains:
           - Error
-          - Internal Server 
+          - Internal Server
           - Failed
           - Unauthorized
           - access denied

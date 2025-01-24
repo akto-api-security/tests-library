@@ -26,6 +26,12 @@ info:
   cve:
     - CVE-2021-37832
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   response_code:
     gte: 200
@@ -65,38 +71,38 @@ execute:
   type: single
   requests:
     - req:
-        - modify_body_param: 
-            changed_body_key:  ${changed_body_value}${specialCharacters}
+        - modify_body_param:
+            changed_body_key: ${changed_body_value}${specialCharacters}
         - modify_query_param:
-            changed_query_key:  ${changed_query_value}${specialCharacters}
+            changed_query_key: ${changed_query_value}${specialCharacters}
 validate:
   and:
-  - response_payload:
-      not_contains:
-        - <html>
-        - </html>
-  - or:
     - response_payload:
-        contains_either: "SQLITE_ERROR"
-    - response_payload:
-        regex: "SQLite/JDBCDriver"
-    - response_payload:
-        regex: "SQLite\\.Exception"
-    - response_payload:
-        regex: "(Microsoft|System)\\.Data\\.SQLite\\.SQLiteException"
-    - response_payload:
-        regex: "Warning.*?\\W(sqlite_|SQLite3::)"
-    - response_payload:
-        regex: "\\[SQLITE_ERROR\\]"
-    - response_payload:
-        regex: "SQLite error \\d+:"
-    - response_payload:
-        regex: "sqlite3.OperationalError:"
-    - response_payload:
-        regex: "SQLite3::SQLException"
-    - response_payload:
-        regex: "org\\.sqlite\\.JDBC"
-    - response_payload:
-        regex: "Pdo[./_\\]Sqlite"
-    - response_payload:
-        regex: "SQLiteException"
+        not_contains:
+          - <html>
+          - </html>
+    - or:
+        - response_payload:
+            contains_either: "SQLITE_ERROR"
+        - response_payload:
+            regex: "SQLite/JDBCDriver"
+        - response_payload:
+            regex: "SQLite\\.Exception"
+        - response_payload:
+            regex: "(Microsoft|System)\\.Data\\.SQLite\\.SQLiteException"
+        - response_payload:
+            regex: "Warning.*?\\W(sqlite_|SQLite3::)"
+        - response_payload:
+            regex: "\\[SQLITE_ERROR\\]"
+        - response_payload:
+            regex: "SQLite error \\d+:"
+        - response_payload:
+            regex: "sqlite3.OperationalError:"
+        - response_payload:
+            regex: "SQLite3::SQLException"
+        - response_payload:
+            regex: "org\\.sqlite\\.JDBC"
+        - response_payload:
+            regex: "Pdo[./_\\]Sqlite"
+        - response_payload:
+            regex: "SQLiteException"

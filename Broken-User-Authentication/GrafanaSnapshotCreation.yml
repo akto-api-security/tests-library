@@ -2,7 +2,7 @@ id: GRAFANA_SNAPSHOT_CREATION
 info:
   name: "Grafana Unauthenticated Snapshot Creation"
   description: "This vulnerability allows attackers to create snapshots of Grafana dashboards without authentication. These snapshots can expose sensitive information, such as dashboard configurations, data visualizations, or metrics. Since no credentials are required, attackers can access and share dashboard content, potentially leading to data leaks or unauthorized access to critical insights."
-  details:  "This vulnerability occurs when Grafana’s snapshot feature allows the creation of public snapshots without requiring user authentication. This issue is due to insufficient access control, enabling anyone to generate snapshots containing the current state of dashboards. These snapshots, although static, can reveal sensitive information such as dashboard configurations, internal metrics, or data visualizations."
+  details: "This vulnerability occurs when Grafana’s snapshot feature allows the creation of public snapshots without requiring user authentication. This issue is due to insufficient access control, enabling anyone to generate snapshots containing the current state of dashboards. These snapshots, although static, can reveal sensitive information such as dashboard configurations, internal metrics, or data visualizations."
   impact: "The impact of this vulnerability is significant, as it allows unauthorized users to generate public snapshots of dashboards. These snapshots could expose sensitive data such as internal metrics, system health, or business-related information. If exploited, this can lead to information disclosure, enabling attackers to gain insights into internal operations or infrastructure, potentially facilitating further attacks."
   category:
     name: NO_AUTH
@@ -19,6 +19,12 @@ info:
   cve:
     - CVE-2021-27358
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -34,10 +40,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: POST
-      - modify_url: "/api/snapshots"
-      - replace_body: '{"dashboard": {"editable":false,"hideControls":true,"nav":[{"enable":false,"type":"timepicker"}],"rows": [{}],"style":"dark","tags":[],"templating":{"list":[]},"time":{},"timezone":"browser","title":"Home","version":5},"expires": 3600}'
-      
+        - modify_method: POST
+        - modify_url: "/api/snapshots"
+        - replace_body: '{"dashboard": {"editable":false,"hideControls":true,"nav":[{"enable":false,"type":"timepicker"}],"rows": [{}],"style":"dark","tags":[],"templating":{"list":[]},"time":{},"timezone":"browser","title":"Home","version":5},"expires": 3600}'
 validate:
   response_payload:
     contains_all:
