@@ -128,7 +128,7 @@ execute:
             response_payload:
               length:
                 gt: 0
-              neq: "${x1.response.body}"
+              neq_obj: "${x1.response.body}"
               not_contains:
                 - rate-limit
                 - rate limit
@@ -161,7 +161,7 @@ execute:
             response_payload:
               length:
                 gt: 0
-              eq: "${x2.response.body}"
+              eq_obj: "${x2.response.body}"
               not_contains:
                 - rate-limit
                 - rate limit

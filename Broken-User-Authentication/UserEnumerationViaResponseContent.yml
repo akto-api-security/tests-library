@@ -122,7 +122,7 @@ execute:
             passKey: Default1!
         - validate:
             response_payload:
-              neq: "${x1.response.body}"
+              neq_obj: "${x1.response.body}"
               not_contains:
                 - rate-limit
                 - rate limit
@@ -139,7 +139,7 @@ execute:
             passKey: Default2!
         - validate:
             response_payload:
-              eq: "${x2.response.body}"
+              eq_obj: "${x2.response.body}"
               not_contains:
                 - rate-limit
                 - rate limit
@@ -148,3 +148,4 @@ execute:
                 - account is blocked
                 - multiple failed attempt
         - success: vulnerable
+        - failure: exit
