@@ -31,6 +31,12 @@ info:
   cve:
     - CVE-2022-34621
  
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 auth:
   authenticated: true
 api_selection_filters:
@@ -53,7 +59,7 @@ api_selection_filters:
       - "}"
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -109,7 +115,7 @@ validate:
       - "}"
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

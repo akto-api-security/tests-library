@@ -1,7 +1,7 @@
 id: SPRING_DATA_COMMONS_RCE
 info:
   name: "Spring Data Commons Remote Code Execution"
-  description: "Spring Data Commons Remote Code Execution (RCE) vulnerabilities arise from flaws in the Spring framework that allow attackers to execute arbitrary code on a server remotely. These vulnerabilities often result from improper handling of deserialization or inadequate input validation, enabling attackers to craft malicious requests that exploit these weaknesses. By leveraging such RCE vulnerabilities, attackers can gain unauthorized access to applications, manipulate data, or take control of the underlying server. Regular updates and secure coding practices are essential to mitigate these risks in Spring Data Commons." 
+  description: "Spring Data Commons Remote Code Execution (RCE) vulnerabilities arise from flaws in the Spring framework that allow attackers to execute arbitrary code on a server remotely. These vulnerabilities often result from improper handling of deserialization or inadequate input validation, enabling attackers to craft malicious requests that exploit these weaknesses. By leveraging such RCE vulnerabilities, attackers can gain unauthorized access to applications, manipulate data, or take control of the underlying server. Regular updates and secure coding practices are essential to mitigate these risks in Spring Data Commons."
   details: "Spring Data Commons Remote Code Execution (RCE) vulnerabilities typically stem from issues related to insecure deserialization or inadequate validation of user inputs. Attackers can exploit these weaknesses by sending specially crafted payloads, allowing them to execute arbitrary code on the server hosting the application. This could enable them to access sensitive data, alter application behavior, or deploy malware. To reduce the risk of RCE attacks, it's important to implement strong input validation, sanitize deserialized objects, and keep the Spring framework and its components up to date with the latest security patches."
   impact: "The impact of Spring Data Commons Remote Code Execution (RCE) vulnerabilities can be critical, allowing attackers to execute arbitrary code on the server and potentially gain full control over the application environment. This can lead to unauthorized access to sensitive data, data corruption, or the introduction of malware. Additionally, such vulnerabilities can compromise the integrity and availability of services, resulting in significant reputational damage, legal liabilities, and financial losses for organizations affected by the exploit."
   category:
@@ -9,7 +9,7 @@ info:
     shortName: Command Injection
     displayName: Command Injection
   subCategory: SPRING_DATA_COMMONS_RCE
-  severity: MEDIUM
+  severity: CRITICAL
   tags:
     - Business logic
     - OWASP top 10
@@ -18,6 +18,12 @@ info:
     - CWE-78
   cve:
     - CVE-2018-1273
+
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   response_payload:

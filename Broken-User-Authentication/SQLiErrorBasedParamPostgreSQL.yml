@@ -26,6 +26,12 @@ info:
   cve:
     - CVE-2023-39417
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   response_code:
     gte: 200
@@ -60,38 +66,38 @@ execute:
   type: single
   requests:
     - req:
-        - modify_body_param: 
+        - modify_body_param:
             changed_body_key: ${specialCharacters}
         - modify_query_param:
             changed_query_key: ${specialCharacters}
 validate:
   and:
-  - response_payload:
-      not_contains:
-        - <html>
-        - </html>
-  - or:
     - response_payload:
-        regex: "PostgreSQL.*?ERROR"
-    - response_payload:
-        regex: "Warning.*?\\Wpg_"
-    - response_payload:
-        regex: "valid PostgreSQL result"
-    - response_payload:
-        regex: "Npgsql\\."
-    - response_payload:
-        regex: "PG::SyntaxError:"
-    - response_payload:
-        regex: "org\\.postgresql\\.util\\.PSQLException"
-    - response_payload:
-        regex: "ERROR:\\s\\ssyntax error at or near"
-    - response_payload:
-        regex: "ERROR: parser: parse error at or near"
-    - response_payload:
-        regex: "PostgreSQL query failed"
-    - response_payload:
-        regex: "org\\.postgresql\\.jdbc"
-    - response_payload:
-        regex: "Pdo[./_\\]Pgsql"
-    - response_payload:
-        regex: "PSQLException"
+        not_contains:
+          - <html>
+          - </html>
+    - or:
+        - response_payload:
+            regex: "PostgreSQL.*?ERROR"
+        - response_payload:
+            regex: "Warning.*?\\Wpg_"
+        - response_payload:
+            regex: "valid PostgreSQL result"
+        - response_payload:
+            regex: "Npgsql\\."
+        - response_payload:
+            regex: "PG::SyntaxError:"
+        - response_payload:
+            regex: "org\\.postgresql\\.util\\.PSQLException"
+        - response_payload:
+            regex: "ERROR:\\s\\ssyntax error at or near"
+        - response_payload:
+            regex: "ERROR: parser: parse error at or near"
+        - response_payload:
+            regex: "PostgreSQL query failed"
+        - response_payload:
+            regex: "org\\.postgresql\\.jdbc"
+        - response_payload:
+            regex: "Pdo[./_\\]Pgsql"
+        - response_payload:
+            regex: "PSQLException"

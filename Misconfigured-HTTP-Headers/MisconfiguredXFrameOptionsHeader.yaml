@@ -1,4 +1,3 @@
----
 id: MISCONFIGURED_X_FRAME_OPTIONS_HEADER
 info:
   name: Misconfigured X-Frame-Options Header
@@ -13,7 +12,7 @@ info:
     displayName: Misconfigured HTTP Headers (MHH)
   subCategory: MISCONFIGURED_X_FRAME_OPTIONS_HEADER
   severity: LOW
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -28,22 +27,28 @@ info:
     - CVE-2022-41915
     - CVE-2022-37436
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   response_code:
     gte: 200
     lt: 300
   method:
     neq: "OPTIONS"
-  or: 
+  or:
     - response_headers:
         for_one:
-          key: 
+          key:
             eq: X-Frame-Options
           value:
             regex: "^(?!.*\bDENY\b)(?!.*\bSAMEORIGIN\b)(?!.*\bALLOW FROM\b).*"
     - response_headers:
         for_one:
-          key: 
+          key:
             eq: X-Frame-Options
           value:
             regex: "(?=.*\bDENY\b)(?=.*\bSAMEORIGIN\b)|(?=.*\bDENY\b)(?=.*\bALLOW FROM\b)|(?=.*\bSAMEORIGIN\b)(?=.*\bALLOW FROM\b)"

@@ -18,6 +18,12 @@ info:
   cve:
     - CVE-2019-0221
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -35,9 +41,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_method: GET
-      - modify_url: ${paths}
-      - replace_body: '{}'
+        - modify_method: GET
+        - modify_url: ${paths}
+        - replace_body: '{}'
 
 validate:
   response_code:

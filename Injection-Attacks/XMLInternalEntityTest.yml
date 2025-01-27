@@ -2,14 +2,11 @@ id: XML_INTERNAL_ENTITY_TEST
 info:
   name: "XML Internal Entity Vulnerability test in API Endpoints"
   description: >
-    "This test can be used to identify potential vulnerabilities where internal XML entities 
-    could be exploited for unauthorized data access or service disruption."
+    "This test can be used to identify potential vulnerabilities where internal XML entities  could be exploited for unauthorized data access or service disruption."
   details: >
-    "This test focuses on detecting the API's susceptibility to internal XML entity exploitation, 
-    which could compromise data integrity or availability."
+    "This test focuses on detecting the API's susceptibility to internal XML entity exploitation,  which could compromise data integrity or availability."
   impact: >
-    "Successful XML Internal Entity Injection can lead to severe data breaches, service disruptions, 
-    and unauthorized system access, posing critical threats to API security and data integrity."
+    "Successful XML Internal Entity Injection can lead to severe data breaches, service disruptions,  and unauthorized system access, posing critical threats to API security and data integrity."
   category:
     name: INJECT
     shortName: Injection Attacks
@@ -30,6 +27,12 @@ info:
   cve:
     - CVE-2022-42745
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   response_code:
     gte: 200
@@ -39,7 +42,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -80,7 +83,7 @@ execute:
   type: single
   requests:
     - req:
-        - replace_body:  ${payloads}
+        - replace_body: ${payloads}
         - modify_header:
             ${headerKey}: "application/xml"
 validate:
@@ -90,7 +93,7 @@ validate:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

@@ -2,7 +2,7 @@ id: ELASTICSEARCH_DEFAULT_LOGIN
 info:
   name: "ElasticSearch Default Login Vulnerability"
   description: "The ElasticSearch Default Login Vulnerability occurs when ElasticSearch instances are left accessible with default or no credentials. This misconfiguration allows unauthorized users to access and control the database, leading to potential exposure or manipulation of stored data. Attackers can exploit this flaw to view, modify, or delete sensitive information, posing a serious security risk. Proper authentication and access control settings are essential to secure ElasticSearch deployments against unauthorized access."
-  details:  "The ElasticSearch Default Login Vulnerability arises when ElasticSearch instances are deployed without enabling authentication or leaving default credentials in place. This allows attackers to gain unrestricted access to the database, including the ability to view, modify, or delete indices and documents. In some cases, this can lead to data breaches, loss of important data, or unauthorized system changes. To prevent exploitation, administrators should enable strong authentication, configure role-based access control, and avoid using default settings in production environments."
+  details: "The ElasticSearch Default Login Vulnerability arises when ElasticSearch instances are deployed without enabling authentication or leaving default credentials in place. This allows attackers to gain unrestricted access to the database, including the ability to view, modify, or delete indices and documents. In some cases, this can lead to data breaches, loss of important data, or unauthorized system changes. To prevent exploitation, administrators should enable strong authentication, configure role-based access control, and avoid using default settings in production environments."
   impact: "The impact of the ElasticSearch Default Login Vulnerability can be critical, as unauthorized access to the database may result in data breaches, tampering with sensitive data, or even complete data loss. Attackers could modify, delete, or exfiltrate data, leading to significant financial and reputational damage for organizations. Additionally, exploitation of this vulnerability can expose other security weaknesses within the system. Implementing strong authentication and access controls is essential to prevent these potential risks."
   category:
     name: SM
@@ -17,6 +17,12 @@ info:
     - CWE-16
   cve:
     - CVE-2021-43798
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -39,19 +45,19 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/internal/security/login"
-      - modify_method: POST
-      - add_header:
-          referer: ${urlVar}/login
-      - add_header:
-          kbn-version: "8.8.2"
-      - add_header:
-          x-kbn-context: "%7B%22name%22%3A%22security_login%22%2C%22url%22%3A%22%2Flogin%22%7D"
-      - add_header:
-          Origin: ${urlVar}
-      - replace_body: '{"providerType":"basic","providerName":"basic","currentURL":"${urlVar}/login","params":{"username":"elastic","password":"changeme" }}'
-      - add_header:
-          user-agent: "Mozilla/5.0 (Windows; Windows NT 10.1; Win64; x64; en-US) Gecko/20100101 Firefox/49.5"
+        - modify_url: "/internal/security/login"
+        - modify_method: POST
+        - add_header:
+            referer: ${urlVar}/login
+        - add_header:
+            kbn-version: "8.8.2"
+        - add_header:
+            x-kbn-context: "%7B%22name%22%3A%22security_login%22%2C%22url%22%3A%22%2Flogin%22%7D"
+        - add_header:
+            Origin: ${urlVar}
+        - replace_body: '{"providerType":"basic","providerName":"basic","currentURL":"${urlVar}/login","params":{"username":"elastic","password":"changeme" }}'
+        - add_header:
+            user-agent: "Mozilla/5.0 (Windows; Windows NT 10.1; Win64; x64; en-US) Gecko/20100101 Firefox/49.5"
 validate:
   response_code:
     eq: 200
@@ -62,15 +68,15 @@ validate:
       - <html>
       - </html>
   and:
-  - response_headers:
-      for_one:
-        key:
-          eq: "set-cookie"
-        value:
-          contains_either: "sid="
-  - response_headers:
-      for_one:
-        key:
-          eq: "kbn-license-sig"
+    - response_headers:
+        for_one:
+          key:
+            eq: "set-cookie"
+          value:
+            contains_either: "sid="
+    - response_headers:
+        for_one:
+          key:
+            eq: "kbn-license-sig"
 strategy:
   run_once: /

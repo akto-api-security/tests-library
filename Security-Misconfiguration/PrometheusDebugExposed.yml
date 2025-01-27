@@ -1,4 +1,3 @@
----
 id: PROMETHEUS_DEBUG_EXPOSED
 info:
   name: "Prometheus Debug Exposed"
@@ -23,6 +22,12 @@ info:
     - CWE-200
     - CWE-538
 
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -40,7 +45,7 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: ${attemptValues}
+        - modify_url: ${attemptValues}
 
 validate:
   response_code:
@@ -50,36 +55,36 @@ validate:
     length:
       gt: 0
     not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
-    - Attention Required!
-    - CloudFlare
-    - "Sorry, you have been blocked"
-    - <html>
-    - </html>
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - Attention Required!
+      - CloudFlare
+      - "Sorry, you have been blocked"
+      - <html>
+      - </html>
 strategy:
   run_once: /

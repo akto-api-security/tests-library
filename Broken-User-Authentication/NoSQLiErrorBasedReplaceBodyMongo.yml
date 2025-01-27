@@ -28,6 +28,12 @@ info:
     - CVE-2021-22911
     - CVE-2023-28359
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   response_code:
     gte: 200
@@ -39,7 +45,7 @@ api_selection_filters:
       - PATCH
   url:
     extract: urlVar
-    
+
 wordLists:
   specialPayloads:
     - "{\"$where\": \"function() { return (this.name === 'Admin' && this.password); }\"}"
@@ -59,11 +65,11 @@ validate:
           - <html>
           - </html>
     - or:
-      - response_payload:
-          regex: "(?i)Cast to string failed for value"
-      - response_payload:
-          regex: "MongoError: unknown operator"
-      - response_payload:
-          regex: "CastError: Cast to ObjectId failed"
-      - response_payload:
-          regex: "ValidationError: User validation failed: "
+        - response_payload:
+            regex: "(?i)Cast to string failed for value"
+        - response_payload:
+            regex: "MongoError: unknown operator"
+        - response_payload:
+            regex: "CastError: Cast to ObjectId failed"
+        - response_payload:
+            regex: "ValidationError: User validation failed: "

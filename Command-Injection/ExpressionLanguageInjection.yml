@@ -1,4 +1,3 @@
----
 id: EXPRESSION_LANGUAGE_INJECTION
 info:
   name: "Expression Language Injection"
@@ -27,6 +26,12 @@ info:
     - CVE-2023-25826
     - CVE-2023-41031
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   response_code:
     gte: 200
@@ -38,7 +43,7 @@ api_selection_filters:
       gt: 0
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied
@@ -85,10 +90,10 @@ execute:
   type: single
   requests:
     - req:
-      - modify_body_param: 
-          changed_body_key:  ${attemptInput}
-      - modify_query_param:
-          changed_query_key:  ${attemptInput}
+        - modify_body_param:
+            changed_body_key: ${attemptInput}
+        - modify_query_param:
+            changed_query_key: ${attemptInput}
 
 validate:
   response_payload:
@@ -97,7 +102,7 @@ validate:
     contains_either: ${attemptOutput}
     not_contains:
       - Error
-      - Internal Server 
+      - Internal Server
       - Failed
       - Unauthorized
       - access denied

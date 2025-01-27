@@ -1,21 +1,18 @@
 id: EXPRESS_DEFAULT_HOMEPAGE_ENABLED
 info:
-  name: Express Default Homepage Enabled 
-  description:  Express Default Homepage Enabled Misconfiguration
+  name: Express Default Homepage Enabled
+  description: Express Default Homepage Enabled Misconfiguration
   details: >
-      The Express Default Homepage Enabled misconfiguration occurs when the default homepage is enabled in a production 
-      environment. The default homepage typically displays a welcome message and may reveal information about the Express 
-      framework being used. This can provide valuable insights to potential attackers, helping them identify vulnerabilities 
-      or weaknesses in the system. To reduce the risk of exposing sensitive details and to enhance security, it is recommended
-      to disable or customize the default homepage in production environments.
+    The Express Default Homepage Enabled misconfiguration occurs when the default homepage is enabled in a production  environment. The default homepage typically displays a welcome message and may reveal information about the Express  framework being used. This can provide valuable insights to potential attackers, helping them identify vulnerabilities  or weaknesses in the system. To reduce the risk of exposing sensitive details and to enhance security, it is recommended
+    to disable or customize the default homepage in production environments.
   impact: Enabling the Express default homepage exposes information about the framework, increasing the risk of targeted attacks and potential exploitation.
   category:
-      name: SM
-      shortName: Misconfiguration
-      displayName: Security Misconfiguration (SM)
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
   subCategory: Server Misconfiguration
   severity: LOW
-  tags: 
+  tags:
     - ExpressJS
     - Business logic
     - OWASP top 10
@@ -25,6 +22,12 @@ info:
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
   cwe:
     - CWE-16
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -43,4 +46,3 @@ validate:
     contains_all:
       - "<title>Express</title>"
       - "Welcome to Express"
-        

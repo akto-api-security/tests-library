@@ -1,23 +1,20 @@
 id: DJANGO_DEFAULT_HOMEPAGE_ENABLED
 info:
-  name: Django Default Homepage Enabled 
+  name: Django Default Homepage Enabled
   description: Detection of Django default homepage enabled misconfiguration, exposing sensitive information and indicating a potential security risk.
   details: >
-       The Django Default Homepage Enabled test identifies a security misconfiguration where the default homepage
-       of a Django application is accessible. The test checks if the response payload contains the string "The 
-       install worked successfully! Congratulations!" which indicates that the default homepage is enabled. Having
-       the default homepage accessible can expose sensitive information about the Django application, such as 
-       version numbers and potentially sensitive file paths. This misconfiguration falls under the Security 
-       Misconfiguration category with a low severity level. Disabling the default homepage in production
-        environments is crucial to minimize information exposure and enhance security
+    The Django Default Homepage Enabled test identifies a security misconfiguration where the default homepage
+    of a Django application is accessible. The test checks if the response payload contains the string "The  install worked successfully! Congratulations!" which indicates that the default homepage is enabled. Having
+    the default homepage accessible can expose sensitive information about the Django application, such as  version numbers and potentially sensitive file paths. This misconfiguration falls under the Security  Misconfiguration category with a low severity level. Disabling the default homepage in production
+     environments is crucial to minimize information exposure and enhance security
   impact: Enabling the Django default homepage exposes sensitive information, indicating potential security risks and facilitating targeted attacks on known vulnerabilities.
   category:
-      name: SM
-      shortName: Misconfiguration
-      displayName: Security Misconfiguration (SM)
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
   subCategory: Server Misconfiguration
   severity: LOW
-  tags: 
+  tags:
     - Django
     - Business logic
     - OWASP top 10
@@ -27,6 +24,12 @@ info:
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
   cwe:
     - CWE-16
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -49,4 +52,3 @@ validate:
       - </html>
     contains_either:
       - "The install worked successfully! Congratulations!"
-        

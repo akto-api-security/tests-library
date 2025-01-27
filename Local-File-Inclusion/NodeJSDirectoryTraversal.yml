@@ -2,7 +2,7 @@ id: NODEJS_DIRECTORY_TRAVERSAL
 info:
   name: "Node.js Local File Inclusion"
   description: "Node.js Local File Inclusion (LFI) is a security vulnerability that occurs in Node.js applications when user input is not properly validated, allowing attackers to include arbitrary files from the server's filesystem. If an application allows users to specify file paths without adequate checks, attackers can exploit this weakness to access sensitive files, such as configuration settings or logs. This unauthorized access can lead to information disclosure and may provide attackers with insights that facilitate further exploitation of the application. To mitigate this risk, it is essential to implement strict input validation and avoid using user-defined file paths in file operations."
-  details:  "Node.js Local File Inclusion (LFI) occurs when a Node.js application improperly handles user input for file paths, allowing malicious users to include files from the server's filesystem. Attackers can craft requests to manipulate the file path, potentially gaining access to sensitive files, such as environment variables, configuration files, or user data stored on the server. This vulnerability can lead to critical information disclosure, enabling attackers to escalate privileges or exploit further weaknesses in the application. To prevent LFI, developers should ensure strong input validation, implement whitelisting for acceptable file paths, and follow secure coding practices in file handling operations."
+  details: "Node.js Local File Inclusion (LFI) occurs when a Node.js application improperly handles user input for file paths, allowing malicious users to include files from the server's filesystem. Attackers can craft requests to manipulate the file path, potentially gaining access to sensitive files, such as environment variables, configuration files, or user data stored on the server. This vulnerability can lead to critical information disclosure, enabling attackers to escalate privileges or exploit further weaknesses in the application. To prevent LFI, developers should ensure strong input validation, implement whitelisting for acceptable file paths, and follow secure coding practices in file handling operations."
   impact: "The impact of Node.js Local File Inclusion (LFI) can be significant, as it allows attackers to access sensitive files on the server, potentially leading to severe information disclosure and security breaches. By exposing critical data such as configuration files, API keys, or user credentials, attackers can leverage this information to escalate privileges, manipulate application behavior, or gain unauthorized access to other systems. Such breaches can result in reputational damage, financial losses, and regulatory penalties for organizations. Additionally, if attackers gain insights into the system’s architecture through LFI, they may exploit other vulnerabilities, increasing the overall risk to the application and its infrastructure."
   category:
     name: LFI
@@ -25,6 +25,12 @@ info:
     - CVE-2023-22973
 
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -41,9 +47,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

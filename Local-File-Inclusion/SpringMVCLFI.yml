@@ -2,7 +2,7 @@ id: SPRING_MVC_LFI
 info:
   name: "Spring MVC Local File Inclusion"
   description: "Spring MVC Local File Inclusion (LFI) is a security vulnerability that occurs when an application using Spring MVC allows attackers to include local files from the server’s filesystem via user input. This can happen if file paths are not properly validated, enabling attackers to manipulate the input and access sensitive files, such as configuration files or application logs. If exploited, LFI can lead to information disclosure, unauthorized access to sensitive data, or further attacks on the application or underlying system. Implementing strict input validation and sanitization is crucial to mitigating this risk."
-  details:  "Spring MVC Local File Inclusion (LFI) occurs when a Spring MVC application accepts user input that specifies file paths without adequate validation or sanitization. Attackers can exploit this vulnerability by crafting requests that include malicious file paths, potentially gaining access to sensitive files stored on the server, such as environment variables, configuration files, or application logs. This could allow attackers to obtain critical information about the system, such as database credentials or API keys. To mitigate LFI risks, developers should enforce strict whitelisting of allowed file paths and implement robust input validation and sanitization practices."
+  details: "Spring MVC Local File Inclusion (LFI) occurs when a Spring MVC application accepts user input that specifies file paths without adequate validation or sanitization. Attackers can exploit this vulnerability by crafting requests that include malicious file paths, potentially gaining access to sensitive files stored on the server, such as environment variables, configuration files, or application logs. This could allow attackers to obtain critical information about the system, such as database credentials or API keys. To mitigate LFI risks, developers should enforce strict whitelisting of allowed file paths and implement robust input validation and sanitization practices."
   impact: "The impact of Spring MVC Local File Inclusion (LFI) can be severe, as it may allow attackers to access sensitive files on the server, leading to information disclosure and potential system compromise. By exposing critical data such as configuration files or database credentials, attackers can escalate their privileges, launch further attacks, or gain unauthorized access to user data. This breach of security can result in significant reputational damage, financial losses, and regulatory penalties for organizations. Additionally, the exploitation of LFI vulnerabilities can serve as a stepping stone for more advanced attacks, increasing the overall risk to the application and its infrastructure."
   category:
     name: LFI
@@ -25,6 +25,12 @@ info:
     - CVE-2023-22973
 
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -42,9 +48,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

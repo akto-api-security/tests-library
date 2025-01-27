@@ -2,7 +2,7 @@ id: AWS_CONTAINER_METADATA
 info:
   name: "AWS Container Metadata Content Exposure"
   description: "AWS Container Metadata Content Exposure refers to a security risk where sensitive metadata of AWS containers, such as instance roles or credentials, are inadvertently exposed. This can happen if applications inside containers access the EC2 instance metadata service and the metadata isn't properly restricted. Attackers exploiting this exposure can gain unauthorized access to AWS resources, compromising system security."
-  details:  "AWS Container Metadata Content Exposure occurs when applications running in AWS containers access the EC2 instance metadata service without proper controls. This metadata can include sensitive information like IAM role credentials, instance IDs, and security group settings. If this information is exposed or mishandled, it can allow attackers to escalate privileges, access other AWS resources, or launch further attacks within the cloud environment. To mitigate this risk, AWS recommends implementing stringent access controls, network security measures, and best practices for container configuration."
+  details: "AWS Container Metadata Content Exposure occurs when applications running in AWS containers access the EC2 instance metadata service without proper controls. This metadata can include sensitive information like IAM role credentials, instance IDs, and security group settings. If this information is exposed or mishandled, it can allow attackers to escalate privileges, access other AWS resources, or launch further attacks within the cloud environment. To mitigate this risk, AWS recommends implementing stringent access controls, network security measures, and best practices for container configuration."
   impact: "The impact of AWS Container Metadata Content Exposure can be significant, leading to unauthorized access to sensitive AWS resources and potential data breaches. Attackers may exploit exposed metadata to escalate privileges, allowing them to manipulate or steal data, disrupt services, or launch attacks on other systems. This not only jeopardizes the integrity and confidentiality of cloud-based applications but can also result in financial losses and reputational damage for organizations. Furthermore, compliance violations may occur if sensitive data is mishandled, leading to regulatory repercussions."
   category:
     name: SM
@@ -17,6 +17,12 @@ info:
     - CWE-16
   cve:
     - CVE-2021-43798
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -35,9 +41,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

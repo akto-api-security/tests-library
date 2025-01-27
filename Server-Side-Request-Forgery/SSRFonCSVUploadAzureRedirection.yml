@@ -27,7 +27,13 @@ info:
     - CWE-918
   cve:
     - CVE-2022-4725
-  
+
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -43,14 +49,14 @@ api_selection_filters:
         for_one:
           value:
             contains_either:
-                - .csv
+              - .csv
           key:
             extract: csv_key
     - query_param:
         for_one:
           value:
             contains_either:
-                - .csv
+              - .csv
           key:
             extract: csv_key
 

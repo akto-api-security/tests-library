@@ -3,7 +3,7 @@ info:
   name: Redis Configuration File Exposure
   description: "Redis configuration file (redis.conf) was exposed."
   details: >
-              "The Redis configuration file (redis.conf) was found at the specified URL. This file contains sensitive information such as server binding, protected mode settings, and port configuration."
+    "The Redis configuration file (redis.conf) was found at the specified URL. This file contains sensitive information such as server binding, protected mode settings, and port configuration."
   impact: "The exposure of the Redis configuration file can potentially lead to unauthorized access, modification, or exploitation of the Redis server and its data."
   category:
     name: SM
@@ -21,6 +21,12 @@ info:
     - CVE-2023-36824
     - CVE-2022-0543
 
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -29,12 +35,12 @@ api_selection_filters:
     lt: 300
   url:
     extract: urlVar
-  
+
 execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlVar}/redis.conf
+        - modify_url: ${urlVar}/redis.conf
 
 validate:
   response_code:

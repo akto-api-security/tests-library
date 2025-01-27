@@ -2,7 +2,7 @@ id: WSDL_DETECT
 info:
   name: "WSDL File Exposure"
   description: "This test refers to the unintended public accessibility of Web Services Description Language (WSDL) files, which define the structure, operations, and messages of a web service. When these files are exposed without proper security measures, they can provide unauthorized users with detailed information about the web service's operations and endpoints. This exposure can increase the risk of targeted attacks, as attackers may exploit vulnerabilities identified through the information contained in the WSDL files. To mitigate these risks, organizations should implement strong access controls and secure WSDL files behind authentication mechanisms."
-  details:  "WSDL File Exposure occurs when WSDL files, which specify the web service's interface, operations, and binding information, are publicly accessible without adequate security controls. This vulnerability allows unauthorized users to view sensitive information about the web service, including available methods, input parameters, and endpoint URLs. Such exposure can be exploited by attackers to identify potential weaknesses in the service, facilitating targeted attacks like injection or denial of service. To protect against this exposure, organizations should enforce strict access controls and limit visibility to WSDL files through authentication and IP restrictions."
+  details: "WSDL File Exposure occurs when WSDL files, which specify the web service's interface, operations, and binding information, are publicly accessible without adequate security controls. This vulnerability allows unauthorized users to view sensitive information about the web service, including available methods, input parameters, and endpoint URLs. Such exposure can be exploited by attackers to identify potential weaknesses in the service, facilitating targeted attacks like injection or denial of service. To protect against this exposure, organizations should enforce strict access controls and limit visibility to WSDL files through authentication and IP restrictions."
   impact: "The impact of WSDL File Exposure can be significant, as unauthorized access to WSDL files enables attackers to gather detailed information about the web service's functionality and structure. This can lead to exploitation of vulnerabilities within the service, resulting in unauthorized access, data breaches, or service disruptions. Additionally, attackers may use the exposed information to craft targeted attacks, such as SQL injection or service manipulation, which can have serious operational and financial repercussions. Furthermore, organizations may face reputational damage and regulatory penalties if sensitive data is compromised due to inadequate security measures."
   category:
     name: SM
@@ -18,6 +18,12 @@ info:
   cve:
     - CVE-2021-43798
 
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -31,9 +37,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "/?wsdl"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "/?wsdl"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_payload:
     length:
@@ -42,9 +48,9 @@ validate:
       - "wsdl:definitions"
   request_headers:
     for_one:
-      key: 
+      key:
         eq: content-type
-      value: 
+      value:
         eq: application/wsdl+xml
 strategy:
   run_once: /

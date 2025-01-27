@@ -1,4 +1,3 @@
----
 id: TIMESTAMP_DISCLOSURE_UNIX
 info:
   name: "Timestamp Disclosure - Unix"
@@ -13,10 +12,10 @@ info:
     name: MHH
     shortName: Misconfigured HTTP Headers
     displayName: Misconfigured HTTP Headers (MHH)
-  
+
   subCategory: TIMESTAMP_DISCLOSURE_UNIX
   severity: LOW
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -29,6 +28,12 @@ info:
     - CVE-2022-3215
     - CVE-2020-5247
     - CVE-2023-38039
+
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   response_code:

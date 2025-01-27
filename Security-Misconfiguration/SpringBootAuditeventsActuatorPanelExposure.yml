@@ -2,7 +2,7 @@ id: SPRING_BOOT_AUDITEVENTS_ACTUATOR_PANEL_EXPOSURE
 info:
   name: "Spring Boot AuditEvents Actuator Panel Exposure"
   description: "Spring Boot AuditEvents Actuator Panel Exposure refers to a security vulnerability where the Actuator’s AuditEvents endpoint is exposed without proper authentication or access control. This can allow unauthorized users to access sensitive audit logs, which may include information about security events, user activities, and system behavior. If exploited, attackers can gain insights into the application's internal operations, potentially leading to further exploitation or data breaches. To mitigate this risk, it is essential to secure the Actuator endpoints with proper authentication and restrict access to trusted users."
-  details:  "Spring Boot AuditEvents Actuator Panel Exposure occurs when the AuditEvents endpoint, which tracks security-related events such as user logins, system access, and configuration changes, is left unprotected. If improperly secured, this panel can be accessed by unauthorized users, revealing sensitive audit logs that could contain valuable information about system vulnerabilities or user behavior. Attackers can use this data to craft targeted attacks or exploit other weaknesses in the application. Proper authentication, role-based access controls, and endpoint security measures are crucial to prevent unauthorized access to the AuditEvents panel."
+  details: "Spring Boot AuditEvents Actuator Panel Exposure occurs when the AuditEvents endpoint, which tracks security-related events such as user logins, system access, and configuration changes, is left unprotected. If improperly secured, this panel can be accessed by unauthorized users, revealing sensitive audit logs that could contain valuable information about system vulnerabilities or user behavior. Attackers can use this data to craft targeted attacks or exploit other weaknesses in the application. Proper authentication, role-based access controls, and endpoint security measures are crucial to prevent unauthorized access to the AuditEvents panel."
   impact: "The impact of Spring Boot AuditEvents Actuator Panel Exposure can be critical, as unauthorized access to audit logs can provide attackers with detailed insights into application activity and security events. This information can be used to identify weaknesses, track user behavior, or exploit system vulnerabilities, potentially leading to data breaches or privilege escalation. Additionally, exposed logs may contain sensitive information that can compromise user privacy and violate compliance regulations, resulting in reputational damage, financial losses, and legal repercussions for the organization."
   category:
     name: SM
@@ -17,6 +17,12 @@ info:
     - CWE-16
   cve:
     - CVE-2021-43798
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -35,9 +41,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: "${paths}"
-      - modify_method: GET
-      - replace_body: '{}'
+        - modify_url: "${paths}"
+        - modify_method: GET
+        - replace_body: '{}'
 validate:
   response_code:
     eq: 200

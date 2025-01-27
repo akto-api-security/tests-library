@@ -1,4 +1,3 @@
----
 id: REFERRER_EXPOSES_SESSION_ID
 info:
   name: Referer exposes session ID
@@ -13,7 +12,7 @@ info:
     displayName: Misconfigured HTTP Headers (MHH)
   subCategory: REFERRER_EXPOSES_SESSION_ID
   severity: LOW
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -27,6 +26,12 @@ info:
   cve:
     - CVE-2022-41915
     - CVE-2022-37436
+
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   response_code:

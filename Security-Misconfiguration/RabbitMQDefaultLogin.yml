@@ -1,4 +1,3 @@
----
 id: RABBIT_MQ_DEFAULT_LOGIN
 info:
   name: "RabbitMQ Default Login"
@@ -10,12 +9,12 @@ info:
     "Using default credentials can lead to unauthorized access, allowing attackers to manipulate message queues, read sensitive data, and potentially disrupt services. It is crucial to change these credentials to maintain security and prevent unauthorized exploitation."
 
   category:
-      name: SM
-      shortName: Misconfiguration
-      displayName: Security Misconfiguration (SM)
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
   subCategory: RABBIT_MQ_DEFAULT_LOGIN
   severity: LOW
-  tags: 
+  tags:
     - Business logic
     - OWASP top 10
     - HackerOne top 10
@@ -27,6 +26,12 @@ info:
     - CWE-200
   cve:
     - CVE-2017-7529
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -50,9 +55,9 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: ${attemptValues}
-      - modify_method: POST
-      - replace_body: '{ "username": "guest", "password": "guest" }'
+        - modify_url: ${attemptValues}
+        - modify_method: POST
+        - replace_body: '{ "username": "guest", "password": "guest" }'
 
 validate:
   response_code:

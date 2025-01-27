@@ -1,9 +1,9 @@
 id: WGETRC_CONFIG
 info:
   name: Wgetrc Configuration File Exposure
-  description: "Exposes the Wgetrc configuration file used by Wget utility, containing potentially sensitive information." 
+  description: "Exposes the Wgetrc configuration file used by Wget utility, containing potentially sensitive information."
   details: >
-              "The Wgetrc configuration file, which may store sensitive information such as proxy settings and authentication credentials, is exposed. Unauthorized access to this file can lead to the compromise of sensitive data and system security."
+    "The Wgetrc configuration file, which may store sensitive information such as proxy settings and authentication credentials, is exposed. Unauthorized access to this file can lead to the compromise of sensitive data and system security."
   impact: "Exposing the Wgetrc configuration file can lead to unauthorized access and potential compromise of sensitive information, posing security risks to the system."
   category:
     name: SM
@@ -18,6 +18,12 @@ info:
     - CWE-16
     - CWE-200
 
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+
 api_selection_filters:
   method:
     neq: "OPTIONS"
@@ -31,12 +37,12 @@ wordLists:
   urlPaths:
     - ${urlVar}/wgetrc
     - ${urlVar}/.wgetrc
-  
+
 execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlPaths}
+        - modify_url: ${urlPaths}
 
 validate:
   response_code:

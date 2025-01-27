@@ -3,7 +3,7 @@ info:
   name: Nginx - Git Configuration Exposure
   description: "Nginx is vulnerable to git configuration exposure."
   details: >
-              "Nginx - Git Configuration Exposure refers to the vulnerability where Nginx servers are susceptible to git configuration exposure due to an off-by-slash misconfiguration. By appending "../" in the URL path, unauthorized access to Git configuration files, such as /.git/config, is possible. Promptly addressing this vulnerability is essential to prevent unauthorized access, protect the confidentiality of repository data, and maintain the security of Nginx servers."
+    "Nginx - Git Configuration Exposure refers to the vulnerability where Nginx servers are susceptible to git configuration exposure due to an off-by-slash misconfiguration. By appending "../" in the URL path, unauthorized access to Git configuration files, such as /.git/config, is possible. Promptly addressing this vulnerability is essential to prevent unauthorized access, protect the confidentiality of repository data, and maintain the security of Nginx servers."
   impact: "Exploiting the off-by-slash misconfiguration in Nginx exposes Git configuration files, revealing sensitive information such as repository configurations, URLs, and credentials. This enables attackers to gain unauthorized access, manipulate code, and launch further attacks."
   category:
     name: SM
@@ -20,6 +20,12 @@ info:
     - CWE-22
   cve:
     - CVE-2021-23017
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
 
 api_selection_filters:
   method:
@@ -47,8 +53,8 @@ execute:
   type: single
   requests:
     - req:
-      - modify_url: ${urlPaths}
-      
+        - modify_url: ${urlPaths}
+
 validate:
   response_code:
     eq: 200
