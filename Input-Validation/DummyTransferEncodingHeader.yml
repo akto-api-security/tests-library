@@ -1,12 +1,9 @@
 id: DUMMY_TRANSFER_ENCODING_HEADER
 info:
   name: Dummy Transfer-Encoding Header
-  description: |
-    "This vulnerability involves the misuse of the Transfer-Encoding HTTP header, which indicates the form of encoding used to safely transfer the payload body to the server. When applications do not properly validate this header, they may be vulnerable to various attacks."
-  details: |
-    "By sending a dummy Transfer-Encoding header with an arbitrary value (e.g., 'chunked'), an attacker can test how the server handles unexpected or malformed transfer encodings. This can lead to improper parsing of the request body, potentially allowing attackers to manipulate the data being sent or received."
-  impact: |
-    "If the server does not handle invalid Transfer-Encoding values correctly, it may result in security issues such as request smuggling, response splitting, or even denial of service. Proper validation and handling of Transfer-Encoding headers are essential to safeguard web applications."
+  description: "This vulnerability involves the misuse of the Transfer-Encoding HTTP header, which indicates the form of encoding used to safely transfer the payload body to the server. When applications do not properly validate this header, they may be vulnerable to various attacks."
+  details: "By sending a dummy Transfer-Encoding header with an arbitrary value (e.g., 'chunked'), an attacker can test how the server handles unexpected or malformed transfer encodings. This can lead to improper parsing of the request body, potentially allowing attackers to manipulate the data being sent or received."
+  impact: "If the server does not handle invalid Transfer-Encoding values correctly, it may result in security issues such as request smuggling, response splitting, or even denial of service. Proper validation and handling of Transfer-Encoding headers are essential to safeguard web applications."
 
   category:
     name: INPUT
@@ -69,25 +66,36 @@ api_selection_filters:
       - account is locked
       - account is blocked
       - multiple failed attempts
+  request_headers:
+    for_one:
+      key:
+        eq: "transfer-encoding"
+        extract: transferHeader
+  request_payload:
+    for_one:
+      key:
+        regex: ".*"
 
 execute:
   type: single
   requests:
     - req:
-        - add_header:
-            Transfer-Encoding: cats
+        - modify_header:
+            transferHeader: cats
 
 validate:
   response_code:
     gte: 200
     lt: 300
+  response_headers:
+    for_one:
+      key:
+        eq: transfer-encoding
+      value:
+        eq: cats
   response_payload:
     length:
       gt: 0
-    percentage_match_schema:
-      eq: 100
-    percentage_match:
-      lt: 20
     not_contains:
       - Error
       - Internal Server
@@ -118,3 +126,5 @@ validate:
       - Attention Required!
       - CloudFlare
       - "Sorry, you have been blocked"
+strategy:
+  run_once: /

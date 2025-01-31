@@ -1,12 +1,9 @@
 id: BREAKING_JSON_PARSING
 info:
   name: "Breaking JSON Parsing"
-  description: |
-    "This test evaluates the system's ability to correctly handle and parse JSON input, especially when special characters, escape sequences, or malformed data are included. The objective is to identify vulnerabilities that could allow users to break JSON parsing, leading to application errors, security risks, or data corruption."
-  details: |
-    "The test involves sending API requests with JSON payloads containing special characters (e.g., newline characters like '\u2028', null characters like '\u0000'), escape sequences, or malformed JSON structures. For example, a user might include a control character in a string field (e.g., 'comment') to test whether the JSON parser can handle it correctly. The test checks whether the application properly sanitizes, validates, and parses JSON input without causing errors or exposing vulnerabilities."
-  impact: |
-    "Breaking JSON parsing can lead to various security issues, such as injection attacks, denial of service, and data corruption. If users can manipulate JSON payloads to cause parsing errors or bypass validation, it undermines the application's security and stability. Ensuring robust parsing, sanitization, and validation of JSON input is crucial to prevent exploitation and maintain the integrity and security of the application."
+  description: "This test evaluates the system's ability to correctly handle and parse JSON input, especially when special characters, escape sequences, or malformed data are included. The objective is to identify vulnerabilities that could allow users to break JSON parsing, leading to application errors, security risks, or data corruption."
+  details: "The test involves sending API requests with JSON payloads containing special characters (e.g., newline characters like '\u2028', null characters like '\u0000'), escape sequences, or malformed JSON structures. For example, a user might include a control character in a string field (e.g., 'comment') to test whether the JSON parser can handle it correctly. The test checks whether the application properly sanitizes, validates, and parses JSON input without causing errors or exposing vulnerabilities."
+  impact: "Breaking JSON parsing can lead to various security issues, such as injection attacks, denial of service, and data corruption. If users can manipulate JSON payloads to cause parsing errors or bypass validation, it undermines the application's security and stability. Ensuring robust parsing, sanitization, and validation of JSON input is crucial to prevent exploitation and maintain the integrity and security of the application."
 
   category:
     name: INPUT
@@ -70,9 +67,14 @@ api_selection_filters:
       - account is locked
       - account is blocked
       - multiple failed attempts
-  request_payload:
-    for_one:
-      extract: userBody
+  and:
+  - request_payload:
+      for_one:
+        extract: userBody
+  - request_payload:
+      for_one:
+        key:
+          regex: ".*"
 
 wordLists:
   attemptValues:
@@ -163,3 +165,4 @@ execute:
                 gt: 90
               not_contains: ${responseErrorList}
         - success: vulnerable
+        - failure: exit
