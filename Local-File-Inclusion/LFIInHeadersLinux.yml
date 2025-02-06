@@ -49,6 +49,8 @@ api_selection_filters:
         eq: content-type
       value:
         regex: json
+  url:
+    extract: urlVar
 
 wordLists:
   filePaths:
@@ -134,9 +136,11 @@ validate:
       - "Entrypoint"             
       - "shosts.equiv"           
       - "AuthorizedKeysFile"     
-      - "/var/log/auth.log"     
+      - "/var/log/auth.log" 
+    not_contains: ${urlVar}    
     length:
       gt: 0
     not_contains:
       - <html>
       - </html>
+
