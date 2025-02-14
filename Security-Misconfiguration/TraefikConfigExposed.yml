@@ -60,10 +60,19 @@ validate:
   response_payload:
     length:
       gt: 0
-    percentage_match:
-      lt: 10
-    percentage_match_schema:
-      lt: 10
+    contains_either:
+      - "auth.basic"
+      - "traefik.http.middlewares"
+      - "api.dashboard"
+      - "api.insecure"
+      - "tls.certFile"
+      - "tls.keyFile"
+      - "traefik.tls.certificates"
+      - "tls.stores"
+      - "entryPoints.web"
+      - "traefik.http.routers"
+      - "providers.file.filename"
+      - "traefik.http.services"
     not_contains:
       - Error
       - Internal Server
