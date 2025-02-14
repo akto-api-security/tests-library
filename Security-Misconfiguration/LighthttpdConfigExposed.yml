@@ -57,10 +57,20 @@ validate:
   response_payload:
     length:
       gt: 0
-    percentage_match:
-      lt: 10
-    percentage_match_schema:
-      lt: 10
+    contains_either:
+      - "auth.backend"
+      - "auth.require"
+      - "ssl.engine"
+      - "ssl.pemfile"
+      - "ssl.ca-file"
+      - "ssl.honor-cipher-order"
+      - "ssl.cipher-list"
+      - "ssl.use-strong-random"
+      - "server.document-root"
+      - "server.dir-listing"
+      - "static-file.exclude-extensions"
+      - "accesslog.filename"
+      - "debug.log-re"
     not_contains:
       - Error
       - Internal Server
