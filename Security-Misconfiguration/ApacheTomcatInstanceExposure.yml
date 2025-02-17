@@ -53,10 +53,28 @@ execute:
         - modify_method: GET
         - replace_body: '{}'
 validate:
-  or:
-    - response_code:
-        eq: 200
-    - response_code:
-        eq: 401
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - "Host Manager Application"
+      - "List of virtual hosts"
+      - "Add new host"
+      - "Remove selected hosts"
+      - "Tomcat Server Status"
+      - "JVM Free Memory"
+      - "Max Threads"
+      - "Request Information"
+      - "Tomcat Web Application Manager"
+      - "Current Threads Busy"
+      - "Apache Tomcat Documentation"
+      - "Configuration Reference"
+      - "JSP Examples"
+      - "Servlet Examples"
+      - "JSP Source Code"
+      - "Request Parameters Example"
 strategy:
   run_once: /
