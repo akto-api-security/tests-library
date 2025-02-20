@@ -29,6 +29,9 @@ attributes:
 
 
 api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
   method:
     neq: "OPTIONS"
   query_param:
@@ -41,20 +44,40 @@ api_selection_filters:
         regex: "^\\d+$"
   response_payload:
     length:
+      gt: 0
       extract: original_length
+    not_contains:
+      - error
+      - invalid
+      - fail
+      - expire
+      - unauthenticated
 
 execute:
-  type: single
+  type: multiple
   requests:
     - req:
-        modify_query_param:
-          limitKey: ${limitValue}0
-
+        - add_header:
+            dummy: akto
+        - validate:
+            response_payload:
+              percentage_match:
+                gte: 95
+              percentage_match_schema:
+                gte: 95
+              length:
+                gt: 0
+                extract: old_length
+        - success: x2
+        - failure: exit
+    - req:
+      - modify_query_param:
+          limitKey: "${limitValue}0"
+      - validate:
+          response_payload:
+            length: 
+              extract: new_expected_length
 validate:
-  response_code:
-    and:
-      gte: 200
-      lt: 300
-  response_payload:
-    length:
-      gt: ${original_length}
+  compare_greater:
+  - ${new_expected_length}
+  - ${old_length} * 2
