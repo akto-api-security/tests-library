@@ -34,6 +34,35 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  response_payload:
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - "NotAuthenticated"
   or:
     - request_payload:
         for_one:
@@ -61,8 +90,37 @@ execute:
         - add_header:
             dummy_Header_Key: "dummyValue"
         - validate:
-            percentage_match:
-              gte: 90
+            response_payload:
+              percentage_match:
+                gte: 90
+              not_contains:
+                - Error
+                - Internal Server
+                - Failed
+                - Unauthorized
+                - access denied
+                - Forbidden
+                - Method Not allowed
+                - Gateway timeout
+                - request timeout
+                - server error
+                - server busy
+                - authentication error
+                - authorization error
+                - validation error
+                - Permission Denied
+                - invalid token
+                - token expired
+                - session expired
+                - session timeout
+                - unexpected error
+                - unable to process request
+                - bad request
+                - service unavailable
+                - account is locked
+                - account is blocked
+                - multiple failed attempts
+                - "NotAuthenticated"     
         - success: x2
         - failure: exit
     - req:
@@ -81,3 +139,6 @@ validate:
     - compare_greater:
         - ${x2.response.stats.median_response_time}
         - ${x1.response.stats.median_response_time} * 5
+
+strategy:
+  run_once: /
