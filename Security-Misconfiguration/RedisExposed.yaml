@@ -50,10 +50,24 @@ wordLists:
     - "/v1/endpoints/stats"
 
   probableOutputParams:
-    - "severity"
-    - "time"
-    - "intervals"
-    - "uid"
+    - "FLUSHDB"
+    - "keyspace_event"
+    - "ttl"
+    - "slowlog"
+    - "evicted_keys"
+    - "expired_keys"
+    - "connected_clients"
+    - "blocked_clients"
+    - "rejected_connections"
+    - "cache_hits"
+    - "cache_misses"
+    - "used_memory"
+    - "total_keys"
+    - "command_stats"
+    - "replication_role"
+    - "sync_status"
+    - "pubsub_channels"
+    - "pubsub_patterns"
 
 execute:
   type: single
