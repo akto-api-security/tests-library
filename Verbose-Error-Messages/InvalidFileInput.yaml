@@ -70,6 +70,6 @@ validate:
               - SQL
               - MYSQL
               - access denied
-    - response_payload:
-        - length:
-            gt: 1000
+              - Forbidden
+          - not_contains:
+              - "cloudflare"
