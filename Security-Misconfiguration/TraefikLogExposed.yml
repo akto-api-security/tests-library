@@ -58,10 +58,20 @@ validate:
     length:
       gt: 0
     contains_either:
-      - info
-      - debug
-      - Debug
-      - Info
+      - "traefik.http."
+      - "traefik.tls."
+      - "traefik.docker."
+      - "traefik.enable"
+      - "sticky.cookie"
+      - "weighted.services"
+      - "auth.basic.users"
+      - "auth.forward.address"
+      - "tls.certificates"
+      - "insecureSkipVerify"
+      - "accessLog.filePath"
+      - "accessLog.filters.statuscodes"
+      - "log.level=DEBUG"
+      - "tracing.serviceName"
     not_contains:
       - Error
       - Internal Server

@@ -61,9 +61,21 @@ validate:
     length:
       gt: 0
     contains_either:
-      - apps
-      - servers
-      - routes
+      - admin_config
+      - caddyfile_adapter
+      - cert_cache
+      - storage_path
+      - reverse_proxy.upstreams
+      - tls.issuer
+      - tls.certificates
+      - active_config
+      - on_demand_tls
+      - http.handlers
+      - admin_endpoints
+      - module_directives
+      - graceful_shutdown
+      - log.sink.output
+      - config_load_time
     not_contains:
       - Error
       - Internal Server

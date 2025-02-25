@@ -57,10 +57,22 @@ validate:
   response_payload:
     length:
       gt: 0
-    percentage_match:
-      lt: 10
-    percentage_match_schema:
-      lt: 10
+    contains_either:
+      - vcl_recv
+      - vcl_backend_response
+      - vcl_deliver
+      - "backend_hint"
+      - "beresp.ttl"
+      - "beresp.uncacheable"
+      - "hash_data"
+      - "acl purge"
+      - "std.syslog"
+      - "X-Varnish"
+      - "first_byte_timeout"
+      - "between_bytes_timeout"
+      - "connect_timeout"
+      - "set beresp.http.cache-control"
+      - "req.backend_hint"
     not_contains:
       - Error
       - Internal Server

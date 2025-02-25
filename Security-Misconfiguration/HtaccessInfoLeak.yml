@@ -53,6 +53,22 @@ validate:
     not_contains:
       - <html>
       - </html>
+    contains_either:
+      - RewriteRule
+      - RewriteCond
+      - AuthUserFile
+      - AuthGroupFile
+      - "Require valid-user"
+      - "Deny from all"
+      - "Order allow,deny"
+      - SetEnvIf
+      - php_flag
+      - php_value
+      - "Options -Indexes"
+      - "ErrorDocument"
+      - "Header set X-Frame-Options"
+      - "AddType application/x-httpd-php"
+      - "RedirectMatch 301"
   response_headers:
     for_one:
       key:

@@ -67,16 +67,18 @@ execute:
         - validate:
             response_payload:
               or:
-                - contains_either:
+                - contains_all:
                     - 'APP_NAME'
                     - 'APP_ENV'
                     - 'APP_KEY'
                     - 'APP_DEBUG'
                     - 'APP_URL'
+                - contains_all:
                     - 'DB_HOST'
                     - 'DB_PASSWORD'
                     - 'DB_DATABASE'
                     - "DB_CONNECTION"
+                - contains_all:
                     - "LOG_CHANNEL"
                     - "LOG_DEPRECATIONS_CHANNEL"
                     - "LOG_LEVEL"
@@ -90,16 +92,18 @@ execute:
         - validate:
             response_payload:
               or:
-                - contains_either:
+                - contains_all:
                     - 'APP_NAME'
                     - 'APP_ENV'
                     - 'APP_KEY'
                     - 'APP_DEBUG'
                     - 'APP_URL'
+                - contains_all:
                     - 'DB_HOST'
                     - 'DB_PASSWORD'
                     - 'DB_DATABASE'
                     - "DB_CONNECTION"
+                - contains_all:
                     - "LOG_CHANNEL"
                     - "LOG_DEPRECATIONS_CHANNEL"
                     - "LOG_LEVEL"

@@ -57,9 +57,34 @@ validate:
     length:
       gt: 0
     contains_either:
-      - http
-      - server
-      - location
+      - cache_peer
+      - never_direct
+      - always_direct
+      - forward_max_tries
+      - hierarchy_stoplist
+      - miss_access
+      - auth_param
+      - basic_ncsa_auth
+      - proxy_auth
+      - external_acl_type
+      - ssl_bump
+      - sslproxy_cert_error
+      - sslproxy_flags
+      - strip_query_terms
+      - client_db
+      - request_header_access
+      - reply_header_access
+      - tcp_outgoing_address
+      - dns_v4_first
+      - refresh_pattern
+      - maximum_object_size
+      - "acl Safe_ports"
+      - "acl CONNECT"
+      - http_reply_access
+      - icap_enable
+      - adaptation_access
+      - store_id_program
+      - redirect_program
     not_contains:
       - Error
       - Internal Server

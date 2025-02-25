@@ -47,6 +47,17 @@ validate:
   response_code:
     eq: 200
   response_payload:
+    contains_either:
+      - "DIRC"
+      - "SHA-1"
+      - "index format"
+      - 'cache-tree'
+      - 'ctime'
+      - "mtime"
+      - "object name"
+      - "packfile"
+      - "HEAD reflog"
+      - "MERGE_HEAD"
     not_contains:
       - '<html'
       - '<body'
@@ -84,3 +95,6 @@ validate:
       - CloudFlare
       - "Sorry, you have been blocked"
       - </html>
+
+strategy:
+  run_once: /

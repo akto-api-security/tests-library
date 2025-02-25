@@ -44,7 +44,7 @@ execute:
   type: single
   requests:
     - req:
-        - modify_url: /security/openapi/swagger-ui/index.html
+        - modify_url: /v3/clusters
         - remove_auth_header: true
 
 validate:
@@ -54,6 +54,24 @@ validate:
   response_payload:
     length:
       gt: 0
+    contains_either:
+      - controller_id
+      - broker.rack
+      - advertised.listeners
+      - leader_epoch
+      - ISR
+      - under_replicated_partitions
+      - log.dir
+      - group_id
+      - member_id
+      - coordinator
+      - acl.principal
+      - acl.operation
+      - acl.permission
+      - allow.everyone.if.no.acl.found
+      - sasl.enabled.mechanisms
+      - zookeeper.connect
+      - min.insync.replicas
     not_contains:
       - Error
       - Internal Server

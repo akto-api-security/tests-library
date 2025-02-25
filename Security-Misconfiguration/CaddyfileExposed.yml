@@ -56,10 +56,20 @@ validate:
     length:
       gt: 0
     contains_either:
-      - directive
-      - localhost
-      - respond
-      - file_server
+      - "tls internal"
+      - handle_path
+      - reverse_proxy
+      - handle_errors
+      - "log output file"
+      - basicauth
+      - "route match"
+      - on_demand_tls
+      - cert_issuer
+      - header_up
+      - trusted_proxies
+      - "import caddyfile"
+      - "storage file_system"
+      - "jwt validate"
     not_contains:
       - Error
       - Internal Server

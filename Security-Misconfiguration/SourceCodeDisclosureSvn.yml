@@ -48,8 +48,21 @@ validate:
   response_code:
     eq: 200
   response_payload:
-    percentage_match:
-      lt: 10
+    length:
+      gt: 0
+    contains_either:
+      - "local_relpath"
+      - "translated_size"
+      - "actual_checksum"
+      - "repos_path"
+      - "changed_revision"
+      - "changed_author"
+      - "realmstring"
+      - "svn+ssh://"
+      - "password_hash"
+      - "wcroot_path"
+      - "work_queue"
+      - "dav-cache"
     not_contains:
       - Error
       - Internal Server
@@ -82,3 +95,6 @@ validate:
       - "Sorry, you have been blocked"
       - <html>
       - </html>
+
+strategy:
+  run_once: /

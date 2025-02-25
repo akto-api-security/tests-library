@@ -51,6 +51,22 @@ validate:
   response_payload:
     length:
       gt: 0
+    contains_either:
+      - proxy_host
+      - upstream_status
+      - request_time
+      - sent_http_x_apigee
+      - apiproduct_name
+      - developer_email
+      - cache_status
+      - target_response_time
+      - api_proxy_name
+      - oauth_access_token
+      - jwt_claims
+      - quota_exceeded
+      - fault_code
+      - apikey_verification_status
+      - flow_variable
     not_contains:
       - Error
       - Internal Server
