@@ -54,6 +54,22 @@ validate:
   response_payload:
     length:
       gt: 0
+    contains_either:
+      - prometheus_build_info
+      - target_scrape_pool
+      - scrape_samples_post_metric_relabeling
+      - db_storage_blocks_bytes
+      - tsdb_head_series
+      - http_request_duration_seconds
+      - alertmanager_cluster_status
+      - query_engine_execution_time
+      - remote_storage_samples_failed_total
+      - prometheus_sd_discovered_targets
+      - rule_evaluation_duration_seconds
+      - active_targets.json
+      - config_reload_success_timestamp_seconds
+      - tsdb_wal_truncate_duration_seconds
+      - prometheus_http_requests_total
     not_contains:
       - Error
       - Internal Server

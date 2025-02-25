@@ -53,6 +53,22 @@ validate:
   response_payload:
     length:
       gt: 0
+    contains_either:
+      - upstream_response_time
+      - request_uri
+      - status_code
+      - remote_addr
+      - http_referer
+      - http_x_forwarded_for
+      - bytes_sent
+      - request_length
+      - server_protocol
+      - upstream_cache_status
+      - proxy_add_x_forwarded_for
+      - http_user_agent
+      - request_method
+      - gzip_ratio
+      - ssl_protocol
     not_contains:
       - Error
       - Internal Server

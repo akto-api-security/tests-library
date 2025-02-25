@@ -57,8 +57,23 @@ validate:
   response_payload:
     length:
       gt: 0
-    percentage_match:
-      gt: 90
+    contains_either:
+      - zk_version
+      - zk_server_state
+      - zk_outstanding_requests
+      - zk_avg_latency
+      - zk_min_latency
+      - zk_max_latency
+      - zk_num_alive_connections
+      - zk_watch_count
+      - zk_ephemerals_count
+      - zk_synced_followers
+      - zk_pending_syncs
+      - zk_leader_id
+      - zk_followers
+      - zk_open_file_descriptor_count
+      - zk_max_file_descriptor_count
+      - zk_auth_info
     not_contains:
       - Error
       - Internal Server
