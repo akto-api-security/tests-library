@@ -139,7 +139,7 @@ validate:
     length:
       gt: 0
     percentage_match:
-      - gte: 90
+      gte: 90
     not_contains:
       - Error
       - Internal Server
@@ -172,3 +172,4 @@ validate:
       - "Sorry, you have been blocked"
       - "failure"
       - "not found"
+      - "jwt expired"
