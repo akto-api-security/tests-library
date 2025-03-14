@@ -1,0 +1,113 @@
+id: BYPASS_OTP_RATE_LIMIT
+info:
+  name: Bypass OTP rate limit vulnerability test
+  description: "Bypassing OTP rate limits involves testing whether an application enforces restrictions on OTP requests or verification attempts. Attackers can exploit weak rate limits to brute-force OTPs or flood a user’s phone with repeated requests. Testing includes sending multiple OTP requests rapidly or trying excessive incorrect OTP entries to check if limits are enforced."
+  details: "To test for OTP rate limit bypass, repeatedly request OTPs or attempt multiple incorrect OTP entries to check if restrictions are enforced. Use automation or scripts to send rapid requests and observe if the server blocks or delays responses. If the application lacks proper rate limiting, attackers can brute-force OTPs or spam users with excessive messages."
+  impact: "If OTP rate limits can be bypassed, attackers can brute-force OTPs, leading to unauthorized account access. They can also flood users with OTP messages, causing service disruption or potential SMS exhaustion. This vulnerability weakens authentication security and increases the risk of account takeover or abuse."
+  category:
+    name: RL
+    shortName: Lack of Resources & Rate Limiting
+    displayName: Lack of Resources & Rate Limiting (RL)
+  subCategory: BYPASS_OTP_RATE_LIMIT
+  severity: MEDIUM
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://hackerone.com/reports/210417
+  cwe:
+  - CWE-287
+  cve:
+  - CVE-2022-39955
+  - CVE-2023-0085
+
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: SLOW
+
+api_selection_filters:
+  method:
+    neq: OPTIONS
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    not_contains:
+    - invalid
+    - error
+    - failed
+  or:
+  - request_payload:
+      for_one:
+        key:
+          contains_either: otp
+          extract: otp_key
+  - query_param:
+      for_one:
+        key:
+          contains_either: otp
+          extract: otp_key
+wordLists:
+  test_otps:
+  - 1111
+  - 2222
+  - 3333
+  - 4444
+  - 5555
+execute:
+  type: multiple
+  requests:
+  - req:
+    - modify_url:
+        regex_replace:
+          regex: "v([3-9]\\d*|\\d{2,})/"
+          replace_with: v2/
+    - modify_body_param:
+        otp_key: 9999
+    - validate:
+        response_code:
+          eq: 500
+          neq: 404
+        response_payload:
+          contains_all:
+          - invalid
+          - otp
+          not_contains:
+          - ERROR..
+          - Not found
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_url:
+        regex_replace:
+          regex: "v([3-9]\\d*|\\d{2,})/"
+          replace_with: v2/
+    - modify_body_param:
+        otp_key: "${test_otps}"
+    - validate:
+        response_code:
+          gte: 505
+    - success: exit
+    - failure: x3
+  - req:
+    - modify_url:
+        regex_replace:
+          regex: "v([3-9]\\d*|\\d{2,})/"
+          replace_with: v2/
+    - modify_body_param:
+        otp_key: "${test_otps}"
+    - validate:
+        response_code:
+          eq: 500
+          neq: 404
+        response_payload:
+          contains_all:
+          - invalid
+          - otp
+          not_contains:
+          - ERROR..
+          - Not found
+    - success: vulnerable
+    - failure: exit

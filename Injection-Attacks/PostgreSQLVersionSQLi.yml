@@ -1,0 +1,59 @@
+id: POSTGRES_VERSION_SQLI
+info:
+  name: PostgreSQL Injection test for Version Identification
+  description: "PostgreSQL Injection for version identification involves injecting SQL queries to extract the database version. Attackers can use payloads like `SELECT version();` or `' UNION SELECT version() --` to retrieve this information. Identifying the PostgreSQL version helps in targeting known vulnerabilities for exploitation."
+  details: "To test for PostgreSQL version identification via SQL injection, inject payloads like `SELECT version();` or `' UNION SELECT version() --` into input fields or API requests. If successful, the database returns its version details, revealing potential security risks. This information helps attackers identify known vulnerabilities and craft targeted exploits."
+  impact: "If PostgreSQL version identification is successful via SQL injection, attackers can determine if the database has known vulnerabilities. This information helps in crafting targeted exploits, potentially leading to data breaches, privilege escalation, or remote code execution. Exposing the database version increases the risk of further attacks."
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: POSTGRES_VERSION_SQLI
+  severity: MEDIUM
+  references:
+  - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md
+  cwe:
+  - CWE-200
+  - CWE-16
+  cve:
+  - CVE-2020-9402
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+api_selection_filters:
+  method:
+    neq: OPTIONS
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - postgresql
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extract: KeyVar
+      value:
+        regex: "^(?=.*[A-Za-z])(?=.*\\d).+$"
+        extract: keyVal
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        KeyVar: "${keyVal}' union select version();-- -"
+validate:
+  response_payload:
+    contains_all:
+    - PostgreSQL
+    not_contains:
+    - <html>
+    - </html>
+    length:
+      gt: 0

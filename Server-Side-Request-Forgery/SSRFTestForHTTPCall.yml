@@ -1,0 +1,57 @@
+id: SSRF_TEST_HTTP
+info:
+  name: SSRF test for HTTP call
+  description: "Server-Side Request Forgery (SSRF) testing for HTTP calls involves manipulating request parameters to force the server to make unintended HTTP requests. Attackers can exploit this to access internal services, metadata endpoints, or external systems. Common tests include sending requests to `http://localhost`, internal IPs, or cloud instance metadata URLs."
+  details: "To test for SSRF in HTTP calls, modify request parameters to target internal or external URLs, such as `http://localhost:80` or `http://169.254.169.254/latest/meta-data/`. If the server processes and responds to these requests, it indicates an SSRF vulnerability. This can be tested via headers, query parameters, or JSON payloads in API requests."
+  impact: "If an SSRF vulnerability exists in HTTP calls, attackers can access internal services, leak sensitive data, or interact with cloud metadata endpoints to steal credentials. This can lead to unauthorized access, internal network reconnaissance, and potential remote code execution. Exploiting SSRF may also allow attackers to bypass security controls and escalate attacks."
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: SSRF_TEST_HTTP
+  severity: MEDIUM
+  references:
+  - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md
+  cwe:
+  - CWE-200
+  - CWE-16
+  cve:
+  - CVE-2020-9402
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+api_selection_filters:
+  method:
+    neq: OPTIONS
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - uuid
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extract: KeyVar
+      value:
+        regex: "\\bhttps?:\\/\\/[^\\s\\/$.?#].[^\\s]*\\b"
+        extract: keyVal
+execute:
+  type: single
+  requests:
+  - req:
+    - send_ssrf_req:
+        url: "https://test-services.akto.io/store_uuid/${random_uuid}"
+    - modify_body_param:
+        KeyVar: "https://test-services.akto.io/${random_uuid}"
+validate:
+  response_payload:
+    contains_either:
+    - uuid
+  ssrf_url_hit: ${random_uuid}
