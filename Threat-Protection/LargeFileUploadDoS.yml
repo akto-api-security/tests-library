@@ -1,0 +1,37 @@
+id: LargeFileUploadDoS
+filter:
+ - and:
+    - request_headers:
+        for_one:
+          key:
+            eq: content-length
+          value:
+            regex: "\\s*(1\\d{8}|[2-9]\\d{7,})"
+    - request_headers:
+        for_one:
+          key:
+            eq: content-type
+          value:
+            contains_either: "multipart/form-data"
+info:
+  name: "LargeFileUploadDoS"
+  description: "LargeFileUploadDoS is a denial-of-service (DoS) attack where an API is overwhelmed by excessively large file uploads, consuming server resources like CPU, memory, and disk space. Attackers exploit unrestricted file size limits or inefficient processing to degrade performance or cause outages. Runtime threat protection mitigates this by enforcing file size limits, rate limiting, and validating input before processing."
+  details: "LargeFileUploadDoS attacks target APIs by uploading excessively large files, leading to resource exhaustion and potential downtime. Attackers exploit weak upload controls, causing high memory, CPU, or storage usage. Effective defenses include enforcing strict file size limits, using streaming instead of buffering, and implementing rate limiting to prevent abuse."
+  impact: "LargeFileUploadDoS attacks can degrade API performance, increase latency, or cause complete service outages. They may lead to server crashes, high infrastructure costs, and disrupted user experience. In severe cases, they can be exploited as a distraction for other attacks, such as data exfiltration or credential stuffing."
+  category:
+    name: "SM"
+    displayName: "SM"
+  subCategory: "SM"
+  severity: MEDIUM
+
+aggregation_rules:
+  - rule:
+      name: "Rule 1"
+      condition:
+        matchCount: 50 
+        windowThreshold: 5
+  - rule:
+      name: "Rule 2"
+      condition:
+        matchCount: 100 
+        windowThreshold: 10

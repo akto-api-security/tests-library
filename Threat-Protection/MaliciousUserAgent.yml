@@ -1,0 +1,44 @@
+id: MaliciousUserAgent
+filter:
+  request_headers:
+    for_one:
+      key:
+        eq: "user-agent"
+      value:
+        contains_either:
+          - "Python-urllib/"
+          - "Java/"
+          - "Go-http-client/"
+          - "PycURL/"
+          - "Scrapy/"
+          - "Wget/"
+          - "cURL/"
+          - "Mechanize/"
+          - "python-requests/"
+          - "sqlmap/"
+          - "nikto/"
+          - "acunetix/"
+          - "wpscan/"
+          - "metasploit/"
+info:
+  name: "MaliciousUserAgent"
+  description: "MaliciousUserAgent in runtime threat protection for APIs refers to detecting and blocking requests originating from known malicious or suspicious user agents. Attackers often spoof or manipulate user agents to evade security measures, perform web scraping, or launch automated attacks. Security systems analyze user agent patterns, compare them against threat intelligence databases, and flag or block anomalous requests to protect APIs."
+  details: "Malicious user agents are often associated with botnets, scrapers, or automated attack tools that disguise their identity to bypass security controls. Runtime threat protection identifies these by analyzing user agent strings, request behavior, and known threat signatures. Suspicious requests can be blocked, challenged, or monitored to prevent API abuse, data scraping, or credential stuffing attacks."
+  impact: "Allowing malicious user agents can lead to data breaches, API abuse, and service disruptions due to automated attacks like credential stuffing or scraping. Attackers may exfiltrate sensitive information, exploit vulnerabilities, or overload API endpoints. Effective detection and blocking help maintain API integrity, reduce security risks, and prevent unauthorized access."
+  category:
+    name: "SM"
+    displayName: "SM"
+  subCategory: "SM"
+  severity: MEDIUM
+
+aggregation_rules:
+  - rule:
+      name: "Rule 1"
+      condition:
+        matchCount: 50 
+        windowThreshold: 5
+  - rule:
+      name: "Rule 2"
+      condition:
+        matchCount: 100 
+        windowThreshold: 10

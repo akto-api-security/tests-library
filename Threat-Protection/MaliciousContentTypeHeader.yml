@@ -1,0 +1,47 @@
+id: MaliciousContentTypeHeader
+filter:
+  request_headers:
+    for_one:
+      key:
+        eq: "content-type"
+      value:
+        contains_either:
+          - "application/x-msdownload"
+          - "application/octet-stream"
+          - "text/plain"
+          - "application/x-javascript"
+          - "message/http"
+          - "application/x-java-serialized-object"
+          - "application/x-shockwave-flash"
+          - "application/hta"
+          - "application/ecmascript"
+          - "application/exe"
+          - "application/x-msdos-program"
+          - "application/x-php"
+          - "application/x-python-code"
+          - "application/x-perl"
+          - "application/x-ruby"
+          - "application/x-shellscript"           
+
+info:
+  name: "BlockedHTTPMethods"
+  description: "MaliciousContentTypeHeader is a runtime API threat that occurs when an attacker manipulates the `Content-Type` header to exploit vulnerabilities in the backend. This can lead to deserialization attacks, server-side request forgery (SSRF), or remote code execution (RCE). Proper validation and enforcement of allowed content types help mitigate this risk."
+  details: "Attackers exploit MaliciousContentTypeHeader by sending unexpected or malformed `Content-Type` headers to bypass security controls or trigger unintended behavior in APIs. This can lead to deserialization attacks, SSRF, or RCE if the backend processes the content incorrectly. To prevent this, APIs should enforce strict content-type validation and reject unsupported or suspicious values."
+  impact: "A MaliciousContentTypeHeader attack can lead to severe security risks, including remote code execution (RCE), server-side request forgery (SSRF), and deserialization vulnerabilities. Exploiting this can allow attackers to bypass security controls, access sensitive data, or execute arbitrary code on the server. This can result in data breaches, system compromise, and service disruption."
+  category:
+    name: "SM"
+    displayName: "SM"
+  subCategory: "SM"
+  severity: MEDIUM
+
+aggregation_rules:
+  - rule:
+      name: "Rule 1"
+      condition:
+        matchCount: 50 
+        windowThreshold: 5
+  - rule:
+      name: "Rule 2"
+      condition:
+        matchCount: 100 
+        windowThreshold: 10

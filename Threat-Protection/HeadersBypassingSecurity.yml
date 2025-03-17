@@ -1,0 +1,34 @@
+id: HeadersBypassingSecurity
+filter:
+  request_headers:
+    for_one:
+      key:
+        contains_either:
+          - "X-HTTP-Method-Override"
+          - "X-HTTP-Method"
+          - "X-Method-Override"
+          - "X-Rewrite-URL"
+          - "X-Original-URL"
+          - "X-Debug"
+info:
+  name: "HeadersBypassingSecurity"
+  description: "HeadersBypassingSecurity refers to an attack where malicious actors manipulate or inject HTTP headers to bypass security controls in API runtime protection. This can include altering authentication headers, modifying content security policies, or tampering with rate-limiting mechanisms. Effective API security should validate headers strictly and detect anomalies in real time to prevent unauthorized access."
+  details: "HeadersBypassingSecurity exploits weak or misconfigured API security mechanisms by modifying HTTP headers to evade authentication, authorization, or other protections. Attackers may inject fake authentication tokens, override CORS policies, or manipulate user-agent headers to bypass restrictions. APIs should enforce strict header validation, implement allowlists, and monitor suspicious header modifications in real time."
+  impact: "Impact of HeadersBypassingSecurity can include unauthorized access, data breaches, and security policy violations in APIs. Attackers may exploit header manipulation to bypass authentication, escalate privileges, or evade security controls like rate limiting and CORS restrictions. This can lead to exposure of sensitive data, API abuse, and increased attack surface for further exploitation."
+  category:
+    name: "SM"
+    displayName: "SM"
+  subCategory: "SM"
+  severity: MEDIUM
+
+aggregation_rules:
+  - rule:
+      name: "Rule 1"
+      condition:
+        matchCount: 50 
+        windowThreshold: 5
+  - rule:
+      name: "Rule 2"
+      condition:
+        matchCount: 100 
+        windowThreshold: 10

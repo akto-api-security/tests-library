@@ -1,0 +1,30 @@
+id: IPBasedHost
+filter:
+  request_headers:
+    for_one:
+      key:
+        eq: host
+      value:
+        regex: "\b(?:(?:25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\b"
+info:
+  name: "IPBasedHost"
+  description: "IPBasedHost in runtime threat protection for APIs is a security mechanism that monitors and analyzes incoming API requests based on their source IP address. It helps detect and block threats such as malicious bots, DDoS attacks, and suspicious traffic patterns by enforcing IP-based rules. This approach enhances API security by allowing or restricting access based on trusted or flagged IP addresses."
+  details: "IPBasedHost in runtime threat protection identifies and mitigates threats by analyzing API traffic based on source IP addresses. It helps prevent unauthorized access, rate-limit abusive requests, and block malicious IPs in real-time. Security policies can be configured to allow, restrict, or monitor specific IPs, enhancing API resilience against attacks like DDoS and credential stuffing."
+  impact: "Implementing IPBasedHost in runtime threat protection reduces the risk of unauthorized API access, mitigates DDoS attacks, and improves overall API security. It enhances threat detection by blocking malicious IPs in real-time, ensuring API availability and performance. Additionally, it helps enforce security policies, reducing the attack surface and protecting sensitive data."
+  category:
+    name: "SM"
+    displayName: "SM"
+  subCategory: "SM"
+  severity: MEDIUM
+
+aggregation_rules:
+  - rule:
+      name: "Rule 1"
+      condition:
+        matchCount: 50 
+        windowThreshold: 5
+  - rule:
+      name: "Rule 2"
+      condition:
+        matchCount: 100 
+        windowThreshold: 10
