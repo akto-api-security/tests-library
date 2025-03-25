@@ -41,14 +41,12 @@ api_selection_filters:
 execute:
   type: single
   requests:
-    - req: []
+    - req:
+      - modify_url: "/"
 
 validate:
   response_payload:
     length:
       gt: 0
-    not_contains:
-      - <html>
-      - </html>
     contains_either:
-      - "The install worked successfully! Congratulations!"
+      - "The install worked successfully!"
