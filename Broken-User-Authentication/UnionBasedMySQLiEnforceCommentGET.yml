@@ -112,9 +112,7 @@ execute:
               length:
                 gt: 0
               contains_either:
-                - database
                 - schema
-                - host
                 - mysql
                 - linux
               not_contains:
@@ -149,6 +147,9 @@ execute:
                 - Sorry, you have been blocked
                 - " UNION SELECT "
                 - </html>
+                - "UNION"
+                - "SELECT"
+                - "WHERE"
                 - <html>
         - success: x2
         - failure: exit
@@ -193,6 +194,9 @@ execute:
                 - CloudFlare
                 - Sorry, you have been blocked
                 - " UNION SELECT "
+                - "UNION"
+                - "SELECT"
+                - "WHERE"
                 - database
                 - schema
                 - host
@@ -249,6 +253,9 @@ execute:
                 - schema
                 - host
                 - mysql
+                - "UNION"
+                - "SELECT"
+                - "WHERE"
                 - linux
                 - <html>
                 - </html>
