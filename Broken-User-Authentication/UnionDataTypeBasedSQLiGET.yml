@@ -150,6 +150,9 @@ execute:
                 - CloudFlare
                 - Sorry, you have been blocked
                 - " UNION SELECT "
+                - "UNION"
+                - "SELECT"
+                - "WHERE"
                 - <html>
                 - </html>
         - success: x2
@@ -195,6 +198,9 @@ execute:
                 - CloudFlare
                 - Sorry, you have been blocked
                 - " UNION SELECT "
+                - "UNION"
+                - "SELECT"
+                - "WHERE"
                 - <html>
                 - </html>
               neq_obj: "${x1.response.body}"
@@ -241,6 +247,9 @@ execute:
                 - CloudFlare
                 - Sorry, you have been blocked
                 - " UNION SELECT "
+                - "UNION"
+                - "SELECT"
+                - "WHERE"
                 - <html>
                 - </html>
               eq_obj: "${x2.response.body}"
