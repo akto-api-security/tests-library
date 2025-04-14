@@ -1,0 +1,48 @@
+id: SQLInjection
+filter:
+  or: 
+    - request_headers:
+        contains_either:
+          - "' OR '1'='1"
+          - "' OR U&'\\0061'='a"
+          - "%27%20OR%20%271%27%3D%271"
+          - "' OR ASCII('1')=49"
+          - "' OR 1=1 -- -"
+    - query_param:
+        contains_either:
+          - "' OR '1'='1"
+          - "' OR U&'\\0061'='a"
+          - "%27%20OR%20%271%27%3D%271"
+          - "' OR ASCII('1')=49"
+          - "' OR 1=1 -- -"
+    - request_payload:
+        contains_either:
+          - "' OR '1'='1"
+          - "' OR U&'\\0061'='a"
+          - "%27%20OR%20%271%27%3D%271"
+          - "' OR ASCII('1')=49"
+          - "' OR 1=1 -- -"
+    
+
+info:
+  name: "SQLInjection"
+  description: "SQL Injection (SQLi) in API threat protection at runtime involves detecting and blocking malicious SQL queries embedded in API requests. Attackers exploit input fields to inject SQL commands, aiming to manipulate or extract database data. Runtime protection uses techniques like query parameterization, web application firewalls (WAFs), and AI-driven anomaly detection to prevent unauthorized database access. Implementing strict input validation and least privilege access controls further reduces SQLi risks."
+  details: "SQL Injection (SQLi) occurs when attackers insert malicious SQL queries into API inputs to manipulate database operations. At runtime, API threat protection mitigates SQLi using query parameterization, input validation, and WAFs that detect suspicious patterns. Advanced solutions leverage AI to analyze request behavior and block anomalies in real time. Implementing least privilege database access and logging SQL queries enhances security."
+  impact: "SQL Injection (SQLi) can lead to unauthorized data access, data leakage, or complete database compromise. Attackers may delete or modify critical records, impacting application integrity and user trust. Exploiting SQLi can also allow privilege escalation, enabling deeper system access. In severe cases, it can result in financial losses, compliance violations, and reputational damage."
+  category:
+    name: "SQL_INJECTION"
+    displayName: "SQL_INJECTION"
+  subCategory: "SQL_INJECTION"
+  severity: MEDIUM
+
+aggregation_rules:
+  - rule:
+      name: "Rule 1"
+      condition:
+        matchCount: 50 
+        windowThreshold: 5
+  - rule:
+      name: "Rule 2"
+      condition:
+        matchCount: 100 
+        windowThreshold: 10

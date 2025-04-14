@@ -1,0 +1,210 @@
+id: SecurityMisconfig
+filter:
+  or: 
+    - and: 
+      - response_code:
+          gte: 400
+          lt: 500
+      - response_payload:
+          length:
+            gt: 0
+    - and: 
+        - method:
+            contains_either:
+              - TRACE
+              - TRACK
+              - HEAD
+              - CONNECT 
+        - response_payload:               
+            length:
+              gt: 0
+    - or: 
+      - request_headers:
+          for_one:
+            key:
+              contains_either:
+                - "X-Transfer-Encoding"
+                - "X-Content-Encoding"
+      - request_headers:
+          for_one:
+            key:
+              eq: "transfer-encoding"
+            value:
+              contains_all:
+                - chunked
+                - gzip
+                - deflate
+      - request_headers:
+          for_one:
+            key:
+              eq: "content-encoding"
+            value:
+              contains_all:
+                - compress
+                - gzip
+                - deflate
+      - request_headers:
+          for_one:
+            key:
+              eq: "content-transfer-encoding"
+            value:
+              contains_all:
+                - base64
+                - quoted-printable
+                - binary
+      - request_headers:
+          for_one:
+            key:
+              eq: "transfer-encoding"
+            value:
+              contains_all:
+                - chunked
+                - gzip
+                - deflate
+                - trailers
+    - and:
+      - method:
+          contains_either:
+            - GET
+            - HEAD
+      - request_payload:
+          for_one:
+            key:
+              regex: .*
+            value:
+              regex: .*
+    - and:
+        - request_headers:
+            for_one:
+              key:
+                contains_either:
+                  - "X-HTTP-Method-Override"
+                  - "X-HTTP-Method"
+                  - "X-Method-Override"
+                  - "X-Rewrite-URL"
+                  - "X-Original-URL"
+                  - "X-Debug"
+    - and:
+      - request_headers:
+          for_one:
+            key:
+              eq: host
+            value:
+              regex: "\b(?:(?:25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\b"
+    - and:
+        - request_headers:
+            for_one:
+              key:
+                eq: content-length
+              value:
+                regex: "\\s*(1\\d{8}|[2-9]\\d{7,})"
+        - request_headers:
+            for_one:
+              key:
+                eq: content-type
+              value:
+                contains_either: "multipart/form-data"
+    - and:
+        - request_headers:
+            for_one:
+              key:
+                eq: content-length
+              value:
+                regex: "^(?![1-9]\\d{0,8}$).*"
+    - and:
+      - request_headers:
+          for_one:
+            key:
+              eq: "content-type"
+            value:
+              contains_either:
+                - "application/x-msdownload"
+                - "application/octet-stream"
+                - "text/plain"
+                - "application/x-javascript"
+                - "message/http"
+                - "application/x-java-serialized-object"
+                - "application/x-shockwave-flash"
+                - "application/hta"
+                - "application/ecmascript"
+                - "application/exe"
+                - "application/x-msdos-program"
+                - "application/x-php"
+                - "application/x-python-code"
+                - "application/x-perl"
+                - "application/x-ruby"
+                - "application/x-shellscript"  
+                - "multipart/byteranges"    
+    - or:
+        - url:
+            contains_either:
+              - .exe
+              - .sql
+              - .dll
+              - .bat
+        - request_payload:
+            for_one:
+              key:
+                regex: .*
+              value:
+                contains_either:
+                  - .exe
+                  - .sql
+                  - .dll 
+                  - .bat
+        - query_param:
+            for_one:
+              key:
+                regex: .*
+              value:
+                contains_either:
+                  - .exe
+                  - .sql
+                  - .dll 
+                  - .bat        
+    - and:
+      - request_headers:
+          for_one:
+            key:
+              eq: "user-agent"
+            value:
+              contains_either:
+                - "Python-urllib/"
+                - "Java/"
+                - "Go-http-client/"
+                - "PycURL/"
+                - "Scrapy/"
+                - "Wget/"
+                - "cURL/"
+                - "Mechanize/"
+                - "python-requests/"
+                - "sqlmap/"
+                - "nikto/"
+                - "acunetix/"
+                - "wpscan/"
+                - "metasploit/"
+
+
+info:
+  name: "SecurityMisconfiguration"
+  description: "Security misconfiguration in API threat protection at runtime occurs when APIs accept malicious or unexpected values in headers like `Content-Type`, `Content-Length`, `User-Agent`, or HTTP methods. Attackers can exploit these weaknesses to bypass security controls, trigger unintended behavior, or cause denial-of-service. Proper validation and enforcement of expected values help mitigate such risks."
+  details: "Security misconfiguration in APIs can lead to attacks if critical headers like `Content-Type`, `Content-Length`, `User-Agent`, or HTTP methods are not properly validated. Attackers may send malformed or unexpected values to bypass security filters, exploit backend logic, or cause performance issues. Enforcing strict validation, rejecting unknown headers, and using allowlists can prevent such threats at runtime."
+  impact: "Security misconfigurations in APIs can lead to API abuse, bypassing security controls, and potential data leaks. Attackers may exploit these flaws to execute unauthorized actions, trigger service disruptions, or manipulate backend processing. This can result in degraded performance, compliance violations, and increased attack surface for further exploitation."
+  category:
+    name: "SEC_MISCONFIG"
+    displayName: "SM"
+  subCategory: "SM"
+  severity: MEDIUM
+
+aggregation_rules:
+  - rule:
+      name: "Rule 1"
+      condition:
+        matchCount: 50 
+        windowThreshold: 5
+  - rule:
+      name: "Rule 2"
+      condition:
+        matchCount: 100 
+        windowThreshold: 10
+
