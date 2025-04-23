@@ -2,20 +2,14 @@ id: XSS
 filter:
   or:
     - request_payload:
-        contains_either:
-          - script%3Ealert
-          - document.domain%29%3C%2Fscript
-          - "<script>"
+        regex:
+          - (?i)(?:<(?:%3C)?script(?:%3E|>)(?:.*?(?:alert|document\.domain).*?(?:<%2F|<\/)script(?:%3E|>))?|(?:javascript:))
     - query_param:
-        contains_either:
-          - script%3Ealert
-          - document.domain%29%3C%2Fscript
-          - <script>
+        regex:
+          - (?i)(?:<(?:%3C)?script(?:%3E|>)(?:.*?(?:alert|document\.domain).*?(?:<%2F|<\/)script(?:%3E|>))?|(?:javascript:))
     - request_headers:
-        contains_either:
-          - script%3Ealert
-          - document.domain%29%3C%2Fscript
-          - <script>  
+        regex:
+          - (?i)(?:<(?:%3C)?script(?:%3E|>)(?:.*?(?:alert|document\.domain).*?(?:<%2F|<\/)script(?:%3E|>))?|(?:javascript:))
 
 
 info:
@@ -28,15 +22,3 @@ info:
     displayName: "XSS"
   subCategory: "XSS"
   severity: MEDIUM
-
-aggregation_rules:
-  - rule:
-      name: "Rule 1"
-      condition:
-        matchCount: 50 
-        windowThreshold: 5
-  - rule:
-      name: "Rule 2"
-      condition:
-        matchCount: 100 
-        windowThreshold: 10

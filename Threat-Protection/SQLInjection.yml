@@ -2,27 +2,15 @@ id: SQLInjection
 filter:
   or: 
     - request_headers:
-        contains_either:
-          - "' OR '1'='1"
-          - "' OR U&'\\0061'='a"
-          - "%27%20OR%20%271%27%3D%271"
-          - "' OR ASCII('1')=49"
-          - "' OR 1=1 -- -"
+        regex:
+          - (?i)(?:\\b(?:select|insert|drop)\\s+(?:from|into|all|\\*|\\b\\d+\\b|['\";])|\\b1=1\\b|or\\s+\\S+\\s*=\\s*\\S+|/\\*)(?:\\s|$)
+          
     - query_param:
-        contains_either:
-          - "' OR '1'='1"
-          - "' OR U&'\\0061'='a"
-          - "%27%20OR%20%271%27%3D%271"
-          - "' OR ASCII('1')=49"
-          - "' OR 1=1 -- -"
+        regex:
+          - (?i)(?:\\b(?:select|insert|drop)\\s+(?:from|into|all|\\*|\\b\\d+\\b|['\";])|\\b1=1\\b|or\\s+\\S+\\s*=\\s*\\S+|/\\*)(?:\\s|$)
     - request_payload:
-        contains_either:
-          - "' OR '1'='1"
-          - "' OR U&'\\0061'='a"
-          - "%27%20OR%20%271%27%3D%271"
-          - "' OR ASCII('1')=49"
-          - "' OR 1=1 -- -"
-    
+        regex:
+          - (?i)(?:\\b(?:select|insert|drop)\\s+(?:from|into|all|\\*|\\b\\d+\\b|['\";])|\\b1=1\\b|or\\s+\\S+\\s*=\\s*\\S+|/\\*)(?:\\s|$)
 
 info:
   name: "SQLInjection"
@@ -34,15 +22,3 @@ info:
     displayName: "SQL_INJECTION"
   subCategory: "SQL_INJECTION"
   severity: MEDIUM
-
-aggregation_rules:
-  - rule:
-      name: "Rule 1"
-      condition:
-        matchCount: 50 
-        windowThreshold: 5
-  - rule:
-      name: "Rule 2"
-      condition:
-        matchCount: 100 
-        windowThreshold: 10
