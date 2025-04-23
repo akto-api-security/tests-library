@@ -2,31 +2,14 @@ id: SSRF
 filter:
   or: 
     - request_payload:
-        contains_either:
-          - "localhost"     
-          - "127.0.0.1"               
-          - "attacker.com"              
-          - "webhook.site"      
-          - "http://169.254.169.254"               
-          - "http://localhost/admin"                 
-        length:
-          gt: 0
+        regex:
+          - (?i)\\b(?:http://)?(?:localhost|127\\.0\\.0\\.1|169\\.254\\.169\\.254|attacker\\.com|webhook\\.site)(?:/admin)?\\b
     - query_param:
-        contains_either:
-          - "localhost"     
-          - "127.0.0.1"               
-          - "attacker.com"              
-          - "webhook.site"      
-          - "http://169.254.169.254"               
-          - "http://localhost/admin"                 
+        regex:
+          - (?i)\\b(?:http://)?(?:localhost|127\\.0\\.0\\.1|169\\.254\\.169\\.254|attacker\\.com|webhook\\.site)(?:/admin)?\\b
     - request_headers:
-        contains_either:
-          - "localhost"     
-          - "127.0.0.1"               
-          - "attacker.com"              
-          - "webhook.site"      
-          - "http://169.254.169.254"               
-          - "http://localhost/admin"                 
+        regex:
+          - (?i)\\b(?:http://)?(?:localhost|127\\.0\\.0\\.1|169\\.254\\.169\\.254|attacker\\.com|webhook\\.site)(?:/admin)?\\b
 
 info:
   name: "SSRF"
@@ -38,15 +21,3 @@ info:
     displayName: "SSRF"
   subCategory: "SSRF"
   severity: HIGH
-
-aggregation_rules:
-  - rule:
-      name: "Rule 1"
-      condition:
-        matchCount: 50 
-        windowThreshold: 5
-  - rule:
-      name: "Rule 2"
-      condition:
-        matchCount: 100 
-        windowThreshold: 10
