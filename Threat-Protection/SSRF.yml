@@ -3,13 +3,13 @@ filter:
   or: 
     - request_payload:
         regex:
-          - (?i)\\b(?:http://)?(?:localhost|127\\.0\\.0\\.1|169\\.254\\.169\\.254|attacker\\.com|webhook\\.site)(?:/admin)?\\b
+          - (?i)\bhttp(s)?://(?:localhost|127\.0\.0\.1|169\.254\.169\.254|attacker\.com|webhook\.site)(?:/admin)?\b
     - query_param:
         regex:
-          - (?i)\\b(?:http://)?(?:localhost|127\\.0\\.0\\.1|169\\.254\\.169\\.254|attacker\\.com|webhook\\.site)(?:/admin)?\\b
+          - (?i)\bhttp(s)?://(?:localhost|127\.0\.0\.1|169\.254\.169\.254|attacker\.com|webhook\.site)(?:/admin)?\b
     - request_headers:
         regex:
-          - (?i)\\b(?:http://)?(?:localhost|127\\.0\\.0\\.1|169\\.254\\.169\\.254|attacker\\.com|webhook\\.site)(?:/admin)?\\b
+          - (?i)\bhttp(s)?://(?:localhost|127\.0\.0\.1|169\.254\.169\.254|attacker\.com|webhook\.site)(?:/admin)?\b
 
 info:
   name: "SSRF"
