@@ -1,7 +1,7 @@
 # Akto.io API Security
 
 
-# What is Akto?
+# What is Akto ?
 
 [How it works](https://docs.akto.io/#how-it-works) • [Getting-Started](https://docs.akto.io/#how-to-get-started) • [API Inventory](https://docs.akto.io/api-inventory/api-collections) • [API testing](https://docs.akto.io/testing/run-test) • [Add Test](https://docs.akto.io/testing/test-library) • [Join Slack community](https://join.slack.com/t/aktocommunity/shared\_invite/zt-1nqfw3knb-XO\~r7UZyzD9f8\_Ddm4R1lg) •
 
