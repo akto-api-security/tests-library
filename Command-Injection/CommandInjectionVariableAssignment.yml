@@ -1,10 +1,25 @@
 id: COMMAND_INJECTION_VARIABLE_ASSIGN
 info:
   name: "Command injection by variable assignment"
-  description: "Command injection by variable assignment is a security vulnerability where an attacker manipulates environment variables to execute arbitrary commands. By injecting malicious input into variables used by a system command, the attacker can gain unauthorized access or control over the system. This type of injection exploits insufficient input validation and can lead to severe security breaches if not properly mitigated."
+  description: "Command injection by variable assignment is a security vulnerability
+    where an attacker manipulates environment variables to execute arbitrary commands.
+    By injecting malicious input into variables used by a system command, the attacker
+    can gain unauthorized access or control over the system. This type of injection
+    exploits insufficient input validation and can lead to severe security breaches
+    if not properly mitigated."
   details: >
-    "Command injection by variable assignment occurs when an attacker exploits a vulnerability in how a program assigns values to environment variables. By injecting malicious commands into these variables, the attacker can manipulate the system to execute unintended commands. This often happens due to improper input validation or sanitization, allowing unauthorized command execution and potentially compromising system security. Properly validating and sanitizing user input can prevent this type of attack."
-  impact: "The impact of command injection by variable assignment can be severe, leading to unauthorized command execution and system compromise. Attackers may gain access to sensitive data, modify system configurations, or disrupt operations. This can result in data breaches, financial losses, and damage to an organization's reputation. Ensuring robust input validation and sanitization is crucial to mitigate such risks."
+    "Command injection by variable assignment occurs when an attacker exploits a vulnerability
+    in how a program assigns values to environment variables. By injecting malicious
+    commands into these variables, the attacker can manipulate the system to execute
+    unintended commands. This often happens due to improper input validation or sanitization,
+    allowing unauthorized command execution and potentially compromising system security.
+    Properly validating and sanitizing user input can prevent this type of attack."
+  impact: "The impact of command injection by variable assignment can be severe, leading
+    to unauthorized command execution and system compromise. Attackers may gain access
+    to sensitive data, modify system configurations, or disrupt operations. This can
+    result in data breaches, financial losses, and damage to an organization's reputation.
+    Ensuring robust input validation and sanitization is crucial to mitigate such
+    risks."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
@@ -12,16 +27,16 @@ info:
   subCategory: COMMAND_INJECTION_VARIABLE_ASSIGN
   severity: CRITICAL
   tags:
-    - Business logic
-    - OWASP top 10
-    - HackerOne top 10
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
   references:
-    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  - "https://twitter.com/trbughunters/status/1283133356922884096"
   cwe:
-    - CWE-77
+  - CWE-77
   cve:
-    - CVE-2023-25826
-    - CVE-2023-41031
+  - CVE-2023-25826
+  - CVE-2023-41031
 
 attributes:
   nature: INTRUSIVE
@@ -39,123 +54,125 @@ api_selection_filters:
     length:
       gt: 0
     not_contains:
-      - Error
-      - Internal Server
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
   or:
-    - request_payload:
-        for_one:
-          key:
-            regex: .*
-            extract: changed_body_key
-          value:
-            extract: changed_body_value
-    - query_param:
-        for_one:
-          key:
-            regex: .*
-            extract: changed_query_key
-          value:
-            regex: .*
-            extract: changed_query_value
+  - request_payload:
+      for_one:
+        key:
+          regex: .*
+          extractMultiple: changed_body_key
+        value:
+          extractMultiple: changed_body_value
+  - query_param:
+      for_one:
+        key:
+          regex: .*
+          extractMultiple: changed_query_key
+        value:
+          regex: .*
+          extractMultiple: changed_query_value
 wordLists:
   specialOSPayloads:
-    - "VAR=$(id)"
+  - "VAR=$(id)"
 execute:
   type: multiple
   requests:
-    - req:
-        - modify_body_param:
-            changed_body_key: ${specialOSPayloads}
-        - modify_query_param:
-            changed_query_key: ${specialOSPayloads}
-        - validate:
-            and:
-              - response_code:
-                  gte: 200
-                  lt: 300
-              - response_payload:
-                  length:
-                    gt: 0
-                  not_contains:
-                    - Error
-                    - fail
-                    - invalid
-                    - expired
-                    - not found
-                    - account is locked
-                    - account is blocked
-                    - rate-limit
-                    - rate_limit
-                    - rate limit
-                    - multiple failed attempt
-                    - <html>
-                    - </html>
-        - success: x2
-        - failure: exit
-    - req:
-        - modify_body_param:
-            changed_body_key: "echo $VAR"
-        - modify_query_param:
-            changed_query_key: "echo $VAR"
-        - validate:
-            response_payload:
-              length:
-                gt: 0
-              contains_all:
-                - "uid="
-                - "gid="
-                - "groups="
-              not_contains:
-                - Error
-                - Internal Server
-                - Failed
-                - Unauthorized
-                - access denied
-                - Forbidden
-                - Method Not allowed
-                - Gateway timeout
-                - request timeout
-                - server error
-                - server busy
-                - authentication error
-                - authorization error
-                - validation error
-                - Permission Denied
-                - invalid token
-                - token expired
-                - session expired
-                - session timeout
-                - unexpected error
-                - unable to process request
-                - bad request
-                - service unavailable
-                - account is locked
-                - account is blocked
-                - multiple failed attempts
-                - <html>
-                - </html>
-        - success: vulnerable
+  - req:
+    - for_each_combination: true
+    - modify_body_param:
+        ${changed_body_key}: ${specialOSPayloads}
+    - modify_query_param:
+        changed_query_key: ${specialOSPayloads}
+    - validate:
+        and:
+        - response_code:
+            gte: 200
+            lt: 300
+        - response_payload:
+            length:
+              gt: 0
+            not_contains:
+            - Error
+            - fail
+            - invalid
+            - expired
+            - not found
+            - account is locked
+            - account is blocked
+            - rate-limit
+            - rate_limit
+            - rate limit
+            - multiple failed attempt
+            - <html>
+            - </html>
+    - success: x2
+    - failure: exit
+  - req:
+    - for_each_combination: true
+    - modify_body_param:
+        ${changed_body_key}: "echo $VAR"
+    - modify_query_param:
+        changed_query_key: "echo $VAR"
+    - validate:
+        response_payload:
+          length:
+            gt: 0
+          contains_all:
+          - "uid="
+          - "gid="
+          - "groups="
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - <html>
+          - </html>
+    - success: vulnerable
