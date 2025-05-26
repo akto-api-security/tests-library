@@ -1,6 +1,6 @@
-id: ADVANCED_UNION_BASED_SQLI_POST
+id: ENHANCED_ADVANCED_UNION_BASED_SQLI_POST
 info:
-  name: "Advanced Union based SQL Injection test with POST method"
+  name: "Enhanced Advanced Union based SQL Injection test with POST method"
   description: "The Advanced Union-Based SQL Injection Test identifies vulnerabilities where attackers can exploit SQL queries through UNION-based injection techniques. This method involves injecting malicious SQL statements using the `UNION` operator to merge attacker-controlled queries with legitimate ones. The goal is to retrieve sensitive data, such as database schema details, user credentials, or application secrets. Preventing this vulnerability requires robust input validation, parameterized queries, and secure database interaction practices."
   details: "The Advanced Union-Based SQL Injection Test focuses on detecting SQL injection flaws that leverage the `UNION` operator to append malicious queries. By combining attacker-controlled queries with legitimate SQL queries, sensitive data like database tables, columns, or user credentials can be exposed. This test checks for input fields or parameters that accept user input without proper sanitization or validation, making them vulnerable to this type of injection. Mitigation strategies include using parameterized queries, prepared statements, and rigorous input validation to block unauthorized SQL query execution."
   impact: "The impact of an Advanced Union-Based SQL Injection vulnerability can be critical, allowing attackers to retrieve sensitive information, such as user credentials, financial data, or application secrets, directly from the database. This can lead to unauthorized access, data breaches, and potential compliance violations. Additionally, attackers could escalate their privileges or further exploit the database and underlying system. Implementing secure coding practices and robust database query mechanisms is essential to mitigate such risks."
@@ -9,7 +9,7 @@ info:
     name: NO_AUTH
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
-  subCategory: ADVANCED_UNION_BASED_SQLI_POST
+  subCategory: ENHANCED_ADVANCED_UNION_BASED_SQLI_POST
   severity: MEDIUM
   tags:
     - Business logic

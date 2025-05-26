@@ -1,6 +1,6 @@
-id: BOOLEAN_BASED_SQLI_GET
+id: ENHANCED_BOOLEAN_BASED_SQLI_GET
 info:
-  name: "Boolean based SQL Injection test on GET method APIs"
+  name: "Enhanced Boolean based SQL Injection test on GET method APIs"
   description: "The Boolean-Based SQL Injection Test on GET Method APIs examines whether an attacker can manipulate SQL queries by injecting boolean expressions (e.g., `AND 1=1` or `AND 1=2`) into GET request parameters. This technique does not return immediate errors but allows attackers to infer information about the database structure based on the application’s response to different inputs. By exploiting the lack of proper input validation, attackers can extract sensitive information or manipulate the database. Proper input sanitization and error handling can help prevent such attacks."
   details: " The Boolean-Based SQL Injection Test on GET Method APIs involves injecting boolean expressions into input fields of POST requests to manipulate SQL queries. These expressions, such as `AND 1=1` or `AND 1=2`, trigger different responses depending on the validity of the query, allowing attackers to deduce database information like table names or column structures. This technique works without producing immediate errors, making it harder to detect but still dangerous. Protecting against it requires implementing robust input validation, parameterized queries, and careful handling of database errors."
   impact: "The impact of the Boolean-Based SQL Injection Test on GET Method APIs can be significant, as it allows attackers to slowly extract sensitive data or infer the structure of the database through subtle differences in application responses. While it may not immediately expose data, it can lead to unauthorized access, data leakage, or further exploitation of vulnerabilities. Additionally, attackers can escalate their access by crafting more complex queries based on the information obtained. Proper input sanitization, error handling, and parameterized queries are essential to mitigate such risks."
@@ -8,7 +8,7 @@ info:
     name: NO_AUTH
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
-  subCategory: BOOLEAN_BASED_SQLI_GET
+  subCategory: ENHANCED_BOOLEAN_BASED_SQLI_GET
   severity: MEDIUM
   tags:
     - Business logic

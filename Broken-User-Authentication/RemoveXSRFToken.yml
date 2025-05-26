@@ -1,6 +1,6 @@
-id: REMOVE_XSRF
+id: ENHANCED_REMOVE_XSRF
 info:
-  name: "Broken Authentication test by removing XSRF token"
+  name: "Enhanced Broken Authentication test by removing XSRF token"
   description: "This test involves checking if a web application properly validates XSRF (CSRF) tokens. XSRF (CSRF) tokens prevent unauthorized actions by ensuring requests originate from the legitimate user. By removing the token from requests, testers can see if the application rejects these requests, thereby identifying potential vulnerabilities in CSRF protection."
   details: >
     "This test involves testing a web application’s security by omitting the Cross-Site Request Forgery (XSRF/CSRF) token from requests. XSRF tokens protect against unauthorized actions by verifying the source of requests. By removing the token, testers check if the application still processes the request, which would indicate a vulnerability in CSRF protection mechanisms."
@@ -9,7 +9,7 @@ info:
     name: NO_AUTH
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
-  subCategory: REMOVE_XSRF
+  subCategory: ENHANCED_REMOVE_XSRF
   severity: CRITICAL
   tags:
     - Business logic

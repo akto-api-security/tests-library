@@ -1,6 +1,6 @@
-id: ALTERNATE_ENCODING_SQLI_GET
+id: ENHANCED_ALTERNATE_ENCODING_SQLI_GET
 info:
-  name: "SQL Injection test using Alternate Encoding for GET method APIs"
+  name: "Enhanced SQL Injection test using Alternate Encoding for GET method APIs"
   description: "The SQL Injection Test Using Alternate Encoding for GET Method APIs identifies vulnerabilities where attackers bypass standard input validation by using alternate encoding techniques. These include URL encoding, Unicode, or hexadecimal representations to inject malicious SQL queries into GET method APIs. This approach evades simple filtering mechanisms, allowing unauthorized database access or manipulation. Properly decoding and validating all input is critical to mitigate such attacks."
   details: "The SQL Injection Test Using Alternate Encoding for GET Method APIs evaluates if alternate encoding methods like URL encoding (`%27` for `'`), Unicode (`'`), or hexadecimal can bypass input sanitization mechanisms. Attackers leverage these techniques to disguise malicious SQL payloads and evade detection. This test targets GET API endpoints that handle encoded inputs without proper decoding or validation, potentially allowing unauthorized database queries. Mitigation involves decoding inputs before validation and implementing parameterized queries to ensure robust defense against injection attacks."
   impact: "The impact of the SQL Injection Test Using Alternate Encoding for GET Method APIs can be significant, as attackers could bypass input filters and inject malicious SQL queries using alternative encodings. This allows unauthorized access to or manipulation of sensitive database information, potentially leading to data breaches, loss of data integrity, and unauthorized privilege escalation. Additionally, it could result in a compromised system, leading to reputational damage and regulatory consequences. Effective mitigation requires proper decoding of inputs and securing API endpoints with parameterized queries and strong validation."
@@ -9,7 +9,7 @@ info:
     name: NO_AUTH
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
-  subCategory: ALTERNATE_ENCODING_SQLI_GET
+  subCategory: ENHANCED_ALTERNATE_ENCODING_SQLI_GET
   severity: MEDIUM
   tags:
     - Business logic
