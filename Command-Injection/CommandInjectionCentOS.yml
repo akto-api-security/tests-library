@@ -1,6 +1,6 @@
-id: COMMAND_INJECTION_CENTOS
+id: ENHANCED_COMMAND_INJECTION_CENTOS
 info:
-  name: "Command injection for identifying CentOS using system specific operations"
+  name: "Enhanced Command injection for identifying CentOS using system specific operations"
   description: "Command injection for identifying CentOS using system-specific operations involves exploiting vulnerabilities to execute commands that reveal details about the CentOS operating system. Attackers inject commands that run CentOS-specific queries or utilities, such as `cat /etc/centos-release` or `uname -r`, to obtain information about the OS version and configuration. This allows attackers to confirm the presence of CentOS and gather essential details to tailor further attacks or exploits based on the specific characteristics and vulnerabilities of CentOS."
   details: >
     "Command injection for identifying CentOS using system-specific operations involves injecting malicious commands into an application to run CentOS-specific system queries. For example, attackers might use `cat /etc/centos-release` to display the CentOS version or `uname -r` to reveal the kernel version. By exploiting vulnerabilities to execute these commands, attackers can determine that the system is running CentOS and obtain version and configuration details. This information helps in customizing further attacks or exploiting known vulnerabilities specific to CentOS."

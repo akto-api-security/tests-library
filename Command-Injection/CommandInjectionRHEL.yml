@@ -1,6 +1,6 @@
-id: COMMAND_INJECTION_RHEL
+id: ENHANCED_COMMAND_INJECTION_RHEL
 info:
-  name: "Command injection for identifying Red Hat Linux using system specific operations"
+  name: "Enhanced Command injection for identifying Red Hat Linux using system specific operations"
   description: "Command injection for identifying Red Hat Linux using system-specific operations involves exploiting vulnerabilities to execute commands that reveal details about the Red Hat Linux environment. Attackers inject commands that run Red Hat-specific queries or utilities, such as `cat /etc/redhat-release` or `uname -r`, to obtain information about the OS version and configuration. This enables attackers to confirm the presence of Red Hat Linux and gather critical details needed to tailor further attacks based on the specific characteristics and vulnerabilities of the Red Hat environment."
   details: >
     "Command injection for identifying Red Hat Linux using system-specific operations involves injecting malicious commands to run queries specific to Red Hat Linux. For example, attackers might use `cat /etc/redhat-release` to display the Red Hat version or `uname -r` to reveal the kernel version. By exploiting vulnerabilities to execute these commands, attackers can ascertain that the system is running Red Hat Linux and obtain detailed version and configuration information. This data is useful for customizing further attacks to exploit known Red Hat vulnerabilities and system specifics."

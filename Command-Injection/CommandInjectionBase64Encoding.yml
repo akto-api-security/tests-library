@@ -1,6 +1,6 @@
-id: COMMAND_INJECTION_BASE64_ENCODING
+id: ENHANCED_COMMAND_INJECTION_BASE64_ENCODING
 info:
-  name: "Command injection via base64 encoding with echo"
+  name: "Enhanced Command injection via base64 encoding with echo"
   description: "This test is a technique where an attacker injects malicious commands into a system by encoding them in base64. The system decodes the base64 input and uses echo to process it, which can lead to the execution of the attacker's commands. This method exploits base64 encoding to bypass input validation and execute unauthorized commands."
   details: >
     "In this test, an attacker injects malicious commands into an application that uses base64 encoding and the echo command to handle input. By encoding their commands in base64, they can bypass input filters or validation. When the application decodes the base64 data and processes it with echo, it executes the injected commands, potentially compromising the system."

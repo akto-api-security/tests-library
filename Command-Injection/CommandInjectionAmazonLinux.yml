@@ -1,6 +1,6 @@
-id: COMMAND_INJECTION_AMAZON_LINUX
+id: ENHANCED_COMMAND_INJECTION_AMAZON_LINUX
 info:
-  name: "Command injection for identifying Amazon Linux OS using system specific operations"
+  name: "Enhanced Command injection for identifying Amazon Linux OS using system specific operations"
   description: "Command injection for identifying Amazon Linux OS using system-specific operations involves exploiting vulnerabilities to run commands that reveal details about the Amazon Linux environment. Attackers inject commands that execute Amazon Linux-specific queries or utilities, such as `cat /etc/system-release` or `uname -a`, to obtain information about the OS version and system configuration. This allows attackers to confirm the presence of Amazon Linux and gather relevant details to tailor their attacks based on the specific characteristics and vulnerabilities of the Amazon Linux OS."
   details: >
     "Command injection for identifying Amazon Linux OS using system-specific operations involves injecting malicious commands into an application to run queries specific to Amazon Linux. For example, attackers might use `cat /etc/system-release` to reveal the distribution and version information or `uname -a` to get details about the kernel and architecture. By exploiting vulnerabilities to execute these commands, attackers can confirm that the system is running Amazon Linux and gather essential details about its version and configuration. This information helps in customizing further exploits to target specific Amazon Linux vulnerabilities."

@@ -1,6 +1,6 @@
-id: COMMAND_INJECTION_BASE64_ENCODING_CHAINED
+id: ENHANCED_COMMAND_INJECTION_BASE64_ENCODING_CHAINED
 info:
-  name: "Command injection via base64 encoding with echo and chained system instruction"
+  name: "Enhanced Command injection via base64 encoding with echo and chained system instruction"
   description: "Command injection via base64 encoding with `echo` and chained system instructions involves exploiting vulnerabilities by encoding malicious commands in base64 format. Attackers inject these encoded commands into an application, which then decodes and executes them using `echo` and other chained system instructions. This technique allows attackers to bypass input validation and execute complex command sequences, potentially leading to unauthorized access, data manipulation, or system compromise by leveraging obfuscated payloads."
   details: >
     "Command injection via base64 encoding with `echo` and chained system instructions involves encoding malicious payloads in base64 to evade detection and input validation. Attackers inject these encoded commands into an application, which decodes them using `echo` or similar mechanisms, and then executes them as part of a chain of system instructions. By chaining these commands, attackers can perform complex operations, access sensitive data, or modify system configurations, leveraging the encoding to bypass security filters and execute harmful actions."

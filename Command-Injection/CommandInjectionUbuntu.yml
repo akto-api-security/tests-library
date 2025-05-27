@@ -1,6 +1,6 @@
-id: COMMAND_INJECTION_UBUNTU
+id: ENHANCED_COMMAND_INJECTION_UBUNTU
 info:
-  name: "Command injection for identifying Ubuntu using system specific operations"
+  name: "Enhanced Command injection for identifying Ubuntu using system specific operations"
   description: "Command injection for identifying Ubuntu using system-specific operations involves exploiting vulnerabilities to execute commands that reveal details about the operating system. Attackers inject commands that run Ubuntu-specific operations or queries, such as `lsb_release -a` or `uname -a`, to gather information about the Ubuntu version, kernel, and system architecture. This allows attackers to confirm the presence of Ubuntu and tailor further attacks or exploits based on the specific characteristics of the Ubuntu environment."
   details: >
     "Command injection for identifying Ubuntu using system-specific operations involves injecting commands into an application that execute Ubuntu-specific system queries. Common commands like `lsb_release -a`, which provides detailed version information, or `uname -a`, which reveals kernel and system architecture details, are used. By exploiting vulnerabilities to run these commands, attackers can ascertain that the target is running Ubuntu, as well as gather details about the distribution version and system configuration. This information aids in tailoring subsequent attacks to exploit Ubuntu-specific vulnerabilities."

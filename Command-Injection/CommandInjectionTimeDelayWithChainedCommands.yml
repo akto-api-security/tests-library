@@ -1,6 +1,6 @@
-id: COMMAND_INJECTION_TIME_DELAY_CHAINED
+id: ENHANCED_COMMAND_INJECTION_TIME_DELAY_CHAINED
 info:
-  name: "Command injection using Time delay sleep command with chained system instruction"
+  name: "Enhanced Command injection using Time delay sleep command with chained system instruction"
   description: "Command injection using time delay sleep commands with chained system instructions involves exploiting vulnerabilities to execute arbitrary commands and introduce delays. Attackers inject commands that include time delay functions, such as `sleep`, to pause execution before running additional chained instructions. This technique can be used to disrupt system operations, execute complex command sequences, or perform timing-based attacks, such as delaying responses to evade detection or coordinate attacks over time."
   details: >
     "Command injection using time delay sleep commands with chained system instructions involves injecting commands that include time delay functions like `sleep` into an application. Attackers use these delays to pause the execution of subsequent commands, allowing for more sophisticated attack strategies. This can be used to create timing attacks, synchronize malicious actions, or circumvent security measures by spreading out the execution of commands. The chained commands can then perform various unauthorized actions, such as data exfiltration or system modifications, while the delays help avoid detection or improve attack coordination."
