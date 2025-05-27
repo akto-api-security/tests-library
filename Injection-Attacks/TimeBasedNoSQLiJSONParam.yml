@@ -132,8 +132,9 @@ execute:
         - success: x2
         - failure: exit
     - req:
+        - for_each_combination: true
         - modify_body_param:
-            changed_body_key: ${changed_body_value}${timeBasedPayloads}
+            ${changed_body_key}: ${changed_body_value}${timeBasedPayloads}
         - validate:
             response_code:
               eq: 429

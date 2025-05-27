@@ -83,8 +83,9 @@ execute:
   type: multiple
   requests:
     - req:
+        - for_each_combination: true
         - modify_body_param:
-            changed_body_key: !!str ${changed_body_value} && 'a' != 'a' && 'a' != 'a
+            ${changed_body_key}: !!str ${changed_body_value} && 'a' != 'a' && 'a' != 'a
         - validate:
             or:
               - response_code:
@@ -116,8 +117,9 @@ execute:
         - success: x2
         - failure: exit
     - req:
+        - for_each_combination: true
         - modify_body_param:
-            changed_body_key: !!str ${changed_body_value} || 'a' == 'a' || 'a
+            ${changed_body_key}: !!str ${changed_body_value} || 'a' == 'a' || 'a
         - validate:
             response_code:
               gte: 200
@@ -147,8 +149,9 @@ execute:
     - req:
         - add_header:
             dummyHeader: dummyValue
+        - for_each_combination: true
         - modify_body_param:
-            changed_body_key: !!str ${changed_body_value} || 'a' == 'a' || 'a
+            ${changed_body_key}: !!str ${changed_body_value} || 'a' == 'a' || 'a
         - validate:
             response_payload:
               eq_obj: "${x2.response.body}"

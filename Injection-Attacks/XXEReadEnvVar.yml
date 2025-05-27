@@ -92,8 +92,9 @@ execute:
   type: single
   requests:
     - req:
+        - for_each_combination: true
         - modify_body_param:
-            changed_body_key: ${payloads}
+            ${changed_body_key}: ${payloads}
         - modify_query_param:
             changed_query_key: ${payloads}
 validate:

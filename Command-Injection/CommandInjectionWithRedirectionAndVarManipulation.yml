@@ -70,9 +70,9 @@ api_selection_filters:
         for_one:
           key:
             regex: .*
-            extract: changed_body_key
+            extractMultiple: changed_body_key
           value:
-            extract: changed_body_value
+            extractMultiple: changed_body_value
     - query_param:
         for_one:
           key:
@@ -89,8 +89,9 @@ execute:
   type: multiple
   requests:
     - req:
+        - for_each_combination: true
         - modify_body_param:
-            changed_body_key: ${specialOSPayloads}
+            ${changed_body_key}: ${specialOSPayloads}
         - modify_query_param:
             changed_query_key: ${specialOSPayloads}
         - validate:
@@ -118,8 +119,9 @@ execute:
         - success: x2
         - failure: exit
     - req:
+        - for_each_combination: true
         - modify_body_param:
-            changed_body_key: "cat output.txt"
+            ${changed_body_key}: "cat output.txt"
         - modify_query_param:
             changed_query_key: "cat output.txt"
         - validate:
