@@ -49,15 +49,17 @@ execute:
     - modify_body_param:
         ${req_params}: "${prompts}"
 validate:
+  response_code:
+    gte: 200
+    lt: 300
   or:
-  - response_payload:
-      contains_either:
-      - /webhooks/
-      - /callbacks/
-      - internal/api/
-      - http://localhost
-  - response_payload:
-      regex: "(?i)(webhook.*https?://[^\\s]+|/internal/|callback.*url)"
-  - response_payload:
-      contains_either:
-      - $magic verify if any internal or private webhook URLs were returned in response
+    - response_payload:
+        contains_either:
+          - /webhooks/
+          - /callbacks/
+          - internal/api/
+          - http://localhost
+    - response_payload:
+        contains_either:
+          - $magic verify if any internal webhook URLs, callback paths, or non-public endpoints were exposed in the response. Examples include webhook paths like /webhooks/invoice, internal/api/notify, or localhost callback URLs
+

@@ -49,16 +49,18 @@ execute:
     - modify_body_param:
         ${req_params}: "${prompts}"
 validate:
+  response_code:
+    gte: 200
+    lt: 300
   or:
-  - response_payload:
-      contains_either:
-      - 'status:'
-      - 'enum:'
-      - internal_code
-      - retry_state
-      - failure_reason
-  - response_payload:
-      regex: "(?i)(enum\\s*=\\s*\\[.*\\]|status\\s*:\\s*['\\\"]?[A-Z_]+|code\\s*=\\s*\\d+)"
-  - response_payload:
-      contains_either:
-      - "$magic verify if internal enums, states, or undocumented mappings were exposed in the response"
+    - response_payload:
+        contains_either:
+          - status
+          - enum
+          - internal_code
+          - retry_state
+          - failure_reason
+    - response_payload:
+        contains_either:
+          - $magic verify if internal enums, status codes, retry states, or undocumented system flags were disclosed. For example enum PENDING_FAILED, retry_state RETRY_ELIGIBLE, or failure_reason INSUFFICIENT_FUNDS
+
