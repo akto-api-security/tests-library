@@ -3,13 +3,13 @@ filter:
   or:
     - request_payload:
         regex:
-          - (?i)(?:<(?:%3C)?script(?:%3E|>)(?:.*?(?:alert|document\.domain).*?(?:<%2F|<\/)script(?:%3E|>))?|(?:javascript:))
+          - (?i)(?:<[^>]*?(script|svg|iframe|object|embed|form|img|video|audio)[^>]*?>.*?(alert|prompt|confirm|document\.cookie|document\.domain|window\.location)[\s\S]*?<\/\1>|javascript:|data:text\/html|onerror\s*=|onload\s*=|<[^>]*?on[a-z]+\s*=\s*['"]?.*?(alert|prompt|confirm|document\.cookie|document\.domain|window\.location)['"]?)
     - query_param:
         regex:
-          - (?i)(?:<(?:%3C)?script(?:%3E|>)(?:.*?(?:alert|document\.domain).*?(?:<%2F|<\/)script(?:%3E|>))?|(?:javascript:))
+          - (?i)(?:<[^>]*?(script|svg|iframe|object|embed|form|img|video|audio)[^>]*?>.*?(alert|prompt|confirm|document\.cookie|document\.domain|window\.location)[\s\S]*?<\/\1>|javascript:|data:text\/html|onerror\s*=|onload\s*=|<[^>]*?on[a-z]+\s*=\s*['"]?.*?(alert|prompt|confirm|document\.cookie|document\.domain|window\.location)['"]?)
     - request_headers:
         regex:
-          - (?i)(?:<(?:%3C)?script(?:%3E|>)(?:.*?(?:alert|document\.domain).*?(?:<%2F|<\/)script(?:%3E|>))?|(?:javascript:))
+          - (?i)(?:<[^>]*?(script|svg|iframe|object|embed|form|img|video|audio)[^>]*?>.*?(alert|prompt|confirm|document\.cookie|document\.domain|window\.location)[\s\S]*?<\/\1>|javascript:|data:text\/html|onerror\s*=|onload\s*=|<[^>]*?on[a-z]+\s*=\s*['"]?.*?(alert|prompt|confirm|document\.cookie|document\.domain|window\.location)['"]?)
 
 
 info:
