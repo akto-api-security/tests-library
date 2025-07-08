@@ -3,13 +3,13 @@ filter:
   or:
     - request_payload:
         regex:
-          - '[^\x20-\x7E]'
+          - '[^\x09\x0A\x0D\x20-\x7E]'
     - query_param:
         regex:
-          - '[^\x20-\x7E]'
+          - '[^\x09\x0A\x0D\x20-\x7E]'
     - request_headers:
         regex:
-          - '[^\x20-\x7E]'
+          - '[^\x09\x0A\x0D\x20-\x7E]'
 info:
   name: "Unicode Characters Outside ASCII Printable Range"
   description: "Detects presence of Unicode characters outside the printable ASCII range in incoming API requests. This can indicate encoding attacks, obfuscation, or attempts to bypass input validation mechanisms."
