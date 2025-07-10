@@ -3,13 +3,13 @@ filter:
   or:
     - request_payload:
         regex:
-          - (?i)(?:^|[&|;<>\|`]\s*)(?:cmd\.exe|powershell\.exe|whoami|net\s+(?:user|localgroup|view|use)|tasklist|taskkill|ping|nslookup|ipconfig|reg(?:svr32)?|mshta|wscript|cscript|curl|wget|wmic|psexec|rundll32|schtasks|sc|explorer|del|dir|type|at\.exe)(?:\s|$)
+          - (?i)\b(cmd|powershell|pwsh|wscript|cscript|rundll32|certutil|mshta|bitsadmin|regsvr32|wmic|schtasks|ping|whoami|net|dir|tasklist|nslookup)\b.*[&|;<>]|%[a-z0-9_]+%|\\{2}[^\\\s]+\\[^\\\s]+
     - query_param:
         regex:
-          - (?i)(?:^|[&|;<>\|`]\s*)(?:cmd\.exe|powershell\.exe|whoami|net\s+(?:user|localgroup|view|use)|tasklist|taskkill|ping|nslookup|ipconfig|reg(?:svr32)?|mshta|wscript|cscript|curl|wget|wmic|psexec|rundll32|schtasks|sc|explorer|del|dir|type|at\.exe)(?:\s|$)
+          - (?i)\b(cmd|powershell|pwsh|wscript|cscript|rundll32|certutil|mshta|bitsadmin|regsvr32|wmic|schtasks|ping|whoami|net|dir|tasklist|nslookup)\b.*[&|;<>]|%[a-z0-9_]+%|\\{2}[^\\\s]+\\[^\\\s]+
     - request_headers:
         regex:
-          - (?i)(?:^|[&|;<>\|`]\s*)(?:cmd\.exe|powershell\.exe|whoami|net\s+(?:user|localgroup|view|use)|tasklist|taskkill|ping|nslookup|ipconfig|reg(?:svr32)?|mshta|wscript|cscript|curl|wget|wmic|psexec|rundll32|schtasks|sc|explorer|del|dir|type|at\.exe)(?:\s|$)
+          - (?i)\b(cmd|powershell|pwsh|wscript|cscript|rundll32|certutil|mshta|bitsadmin|regsvr32|wmic|schtasks|ping|whoami|net|dir|tasklist|nslookup)\b.*[&|;<>]|%[a-z0-9_]+%|\\{2}[^\\\s]+\\[^\\\s]+
 
 info:
   name: "Windows Command Injection"
