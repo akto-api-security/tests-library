@@ -104,4 +104,4 @@ validate:
     gte: 200
     lt: 300
   response_payload:
-    contains_either: "$magic Check whether the response contains any kind of error response (error status, error fields, error messages, error flags or any json key related to error). If there is any error then return empty list []. Else return a list of words in case of successful response."
+    contains_either: "$magic Check whether the response contains any kind of error response (error status, error fields, error messages, error flags or any json key related to error). If there is any error then return nothing just empty braces []. Else return a list of words from the response only in case of successful response."

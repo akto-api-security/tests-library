@@ -97,7 +97,7 @@ execute:
           gte: 200
           lt: 300
         response_payload:
-          contains_either: "$magic Check if the request was responded as per the input data or it gave an error. If the response does not have any error, even if the data is empty, return a list of relevant words from the response. If the response has any kind of error (error fields, error messages, or error flags), return nothing."
+          contains_either: "$magic Check whether the response contains any kind of error response (error status, error fields, error messages, error flags or any json key related to error). If there is any error then return nothing just empty braces []. Else return a list of words from the response only in case of successful response."
     - success: vulnerable
 wordLists:
   attemptValues:
