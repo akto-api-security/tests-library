@@ -1,0 +1,130 @@
+---
+id: MCP_BREAKING_JSON_PARSING
+info:
+  name: Breaking JSON Parsing (MCP)
+  description: "This test evaluates the system's ability to correctly handle and parse JSON input, especially when special characters, escape sequences, or malformed data are included. The objective is to identify vulnerabilities that could allow users to break JSON parsing, leading to application errors, security risks, or data corruption."
+  details: "The test involves sending API requests with JSON payloads containing special characters (e.g., newline characters like '\L', null characters like '\0'), escape sequences, or malformed JSON structures. For example, a user might include a control character in a string field (e.g., 'comment') to test whether the JSON parser can handle it correctly. The test checks whether the application properly sanitizes, validates, and parses JSON input without causing errors or exposing vulnerabilities."
+  impact: "Breaking JSON parsing can lead to various security issues, such as injection attacks, denial of service, and data corruption. If users can manipulate JSON payloads to cause parsing errors or bypass validation, it undermines the application's security and stability. Ensuring robust parsing, sanitization, and validation of JSON input is crucial to prevent exploitation and maintain the integrity and security of the application."
+  category:
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_BREAKING_JSON_PARSING
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  and:
+  - request_payload:
+      for_one:
+        extract: userBody
+  - request_payload:
+      for_one:
+        key:
+          regex: .*
+  - request_payload:
+      contains_all:
+      - jsonrpc
+      - method
+      - params
+wordLists:
+  attemptValues:
+  - "\0"
+  - "\ufffe"
+  - "\uffff"
+  - "null"
+  - undefined
+  - "{"
+  - "}"
+  - "["
+  - "]"
+  - NaN
+  - "\x1f"
+  - "\x7f"
+  - "\x81"
+  - "\ud800"
+  - "\udbff"
+  - "\udc00"
+  - "\udfff"
+  - �
+  - <script>
+  - \u0022
+  responseErrorList:
+  - Error
+  - Internal Server
+  - Failed
+  - Unauthorized
+  - access denied
+  - Forbidden
+  - Method Not allowed
+  - Gateway timeout
+  - request timeout
+  - server error
+  - server busy
+  - authentication error
+  - authorization error
+  - validation error
+  - Permission Denied
+  - invalid token
+  - token expired
+  - session expired
+  - session timeout
+  - unexpected error
+  - unable to process request
+  - bad request
+  - service unavailable
+  - account is locked
+  - account is blocked
+  - multiple failed attempts
+  - Attention Required!
+  - CloudFlare
+  - "Sorry, you have been blocked"
+execute:
+  type: multiple
+  requests:
+  - req:
+    - add_header:
+        x-akto-ignore: 123
+    - replace_body: "{}"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: "${responseErrorList}"
+    - success: exit
+    - failure: x2
+  - req:
+    - add_header:
+        x-akto-ignore: 123
+    - replace_body: "${attemptValues}${userBody}"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          not_contains: "${responseErrorList}"
+    - success: vulnerable
+    - failure: exit
