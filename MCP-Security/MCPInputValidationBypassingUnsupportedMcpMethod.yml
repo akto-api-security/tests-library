@@ -1,0 +1,61 @@
+---
+id: INPUT_VALIDATION_BY_PASSING_UNSUPPORTED_MCP_METHOD
+info:
+  name: Input Validation by passing unsupport mcp method
+  description: |
+    This test checks the application's validation mechanisms by replacing expected object structures with arrays.
+  details: |
+    The test involves sending requests where objects are replaced by arrays to assess whether the application appropriately detects and rejects this structural mismatch.
+  impact: |
+    Inadequate validation can result in processing errors, security flaws, or the ability to manipulate application logic through unexpected data structures.
+  category:
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: INPUT_VALIDATION_BY_PASSING_UNSUPPORTED_MCP_METHOD
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+    for_one:
+      key:
+        regex: method
+        extract: mcpMethodKey
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        mcpMethodKey: tools/attack
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    contains_either: "$magic Check whether the response contains any kind of error response. Any error field or key indicating method not found, not found, invalid parameter, validation error or anything specific to input validations. If there is any error then return empty list []. Else return a list of words in case of successful response."

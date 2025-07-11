@@ -1,0 +1,92 @@
+---
+id: DUMMY_CONTENT_LENGTH_HEADER_MCP
+info:
+  name: Dummy Content-Length Header (MCP)
+  description: |
+    "This vulnerability arises when an application does not properly validate or handle Content-Length headers in HTTP requests, potentially allowing for exploitation through malformed or unexpected header values."
+  details: |
+    "By sending a dummy Content-Length header with a non-numeric value, such as 'cats', an attacker can iteratively test all paths and HTTP methods of the application. The objective is to provoke a response from the server that indicates how it handles invalid content length values. The expectation is to receive a 400 Bad Request response, indicating that the server correctly rejects unsupported Content-Length formats."
+  impact: |
+    "Improper handling of Content-Length headers can lead to various issues, including request misprocessing, buffer overflow vulnerabilities, or denial of service. If the server fails to respond with a 400 Bad Request, it may suggest vulnerabilities in the application's request parsing logic or improper input validation mechanisms."
+  category:
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: DUMMY_CONTENT_LENGTH_HEADER_MCP
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://endava.github.io/cats/docs/fuzzers/header-fuzzers/dummy-content-length
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+wordLists:
+  attemptValues:
+  - cats
+  - 1
+  - 0
+execute:
+  type: single
+  requests:
+  - req:
+      modify_header:
+        content-length: "${attemptValues}"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
