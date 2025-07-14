@@ -6,9 +6,9 @@ info:
   details: "In this testing scenario for MCP servers, the focus lies on manipulating URL by injecting lengthy strings. By inundating the system with such inputs, testers analyze how the application manages the parsing and processing of these parameters. This method aims to uncover vulnerabilities in key handling mechanisms, providing insights into potential weaknesses that malicious actors could exploit to disrupt the system's functionality through Denial of Service (DoS) attacks."
   impact: "The impact of successful Denial of Service (DoS) attacks via manipulation of URL in MCP servers can be significant. It may result in system slowdowns, unresponsiveness, or complete service outages, disrupting normal operations. Additionally, such attacks could compromise the availability and reliability of the system, leading to financial losses and reputational damage due to the perception of inadequate security measures."
   category:
-    name: MCP
-    shortName: Lack of Resources & Rate Limiting
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: Model Context Protocol (MCP) Security - Denial of Service
   subCategory: DOS_TEST_URL_MCP
   severity: HIGH
   tags:
@@ -44,8 +44,6 @@ execute:
         dummy_Header_Key: dummyValue
     - validate:
         response_payload:
-          percentage_match:
-            gte: 90
           not_contains:
           - Error
           - Internal Server

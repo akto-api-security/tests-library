@@ -5,9 +5,9 @@ info:
   details: "In a ReDOS (Regular Expression Denial of Service) test with small input on email parameters, testers intentionally provide email inputs designed to trigger inefficient regular expression matching. These inputs exploit vulnerabilities in the regular expression engine, causing excessive backtracking and potentially leading to system slowdowns or crashes. By assessing the system's response to these inputs, testers can uncover weaknesses in input validation mechanisms and bolster defenses against ReDOS attacks targeting email handling functionalities."
   impact: "A successful ReDOS (Regular Expression Denial of Service) test with small input on email parameters can have significant repercussions. It may lead to system slowdowns or crashes due to excessive backtracking caused by inefficient regular expression matching. As a result, email handling functionalities may become unresponsive, impacting user experience and potentially causing service disruptions. Furthermore, the discovery of such vulnerabilities underscores the importance of implementing robust input validation mechanisms to mitigate the risk of ReDOS attacks."
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: Model Context Protocol (MCP) Security - Denial of Service
   subCategory: EMAIL_REGEX_REDOS_SMALL_INPUT_MCP
   severity: HIGH
   tags:

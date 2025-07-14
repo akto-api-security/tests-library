@@ -9,9 +9,9 @@ info:
     Improper handling of large numeric values may lead to performance degradation, resource exhaustion, or even application crashes, rendering the service unavailable to legitimate users.
 
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: Model Context Protocol (MCP) Security - Denial of Service
   subCategory: DOS_TEST_LARGE_NUMBERS_MCP
   severity: HIGH
   tags:
@@ -46,7 +46,8 @@ api_selection_filters:
     - params
     for_one:
       key:
-        contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any one key inside `arguments` whose value is a number. Do not select keys whose values are arrays or objects or alphanumeric. Return the selected key else return empty braces [] if not found"        extract: userKey
+        contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any one key inside `arguments` whose value is a number or decimal. If found then return the selected key. Else return empty braces []. Do not select the key `name`"
+        extract: userKey
       value:
         datatype: number
         extract: userVal
@@ -58,20 +59,20 @@ execute:
         - add_header:
             x-akto-ignore: "0"
         - validate:
-            response_code:
-              gte: 200
-              lt: 300
+            # response_code:
+            #   gte: 200
+            #   lt: 300
             response_payload:
-              length:
-                gt: 0
+              # length:
+              #   gt: 0
               not_contains: ${badList}
         - success: x2
         - failure: exit
     - req:
         - delete_body_param: ${userKey}
         - validate:
-            response_code:
-              gte: 400
+            response_payload:
+              contains_either: "$magic Check whether the response contains any kind of error response (error status, error fields, error messages, error flags or any json key related to error). If there is any error then return list of words from the error message. Else return empty braces [] in case of successful response"
         - success: x3
         - failure: exit
     - req:

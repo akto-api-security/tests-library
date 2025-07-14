@@ -9,9 +9,9 @@ info:
   impact: |
     "Improper handling of page size parameters can result in excessive memory consumption, performance degradation, or denial of service. If users can request extremely large page sizes, the server may become overloaded, leading to slower response times or even crashes. Ensuring proper validation and limits on paging parameters is crucial to maintaining application performance, resource management, and security."
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: Model Context Protocol (MCP) Security - Input Validation
   subCategory: IMPROPER_PAGE_SIZE_HANDLING_MCP
   severity: LOW
   tags:
@@ -44,7 +44,7 @@ api_selection_filters:
     - params
     for_one:
       key:
-        contains_either: $magic check for any parameter which is for pagination. Get the parameter key which controls the total number of records to fetch. Do not return value or any key which is unique or does not contains pagination related value
+        contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. check for any parameter which is for pagination inside `arguments` object. Get the parameter key which controls the total number of records to fetch. If found then return the selected key. Else return empty braces []. Do not select the key `name`."
         extract: limitKey
       value:
         extract: limitValue

@@ -9,9 +9,9 @@ info:
   impact: |
     "Bypassing input validation with null values can lead to security vulnerabilities, unauthorized access, data corruption, or other unexpected behaviors. If users can manipulate input validation by inserting null characters, they could potentially gain access to restricted areas, bypass authentication mechanisms, or exploit other weaknesses in the application. Ensuring robust validation and sanitization of all input data, including null characters, is crucial to maintaining the security and integrity of the application."
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: Model Context Protocol (MCP) Security - Input Validation
   subCategory: BYPASS_INPUT_VALIDATION_WITH_NULL_VALUES_MCP
   severity: LOW
   tags:
@@ -44,7 +44,7 @@ api_selection_filters:
     - params
     for_one:
       key:
-        regex: .*
+        contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any one key inside `arguments` which has a value of type string. If found then return the selected key. Else return empty braces []. Do not select the key `name`"
         extract: userKey
       value:
         extract: userVal

@@ -9,9 +9,9 @@ info:
   impact: |
     Failure to properly handle invalid header values can lead to security risks such as denial of service, information leakage, or incorrect processing of requests. Servers that do not sanitize or validate header input may be susceptible to attacks that exploit these weaknesses, potentially allowing unauthorized access or disruption of service.
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: Model Context Protocol (MCP) Security - Input Validation
   subCategory: HEADER_INVALID_VALUES_MCP
   severity: LOW
   tags:
@@ -45,7 +45,7 @@ api_selection_filters:
   request_headers:
     for_one:
       key:
-        regex: .*
+        regex: ^(?!.*\b[hH]ost\b).*
         extract: userKey
       value:
         extract: userVal
@@ -69,8 +69,6 @@ execute:
         response_payload:
           length:
             gt: 0
-          percentage_match:
-            gte: 90
           not_contains: "${badList}"
     - success: vulnerable
     - failure: x3
@@ -84,8 +82,6 @@ execute:
         response_payload:
           length:
             gt: 0
-          percentage_match:
-            gte: 90
           not_contains: "${badList}"
     - success: vulnerable
     - failure: x4

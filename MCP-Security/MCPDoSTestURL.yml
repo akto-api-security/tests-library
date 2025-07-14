@@ -5,9 +5,9 @@ info:
   details: "In this testing scenario, the focus lies on manipulating URL by injecting lengthy strings. By inundating the system with such inputs, testers analyze how the application manages the parsing and processing of these parameters. This method aims to uncover vulnerabilities in key handling mechanisms, providing insights into potential weaknesses that malicious actors could exploit to disrupt the system's functionality through Denial of Service (DoS) attacks."
   impact: "The impact of successful Denial of Service (DoS) attacks via manipulation of URL can be significant. It may result in system slowdowns, unresponsiveness, or complete service outages, disrupting normal operations. Additionally, such attacks could compromise the availability and reliability of the system, leading to financial losses and reputational damage due to the perception of inadequate security measures."
   category:
-    name: RL
-    shortName: Lack of Resources & Rate Limiting
-    displayName: Lack of Resources & Rate Limiting (RL)
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: Model Context Protocol (MCP) Security - Denial of Service
   subCategory: DOS_TEST_URL_MCP
   severity: HIGH
   tags:
@@ -30,11 +30,15 @@ attributes:
 
 api_selection_filters:
   method:
-    neq: "OPTIONS"
+    eq: "POST"
   response_code:
     gte: 200
     lt: 300
   response_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
     not_contains:
       - Error
       - Internal Server
@@ -74,8 +78,8 @@ execute:
             dummy_Header_Key: "dummyValue"
         - validate:
             response_payload:
-              percentage_match:
-                gte: 90
+              # percentage_match:
+              #   gte: 90
               not_contains:
                 - Error
                 - Internal Server

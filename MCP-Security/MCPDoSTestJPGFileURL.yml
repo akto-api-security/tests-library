@@ -5,9 +5,9 @@ info:
   details: "This test involves inputting a large JPG file URL to flood the system with data requests, aiming to overwhelm its capacity and render it unresponsive. It evaluates the system's resilience against denial of service (DoS) attacks, assessing its ability to handle resource exhaustion and identifying potential vulnerabilities in its defense mechanisms. The test focuses on the system's mitigation strategies and resilience under stress."
   impact: "The impact of this test could potentially disrupt essential services and cause downtime for users reliant on the affected system. By overwhelming its capacity, legitimate users may be unable to access resources, leading to financial losses and reputational damage for the organization. Furthermore, if left unaddressed, such vulnerabilities could be exploited by malicious actors to orchestrate more severe attacks, jeopardizing data integrity and compromising sensitive information."
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: Model Context Protocol (MCP) Security - Denial of Service
   subCategory: DOS_FILE_URL_JPG_MCP
   severity: HIGH
   tags:
@@ -61,8 +61,8 @@ execute:
             dummy_Header_Key: "dummyValue"
         - validate:
             response_payload:
-              percentage_match:
-                gte: 90
+              # percentage_match:
+              #   gte: 90
               not_contains:
                 - Error
                 - Internal Server

@@ -11,9 +11,9 @@ info:
   impact: |
     Accepting requests with incorrect or unsupported `jsonrpc` versions can lead to undefined behavior, potential parsing issues, or security inconsistencies in how requests are processed, especially across different tools or protocol evolutions.
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: Model Context Protocol (MCP) Security - Input Validation
   subCategory: INPUT_VALIDATION_BY_PASSING_UNSUPPORTED_JSONRPC_VERISON
   severity: LOW
   tags:
@@ -23,13 +23,14 @@ info:
   - Business logic
   references:
   - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
-  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
-  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://owasp.org/www-project-developer-guide/latest/design/web_app_checklist/validate_inputs/
+  - https://www.jsonrpc.org/specification
   cwe:
   - CWE-20
   cve:
-  - CVE-2018-20679
-  - CVE-2019-14271
+  - CVE-2018-20487
+  - CVE-2024-20381
 attributes:
   nature: INTRUSIVE
   plan: PRO

@@ -5,9 +5,9 @@ info:
   details: "This test involves inundating a system's request with an excessive number of JSON body parameters, potentially overwhelming its capacity to process incoming data. Testers assess how the system copes with this barrage of parameters, scrutinizing its ability to parse and handle the influx of information effectively. The objective is to uncover any weaknesses in parameter handling that could be exploited by attackers to disrupt the system's functionality through Denial of Service (DoS) attacks."
   impact: "A successful Denial of Service (DoS) attack via bombarding multiple JSON body parameters in a request can have severe consequences. It may lead to system instability, causing slowdowns, unresponsiveness, or even crashes as the system struggles to process the overwhelming volume of data. Additionally, service disruptions can frustrate users, resulting in diminished trust and potential reputational damage for the organization, highlighting vulnerabilities in its request handling mechanisms."
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: Model Context Protocol (MCP) Security - Denial of Service
   subCategory: JSON_BODY_PARAM_BOMBING_DOS_MCP
   severity: HIGH
   tags:
@@ -41,7 +41,7 @@ api_selection_filters:
     - params
     for_one:
       key:
-        contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any one key inside `arguments`. If found then return the selected key. Else return empty braces [] if not found"
+        contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any one key inside `arguments` whose value is either a string, number, decimal or boolean. If found then return the selected key. Else return empty braces [] if not found. Do not select the key `name`"
         extract: userKey
       value:
         extract: userVal

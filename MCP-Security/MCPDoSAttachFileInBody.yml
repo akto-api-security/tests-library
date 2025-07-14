@@ -5,9 +5,9 @@ info:
   details: "In this test, a large file is sent within the request body to exhaust the system's processing resources, potentially causing it to become unresponsive. By inundating the system with excessive data, it evaluates its ability to handle and process incoming requests efficiently. This test helps uncover vulnerabilities in the system's defenses against Denial of Service (DoS) attacks, highlighting areas for improvement in its resilience and response mechanisms."
   impact: "The impact of this test can disrupt essential services, leading to system downtime and hindering user access. By overwhelming processing resources, legitimate requests may be delayed or denied, resulting in degraded performance and user frustration. Moreover, if not adequately mitigated, such vulnerabilities could be exploited by attackers to execute more severe attacks, potentially compromising system integrity and exposing sensitive data."
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: Model Context Protocol (MCP) Security - Denial of Service
   subCategory: DOS_ATTACH_FILE_IN_BODY_MCP
   severity: HIGH
   tags:

@@ -5,9 +5,9 @@ info:
   details: "In this testing scenario, the focus lies on manipulating the keys of JSON Body parameters by injecting lengthy and random strings. By inundating the system with such inputs, testers analyze how the application manages the parsing and processing of these parameters. This method aims to uncover vulnerabilities in key handling mechanisms, providing insights into potential weaknesses that malicious actors could exploit to disrupt the system's functionality through Denial of Service (DoS) attacks."
   impact: "The impact of successful Denial of Service (DoS) attacks via manipulation of JSON Body Parameter keys can be significant. It may result in system slowdowns, unresponsiveness, or complete service outages, disrupting normal operations. Additionally, such attacks could compromise the availability and reliability of the system, leading to financial losses and reputational damage due to the perception of inadequate security measures."
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: Model Context Protocol (MCP) Security - Denial of Service
   subCategory: DOS_JSON_BODY_KEY_MCP
   severity: HIGH
   tags:
@@ -42,7 +42,7 @@ api_selection_filters:
   request_payload:
     for_one:
       key:
-        contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any one key inside `arguments` whose value is a primitive (string, number, boolean). Do not select keys whose values are arrays or objects. Return the selected key."
+        contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any one key inside `arguments` whose value is either a string, number, decimal or boolean. If found then return the selected key. Else return empty braces []. Do not select the key `name`"
         extract: userKey
       value:
         extract: userValue
@@ -64,8 +64,8 @@ execute:
             dummy_Header_Key: "dummyValue"
         - validate:
             response_payload:
-              percentage_match:
-                gte: 90
+              # percentage_match:
+              #   gte: 90
               not_contains:
                 - Error
                 - Internal Server

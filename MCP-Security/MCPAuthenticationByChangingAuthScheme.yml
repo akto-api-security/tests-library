@@ -9,9 +9,9 @@ info:
   impact: |
     Accepting requests with the wrong authorization scheme may allow bypassing intended authentication mechanisms or introduce unexpected behavior.
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_AUTH
+    shortName: MCP_AUTH
+    displayName: Model Context Protocol (MCP) Security - Broken Authentication
   subCategory: AUTHENTICATION_WITH_WRONG_AUTH_SCHEME_MCP
   severity: HIGH
   tags:
@@ -43,9 +43,10 @@ api_selection_filters:
   request_headers:
     for_one:
       key:
-        contains_either: "$magic From the request headers, find the key that contains the authorization information. It must contain the access token or credentials used for authentication. Return only the exact key name from the headers."
+        regex: .*
         extract: authHeaderKey
       value:
+        regex: ^Bearer.*
         extract: authHeaderVal
 execute:
   type: single
@@ -54,5 +55,7 @@ execute:
     - modify_header:
         authHeaderKey: "Basic ${authHeaderVal}"
 validate:
+  response_code:
+    gte: 401
   response_payload:
     contains_either: "$magic Check whether the response contains any kind of error response (error status, error fields, error messages, error flags or any json key related to error) related to authentication failure. If there is any error then return nothing just empty braces []. Else return a list of words from the response only in case of successful response."

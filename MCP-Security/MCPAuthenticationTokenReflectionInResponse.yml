@@ -9,9 +9,9 @@ info:
   impact: |
     Token reflection can lead to credential exposure, log injection, or unintended propagation of secrets, especially if the server response is cached or logged.
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_AUTH
+    shortName: MCP_AUTH
+    displayName: Model Context Protocol (MCP) Security - Broken Authentication
   subCategory: AUTHENTICATION_TOKEN_REFLECTION_IN_RESPONSE_MCP
   severity: HIGH
   tags:
@@ -53,8 +53,5 @@ execute:
   requests:
   - req: []
 validate:
-  or:
-  - response_payload:
-      contains_either: "$magic Check whether the response body contains the authentication token value that was passed in the request header (the heder value: ${authHeaderVal}). If there is no exact token matching, then return just empty braces. Else return a list with the exact token found in the response."
-  - response_headers:
-      contains_either: "$magic Check whether the response headers contains the authentication token value that was passed in the request header (the heder value: ${authHeaderVal}). If there is no exact token matching, then return just empty braces. Else return a list with the exact token found in the response."
+  response_payload:
+    contains_either: "$magic Check whether the response body contains the authentication token value that was passed in the request header (the heder value: ${authHeaderVal}). If there is no exact token matching, then return just empty braces. Else return a list with the exact token found in the response."

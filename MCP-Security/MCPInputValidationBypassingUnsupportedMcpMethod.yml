@@ -3,15 +3,15 @@ id: INPUT_VALIDATION_BY_PASSING_UNSUPPORTED_MCP_METHOD
 info:
   name: Input Validation by passing unsupport mcp method
   description: |
-    This test checks the application's validation mechanisms by replacing expected object structures with arrays.
+    This test checks whether the MCP server properly validates unsupported or unexpected values in the method field of an MCP request.
   details: |
-    The test involves sending requests where objects are replaced by arrays to assess whether the application appropriately detects and rejects this structural mismatch.
+    The test modifies the method value in the JSON-RPC request (e.g., to tools/attack) to an invalid or undefined value. This helps assess if the server appropriately validates method names and rejects calls to unauthorized or undefined methods.
   impact: |
-    Inadequate validation can result in processing errors, security flaws, or the ability to manipulate application logic through unexpected data structures.
+    If unsupported method names are accepted or executed, it may indicate weak validation, misconfigured routing, or potential backdoor exposure. This can lead to misuse of internal functionality or unauthorized access.
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: Model Context Protocol (MCP) Security - Input Validation
   subCategory: INPUT_VALIDATION_BY_PASSING_UNSUPPORTED_MCP_METHOD
   severity: LOW
   tags:
@@ -20,12 +20,13 @@ info:
   - HackerOne top 10
   references:
   - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
-  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://www.jsonrpc.org/specification
   cwe:
   - CWE-20
   cve:
-  - CVE-2018-20679
-  - CVE-2019-14271
+  - CVE-2018-20487
+  - CVE-2024-20381
 attributes:
   nature: INTRUSIVE
   plan: PRO

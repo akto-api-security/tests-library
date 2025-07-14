@@ -2,13 +2,13 @@
 id: MCP_BREAKING_JSON_PARSING
 info:
   name: Breaking JSON Parsing (MCP)
-  description: "This test evaluates the system's ability to correctly handle and parse JSON input, especially when special characters, escape sequences, or malformed data are included. The objective is to identify vulnerabilities that could allow users to break JSON parsing, leading to application errors, security risks, or data corruption."
-  details: "The test involves sending API requests with JSON payloads containing special characters (e.g., newline characters like '\L', null characters like '\0'), escape sequences, or malformed JSON structures. For example, a user might include a control character in a string field (e.g., 'comment') to test whether the JSON parser can handle it correctly. The test checks whether the application properly sanitizes, validates, and parses JSON input without causing errors or exposing vulnerabilities."
-  impact: "Breaking JSON parsing can lead to various security issues, such as injection attacks, denial of service, and data corruption. If users can manipulate JSON payloads to cause parsing errors or bypass validation, it undermines the application's security and stability. Ensuring robust parsing, sanitization, and validation of JSON input is crucial to prevent exploitation and maintain the integrity and security of the application."
+  description: "This test checks whether MCP servers robustly handle unexpected or control characters in JSON input. It evaluates the parser’s resilience when special values like null bytes, invalid Unicode, or control characters are prepended to valid JSON content, identifying risks that could lead to parsing issues or input validation bypasses."
+  details: "The test sends API requests with JSON payloads that prepend various special characters — such as null bytes ('\\0'), invalid Unicode sequences, or control characters — to valid JSON content (`userBody`). This helps detect whether the application’s JSON parser or request preprocessing logic is vulnerable to input parsing issues or can be tricked into misinterpreting the payload. The test does not use malformed JSON structures, but focuses on injecting control data that could exploit weak parsers or insufficient input sanitization."
+  impact: "Failure to handle special or unexpected characters in JSON payloads can lead to parsing anomalies, denial of service, or bypass of validation logic. An attacker may exploit these weaknesses to disrupt normal operation, trigger unhandled exceptions, or evade input validation. Ensuring strict and predictable JSON parsing is critical to maintaining application stability and security."
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: Model Context Protocol (MCP) Security - Input Validation
   subCategory: MCP_BREAKING_JSON_PARSING
   severity: LOW
   tags:

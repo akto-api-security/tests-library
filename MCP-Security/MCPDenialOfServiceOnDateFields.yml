@@ -9,9 +9,9 @@ info:
   impact: |
     Improper handling of extreme date inputs can cause high CPU utilization, long processing times, or crashes. This compromises the reliability and availability of the MCP server, potentially opening the door to denial-of-service attacks.
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: Model Context Protocol (MCP) Security - Denial of Service
   subCategory: DATE_FIELD_DOS_MCP
   severity: HIGH
   tags:
@@ -41,7 +41,7 @@ api_selection_filters:
   - request_payload:
       for_one:
         key:
-          contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any one key inside `arguments` whose value looks like a date or timestamp field (e.g., values like \"2023-01-01\", \"01/01/2023\", timestamps, or date-like strings). Return the selected key only. Do not return nested paths or example values."
+          contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any one key inside `arguments` whose value is either a string, number, decimal or boolean. If found then return the selected key. Else return empty braces []. Do not select the key `name`"
           extract: userKey
   - request_payload:
       for_one:

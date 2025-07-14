@@ -9,9 +9,9 @@ info:
   impact: |
     "Improper handling of Accept headers can lead to unexpected behavior in the application, including the potential exposure of sensitive endpoints, mis-routing of requests, or information disclosure through error messages. The consistent receipt of a 406 Not Acceptable response indicates that the application correctly rejects unsupported media types, but any other response may suggest vulnerabilities in the API's content negotiation logic."
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: Model Context Protocol (MCP) Security - Input Validation
   subCategory: DUMMY_ACCEPT_HEADER_MCP
   severity: LOW
   tags:
