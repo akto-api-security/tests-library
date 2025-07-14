@@ -1,0 +1,60 @@
+---
+id: AUTHENTICATION_TOKEN_REFLECTION_IN_RESPONSE_MCP
+info:
+  name: Authenticaton Token Reflection in Response
+  description: |
+    This test verifies whether the access token provided in the Authorization header is echoed back in the server's response.
+  details: |
+    Reflecting sensitive tokens in the response increases the risk of token leakage through logs, error messages, or intermediate systems. This test sends a valid token and observes whether it is reflected back in the response body.
+  impact: |
+    Token reflection can lead to credential exposure, log injection, or unintended propagation of secrets, especially if the server response is cached or logged.
+  category:
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: AUTHENTICATION_TOKEN_REFLECTION_IN_RESPONSE_MCP
+  severity: HIGH
+  tags:
+  - Authentication
+  - Token reflection
+  - OWASP top 10
+  - Business logic
+  references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html
+  - https://owasp.org/www-community/attacks/Information_exposure_through_query_strings_in_url
+  cwe:
+  - CWE-200
+  cve:
+  - CVE-2023-1644
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+  request_headers:
+    for_one:
+      key:
+        contains_either: "$magic From the request headers, find the key that contains the authorization information. It must contain the access token or credentials used for authentication. Return only the header key name."
+        extract: authHeaderKey
+      value:
+        extract: authHeaderVal
+execute:
+  type: single
+  requests:
+  - req: []
+validate:
+  or:
+  - response_payload:
+      contains_either: "$magic Check whether the response body contains the authentication token value that was passed in the request header (the heder value: ${authHeaderVal}). If there is no exact token matching, then return just empty braces. Else return a list with the exact token found in the response."
+  - response_headers:
+      contains_either: "$magic Check whether the response headers contains the authentication token value that was passed in the request header (the heder value: ${authHeaderVal}). If there is no exact token matching, then return just empty braces. Else return a list with the exact token found in the response."

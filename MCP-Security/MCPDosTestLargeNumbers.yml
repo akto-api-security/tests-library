@@ -1,0 +1,132 @@
+id: DOS_TEST_LARGE_NUMBERS_MCP
+info:
+  name: "Denial of Service Test by Entering Numbers (MCP)"
+  description: >
+    This test evaluates the application's ability to handle extremely large numeric inputs and its resilience to potential denial of service conditions.
+  details: >
+    The test involves iteratively replacing numeric fields in requests with very large decimal values (up to 40,000 digits for the integer part and 40 digits for the decimal part) and very large integers (up to 40,000 digits) to assess the system's response and stability.
+  impact: >
+    Improper handling of large numeric values may lead to performance degradation, resource exhaustion, or even application crashes, rendering the service unavailable to legitimate users.
+
+  category:
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: DOS_TEST_LARGE_NUMBERS_MCP
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa4-unrestricted-resource-consumption.md"
+  cwe:
+    - CWE-400
+  cve:
+    - CVE-2023-4647
+    - CVE-2023-38254
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+
+
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+    for_one:
+      key:
+        contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any one key inside `arguments` whose value is a number. Do not select keys whose values are arrays or objects or alphanumeric. Return the selected key else return empty braces [] if not found"        extract: userKey
+      value:
+        datatype: number
+        extract: userVal
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - add_header:
+            x-akto-ignore: "0"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${badList}
+        - success: x2
+        - failure: exit
+    - req:
+        - delete_body_param: ${userKey}
+        - validate:
+            response_code:
+              gte: 400
+        - success: x3
+        - failure: exit
+    - req:
+        - modify_body_param:
+            userKey: ${attemptValues}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${badList}
+
+validate:
+  and:
+    - compare_greater:
+        - ${x3.response.stats.median_response_time}
+        - 3001
+    - compare_greater:
+        - ${x3.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 4
+
+wordLists:
+  attemptValues:
+    - 11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+    - 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+
+  badList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
