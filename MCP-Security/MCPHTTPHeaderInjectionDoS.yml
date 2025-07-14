@@ -5,9 +5,9 @@ info:
   details: "In this test, attackers input unusually long or random IP addresses into HTTP headers, such as `X-Forwarded-For`, to evaluate how the system handles such input. The intent is to see if the server or application becomes unresponsive or crashes due to excessive resource usage or malformed input processing. This can help identify weaknesses in how the system parses and manages IP address data, potentially leading to Denial of Service (DoS) conditions."
   impact: "The impact of this Denial of Service (DoS) test can be significant, potentially causing system slowdowns, crashes, or outages. By overwhelming the system with excessively long or random IP addresses, the test may lead to resource exhaustion or processing errors. This disruption can affect the availability and reliability of the service, potentially resulting in downtime or degraded performance for users."
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: Model Context Protocol (MCP) Security - Denial of Service
   subCategory: HTTP_HEADER_IP_INJECTION_DOS_MCP
   severity: MEDIUM
   tags:
