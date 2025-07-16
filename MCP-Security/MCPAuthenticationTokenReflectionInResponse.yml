@@ -54,4 +54,4 @@ execute:
   - req: []
 validate:
   response_payload:
-    contains_either: "$magic Check whether the response body contains the authentication token value that was passed in the request header (the heder value: ${authHeaderVal}). If there is no exact token matching, then return just empty braces. Else return a list with the exact token found in the response."
+    contains_either: "$magic Check whether the response body contains the authentication token value that was passed in the request header (the header value: ${authHeaderVal}). If there is no exact token matching, then return just empty braces. Else return a list with the exact token found in the response."

@@ -55,4 +55,4 @@ execute:
   - req: []
 validate:
   response_headers:
-    contains_either: "$magic Check whether the response headers contains any authentication token value that was passed in the request header (the heder value: ${authHeaderVal}). If there is no exact token matching, then return just empty braces. Else return a list of words with the actual token found in the response header only."
+    contains_either: "$magic Check whether the response headers contains any authentication token value that was passed in the request header (the header value: ${authHeaderVal}). If there is no exact token matching, then return just empty braces. Else return a list of words with the actual token found in the response header only."
