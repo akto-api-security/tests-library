@@ -3,14 +3,13 @@ filter:
   or:
     - request_payload:
         regex:
-          - (?i)(?:<\s*(script|img|svg|iframe|body|embed|object|video|audio|marquee|style|link|meta|form|input|button|textarea|select|option)[^>]*>|(?:javascript:|data:text\/html)|on\w+\s*=|alert\s*\(|confirm\s*\(|prompt\s*\(|eval\s*\(|document\.cookie|document\.domain|location\.href|window\.location|&#x?[\da-f]{2,5};)
+          - "(?i)(<|%3[cC]|&#x3[cC];)[^\\n]{0,250}?on\\w+\\s*=|<\\s*(script|img|svg|iframe|body|embed|object|video|audio|marquee|style|link|meta|form|input|button|textarea|select|option|br)[^>]*>|<script[^>]*src\\s*=\\s*([\"'])?data:.*|javascript:|data:text/html|\\b(alert|prompt|confirm|eval|navigator\\.vibrate|top|document\\.cookie|document\\.domain|location\\.href|window\\.location)\\b|&#x?[\\da-f]{2,5};"
     - query_param:
         regex:
-          - (?i)(?:<\s*(script|img|svg|iframe|body|embed|object|video|audio|marquee|style|link|meta|form|input|button|textarea|select|option)[^>]*>|(?:javascript:|data:text\/html)|on\w+\s*=|alert\s*\(|confirm\s*\(|prompt\s*\(|eval\s*\(|document\.cookie|document\.domain|location\.href|window\.location|&#x?[\da-f]{2,5};)
+          - "(?i)(<|%3[cC]|&#x3[cC];)[^\\n]{0,250}?on\\w+\\s*=|<\\s*(script|img|svg|iframe|body|embed|object|video|audio|marquee|style|link|meta|form|input|button|textarea|select|option|br)[^>]*>|<script[^>]*src\\s*=\\s*([\"'])?data:.*|javascript:|data:text/html|\\b(alert|prompt|confirm|eval|navigator\\.vibrate|top|document\\.cookie|document\\.domain|location\\.href|window\\.location)\\b|&#x?[\\da-f]{2,5};"
     - request_headers:
         regex:
-          - (?i)(?:<\s*(script|img|svg|iframe|body|embed|object|video|audio|marquee|style|link|meta|form|input|button|textarea|select|option)[^>]*>|(?:javascript:|data:text\/html)|on\w+\s*=|alert\s*\(|confirm\s*\(|prompt\s*\(|eval\s*\(|document\.cookie|document\.domain|location\.href|window\.location|&#x?[\da-f]{2,5};)
-
+          - "(?i)(<|%3[cC]|&#x3[cC];)[^\\n]{0,250}?on\\w+\\s*=|<\\s*(script|img|svg|iframe|body|embed|object|video|audio|marquee|style|link|meta|form|input|button|textarea|select|option|br)[^>]*>|<script[^>]*src\\s*=\\s*([\"'])?data:.*|javascript:|data:text/html|\\b(alert|prompt|confirm|eval|navigator\\.vibrate|top|document\\.cookie|document\\.domain|location\\.href|window\\.location)\\b|&#x?[\\da-f]{2,5};"
 
 info:
   name: "XSS"
