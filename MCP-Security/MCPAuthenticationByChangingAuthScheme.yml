@@ -59,4 +59,4 @@ validate:
     gte: 200
     lt: 300
   response_payload:
-    contains_either: "$magic Check whether the response contains any kind of error response (error status, error fields, error messages, error flags or any json key related to error) related to authentication failure. If there is any error then return nothing just empty braces []. Else return a list of words from the response only in case of successful response."
+    not_contains: "$magic check if the response is invalid and failed due to authentication or authorization error. Return empty braces [] if response has error code or message. Else return listy of words from the successful response."
