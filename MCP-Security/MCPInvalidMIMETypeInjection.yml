@@ -1,0 +1,80 @@
+---
+id: MCP_INVALID_MIME_TYPE_INJECTION
+info:
+  name: Invalid MIME Type Injection (MCP)
+  description: |
+    This test injects unexpected or invalid MIME types during resource read operations to check if the system properly validates and handles MIME types for resource responses.
+  details: |
+    Failing to validate MIME types can allow content spoofing, misinterpretation of file types, or trigger vulnerabilities in clients that process the returned data. This test targets `resources/read` endpoints and manipulates the `Accept` header or query parameters to inject invalid MIME types.
+  impact: |
+    Improper MIME type handling can result in content spoofing, client-side code execution, or misclassified resources being processed insecurely, leading to client compromise or data leakage.
+  category:
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_INVALID_MIME_TYPE
+  severity: MEDIUM
+  tags:
+  - MIME Type Injection
+  - Content Spoofing
+  - Content-Type Validation
+  - MCP Resource Abuse
+  references:
+  - https://modelcontextprotocol.io/docs/concepts/resources
+  - https://owasp.org/www-community/attacks/MIME_Sniffing
+  cwe:
+  - CWE-494
+  - CWE-79
+  cve: []
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+  and:
+  - request_payload:
+      for_one:
+        key:
+          contains_either: "$magic From the request body, locate the `params` object. Inside `params`, select keys that contain a valid relative URL (string starting with `/` or without protocol). Return the list of such keys. Exclude `name`."
+        value:
+          extract: uriParam
+  - request_payload:
+      for_one:
+        key:
+          eq: method
+        value:
+          regex: "^resources/read[^ ]*$"
+wordLists:
+  maliciousMimeTypes:
+  - application/x-msdownload
+  - text/html
+  - application/javascript
+  - image/svg+xml
+  - application/x-shockwave-flash
+  - application/x-bash
+  - text/x-python
+  - application/zip
+  mimeIndicators:
+  - <script>
+  - "Content-Disposition: attachment"
+  - application/x-msdownload
+  - Unexpected MIME
+  - File download triggered
+  - Executable content
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_header:
+        Accept: "${maliciousMimeTypes}"
+validate:
+  response_payload:
+    or:
+    - contains_either: "${mimeIndicators}"
+    - contains_either: |
+        $magic Check if the response returned data in an unsafe or unexpected MIME type like executable, HTML, or script types. Confirm whether this could result in client-side execution, spoofing, or unsafe rendering.
