@@ -1,0 +1,77 @@
+---
+id: MCP_METHOD_NOT_FOUND
+info:
+  name: Method Not Found (MCP)
+  description: >
+    This test checks whether the MCP server correctly handles calls to unknown or non-existent methods.
+    It verifies that a well-formed JSON-RPC error is returned with the appropriate MCP error code (-32601).
+  details: >
+    The test modifies the `method` field of a valid MCP request to use an invalid, authentic-looking method name.
+    A compliant server must return error code -32601 without leaking internal tracebacks or debugging details.
+  impact: >
+    Improper handling of unknown method calls may lead to broken clients or information exposure.
+  category:
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_METHOD_NOT_FOUND
+  severity: MEDIUM
+  tags:
+    - Error handling
+    - MCP compliance
+    - jsonrpc
+  references:
+    - https://www.jsonrpc.org/specification#error_object
+  cwe:
+    - CWE-209
+  cve: []
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  and:
+    - request_payload:
+        for_one:
+          key:
+            regex: '"method"\s*:\s*"(tools|resources|prompts)/[^"]+"'
+            extract: changed_method
+    - request_payload:
+        contains_all:
+          - jsonrpc
+          - method
+          - params
+wordLists:
+  invalidMethodNames:
+    - "tools/invalidSecurePrompt"
+    - "resources/fakeResourceSync"
+    - "prompts/nonExistentFlow"
+    - "tools/invokeImaginary"
+    - "resources/missingCall"
+  methodNotFoundCode:
+    - '"code": -32601'
+  errorIndicators:
+    - "Traceback"
+    - "Exception"
+    - "RuntimeError"
+    - "StackTrace"
+execute:
+  type: single
+  requests:
+    - req:
+        - add_header:
+            x-akto-ignore: 123
+        - modify_body_param:
+            changed_method: ${invalidMethodNames}
+validate:
+  response_payload:
+    or:
+      - contains_either: "${methodNotFoundCode}"
+      - $magic: >
+          Check if the response includes a valid MCP error indicating the requested method was not found.
+          The error should include code -32601 or an equivalent explanation, and should not include stack traces or internal debug info.
