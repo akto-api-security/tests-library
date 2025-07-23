@@ -66,6 +66,10 @@ wordLists:
     - http://localhost:22
     - http://localhost:80
     - http://localhost:443
+    - http://localhost:8443
+    - http://localhost:3000
+    - http://localhost:5000
+    - http://localhost:8000
     - http://localhost:8080
     - http://localhost:27017
 
@@ -83,11 +87,18 @@ validate:
     gte: 200
     lt: 300
   response_payload:
-    regex:
-      - "(?i)rejected"
-      - "(?i)refused"
-      - "(?i)timeout"
-      - "MongoDB"
+    or: 
+    - regex:
+        - "(?i)rejected"
+        - "(?i)refused"
+        - "(?i)timeout"
+        - "MongoDB"
+    - length:
+      - gt: 0
+      percentage_match_schema:
+      - gte: 60
+      percentage_match:
+      - gt: 50
     not_contains:
       - Access Denied
       - Error
