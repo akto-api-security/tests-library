@@ -1,0 +1,127 @@
+---
+id: REPLACE_CSRF_EVENUP
+info:
+  name: CSRF test by replacing with invalid csrf token Custom 1753369747
+  description: Vulnerability assessment by replacing the CSRF token with an invalid one
+  details: |
+    "Evaluating the effectiveness of the web application's CSRF protection mechanism by intentionally replacing the CSRF token" "and assessing if unauthorized actions can be successfully executed, potentially exposing the system to security risks and breaches."
+  impact: |
+    "Successful execution of unauthorized actions due to the absence of CSRF token may result in severe consequences," "such as unauthorized data modification, account hijacking, or sensitive information disclosure," "highlighting critical vulnerabilities and emphasizing the need for robust CSRF protection measures."
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: REPLACE_CSRF
+  severity: HIGH
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://portswigger.net/web-security/csrf
+  - https://owasp.org/www-community/attacks/csrf
+  - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md
+  cwe:
+  - CWE-352
+  cve:
+  - CVE-2023-27495
+  - CVE-2020-27379
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+  or:
+  - request_headers:
+      for_one:
+        key:
+          contains_either: csrf
+        value:
+          not_contains:
+          - ':'
+          - ;
+  - query_param:
+      for_one:
+        key:
+          contains_either: csrf
+        value:
+          not_contains:
+          - ':'
+          - ;
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_header:
+        $magic: replace the csrf token with equal length alphanumeric string
+    - modify_query_param:
+        $magic: replace the csrf token with equal length alphanumeric string
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    percentage_match:
+      gt: 80
+    length:
+      gt: 0
+    not_contains:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
