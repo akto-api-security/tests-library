@@ -34,13 +34,17 @@ api_selection_filters:
   - request_payload:
       for_one:
         key:
-          regex: http
+          regex: .*
           extract: param_key
+        value:
+          regex: http
   - query_param:
       for_one:
         key:
-          regex: http
+          regex: .*
           extract: param_key
+        value:
+          regex: http
 
 wordLists:
   redirect_urls:
