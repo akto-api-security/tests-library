@@ -12,7 +12,7 @@ info:
     shortName: Broken Authentication
     displayName: Broken User Authentication (BUA)
   subCategory: NOSQLI_ERROR_BASED_PARAM_MONGO_SPECIAL_CHARACTERS
-  severity: MEDIUM
+  severity: HIGH
   tags:
     - Injection Attack
     - OWASP Top 10
@@ -80,14 +80,24 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
-            regex: .*
+            contains_either: ${attempt_Ids}
             extract: changed_body_key
     - query_param:
         for_one:
           key:
-            regex: .*
+            contains_either: ${attempt_Ids}
             extract: changed_query_key
 wordLists:
+  attempt_Ids:
+    - "name"
+    - "username"
+    - "email"
+    - "password"
+    - "userId"
+    - "userID"
+    - "user-id"
+    - "userid"
+    - "id"
   specialCharacters:
     - "'"
     - "\""
@@ -95,6 +105,7 @@ wordLists:
     - "."
     - ">"
     - "[\",\"]"
+    - "{\"$ne\": null}"
     - "{\"$gt\": \"\"}"
     - "{\"$ne\": \"nonexistentname\"}"
     - "{\"$where\": \"function() { throw 'Error'; }\"}"
@@ -120,6 +131,13 @@ validate:
         regex: "(?i)unterminated string literal"
     - response_payload:
         regex: "Cast to string failed for value"
+    - response_payload:
+        length:
+          gt: 0
+        percentage_match:
+          - gte: 30
+        percentage_match_schema:
+          - gte: 50
   response_payload:
     not_contains:
       - failed
