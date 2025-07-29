@@ -1,0 +1,47 @@
+id: STACK_TRACE_EXPOSED_CHANGE_AUTH
+info:
+  name: "Stack Trace Exposure via Auth Header Manipulation"
+  description: >
+    This test checks if stack traces or debugging information are exposed in API responses when the authentication header is replaced or tampered with. It targets endpoints that return a successful (2xx) response and inspects the payload for stack trace indicators such as "stack", "trace", or "stacktrace".
+  details: >
+    The test sends requests to API endpoints with the authentication header replaced, simulating an unauthorized or malformed authentication attempt. If the server responds with a 2xx status code, the response payload is analyzed for the presence of stack trace keywords. Exposure of such information can reveal sensitive implementation details, making the application more vulnerable to attacks.
+  impact: >
+    If stack traces or debugging information are exposed in API responses, attackers can gain insights into the application's internal logic, error handling, and potential vulnerabilities. This can facilitate further exploitation, information disclosure, and compromise of the application's security posture. Preventing stack trace exposure is essential to maintaining robust security and protecting sensitive data.
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: STACK_TRACE_EXPOSED_CHANGE_AUTH
+  severity: MEDIUM
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+  cwe:
+    - CWE-200
+    - CWE-16
+  cve:
+    - CVE-2021-43798
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+
+execute:
+  type: single
+  requests:
+    - req:
+        - replace_auth_header: true
+
+validate:
+  response_payload:
+    contains_either:
+      - "stack"
+      - "trace"
+      - stacktrace
