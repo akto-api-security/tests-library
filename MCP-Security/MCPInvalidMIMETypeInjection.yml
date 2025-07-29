@@ -41,14 +41,12 @@ api_selection_filters:
       for_one:
         key:
           contains_either: "$magic From the request body, locate the `params` object. Inside `params`, select keys that contain a valid relative URL (string starting with `/` or without protocol). Return the list of such keys. Exclude `name`."
-        value:
-          extract: uriParam
   - request_payload:
       for_one:
         key:
           eq: method
         value:
-          regex: "^resources/read[^ ]*$"
+          regex: "^resources/read"
 wordLists:
   maliciousMimeTypes:
   - application/x-msdownload

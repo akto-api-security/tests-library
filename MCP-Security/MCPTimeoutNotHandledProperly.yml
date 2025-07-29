@@ -52,12 +52,12 @@ api_selection_filters:
           - params
 wordLists:
   timeoutTriggerPayloads:
-    - '{"jsonrpc":"2.0", "method": "tool.call", "params": {"tool_name": "long_running_tool", "args": {"sleep": 10000}}, "id":1}'
-    - '{"jsonrpc":"2.0", "method": "resources.call", "params": {"resource": {"type": "compute", "id": "slow-op"}}, "id":1}'
+    - '{"jsonrpc":"2.0", "method": "tools/call", "params": {"tool_name": "long_running_tool", "args": {"sleep": 10000}}, "id":1}'
+    - '{"jsonrpc":"2.0", "method": "resources/read", "params": {"resource": {"type": "compute", "id": "slow-op"}}, "id":1}'
   mcpValidTimeoutCodes:
-    - '"code": -32000'
-    - '"code": -32001'
-    - '"code": -32603'
+    - '-32000'
+    - '-32001'
+    - '-32603'
   timeoutKeywords:
     - "timeout"
     - "request timed out"

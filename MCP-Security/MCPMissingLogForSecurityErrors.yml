@@ -53,10 +53,10 @@ api_selection_filters:
           - params
 wordLists:
   securityErrorPayloads:
-    - '{"jsonrpc":"2.0", "method": "tool.call", "params": {"tool_name": null}, "id":1}'
-    - '{"jsonrpc":"2.0", "method": "resources.list", "params": {"filter": {"type": "secrets", "provider": "invalid"}}, "id":1}'
-    - '{"jsonrpc":"2.0", "method": "resources.call", "params": {"resource": {"type": "secrets", "provider": "unknown", "id": "fake"}}, "id":1}'
-    - '{"jsonrpc":"2.0", "method": "resources.call", "params": {"resource": {"id": null}}, "id":1}'
+    - '{"jsonrpc":"2.0", "method": "tools/call", "params": {"tool_name": null}, "id":1}'
+    - '{"jsonrpc":"2.0", "method": "resources/list", "params": {"filter": {"type": "secrets", "provider": "invalid"}}, "id":1}'
+    - '{"jsonrpc":"2.0", "method": "resources/read", "params": {"resource": {"type": "secrets", "provider": "unknown", "id": "fake"}}, "id":1}'
+    - '{"jsonrpc":"2.0", "method": "resources/read", "params": {"resource": {"id": null}}, "id":1}'
   mcpValidErrorCodes:
     - '"code": -32600'
     - '"code": -32602'

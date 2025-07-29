@@ -37,7 +37,7 @@ api_selection_filters:
   - request_payload:
       for_one:
         key:
-          regex: params
+          regex: params|content 
           extract: changed_param
   - request_payload:
       contains_all:
@@ -51,7 +51,7 @@ wordLists:
   - "{}"
   - '"invalid"'
   invalidParamsCode:
-  - "\"code\": -32602"
+  - "-32602"
   errorIndicators:
   - Traceback
   - Exception
