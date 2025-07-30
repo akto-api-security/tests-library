@@ -44,7 +44,8 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
-            contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any one key inside `arguments` whose value is a primitive (string, number, boolean). Do not select keys whose values are arrays or objects. Do not select the key `name`. Return the selected key."            extract: userKey
+            contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any one key inside `arguments` whose value is a primitive (string, number, boolean). Do not select keys whose values are arrays or objects. Do not select the key `name`. Return the selected key."            
+          extract: userKey
     - query_param:
         for_one:
           key:
