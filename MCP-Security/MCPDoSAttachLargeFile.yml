@@ -1,0 +1,88 @@
+id: DOS_ATTACH_LARGE_FILE_MCP
+info:
+  name: "Denial of Service test by providing a large file as input (MCP)"
+  description: "In this Denial of Service (DoS) test, a large file is included in the request body to overwhelm the targeted system's processing capabilities. By inundating the system with excessive data in the request payload, this test aims to evaluate its resilience against resource exhaustion attacks. It assesses the system's ability to handle and process large volumes of data efficiently, identifying potential vulnerabilities in its defense mechanisms against DoS incidents."
+  details: "In this test, a large file is sent within the request body to exhaust the system's processing resources, potentially causing it to become unresponsive. By inundating the system with excessive data, it evaluates its ability to handle and process incoming requests efficiently. This test helps uncover vulnerabilities in the system's defenses against Denial of Service (DoS) attacks, highlighting areas for improvement in its resilience and response mechanisms."
+  impact: "The impact of this test can disrupt essential services, leading to system downtime and hindering user access. By overwhelming processing resources, legitimate requests may be delayed or denied, resulting in degraded performance and user frustration. Moreover, if not adequately mitigated, such vulnerabilities could be exploited by attackers to execute more severe attacks, potentially compromising system integrity and exposing sensitive data."
+  category:
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: Model Context Protocol (MCP) Security - Denial of Service
+  subCategory: DOS_ATTACH_LARGE_FILE_MCP
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa4-unrestricted-resource-consumption.md"
+  cwe:
+    - CWE-400
+  cve:
+    - CVE-2023-4647
+    - CVE-2023-38254
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+
+
+wordLists:
+  fileURLs:
+    - https://github.com/akto-api-security/tests-library/raw/akto_resources/resources/heavy%20files/file.csv
+    - https://github.com/akto-api-security/tests-library/raw/akto_resources/resources/heavy%20files/heavy-pdf.pdf
+    - https://raw.githubusercontent.com/akto-api-security/tests-library/akto_resources/resources/heavy%20files/meme.png
+    - https://raw.githubusercontent.com/akto-api-security/tests-library/akto_resources/resources/heavy%20files/heavy-xml.xml
+    - https://raw.githubusercontent.com/akto-api-security/tests-library/akto_resources/resources/heavy%20files/video.mp4
+    - https://raw.githubusercontent.com/akto-api-security/tests-library/akto_resources/resources/heavy%20files/photo.jpeg
+  sampleFileURLs:
+    - https://raw.githubusercontent.com/akto-api-security/tests-library/akto_resources/resources/small-files/sample-csv.csv
+    - https://raw.githubusercontent.com/akto-api-security/tests-library/akto_resources/resources/small-files/sample-pdf.pdf
+    - https://raw.githubusercontent.com/akto-api-security/tests-library/akto_resources/resources/small-files/sample-jpg.jpg
+    - https://raw.githubusercontent.com/akto-api-security/tests-library/akto_resources/resources/small-files/sample-png.png
+    - https://raw.githubusercontent.com/akto-api-security/tests-library/akto_resources/resources/small-files/sample-pdf.pdf
+    - https://raw.githubusercontent.com/akto-api-security/tests-library/akto_resources/resources/small-files/sample-mp4.mp4
+api_selection_filters:
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+  response_code:
+    gte: 200
+    lt: 300
+  request_headers:
+    for_one:
+      value:
+        contains_either:
+          - multipart
+          - form-data
+execute:
+  type: multiple
+  requests:
+    - req:
+        - attach_file: ${sampleFileURLs}
+        # - validate:
+        #     response_payload:
+        #       percentage_match:
+        #         gte: 90
+        # - success: x2
+        # - failure: exit
+    - req:
+        - attach_file: ${fileURLs}
+        - validate:
+            response_code:
+              gt: 505
+validate:
+  and:
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - 5001
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 5
+
+strategy:
+  run_once: /

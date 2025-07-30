@@ -1,0 +1,63 @@
+---
+id: INPUT_VALIDATION_BY_PASSING_UNSUPPORTED_JSONRPC_VERISON
+info:
+  name: Input Validation by Passing Unsupported `jsonrpc` Version
+  description: |
+    This test verifies whether the MCP server correctly enforces the `jsonrpc` protocol version requirement.
+  details: |
+    The MCP specification requires that all valid requests use `"jsonrpc": "2.0"`. This test intentionally replaces the `jsonrpc` version with an unsupported or incorrect value (e.g., `"attack"`), and then checks how the server responds.
+    
+    If the server continues to process the request successfully or returns a valid-looking response, it indicates a flaw in input validation — as requests with unsupported protocol versions must be rejected.
+  impact: |
+    Accepting requests with incorrect or unsupported `jsonrpc` versions can lead to undefined behavior, potential parsing issues, or security inconsistencies in how requests are processed, especially across different tools or protocol evolutions.
+  category:
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: Model Context Protocol (MCP) Security - Input Validation
+  subCategory: INPUT_VALIDATION_BY_PASSING_UNSUPPORTED_JSONRPC_VERISON
+  severity: LOW
+  tags:
+  - Input validation
+  - Protocol compliance
+  - OWASP top 10
+  - Business logic
+  references:
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://owasp.org/www-project-developer-guide/latest/design/web_app_checklist/validate_inputs/
+  - https://www.jsonrpc.org/specification
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20487
+  - CVE-2024-20381
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+    for_one:
+      key:
+        regex: jsonrpc
+        extract: jsonrpcKey
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        jsonrpcKey: attack
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_either: "$magic Check whether the response is a valid successful response or not. If it contains errors then return contains_either: []. Else return contains_either: [<word1>, <word2>,....]"

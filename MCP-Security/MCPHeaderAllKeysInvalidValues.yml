@@ -1,0 +1,86 @@
+---
+id: HEADER_ALL_KEYS_INVALID_VALUES_MCP
+info:
+  name: Header All Keys Invalid Values (MCP)
+  description: |
+    This test examines how the application handles requests with all keys containing invalid values in the header.
+  details: |
+    The test involves sending requests where every key in the header is replaced with invalid or unexpected values, such as control characters, special characters, or completely non-alphanumeric strings. The purpose is to assess the application's ability to properly validate and respond to such inputs.
+  impact: |
+    Failing to validate keys appropriately can lead to security vulnerabilities, such as denial of service, data corruption, or unintended application behavior. It may also expose the application to injection attacks or other forms of exploitation.
+  category:
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: Model Context Protocol (MCP) Security - Input Validation
+  subCategory: HEADER_ALL_KEYS_INVALID_VALUES_MCP
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://endava.github.io/cats/docs/fuzzers/header-fuzzers
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+  request_headers:
+    for_one:
+      key:
+        regex: ^(?!.*\b[hH]ost\b).*
+        extractMultiple: headerKeys
+execute:
+  type: single
+  requests:
+  - req:
+    - ${headerKeys}:
+        for_all:
+        - modify_header:
+            ${iteratorKey}: "${attemptValues}"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    contains_either: "$magic Check whether the response contains any kind of error response (error status, error fields, error messages, error flags or any json key related to error). If there is any error then return nothing just empty braces []. Else return a list of words from the response only in case of successful response."
+wordLists:
+  attemptValues:
+  - ""
+  - \u0000
+  - \0
+  - "NULL"
+  - "null"
+  - 0
+  - \x00
+  - "\0"
+  - "\0"
+  - NUL
+  - NUL
+  - "\0"
+  - "\000"
+  - 0
+  - "\0null"
+  - '      '
+  - :)
+  - జ్ఞ‌ా
+  - স্র‌ু
