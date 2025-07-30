@@ -21,9 +21,9 @@ info:
     or deleting data, and disrupting services. This can result in significant financial
     losses, reputational damage, and legal consequences for affected organizations.
   category:
-    name: MCP_CI
-    shortName: MCP_CI
-    displayName: MCP - Command Injection Attacks
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
   subCategory: MCP_COMMAND_INJECTION_WITH_OPERATORS
   severity: CRITICAL
   tags:
@@ -106,7 +106,6 @@ execute:
   - req:
     - modify_body_param:
         changed_body_key: ${specialOSPayloads}
-
 validate:
   response_payload:
     length:

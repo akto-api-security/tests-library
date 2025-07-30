@@ -25,9 +25,9 @@ info:
     to detect and prevent the attack, increasing the risk of severe consequences for
     system integrity and confidentiality.
   category:
-    name: MCP_CI
-    shortName: MCP_CI
-    displayName: MCP - Command Injection Attacks
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
   subCategory: MCP_COMMAND_INJECTION_BASE64_ENCODING_CHAINED
   severity: CRITICAL
   tags:
@@ -81,7 +81,6 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-
   request_payload:
     contains_all:
     - jsonrpc
@@ -93,8 +92,6 @@ api_selection_filters:
         extract: changed_body_key
       value:
         extract: changed_body_value
-
-
 wordLists:
   specialOSPayloads:
   - eval "$(echo "aWQgJiYgZGF0ZSArIiVkLSVCLSVZIg==" | base64 --decode)"

@@ -27,9 +27,9 @@ info:
     to CentOS. Accurate identification allows attackers to craft more effective and
     focused attacks, potentially leading to greater damage and security breaches.
   category:
-    name: MCP_CI
-    shortName: MCP_CI
-    displayName: MCP - Command Injection Attacks
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
   subCategory: MCP_COMMAND_INJECTION_CENTOS
   severity: MEDIUM
   tags:
@@ -83,7 +83,6 @@ api_selection_filters:
     - account is locked
     - account is blocked
     - multiple failed attempts
-
   request_payload:
     contains_all:
     - jsonrpc
@@ -95,7 +94,6 @@ api_selection_filters:
         extract: changed_body_key
       value:
         extract: changed_body_value
-
 wordLists:
   specialOSPayloads:
   - uname -a

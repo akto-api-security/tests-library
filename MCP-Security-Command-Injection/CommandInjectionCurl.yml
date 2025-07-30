@@ -21,9 +21,9 @@ info:
     attacks, including data breaches or system compromise, and significantly undermine
     the security posture of the organization.
   category:
-    name: MCP_CI
-    shortName: MCP_CI
-    displayName: MCP - Command Injection Attacks
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
   subCategory: MCP_COMMAND_INJECTION_CURL_HTTP_REQUEST
   severity: CRITICAL
   tags:
@@ -90,7 +90,6 @@ api_selection_filters:
         extract: changed_body_key
       value:
         extract: changed_body_value
-
 wordLists:
   specialOSPayloads:
   - 'curl -s -w ''Response Time: %{time_total}s
