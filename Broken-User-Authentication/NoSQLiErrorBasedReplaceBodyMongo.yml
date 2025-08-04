@@ -70,6 +70,8 @@ validate:
         - response_payload:
             regex: "MongoError: unknown operator"
         - response_payload:
+            regex: "unknown(.*)operator"
+        - response_payload:
             regex: "CastError: Cast to ObjectId failed"
         - response_payload:
             regex: "ValidationError: User validation failed: "
