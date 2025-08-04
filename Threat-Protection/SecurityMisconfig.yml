@@ -4,7 +4,7 @@ filter:
   or:
     - response_payload:
         regex:
-          - (?i)(?:Exception in thread "[^"]*"|java[\.a-z]+E(?:xception|rror)|(?:org|com)\.[\.a-z]+Exception|at[\s\x0b]+(?:ja(?:vax?|karta)|org|com)|goroutine\s+\d+\s+\[.*?]:|panic:\s+.+|Traceback\s+\(most recent call last\):|File\s+".+?",\s+line\s+\d+,\s+in\s+\w+) 
+          - (?m)(?:^Exception in thread "[^"]*"\s*$|\b(?:java|javax|jakarta)(?:\.[\w$]+)*\.[A-Z][\w$]*E(?:xception|rror)\b|\b(?:org|com)(?:\.[\w$]+)*\.[A-Z][\w$]*E(?:xception|rror)\b|^\s*at\s+(?:ja(?:vax?|karta)|org|com)\.(?:[\w$]+\.)+[\w$<>]+\([^()\r\n]*\)\s*$|^\s*goroutine\s+\d+\s+\[[^\]]*]:\s*$|^\s*panic:\s+.+$|^\s*Traceback\s+\(most recent call last\):\s*$|^\s*File\s+".+?",\s+line\s+\d+,\s+in\s+\w+\s*$)
     - request_headers:
         for_one:
           key:
