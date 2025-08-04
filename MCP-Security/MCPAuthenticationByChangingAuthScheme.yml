@@ -59,4 +59,4 @@ validate:
     gte: 200
     lt: 300
   response_payload:
-    not_contains: "$magic check if the response is invalid and failed due to authentication or authorization error. Return empty braces [] if response has error code or message. Else return list of words from the successful response."
+    contains_either: "$magic check if the response is invalid and failed due to authentication or authorization error. If yes then return not_found. Else return list of words from the successful response."
