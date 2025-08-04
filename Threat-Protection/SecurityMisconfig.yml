@@ -4,13 +4,7 @@ filter:
   or:
     - response_payload:
         regex:
-          - (?i)(?:Exception in thread "[^"]*"|java[\.a-z]+E(?:xception|rror)|(?:org|com)\.[\.a-z]+Exception|at[\s\x0b]+(?:ja(?:vax?|karta)|org|com)|goroutine\s+\d+\s+\[.*?]:|panic:\s+.+|Traceback\s+\(most recent call last\):|File\s+".+?",\s+line\s+\d+,\s+in\s+\w+) 
-    - request_headers:
-        for_one:
-          key:
-            eq: host
-          value:
-            regex: ^(?:\d{1,3}(?:\.\d{1,3}){3}|[a-zA-Z0-9.-]+:\d+)$ 
+          - (?m)(?:^Exception in thread "[^"]*"\s*$|\b(?:java|javax|jakarta)(?:\.[\w$]+)*\.[A-Z][\w$]*E(?:xception|rror)\b|\b(?:org|com)(?:\.[\w$]+)*\.[A-Z][\w$]*E(?:xception|rror)\b|^\s*at\s+(?:ja(?:vax?|karta)|org|com)\.(?:[\w$]+\.)+[\w$<>]+\([^()\r\n]*\)\s*$|^\s*goroutine\s+\d+\s+\[[^\]]*]:\s*$|^\s*panic:\s+.+$|^\s*Traceback\s+\(most recent call last\):\s*$|^\s*File\s+".+?",\s+line\s+\d+,\s+in\s+\w+\s*$)
 info:
   name: "SecurityMisconfig"
   description: "Security misconfigurations occur when systems, applications, or APIs are not securely configured, exposing vulnerabilities that attackers can exploit. This includes improper settings, default configurations, unnecessary features enabled, or misconfigured permissions, leading to unauthorized access or data exposure."
