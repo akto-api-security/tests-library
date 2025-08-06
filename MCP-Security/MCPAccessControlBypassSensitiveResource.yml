@@ -39,7 +39,7 @@ api_selection_filters:
   - request_payload:
       for_one:
         key:
-          contains_either: "$magic From the request body, locate the `params` object. Inside `params`, select keys whose value is a string URI pointing to a potentially sensitive internal file (e.g., model weights, secrets, or diagnostic logs). Return the list of such keys. Exclude keys named `name`."
+          eq: uri
         value:
           extract: uriParam
   - request_payload:

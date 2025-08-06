@@ -49,15 +49,12 @@ api_selection_filters:
       key:
         contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any key that may accept free-form input text or system command. Return only keys likely to be unsafe.  If found then return the selected key. Else return empty braces []. Do not select the key `name`."
         extract: shellArgKey
-      value:
-        extract: shellArgValue
 execute:
   type: single
   requests:
   - req:
     - modify_body_param:
-        key: "${shellArgKey}"
-        value: "${shellInjectionPatterns}"
+        shellArgKey: "${shellInjectionPatterns}"
 validate:
   response_code:
     gte: 200

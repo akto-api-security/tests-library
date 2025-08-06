@@ -12,7 +12,7 @@ info:
     name: MCP
     shortName: MCP
     displayName: Model Context Protocol (MCP) Security
-  subCategory: BINARY_URI_DESERIALIZATION
+  subCategory: MCP_RESOURCE_BINARY_URI_DESERIALIZATION_ATTACK
   severity: HIGH
   tags:
   - Deserialization
@@ -36,6 +36,11 @@ api_selection_filters:
     lt: 300
   and:
   - request_payload:
+      contains_all:
+        - jsonrpc
+        - method
+        - params
+  - request_payload:
       for_one:
         key:
           eq: method
@@ -44,9 +49,7 @@ api_selection_filters:
   - request_payload:
       for_one:
         key:
-          contains_either: |
-            $magic From the request body, locate the `params` object. Inside `params` select keys whose value appears to be a URL or relative resource path. Only return keys that represent a resource URI (e.g., not names or labels). Exclude any key named `name`. Return the matching keys as a list. If no such key is found, return an empty list `[]`.
-        value:
+          eq: uri
           extract: uriParam
 wordLists:
   binaryPayloads:

@@ -12,7 +12,7 @@ info:
     name: MCP
     shortName: MCP
     displayName: Model Context Protocol (MCP) Security
-  subCategory: MCP_INVALID_MIME_TYPE
+  subCategory: MCP_INVALID_MIME_TYPE_INJECTION
   severity: MEDIUM
   tags:
   - MIME Type Injection
@@ -38,15 +38,21 @@ api_selection_filters:
     lt: 300
   and:
   - request_payload:
-      for_one:
-        key:
-          contains_either: "$magic From the request body, locate the `params` object. Inside `params`, select keys that contain a valid relative URL (string starting with `/` or without protocol). Return the list of such keys. Exclude `name`."
+      contains_all:
+      - jsonrpc
+      - method
+      - params
   - request_payload:
       for_one:
         key:
           eq: method
         value:
-          regex: "^resources/read"
+          regex: ^resources/read
+  - request_payload:
+      for_one:
+        key:
+          eq: mimeType
+          extract: mimeParam
 wordLists:
   maliciousMimeTypes:
   - application/x-msdownload
@@ -68,8 +74,8 @@ execute:
   type: single
   requests:
   - req:
-    - modify_header:
-        Accept: "${maliciousMimeTypes}"
+    - modify_body_param:
+        mimeParam: "${maliciousMimeTypes}"
 validate:
   response_payload:
     or:
