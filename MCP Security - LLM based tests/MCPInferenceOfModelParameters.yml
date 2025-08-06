@@ -39,7 +39,7 @@ api_selection_filters:
     - id
     for_one:
       key:
-        contains_either: "$magic Locate the prompt field only. STRICTLY: exclude id, jsonrpc, method, params, and their nested keys."
+        contains_either: "$magic Locate any one string json key from the request body accepted as user prompt. STRICTLY: 1. do not pick id, jsonrpc, method, params, params.arguments, params.name 2. Do not return values."      
         extract: changed_key
 wordLists:
   intent:
