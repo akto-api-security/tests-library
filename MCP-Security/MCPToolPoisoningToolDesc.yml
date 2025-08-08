@@ -2,7 +2,7 @@ id: MCP_TOOL_POISONING_TOOL_DESC
 info:
   name: MCP Tool Poisoning via Tool Description Injection (JSON-RPC)
   description: |
-    Tests whether an attacker can inject malicious instructions into a tool’s description in JSON-RPC calls,
+    Tests whether an attacker can inject malicious instructions into a tool's description in JSON-RPC calls,
     causing the LLM agent to ignore legitimate tool constraints and follow attacker-controlled commands.
   details: |
     Some LLM agents ingest tool definitions with free-form text descriptions. If this description is user-controllable,
@@ -10,14 +10,14 @@ info:
     When processed by the LLM, these instructions can override intended behavior and compromise the system.
 
     This test targets such scenarios by modifying the `description` or similarly named fields in the tool metadata
-    of a JSON-RPC payload and observing whether the agent’s response shows signs of manipulation.
+    of a JSON-RPC payload and observing whether the agent's response shows signs of manipulation.
   impact: |
     Affected agents may leak sensitive information, bypass tool limitations,
     or perform unintended and potentially malicious actions defined by the attacker.
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_SENSITIVE_DATA_LEAKAGE
+    shortName: MCP_SENSITIVE_DATA_LEAKAGE
+    displayName: Model Context Protocol (MCP) Security - Sensitive Data Leakage
   subCategory: MCP_TOOL_POISONING_TOOL_DESC
   severity: HIGH
   tags:

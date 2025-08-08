@@ -1,0 +1,147 @@
+---
+id: HEADER_INVALID_VALUES_MCP
+info:
+  name: Header Invalid Values (MCP)
+  description: |
+    This test focuses on the handling of invalid values in HTTP headers. It aims to identify vulnerabilities arising from the server's inability to properly handle various types of unexpected input in header fields, such as control characters, emojis, and whitespace.
+  details: |
+    The test involves sending HTTP requests with headers containing invalid or malformed values. This includes leading control characters, leading whitespace, null values, and various types of emojis. The goal is to observe how the server responds to these inputs and whether it can handle them gracefully without exposing any vulnerabilities.
+  impact: |
+    Failure to properly handle invalid header values can lead to security risks such as denial of service, information leakage, or incorrect processing of requests. Servers that do not sanitize or validate header input may be susceptible to attacks that exploit these weaknesses, potentially allowing unauthorized access or disruption of service.
+  category:
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: Model Context Protocol (MCP) Security - Input Validation
+  subCategory: HEADER_INVALID_VALUES_MCP
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://endava.github.io/cats/docs/fuzzers/header-fuzzers
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+  request_headers:
+    for_one:
+      key:
+        regex: ^(?!.*\b[hH]ost\b).*
+        extract: userKey
+      value:
+        extract: userVal
+execute:
+  type: multiple
+  requests:
+  - req:
+    - delete_header: "${userKey}"
+    - validate:
+        response_code:
+          gte: 200
+    - success: x2
+    - failure: exit
+  - req:
+    - modify_header:
+        userKey: "${userVal}${attemptValues}"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: "${badList}"
+    - success: vulnerable
+    - failure: x3
+  - req:
+    - modify_header:
+        userKey: "${attemptValues}"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: "${badList}"
+    - success: vulnerable
+    - failure: x4
+  - req:
+    - modify_header:
+        userKey: "${attemptValues}${userVal}"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          contains_either: "$magic Check whether the response contains any kind of error response (error status, error fields, error messages, error flags or any json key related to error). If there is any error then return nothing just empty braces []. Else return a list of words from the response only in case of successful response."
+    - success: vulnerable
+wordLists:
+  attemptValues:
+  - \u0000
+  - \0
+  - "NULL"
+  - "null"
+  - "0000"
+  - \x00
+  - "\0"
+  - "\0"
+  - NUL
+  - "NUL"
+  - "\0"
+  - "\000"
+  - 0x00
+  - "\0null"
+  - ":)"
+  - "జ్ఞ‌ా"
+  - "স্র‌ু"
+
+  badList:
+  - Error
+  - Internal Server
+  - Failed
+  - Unauthorized
+  - access denied
+  - Forbidden
+  - Method Not allowed
+  - Gateway timeout
+  - request timeout
+  - server error
+  - server busy
+  - authentication error
+  - authorization error
+  - validation error
+  - Permission Denied
+  - invalid token
+  - token expired
+  - session expired
+  - session timeout
+  - unexpected error
+  - unable to process request
+  - bad request
+  - service unavailable
+  - account is locked
+  - account is blocked
+  - multiple failed attempts
+  - Attention Required!
+  - CloudFlare
+  - "Sorry, you have been blocked"
