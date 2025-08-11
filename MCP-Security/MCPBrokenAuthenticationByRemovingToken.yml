@@ -49,39 +49,10 @@ execute:
   type: single
   requests:
   - req:
-    - modify_url: http://mcp.razorpay.com/message
     - remove_auth_header: true
 validate:
   response_code:
     gte: 200
     lt: 300
   response_payload:
-    not_contains:
-    - Error
-    - Internal Server
-    - Failed
-    - Unauthorized
-    - access denied
-    - Forbidden
-    - Method Not allowed
-    - Gateway timeout
-    - request timeout
-    - server error
-    - server busy
-    - authentication error
-    - authorization error
-    - validation error
-    - Permission Denied
-    - invalid token
-    - token expired
-    - session expired
-    - session timeout
-    - unexpected error
-    - unable to process request
-    - bad request
-    - service unavailable
-    - account is locked
-    - account is blocked
-    - multiple failed attempts
-    - invalid credentials
-    - Authentication failed
+    not_contains: "$magic check if the response is invalid and failed due to authentication or authorization error. Return empty braces [] if response has error code or message. Else return list of words from the successful response."

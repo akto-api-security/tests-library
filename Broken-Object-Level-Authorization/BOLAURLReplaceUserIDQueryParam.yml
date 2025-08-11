@@ -1,0 +1,144 @@
+id: BOLA_REPLACE_USER_ID_QUERY_PARAM
+info:
+  name: "Exploiting BOLA by replacing User IDs for Unauthorized Access."
+  description: >
+    This test checks for Broken Object Level Authorization (BOLA) vulnerabilities by modifying URL query parameters related to user identification (such as UserId, user_id, etc.) and replacing their values with common privileged identifiers (e.g., admin, root, superuser). The goal is to determine if unauthorized access to resources is possible by manipulating these parameters.
+  details: >
+    The test targets API endpoints that use user-related query parameters. It systematically replaces these parameters with values like "admin" or "root" and sends requests to the server. The test then validates the responses to ensure that unauthorized access is not granted. It checks for successful response codes (2xx), non-empty payloads, and ensures the response does not contain error or denial messages, nor does it closely match the original user's data, indicating a possible privilege escalation or data leak.
+  impact: >
+    If the test is successful, it indicates that attackers could gain unauthorized access to sensitive data or perform actions as privileged users by simply modifying query parameters. This could lead to data breaches, unauthorized transactions, or compromise of user accounts, highlighting a critical need to enforce strict object-level authorization on all endpoints that accept user-identifying parameters.
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: BOLA_REPLACE_USER_ID_QUERY_PARAM
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://www.akto.io/blog/bola-exploitation-using-unauthorized-uuid-on-api-endpoint"
+    - "https://www.akto.io/blog/what-is-broken-object-level-authorization-bola"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md"
+    - "https://cwe.mitre.org/data/definitions/284.html"
+    - "https://cwe.mitre.org/data/definitions/285.html"
+    - "https://cwe.mitre.org/data/definitions/639.html"
+  cwe:
+    - CWE-284
+    - CWE-285
+    - CWE-639
+  cve:
+    - CVE-2022-34770
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - failure
+      - not available
+      - not found
+  query_param:
+    for_one:
+      key:
+        regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|^username$|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
+        extract: userKey
+      value:
+        not_contains: ${attempt_Ids}
+
+wordLists:
+  attempt_Ids:
+    - superuser
+    - master
+    - admin
+    - root
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_query_param:
+            userKey: ${attempt_Ids}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      gt: 40
+    percentage_match_schema:
+      gte: 90
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - failure
+      - not available
+      - not found
+      - "<html>"
+      - "</html>"

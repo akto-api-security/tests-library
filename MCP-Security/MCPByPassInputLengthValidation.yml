@@ -45,11 +45,12 @@ api_selection_filters:
     - method
     - params
     for_one:
+      key:
+        contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any one key inside `arguments` whose value is either a string, number, decimal or boolean. If found then return the selected key. Else return empty braces []. Do not select the key `name`"
+        extract: userKey
       value:
         datatype: string
         extract: userVal
-      key:
-        extract: userKey
 wordLists:
   responseErrorList:
   - Error
