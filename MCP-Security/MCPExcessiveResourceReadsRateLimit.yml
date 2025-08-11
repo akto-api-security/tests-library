@@ -1,0 +1,62 @@
+---
+id: MCP_EXCESSIVE_RESOURCE_READS_RATE_LIMIT
+info:
+  name: Excessive Resource Reads - Rate Limit via Headers (MCP)
+  description: |
+    This test checks whether MCP's resource read endpoints (`resources/read*`) expose rate-limiting protections through response headers when consecutive requests are made.
+  details: |
+    Instead of sending high volumes of traffic, this test performs 2 rapid requests and inspects headers such as `Retry-After`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`, or any other rate-limit related clues to determine protection.
+  impact: |
+    Lack of header-based rate limit feedback indicates absence of proactive protections, which can lead to abuse, data scraping, or DoS on read-heavy endpoints.
+  category:
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_EXCESSIVE_RESOURCE_READS_RATE_LIMIT
+  severity: MEDIUM
+  tags:
+  - Rate Limiting
+  - Resource Abuse
+  - DoS
+  - Scraping
+  references:
+  - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Retry-After
+  - https://owasp.org/www-project-api-security/#api4-lack-of-resources-rate-limiting
+  cwe:
+  - CWE-770
+  - CWE-400
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  and:
+  - request_payload:
+      contains_all:
+      - jsonrpc
+      - method
+      - params
+wordLists:
+  rateLimitHeaders:
+  - x-ratelimit-remaining
+  - x-ratelimit-limit
+  - retry-after
+  - x-throttle-limit
+  - x-rate-limit-reset
+execute:
+  type: multiple
+  requests:
+  - req:
+    - validate:
+        contains_either: "${rateLimitHeaders}"
+    - success: x2
+    - failure: x2
+  - req: []
+validate:
+  contains_either: |
+    $magic Analyze the 2 response headers and body. If rate limiting clues are visible (e.g. Retry-After, quota, throttling headers), mark as protected. If no such indications, flag the endpoint as potentially lacking read throttling.

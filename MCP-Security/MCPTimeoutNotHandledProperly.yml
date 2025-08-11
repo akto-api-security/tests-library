@@ -1,0 +1,97 @@
+id: MCP_TIMEOUT_NOT_HANDLED_PROPERLY
+info:
+  name: Handle Timeouts Appropriately (MCP)
+  description: >
+    This test verifies whether MCP servers correctly handle tool or resource timeouts by returning standardized MCP error responses.
+  details: >
+    If the server takes too long to respond, or encounters internal timeout behavior,
+    it should return an MCP-style error object with a proper error code (e.g., -32000+) and a clear timeout-related message.
+    If the system responds with HTTP 2xx, no error object, or unclear failure messaging, it is marked vulnerable.
+  impact: >
+    Poor timeout handling allows tools to hang indefinitely, clients to retry aggressively,
+    or attackers to trigger resource exhaustion or silent failures.
+    Well-defined timeouts ensure graceful degradation and observability.
+  category:
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_TIMEOUT_NOT_HANDLED_PROPERLY
+  severity: MEDIUM
+  tags:
+    - Timeout
+    - Stability
+    - Resilience
+    - OWASP top 10
+    - MCP security
+    - mcp-security
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/10-Denial_of_Service_Testing/
+    - https://cheatsheetseries.owasp.org/cheatsheets/Timeouts_Cheat_Sheet.html
+  cwe:
+    - CWE-400
+    - CWE-674
+  cve: []
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  and:
+    - request_payload:
+        for_one:
+          extract: userBody
+    - request_payload:
+        contains_all:
+          - jsonrpc
+          - method
+          - params
+wordLists:
+  timeoutTriggerPayloads:
+    - '{"jsonrpc":"2.0", "method": "tools/call", "params": {"tool_name": "long_running_tool", "args": {"sleep": 10000}}, "id":1}'
+    - '{"jsonrpc":"2.0", "method": "resources/read", "params": {"resource": {"type": "compute", "id": "slow-op"}}, "id":1}'
+  mcpValidTimeoutCodes:
+    - '-32000'
+    - '-32001'
+    - '-32603'
+  timeoutKeywords:
+    - "timeout"
+    - "request timed out"
+    - "execution expired"
+    - "operation took too long"
+    - "deadline exceeded"
+  invalidTimeoutIndicators:
+    - '"result":'
+    - '"code": 0'
+    - '"code": 200'
+    - '"code": null'
+    - '"error": null'
+    - '"message": "Something went wrong"'
+    - "Traceback"
+    - "Exception"
+    - "stack trace"
+execute:
+  type: single
+  requests:
+    - req:
+        - add_header:
+            x-akto-ignore: 123
+        - replace_body: "${timeoutTriggerPayloads}"
+validate:
+  or:
+    - and:
+        - response_code:
+            gte: 400
+        - response_payload:
+            contains_either: "${timeoutKeywords}"
+        - response_payload:
+            contains_either: "${mcpValidTimeoutCodes}"
+    - and:
+        - response_code:
+            gte: 400
+        - response_payload:
+            contains_either: "${invalidTimeoutIndicators}"

@@ -1,0 +1,73 @@
+---
+id: MCP_INVALID_PARAMS
+info:
+  name: Invalid Params Handling (MCP)
+  description: |
+    This test checks whether the MCP server correctly handles requests with invalid or malformed `params`. It ensures that error code -32602 is returned and no internal information is leaked.
+  details: |
+    The test modifies the `params` field of a valid MCP request with malformed or logically invalid data. The server should return a JSON-RPC error object with code -32602 and avoid revealing internal stack traces.
+  impact: |
+    Improper handling of invalid parameters may crash the server or leak implementation details.
+  category:
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_INVALID_PARAMS
+  severity: MEDIUM
+  tags:
+  - Error handling
+  - MCP compliance
+  - jsonrpc
+  references:
+  - https://www.jsonrpc.org/specification#error_object
+  cwe:
+  - CWE-209
+  cve: []
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  and:
+  - request_payload:
+      for_one:
+        key:
+          regex: params|content 
+          extract: changed_param
+  - request_payload:
+      contains_all:
+      - jsonrpc
+      - method
+      - params
+wordLists:
+  invalidParams:
+  - "null"
+  - "[]"
+  - "{}"
+  - '"invalid"'
+  invalidParamsCode:
+  - "-32602"
+  errorIndicators:
+  - Traceback
+  - Exception
+  - StackTrace
+  - RuntimeError
+execute:
+  type: single
+  requests:
+  - req:
+    - add_header:
+        x-akto-ignore: 123
+    - modify_body_param:
+        changed_param: "${invalidParams}"
+validate:
+  response_payload:
+    or:
+    - contains_either: "${invalidParamsCode}"
+    - contains_either: |
+        $magic Check if the response indicates an MCP error due to invalid or malformed parameters. The error should return code -32602 or an equivalent description. It must not leak stack traces, exception details, or internal debugging information.

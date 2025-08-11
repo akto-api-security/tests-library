@@ -1,0 +1,70 @@
+---
+id: MCP_TOOLS_CALL_SHELL_LIKE_COMMAND
+info:
+  name: MCP Tools Call - Shell-Like Command Injection via tool_input
+  description: |
+    This test checks if the `tools/call` endpoint of the MCP server allows command injection through shell-like inputs passed in the `tool_input` field. Inputs like `;`, `&&`, or backticks are often used to chain or execute shell commands unexpectedly.
+  details: |
+    Attackers may attempt to execute arbitrary system-level commands or break out of input contexts using shell metacharacters. This test attempts to pass such patterns in tool input parameters to check if the tool engine is vulnerable to command injection.
+  impact: |
+    If a tool executes or evaluates inputs in a shell or subprocess context without proper sanitization, an attacker could execute unauthorized commands, leading to RCE or full takeover of the tool execution environment.
+  category:
+    name: MCP_CODE_EXECUTION
+    shortName: MCP_CODE_EXECUTION
+    displayName: Model Context Protocol (MCP) Security - Code Execution
+  subCategory: MCP_TOOLS_CALL_SHELL_LIKE_COMMAND
+  severity: CRITICAL
+  tags:
+  - Command Injection
+  - Shell Exploit
+  - Tools Call
+  - Model Context Protocol
+  references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/server#tools-call
+  - https://owasp.org/www-project-api-security/
+  cwe:
+  - CWE-77
+  - CWE-78
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+wordLists:
+  shellInjectionPatterns:
+  - test; whoami
+  - '`whoami`'
+  - $(whoami)
+  - test && echo vulnerable
+  - '| id'
+  - '|| uname -a'
+api_selection_filters:
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+    - method
+    - tools/call
+    - params
+    for_one:
+      key:
+        contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any key that may accept free-form input text or system command. Return only keys likely to be unsafe.  If found then return the selected key. Else return empty braces []. Do not select the key `name`."
+        extract: shellArgKey
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        shellArgKey: "${shellInjectionPatterns}"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    contains_either:
+    - uid=
+    - gid=
+    - Linux
+    - root
+    - vulnerable
+    - uname
+    - "$magic Check if the response contains any output or evidence that a shell-like command was executed. Look for indicators like current user, system name, command echo, or file listings."
