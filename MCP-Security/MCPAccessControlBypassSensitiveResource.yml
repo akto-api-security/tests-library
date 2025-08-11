@@ -37,17 +37,21 @@ api_selection_filters:
     lt: 300
   and:
   - request_payload:
-      for_one:
-        key:
-          eq: uri
-        value:
-          extract: uriParam
+      contains_all:
+      - jsonrpc
+      - method
+      - params
   - request_payload:
       for_one:
         key:
           eq: method
         value:
-          regex: "^resources/read[^ ]*$"
+          regex: ^resources/read
+  - request_payload:
+      for_one:
+        key:
+          eq: uri
+          extract: uriParam
 wordLists:
   sensitiveUris:
   - /internal/model-weights.bin
