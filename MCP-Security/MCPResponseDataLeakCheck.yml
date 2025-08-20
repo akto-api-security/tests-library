@@ -1,7 +1,7 @@
 ---
 id: MCP_RESPONSE_DATA_LEAK_CHECK
 info:
-  name: MCP Response Data Leak Check
+  name: Sensitive Data Leakage
   description: |
     This test ensures that responses from MCP servers do not expose internal implementation details, sensitive user data, or system secrets.
   details: |
@@ -39,9 +39,6 @@ api_selection_filters:
     lt: 300
   method:
     eq: POST
-  response_payload:
-    length:
-      gt: 0
   request_payload:
     contains_all:
     - jsonrpc
