@@ -71,7 +71,5 @@ execute:
 validate:
   response_payload:
     or:
-      - contains_either: "${methodNotFoundCode}"
-      - $magic: >
-          Check if the response includes a valid MCP error indicating the requested method was not found.
-          The error should include code -32601 or an equivalent explanation, and should not include stack traces or internal debug info.
+    - contains_either: "${methodNotFoundCode}"
+    - contains_either: "$magic Check if the response includes a valid MCP error indicating the requested method was not found. The error should include code -32601 or an equivalent explanation, and should not include stack traces or internal debug info."
