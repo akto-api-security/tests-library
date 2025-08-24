@@ -71,4 +71,5 @@ validate:
     gte: 200
     lt: 300
   response_payload:
-    contains_either: "$magic From the response JSON, return a list of leaked infrastructure indicators such as: open ports, service names, version numbers, outdated package names, container image tags, or vulnerability descriptors. If none, return not_found."
+  - not_magic_validate: "Analyze the response and check whether the response indicates that the request failed due to isError: true or any other error (like requested data nbot found, error processing request, server error, not accessible, etc)."
+  - magic_validate: "Analyze the response and strictly verify whether it leaks infrastructure details such as: open ports, service names, version numbers, outdated package names, container image tags, or vulnerability descriptors. If none, return not_found."
