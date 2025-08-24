@@ -59,4 +59,4 @@ validate:
   response_payload:
     length:
       gt: 0
-    contains_either: "$magic Check whether the response is a valid successful response or not. If it contains errors then return contains_either: []. Else return contains_either: [<word1>, <word2>,....]"
+    not_magic_validate: "Check whether the response failed due to errors. Verify whether it contains any kind of error messages related to invalid request, invalid parameters, invalid menthod, method not found, not found or any generic error"

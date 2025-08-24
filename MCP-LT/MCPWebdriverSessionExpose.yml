@@ -58,4 +58,5 @@ execute:
   - req: []
 validate:
   response_payload:
-    magic_validate: "Whenever WebDriver sessionIds are exposed in the response body then it is a serious vulnerability. check for any such data in the given response. IGNORE errors, ids, sessionIds, etc that are not related to webDrivers."
+  - not_magic_validate: "Analyze the response and check whether the response indicates that the request failed due to isError: true or any other error (like requested data nbot found, error processing request, server error, not accessible, etc)."
+  - magic_validate: "Whenever WebDriver sessionIds are exposed in the response body then it is a serious vulnerability. check for any such data in the given response. IGNORE errors, ids, sessionIds, etc that are not related to webDrivers."

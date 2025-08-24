@@ -45,4 +45,5 @@ execute:
   - req: []
 validate:
   response_payload:
-    magic_validate: "\"Analyze the response and check whether it contains any data related to web browser version (chromedriverVersion, geckodriverVersion, edgedriverVersion, safaridriverVersion, driverVersion) or any value that contains a broswwer software version (digits with dots). Ignore all other types of versions."
+  - not_magic_validate: "Analyze the response and check whether the response indicates that the request failed due to isError: true or any other error (like requested data nbot found, error processing request, server error, not accessible, etc)."
+  - magic_validate: "\"Analyze the response and check whether it contains any data related to web browser version (chromedriverVersion, geckodriverVersion, edgedriverVersion, safaridriverVersion, driverVersion) or any value that contains a broswwer software version (digits with dots). Ignore all other types of versions."
