@@ -58,7 +58,7 @@ api_selection_filters:
     - method
     for_one:
       key:
-        regex: ^(codebasePath|(?!(?:id|params|method|jsonrpc|name|arguments)$).+)$
+        eq: codebasePath
         extract: promptKey
       value:
         datatype: string
