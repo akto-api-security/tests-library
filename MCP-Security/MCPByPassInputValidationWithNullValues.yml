@@ -1,0 +1,93 @@
+---
+id: BYPASS_INPUT_VALIDATION_WITH_NULL_VALUES_MCP
+info:
+  name: Bypass Input Validation with Null Values (MCP)
+  description: |
+    "This test evaluates the system's ability to handle and validate inputs correctly when null characters or null values are included. The objective is to identify vulnerabilities that could allow users to bypass input validation checks by inserting null characters or submitting null values, potentially leading to security breaches or unexpected application behavior."
+  details: |
+    "The test involves sending API requests with null characters (`\u0000`) or null values included within the input data, such as in fields for passwords, usernames, or other sensitive information."
+  impact: |
+    "Bypassing input validation with null values can lead to security vulnerabilities, unauthorized access, data corruption, or other unexpected behaviors. If users can manipulate input validation by inserting null characters, they could potentially gain access to restricted areas, bypass authentication mechanisms, or exploit other weaknesses in the application. Ensuring robust validation and sanitization of all input data, including null characters, is crucial to maintaining the security and integrity of the application."
+  category:
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: Model Context Protocol (MCP) Security - Input Validation
+  subCategory: BYPASS_INPUT_VALIDATION_WITH_NULL_VALUES_MCP
+  severity: LOW
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+  - https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/validate_inputs/
+  cwe:
+  - CWE-20
+  cve:
+  - CVE-2018-20679
+  - CVE-2019-14271
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+    for_one:
+      key:
+        contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any one key inside `arguments` which has a value of type string. If found then return the selected key. Else return empty braces []. Do not select the key `name`"
+        extract: userKey
+      value:
+        extract: userVal
+wordLists:
+  nullValues:
+  - \u0000
+  - \0
+  - "NULL"
+  - "null"
+  - 0
+  - \x00
+  - "\0"
+  - "\0"
+  - NUL
+  - NUL
+  - "\0"
+  - "\000"
+  - 0
+  - "\0null"
+execute:
+  type: multiple
+  requests:
+  - req:
+    - delete_body_param: "${userKey}"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          not_contains: "$magic Check whether the response contains any kind of error response (error status, error fields, error messages, error flags or any json key related to error). If there is any error then return list of words indicating error. Else return an empty list - [] if it was successful."
+    - success: exit
+    - failure: x2
+  - req:
+    - modify_body_param:
+        userKey: "${nullValues}"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          length:
+            gt: 0
+          contains_either: "$magic Check whether the response contains any kind of error response (error status, error fields, error messages, error flags or any json key related to error). If there is any error then return nothing just empty braces []. Else return a list of words from the response only in case of successful response."
+    - success: vulnerable

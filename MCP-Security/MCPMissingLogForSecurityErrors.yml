@@ -1,0 +1,98 @@
+---
+id: MCP_MISSING_LOG_FOR_SECURITY_ERRORS
+info:
+  name: Log Security-Relevant Errors (MCP)
+  description: |
+    This test verifies whether security-sensitive errors — across both `tool.call` and `resources.*` MCP methods —  result in properly structured MCP error objects with valid error codes and meaningful messages.
+  details: |
+    The test sends invalid payloads to MCP's tool and resource methods. If the system returns a 2xx success without error logging, or responds with a broken error object, the test marks it as vulnerable. Proper logging and standardized error handling are essential for detecting misuse and maintaining security posture.
+  impact: |
+    If a system silently ignores misuse or fails to log violations in tools/resources access, attackers may enumerate, probe, or exploit internal APIs undetected.
+  category:
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_MISSING_LOG_FOR_SECURITY_ERRORS
+  severity: HIGH
+  tags:
+  - Error handling
+  - Authorization
+  - Audit
+  - MCP security
+  - OWASP top 10
+  - mcp-security
+  references:
+  - https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/08-Testing_for_Error_Handling/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
+  cwe:
+  - CWE-778
+  - CWE-209
+  cve: []
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  and:
+  - request_payload:
+      for_one:
+        extract: userBody
+  - request_payload:
+      contains_all:
+      - jsonrpc
+      - method
+      - params
+wordLists:
+  securityErrorPayloads:
+  - "{\"jsonrpc\":\"2.0\", \"method\": \"tools/call\", \"params\": {\"tool_name\": null}, \"id\":1}"
+  - "{\"jsonrpc\":\"2.0\", \"method\": \"resources/list\", \"params\": {\"filter\": {\"type\": \"secrets\", \"provider\": \"invalid\"}}, \"id\":1}"
+  - "{\"jsonrpc\":\"2.0\", \"method\": \"resources/read\", \"params\": {\"resource\": {\"type\": \"secrets\", \"provider\": \"unknown\", \"id\": \"fake\"}}, \"id\":1}"
+  - "{\"jsonrpc\":\"2.0\", \"method\": \"resources/read\", \"params\": {\"resource\": {\"id\": null}}, \"id\":1}"
+  mcpValidErrorCodes:
+  - "\"code\": -32600"
+  - "\"code\": -32602"
+  - "\"code\": -32603"
+  - "\"code\": -32000"
+  - "\"code\": -32001"
+  - "\"code\": -32099"
+  mcpInvalidErrorIndicators:
+  - "\"code\": 0"
+  - "\"code\": null"
+  - "\"code\": 200"
+  - "\"error\": {}"
+  - "\"error\": null"
+  - '"result":'
+  - "\"message\": \"Something went wrong\""
+  securityErrorPhrases:
+  - unauthorized
+  - access denied
+  - forbidden
+  - invalid token
+  - token expired
+  - permission denied
+  - authentication failed
+  - authorization error
+execute:
+  type: single
+  requests:
+  - req:
+    - add_header:
+        x-akto-ignore: 123
+    - replace_body: "${securityErrorPayloads}"
+validate:
+  response_code:
+    gte: 200
+  or:
+  - and:
+    - response_payload:
+        contains_either: "${securityErrorPhrases}"
+    - response_payload:
+        contains_either: "${mcpValidErrorCodes}"
+  - and:
+    - response_payload:
+        contains_either: "${mcpInvalidErrorIndicators}"
