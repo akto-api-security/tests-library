@@ -55,8 +55,14 @@ api_selection_filters:
 execute:
   type: single
   requests:
-  - req: []
+  - req:
+      modify_body_param:
+        testId: DA-WIN-466203-1756104789390435861FMZ
+      delete_body_param: pageNumber
 validate:
   response_payload:
-  - not_magic_validate: "Analyze the response and check whether the response indicates that the request failed due to isError: true or any other error (like requested data nbot found, error processing request, server error, not accessible, etc)."
-  - magic_validate: "Whenever WebDriver sessionIds are exposed in the response body then it is a serious vulnerability. check for any such data in the given response. IGNORE errors, ids, sessionIds, etc that are not related to webDrivers."
+    or:
+    - regex: (?i)\bwd\/hub\/session\/(?:[0-9a-f]{32}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b
+    # - and:
+    #   - not_magic_validate: "Analyze the response and check whether the response indicates that the request failed due to isError: true or any other error (like requested data nbot found, error processing request, server error, not accessible, etc)."
+    #   - magic_validate: "Whenever WebDriver sessionIds are exposed in the response body then it is a serious vulnerability. check for data like `wd/hub/session/{sessionId}` or any selenium related sessionIds. IGNORE errors, ids, sessionIds, etc that are not related to webDrivers."
