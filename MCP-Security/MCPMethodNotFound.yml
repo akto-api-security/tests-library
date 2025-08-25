@@ -39,7 +39,7 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
-            regex: '"method"\s*:\s*"(tools|resources|prompts)/[^"]+"'
+            eq: method
             extract: changed_method
     - request_payload:
         contains_all:
@@ -71,5 +71,5 @@ execute:
 validate:
   response_payload:
     or:
-    - contains_either: "${methodNotFoundCode}"
-    - contains_either: "$magic Check if the response includes a valid MCP error indicating the requested method was not found. The error should include code -32601 or an equivalent explanation, and should not include stack traces or internal debug info."
+    - not_contains_either: "${methodNotFoundCode}"
+    - not_contains_either: "$magic Check if the response includes a valid MCP error indicating the requested method was not found. The error should include code -32601 or an equivalent explanation, and should not include stack traces or internal debug info."
