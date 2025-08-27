@@ -47,6 +47,11 @@ api_selection_filters:
     - jsonrpc
     - id
     - method
+    for_one:
+      key:
+        eq: method
+      value:
+        eq: tools/list
 execute:
   type: single
   requests:
