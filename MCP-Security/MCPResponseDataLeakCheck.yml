@@ -49,6 +49,6 @@ execute:
   - req: []
 validate:
   response_payload:
-    contains_either: |-
-      $magic Analyze the response for signs of sensitive or internal data leakage. Flag values that meet any of the following: - Credentials or secrets (e.g., tokens, API keys, passwords, base64 or JWT-like blobs) - User data (emails, phone numbers, names) ONLY IF: - It's unrelated to the current authenticated user, or - Appears inside debug, tool, or error responses unexpectedly
-      Do not flag business response fields unless they contain sensitive-looking values. Focus on the content of the values, not field names. Return only red-flag values. Return an empty list if nothing suspicious is found.
+    magic_validate: |-
+      Analyze the response for signs of sensitive or internal data leakage. Flag values that meet any of the following: - Credentials or secrets (e.g., tokens, API keys, passwords, base64 or JWT-like blobs) - User data (emails, phone numbers, names) ONLY IF: - It's unrelated to the current authenticated user, or - Appears inside debug, tool, or error responses unexpectedly
+      Do not flag business response fields unless they contain sensitive-looking values. Focus on the content of the values, not field names.
