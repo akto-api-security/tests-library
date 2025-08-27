@@ -59,6 +59,8 @@ validate:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
+    not_contains:
+      - method not found
+      - "-32601"
       - method not allowed
-    not_magic_validate: "Check whether the response failed due to errors. Verify whether it contains any kind of error messages related to invalid request, invalid parameters, invalid menthod, method not found, not found or any generic error"
+    not_magic_validate: Check whetehr the response failed due to any error related to Invalid Method or Method not found. Also check whether it has any error code like -32601
