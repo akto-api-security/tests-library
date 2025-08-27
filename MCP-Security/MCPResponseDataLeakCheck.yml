@@ -49,8 +49,6 @@ execute:
   - req: []
 validate:
   response_payload:
-    not_magic_validate: |
-      Analyze the response and check whether the response indicates that the request failed due to isError: true or any other error (like requested data nbot found, error processing request, server error, not accessible, etc).
-    magic_validate: |-
-      Analyze the response for signs of sensitive data leakage. Flag values that meet any of the following: - Credentials or secrets (e.g., tokens, API keys, passwords, base64 or JWT-like blobs) - User data (emails, phone numbers, names)
-      Do not flag business response fields unless they contain sensitive-looking values. Focus on the content of the values, not field names.
+    and:
+    - not_magic_validate: "Analyze the response and check whether the response indicates that the request failed due to isError: true or any other error (like requested data nbot found, error processing request, server error, not accessible, etc)."
+    - magic_validate: "Check the response for sensitive data related to username and password, api-keys, api tokens, access keys, jwt tokens, ssh keys, keys corresponding to username, secrets or credentials. Any secrets that was not supposed to be exposed. DO NOT consider json param keys. ONLY consider their values."
