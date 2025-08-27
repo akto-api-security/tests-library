@@ -61,7 +61,7 @@ validate:
     length:
       gt: 0
     or:
-    - not_contains:
+    - not_contains_either:
       - "-32600"
       - invalid json-rpc version
       - invalid jsonrpc version

@@ -60,7 +60,7 @@ validate:
     length:
       gt: 0
     or:
-    - not_contains:
+    - not_contains_either:
       - method not found
       - "-32601"
       - method not allowed
