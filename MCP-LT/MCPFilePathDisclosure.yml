@@ -43,13 +43,13 @@ execute:
   - req: []
 validate:
   response_payload:
-    or: 
+    # or: 
     - contains_either:
       - "Program Files (x86)"
       - "/etc/passwd"
       - "/etc/shadow"
       - "C:\\Windows\\System32"
       - "C:\\Users\\Administrator"
-    - and:
-      - not_magic_validate: "Analyze the response and check whether the response indicates that the request failed due to isError: true or any other error (like requested data nbot found, error processing request, server error, not accessible, etc)."
-      - magic_validate: "Check the response body strictly for literal absolute file system paths only. Unix-style paths must start with '/' followed by at least one valid directory or file name (e.g., /etc/passwd, /var/log/file.txt). Windows-style paths must start with a drive letter, colon, and backslash, followed by at least one directory or file name (e.g., C:\\Windows\\System32\\). Do NOT flag JSON keys, array names, or plain text that mention directories, logs, or file types unless they contain a literal absolute path. Do NOT flag empty arrays, placeholders (e.g., /path/to/file), relative paths (./file.txt, ../logs/debug.log), or strings that only look like paths but are not literal. Flag only actual paths that exist literally in the response."
+    # - and:
+    #   - not_magic_validate: "Analyze the response and check whether the response indicates that the request failed due to isError: true or any other error (like requested data nbot found, error processing request, server error, not accessible, etc)."
+    #   - magic_validate: "Check the response body strictly for literal absolute file system paths only. Unix-style paths must start with '/' followed by at least one valid directory or file name (e.g., /etc/passwd, /var/log/file.txt). Windows-style paths must start with a drive letter, colon, and backslash, followed by at least one directory or file name (e.g., C:\\Windows\\System32\\). Do NOT flag JSON keys, array names, or plain text that mention directories, logs, or file types unless they contain a literal absolute path. Do NOT flag empty arrays, placeholders (e.g., /path/to/file), relative paths (./file.txt, ../logs/debug.log), or strings that only look like paths but are not literal. Flag only actual paths that exist literally in the response."
