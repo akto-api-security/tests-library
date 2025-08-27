@@ -60,4 +60,9 @@ validate:
   response_payload:
     length:
       gt: 0
-    contains_either: "$magic Check whether the response is a valid successful response or not. If it contains errors then return contains_either: []. Else return contains_either: [<word1>, <word2>,....]"
+    not_contains:
+    - "-32600"
+    - invalid json-rpc version
+    - invalid jsonrpc version
+    - invalid request
+    not_magic_validate: Check whetehr the response failed due to any error related to Invalid JSON-RPC version or it has any error code like -32600
