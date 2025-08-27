@@ -61,9 +61,8 @@ validate:
     length:
       gt: 0
     or:
-    - not_contains_either:
+    - not_contains:
       - "-32600"
       - invalid json-rpc version
       - invalid jsonrpc version
-      - invalid request
     - not_magic_validate: Check whetehr the response failed due to any error related to Invalid JSON-RPC version or it has any error code like -32600
