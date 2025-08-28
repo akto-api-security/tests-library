@@ -1,0 +1,54 @@
+---
+id: MCP_RESPONSE_DATA_LEAK_CHECK
+info:
+  name: Sensitive Data Leakage
+  description: |
+    This test ensures that responses from MCP servers do not expose internal implementation details, sensitive user data, or system secrets.
+  details: |
+    The test sends a valid request to the MCP server and inspects the response body to identify any unintended exposure of internal components or user-related information. This helps validate that the MCP server does not leak data that could assist in exploitation or reconnaissance.
+  impact: |
+    If the MCP server response contains internal, sensitive, or user-specific data, it could lead to security breaches, data leakage, or unauthorized access to protected resources.
+  category:
+    name: MCP_SENSITIVE_DATA_LEAKAGE
+    shortName: MCP_SENSITIVE_DATA_LEAKAGE
+    displayName: MCP - Sensitive Data Leakage
+  subCategory: MCP_RESPONSE_DATA_LEAK_CHECK
+  severity: HIGH
+  tags:
+  - Information disclosure
+  - API security
+  - Data protection
+  - OWASP top 10
+  references:
+  - https://owasp.org/Top10/A01_2021-Broken_Access_Control/
+  - https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/
+  - https://cheatsheetseries.owasp.org/cheatsheets/Information_Leakage_Cheat_Sheet.html
+  cwe:
+  - CWE-200
+  - CWE-201
+  cve:
+  - CVE-2023-30625
+  - CVE-2022-41040
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+execute:
+  type: single
+  requests:
+  - req: []
+validate:
+  response_payload:
+    and:
+    - not_magic_validate: "Analyze the response and check whether the response indicates that the request failed due to isError: true or any other error (like requested data nbot found, error processing request, server error, not accessible, etc)."
+    - magic_validate: "Check the response for sensitive data related to username and password, api-keys, api tokens, access keys, jwt tokens, ssh keys, keys corresponding to username, secrets or credentials. Any secrets that was not supposed to be exposed. DO NOT consider json param keys. ONLY consider their values."

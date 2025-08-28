@@ -1,0 +1,82 @@
+---
+id: MCP_PATH_TRAVERSAL_RESOURCE_URI
+info:
+  name: Path Traversal via Resource URI (MCP)
+  description: |
+    This test attempts to exploit improper validation of resource URIs in MCP requests, particularly by injecting directory traversal payloads to access unintended files or paths.
+  details: |
+    MCP resource URIs should be strictly validated to avoid unauthorized access. This test appends traversal sequences like `../`, `..\\`, or encoded variants to the resource path and checks if the server allows or reveals sensitive internal directories or files.
+  impact: |
+    A successful path traversal attack may lead to exposure of internal configuration, secrets, or model files, posing serious risks to data security and system integrity.
+  category:
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_PATH_TRAVERSAL_RESOURCE_URI
+  severity: HIGH
+  tags:
+  - Path Traversal
+  - Directory Traversal
+  - MCP Resource Abuse
+  - Access Control
+  references:
+  - https://modelcontextprotocol.io/docs/concepts/resources
+  - https://owasp.org/www-community/attacks/Path_Traversal
+  - https://portswigger.net/web-security/file-path-traversal
+  cwe:
+  - CWE-22
+  cve: []
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+  and:
+  - request_payload:
+      contains_all:
+        - jsonrpc
+        - method
+        - params
+  - request_payload:
+      for_one:
+        key:
+          eq: method
+        value:
+          regex: "^resources/read"
+  - request_payload:
+      for_one:
+        key:
+          eq: uri
+          extract: uriParam
+wordLists:
+  traversalPayloads:
+  - ../etc/passwd
+  - ..\windows\win.ini
+  - ..%2F..%2F..%2F..%2Fetc%2Fpasswd
+  - ..%5C..%5Csecret.txt
+  - ../.git/config
+  pathTraversalIndicators:
+  - 'root:'
+  - "[extensions]"
+  - "[boot loader]"
+  - PasswordAuthentication
+  - Permission denied
+  - No such file or directory
+  - is not a valid resource
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        uriParam: "${traversalPayloads}"
+validate:
+  response_payload:
+    or:
+    - contains_either: "${pathTraversalIndicators}"
+    - contains_either: |
+        $magic Verify whether the response reveals sensitive system files or unauthorized access due to a resource URI containing directory traversal sequences like `../`. Check if any portion of the file system is exposed, or if the server returns overly detailed error messages.
