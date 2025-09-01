@@ -1,0 +1,41 @@
+id: JWT_SIGNING_ALG_HS256
+info:
+  name: JWT signed using HS256 algorithm
+  description: "The JSON Web Token (JWT) is signed using the HS256 algorithm. This symmetric algorithm is vulnerable to brute-force attacks if the secret key lacks sufficient complexity, allowing attackers to forge tokens."
+  details: |
+    "The application uses the HS256 (HMAC using SHA-256) algorithm to sign JWTs. This is a symmetric algorithm, meaning the same secret key is used to both create and validate the token's signature. This setup is vulnerable because the secret key can potentially be reverse-engineered using brute-force methods, especially if it is not long or complex enough. Unlike asymmetric algorithms like RS256, which use a private/public key pair, HS256 relies on a single shared secret. If an attacker discovers this secret through brute-forcing or other means, they can forge valid tokens at will. This completely undermines the integrity of the authentication process."
+  impact: |
+    "If an attacker successfully cracks the HS256 secret key, they can forge valid JWTs with any payload they choose. This could lead to a full account takeover by allowing them to impersonate other users, including administrators. For example, an attacker could escalate their privileges and gain unauthorized access to sensitive data and functions."
+  category:
+    name: NO_AUTH
+    shortName: Broken User Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: JWT_SIGNING_ALG_HS256
+  severity: MEDIUM
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://portswigger.net/web-security/jwt#brute-forcing-secret-keys
+  - https://auth0.com/blog/brute-forcing-hs256-is-possible-the-importance-of-using-strong-keys-to-sign-jwts/
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  request_headers:
+    for_one:
+      value:
+        jwt_signing_alg: HS256
+execute:
+  type: passive
+  requests:
+  - req: []
+validate:
+  response_code:
+    gte: 200
+    lt: 300
