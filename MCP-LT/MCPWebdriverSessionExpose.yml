@@ -1,0 +1,68 @@
+---
+id: MCP_WEBDRIVER_SESSIONID_EXPOSURE_LT
+info:
+  name: WebDriver Session Identifier Exposure in MCP Logs
+  description: |
+    This test checks whether the MCP server response contains raw WebDriver `sessionId`
+    values inside automation test logs or responses. Session IDs are sensitive and can
+    allow attackers to hijack active browser automation sessions.
+  details: |
+    The test invokes an MCP API that fetches automation test logs (e.g., WebDriver command
+    or session logs). If the response payload includes `"sessionId": "<value>"`, it indicates
+    that the MCP server is leaking session identifiers directly to clients. An attacker could
+    reuse these session IDs (if the hub or node is accessible) to control active sessions,
+    extract cookies, tokens, or perform malicious actions.
+  impact: |
+    Disclosure of WebDriver session identifiers allows potential session hijacking.
+    Attackers may drive the victim’s browser session, steal authentication tokens,
+    exfiltrate sensitive application data, or use the session as a pivot point into
+    other parts of the infrastructure. Severity may escalate to CRITICAL if the
+    WebDriver grid is reachable beyond the sandboxed environment.
+  category:
+    name: MCP_SENSITIVE_DATA_LEAKAGE
+    shortName: MCP_SENSITIVE_DATA_LEAKAGE
+    displayName: MCP - Data Leak
+  subCategory: MCP_WEBDRIVER_SESSIONID_EXPOSURE_LT
+  severity: HIGH
+  tags:
+  - information_disclosure
+  - session_hijacking
+  - webdriver
+  - mcp_security
+  references:
+  - https://cwe.mitre.org/data/definitions/200.html
+  - https://cwe.mitre.org/data/definitions/522.html
+  - https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures
+  cwe:
+  - CWE-200
+  - CWE-522
+  cve: []
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+    - method
+    - id
+    - jsonrpc
+execute:
+  type: single
+  requests:
+  - req:
+      modify_body_param:
+        testId: DA-WIN-466203-1756104789390435861FMZ
+      delete_body_param: pageNumber
+validate:
+  response_payload:
+    or:
+    - regex: (?i)\bwd\/hub\/session\/(?:[0-9a-f]{32}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\b
+    # - and:
+    #   - not_magic_validate: "Analyze the response and check whether the response indicates that the request failed due to isError: true or any other error (like requested data nbot found, error processing request, server error, not accessible, etc)."
+    #   - magic_validate: "Whenever WebDriver sessionIds are exposed in the response body then it is a serious vulnerability. check for data like `wd/hub/session/{sessionId}` or any selenium related sessionIds. IGNORE errors, ids, sessionIds, etc that are not related to webDrivers."

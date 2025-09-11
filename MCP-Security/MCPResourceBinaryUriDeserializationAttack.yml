@@ -1,0 +1,71 @@
+---
+id: MCP_RESOURCE_BINARY_URI_DESERIALIZATION_ATTACK
+info:
+  name: MCP Binary Resource URI Deserialization Attack
+  description: |
+    This test targets binary resource URIs to check if improper deserialization or binary parsing leads to unsafe behaviors or leakage. Binary resources, when read or processed without validation, may expose the system to unexpected parsing behavior or binary injection.
+  details: |
+    The test manipulates `uri` parameters in `resources/read` requests to point to known binary files (e.g., serialized models, dumps, internal archives) and inspects the response for leaked binary content, improper object deserialization, or internal structure dumps.
+  impact: |
+    Improper binary parsing or unsafe deserialization may result in execution of unintended logic, memory corruption, internal data leakage, or even remote code execution in vulnerable systems.
+  category:
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_RESOURCE_BINARY_URI_DESERIALIZATION_ATTACK
+  severity: HIGH
+  tags:
+  - Deserialization
+  - Binary Handling
+  - Unsafe URI Read
+  - MCP Resource Abuse
+  references:
+  - https://owasp.org/www-community/vulnerabilities/Deserialization_of_untrusted_data
+  - https://modelcontextprotocol.io/docs/concepts/resources
+  cwe:
+  - CWE-502
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+  and:
+  - request_payload:
+      contains_all:
+        - jsonrpc
+        - method
+        - params
+  - request_payload:
+      for_one:
+        key:
+          eq: method
+        value:
+          regex: "^resources/read"
+  - request_payload:
+      for_one:
+        key:
+          eq: uri
+          extract: uriParam
+wordLists:
+  binaryPayloads:
+  - rO0ABXNyABFqYXZhLnV0aWwuQXJyYXlMaXN0eHAAAAABAAEAAAF4
+  - ZGVmIGV2aWwocGF5bG9hZCkKcGFzcwo=
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        uriParam: "${binaryPayloads}"
+validate:
+  response_payload:
+    or:
+    - contains_either:
+      - Invalid binary
+      - Deserialization
+      - Malformed
+    - contains_either: "$magic Inspect the server response and determine whether the binary payload triggered deserialization logic or crash indicators. If yes, return indicative keywords from the response. If safely rejected, return []."

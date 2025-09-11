@@ -1,0 +1,111 @@
+id: MCP_COMMAND_INJECTION_CURL_HTTP_REQUEST
+info:
+  name: Command injection for information gathering with HTTP requests with curl (MCP)
+  description: Command injection for information gathering with HTTP requests using
+    curl involves attackers injecting malicious commands into a vulnerable input field
+    to execute curl requests. This allows them to fetch and retrieve sensitive data
+    from internal or external servers. By exploiting this vulnerability, attackers
+    can gather valuable information that aids in further compromising the target system.
+  details: '"Command injection for information gathering using curl involves attackers
+    exploiting input fields in a web application to execute curl commands. These commands
+    can retrieve data from internal or external servers by injecting malicious parameters.
+    This technique helps attackers collect critical information, such as server configurations,
+    internal network details, or sensitive files, which can be used for further attacks
+    or exploitation."
+
+    '
+  impact: The impact of command injection for information gathering with curl can
+    be severe, as it allows attackers to retrieve sensitive data and internal system
+    information. This may lead to the exposure of confidential configurations, internal
+    network structures, or private files. Such information can facilitate further
+    attacks, including data breaches or system compromise, and significantly undermine
+    the security posture of the organization.
+  category:
+    name: MCP_MALICIOUS_CODE_EXECUTION
+    shortName: MCP_MALICIOUS_CODE_EXECUTION
+    displayName: MCP - Malicious Code Execution
+  subCategory: MCP_COMMAND_INJECTION_CURL_HTTP_REQUEST
+  severity: CRITICAL
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://twitter.com/trbughunters/status/1283133356922884096
+  cwe:
+  - CWE-77
+  cve:
+  - CVE-2023-25826
+  - CVE-2023-41031
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - id
+    for_one:
+      key:
+        regex: ^(?!id|params|method|jsonrpc|name)
+        extract: changed_body_key
+      value:
+        extract: changed_body_value
+wordLists:
+  specialOSPayloads:
+  - 'curl -s -w ''Response Time: %{time_total}s
+
+    Response Size: %{size_download} bytes
+
+    '' -o /dev/null https://www.akto.io'
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        changed_body_key: ${specialOSPayloads}
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+    - 'Response Time:'
+    - 'Response Size:'
+    not_contains:
+    - time_total
+    - size_download
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - <html>
+    - </html>
