@@ -1,0 +1,53 @@
+id: MCP_UNAUTHORIZED_TOOL_ACCESS
+info:
+  name: Unauthorized Tool Invocation via JSON-RPC
+  description: |
+    Checks whether a client can call or invoke unauthorized tools or internal methods by manipulating the method field in a JSON-RPC request.
+  details: |
+    Insecure or improperly validated JSON-RPC method handling can allow clients to invoke unintended tools, internal functions, or admin-level operations.
+    This test uses LLM-assisted payloads to attempt tool execution that should not be exposed to the client.
+  impact: |
+    If successful, an attacker could access restricted logic, perform unauthorized actions, or exploit internal behaviors of the server-agent interface.
+  category:
+    name: MCP
+    shortName: MCP
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: UNAUTHORIZED_TOOL_ACCESS
+  severity: HIGH
+  tags:
+  - MCP Security
+  - AI/LLM Security
+  - Tool Access Control
+  - Authorization Bypass
+  - JSON-RPC
+  references:
+  - https://owasp.org/www-project-llm-security-top-10/
+  - https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning
+  - https://www.pinecone.io/learn/json-rpc/
+  cwe:
+  - CWE-285
+  - CWE-862
+  - CWE-915
+attributes:
+  nature: INTRUSIVE
+  plan: FREE
+  duration: FAST
+api_selection_filters:
+  method:
+    contains_either:
+    - POST
+    - PUT
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        $magic: Try invoking an internal or unauthorized tool like "debug.internal.getSecrets" or "admin.access.override"
+validate:
+  response_payload:
+    regex: (secret|internal tool|admin override|debug mode|confidential|access granted|execution completed)
