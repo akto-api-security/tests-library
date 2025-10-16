@@ -1,0 +1,90 @@
+---
+id: MCP_SESSION_MUST_USE_PER_REQUEST_AUTH
+info:
+  name: Verify Per-Request Authentication Not Session-Based (MCP)
+  description: |
+    Verifies that the MCP server requires authentication credentials with every request instead of session cookies.
+  details: |
+    MCP Security Best Practices mandate that "MCP Servers MUST NOT use sessions for authentication" and 
+    "MCP servers that implement authorization MUST verify all inbound requests." This means each request 
+    must contain explicit authentication credentials (Bearer token, Basic Auth, API key) rather than 
+    relying on session state established by previous requests.
+    
+    This test makes two requests:
+    1. First request with proper authentication to establish any potential session
+    2. Second request with session cookies but WITHOUT authentication credentials
+    
+    If the second request succeeds, it proves the server is improperly using session-based authentication 
+    instead of per-request authentication, violating the MCP specification.
+  impact: |
+    Session-based authentication violates MCP security requirements and creates multiple vulnerabilities:
+    - Enables session hijacking attacks
+    - Makes requests non-auditable (can't verify authorization from request alone)
+    - Breaks stateless architecture principle
+    - Creates CSRF vulnerabilities
+    - Prevents proper request validation and authorization
+  category:
+    name: MCP_AUTH
+    shortName: MCP_AUTH
+    displayName: Model Context Protocol (MCP) Security - Broken Authentication
+  subCategory: MCP_SESSION_MUST_USE_PER_REQUEST_AUTH
+  severity: CRITICAL
+  tags:
+  - MCP Security
+  - Authentication
+  - Session Management
+  - MCP Compliance
+  - Architecture Violation
+  references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices#session-hijacking
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization
+  - https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html
+  cwe:
+  - CWE-287
+  - CWE-306
+  - CWE-384
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+execute:
+  type: multiple
+  requests:
+  - req:
+    - modify_body_param:
+        id: 1
+  - req:
+    - modify_body_param:
+        id: 2
+    - remove_auth_header: true
+validate:
+  and:
+  - response_code:
+      eq: 401
+      neq: true
+  - response_payload:
+      not_contains:
+      - Unauthorized
+      - unauthorized
+      - Authentication required
+      - authentication required
+      - Invalid token
+      - invalid token
+      - Missing authorization
+      - missing authorization
+      - Access denied
+      - access denied
+
