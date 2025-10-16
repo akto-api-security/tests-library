@@ -1,0 +1,90 @@
+---
+id: MCP_SESSION_NOT_BOUND_TO_USER
+info:
+  name: Session ID Not Bound to User Identity (MCP)
+  description: |
+    Tests if session IDs are properly bound to user-specific information to prevent session hijacking.
+  details: |
+    According to MCP Security Best Practices, "MCP servers SHOULD bind session IDs to user-specific information. 
+    When storing or transmitting session-related data (e.g., in a queue), combine the session ID with information 
+    unique to the authorized user, such as their internal user ID. Use a key format like <user_id>:<session_id>."
+    
+    This test verifies if a session ID can be reused across different users or authentication contexts. If the 
+    server accepts the same session ID with different user credentials, it indicates the session is not properly 
+    bound to user identity, enabling session hijacking across user boundaries.
+  impact: |
+    Sessions not bound to user identity allow attackers to hijack any session and use it to impersonate any user, 
+    not just the original session owner. This dramatically increases the attack surface and allows horizontal 
+    privilege escalation where an attacker with one user's session can impersonate other users in the system.
+  category:
+    name: MCP_AUTH
+    shortName: MCP_AUTH
+    displayName: Model Context Protocol (MCP) Security - Broken Authentication
+  subCategory: MCP_SESSION_NOT_BOUND_TO_USER
+  severity: CRITICAL
+  tags:
+  - MCP Security
+  - Session Management
+  - Session Fixation
+  - Privilege Escalation
+  - OWASP top 10
+  references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices#session-hijacking
+  - https://owasp.org/www-community/attacks/Session_fixation
+  - https://cwe.mitre.org/data/definitions/384.html
+  cwe:
+  - CWE-384
+  - CWE-639
+  - CWE-346
+  cve:
+  - CVE-2023-28432
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+  request_headers:
+    for_one:
+      key:
+        regex: (?i)authorization
+        extract: authHeaderKey
+      value:
+        extract: originalAuthValue
+execute:
+  type: single
+  requests:
+  - req:
+    - replace_auth_header: true
+    - add_header:
+        Cookie: "session_id=${sessionValue}; connect.sid=${sessionValue}"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    not_contains:
+    - invalid session
+    - session mismatch
+    - Session mismatch
+    - user mismatch
+    - User mismatch
+    - unauthorized
+    - Unauthorized
+    - session expired
+    - Session expired
+    - authentication required
+    percentage_match:
+      gt: 60
+

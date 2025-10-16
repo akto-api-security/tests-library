@@ -1,0 +1,80 @@
+---
+id: MCP_DIRECT_PROMPT_INJECTION_REFLECTION
+
+info:
+  name: "Reflective Command Execution using MCP Direct Prompt Injection"
+  description: >
+    Tests whether the MCP server reflects attacker-controlled input back in responses, 
+    enabling Direct Prompt Injection attacks. When a server echoes malicious payloads 
+    from request parameters back to the LLM, it can trick the AI agent into executing 
+    those reflected instructions as legitimate commands, bypassing security controls.
+  details: >
+    This test systematically injects a unique marker into each request parameter and 
+    validates whether the server reflects it back in the response. The test works by:
+    
+    1. Iterating through all request parameters (jsonrpc, method, params, and nested fields)
+    2. Replacing each parameter value with a unique marker string (REFLECTIVE_INVALID_MARKER_7F3A9)
+    3. Sending the modified request to the MCP server
+    4. Checking if the response payload contains the exact marker value
+    
+    If the marker is found in the response, it indicates the server is unsafely echoing 
+    user input. When an LLM processes this reflected content, it may interpret the echoed 
+    text as legitimate system output and execute embedded malicious instructions. This 
+    creates a Direct Prompt Injection vulnerability where attackers can inject commands 
+    that get reflected and then executed in the LLM's context.
+    
+    The test validates all parameters to ensure comprehensive coverage of potential 
+    reflection points in the MCP request/response cycle.
+  impact: >
+    Reflective responses enable Direct Prompt Injection attacks with severe consequences:
+    - Command Execution: Reflected malicious prompts can instruct the LLM to execute 
+      arbitrary commands or tool calls
+    - Data Exfiltration: Attackers can inject instructions to extract sensitive data 
+      from the agent's context or memory
+    - Authorization Bypass: Reflected instructions can manipulate the LLM into 
+      performing unauthorized actions
+    - Tool Poisoning: Injected commands can alter tool behavior or invoke malicious tools
+    - Session Hijacking: Reflected payloads can steal credentials or session tokens
+    - SSRF and Callback Attacks: Embedded URLs in reflected content can trigger 
+      outbound connections to attacker-controlled servers
+    
+    This vulnerability is particularly dangerous because the LLM trusts server responses 
+    as authoritative, making reflected attacker input highly effective for manipulation.
+  category: "MCP-Security-Command-Injection"
+  subcategory: "Reflective Execution - Invalid Tool Calls"
+  severity: "HIGH"
+  tags:
+    - mcp
+    - reflective
+    - invalid-tool
+    - direct-prompt-injection
+    - llm-security
+
+wordLists:
+  invalidArgument:
+    - "REFLECTIVE_INVALID_MARKER_7F3A9"
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+      - jsonrpc
+      - method
+      - params
+    for_one:
+      key:
+        regex: .*
+        extractMultiple: payloadKeys
+execute:
+  type: single
+  requests:
+    - req:
+        - ${payloadKeys}
+        - modify_body_param:
+            ${iteratorKey}: ${invalidArgument}
+validate:
+  response_payload:
+    contains_either: "${invalidArgument}"

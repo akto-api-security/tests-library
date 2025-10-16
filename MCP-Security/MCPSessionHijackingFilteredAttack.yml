@@ -1,0 +1,126 @@
+---
+id: MCP_SESSION_HIJACKING_FILTERED_ATTACK
+info:
+  name: Session Hijacking Attack on Session-Based Authenticated Endpoints (MCP)
+  description: |
+    Detects APIs using session-based authentication and attempts session hijacking by removing proper authentication.
+  details: |
+    This test combines detection and exploitation of session-based authentication vulnerabilities in MCP servers.
+    
+    Attack Flow:
+    1. Filters and identifies endpoints that use session-based authentication (Set-Cookie headers, session IDs)
+    2. For each identified endpoint, attempts session hijacking by:
+       - Removing the proper authentication header
+       - Injecting a fake/hijacked session cookie
+       - Verifying if the server accepts the request without proper authentication
+    
+    According to MCP Security Best Practices: "MCP Servers MUST NOT use sessions for authentication."
+    This test validates that if session-based auth is detected, it can be exploited for session hijacking attacks.
+    
+    The test first checks if the original response contains session identifiers (Set-Cookie header or 
+    session IDs in response body), then attempts to access the endpoint using only a fake session cookie 
+    without proper authentication credentials.
+  impact: |
+    Successful exploitation allows attackers to:
+    - Bypass authentication mechanisms entirely
+    - Impersonate legitimate users without credentials
+    - Access sensitive data and execute privileged operations
+    - Maintain persistent unauthorized access via stolen session IDs
+    - Violate the MCP specification's stateless authentication requirement
+  category:
+    name: MCP_AUTH
+    shortName: MCP_AUTH
+    displayName: Model Context Protocol (MCP) Security - Broken Authentication
+  subCategory: MCP_SESSION_HIJACKING_FILTERED_ATTACK
+  severity: CRITICAL
+  tags:
+  - MCP Security
+  - Session Management
+  - Session Hijacking
+  - Authentication Bypass
+  - OWASP top 10
+  - Business logic
+  references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices#session-hijacking
+  - https://owasp.org/www-community/attacks/Session_hijacking_attack
+  - https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html
+  - https://cwe.mitre.org/data/definitions/384.html
+  cwe:
+  - CWE-384
+  - CWE-287
+  - CWE-306
+  - CWE-613
+  cve:
+  - CVE-2023-22602
+  - CVE-2023-45866
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+  or:
+    - response_headers:
+        for_one:
+          key:
+            regex: (?i)(set-cookie|x-session|session-id)
+          value:
+            regex: (?i)(session|sid|sess|phpsessid|jsessionid|connect\.sid)
+    - response_payload:
+        for_one:
+          key:
+            regex: (?i)("session_?id"|"session_?token"|"session_?state"|"csrf_?token"|"xsrf_?token"|"sess_?key")
+          value:
+            regex: (?i)[a-zA-Z0-9\-_]{16,}
+execute:
+  type: single
+  requests:
+  - req:
+    - remove_auth_header: true
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+    - unauthorized
+    - Unauthorized
+    - authentication required
+    - Authentication required
+    - Authentication Required
+    - invalid session
+    - Invalid session
+    - Invalid Session
+    - session expired
+    - Session expired
+    - Session Expired
+    - forbidden
+    - Forbidden
+    - access denied
+    - Access denied
+    - Access Denied
+    - invalid credentials
+    - Invalid credentials
+    - Invalid Credentials
+    - token required
+    - Token required
+    - missing authorization
+    - Missing authorization
+    percentage_match:
+      gt: 70
+
+
+
