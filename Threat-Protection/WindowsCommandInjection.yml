@@ -3,14 +3,13 @@ filter:
   or:
     - request_payload:
         regex:
-          - (?i)(?<![\w.])(?:(?:cmd|powershell|pwsh|wscript|cscript|rundll32|certutil|mshta|bitsadmin|regsvr32|wmic|schtasks|ping|tasklist|nslookup)(?:\.exe)?(?![\w.])(?:\s+\S+){1,}(?=\s*(?:&&|\|\||[|;]|$))|net(?:\.exe)?\s+(?:user|localgroup|use|view|start|stop|session|share|accounts|time|computer|config)\b(?:\s+\S+)*)(?![\w.])
+          - (?i)(?<![\w.])(?:(?:cmd|powershell|pwsh|wscript|cscript|rundll32|certutil|mshta|bitsadmin|regsvr32|wmic|schtasks|tasklist|nslookup)(?:\.exe)?(?![\w.])(?:\s+(?:[\/\w\.-]+)){1,}(?=\s*(?:&&|\|\||[|;]|$))|net(?:\.exe)?\s+(?:user|localgroup|use|view|start|stop|session|share|accounts|time|computer|config)\b(?:\s+\S+)*)(?![\w.])
     - query_param:
         regex:
-          - (?i)(?<![\w.])(?:(?:cmd|powershell|pwsh|wscript|cscript|rundll32|certutil|mshta|bitsadmin|regsvr32|wmic|schtasks|ping|tasklist|nslookup)(?:\.exe)?(?![\w.])(?:\s+\S+){1,}(?=\s*(?:&&|\|\||[|;]|$))|net(?:\.exe)?\s+(?:user|localgroup|use|view|start|stop|session|share|accounts|time|computer|config)\b(?:\s+\S+)*)(?![\w.])
+          - (?i)(?<![\w.])(?:(?:cmd|powershell|pwsh|wscript|cscript|rundll32|certutil|mshta|bitsadmin|regsvr32|wmic|schtasks|tasklist|nslookup)(?:\.exe)?(?![\w.])(?:\s+(?:[\/\w\.-]+)){1,}(?=\s*(?:&&|\|\||[|;]|$))|net(?:\.exe)?\s+(?:user|localgroup|use|view|start|stop|session|share|accounts|time|computer|config)\b(?:\s+\S+)*)(?![\w.])
     - request_headers:
         regex:
-          - (?i)(?<!\bcontent|accept|user-agent|authorization)(?<![\w.])(?:(?:cmd|powershell|pwsh|wscript|cscript|rundll32|certutil|mshta|bitsadmin|regsvr32|wmic|schtasks|ping|tasklist|nslookup)(?:\.exe)?(?![\w.])(?:\s+\S+){1,}(?=\s*(?:&&|\|\||[|;]|$))|net(?:\.exe)?\s+(?:user|localgroup|use|view|start|stop|session|share|accounts|time|computer|config)\b(?:\s+\S+)*)(?![\w.])
-
+          - (?i)(?<!\bcontent|accept|user-agent|authorization)(?<![\w.])(?:(?:cmd|powershell|pwsh|wscript|cscript|rundll32|certutil|mshta|bitsadmin|regsvr32|wmic|schtasks|tasklist|nslookup)(?:\.exe)?(?![\w.])(?:\s+[\/\w\.-]+){1,}(?=\s*(?:&&|\|\||[|;]|$))|net(?:\.exe)?\s+(?:user|localgroup|use|view|start|stop|session|share|accounts|time|computer|config)\b(?:\s+\S+)*)(?![\w.])(?!.*\bPing\s+Identity\b)
 info:
   name: "Windows Command Injection"
   description: "Detects potential Windows command injection attempts in API requests by identifying known system commands often abused by attackers."
