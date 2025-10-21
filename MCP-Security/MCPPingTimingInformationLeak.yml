@@ -1,0 +1,91 @@
+---
+id: MCP_PING_TIMING_INFORMATION_LEAK
+info:
+  name: Ping Timing-Based Information Disclosure (MCP)
+  description: |
+    Tests whether ping response times vary based on system state, potentially leaking information about server load, user presence, or internal operations.
+  details: |
+    This test analyzes ping response time patterns to detect potential information leakage. While ping should respond promptly with an empty result, variations in response times can reveal information about server state, resource availability, or ongoing operations. Consistent response times across different server states indicate proper isolation.<br>
+    <b>Background:</b> Timing attacks are a subtle form of side-channel attack where information is inferred from response time variations. If ping responses are faster or slower depending on server load, authenticated vs unauthenticated requests, or other factors, attackers can use this to profile the server, detect user activity, or time attacks optimally.
+  impact: |
+    Timing-based information leakage through ping enables:
+    1. Server load profiling to identify optimal attack times
+    2. Detection of user activity patterns
+    3. Identification of resource-intensive operations in progress
+    4. Correlation of ping timing with other attacks to measure impact
+    5. Inference of authentication state or user presence
+    6. Mapping of internal system architecture based on latency patterns
+  category:
+    name: MCP_INFORMATION_DISCLOSURE
+    shortName: MCP_INFO_LEAK
+    displayName: Model Context Protocol (MCP) Security - Information Disclosure
+  subCategory: MCP_PING_TIMING_INFORMATION_LEAK
+  severity: LOW
+  tags:
+  - Business logic
+  - MCP
+  - Information Disclosure
+  - Timing Attack
+  - Side Channel
+  references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/utilities/ping#behavior-requirements
+  - https://cwe.mitre.org/data/definitions/208.html
+  - https://cwe.mitre.org/data/definitions/362.html
+  cwe:
+  - CWE-208
+  - CWE-362
+  - CWE-385
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: SLOW
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+auth:
+  authenticated: true
+execute:
+  type: multiple
+  requests:
+  # Authenticated ping
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"ping-auth-1","method":"ping"}'
+    - success: x1
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"ping-auth-2","method":"ping"}'
+    - success: x2
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"ping-auth-3","method":"ping"}'
+    - success: x3
+  # Unauthenticated ping
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"ping-noauth-1","method":"ping"}'
+    - remove_auth_header: true
+    - success: x4
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"ping-noauth-2","method":"ping"}'
+    - remove_auth_header: true
+    - success: x5
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"ping-noauth-3","method":"ping"}'
+    - remove_auth_header: true
+    - success: x6
+validate:
+  # Check if timing difference between authenticated and unauthenticated is significant
+  or:
+  - compare_greater:
+      - ${x1.response.stats.median_response_time}
+      - ${x4.response.stats.median_response_time} * 2
+  - compare_greater:
+      - ${x4.response.stats.median_response_time}
+      - ${x1.response.stats.median_response_time} * 2
+strategy:
+  run_once: /
+

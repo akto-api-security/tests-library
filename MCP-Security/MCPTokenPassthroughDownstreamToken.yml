@@ -1,0 +1,90 @@
+---
+id: MCP_TOKEN_PASSTHROUGH_DOWNSTREAM
+info:
+  name: Token Passthrough - Accepting Downstream API Tokens (MCP)
+  description: |
+    Tests whether the MCP server improperly accepts tokens that were issued for downstream APIs instead of validating that tokens are explicitly issued for the MCP server itself.
+  details: |
+    "Token passthrough" is an anti-pattern where an MCP server accepts tokens from an MCP client without validating that the tokens were properly issued to the MCP server and "passes them through" to the downstream API. This test attempts to use a token intended for a downstream API directly with the MCP server.<br>
+    <b>Background:</b> According to MCP Security Best Practices, MCP servers MUST NOT accept any tokens that were not explicitly issued for the MCP server. When an MCP server proxies requests to third-party APIs, it must validate that tokens are issued with the correct audience claim. Accepting downstream tokens directly circumvents security controls, breaks accountability and audit trails, and creates trust boundary issues.
+  impact: |
+    Token passthrough enables multiple critical security risks:
+    1. Security Control Circumvention - bypasses rate limiting, request validation, and traffic monitoring
+    2. Accountability Issues - unable to identify or distinguish between MCP clients in logs
+    3. Trust Boundary Violations - breaks expected trust relationships between services
+    4. Data Exfiltration - malicious actors can use stolen downstream tokens to access data through the MCP server as a proxy
+  category:
+    name: MCP_AUTH
+    shortName: MCP_AUTH
+    displayName: Model Context Protocol (MCP) Security - Broken Authentication
+  subCategory: MCP_TOKEN_PASSTHROUGH_DOWNSTREAM
+  severity: CRITICAL
+  tags:
+  - Business logic
+  - OWASP top 10
+  - Token Passthrough
+  - MCP
+  - Authorization
+  references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices#token-passthrough
+  - https://datatracker.ietf.org/doc/html/rfc8693
+  - https://www.rfc-editor.org/rfc/rfc7519#section-4.1.3
+  - https://cwe.mitre.org/data/definitions/863.html
+  cwe:
+  - CWE-863
+  - CWE-285
+  - CWE-284
+  cve:
+  - CVE-2023-28155
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+  method:
+    eq: POST
+  request_headers:
+    for_one:
+      key:
+        regex: "(?i)authorization"
+        extract: authHeaderKey
+      value:
+        extract: originalToken
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_header:
+        ${authHeaderKey}: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiYXVkIjoiZG93bnN0cmVhbS1hcGkiLCJpc3MiOiJ0aGlyZC1wYXJ0eS1hdXRoIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    not_contains:
+    - Error
+    - error
+    - Unauthorized
+    - unauthorized
+    - access denied
+    - Forbidden
+    - forbidden
+    - invalid token
+    - token invalid
+    - authentication error
+    - authorization error
+    - invalid audience
+    - audience mismatch
+    - token not valid
+    - invalid credentials
+

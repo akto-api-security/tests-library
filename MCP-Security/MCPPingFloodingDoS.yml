@@ -1,0 +1,120 @@
+---
+id: MCP_PING_FLOODING_DOS
+info:
+  name: Denial of Service via Ping Flooding (MCP)
+  description: |
+    Tests whether the MCP server is vulnerable to DoS attacks through excessive ping requests. The specification warns that "excessive pinging SHOULD be avoided to reduce network overhead."
+  details: |
+    This test sends rapid, successive ping requests to the MCP server to determine if it has proper rate limiting and DoS protection. According to the MCP specification, "Excessive pinging SHOULD be avoided to reduce network overhead." A vulnerable server will process all ping requests without limitation, consuming resources and potentially becoming unresponsive.<br>
+    <b>Background:</b> The MCP Ping utility allows either party to verify connection health. However, without proper rate limiting, malicious actors can abuse the ping mechanism to overwhelm the server with requests. The specification states that "The frequency of pings SHOULD be configurable" and implementations should avoid excessive pinging, but doesn't mandate specific limits, making this a common vulnerability.
+  impact: |
+    Successful ping flooding attacks can result in:
+    1. Server resource exhaustion (CPU, memory, network bandwidth)
+    2. Service degradation or complete unavailability for legitimate users
+    3. Cascading failures if the server is part of a larger system
+    4. Financial losses due to downtime or increased infrastructure costs
+    5. Potential for amplification attacks if server responses are larger than requests
+  category:
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: Model Context Protocol (MCP) Security - Denial of Service
+  subCategory: MCP_PING_FLOODING_DOS
+  severity: HIGH
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  - MCP
+  - DoS
+  - Rate Limiting
+  references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/utilities/ping#implementation-considerations
+  - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa4-unrestricted-resource-consumption.md
+  - https://cwe.mitre.org/data/definitions/400.html
+  cwe:
+  - CWE-400
+  - CWE-770
+  - CWE-799
+  cve:
+  - CVE-2023-4647
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+execute:
+  type: multiple
+  requests:
+  # First request - baseline ping
+  - req:
+    - modify_body_param:
+        method: "ping"
+    - replace_body: '{"jsonrpc":"2.0","id":"baseline-ping","method":"ping"}'
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+        response_payload:
+          contains_either:
+          - result
+    - success: x1
+    - failure: exit
+  # Second request - rapid ping flooding (simulated via single request expecting no rate limit)
+  - req:
+    - modify_body_param:
+        method: "ping"
+    - replace_body: '{"jsonrpc":"2.0","id":"flood-ping-1","method":"ping"}'
+    - success: x2
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"flood-ping-2","method":"ping"}'
+    - success: x3
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"flood-ping-3","method":"ping"}'
+    - success: x4
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"flood-ping-4","method":"ping"}'
+    - success: x5
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"flood-ping-5","method":"ping"}'
+    - success: x6
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"flood-ping-6","method":"ping"}'
+    - success: x7
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"flood-ping-7","method":"ping"}'
+    - success: x8
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"flood-ping-8","method":"ping"}'
+    - success: x9
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"flood-ping-9","method":"ping"}'
+    - success: x10
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"flood-ping-10","method":"ping"}'
+validate:
+  and:
+  - response_code:
+      gte: 200
+      lt: 300
+  - response_payload:
+      not_contains:
+      - rate limit
+      - too many requests
+      - slow down
+      - throttle
+      - exceeded
+      - quota
+      - limit reached
+      - try again later
+strategy:
+  run_once: /
+

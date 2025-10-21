@@ -1,0 +1,71 @@
+---
+id: MCP_PING_AMPLIFICATION_ATTACK
+info:
+  name: Ping Amplification Attack Detection (MCP)
+  description: |
+    Tests whether ping responses are properly sized to prevent amplification attacks where small requests generate disproportionately large responses.
+  details: |
+    The MCP specification requires ping to respond with an empty result: {"jsonrpc":"2.0","id":"123","result":{}}. This test verifies that ping responses don't include excessive data that could be used for amplification attacks. A properly implemented server should return a minimal response regardless of request characteristics.<br>
+    <b>Background:</b> Amplification attacks exploit services that respond with more data than they receive, allowing attackers to use the server to amplify DDoS attacks. While ping should return a minimal response, improper implementations might include debugging information, error details, or other data that increases response size, creating an amplification vector.
+  impact: |
+    Ping amplification vulnerabilities enable:
+    1. DDoS amplification attacks using the server as a reflector
+    2. Bandwidth exhaustion for both server and attack targets
+    3. Network congestion affecting legitimate traffic
+    4. Increased infrastructure costs due to bandwidth consumption
+    5. Potential service degradation or outages
+    6. Reputation damage if server is used in DDoS attacks
+  category:
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: Model Context Protocol (MCP) Security - Denial of Service
+  subCategory: MCP_PING_AMPLIFICATION_ATTACK
+  severity: MEDIUM
+  tags:
+  - Business logic
+  - MCP
+  - Amplification
+  - DDoS
+  - Network Security
+  references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/utilities/ping#message-format
+  - https://www.cisa.gov/news-events/alerts/2014/01/17/udp-based-amplification-attacks
+  - https://cwe.mitre.org/data/definitions/406.html
+  cwe:
+  - CWE-406
+  - CWE-400
+  - CWE-770
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+execute:
+  type: single
+  requests:
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"1","method":"ping"}'
+validate:
+  and:
+  - response_code:
+      gte: 200
+      lt: 300
+  - response_payload:
+      length:
+        gt: 200
+  - response_payload:
+      not_contains:
+      - Error
+      - error
+strategy:
+  run_once: /
+
