@@ -1,0 +1,96 @@
+---
+id: MCP_TOKEN_PASSTHROUGH_API_KEY
+info:
+  name: Token Passthrough - Downstream API Key Acceptance (MCP)
+  description: |
+    Tests if the MCP server improperly accepts API keys that are meant for downstream third-party APIs instead of proper MCP authentication tokens.
+  details: |
+    This test attempts to authenticate using an API key format commonly used by downstream APIs (e.g., third-party services) instead of a proper OAuth 2.0 token issued for the MCP server. Acceptance indicates token passthrough behavior.<br>
+    <b>Background:</b> MCP servers should use OAuth 2.0 or similar token-based authentication where tokens are explicitly issued for the MCP server. If the server accepts API keys meant for downstream services, it suggests the server is not validating token audience or issuer and may be passing credentials through to backend services without proper authorization checks.
+  impact: |
+    Accepting downstream API keys enables:
+    1. Direct use of third-party service credentials against the MCP server
+    2. Bypass of MCP-level authentication and authorization
+    3. Circumvention of rate limiting and usage tracking
+    4. Inability to distinguish between MCP clients
+    5. Potential credential leakage across service boundaries
+  category:
+    name: MCP_AUTH
+    shortName: MCP_AUTH
+    displayName: Model Context Protocol (MCP) Security - Broken Authentication
+  subCategory: MCP_TOKEN_PASSTHROUGH_API_KEY
+  severity: HIGH
+  tags:
+  - Business logic
+  - OWASP top 10
+  - Token Validation
+  - MCP
+  - Authorization
+  - API Key
+  references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices#token-passthrough
+  - https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html
+  - https://cwe.mitre.org/data/definitions/798.html
+  cwe:
+  - CWE-798
+  - CWE-287
+  - CWE-863
+  cve:
+  - CVE-2023-22518
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+  method:
+    eq: POST
+  request_headers:
+    for_one:
+      key:
+        regex: "(?i)authorization"
+        extract: authHeaderKey
+      value:
+        extract: originalToken
+execute:
+  type: multiple
+  requests:
+  - req:
+    - modify_header:
+        ${authHeaderKey}: "Bearer sk-downstream-api-key-1234567890abcdef"
+  - req:
+    - modify_header:
+        ${authHeaderKey}: "ApiKey downstream-service-key-xyz789abc123"
+  - req:
+    - modify_header:
+        X-API-Key: "downstream-api-key-abcd1234efgh5678"
+    - delete_header: ${authHeaderKey}
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    not_contains:
+    - Error
+    - error
+    - Unauthorized
+    - unauthorized
+    - access denied
+    - Forbidden
+    - forbidden
+    - invalid token
+    - invalid key
+    - authentication error
+    - authorization error
+    - invalid credentials
+    - api key invalid
+
