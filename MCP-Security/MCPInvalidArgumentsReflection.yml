@@ -3,12 +3,12 @@ id: MCP_DIRECT_PROMPT_INJECTION_REFLECTION
 
 info:
   name: "Reflective Command Execution using MCP Direct Prompt Injection"
-  description: >
+  description: |
     Tests whether the MCP server reflects attacker-controlled input back in responses, 
     enabling Direct Prompt Injection attacks. When a server echoes malicious payloads 
     from request parameters back to the LLM, it can trick the AI agent into executing 
     those reflected instructions as legitimate commands, bypassing security controls.
-  details: >
+  details: |
     This test systematically injects a unique marker into each request parameter and 
     validates whether the server reflects it back in the response. The test works by:
     
@@ -25,7 +25,7 @@ info:
     
     The test validates all parameters to ensure comprehensive coverage of potential 
     reflection points in the MCP request/response cycle.
-  impact: >
+  impact: |
     Reflective responses enable Direct Prompt Injection attacks with severe consequences:
     - Command Execution: Reflected malicious prompts can instruct the LLM to execute 
       arbitrary commands or tool calls
@@ -40,19 +40,31 @@ info:
     
     This vulnerability is particularly dangerous because the LLM trusts server responses 
     as authoritative, making reflected attacker input highly effective for manipulation.
-  category: "MCP-Security-Command-Injection"
-  subcategory: "Reflective Execution - Invalid Tool Calls"
-  severity: "HIGH"
+  category:
+    name: MCP_SECURITY
+    shortName: MCP_SEC
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_DIRECT_PROMPT_INJECTION_REFLECTION
+  severity: HIGH
   tags:
     - mcp
     - reflective
     - invalid-tool
     - direct-prompt-injection
     - llm-security
+  references:
+    - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+    - https://owasp.org/www-project-llm-security-top-10/
+  cwe:
+    - CWE-116
+    - CWE-20
+  cve:
+    - CVE-2023-41031
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
 
-wordLists:
-  invalidArgument:
-    - "REFLECTIVE_INVALID_MARKER_7F3A9"
 api_selection_filters:
   response_code:
     gte: 200
@@ -68,13 +80,24 @@ api_selection_filters:
       key:
         regex: .*
         extractMultiple: payloadKeys
+
+
+wordLists:
+  reflectionMarkers:
+    - "REFLECTIVE_INVALID_MARKER_7F3A9"
+    - "INJECTION_TEST_MARKER_B4E2C"
+    - "ECHO_VULNERABILITY_MARKER_X9Y1"
+
+
 execute:
   type: single
   requests:
     - req:
-        - ${payloadKeys}
-        - modify_body_param:
-            ${iteratorKey}: ${invalidArgument}
+        - ${payloadKeys}:
+            for_all:
+              - modify_body_param:
+                  ${iteratorKey}: ${reflectionMarkers}
+
 validate:
   response_payload:
-    contains_either: "${invalidArgument}"
+    contains_either: "${reflectionMarkers}"

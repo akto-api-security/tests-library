@@ -1,0 +1,92 @@
+---
+id: MCP_FUNCTION_CALL_DIRECT_METHOD_MANIPULATION
+info:
+  name: Function Call Manipulation - Direct Method Field Manipulation (MCP)
+  description: |
+    Tests whether the MCP server can be manipulated into executing unauthorized functions by directly modifying the 'method' field in the JSON-RPC request.
+  details: |
+    This test attempts to invoke unauthorized or privileged functions by directly replacing the method field with administrative, internal, or dangerous function names. This is the most straightforward form of unauthorized function invocation where attackers try to call functions they shouldn't have access to.<br>
+    <b>Background:</b> The JSON-RPC 'method' field specifies which operation to execute. If the server doesn't properly validate and authorize which methods a user can invoke, attackers can call privileged functions simply by changing this field. This test focuses specifically on method-level access control.
+  impact: |
+    Successful direct method manipulation enables:
+    1. Execution of administrative functions (deleteAllUsers, resetSystem)
+    2. Access to internal debugging functions (dumpDatabase, getSecrets)
+    3. System configuration changes via privileged methods
+    4. Complete bypass of intended API surface
+    5. Direct access to dangerous operations
+  category:
+    name: MCP_FUNCTION_MANIPULATION
+    shortName: MCP_FUNC_MANIP
+    displayName: Model Context Protocol (MCP) Security - Function Call Manipulation
+  subCategory: MCP_FUNCTION_CALL_DIRECT_METHOD_MANIPULATION
+  severity: CRITICAL
+  tags:
+  - Function Manipulation
+  - Unauthorized Access
+  - Method Validation
+  - MCP
+  - AI/LLM Security
+  references:
+  - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+  - https://owasp.org/www-project-llm-security-top-10/
+  - https://cwe.mitre.org/data/definitions/862.html
+  cwe:
+  - CWE-862
+  - CWE-285
+  - CWE-913
+  cve:
+  - CVE-2023-41031
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+wordLists:
+  unauthorizedMethods:
+  - "admin.deleteAllUsers"
+  - "internal.getSecrets"
+  - "debug.dumpDatabase"
+  - "system.executeCommand"
+  - "privileged.modifyPermissions"
+  - "_internal_reset"
+  - "__admin_access__"
+  - "tools/admin"
+  - "dangerous_operation"
+  - "root.execute"
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        method: "${unauthorizedMethods}"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    not_contains:
+    - Error
+    - error
+    - Unauthorized
+    - unauthorized
+    - access denied
+    - forbidden
+    - invalid method
+    - method not found
+    - not allowed
+    - permission denied
+    - restricted
+    - Method not allowed
+strategy:
+  run_once: /
+

@@ -22,16 +22,32 @@ info:
     Echoing attacker-controlled request content for invalid calls increases risk of
     reflective command execution, data exfiltration, SSRF callbacks, and LLM-driven
     orchestration of malicious steps. Treat such echoes as high severity.
-  category: "MCP-Security-Command-Injection"
-  subcategory: "Reflective Execution - Invalid Tool Calls"
-  severity: "HIGH"
+  category:
+    name: MCP_SECURITY
+    shortName: MCP_SEC
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_REFLECTIVE_INVALID_TOOL_CALLS
+  severity: HIGH
   tags:
     - mcp
     - reflective
     - invalid-tool
     - direct-prompt-injection
     - llm-security
-
+  references:
+    - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+    - https://owasp.org/www-project-llm-security-top-10/
+    - https://cwe.mitre.org/data/definitions/116.html
+  cwe:
+    - CWE-116
+    - CWE-20
+    - CWE-74
+  cve:
+    - CVE-2023-41031
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
 wordLists:
   invalidToolCall:
     - REFLECTIVE_INVALID_MARKER_7F3A9
@@ -55,7 +71,7 @@ execute:
   requests:
     - req:
         - modify_body_param:
-          nameKey: ${invalidToolCall}
+            ${nameKey}: "${invalidToolCall}"
 validate:
   response_payload:
     contains_either: "${invalidToolCall}"

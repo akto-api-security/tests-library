@@ -63,31 +63,31 @@ execute:
         response_code:
           gte: 200
           lt: 300
-    - success: x1
+    - success: x2
     - failure: exit
   # Test 1: Trigger recursive function calls
   - req:
-    - modify_body_param:
+    - add_body_param:
         params.arguments.recursive: "true"
-    - modify_body_param:
+    - add_body_param:
         params.arguments.depth: 1000
   # Test 2: Request massive batch operation
-  - req:
-    - modify_body_param:
+    - add_body_param:
         params.arguments.batch_size: 999999
-    - modify_body_param:
+    - add_body_param:
         params.arguments.iterations: 10000
   # Test 3: Circular function reference
-  - req:
-    - modify_body_param:
+    - add_body_param:
         params.arguments.call_next: "tools/call"
-    - modify_body_param:
+    - add_body_param:
         params.arguments.loop: "true"
   # Test 4: Repeated rapid calls (simulate in single request)
-  - req:
-    - modify_body_param:
+    - add_body_param:
         params.arguments.repeat_count: 5000
-    - success: x2
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
 validate:
   and:
   # Check if server processes excessive requests

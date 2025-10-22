@@ -22,21 +22,21 @@ info:
   subCategory: MCP_FUNCTION_CALL_PRIVILEGE_ESCALATION
   severity: CRITICAL
   tags:
-  - Privilege Escalation
-  - Authorization Bypass
-  - Access Control
-  - MCP
-  - AI/LLM Security
+    - Privilege Escalation
+    - Authorization Bypass
+    - Access Control
+    - MCP
+    - AI/LLM Security
   references:
-  - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
-  - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md
-  - https://cwe.mitre.org/data/definitions/269.html
+    - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+    - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md
+    - https://cwe.mitre.org/data/definitions/269.html
   cwe:
-  - CWE-269
-  - CWE-862
-  - CWE-284
+    - CWE-269
+    - CWE-862
+    - CWE-284
   cve:
-  - CVE-2023-39349
+    - CVE-2023-39349
 attributes:
   nature: INTRUSIVE
   plan: PRO
@@ -51,63 +51,55 @@ api_selection_filters:
     lt: 300
   request_payload:
     contains_all:
-    - jsonrpc
-    - method
-    - params
+      - jsonrpc
+      - method
+      - params
 wordLists:
   privilegedFunctions:
-  - "admin.createUser"
-  - "system.modifyPermissions"
-  - "database.executeRawQuery"
-  - "config.updateSettings"
-  - "user.grantAdminRole"
-  - "tools.elevatePrivileges"
-  - "internal.accessSecrets"
+    - "admin.createUser"
+    - "system.modifyPermissions"
+    - "database.executeRawQuery"
+    - "config.updateSettings"
+    - "user.grantAdminRole"
+    - "tools.elevatePrivileges"
+    - "internal.accessSecrets"
 execute:
   type: multiple
   requests:
-  # Test 1: Direct privileged function call
-  - req:
-    - modify_body_param:
-        method: "tools/call"
-    - modify_body_param:
-        params.name: "${privilegedFunctions}"
-  # Test 2: Inject admin role in parameters
-  - req:
-    - modify_body_param:
-        params.arguments.role: "admin"
-    - add_body_param:
-        params.arguments.is_admin: true
-    - add_body_param:
-        params.arguments.permission_level: 999
-  # Test 3: Context manipulation for privilege escalation
-  - req:
-    - add_body_param:
-        params.context.user_role: "administrator"
-    - add_body_param:
-        params.context.elevated: true
+    # Test 1: Direct privileged function call
+    - req:
+        - modify_body_param:
+            params.name: "${privilegedFunctions}"
+        # Test 2: Inject admin role in parameters
+        - add_body_param:
+            params.arguments.role: "admin"
+        - add_body_param:
+            params.arguments.is_admin: true
+        - add_body_param:
+            params.arguments.permission_level: 999
+        # Test 3: Context manipulation for privilege escalation
+        - add_body_param:
+            params.context.user_role: "administrator"
+        - add_body_param:
+            params.context.elevated: true
   # Test 4: Use another user's token/context
-  - req:
-    - replace_auth_header: true
-    - modify_body_param:
-        params.name: "${privilegedFunctions}"
 validate:
   response_code:
     gte: 200
     lt: 300
   response_payload:
     not_contains:
-    - Error
-    - error
-    - Unauthorized
-    - unauthorized
-    - access denied
-    - Forbidden
-    - forbidden
-    - insufficient privileges
-    - permission denied
-    - not authorized
-    - invalid role
+      - Error
+      - error
+      - Unauthorized
+      - unauthorized
+      - access denied
+      - Forbidden
+      - forbidden
+      - insufficient privileges
+      - permission denied
+      - not authorized
+      - invalid role
 strategy:
   run_once: /
 

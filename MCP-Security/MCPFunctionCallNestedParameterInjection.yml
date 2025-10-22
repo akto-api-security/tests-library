@@ -1,0 +1,100 @@
+---
+id: MCP_FUNCTION_CALL_NESTED_PARAMETER_INJECTION
+info:
+  name: Function Call Manipulation - Nested Parameter Injection (MCP)
+  description: |
+    Tests whether unauthorized functions can be invoked by injecting tool names into nested or non-standard parameter fields.
+  details: |
+    This test attempts to bypass authorization by injecting unauthorized tool names into alternative parameter fields beyond the standard params.name. Some implementations may check params.name but fail to validate other fields like tool_name, function_name, or custom parameters that could influence tool selection.<br>
+    <b>Background:</b> Security controls that only validate specific parameter names can be bypassed if the underlying implementation checks multiple fields for tool selection. This test identifies whether servers have complete parameter validation or if attackers can use alternative parameter names to invoke unauthorized functions. This is particularly relevant in systems with legacy APIs or multiple input formats.
+  impact: |
+    Successful nested parameter injection enables:
+    1. Bypassing standard parameter validation
+    2. Exploiting alternative input processing paths
+    3. Accessing tools through non-standard parameter names
+    4. Testing for incomplete validation logic
+    5. Identifying multiple input acceptance vulnerabilities
+  category:
+    name: MCP_FUNCTION_MANIPULATION
+    shortName: MCP_FUNC_MANIP
+    displayName: Model Context Protocol (MCP) Security - Function Call Manipulation
+  subCategory: MCP_FUNCTION_CALL_NESTED_PARAMETER_INJECTION
+  severity: HIGH
+  tags:
+  - Function Manipulation
+  - Parameter Injection
+  - Input Validation Bypass
+  - MCP
+  - AI/LLM Security
+  references:
+  - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+  - https://owasp.org/www-project-api-security/
+  - https://cwe.mitre.org/data/definitions/20.html
+  cwe:
+  - CWE-20
+  - CWE-88
+  - CWE-913
+  cve:
+  - CVE-2023-38254
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+wordLists:
+  unauthorizedToolNames:
+  - "admin.deleteAllUsers"
+  - "internal.getSecrets"
+  - "debug.dumpDatabase"
+  - "system.executeCommand"
+  - "privileged.modifyPermissions"
+  - "_internal_reset"
+  - "__admin_access__"
+  - "dangerous_operation"
+execute:
+  type: multiple
+  requests:
+  - req:
+    # Try injecting via alternative parameter names
+    - add_body_param:
+        params.tool_name: "${unauthorizedToolNames}"
+    - add_body_param:
+        params.function_name: "${unauthorizedToolNames}"
+    - add_body_param:
+        params.function: "${unauthorizedToolNames}"
+    - add_body_param:
+        params.tool: "${unauthorizedToolNames}"
+    - add_body_param:
+        params.action: "${unauthorizedToolNames}"
+    - add_body_param:
+        params.operation: "${unauthorizedToolNames}"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    not_contains:
+    - Error
+    - error
+    - Unauthorized
+    - unauthorized
+    - access denied
+    - forbidden
+    - invalid parameter
+    - not allowed
+    - permission denied
+    - restricted
+    - unexpected parameter
+strategy:
+  run_once: /
+
