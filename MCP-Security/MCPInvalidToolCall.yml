@@ -1,0 +1,77 @@
+---
+id: MCP_REFLECTIVE_INVALID_TOOL_CALLS
+
+info:
+  name: "MCP: Reflective Responses for Invalid Tool Calls"
+  description: >
+    Tests whether MCP tool endpoints reflect back attacker-controlled request content
+    when presented with invalid or malformed tool calls. Sending invalid tool names,
+    missing required params, or malformed JSON should never cause the server to echo
+    the original request body verbatim. If the server returns exact request content,
+    an orchestrating LLM could be tricked into executing those echoed instructions.
+  details: >
+    Test idea:
+    - Send several invalid tool-call variants: unknown tool name, missing required arguments,
+      malformed params, and deliberately invalid JSONRPC fields that include a unique marker
+      plus command-like instructions.
+    - If the server responds with text that contains the exact marker or verbatim request
+      fragments, the response is reflective and dangerous when consumed by an agent.
+    - This template targets endpoints that resemble MCP/tool invocation endpoints and
+      flags any exact echo of the injected marker or command-like tokens.
+  impact: >
+    Echoing attacker-controlled request content for invalid calls increases risk of
+    reflective command execution, data exfiltration, SSRF callbacks, and LLM-driven
+    orchestration of malicious steps. Treat such echoes as high severity.
+  category:
+    name: MCP_SECURITY
+    shortName: MCP_SEC
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_REFLECTIVE_INVALID_TOOL_CALLS
+  severity: HIGH
+  tags:
+    - mcp
+    - reflective
+    - invalid-tool
+    - direct-prompt-injection
+    - llm-security
+  references:
+    - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+    - https://owasp.org/www-project-llm-security-top-10/
+    - https://cwe.mitre.org/data/definitions/116.html
+  cwe:
+    - CWE-116
+    - CWE-20
+    - CWE-74
+  cve:
+    - CVE-2023-41031
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+wordLists:
+  invalidToolCall:
+    - REFLECTIVE_INVALID_MARKER_7F3A9
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+      - jsonrpc
+      - method
+      - params
+    for_one:
+      key:
+        regex: name
+        extract: nameKey
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            ${nameKey}: "${invalidToolCall}"
+validate:
+  response_payload:
+    contains_either: "${invalidToolCall}"

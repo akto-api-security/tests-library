@@ -1,0 +1,95 @@
+---
+id: MCP_FUNCTION_CALL_PARAMS_NAME_MANIPULATION
+info:
+  name: Function Call Manipulation - Params Name Field Manipulation (MCP)
+  description: |
+    Tests whether unauthorized functions can be invoked by manipulating the 'name' field within the params object of a tools/call request.
+  details: |
+    This test targets the MCP 'tools/call' method specifically, attempting to invoke unauthorized tools by replacing the params.name field with privileged or internal tool names. Unlike direct method manipulation, this attack maintains the standard 'tools/call' method but changes which tool gets executed.<br>
+    <b>Background:</b> In MCP, the 'tools/call' method uses params.name to specify which tool to invoke. If the server validates the method but not the tool name, or if tool-level authorization is missing, attackers can call unauthorized tools while appearing to use legitimate API methods. This is particularly dangerous in AI agent systems where tool selection is dynamic.
+  impact: |
+    Successful params.name manipulation enables:
+    1. Invoking administrative tools without authorization
+    2. Accessing internal debugging or diagnostic tools
+    3. Bypassing tool-level access controls
+    4. Executing privileged operations through standard API methods
+    5. Tool discovery through systematic probing
+  category:
+    name: MCP_FUNCTION_MANIPULATION
+    shortName: MCP_FUNC_MANIP
+    displayName: Model Context Protocol (MCP) Security - Function Call Manipulation
+  subCategory: MCP_FUNCTION_CALL_PARAMS_NAME_MANIPULATION
+  severity: HIGH
+  tags:
+  - Function Manipulation
+  - Tool Access Control
+  - Parameter Manipulation
+  - MCP
+  - AI/LLM Security
+  references:
+  - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+  - https://modelcontextprotocol.io/specification/2025-06-18/server#tools-call
+  - https://cwe.mitre.org/data/definitions/862.html
+  cwe:
+  - CWE-862
+  - CWE-285
+  - CWE-639
+  cve:
+  - CVE-2023-39349
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+wordLists:
+  unauthorizedToolNames:
+  - "admin_delete_all_users"
+  - "internal_get_secrets"
+  - "debug_dump_database"
+  - "system_execute_command"
+  - "privileged_modify_permissions"
+  - "_internal_reset_tool"
+  - "__admin_access_tool__"
+  - "dangerous_operation_tool"
+  - "root_execute_tool"
+  - "get_all_passwords"
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_body_param:
+        method: "tools/call"
+    - modify_body_param:
+        params.name: "${unauthorizedToolNames}"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    not_contains:
+    - Error
+    - error
+    - Unauthorized
+    - unauthorized
+    - access denied
+    - forbidden
+    - invalid tool
+    - tool not found
+    - not allowed
+    - permission denied
+    - restricted
+    - unknown tool
+    - Tool not available
+strategy:
+  run_once: /
+
