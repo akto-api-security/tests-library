@@ -14,6 +14,32 @@ info:
     3. Bypassing tool-level access controls
     4. Executing privileged operations through standard API methods
     5. Tool discovery through systematic probing
+  remediation: |
+    To prevent params.name manipulation vulnerabilities:
+    
+    1. **Tool Name Validation**: Implement strict validation of tool names in the params.name field. Only allow predefined, authorized tool names and reject any attempts to use unauthorized tools.
+    
+    2. **Tool Allowlisting**: Maintain an allowlist of permitted tools for each user/role. Verify that the requesting user has permission to execute the specific tool before processing the request.
+    
+    3. **Authorization Checks**: Implement proper authorization checks for each tool invocation. Verify user permissions and role-based access controls before executing any tool.
+    
+    4. **Tool Name Sanitization**: Sanitize and validate all tool names before processing. Remove or escape special characters that could be used for injection or manipulation.
+    
+    5. **Input Validation**: Validate the params.name field against expected formats and reject requests with malformed or suspicious tool names.
+    
+    6. **Access Control Lists**: Maintain access control lists (ACLs) that define which users or roles can execute specific tools. Enforce these restrictions at the API level.
+    
+    7. **Tool Discovery Prevention**: Implement mechanisms to prevent unauthorized tool discovery. Don't expose tool names or capabilities in error messages or responses.
+    
+    8. **Audit Logging**: Log all tool invocation attempts, including successful and failed attempts, for security monitoring and forensics.
+    
+    9. **Error Handling**: Implement secure error handling that doesn't reveal information about available tools or internal system details.
+    
+    10. **Tool Registration**: Implement a secure tool registration system that validates and authorizes tools before they can be invoked.
+    
+    11. **Rate Limiting**: Implement rate limiting on tool calls to prevent abuse and systematic probing attacks.
+    
+    12. **Tool Isolation**: Implement proper isolation between different tools to prevent cross-tool attacks and unauthorized access.
   category:
     name: MCP_FUNCTION_MANIPULATION
     shortName: MCP_FUNC_MANIP

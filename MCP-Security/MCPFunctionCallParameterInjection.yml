@@ -15,6 +15,32 @@ info:
     4. Authorization bypass by modifying user/role parameters
     5. Data exfiltration by injecting filter/query parameters
     6. Business logic bypass through parameter manipulation
+  remediation: |
+    To prevent function call parameter injection vulnerabilities:
+    
+    1. **Input Validation**: Implement strict input validation for all function parameters. Validate parameter types, formats, and ranges before processing.
+    
+    2. **Parameter Sanitization**: Sanitize all parameter values to remove or escape special characters, SQL injection patterns, and command injection attempts.
+    
+    3. **Type Checking**: Enforce strict type checking for all parameters. Reject requests with incorrect parameter types or unexpected data formats.
+    
+    4. **Parameter Allowlisting**: Use allowlists for parameter values where possible. Only permit predefined, safe values for critical parameters.
+    
+    5. **SQL Injection Prevention**: Use parameterized queries and prepared statements for database operations. Never concatenate user input directly into SQL queries.
+    
+    6. **Path Traversal Prevention**: Validate and sanitize file paths. Use canonical path resolution and restrict access to authorized directories only.
+    
+    7. **Command Injection Prevention**: Avoid executing system commands with user input. Use safe alternatives like parameterized APIs or whitelisted command patterns.
+    
+    8. **Authorization Validation**: Implement proper authorization checks for all parameters that could affect user permissions or access levels.
+    
+    9. **Input Encoding**: Properly encode all user input before using it in different contexts (HTML, SQL, shell commands, etc.).
+    
+    10. **Error Handling**: Implement secure error handling that doesn't reveal information about parameter validation failures or internal system details.
+    
+    11. **Logging and Monitoring**: Log all parameter injection attempts and monitor for suspicious patterns in function calls.
+    
+    12. **Regular Security Testing**: Conduct regular security testing to identify and fix parameter injection vulnerabilities.
   category:
     name: MCP_FUNCTION_MANIPULATION
     shortName: MCP_FUNC_MANIP
@@ -105,6 +131,4 @@ validate:
       - validation failed
       - unauthorized
       - forbidden
-strategy:
-  run_once: /
 

@@ -15,6 +15,32 @@ info:
     4. Data poisoning in analytics or training data
     5. Business logic errors from incorrect function results
     6. Cascading attacks through output propagation
+  remediation: |
+    To prevent function call output manipulation vulnerabilities:
+    
+    1. **Output Validation**: Implement strict validation of all function outputs before using them in subsequent operations. Validate data types, formats, and content against expected schemas.
+    
+    2. **Output Sanitization**: Sanitize all function outputs to remove or escape HTML tags, scripts, and potentially malicious content before displaying or processing them.
+    
+    3. **Content Security Policy**: Implement Content Security Policy (CSP) headers to prevent XSS attacks and restrict the execution of inline scripts.
+    
+    4. **Output Encoding**: Properly encode all function outputs for the context in which they will be used (HTML, JSON, XML, etc.).
+    
+    5. **Data Integrity Checks**: Implement integrity checks for function outputs, such as checksums or digital signatures, to detect tampering.
+    
+    6. **Output Filtering**: Apply content filters to detect and block malicious patterns in function outputs, including XSS attempts and prompt injection patterns.
+    
+    7. **Context Isolation**: Isolate function outputs from the main agent context to prevent direct influence on reasoning and decision-making.
+    
+    8. **Output Allowlisting**: Use allowlists for function outputs where possible, only permitting expected content types and formats.
+    
+    9. **Error Handling**: Implement proper error handling that doesn't expose sensitive information or reflect user input in error messages.
+    
+    10. **Monitoring and Logging**: Monitor function outputs for suspicious patterns and log all function call results for security analysis.
+    
+    11. **Input Validation**: Implement strict input validation to prevent malicious data from entering the system in the first place.
+    
+    12. **Regular Security Testing**: Conduct regular security testing to identify and fix output manipulation vulnerabilities.
   category:
     name: MCP_FUNCTION_MANIPULATION
     shortName: MCP_FUNC_MANIP
@@ -87,6 +113,3 @@ validate:
           - "SYSTEM MESSAGE"
           - "os.system"
           - "<!-- INJECT"
-strategy:
-  run_once: /
-
