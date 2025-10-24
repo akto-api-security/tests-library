@@ -15,10 +15,36 @@ info:
     4. Injecting instructions into tool discovery responses
     5. Altering agent reasoning about tool capabilities
     6. Social engineering attacks through misleading tool descriptions
+  remediation: |
+    To prevent function call metadata injection vulnerabilities:
+    
+    1. **Metadata Validation**: Implement strict validation of all tool metadata (names, descriptions, parameters) before registration and use. Validate against expected formats and content patterns.
+    
+    2. **Content Sanitization**: Sanitize all metadata fields to remove or escape HTML tags, scripts, and prompt injection patterns before storing or displaying them.
+    
+    3. **Metadata Allowlisting**: Use allowlists for metadata content where possible. Only permit predefined, safe content for tool names and descriptions.
+    
+    4. **Input Filtering**: Implement input filters to detect and block malicious patterns in metadata, including prompt injection attempts and command-like strings.
+    
+    5. **Tool Registration Controls**: Implement secure tool registration processes that validate and authorize metadata before tools can be used.
+    
+    6. **Metadata Encoding**: Properly encode all metadata for the context in which it will be used (HTML, JSON, etc.) to prevent injection attacks.
+    
+    7. **Content Security Policy**: Implement Content Security Policy (CSP) headers to prevent XSS attacks and restrict the execution of inline scripts in metadata.
+    
+    8. **Tool Discovery Security**: Implement secure tool discovery mechanisms that don't expose sensitive metadata or allow unauthorized tool registration.
+    
+    9. **Metadata Isolation**: Isolate tool metadata from the main agent context to prevent direct influence on reasoning and decision-making.
+    
+    10. **Audit Logging**: Log all metadata access and modification attempts for security monitoring and forensics.
+    
+    11. **Regular Security Testing**: Conduct regular security testing to identify and fix metadata injection vulnerabilities.
+    
+    12. **User Education**: Educate users about the risks of metadata injection and provide guidelines for safe tool registration and usage.
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_FUNCTION_MANIPULATION
+    shortName: MCP_FUNC_MANIP
+    displayName: Model Context Protocol (MCP) Security - Function Call Manipulation
   subCategory: MCP_FUNCTION_CALL_METADATA_INJECTION
   severity: MEDIUM
   tags:

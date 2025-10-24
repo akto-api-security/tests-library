@@ -14,10 +14,32 @@ info:
     3. System configuration changes via privileged methods
     4. Complete bypass of intended API surface
     5. Direct access to dangerous operations
+  remediation: |
+    To prevent direct method manipulation vulnerabilities:
+    
+    1. **Method Allowlisting**: Implement strict allowlists of permitted methods. Only allow predefined, authorized methods and reject any attempts to call unauthorized functions.
+    
+    2. **Input Validation**: Validate the method field against a predefined list of allowed methods. Reject requests with unknown or unauthorized method names.
+    
+    3. **Authentication and Authorization**: Implement proper authentication and authorization checks for each method call. Verify that the requesting user has permission to execute the specific method.
+    
+    4. **Method Mapping**: Use internal method mapping instead of direct method invocation. Map external method names to internal function calls with proper validation.
+    
+    5. **Request Sanitization**: Sanitize and validate all method names before processing. Remove or escape special characters that could be used for injection.
+    
+    6. **Access Control Lists**: Maintain access control lists (ACLs) that define which users or roles can execute specific methods.
+    
+    7. **Method Signatures**: Validate method signatures and parameters to ensure they match expected formats before execution.
+    
+    8. **Audit Logging**: Log all method invocation attempts, including successful and failed attempts, for security monitoring and forensics.
+    
+    9. **Error Handling**: Implement secure error handling that doesn't reveal information about available methods or internal system details.
+    
+    10. **Rate Limiting**: Implement rate limiting on method calls to prevent abuse and potential DoS attacks.
   category:
-    name: MCP
-    shortName: MCP
-    displayName: Model Context Protocol (MCP) Security
+    name: MCP_FUNCTION_MANIPULATION
+    shortName: MCP_FUNC_MANIP
+    displayName: Model Context Protocol (MCP) Security - Function Call Manipulation
   subCategory: MCP_FUNCTION_CALL_DIRECT_METHOD_MANIPULATION
   severity: CRITICAL
   tags:
