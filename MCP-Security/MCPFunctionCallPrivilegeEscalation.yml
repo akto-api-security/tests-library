@@ -5,7 +5,7 @@ info:
   description: |
     Tests whether attackers can escalate privileges by manipulating function calls to access higher-privileged operations.
   details: |
-    According to the Promptfoo MCP Plugin, one attack vector is "Unauthorized Tool Invocation / Privilege Escalation: Testing access control boundaries." This test evaluates if users with limited permissions can invoke privileged functions through various manipulation techniques such as parameter tampering, role injection, or context manipulation.<br>
+    According to security research, one attack vector is "Unauthorized Tool Invocation / Privilege Escalation: Testing access control boundaries." This test evaluates if users with limited permissions can invoke privileged functions through various manipulation techniques such as parameter tampering, role injection, or context manipulation.<br>
     <b>Background:</b> MCP servers should enforce strict access controls on function invocations based on user roles, permissions, and context. However, if authorization checks are missing, incomplete, or bypassable, attackers can escalate privileges by calling functions intended only for administrators or higher-privileged users.
   impact: |
     Successful privilege escalation enables:
@@ -28,7 +28,7 @@ info:
     - MCP
     - AI/LLM Security
   references:
-    - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+    - https://owasp.org/www-project-llm-security-top-10/
     - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md
     - https://cwe.mitre.org/data/definitions/269.html
   cwe:

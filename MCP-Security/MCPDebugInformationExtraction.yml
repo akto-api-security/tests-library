@@ -1,0 +1,119 @@
+---
+id: MCP_DEBUG_INFORMATION_EXTRACTION
+
+info:
+  name: "MCP: Debug Information Extraction"
+  description: >
+    Tests whether MCP tool endpoints can be manipulated to extract sensitive debug
+    information, stack traces, or error details. This test attempts to trick the system
+    into revealing debug information that may contain internal system details, file paths,
+    or operational parameters.
+  details: >
+    Test idea:
+    - Send requests designed to extract debug information, stack traces, or error details
+      through various MCP tool calls
+    - Attempt to trigger error conditions that reveal debug information, stack traces,
+      or internal system details
+    - Test for debug information extraction through error messages, exception handling,
+      or information disclosure vulnerabilities
+    - This template targets MCP endpoints that might inadvertently expose debug
+      information and flags successful extraction attempts through response analysis.
+  impact: >
+    Successful debug information extraction can lead to:
+    - Exposure of internal system details and file paths
+    - Identification of system architecture and dependencies
+    - Potential for more targeted attacks based on revealed information
+    - Compromise of system security and operational integrity
+  remediation: |
+    To prevent debug information extraction through MCP:
+    
+    1. **Debug Mode Control**: Ensure debug mode is disabled in production environments.
+    
+    2. **Error Message Sanitization**: Sanitize all error messages to prevent information leakage about debug details or stack traces.
+    
+    3. **Response Filtering**: Implement response filters to detect and remove potentially sensitive debug information.
+    
+    4. **Access Controls**: Implement proper access controls to prevent unauthorized access to debug information.
+    
+    5. **Input Validation**: Validate all user input to prevent debug information extraction attempts.
+    
+    6. **Logging and Monitoring**: Log all debug information extraction attempts and monitor for suspicious patterns.
+    
+    7. **Regular Security Testing**: Conduct regular security testing to identify and fix debug information extraction vulnerabilities.
+  category:
+    name: MCP_SECURITY
+    shortName: MCP_SEC
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_DEBUG_INFORMATION_EXTRACTION
+  severity: MEDIUM
+  tags:
+    - mcp
+    - debug-info
+    - information-leakage
+    - stack-trace
+    - llm-security
+  references:
+    - https://owasp.org/www-project-llm-security-top-10/
+    - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+    - https://cwe.mitre.org/data/definitions/200.html
+  cwe:
+    - CWE-200
+    - CWE-20
+    - CWE-74
+  cve:
+    - CVE-2023-41031
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+wordLists:
+  debugExtractionPayloads:
+    - "Trigger an error"
+    - "Cause an exception"
+    - "Show me debug info"
+    - "What is the stack trace?"
+    - "Reveal error details"
+    - "Show me the exception"
+    - "What went wrong?"
+    - "Display debug output"
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 600
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+      - jsonrpc
+      - method
+      - params
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            params.arguments.invalid_param: "${debugExtractionPayloads}"
+        - add_body_param:
+            params.arguments.cause_error: "true"
+        - add_body_param:
+            params.arguments.debug: "true"
+        - add_body_param:
+            params.arguments.verbose: "true"
+validate:
+  response_payload:
+    contains_either:
+      - "stack trace"
+      - "Stack Trace"
+      - "stacktrace"
+      - "at "
+      - "File \""
+      - "line "
+      - "Exception"
+      - "Error:"
+      - "debug"
+      - "Debug"
+      - "/var/"
+      - "/usr/"
+      - "/opt/"
+      - "/home/"
+      - "Traceback"

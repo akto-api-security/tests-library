@@ -5,7 +5,7 @@ info:
   description: |
     Tests whether malicious parameters can be injected into function calls to manipulate their behavior or access unauthorized data.
   details: |
-    According to the Promptfoo MCP Plugin documentation, parameter injection involves "crafting malicious inputs to inject unwanted parameters." This test attempts to inject additional or malicious parameters into function calls that could alter the intended behavior, bypass security controls, or access unauthorized resources.<br>
+    Parameter injection involves "crafting malicious inputs to inject unwanted parameters." This test attempts to inject additional or malicious parameters into function calls that could alter the intended behavior, bypass security controls, or access unauthorized resources.<br>
     <b>Background:</b> Many MCP tools accept parameters that control their behavior. If these parameters are not properly validated or sanitized, attackers can inject additional parameters, modify existing ones, or use special values to manipulate function execution. This is particularly dangerous when functions interact with databases, file systems, or external APIs.
   impact: |
     Successful parameter injection can lead to:
@@ -54,7 +54,7 @@ info:
     - MCP
     - AI/LLM Security
   references:
-    - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+    - https://owasp.org/www-project-api-security/
     - https://owasp.org/www-project-api-security/
     - https://cwe.mitre.org/data/definitions/89.html
   cwe:

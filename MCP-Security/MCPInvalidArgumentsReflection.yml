@@ -75,7 +75,7 @@ info:
     - direct-prompt-injection
     - llm-security
   references:
-    - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+    - https://owasp.org/www-project-llm-security-top-10/
     - https://owasp.org/www-project-llm-security-top-10/
   cwe:
     - CWE-116
@@ -113,7 +113,7 @@ execute:
   requests:
     - req:
         - ${payloadKeys}:
-            for_all:
+            for_one:
               - modify_body_param:
                   ${iteratorKey}: ${reflectionMarkers}
 

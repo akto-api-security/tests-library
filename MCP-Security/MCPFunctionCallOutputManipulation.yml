@@ -5,7 +5,7 @@ info:
   description: |
     Tests whether function outputs can be manipulated to cause misinterpretation, inject malicious data, or alter subsequent processing.
   details: |
-    According to the Promptfoo MCP Plugin, "Function Output Manipulation" involves "causing misinterpretation of function results." This test evaluates if the system properly validates and sanitizes function outputs before using them in decision-making, displaying to users, or passing to other functions. Malicious outputs can inject false information, trigger unintended actions, or compromise data integrity.<br>
+    According to security research, "Function Output Manipulation" involves "causing misinterpretation of function results." This test evaluates if the system properly validates and sanitizes function outputs before using them in decision-making, displaying to users, or passing to other functions. Malicious outputs can inject false information, trigger unintended actions, or compromise data integrity.<br>
     <b>Background:</b> MCP agents rely on function outputs to make decisions and construct responses. If outputs aren't validated, attackers who control or compromise a function can inject malicious data that: (1) misleads the agent's reasoning, (2) injects prompts that alter behavior, (3) poisons training data, or (4) compromises user-facing outputs with XSS or other injection attacks.
   impact: |
     Function output manipulation can lead to:
@@ -54,7 +54,7 @@ info:
     - MCP
     - AI/LLM Security
   references:
-    - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+    - https://owasp.org/www-project-llm-security-top-10/
     - https://owasp.org/www-community/attacks/xss/
     - https://cwe.mitre.org/data/definitions/79.html
   cwe:

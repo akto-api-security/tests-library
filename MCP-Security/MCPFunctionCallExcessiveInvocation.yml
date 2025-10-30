@@ -5,7 +5,7 @@ info:
   description: |
     Tests whether the system can be manipulated into making excessive or recursive function calls leading to denial of service.
   details: |
-    According to the Promptfoo MCP Plugin documentation, "Excessive Function Calling" involves "exploiting recursion or coercion of function call for denial of service." This test evaluates if an attacker can trigger infinite loops, deep recursion, or repeated function calls that exhaust server resources.<br>
+    According to security research, "Excessive Function Calling" involves "exploiting recursion or coercion of function call for denial of service." This test evaluates if an attacker can trigger infinite loops, deep recursion, or repeated function calls that exhaust server resources.<br>
     <b>Background:</b> AI agents may follow patterns that lead to recursive or repeated function invocations. Without proper limits and circuit breakers, attackers can craft inputs that cause the agent to enter infinite loops, make thousands of API calls, or trigger deeply nested function chains that consume CPU, memory, or API quotas.
   impact: |
     Excessive function calling can result in:
@@ -28,7 +28,7 @@ info:
   - MCP
   - AI/LLM Security
   references:
-  - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+  - https://owasp.org/www-project-llm-security-top-10/
   - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa4-unrestricted-resource-consumption.md
   - https://cwe.mitre.org/data/definitions/674.html
   cwe:
