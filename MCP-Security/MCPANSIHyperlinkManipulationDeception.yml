@@ -1,0 +1,124 @@
+---
+id: MCP_ANSI_HYPERLINK_MANIPULATION_DECEPTION
+
+info:
+  name: "MCP: ANSI Hyperlink Manipulation Deception"
+  description: >
+    Tests whether MCP implementations are vulnerable to ANSI hyperlink
+    manipulation attacks that display legitimate URLs while redirecting
+    users to malicious websites. This test attempts to exploit hyperlink
+    escape codes to create deceptive links for phishing attacks.
+  details: >
+    Test idea:
+    - Send requests with ANSI hyperlink codes designed to display legitimate
+      URLs while redirecting users to malicious websites
+    - Attempt to exploit hyperlink escape sequences to create deceptive
+      links that appear safe but redirect to phishing sites
+    - Test for hyperlink manipulation attacks through escape sequences that
+      create misleading links for credential theft and social engineering
+    - This template targets MCP endpoints that process ANSI hyperlink codes and flags
+      successful hyperlink manipulation deception through response analysis.
+  impact: >
+    Successful ANSI hyperlink manipulation deception can lead to:
+    - Phishing attacks through deceptive hyperlinks
+    - Credential theft through fake login pages
+    - Drive-by downloads and malware installation
+    - Social engineering attacks through misleading links
+    - Tabnabbing and other browser-based attacks
+    - User trust exploitation through legitimate-looking URLs
+  remediation: |
+    To prevent ANSI hyperlink manipulation deception through MCP:
+    
+    1. **ANSI Sanitization**: Implement consistent sanitization for potentially dangerous output by disabling escape sequences before rendering.
+    
+    2. **Hyperlink Validation**: Validate all hyperlinks to ensure the displayed URL matches the actual destination URL.
+    
+    3. **Output Validation**: Validate all tool outputs for ANSI escape sequences before displaying to users.
+    
+    4. **Terminal Security**: Avoid passing raw tool output to terminals without proper sanitization.
+    
+    5. **Tool Description Review**: Review tool descriptions and code when evaluating MCP tools for suspicious characters.
+    
+    6. **MCP Server Policies**: Establish clear policies about which MCP servers are permitted in sensitive environments.
+    
+    7. **Regular Security Assessments**: Conduct regular security assessments of MCP implementations.
+    
+    8. **User Education**: Educate users about the risks of clicking links in terminal output.
+    
+    9. **Monitoring and Detection**: Implement monitoring to detect potentially malicious formatting patterns.
+    
+    10. **Standardized Filtering**: Use standardized filtering libraries in MCP SDKs to prevent ANSI attacks.
+  category:
+    name: MCP_SECURITY
+    shortName: MCP_SEC
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_ANSI_HYPERLINK_MANIPULATION_DECEPTION
+  severity: MEDIUM
+  tags:
+    - mcp
+    - ansi-escape-codes
+    - hyperlink-manipulation
+    - phishing
+    - llm-security
+  references:
+    - https://blog.trailofbits.com/2025/04/29/deceiving-users-with-ansi-terminal-codes-in-mcp/
+    - https://owasp.org/www-project-llm-security-top-10/
+    - https://cwe.mitre.org/data/definitions/345.html
+  cwe:
+    - CWE-345
+    - CWE-20
+    - CWE-74
+  cve:
+    - CVE-2023-41031
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+wordLists:
+  ansiHyperlinkPayloads:
+    - "Please log in to your account here: \x1B]8;;https://phishing-site.example.com/\x1B\\https://legitimate-service.example.com\x1B]8;;\x1B\\"
+    - "Download the update from: \x1B]8;;https://malware-distribution.com/update.exe\x1B\\https://official-software.com/update.exe\x1B]8;;\x1B\\"
+    - "Access your dashboard at: \x1B]8;;https://fake-login.com/login\x1B\\https://real-service.com/dashboard\x1B]8;;\x1B\\"
+    - "Check your account status: \x1B]8;;https://credential-stealer.com/account\x1B\\https://banking-service.com/account\x1B]8;;\x1B\\"
+    - "Verify your identity: \x1B]8;;https://identity-theft.com/verify\x1B\\https://secure-service.com/verify\x1B]8;;\x1B\\"
+    - "Update your payment info: \x1B]8;;https://payment-scam.com/payment\x1B\\https://payment-service.com/payment\x1B]8;;\x1B\\"
+    - "Access your files: \x1B]8;;https://file-stealer.com/files\x1B\\https://cloud-storage.com/files\x1B]8;;\x1B\\"
+    - "Review your settings: \x1B]8;;https://settings-hijacker.com/settings\x1B\\https://user-settings.com/settings\x1B]8;;\x1B\\"
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+      - jsonrpc
+      - method
+      - params
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            params.tool_description: "${ansiHyperlinkPayloads}"
+        - add_body_param:
+            params.description: "${ansiHyperlinkPayloads}"
+        - add_body_param:
+            params.output: "${ansiHyperlinkPayloads}"
+        - add_body_param:
+            params.response: "${ansiHyperlinkPayloads}"
+        - add_body_param:
+            params.content: "${ansiHyperlinkPayloads}"
+validate:
+  response_payload:
+    contains_either:
+      - "phishing-site.example.com"
+      - "malware-distribution.com"
+      - "fake-login.com"
+      - "credential-stealer.com"
+      - "identity-theft.com"
+      - "payment-scam.com"
+      - "file-stealer.com"
+      - "settings-hijacker.com"
+      - "phishing"
+      - "malware"

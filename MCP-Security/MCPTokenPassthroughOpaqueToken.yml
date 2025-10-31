@@ -1,0 +1,92 @@
+---
+id: MCP_TOKEN_PASSTHROUGH_OPAQUE_TOKEN
+info:
+  name: Token Passthrough - Opaque Token Acceptance (MCP)
+  description: |
+    Tests if the MCP server improperly accepts opaque (non-JWT) tokens that may be intended for downstream APIs without proper validation.
+  details: |
+    This test sends an opaque bearer token (non-JWT format) to determine if the MCP server passes it through to downstream services without validating that it was issued specifically for the MCP server.<br>
+    <b>Background:</b> Opaque tokens (reference tokens) should be validated by introspection at the authorization server that issued them. MCP servers must not blindly accept and forward opaque tokens without verifying they were issued for the MCP server itself. Accepting arbitrary opaque tokens indicates the server is passing tokens through to downstream APIs without proper validation, creating accountability and security control issues.
+  impact: |
+    Accepting unvalidated opaque tokens enables:
+    1. Use of downstream API tokens directly against the MCP server
+    2. Complete bypass of MCP server access controls
+    3. Inability to track which MCP client made requests
+    4. Token replay attacks across service boundaries
+    5. Circumvention of rate limiting and monitoring controls
+  category:
+    name: MCP_AUTH
+    shortName: MCP_AUTH
+    displayName: Model Context Protocol (MCP) Security - Broken Authentication
+  subCategory: MCP_TOKEN_PASSTHROUGH_OPAQUE_TOKEN
+  severity: CRITICAL
+  tags:
+  - Business logic
+  - OWASP top 10
+  - Token Validation
+  - MCP
+  - Authorization
+  - Token Introspection
+  references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices#token-passthrough
+  - https://datatracker.ietf.org/doc/html/rfc7662
+  - https://www.oauth.com/oauth2-servers/token-introspection-endpoint/
+  - https://cwe.mitre.org/data/definitions/290.html
+  cwe:
+  - CWE-290
+  - CWE-287
+  - CWE-863
+  cve:
+  - CVE-2023-30253
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+auth:
+  authenticated: true
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+  method:
+    eq: POST
+  request_headers:
+    for_one:
+      key:
+        regex: "(?i)authorization"
+        extract: authHeaderKey
+      value:
+        extract: originalToken
+execute:
+  type: single
+  requests:
+  - req:
+    - modify_header:
+        ${authHeaderKey}: "Bearer opaque_downstream_api_token_abc123xyz789_not_for_mcp_server"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    not_contains:
+    - Error
+    - error
+    - Unauthorized
+    - unauthorized
+    - access denied
+    - Forbidden
+    - forbidden
+    - invalid token
+    - token invalid
+    - malformed token
+    - authentication error
+    - authorization error
+    - token validation failed
+    - invalid format
+    - token introspection failed
+

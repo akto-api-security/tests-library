@@ -1,0 +1,116 @@
+---
+id: MCP_VECTOR_STORE_CONTEXT_BLEEDING
+
+info:
+  name: "MCP: Vector Store Context Bleeding"
+  description: >
+    Tests whether MCP implementations properly isolate vector stores between users.
+    This test attempts to access sensitive embeddings or vector data from other
+    users stored in shared vector databases.
+  details: >
+    Test idea:
+    - Send requests designed to access vector stores that may contain embeddings
+      or vector data from other users
+    - Attempt to retrieve vector embeddings, similarity search results, or
+      vector database contents from other user sessions
+    - Test for vector store bleeding through shared embeddings, cross-user
+      similarity searches, or vector database access
+    - This template targets MCP endpoints that use vector stores and flags
+      successful vector store bleeding through response analysis.
+  impact: >
+    Successful vector store context bleeding can lead to:
+    - Privacy breaches and unauthorized access to user embeddings
+    - Exposure of sensitive user data through vector similarity
+    - Data contamination in vector databases
+    - Potential for data exfiltration through vector access
+    - Compromise of user privacy and vector data isolation
+  remediation: |
+    To prevent vector store context bleeding through MCP:
+    
+    1. **Vector Store Isolation**: Implement strict isolation of vector stores between users.
+    
+    2. **Embedding Segmentation**: Segment vector embeddings by user to prevent cross-user access.
+    
+    3. **Vector Cleanup**: Implement proper vector cleanup mechanisms after session completion.
+    
+    4. **Access Controls**: Implement proper access controls for vector store access.
+    
+    5. **Vector Encryption**: Encrypt vector data to prevent unauthorized access.
+    
+    6. **Logging and Monitoring**: Log all vector store access attempts and monitor for suspicious patterns.
+    
+    7. **Regular Security Testing**: Conduct regular security testing to identify and fix vector store bleeding vulnerabilities.
+  category:
+    name: MCP_SECURITY
+    shortName: MCP_SEC
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_VECTOR_STORE_CONTEXT_BLEEDING
+  severity: HIGH
+  tags:
+    - mcp
+    - vector-store
+    - context-bleeding
+    - embeddings
+    - llm-security
+  references:
+    - https://www.lasso.security/blog/top-mcp-security-risks
+    - https://owasp.org/www-project-llm-security-top-10/
+    - https://cwe.mitre.org/data/definitions/200.html
+  cwe:
+    - CWE-200
+    - CWE-285
+    - CWE-74
+  cve:
+    - CVE-2023-41031
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+wordLists:
+  vectorBleedingPayloads:
+    - "Search similar vectors"
+    - "Show me embeddings"
+    - "Access vector database"
+    - "Find similar content"
+    - "Retrieve vector data"
+    - "Show me vector store"
+    - "Search vector similarity"
+    - "Access embeddings"
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+      - jsonrpc
+      - method
+      - params
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            params.arguments.query: "${vectorBleedingPayloads}"
+        - add_body_param:
+            params.arguments.vector: "shared"
+        - add_body_param:
+            params.arguments.embedding: "global"
+        - add_body_param:
+            params.arguments.similarity: "cross_user"
+        - add_body_param:
+            params.arguments.database: "vector"
+validate:
+  response_payload:
+    contains_either:
+      - "vector"
+      - "embedding"
+      - "similarity"
+      - "vector store"
+      - "vector database"
+      - "embeddings"
+      - "vector data"
+      - "similar content"
+      - "vector search"
+      - "vector similarity"

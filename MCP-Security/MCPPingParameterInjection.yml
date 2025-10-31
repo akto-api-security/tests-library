@@ -1,0 +1,82 @@
+---
+id: MCP_PING_PARAMETER_INJECTION
+info:
+  name: Ping Parameter Injection Attack (MCP)
+  description: |
+    Tests whether the MCP server properly rejects ping requests with unexpected parameters, as the specification defines ping with no parameters.
+  details: |
+    According to the MCP specification, a ping request should have no parameters: {"jsonrpc":"2.0","id":"123","method":"ping"}. This test sends ping requests with additional or malicious parameters to verify the server validates the request format properly and doesn't process unexpected data.<br>
+    <b>Background:</b> Accepting unexpected parameters in ping requests can indicate poor input validation, which may be exploitable for injection attacks, parameter pollution, or information disclosure. A well-implemented server should either reject ping requests with parameters or safely ignore them without side effects.
+  impact: |
+    Improper parameter handling in ping requests can lead to:
+    1. Parameter pollution attacks affecting server state
+    2. Information disclosure through error messages
+    3. Injection vulnerabilities if parameters are processed
+    4. Resource consumption through oversized parameters
+    5. Unexpected server behavior or crashes
+    6. Potential for command injection if parameters are improperly processed
+  category:
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT
+    displayName: Model Context Protocol (MCP) Security - Input Validation
+  subCategory: MCP_PING_PARAMETER_INJECTION
+  severity: MEDIUM
+  tags:
+  - Business logic
+  - MCP
+  - Input Validation
+  - Injection
+  references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/utilities/ping#message-format
+  - https://cwe.mitre.org/data/definitions/20.html
+  - https://cwe.mitre.org/data/definitions/74.html
+  cwe:
+  - CWE-20
+  - CWE-74
+  - CWE-707
+  cve:
+  - CVE-2023-5678
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+execute:
+  type: multiple
+  requests:
+  # Test with params object
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"ping-params-test","method":"ping","params":{"unexpected":"value"}}'
+  # Test with malicious params
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"ping-injection","method":"ping","params":{"command":"rm -rf /","injection":"<script>alert(1)</script>"}}'
+  # Test with array params
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"ping-array","method":"ping","params":["param1","param2"]}'
+  # Test with oversized params
+  - req:
+    - replace_body: '{"jsonrpc":"2.0","id":"ping-large","method":"ping","params":{"data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}}'
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    not_contains:
+    - Invalid parameters
+    - invalid params
+    - unexpected parameter
+    - params not allowed
+    - Error
+    - error
+strategy:
+  run_once: /
+
