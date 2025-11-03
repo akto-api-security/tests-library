@@ -141,8 +141,8 @@ def generate_tests(subcategory_file, strategy_file, template_file, output_dir):
                 continue
 
             # Generate test metadata
-            test_id = generate_id(top_category, subcategory, strategy)
-            test_name = generate_name(top_category, subcategory, strategy)
+            test_id = generate_id(top_category, subcategory, strategy)+"_LINEAR_JAILBREAKING"
+            test_name = generate_name(top_category, subcategory, strategy) + " - Linear JailBreaking"
             description = generate_description(subcategory, strategy, category_prompt)
             details = generate_details(category_prompt, strategy_prompt)
             impact = generate_impact(top_category, subcategory)
