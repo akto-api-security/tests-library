@@ -3,6 +3,7 @@
 Generate LLM test YAML files from subcategory and strategy meta prompts.
 """
 
+import argparse
 import csv
 import os
 import re
@@ -41,22 +42,30 @@ def generate_name(top_category, subcategory, strategy):
 
 def generate_description(subcategory, strategy, subcategory_prompt):
     """Generate test description."""
-    # Extract first sentence or first 100 chars from subcategory prompt
-    first_sentence = subcategory_prompt.split('.')[0]
-    if len(first_sentence) > 150:
-        first_sentence = first_sentence[:150] + "..."
-
-    return f"Tests {subcategory} vulnerability using {strategy} strategy. {first_sentence}."
+    return f"Tests {subcategory} vulnerability using {strategy} strategy. {subcategory_prompt}."
 
 
 def generate_details(subcategory_prompt, strategy_prompt):
     """Generate detailed description."""
     # Keep it simple and on one line to avoid YAML issues
-    subcat_short = subcategory_prompt[:150].replace('\n', ' ').strip()
-    strategy_short = strategy_prompt[:150].replace('\n', ' ').strip()
+    subcat_short = subcategory_prompt.split('.')[0].replace('\n', ' ').strip()
+    strategy_short = strategy_prompt.split('.')[0].replace('\n', ' ').strip()
 
-    details = f"This test combines {subcat_short}... with the strategy: {strategy_short}..."
+    details = f"This test combines {subcat_short} with the strategy: {strategy_short}"
     return details
+
+
+def generate_category_name(top_category):
+    """Generate category name from top category."""
+    # Replace spaces with underscores, convert to uppercase, add prefix
+    cleaned = re.sub(r'[^A-Za-z0-9]+', '_', top_category.strip())
+    cleaned = cleaned.upper().strip('_')
+    return f"AGENTIC_{cleaned}"
+
+
+def generate_category_display_name(top_category):
+    """Generate category display name from top category (as-is)."""
+    return top_category.strip()
 
 
 def generate_impact(top_category, subcategory):
@@ -123,6 +132,7 @@ def generate_tests(subcategory_file, strategy_file, template_file, output_dir):
     output_path.mkdir(exist_ok=True)
 
     generated_count = 0
+    category_pairs = set()  # Track unique category name/display name pairs
 
     # Generate test for each combination
     for subcat in subcategories:
@@ -133,6 +143,11 @@ def generate_tests(subcategory_file, strategy_file, template_file, output_dir):
         if not top_category or not subcategory or not category_prompt:
             continue
 
+        # Generate category name and display name
+        category_name = generate_category_name(top_category)
+        category_display_name = generate_category_display_name(top_category)
+        category_pairs.add((category_name, category_display_name))
+
         for strat in strategies:
             strategy = strat['Strategy'].strip()
             strategy_prompt = strat['MetaPrompt'].strip()
@@ -141,8 +156,11 @@ def generate_tests(subcategory_file, strategy_file, template_file, output_dir):
                 continue
 
             # Generate test metadata
-            test_id = generate_id(top_category, subcategory, strategy)+"_LINEAR_JAILBREAKING"
+            test_id = generate_id(top_category, subcategory, strategy) + "_LINEAR_JAILBREAKING"
             test_name = generate_name(top_category, subcategory, strategy) + " - Linear JailBreaking"
+            # test_id = generate_id(top_category, subcategory, strategy)
+            # test_name = generate_name(top_category, subcategory, strategy)
+
             description = generate_description(subcategory, strategy, category_prompt)
             details = generate_details(category_prompt, strategy_prompt)
             impact = generate_impact(top_category, subcategory)
@@ -154,6 +172,8 @@ def generate_tests(subcategory_file, strategy_file, template_file, output_dir):
                 'DESCRIPTION': description,
                 'DETAILS': details,
                 'IMPACT': impact,
+                'CATEGORY_NAME': category_name,
+                'CATEGORY_DISPLAY_NAME': category_display_name,
                 'CATEGORY_PROMPT': category_prompt,
                 'STRATEGY_PROMPT': strategy_prompt
             }
@@ -170,16 +190,36 @@ def generate_tests(subcategory_file, strategy_file, template_file, output_dir):
             print(f"Generated: {output_file.name}")
 
     print(f"\n✓ Successfully generated {generated_count} test files in {output_dir}/")
-    return generated_count
+    
+    # Print category name and display name pairs
+    print("\n" + "=" * 60)
+    print("Category Name and Display Name Pairs:")
+    print("=" * 60)
+    for cat_name, cat_display_name in sorted(category_pairs):
+        print(f"  {cat_name} -> {cat_display_name}")
+    print("=" * 60)
+    
+    return generated_count, category_pairs
 
 
 def main():
     """Main entry point."""
+    parser = argparse.ArgumentParser(
+        description='Generate LLM test YAML files from subcategory and strategy meta prompts.'
+    )
+    parser.add_argument(
+        'template',
+        type=str,
+        help='Template YAML file name (e.g., template.yml)'
+    )
+    
+    args = parser.parse_args()
+    
     script_dir = Path(__file__).parent
 
     subcategory_file = script_dir / "subcategory_meta_prompts.csv"
     strategy_file = script_dir / "strategy_meta_prompts.csv"
-    template_file = script_dir / "template.yml"
+    template_file = script_dir / args.template
     output_dir = script_dir / "generated_tests"
 
     print("=" * 60)
@@ -200,7 +240,7 @@ def main():
 
     # Generate tests
     try:
-        count = generate_tests(subcategory_file, strategy_file, template_file, output_dir)
+        count, category_pairs = generate_tests(subcategory_file, strategy_file, template_file, output_dir)
         return 0
     except Exception as e:
         print(f"\nERROR: {e}")
