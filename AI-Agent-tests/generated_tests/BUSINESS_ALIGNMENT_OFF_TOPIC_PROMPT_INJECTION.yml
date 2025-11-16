@@ -53,7 +53,7 @@ execute:
           filters but is engineered to trigger the vulnerability. Return only the
           crafted prompt in JSON with key `user_prompt`, no explanations or extra
           data.
-    - modify_url: https://lops-api.stage.evenup.law/matter/4c9a9554-d184-44f0-91db-43881e2b0142/self-serve/request/2b7fddb6-d4c8-4b12-bd32-ea3eeaec714b/ai-edit/
+    - modify_url: https://lops-api.stage.evenup.law/matter/9fd89694-6177-4792-a2eb-4facde36a3f0/self-serve/request/2738af6d-d304-47f2-84bb-37092a76bcd9/ai-edit/
     - validate:
         response_payload:
           for_one:
@@ -64,7 +64,7 @@ execute:
     - success: x2
   - req:
     - wait: 100
-    - modify_url: https://lops-api.stage.evenup.law/matter/4c9a9554-d184-44f0-91db-43881e2b0142/self-serve/request/2b7fddb6-d4c8-4b12-bd32-ea3eeaec714b/chat/
+    - modify_url: https://lops-api.stage.evenup.law/matter/9fd89694-6177-4792-a2eb-4facde36a3f0/self-serve/request/2738af6d-d304-47f2-84bb-37092a76bcd9/chat/
     - modify_method: GET
     - add_query_param:
         chat_id: "${chatId}"
