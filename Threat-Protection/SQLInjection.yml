@@ -3,15 +3,15 @@ filter:
   or: 
     - request_headers:
         regex:
-          - (?i)(?:\bdrop\s+table\s+\w+\s*;|\b(?:or\s+\S+\s*=\s*\S+))
+          - (?i)(?:\bdrop\s+table\s+\w+\s*;|\b(?<!or\s)(or)\s+(?!more\b|less\b|than\b)\S+\s*=\s*\S+)
           
     - query_param:
         regex:
-          - (?i)(?:\bdrop\s+table\s+\w+\s*;|\b(?:or\s+\S+\s*=\s*\S+))
+          - (?i)(?:\bdrop\s+table\s+\w+\s*;|\b(?<!or\s)(or)\s+(?!more\b|less\b|than\b)\S+\s*=\s*\S+)
 
     - request_payload:
         regex:
-          - (?i)(?:\bdrop\s+table\s+\w+\s*;|\b(?:or\s+\S+\s*=\s*\S+))
+          - (?i)(?:\bdrop\s+table\s+\w+\s*;|\b(?<!or\s)(or)\s+(?!more\b|less\b|than\b)\S+\s*=\s*\S+)
 
 info:
   name: "SQLInjection"
