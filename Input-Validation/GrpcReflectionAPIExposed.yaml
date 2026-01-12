@@ -1,0 +1,89 @@
+id: GRPC_REFLECTION_API_EXPOSED
+info:
+  name: "gRPC Reflection API Exposed in Production"
+  description: "The gRPC server has reflection API enabled, exposing the complete service definition including all methods, message types, and service structure to potential attackers."
+  details: >
+    "gRPC Server Reflection provides a way for clients to query a server's capabilities at runtime. While useful for development and debugging with tools like grpcurl and grpcui, leaving it enabled in production environments poses significant security risks:
+    1. Complete service discovery - attackers can enumerate all available services and methods
+    2. Message structure exposure - reveals the exact structure of request and response messages
+    3. Attack surface mapping - provides attackers with a detailed blueprint for targeted attacks
+    4. Internal API exposure - may reveal internal microservices not intended for external access
+    5. Sensitive data field discovery - exposes field names that may contain sensitive information
+    The reflection API is typically exposed through the 'grpc.reflection.v1alpha.ServerReflection' or 'grpc.reflection.v1.ServerReflection' service and responds to ServerReflectionInfo requests."
+  impact: "Information disclosure, enhanced reconnaissance capabilities for attackers, increased attack surface, and potential exposure of sensitive internal service architecture."
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: GRPC_REFLECTION_API_EXPOSED
+  severity: MEDIUM
+  tags:
+    - gRPC
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/grpc/grpc/blob/master/doc/server-reflection.md"
+    - "https://grpc.io/docs/guides/reflection/"
+    - "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/"
+  cwe:
+    - CWE-200
+    - CWE-215
+    - CWE-16
+  cve:
+    - CVE-2023-29383
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  request_headers:
+    for_one:
+      key:
+        regex: "content-type"
+      value:
+        contains_either:
+          - "application/grpc"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_url:
+            regex_replace:
+              regex: "(/[^/]+)$"
+              replace_with: "/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo"
+        - replace_body: '{"list_services": ""}'
+        - add_header:
+            content-type: "application/grpc"
+        - add_header:
+            te: "trailers"
+
+validate:
+  or:
+    - response_code:
+        gte: 200
+        lt: 300
+    - response_payload:
+        contains_either:
+          - "file_descriptor_response"
+          - "ServerReflectionResponse"
+          - "list_services"
+          - "file_descriptor_proto"
+          - "service_response"
+          - "name"
+          - "FileDescriptorProto"
+    - response_headers:
+        for_one:
+          key:
+            eq: "grpc-status"
+          value:
+            eq: "0"
+
+strategy:
+  run_once: /
