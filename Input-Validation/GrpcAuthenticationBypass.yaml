@@ -1,0 +1,114 @@
+id: GRPC_AUTHENTICATION_BYPASS
+info:
+  name: "gRPC Authentication Bypass via Empty Token"
+  description: "The gRPC endpoint fails to properly validate authentication tokens, allowing attackers to bypass authentication by sending empty, null, or malformed authentication metadata."
+  details: >
+    "gRPC services often use metadata for authentication, typically through bearer tokens or API keys. When implementations fail to properly validate the presence and format of authentication credentials, several attack vectors emerge:
+    1. Sending requests without authentication metadata entirely
+    2. Providing empty or null values for authentication headers
+    3. Using malformed token formats that bypass validation logic
+    4. Exploiting weak token validation that only checks for presence, not validity
+    5. Leveraging default or hardcoded credentials
+    This vulnerability is common in microservices where authentication logic is inconsistently implemented across services, or where developers assume the API gateway will handle all authentication. In gRPC, the 'authorization' metadata or custom 'grpc-metadata-*' headers are commonly used for authentication."
+  impact: "Successful exploitation allows unauthorized access to protected resources, privilege escalation, data theft, and the ability to perform unauthorized operations on behalf of legitimate users."
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: GRPC_AUTHENTICATION_BYPASS
+  severity: CRITICAL
+  tags:
+    - gRPC
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://grpc.io/docs/guides/auth/"
+    - "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  cwe:
+    - CWE-20
+    - CWE-287
+    - CWE-306
+  cve:
+    - CVE-2023-27584
+    - CVE-2023-32758
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  request_headers:
+    or: 
+    - for_one:
+        key:
+          regex: "content-type"
+        value:
+          contains_either:
+            - "application/grpc"
+    - for_one:
+        key:
+          regex: "authorization|grpc-metadata-auth"
+          extract: authKey
+        value:
+          extract: authValue
+
+wordLists:
+  bypassAttempts:
+    - ""
+    - "null"
+    - "undefined"
+    - "Bearer "
+    - "Bearer null"
+    - " "
+    - "0"
+    - "false"
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - delete_header: ${authKey}
+        - validate:
+            or:
+              - response_code:
+                  eq: 401
+              - response_code:
+                  eq: 403
+              - response_payload:
+                  contains_either:
+                    - "unauthenticated"
+                    - "UNAUTHENTICATED"
+                    - "unauthorized"
+                    - "Unauthorized"
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_header:
+            ${authKey}: ${bypassAttempts}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - unauthenticated
+                - UNAUTHENTICATED
+                - unauthorized
+                - Unauthorized
+                - "access denied"
+                - Forbidden
+                - "invalid token"
+                - "token required"
+        - success: vulnerable

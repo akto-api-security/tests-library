@@ -1,0 +1,97 @@
+id: GRPC_STATUS_CODE_MANIPULATION
+info:
+  name: "gRPC Status Code Manipulation"
+  description: "The gRPC endpoint improperly handles custom status codes in metadata, allowing attackers to manipulate error handling logic, bypass security controls, or trigger unintended application behavior."
+  details: >
+    "gRPC uses status codes to communicate the outcome of RPC calls. These codes are sent via the 'grpc-status' trailer along with optional 'grpc-message' and 'grpc-status-details-bin' metadata. When applications fail to properly validate or sanitize these status codes, several attack vectors emerge:
+    1. Status code injection - sending custom status codes in request metadata to confuse the server
+    2. Error handling bypass - manipulating status codes to bypass error handling logic
+    3. State manipulation - using status codes to trigger unexpected application states
+    4. Information disclosure - crafting requests that elicit verbose error messages via status manipulation
+    5. Retry logic abuse - sending status codes that trigger infinite retry loops or resource exhaustion
+    gRPC defines 17 standard status codes (OK=0, CANCELLED=1, UNKNOWN=2, etc.), but improper handling of custom or invalid codes can lead to security issues. This is particularly dangerous when applications make authorization or business logic decisions based on status codes."
+  impact: "Successful exploitation can lead to authentication bypass, authorization bypass, denial of service, information disclosure, and unexpected application behavior that compromises security."
+  category:
+    name: INPUT
+    shortName: Input Validation
+    displayName: Input Validation (INPUT)
+  subCategory: GRPC_STATUS_CODE_MANIPULATION
+  severity: MEDIUM
+  tags:
+    - gRPC
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://grpc.github.io/grpc/core/md_doc_statuscodes.html"
+    - "https://grpc.io/docs/guides/error/"
+    - "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/"
+  cwe:
+    - CWE-20
+    - CWE-754
+    - CWE-252
+  cve:
+    - CVE-2023-32732
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  request_headers:
+    for_one:
+      key:
+        regex: "content-type"
+      value:
+        contains_either:
+          - "application/grpc"
+  response_payload:
+    not_contains:
+      - Error
+      - Failed
+      - "invalid status"
+
+wordLists:
+  maliciousStatusCodes:
+    - "999"
+    - "-1"
+    - "0"
+    - "16"
+    - "100"
+    - "9999"
+    - "2147483647"
+    - "null"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - add_header:
+            grpc-status: ${maliciousStatusCodes}
+        - add_header:
+            grpc-message: "injected_error_message"
+        - add_header:
+            x-grpc-test: "status_manipulation_test"
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - "invalid status code"
+      - "malformed status"
+      - "rejected"
+      - "blocked"
+      - "invalid request"
+      - "bad status"
