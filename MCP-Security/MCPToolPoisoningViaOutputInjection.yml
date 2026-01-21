@@ -24,13 +24,6 @@ info:
     - Indirect command execution
 
     These can lead to incorrect outputs, security policy violations, and serious lateral impact if tools affect other systems.
-  remediation: |
-    - Strictly validate and sanitize tool outputs before injecting into model context.
-    - Use output allow-lists or response schemas to strip unsafe or unexpected tokens.
-    - Apply prompt isolation boundaries between tools and model context.
-    - Monitor tools for anomalous output behavior using content filters and heuristics.
-    - Disable execution of any commands returned via tool output.
-    - Apply RBAC and trust scoring for tools that interact with external systems.
   category:
     name: MCP
     shortName: MCP
