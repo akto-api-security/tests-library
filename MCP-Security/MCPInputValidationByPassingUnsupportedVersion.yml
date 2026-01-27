@@ -60,4 +60,4 @@ validate:
   response_payload:
     length:
       gt: 0
-    magic_validate: if the response failed with validation errors like Invalid JSON-RPC version or contains error codes like 32xxx then it is not vulnearable.
+    magic_validate: "the response must fail with errors relates to invalid jsonrpc version or invalid parameters. if there is no error then it is VULNERABLE. Successful responses are VULNERABLE whereas failed responses are not VULNERABLE"
