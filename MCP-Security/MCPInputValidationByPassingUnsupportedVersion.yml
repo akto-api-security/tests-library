@@ -60,10 +60,4 @@ validate:
   response_payload:
     length:
       gt: 0
-    or:
-    - not_contains:
-      - "-32600"
-      - "-32602"
-      - invalid json-rpc version
-      - invalid jsonrpc version
-    - magic_validate: if the response failed with validation errors like Invalid JSON-RPC version or contains error codes like 32xxx then it is not vulnearable.
+    magic_validate: if the response failed with validation errors like Invalid JSON-RPC version or contains error codes like 32xxx then it is not vulnearable.
