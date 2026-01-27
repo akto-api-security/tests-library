@@ -55,7 +55,7 @@ execute:
     - delete_body_param: "${userKey}"
     - validate:
         response_payload:
-          contains_either: "$magic Check whether the response contains any kind of error response (error status, error fields, error messages, error flags or any json key related to error). If there is any error then return nothing just empty braces []. Else return a list of words from the response only in case of successful response."
+          magic_validate: "the response must fail with errors. if there is no error then it is VULNERABLE. Successful responses are VULNERABLE where as failed responses are not VULNERABLE"
     - success: exit
     - failure: x2
   - req:
@@ -64,5 +64,5 @@ execute:
         - "${userVal}"
     - validate:
         response_payload:
-          contains_either: "$magic Check whether the response contains any kind of error response (error status, error fields, error messages, error flags or any json key related to error). If there is any error then return nothing just empty braces []. Else return a list of words from the response only in case of successful response."
+          magic_validate: "the response must fail with errors. if there is no error then it is VULNERABLE. Successful responses are VULNERABLE where as failed responses are not VULNERABLE"
     - success: vulnerable

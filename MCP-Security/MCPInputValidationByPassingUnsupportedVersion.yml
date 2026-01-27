@@ -63,6 +63,7 @@ validate:
     or:
     - not_contains:
       - "-32600"
+      - "-32602"
       - invalid json-rpc version
       - invalid jsonrpc version
-    - not_magic_validate: Check whetehr the response failed due to any error related to Invalid JSON-RPC version or it has any error code like -32600
+    - magic_validate: if the response failed with validation errors like Invalid JSON-RPC version or contains error codes like 32xxx then it is not vulnearable.
