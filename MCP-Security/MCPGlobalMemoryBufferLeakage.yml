@@ -103,7 +103,7 @@ execute:
             params.arguments.store: "global"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "global buffer"
       - "global memory"
       - "global context"
@@ -114,3 +114,4 @@ validate:
       - "global context"
       - "global data"
       - "global store"
+    - magic_validate: "Analyze the response for evidence of memory leakage or buffer information disclosure. Look for memory addresses, buffer contents, cached data from other operations, remnants of previous executions, or any data that suggests information is leaking from global memory or shared buffers."

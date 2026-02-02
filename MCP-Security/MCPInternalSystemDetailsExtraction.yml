@@ -106,7 +106,7 @@ execute:
             params.arguments.details: "${systemDetailsPayloads}"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "architecture"
       - "infrastructure"
       - "dependencies"
@@ -117,3 +117,4 @@ validate:
       - "database"
       - "service"
       - "internal structure"
+    - magic_validate: "Check the response for internal system architecture or implementation details. Look for server versions, framework information, internal component names, service topologies, database schemas, API structures, or other technical details about the system's internal workings."

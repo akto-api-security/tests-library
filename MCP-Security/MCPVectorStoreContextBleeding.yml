@@ -103,7 +103,7 @@ execute:
             params.arguments.database: "vector"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "vector"
       - "embedding"
       - "similarity"
@@ -114,3 +114,4 @@ validate:
       - "similar content"
       - "vector search"
       - "vector similarity"
+    - magic_validate: "Examine the response for evidence of context bleeding from vector stores or embedding databases. Look for retrieved information that doesn't match the current query context, data from other users' embeddings, unrelated document fragments, or signs that vector search results are leaking information across tenant or user boundaries."

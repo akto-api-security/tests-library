@@ -101,7 +101,7 @@ execute:
             params.arguments.verbose: "true"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "stack trace"
       - "Stack Trace"
       - "stacktrace"
@@ -117,3 +117,4 @@ validate:
       - "/opt/"
       - "/home/"
       - "Traceback"
+    - magic_validate: "Analyze the response for debug or diagnostic information that should not be publicly exposed. Look for stack traces, internal file paths, error details, variable dumps, system internals, development/debugging output, or technical information that reveals system architecture."

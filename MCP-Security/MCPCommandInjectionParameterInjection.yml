@@ -130,7 +130,7 @@ execute:
             params.arguments.exec: "${commandInjectionPayloads}"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "root"
       - "admin"
       - "user"
@@ -160,3 +160,4 @@ validate:
       - "srv"
       - "run"
       - "lost+found"
+    - magic_validate: "Examine the response for evidence of command execution. Look for system command outputs, file system paths, process information, user/group names, operating system details, or other indicators that the injected shell commands were executed on the server."

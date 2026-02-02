@@ -160,7 +160,7 @@ execute:
             params.arguments.filename: "${pathTraversalPayloads}"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "root:"
       - "admin:"
       - "user:"
@@ -219,3 +219,4 @@ validate:
       - "session:"
       - "account:"
       - "noninteractive:"
+    - magic_validate: "Examine the response for evidence of unauthorized file access. Look for sensitive file contents such as system files (/etc/passwd, /etc/shadow), configuration files, password hashes, user information, directory listings, or other data that indicates the path traversal attack successfully accessed files outside the intended directory."

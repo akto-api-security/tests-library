@@ -103,7 +103,7 @@ execute:
             params.arguments.context: "global"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "shared memory"
       - "global buffer"
       - "memory contents"
@@ -114,3 +114,4 @@ validate:
       - "buffer contents"
       - "memory access"
       - "shared context"
+    - magic_validate: "Check the response for evidence of shared memory context leakage. Look for data that should be isolated to other contexts, information from parallel processes, cached responses meant for other users, or any signs that shared memory boundaries were violated and context leaked across isolation boundaries."

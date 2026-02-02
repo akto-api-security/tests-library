@@ -100,7 +100,7 @@ execute:
             params.arguments.parameter: "${configExtractionPayloads}"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "api_key"
       - "api_key:"
       - "secret"
@@ -111,3 +111,4 @@ validate:
       - "environment"
       - "env"
       - "parameter"
+    - magic_validate: "Examine the response for configuration details or system settings. Look for application configuration parameters, service endpoints, database configurations, API settings, feature flags, security settings, or other internal configuration information that should not be exposed."

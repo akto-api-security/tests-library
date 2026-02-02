@@ -121,7 +121,7 @@ execute:
             params.arguments.where: "${sqlInjectionPayloads}"
 validate:
   response_payload:
-    contains_either: 
+    - contains_either:
       - "mysql"
       - "postgresql"
       - "sqlite"
@@ -141,3 +141,4 @@ validate:
       - "syntax"
       - "query"
       - "sql"
+    - magic_validate: "Analyze the response for evidence of successful SQL injection. Look for database error messages, exposed database schema information, query results from unauthorized tables, or signs that the SQL payload was executed. Check for database-specific syntax, table/column names, or data that suggests the injection bypassed input validation."

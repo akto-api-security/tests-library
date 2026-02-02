@@ -118,7 +118,7 @@ execute:
             params.arguments.data: "${xssInjectionPayloads}"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "<script>"
       - "javascript:"
       - "onerror="
@@ -171,3 +171,4 @@ validate:
       - "ontimeupdate="
       - "onvolumechange="
       - "onwaiting="
+    - magic_validate: "Examine the response for evidence that XSS payloads were reflected or stored without proper encoding/sanitization. Look for unescaped HTML tags, JavaScript code, event handlers, script elements, or any markup that could execute in a user's browser context."

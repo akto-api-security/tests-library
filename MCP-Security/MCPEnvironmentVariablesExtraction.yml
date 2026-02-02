@@ -101,7 +101,7 @@ execute:
             params.arguments.environment: "${envVarExtractionPayloads}"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "env"
       - "ENV"
       - "environment"
@@ -112,3 +112,4 @@ validate:
       - "TOKEN"
       - "CREDENTIAL"
       - "="
+    - magic_validate: "Check if the response contains environment variable names, values, or system configuration details. Look for key-value pairs with equals signs, API keys, secrets, tokens, credentials, database connection strings, or other sensitive operational data from the system environment."

@@ -118,7 +118,7 @@ execute:
             params.arguments.user: "${ldapInjectionPayloads}"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "cn="
       - "uid="
       - "mail="
@@ -136,3 +136,4 @@ validate:
       - "syntax"
       - "invalid"
       - "malformed"
+    - magic_validate: "Check the response for evidence of successful LDAP injection. Look for LDAP directory information, user attributes, DN (distinguished names), directory structure, authentication bypass indicators, or data that suggests the LDAP query was manipulated to return unauthorized information."

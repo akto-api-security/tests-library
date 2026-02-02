@@ -111,7 +111,7 @@ execute:
             params.content: "${ansiHyperlinkPayloads}"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "phishing-site.example.com"
       - "malware-distribution.com"
       - "fake-login.com"
@@ -122,3 +122,4 @@ validate:
       - "settings-hijacker.com"
       - "phishing"
       - "malware"
+    - magic_validate: "Check if the response processed ANSI hyperlink escape sequences or shows evidence of deceptive link manipulation. Look for signs that malicious hyperlinks were embedded, URL spoofing occurred, or that link text and actual destinations were mismatched through ANSI codes."

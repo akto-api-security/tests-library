@@ -111,7 +111,7 @@ execute:
             params.authorization_url: "${commandInjectionPayloads}"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "calc.exe"
       - "calculator"
       - "id"
@@ -145,3 +145,4 @@ validate:
       - "srv"
       - "run"
       - "lost+found"
+    - magic_validate: "Analyze the response for evidence of remote command execution or RCE. Look for command outputs, system information, network requests to external servers, file system operations, process execution indicators, or any signs that remote commands were successfully executed on the target system."
