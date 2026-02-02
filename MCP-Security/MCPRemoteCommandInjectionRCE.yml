@@ -145,4 +145,4 @@ validate:
       - "srv"
       - "run"
       - "lost+found"
-    - magic_validate: "Analyze the response for evidence of remote command execution or RCE. Look for command outputs, system information, network requests to external servers, file system operations, process execution indicators, or any signs that remote commands were successfully executed on the target system."
+    - magic_validate: "Verify remote command execution via authorization parameter injection: Evidence of calculator/calc.exe execution (Windows GUI calculator indicators), System information from 'id', 'whoami' commands (uid=, gid=, username), OS identification (Linux, Darwin, Windows), Network indicators (localhost, 127.0.0.1), File system paths (bin, sbin, etc, var, usr) indicating directory traversal or command execution, Process information suggesting command execution occurred on remote system"
