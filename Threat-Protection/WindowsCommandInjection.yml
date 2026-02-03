@@ -3,13 +3,13 @@ filter:
   or:
     - request_payload:
         regex:
-          - (?i)(?<![\w._=:-])(?:(?:(?:cmd|powershell|pwsh|wscript|cscript|rundll32|certutil|mshta|bitsadmin|regsvr32|wmic|schtasks|tasklist|nslookup)(?:\.exe)?|ping(?:\.exe)?(?=\s+(?:\d{1,3}(?:\.\d{1,3}){3}|\S+\.[a-z]{2,}|-\w+)))(?![\w.])(?:\s+\S+){1,}(?=\s*(?:&&|\|\||[|;]|$))|net(?:\.exe)?\s+(?:user|localgroup|use|view|start|stop|session|share|accounts|time|computer|config)\b(?:\s+\S+)*)(?![\w.])
+          - (?i)(?<![\w._=:-])(?:(?:(?:cmd|powershell|pwsh|wscript|cscript|rundll32|certutil|mshta|bitsadmin|regsvr32|wmic|schtasks|tasklist|nslookup)(?:\.exe)?|ping(?:\.exe)?(?=\s+(?:\d{1,3}(?:\.\d{1,3}){3}|\S+\.[a-z]{2,}|-\w+)))(?![\w.])(?!\s+script)(?:\s+\S+){1,}(?=\s*(?:&&|\|\||[|;]|$))|net(?:\.exe)?\s+(?:user|localgroup|use|view|start|stop|session|share|accounts|time|computer|config)\b(?:\s+\S+)*)(?![\w.])
     - query_param:
         regex:
-          - (?i)(?<![\w._=:-])(?:(?:(?:cmd|powershell|pwsh|wscript|cscript|rundll32|certutil|mshta|bitsadmin|regsvr32|wmic|schtasks|tasklist|nslookup)(?:\.exe)?|ping(?:\.exe)?(?=\s+(?:\d{1,3}(?:\.\d{1,3}){3}|\S+\.[a-z]{2,}|-\w+)))(?![\w.])(?:\s+\S+){1,}(?=\s*(?:&&|\|\||[|;]|$))|net(?:\.exe)?\s+(?:user|localgroup|use|view|start|stop|session|share|accounts|time|computer|config)\b(?:\s+\S+)*)(?![\w.])
+          - (?i)(?<![\w._=:-])(?:(?:(?:cmd|powershell|pwsh|wscript|cscript|rundll32|certutil|mshta|bitsadmin|regsvr32|wmic|schtasks|tasklist|nslookup)(?:\.exe)?|ping(?:\.exe)?(?=\s+(?:\d{1,3}(?:\.\d{1,3}){3}|\S+\.[a-z]{2,}|-\w+)))(?![\w.])(?!\s+script)(?:\s+\S+){1,}(?=\s*(?:&&|\|\||[|;]|$))|net(?:\.exe)?\s+(?:user|localgroup|use|view|start|stop|session|share|accounts|time|computer|config)\b(?:\s+\S+)*)(?![\w.])
     - request_headers:
         regex:
-          - (?i)(?<!\bcontent|accept|user-agent|authorization)(?<![\w._=:-])(?:(?:(?:cmd|powershell|pwsh|wscript|cscript|rundll32|certutil|mshta|bitsadmin|regsvr32|wmic|schtasks|tasklist|nslookup)(?:\.exe)?|ping(?:\.exe)?(?=\s+(?:\d{1,3}(?:\.\d{1,3}){3}|\S+\.[a-z]{2,}|-\w+)))(?![\w.])(?:\s+\S+){1,}(?=\s*(?:&&|\|\||[|;]|$))|net(?:\.exe)?\s+(?:user|localgroup|use|view|start|stop|session|share|accounts|time|computer|config)\b(?:\s+\S+)*)(?![\w.])
+          - (?i)(?<!\bcontent|accept|user-agent|authorization)(?<![\w._=:-])(?:(?:(?:cmd|powershell|pwsh|wscript|cscript|rundll32|certutil|mshta|bitsadmin|regsvr32|wmic|schtasks|tasklist|nslookup)(?:\.exe)?|ping(?:\.exe)?(?=\s+(?:\d{1,3}(?:\.\d{1,3}){3}|\S+\.[a-z]{2,}|-\w+)))(?![\w.])(?!\s+script)(?:\s+\S+){1,}(?=\s*(?:&&|\|\||[|;]|$))|net(?:\.exe)?\s+(?:user|localgroup|use|view|start|stop|session|share|accounts|time|computer|config)\b(?:\s+\S+)*)(?![\w.])
 
 info:
   name: "Windows Command Injection"
