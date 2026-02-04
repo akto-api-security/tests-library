@@ -101,7 +101,7 @@ execute:
             params.arguments.environment: "${envVarExtractionPayloads}"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "env"
       - "ENV"
       - "environment"
@@ -112,3 +112,4 @@ validate:
       - "TOKEN"
       - "CREDENTIAL"
       - "="
+    - magic_validate: "Verify if actual environment variables were exposed: Environment variable format: KEY=value with actual values, Specific sensitive vars: API_KEY=sk-..., SECRET=..., PASSWORD=..., TOKEN=eyJ..., DATABASE_URL=postgres://..., System paths: PATH=/usr/bin:/bin, HOME=/root, SHELL=/bin/bash, NOT just the words 'environment' or 'variable' but actual KEY=value pairs"

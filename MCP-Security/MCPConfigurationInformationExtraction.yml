@@ -100,7 +100,7 @@ execute:
             params.arguments.parameter: "${configExtractionPayloads}"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "api_key"
       - "api_key:"
       - "secret"
@@ -111,3 +111,4 @@ validate:
       - "environment"
       - "env"
       - "parameter"
+    - magic_validate: "Check if actual configuration details were leaked: Actual API keys with values (api_key: sk-xxx, apiKey=xyz123), Database connection strings (mongodb://user:pass@host:port/db, postgres://...), Service endpoints and URLs (https://api.internal.com/v1), Security settings and values (debug=true, ssl_verify=false, allow_origins=['*']), Feature flags with states (feature_x: enabled, beta_features=true), NOT just the words 'configuration' or 'setting' but actual config key-value pairs revealing internal system parameters"

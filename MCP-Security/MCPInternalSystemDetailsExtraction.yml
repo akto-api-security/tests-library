@@ -106,7 +106,7 @@ execute:
             params.arguments.details: "${systemDetailsPayloads}"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "architecture"
       - "infrastructure"
       - "dependencies"
@@ -117,3 +117,4 @@ validate:
       - "database"
       - "service"
       - "internal structure"
+    - magic_validate: "Verify if actual internal system details were exposed: Server versions and framework info (Node.js v16.14.2, Express 4.18.1, Python 3.9.7/Django 4.0), Internal component names and services (auth-service, payment-processor, user-management-api), Database schema details (tables: users, orders, payments; columns: user_id, email, password_hash), Service topology and architecture (microservices running on Kubernetes cluster, nginx reverse proxy, Redis cache layer), Internal API structures and endpoints (/internal/v1/admin, private API routes), Infrastructure details (AWS region us-east-1, Docker containers, load balancer config), NOT just words 'architecture' or 'infrastructure' but actual version numbers, component names, or technical specifications"

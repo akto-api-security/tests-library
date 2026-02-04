@@ -103,7 +103,7 @@ execute:
             params.arguments.database: "vector"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "vector"
       - "embedding"
       - "similarity"
@@ -114,3 +114,4 @@ validate:
       - "similar content"
       - "vector search"
       - "vector similarity"
+    - magic_validate: "Verify if actual vector store data from other users was leaked: Retrieved information that doesn't match current query context (similarity search results for queries never made by this user), Data from other users' embeddings (document chunks, text fragments, stored content belonging to other_user), Unrelated document fragments from other tenants (content from different organizations, users, or sessions), Vector similarity results showing cross-user matches (finding 'similar' content from another user's private documents), Vector IDs or embedding metadata from other users (vector_id with user mismatch, embedding timestamps from other sessions), NOT just the words 'vector' or 'embedding' but actual content retrieved from vector stores that belongs to other users"

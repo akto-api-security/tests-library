@@ -121,7 +121,7 @@ execute:
             params.arguments.where: "${sqlInjectionPayloads}"
 validate:
   response_payload:
-    contains_either: 
+    - contains_either:
       - "mysql"
       - "postgresql"
       - "sqlite"
@@ -141,3 +141,4 @@ validate:
       - "syntax"
       - "query"
       - "sql"
+    - magic_validate: "Verify if the SQL injection payloads produced their intended effects: For 'DROP TABLE users' payloads: Table deletion confirmation or errors about missing/dropped tables, For \"' OR '1'='1\" boolean-based payloads: All records returned, authentication bypassed, or 'true' condition executed, For 'admin' --' comment injection: Admin access without password, or SQL after '--' commented out, For 'UNION SELECT username, password FROM users': Username and password pairs exposed in the response, For 'information_schema.tables' queries: Database table names revealed (users, products, orders, etc.), For 'WAITFOR DELAY' or 'SLEEP(5)' time-based payloads: Response delay of 5+ seconds, For '@@version' or 'version()' fingerprinting: Database version strings (MySQL 5.7.33, PostgreSQL 13.2, SQL Server 2019), For 'ORDER BY X' column enumeration: Success up to column count, then error, For error-based extraction with EXTRACTVALUE/UPDATEXML: Data or version info in error messages"

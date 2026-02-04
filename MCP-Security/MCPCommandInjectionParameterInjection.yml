@@ -130,7 +130,7 @@ execute:
             params.arguments.exec: "${commandInjectionPayloads}"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "root"
       - "admin"
       - "user"
@@ -160,3 +160,4 @@ validate:
       - "srv"
       - "run"
       - "lost+found"
+    - magic_validate: "Check if the response contains outputs from the specific injected commands. Look for: Username strings indicating 'whoami' execution (root, admin, ubuntu, www-data, nginx), Password file format 'username:x:uid:gid:' indicating successful 'cat /etc/passwd' (look for entries like 'root:x:0:0:' or 'daemon:x:1:1:'), 'uid=X(username) gid=Y(groupname) groups=Z' format from 'id' command with numeric IDs, References to 'evil.com' or HTTP response content from curl/wget commands, Kernel and OS information from 'uname -a' (Linux, Darwin, kernel version, x86_64, GNU), Environment variables in 'KEY=value' format from 'env' command (PATH=, HOME=, USER=, SHELL=), Directory listing format from 'ls -la' with permissions (drwxr-xr-x, -rw-r--r--), sizes, timestamps, Network connections from 'netstat' with LISTEN, ESTABLISHED, ports, IPs, Network interface details from 'ifconfig' with interface names (eth0, wlan0, en0), IP addresses, MAC addresses, MTU"

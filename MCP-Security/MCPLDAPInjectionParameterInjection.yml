@@ -118,7 +118,7 @@ execute:
             params.arguments.user: "${ldapInjectionPayloads}"
 validate:
   response_payload:
-    contains_either:
+    - contains_either:
       - "cn="
       - "uid="
       - "mail="
@@ -136,3 +136,4 @@ validate:
       - "syntax"
       - "invalid"
       - "malformed"
+    - magic_validate: "Assess if LDAP filter injection manipulated the query successfully: For 'admin)(&(password=*))' AND injection: Admin entry returned with any password accepted, authentication bypassed, For 'admin)(|(password=*))' OR injection: Multiple user records returned beyond just 'admin' user, For 'admin)(!(password=*))' NOT injection: Users without password field, or inverted filter results, For '(&(objectClass=*))' wildcard injection: All objects in directory returned regardless of filter, For '(cn=*)' or '(uid=*)' wildcards: All common names or user IDs exposed, not just searched user, For '(mail=*)' wildcard: All email addresses from directory leaked, LDAP attribute disclosure: Responses containing 'cn=username', 'uid=userid', 'mail=email@domain', 'objectClass=person', 'dn: cn=user,ou=people,dc=example,dc=com', LDAP errors indicating injection: 'invalid filter syntax', 'malformed filter', 'unexpected token', Authentication bypass: Login successful with manipulated filter without valid credentials"
