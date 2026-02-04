@@ -51,6 +51,10 @@ api_selection_filters:
     not_contains:
       - GET
       - OPTIONS
+
+  request_payload:
+    not_contains: "query"
+
   response_payload:
     for_one:
       key:
