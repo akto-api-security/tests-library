@@ -39,6 +39,16 @@ api_selection_filters:
     lt: 300
   method:
     neq: OPTIONS
+
+  or:
+    - url:
+        not_contains: graphql
+    - and:
+        - url:
+            contains_either: graphql
+        - request_payload:
+            not_contains: "query"
+
   response_payload:
     length:
       gt: 0
