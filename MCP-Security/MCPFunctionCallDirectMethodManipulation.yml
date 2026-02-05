@@ -96,7 +96,7 @@ validate:
     gte: 200
     lt: 300
   response_payload:
-    not_contains:
+  - not_contains:
     - Error
     - error
     - Unauthorized
@@ -109,6 +109,20 @@ validate:
     - permission denied
     - restricted
     - Method not allowed
+  - magic_validate: |
+      Identify if the response proves a successful exploit of the ${unauthorizedMethods} call.
+      Criteria for SUCCESS:
+
+      * Data Leakage: The response contains actual sensitive data related to the specific method called such as real API keys, database rows, system secrets, or user lists.
+      * Execution Confirmation: The response confirms a privileged action was performed such as database wiped, permissions updated, or command output results.
+      * Internal Exposure: The response returns raw system information, environment variables, or internal stack traces that reveal server internals.
+
+      Criteria for FAILURE (Do not flag):
+
+      * Reflections: The response only repeats the method name or the request parameters.
+      * Empty Success: A generic status success or result ok with no actual data returned.
+      * Placeholders: The presence of dummy data like test_user, example_secret, or 12345.
+      * Hidden Errors: Any text  indicating the method is unknown, restricted, or invalid, regardless of the 200 OK status.
 strategy:
   run_once: /
 
