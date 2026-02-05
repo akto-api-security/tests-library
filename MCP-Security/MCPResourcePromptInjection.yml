@@ -39,10 +39,15 @@ api_selection_filters:
     - POST
     - PUT
   request_payload:
-    contains_all:
-    - jsonrpc
-    - method
-    - params
+    - contains_all:
+      - jsonrpc
+      - method
+      - params
+    - for_one:
+        key:
+            eq: method
+        value:
+            regex: resource/read
 execute:
   type: single
   requests:

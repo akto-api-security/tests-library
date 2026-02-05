@@ -171,4 +171,19 @@ validate:
       - "ontimeupdate="
       - "onvolumechange="
       - "onwaiting="
-    - magic_validate: "Determine if XSS payloads were reflected without proper encoding: For '<script>alert('XSS')</script>': Exact script tag present with 'alert', 'XSS' intact (not HTML-encoded to &lt;script&gt;), For '<img src=x onerror=alert('XSS')>': 'onerror=' attribute present in img tag without encoding, For '<svg onload=alert('XSS')>': 'onload=' attribute in SVG tag reflecting the payload, For 'javascript:alert('XSS')': The 'javascript:' protocol handler present in href, src, or other URL attributes, For '<iframe src=javascript:alert('XSS')>': Iframe tag with javascript: protocol in src attribute, For '<input onfocus=alert autofocus>': Event handler 'onfocus=' with 'autofocus' attribute triggering automatically, For '<body onload=alert>': Body tag with 'onload=' event handler, For '<details ontoggle=alert>': HTML5 element with 'ontoggle=' handler, General: Any HTML tags or JavaScript code appearing UNESCAPED (not converted to &lt;, &gt;, &quot;), event handlers (on*=) present in response, ability to execute in browser context"
+    - magic_validate: |
+        Mark the response as VULNERABLE only if it contains unescaped,browser-executable HTML or JavaScript introduced via injected parameters.
+
+        Indicators of vulnerability:
+        - Presence of real HTML tags capable of script execution (<script>, <img>, <svg>, <iframe>, etc.)
+        - Presence of active event handler attributes (onerror=, onload=, onfocus=, ontoggle=, etc.)
+        - Presence of a javascript: URL used in an executable attribute (href, src, action, etc.)
+        - The injected content would execute automatically or with normal user interaction in a browser
+
+        Do NOT mark as vulnerable if:
+        - The content is HTML-encoded, escaped, sanitized, or commented out
+        - The content appears only in logs, errors, documentation, examples, or JSON string values
+        - The response discusses or demonstrates XSS without enabling execution
+        - Dummy or illustrative values are returned
+
+        Only real, executable client-side script execution qualifies as a successful attack.
