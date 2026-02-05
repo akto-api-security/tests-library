@@ -122,7 +122,7 @@ validate:
     gte: 200
     lt: 300
   response_payload:
-    not_contains:
+    - not_contains:
       - Error
       - error
       - Invalid parameter
@@ -131,4 +131,18 @@ validate:
       - validation failed
       - unauthorized
       - forbidden
+    - magic_validate: |
+            Identify if the response proves a successful exploit of the ${injectionPayloads} or injected parameters like admin, bypass_auth, or shell.
 
+            Criteria for SUCCESS:
+            - System File Access: Response contains sensitive file content (e.g., "root:x:0:0", "bin/bash", or "/etc/shadow" content).
+            - Command Output: Response displays results of injected commands like whoami (returning "root", "www-data"), ls file listings, or id output.
+            - Database/SQL Leakage: Response shows data from unauthorized tables or confirmations of structural changes (e.g., "Table users dropped").
+            - Auth/Logic Bypass: Response provides administrative data or access tokens specifically because "admin: true" or "bypass_auth" was injected.
+            - Expression/SSTI Results: Response shows the result of math or code evaluation (e.g., "49" appearing in response to "{{7*7}}").
+
+            Criteria for FAILURE:
+            - Literal Reflection: Response simply repeats the attack string back to the user as a "received" value.
+            - Safe Handling: Response treats the payload as a literal name or search term and returns "No results found."
+            - Empty/Generic Success: A 200 OK with no actual data or a message like "parameters accepted" without execution evidence.
+            - Error/Validation: Any text indicating the input was blocked, even if the status code is 200.
