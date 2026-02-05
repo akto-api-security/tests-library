@@ -70,6 +70,26 @@ execute:
             changed_method: ${invalidMethodNames}
 validate:
   response_payload:
-    or:
-    - not_contains_either: "${methodNotFoundCode}"
-    - not_contains_either: "$magic Check if the response includes a valid MCP error indicating the requested method was not found. The error should include code -32601 or an equivalent explanation, and should not include stack traces or internal debug info."
+    magic_validate: |
+        Mark the response as VULNERABLE only if the server fails to handle
+        an unknown or non-existent MCP method correctly.
+
+        VULNERABLE = TRUE only when:
+        - The response does NOT include a valid JSON-RPC / MCP "method not found" indication
+        - Error code -32601 (or an equivalent explicit “method not found” signal) is missing
+        - The response leaks internal implementation details, such as:
+        - Stack traces
+        - Tracebacks
+        - Exception names
+        - Runtime or debugging information
+        - The response exposes internal method resolution logic or server internals
+
+        VULNERABLE = FALSE if ANY of the following are true:
+        - The response correctly indicates that the method was not found
+        (e.g., error code -32601 or a clear equivalent message)
+        - The response is a clean, well-formed JSON-RPC error without internal details
+        - No stack traces, debug output, or internal exceptions are present
+        - The server safely rejects the invalid method without leaking information
+
+        Only improper handling of unknown methods or information disclosure
+        qualifies as a vulnerability.
