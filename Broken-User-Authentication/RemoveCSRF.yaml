@@ -114,6 +114,13 @@ api_selection_filters:
                 not_contains:
                   - ":"
                   - ";"
+        - request_headers:
+            for_one:
+              key:
+                eq: cookie
+                extract: cookie_header
+              value:
+                regex: csrf
 
 execute:
   type: single
@@ -122,6 +129,7 @@ execute:
         - delete_header: ${csrf_key}
         - delete_body_param: ${csrf_key}
         - delete_query_param: ${csrf_key}
+        - delete_header: ${cookie_header}
 
 validate:
   response_code:
