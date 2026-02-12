@@ -73,10 +73,16 @@ api_selection_filters:
     gte: 200
     lt: 300
   request_payload:
-    contains_all:
-    - jsonrpc
-    - method
-    - params
+    - contains_all:
+      - jsonrpc
+      - method
+      - params
+    - for_one:
+        key:
+          eq: method
+          extract: changed_method
+        value:
+          regex: ^(?!(tools/list|resources/list|prompts/list)$).*
 wordLists:
   unauthorizedToolNames:
   - "admin_delete_all_users"
