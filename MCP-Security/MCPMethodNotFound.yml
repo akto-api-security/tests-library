@@ -37,15 +37,17 @@ api_selection_filters:
     eq: POST
   and:
     - request_payload:
-        for_one:
+      - contains_all:
+        - jsonrpc
+        - method
+        - params
+      - for_one:
           key:
             eq: method
             extract: changed_method
-    - request_payload:
-        contains_all:
-          - jsonrpc
-          - method
-          - params
+          value:
+            regex: ^(?!(tools/list|resources/list|prompts/list)$).*
+
 wordLists:
   invalidMethodNames:
     - "tools/invalidSecurePrompt"

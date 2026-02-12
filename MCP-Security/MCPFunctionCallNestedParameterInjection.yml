@@ -73,7 +73,7 @@ api_selection_filters:
       key:
         eq: method
       value:
-        regex: ^(tools/list|resources/list|prompts/list)$
+        regex: ^(?!(tools/list|resources/list|prompts/list)$).*
 wordLists:
   unauthorizedToolNames:
   - "admin.deleteAllUsers"
