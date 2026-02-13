@@ -47,9 +47,15 @@ api_selection_filters:
     gte: 200
     lt: 300
   request_payload:
-    contains_all:
-    - jsonrpc
-    - method
+    - contains_all:
+      - jsonrpc
+      - method
+    - for_one:
+        key:
+          eq: method
+          extract: changed_method
+        value:
+          regex: ^(?!(tools/list|resources/list|prompts/list)$).*
 execute:
   type: multiple
   requests:
@@ -70,13 +76,20 @@ validate:
     gte: 200
     lt: 300
   response_payload:
-    not_contains:
-    - Invalid parameters
-    - invalid params
-    - unexpected parameter
-    - params not allowed
-    - Error
-    - error
+    - contains_all:
+      - Invalid parameters
+      - invalid params
+      - unexpected parameter
+      - params not allowed
+      - Error
+      - error
+    - magic_validate: |
+          VULNERABLE = TRUE only when:
+          - the response succeeded without any error traces related to invalid request or invalid parameters or invalid method or method not found
+
+          VULNERABLE = FALSE if ANY of the following are true:
+          - The response clearly says invalid request, invalid parameters, invalid method, method not found, etc.
+
 strategy:
   run_once: /
 
