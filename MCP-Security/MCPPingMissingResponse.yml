@@ -55,20 +55,22 @@ execute:
   - req:
     - replace_body: '{"jsonrpc":"2.0","id":"test-ping-response","method":"ping"}'
 validate:
-  or:
-  - response_code:
-      not_in:
-      - 200
-  - response_payload:
-      not_contains:
+  and:
+    - length:
+        gt: 10
+    - contains_either:
+      - jsonrpc
       - result
-  - response_payload:
-      contains_either:
-      - error
-      - Error
-      - method not found
-      - unsupported
-      - not implemented
+    - magic_validate: |
+            VULNERABLE = TRUE only when:
+            - The request is successful and the system performs the action.
+            - The response contains no errors of any kind.
+
+            VULNERABLE = FALSE if ANY of the following are true:
+            - the response is empty or does not have any sign of successful response.
+            - The response fails due to an Invalid Method or Method not found error.
+            - The response contains the error code -32601.
+            - The response contains any other error message (e.g., Timeout, 404, 500, or Access Denied).
 strategy:
   run_once: /
 
