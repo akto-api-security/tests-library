@@ -97,7 +97,7 @@ execute:
             ${queryParamValues}: userValue
         - validate:
             response_code:
-              gt: 505
+              gte: 500
 validate:
   and:
     - compare_greater:

@@ -100,7 +100,7 @@ execute:
             pdf_key: https://github.com/akto-api-security/tests-library/raw/akto_resources/resources/heavy%20files/heavy-pdf.pdf
         - validate:
             response_code:
-              gt: 505
+              gte: 500
 validate:
   and:
     - compare_greater:

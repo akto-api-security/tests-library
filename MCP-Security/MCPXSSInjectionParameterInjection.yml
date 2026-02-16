@@ -172,15 +172,15 @@ validate:
       - "onvolumechange="
       - "onwaiting="
     - magic_validate: |
-        Mark the response as VULNERABLE only if it contains unescaped,browser-executable HTML or JavaScript introduced via injected parameters.
+        Mark the response as VULNERABLE only if it contains unescaped, browser-executable HTML or JavaScript introduced via injected parameters.
 
-        Indicators of vulnerability:
-        - Presence of real HTML tags capable of script execution (<script>, <img>, <svg>, <iframe>, etc.)
-        - Presence of active event handler attributes (onerror=, onload=, onfocus=, ontoggle=, etc.)
-        - Presence of a javascript: URL used in an executable attribute (href, src, action, etc.)
+        Vulnerable = TRUE when:
+        - There is presence of real HTML tags capable of script execution (<script>, <img>, <svg>, <iframe>, etc.)
+        - There is presence of active event handler attributes (onerror=, onload=, onfocus=, ontoggle=, etc.)
+        - There is presence of a javascript: URL used in an executable attribute (href, src, action, etc.)
         - The injected content would execute automatically or with normal user interaction in a browser
 
-        Do NOT mark as vulnerable if:
+        Vulnerable = FALSE when:
         - The content is HTML-encoded, escaped, sanitized, or commented out
         - The content appears only in logs, errors, documentation, examples, or JSON string values
         - The response discusses or demonstrates XSS without enabling execution

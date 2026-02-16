@@ -99,7 +99,7 @@ execute:
             mp4_key: https://raw.githubusercontent.com/akto-api-security/tests-library/akto_resources/resources/heavy%20files/video.mp4
         - validate:
             response_code:
-              gt: 505
+              gte: 500
 validate:
   and:
     - compare_greater:
