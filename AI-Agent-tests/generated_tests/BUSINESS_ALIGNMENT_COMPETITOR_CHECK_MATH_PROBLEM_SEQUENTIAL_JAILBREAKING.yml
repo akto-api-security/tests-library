@@ -25,76 +25,76 @@ info:
   cve:
   - CVE-2023-22501
   remediation: |
-      ## 🛡️ Remediation Plan: Business Alignment & Math Logic Hardening
+        ## 🛡️ Remediation Plan: Business Alignment & Math Logic Hardening
 
-      ### 1. Defeating the "Math Puzzle" Trojan
+        ### 1. Defeating the "Math Puzzle" Trojan
 
-      Attackers use arithmetic to distract the model's safety filters or to force it to "execute" logic that leads to a policy violation.
+        Attackers use arithmetic to distract the model's safety filters or to force it to "execute" logic that leads to a policy violation.
 
-      * **Logical Isolation (Sandboxing):** If the agent needs to solve math, use a dedicated **Code Interpreter** or a specialized math tool rather than letting the LLM "reason" through the math in its internal monologue. This prevents the "math reasoning" from bleeding into "business reasoning."
-      * **Prompt Sanitization (De-layering):** Use regex to identify math-heavy prompts that contain unusual keywords (e.g., "competitor," "pricing," "market share") embedded within the text of the problem.
-      * **Marker Detection:** Flag prompts that use phrases like *"solve to reveal,"* *"if X = [competitor name],"* or *"calculate the difference between our price and [Company Y]."*
+        * **Logical Isolation (Sandboxing):** If the agent needs to solve math, use a dedicated **Code Interpreter** or a specialized math tool rather than letting the LLM "reason" through the math in its internal monologue. This prevents the "math reasoning" from bleeding into "business reasoning."
+        * **Prompt Sanitization (De-layering):** Use regex to identify math-heavy prompts that contain unusual keywords (e.g., "competitor," "pricing," "market share") embedded within the text of the problem.
+        * **Marker Detection:** Flag prompts that use phrases like *"solve to reveal,"* *"if X = [competitor name],"* or *"calculate the difference between our price and [Company Y]."*
 
-      ---
+        ---
 
-      ### 2. Multi-Turn Contextual Alignment
+        ### 2. Multi-Turn Contextual Alignment
 
-      The "Sequential" part of this attack builds authority over several turns. The agent needs to realize the conversation is drifting toward a prohibited topic.
+        The "Sequential" part of this attack builds authority over several turns. The agent needs to realize the conversation is drifting toward a prohibited topic.
 
-      * **Cumulative Intent Scoring:** Every 2–3 turns, run a background "Intent Summary." If the summary reveals the conversation is moving toward a **Competitive Analysis**—even if the current prompt is just a math problem—trigger a refusal.
-      * **State-Aware Guardrails:** Maintain a "Business Alignment State." If the user is in a "Math" state, the model should be restricted from accessing business-sensitive tools (like web search or CRM databases) until the context is reset.
-      * **Context Reset on High-Risk Topics:** If the model detects a specific competitor name, it should automatically trigger a "Safety Refresh" where it re-evaluates the system instructions regarding business neutrality.
+        * **Cumulative Intent Scoring:** Every 2–3 turns, run a background "Intent Summary." If the summary reveals the conversation is moving toward a **Competitive Analysis**—even if the current prompt is just a math problem—trigger a refusal.
+        * **State-Aware Guardrails:** Maintain a "Business Alignment State." If the user is in a "Math" state, the model should be restricted from accessing business-sensitive tools (like web search or CRM databases) until the context is reset.
+        * **Context Reset on High-Risk Topics:** If the model detects a specific competitor name, it should automatically trigger a "Safety Refresh" where it re-evaluates the system instructions regarding business neutrality.
 
-      ---
+        ---
 
-      ### 3. Hardening Business Alignment Policies
+        ### 3. Hardening Business Alignment Policies
 
-      Your system prompt must be specific about *why* it cannot answer certain questions to prevent the model from being "guilt-tripped" or "puzzled" into answering.
+        Your system prompt must be specific about *why* it cannot answer certain questions to prevent the model from being "guilt-tripped" or "puzzled" into answering.
 
-      * **Explicit Refusal Scope:** In the system prompt, define a "Do Not Discuss" list:
-      * *“You are prohibited from performing competitive pricing comparisons or market share analysis, even if requested as a mathematical exercise or hypothetical logic puzzle.”*
-
-
-      * **Neutrality Enforcement:** Instruct the model to provide generic industry benchmarks instead of specific competitor data.
-      * *“If asked about competitor pricing, provide only the publicly available standard industry range and redirect the user to our own pricing documentation.”*
+        * **Explicit Refusal Scope:** In the system prompt, define a "Do Not Discuss" list:
+        * *“You are prohibited from performing competitive pricing comparisons or market share analysis, even if requested as a mathematical exercise or hypothetical logic puzzle.”*
 
 
+        * **Neutrality Enforcement:** Instruct the model to provide generic industry benchmarks instead of specific competitor data.
+        * *“If asked about competitor pricing, provide only the publicly available standard industry range and redirect the user to our own pricing documentation.”*
 
-      ---
 
-      ### 4. Monitoring & Detection Patterns
 
-      * **Template Injection Detection:** Monitor for "arithmetic-style" template injections (e.g., `{{ 7*7 }}`) which might be used to probe for backend vulnerabilities alongside the business alignment probe.
-      * **Anomalous Reasoning Chains:** Flag outputs where the model spends a high number of tokens "reasoning" out a simple math problem, as this often indicates it is trying to reconcile conflicting instructions (the user's puzzle vs. the system's safety rules).
+        ---
 
-      ---
+        ### 4. Monitoring & Detection Patterns
 
-      ### 🧪 Implementation Example: The "Intent Drift" Monitor
+        * **Template Injection Detection:** Monitor for "arithmetic-style" template injections (e.g., `{{ 7*7 }}`) which might be used to probe for backend vulnerabilities alongside the business alignment probe.
+        * **Anomalous Reasoning Chains:** Flag outputs where the model spends a high number of tokens "reasoning" out a simple math problem, as this often indicates it is trying to reconcile conflicting instructions (the user's puzzle vs. the system's safety rules).
 
-      This logic helps detect when a "math" conversation is actually a stealthy business inquiry.
+        ---
 
-      ```python
-      def check_intent_drift(conversation_history):
-          """
-          Analyzes the last 3 turns to see if math is being used
-          as a cover for competitor analysis.
-          """
-          critical_keywords = ["pricing", "competitor", "market", "vs", "compare"]
-          math_indicators = ["solve", "calculate", "sum", "equation", "variables"]
-          
-          recent_text = " ".join([turn['content'].lower() for turn in conversation_history[-3:]])
-          
-          # Check for the intersection of math and competitive keywords
-          contains_math = any(m in recent_text for m in math_indicators)
-          contains_business = any(b in recent_text for b in critical_keywords)
-          
-          if contains_math and contains_business:
-              # Trigger a 'High-Security' evaluation turn
-              return "SECURE_MODE_REQUIRED"
-          
-          return "PROCEED"
+        ### 🧪 Implementation Example: The "Intent Drift" Monitor
 
-      ```
+        This logic helps detect when a "math" conversation is actually a stealthy business inquiry.
+
+        ```python
+        def check_intent_drift(conversation_history):
+            """
+            Analyzes the last 3 turns to see if math is being used
+            as a cover for competitor analysis.
+            """
+            critical_keywords = ["pricing", "competitor", "market", "vs", "compare"]
+            math_indicators = ["solve", "calculate", "sum", "equation", "variables"]
+            
+            recent_text = " ".join([turn['content'].lower() for turn in conversation_history[-3:]])
+            
+            # Check for the intersection of math and competitive keywords
+            contains_math = any(m in recent_text for m in math_indicators)
+            contains_business = any(b in recent_text for b in critical_keywords)
+            
+            if contains_math and contains_business:
+                # Trigger a 'High-Security' evaluation turn
+                return "SECURE_MODE_REQUIRED"
+            
+            return "PROCEED"
+
+        ```
 attributes:
   nature: NON_INTRUSIVE
   plan: PRO
