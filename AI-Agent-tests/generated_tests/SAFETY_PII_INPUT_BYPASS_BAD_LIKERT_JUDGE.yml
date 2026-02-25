@@ -24,6 +24,76 @@ info:
   - CWE-306
   cve:
   - CVE-2023-22501
+  remediation: |
+      ## 🛡️ Remediation Plan: PII Input Bypass & Evaluator Hardening
+
+      ### 1. Defeating Technical Obfuscation (The "Bypass" Layer)
+
+      Attackers use Unicode homoglyphs or split tokens to slip past standard keyword filters.
+
+      * **Unicode Normalization:** Implement a preprocessing step that normalizes all incoming text to **NFKC (Compatibility Composition)**. This collapses homoglyphs (like a Cyrillic "а") and hidden characters into their standard canonical forms before the LLM or safety filters see them.
+      * **Recursive JSON Flattening:** If your agent accepts JSON, ensure your security scanner recursively flattens and inspects every nested layer. Attackers often hide malicious payloads deep within nested objects to bypass shallow "top-level" checks.
+      * **Token-Aware Scanning:** Use a scanner that reconstructs "split" words (e.g., `S-S-N` or `Social [newline] Security`) before evaluation.
+      * **Control Character Removal:** Explicitly strip non-printable characters and zero-width spaces that can be used to break up sensitive keywords.
+
+      ---
+
+      ### 2. Hardening the "Judge" (The Likert Manipulation Layer)
+
+      The "Bad Likert Judge" attack tries to trick the model's self-evaluation logic into thinking a policy violation is actually a "5-star" helpful response.
+
+      * **Independent Safety "Judges":** Never rely on the same model instance to both generate a response and judge its own safety. Use a **separate, smaller, instruction-tuned model** (like Llama-Guard) that is strictly programmed to ignore user-provided rating scales.
+      * **Prompt Injection Resistance for Evaluators:** Ensure your internal evaluation prompts use **few-shot examples** of "Bad Likert" attacks to teach the judge what a manipulation attempt looks like.
+      * **Instruction Anchoring:** Surround user input with clear delimiters (e.g., `### USER INPUT START ###`) and instruct the judge to ignore any "scoring" or "rating" criteria found within those tags.
+      * **Fixed Output Schemas:** Force the evaluator model to output in a strict format, such as a single integer or a JSON boolean (e.g., `{"is_safe": false}`). This prevents the model from being led into "chatty" justifications that the attacker can manipulate.
+
+      ---
+
+      ### 3. Egress Filtering (Data Loss Prevention)
+
+      Since input filters can be bypassed, you must treat the agent's *output* as the final line of defense.
+
+      * **Regex & Pattern Matching:** Use high-fidelity regex for SSNs, credit cards, and specific ID formats (like passport numbers or driver's licenses).
+      * **Named Entity Recognition (NER):** Use specialized NLP models (like **Microsoft Presidio** or **SpaCy**) to identify "Names," "Locations," and "Email Addresses" in the output before it reaches the user.
+      * **Threshold-Based Redaction:** If the agent's output contains a high density of entities that look like PII (e.g., more than 3 entities in a single paragraph), redact them automatically or trigger a generic "Refusal" message.
+      * **Differential Privacy:** In analytical use cases, inject "noise" into data outputs to prevent the reconstruction of individual identities through repeated queries.
+
+      ---
+
+      ### 4. Behavioral Monitoring
+
+      Attackers using "Biased Rating" tactics usually exhibit specific patterns that can be flagged at the application level.
+
+      * **Instruction Overload Detection:** Flag prompts that contain an unusually high ratio of instructions to actual questions (e.g., prompts that are 90% "rules" for how the AI should grade itself).
+      * **Policy Mimicry Alerts:** Monitor for prompts that use official-sounding language ("System Audit," "Compliance Check," "Admin Override") to establish fake authority.
+      * **Input Complexity Scoring:** If a prompt's "instruction density" or entropy is abnormally high, route that specific conversation to a more restrictive, high-security model instance.
+
+      ---
+
+      ### 🧪 Implementation Example: The "Normalization" Middleware
+
+      This Python snippet provides a robust first step against the "Input Bypass" portion of the attack by normalizing text and stripping hidden characters.
+
+      ```python
+      import unicodedata
+
+      def sanitize_input(user_input):
+          """
+          Standardizes input to defeat homoglyph and hidden-character bypasses.
+          """
+          # 1. Normalize Unicode (NFKC) to catch homoglyph bypasses
+          # e.g., converts 'pаypаl' (with Cyrillic 'a') back to standard Latin 'paypal'
+          normalized_text = unicodedata.normalize('NFKC', user_input)
+          
+          # 2. Strip hidden control characters (Category "C") 
+          # This removes zero-width spaces and other non-printing characters
+          sanitized_text = "".join(
+              ch for ch in normalized_text if unicodedata.category(ch)[0] != "C"
+          )
+          
+          return sanitized_text
+
+      ```
 attributes:
   nature: NON_INTRUSIVE
   plan: PRO
