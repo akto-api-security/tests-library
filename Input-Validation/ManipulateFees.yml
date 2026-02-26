@@ -83,7 +83,7 @@ api_selection_filters:
         for_one:
           key:
             regex: "${probableInputParameters}"
-            extract: userKey
+            extractMultiple: userKey
           value:
             datatype: number
             extract: userVal
@@ -92,7 +92,7 @@ api_selection_filters:
         for_one:
           key:
             regex: "${probableInputParameters}"
-            extract: userKey2
+            extractMultiple: userKey2
           value:
             regex: "\b([1-9][0-9]*)\b"
             extract: userVal2
@@ -160,10 +160,12 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            userKey: 0
+            ${userKey}: 0
+          for_each_combination: true
         - modify_body_param:
-            userKey2: "0"
+            ${userKey2}: "0"
 
+          for_each_combination: true
 validate:
   response_code:
     gte: 200

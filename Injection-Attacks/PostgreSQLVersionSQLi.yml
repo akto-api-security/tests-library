@@ -38,7 +38,7 @@ api_selection_filters:
     for_one:
       key:
         regex: .*
-        extract: KeyVar
+        extractMultiple: KeyVar
       value:
         regex: "^(?=.*[A-Za-z])(?=.*\\d).+$"
         extract: keyVal
@@ -47,7 +47,8 @@ execute:
   requests:
   - req:
     - modify_body_param:
-        KeyVar: "${keyVal}' union select version();-- -"
+        ${KeyVar}: "${keyVal}' union select version();-- -"
+      for_each_combination: true
 validate:
   response_payload:
     contains_all:

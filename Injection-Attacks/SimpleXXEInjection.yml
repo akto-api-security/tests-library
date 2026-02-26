@@ -75,7 +75,7 @@ api_selection_filters:
     for_one:
       key:
         regex: .*
-        extract: changed_body_key
+        extractMultiple: changed_body_key
       value:
         extract: changed_body_value
 wordLists:
@@ -86,7 +86,8 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            changed_body_key: ${payloads}
+            ${changed_body_key}: ${payloads}
+          for_each_combination: true
 validate:
   response_payload:
     length:

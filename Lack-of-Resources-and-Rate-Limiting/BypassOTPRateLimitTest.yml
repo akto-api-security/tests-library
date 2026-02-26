@@ -43,12 +43,12 @@ api_selection_filters:
       for_one:
         key:
           contains_either: otp
-          extract: otp_key
+          extractMultiple: otp_key
   - query_param:
       for_one:
         key:
           contains_either: otp
-          extract: otp_key
+          extractMultiple: otp_key
 wordLists:
   test_otps:
   - 1111
@@ -65,7 +65,8 @@ execute:
           regex: "v([3-9]\\d*|\\d{2,})/"
           replace_with: v2/
     - modify_body_param:
-        otp_key: 9999
+        ${otp_key}: 9999
+      for_each_combination: true
     - validate:
         response_code:
           eq: 500
@@ -85,7 +86,8 @@ execute:
           regex: "v([3-9]\\d*|\\d{2,})/"
           replace_with: v2/
     - modify_body_param:
-        otp_key: "${test_otps}"
+        ${otp_key}: "${test_otps}"
+      for_each_combination: true
     - validate:
         response_code:
           gte: 505
@@ -97,7 +99,8 @@ execute:
           regex: "v([3-9]\\d*|\\d{2,})/"
           replace_with: v2/
     - modify_body_param:
-        otp_key: "${test_otps}"
+        ${otp_key}: "${test_otps}"
+      for_each_combination: true
     - validate:
         response_code:
           eq: 500

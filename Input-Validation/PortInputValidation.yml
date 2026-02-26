@@ -47,14 +47,14 @@ api_selection_filters:
             contains_either:
               - http
           key:
-            extract: url_key
+            extractMultiple: url_key
     - query_param:
         for_one:
           value:
             contains_either:
               - http
           key:
-            extract: url_key
+            extractMultiple: url_key
 
 wordLists:
   filePaths:
@@ -73,10 +73,12 @@ execute:
   requests:
     - req:
         - modify_query_param:
-            url_key: ${filePaths}
+            ${url_key}: ${filePaths}
+          for_each_combination: true
         - modify_body_param:
-            url_key: ${filePaths}
+            ${url_key}: ${filePaths}
 
+          for_each_combination: true
 validate:
   response_code:
     gte: 200

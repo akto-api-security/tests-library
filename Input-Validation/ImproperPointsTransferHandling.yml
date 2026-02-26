@@ -75,11 +75,11 @@ api_selection_filters:
       - for_one:
           key:
             regex: "${probableFromParameters}"
-            extract: userKey1
+            extractMultiple: userKey1
       - for_one:
           key:
             regex: "${probableToParameters}"
-            extract: userKey2
+            extractMultiple: userKey2
 wordLists:
   probableInputParameters:
     - points
@@ -145,10 +145,12 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            userKey1: ${fromUserIds}
+            ${userKey1}: ${fromUserIds}
+          for_each_combination: true
         - modify_body_param:
-            userKey2: ${toUserIds}
+            ${userKey2}: ${toUserIds}
 
+          for_each_combination: true
 validate:
   response_code:
     gte: 200

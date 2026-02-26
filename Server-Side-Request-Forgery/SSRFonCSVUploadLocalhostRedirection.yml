@@ -48,14 +48,14 @@ api_selection_filters:
             contains_either:
               - .csv
           key:
-            extract: csv_key
+            extractMultiple: csv_key
     - query_param:
         for_one:
           value:
             contains_either:
               - .csv
           key:
-            extract: csv_key
+            extractMultiple: csv_key
 wordLists:
   redirect_urls:
     - http://localhost:80
@@ -84,10 +84,12 @@ execute:
             redirect_url: ${redirect_urls}
         - follow_redirect: true
         - modify_query_param:
-            csv_key: https://test-services.akto.io/${random_uuid}.csv
+            ${csv_key}: https://test-services.akto.io/${random_uuid}.csv
+          for_each_combination: true
         - modify_body_param:
-            csv_key: https://test-services.akto.io/${random_uuid}.csv
+            ${csv_key}: https://test-services.akto.io/${random_uuid}.csv
 
+          for_each_combination: true
 validate:
   response_code:
     gte: 200

@@ -76,14 +76,14 @@ api_selection_filters:
         for_one:
           key:
             regex: "username|^user$|^userid$|^user_id$|^login$|^login_id$|email|^account$|^account_id$|^member$|^member_id$|^id$|^user_name$|^uname$|^identifier$|^user_identifier$|^admin$|^nickname$|^handle$|^alias$|^principal$|^profile$|^profile_id$|^name$|^signin$|^auth$|^credential$|^user_login$|^user_account$|^user_email$|^employee$|^employee_id$|^operator$|^customer_id$|^subscriber$|^subscriber_id$|^participant$|^participant_id$|client_id|^userLoginID$|^client-name$"
-            extract: userKey
+            extractMultiple: userKey
           value:
             regex: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
     - request_payload:
         for_one:
           key:
             regex: "password|^pass$|^pwd$|^user_password$|^userpass$|passwd|^user_pwd$|^password1$|^userPass$|^login_password$|^loginpassword$|^user_pass$|^access_password$|^secret$|^user_secret$"
-            extract: passKey
+            extractMultiple: passKey
 
 wordLists:
   probableInputValidationParameters:
@@ -128,9 +128,11 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            userKey: dummymail@dummy.com
+            ${userKey}: dummymail@dummy.com
+          for_each_combination: true
         - modify_body_param:
-            passKey: Default1!
+            ${passKey}: Default1!
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -147,9 +149,11 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            userKey: dummymail+1@dummy.com
+            ${userKey}: dummymail+1@dummy.com
+          for_each_combination: true
         - modify_body_param:
-            passKey: Default1!
+            ${passKey}: Default1!
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200

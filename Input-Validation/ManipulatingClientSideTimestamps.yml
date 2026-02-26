@@ -74,7 +74,7 @@ api_selection_filters:
     for_one:
       key:
         regex: "${probableInputParameters}"
-        extract: userKey
+        extractMultiple: userKey
       value:
         regex: "\b\\d{4}-\\d{2}-\\d{2}\b"
 
@@ -152,7 +152,8 @@ execute:
         - failure: x2
     - req:
         - modify_body_param:
-            userKey: ${attemptValues}
+            ${userKey}: ${attemptValues}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200

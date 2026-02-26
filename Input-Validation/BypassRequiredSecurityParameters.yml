@@ -74,7 +74,7 @@ api_selection_filters:
     for_one:
       key:
         regex: "${probableInputParameters}"
-        extract: userKey
+        extractMultiple: userKey
       value:
         regex: "^\\d{3}$"
         extract: userVal
@@ -127,7 +127,8 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            userKey: 123
+            ${userKey}: 123
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200

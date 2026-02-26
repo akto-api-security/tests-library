@@ -74,7 +74,7 @@ api_selection_filters:
     for_one:
       key:
         regex: ".*"
-        extract: userKey
+        extractMultiple: userKey
       value:
         regex: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
         extract: userVal
@@ -91,8 +91,9 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            userKey: ${timeValues}
+            ${userKey}: ${timeValues}
 
+          for_each_combination: true
 validate:
   response_code:
     gte: 200

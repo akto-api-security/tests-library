@@ -38,7 +38,7 @@ api_selection_filters:
     for_one:
       key:
         regex: .*
-        extract: KeyVar
+        extractMultiple: KeyVar
       value:
         regex: "\\bhttps?:\\/\\/[^\\s\\/$.?#].[^\\s]*\\b"
         extract: keyVal
@@ -49,7 +49,8 @@ execute:
     - send_ssrf_req:
         url: "https://test-services.akto.io/store_uuid/${random_uuid}"
     - modify_body_param:
-        KeyVar: "https://test-services.akto.io/${random_uuid}"
+        ${KeyVar}: "https://test-services.akto.io/${random_uuid}"
+      for_each_combination: true
 validate:
   response_payload:
     contains_either:

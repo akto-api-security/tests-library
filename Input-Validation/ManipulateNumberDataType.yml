@@ -75,7 +75,7 @@ api_selection_filters:
     for_one:
       key:
         regex: .*
-        extract: userKey
+        extractMultiple: userKey
       value:
         regex: "^\\d{1}$"
         extract: userVal
@@ -98,8 +98,9 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            userKey: ${attemptList}
+            ${userKey}: ${attemptList}
 
+          for_each_combination: true
 validate:
   response_code:
     gte: 200

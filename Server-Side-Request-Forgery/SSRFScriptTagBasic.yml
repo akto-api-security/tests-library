@@ -39,14 +39,14 @@ api_selection_filters:
         for_one:
           key:
             regex: .*
-            extract: param_key
+            extractMultiple: param_key
           value:
             datatype: string
     - query_param:
         for_one:
           key:
             regex: .*
-            extract: param_key
+            extractMultiple: param_key
           value:
             datatype: string
 
@@ -57,10 +57,12 @@ execute:
         - send_ssrf_req:
             url: "https://test-services.akto.io/store_uuid/${random_uuid}"
         - modify_query_param:
-            param_key: "<script> window.location=\"https://test-services.akto.io/${random_uuid}\";</script>"
+            ${param_key}: "<script> window.location=\"https://test-services.akto.io/${random_uuid}\";</script>"
+          for_each_combination: true
         - modify_body_param:
-            param_key: "<script> window.location=\"https://test-services.akto.io/${random_uuid}\";</script>"
+            ${param_key}: "<script> window.location=\"https://test-services.akto.io/${random_uuid}\";</script>"
 
+          for_each_combination: true
 validate:
   response_code:
     gte: 200

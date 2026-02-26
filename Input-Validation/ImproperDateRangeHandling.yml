@@ -74,14 +74,14 @@ api_selection_filters:
         for_one:
           key:
             regex: "${probableStartInputParameters}"
-            extract: userKey
+            extractMultiple: userKey
           value:
             extract: userVal
     - request_payload:
         for_one:
           key:
             regex: "${probableEndInputParameters}"
-            extract: userKey2
+            extractMultiple: userKey2
           value:
             extract: userVal2
 wordLists:
@@ -128,9 +128,11 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            userKey: ${userVal2}
+            ${userKey}: ${userVal2}
+          for_each_combination: true
         - modify_body_param:
-            userKey2: ${userVal}
+            ${userKey2}: ${userVal}
+          for_each_combination: true
 validate:
   response_code:
     gte: 200

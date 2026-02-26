@@ -48,14 +48,14 @@ api_selection_filters:
             contains_either:
               - .pdf
           key:
-            extract: pdf_key
+            extractMultiple: pdf_key
     - query_param:
         for_one:
           value:
             contains_either:
               - .pdf
           key:
-            extract: pdf_key
+            extractMultiple: pdf_key
 wordLists:
   redirect_urls:
     - http://localhost:80
@@ -83,10 +83,12 @@ execute:
             redirect_url: ${redirect_urls}
         - follow_redirect: true
         - modify_query_param:
-            pdf_key: https://test-services.akto.io/${random_uuid}.pdf
+            ${pdf_key}: https://test-services.akto.io/${random_uuid}.pdf
+          for_each_combination: true
         - modify_body_param:
-            pdf_key: https://test-services.akto.io/${random_uuid}.pdf
+            ${pdf_key}: https://test-services.akto.io/${random_uuid}.pdf
 
+          for_each_combination: true
 validate:
   response_code:
     gte: 200

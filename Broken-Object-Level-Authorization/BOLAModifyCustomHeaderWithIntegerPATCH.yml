@@ -87,7 +87,7 @@ api_selection_filters:
           - Account
           - Subscriber
           - User-Hash
-        extract: headerValue
+        extractMultiple: headerValue
 wordLists:
   specialHeaders:
     - 1
@@ -100,7 +100,8 @@ execute:
   requests:
     - req:
         - modify_header:
-            headerValue: "${specialHeaders}"
+            ${headerValue}: "${specialHeaders}"
+          for_each_combination: true
 validate:
   response_code:
     gte: 200

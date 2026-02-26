@@ -74,7 +74,7 @@ api_selection_filters:
     for_one:
       key:
         regex: "quantity"
-        extract: userKey
+        extractMultiple: userKey
       value:
         regex: "\b([1-9][0-9]*)\b"
         extract: userVal
@@ -89,8 +89,9 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            userKey: ${quantityValues}
+            ${userKey}: ${quantityValues}
 
+          for_each_combination: true
 validate:
   response_code:
     gte: 200

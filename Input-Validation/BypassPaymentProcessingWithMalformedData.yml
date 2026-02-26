@@ -76,17 +76,17 @@ api_selection_filters:
         for_one:
           key:
             regex: "${probableInputParameters1}"
-            extract: userKey1
+            extractMultiple: userKey1
     - request_payload:
         for_one:
           key:
             regex: "${probableInputParameters2}"
-            extract: userKey2
+            extractMultiple: userKey2
     - request_payload:
         for_one:
           key:
             regex: "${probableInputParameters3}"
-            extract: userKey3
+            extractMultiple: userKey3
 wordLists:
   probableInputParameters1:
     - credit_card
@@ -155,12 +155,15 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            userKey1: "${attemptValues}"
+            ${userKey1}: "${attemptValues}"
+          for_each_combination: true
         - modify_body_param:
-            userKey2: "${attemptValues}"
+            ${userKey2}: "${attemptValues}"
+          for_each_combination: true
         - modify_body_param:
-            userKey3: "${attemptValues}"
+            ${userKey3}: "${attemptValues}"
 
+          for_each_combination: true
 validate:
   response_code:
     gte: 200

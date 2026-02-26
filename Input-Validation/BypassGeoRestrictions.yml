@@ -74,7 +74,7 @@ api_selection_filters:
     for_one:
       key:
         regex: ${probableInputParameters}
-        extract: userKey
+        extractMultiple: userKey
 
 wordLists:
   probableInputParameters:
@@ -98,8 +98,9 @@ execute:
   requests:
     - req:
         - modify_query_param:
-            userKey: ${sampleValues}
+            ${userKey}: ${sampleValues}
 
+          for_each_combination: true
 validate:
   response_code:
     gte: 200

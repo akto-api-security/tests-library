@@ -74,7 +74,7 @@ api_selection_filters:
         contains_either:
           - content-type
           - Content-Type
-        extract: headerKey
+        extractMultiple: headerKey
   method:
     contains_either:
       - POST
@@ -95,6 +95,7 @@ execute:
         - replace_body: ${payloads}
         - modify_header:
             ${headerKey}: "application/xml"
+          for_each_combination: true
 validate:
   response_payload:
     regex: "(username|password|user|host|port|dbname|DB_USER|DB_PASSWORD|DB_HOST|DB_PORT)\\s*[:=]\\s*'?[\\w\\d.@:-]+'?"
