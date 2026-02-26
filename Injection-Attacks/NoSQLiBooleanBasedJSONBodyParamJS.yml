@@ -76,7 +76,7 @@ api_selection_filters:
     for_one:
       key:
         regex: .*
-        extract: changed_body_key
+        extractMultiple: changed_body_key
       value:
         extract: changed_body_value
 execute:
@@ -84,7 +84,8 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            changed_body_key: !!str ${changed_body_value} && 'a' != 'a' && 'a' != 'a
+            ${changed_body_key}: !!str ${changed_body_value} && 'a' != 'a' && 'a' != 'a
+          for_each_combination: true
         - validate:
             or:
               - response_code:
@@ -117,7 +118,8 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            changed_body_key: !!str ${changed_body_value} || 'a' == 'a' || 'a
+            ${changed_body_key}: !!str ${changed_body_value} || 'a' == 'a' || 'a
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -148,7 +150,8 @@ execute:
         - add_header:
             dummyHeader: dummyValue
         - modify_body_param:
-            changed_body_key: !!str ${changed_body_value} || 'a' == 'a' || 'a
+            ${changed_body_key}: !!str ${changed_body_value} || 'a' == 'a' || 'a
+          for_each_combination: true
         - validate:
             response_payload:
               eq_obj: "${x2.response.body}"

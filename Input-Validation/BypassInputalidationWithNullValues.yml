@@ -75,7 +75,7 @@ api_selection_filters:
     for_one:
       key:
         regex: .*
-        extract: userKey
+        extractMultiple: userKey
       value:
         extract: userVal
 
@@ -144,7 +144,8 @@ execute:
         - failure: x2
     - req:
         - modify_body_param:
-            userKey: ${userVal}${nullValues}
+            ${userKey}: ${userVal}${nullValues}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200

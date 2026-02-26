@@ -71,7 +71,7 @@ api_selection_filters:
     for_one:
       key:
         regex: ".*"
-        extract: userKey
+        extractMultiple: userKey
       value:
         extract: userVal
 wordLists:
@@ -102,7 +102,8 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            userKey: ${userVal}${unionBasedPayloads}
+            ${userKey}: ${userVal}${unionBasedPayloads}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -148,7 +149,8 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            userKey: ${userVal}${unionBasedNegativePayloads}
+            ${userKey}: ${userVal}${unionBasedNegativePayloads}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -196,7 +198,8 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            userKey: ${userVal}${unionBasedNegativePayloads}
+            ${userKey}: ${userVal}${unionBasedNegativePayloads}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200

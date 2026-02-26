@@ -47,12 +47,12 @@ api_selection_filters:
         for_one:
           key:
             regex: .*
-            extract: changed_body_key
+            extractMultiple: changed_body_key
     - query_param:
         for_one:
           key:
             regex: .*
-            extract: changed_query_key
+            extractMultiple: changed_query_key
 wordLists:
   specialCharacters:
     - "'"
@@ -67,9 +67,11 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            changed_body_key: ${specialCharacters}
+            ${changed_body_key}: ${specialCharacters}
+          for_each_combination: true
         - modify_query_param:
-            changed_query_key: ${specialCharacters}
+            ${changed_query_key}: ${specialCharacters}
+          for_each_combination: true
 validate:
   and:
     - response_payload:

@@ -81,7 +81,7 @@ api_selection_filters:
     for_one:
       key:
         regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|^username$|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
-        extract: userKey
+        extractMultiple: userKey
       value:
         not_contains: ${attempt_Ids}
 
@@ -97,8 +97,9 @@ execute:
   requests:
     - req:
         - modify_query_param:
-            userKey: ${attempt_Ids}
+            ${userKey}: ${attempt_Ids}
 
+          for_each_combination: true
 validate:
   response_code:
     gte: 200

@@ -71,14 +71,14 @@ api_selection_filters:
             contains_either:
               - .csv
           key:
-            extract: csv_key
+            extractMultiple: csv_key
     - query_param:
         for_one:
           value:
             contains_either:
               - .csv
           key:
-            extract: csv_key
+            extractMultiple: csv_key
 execute:
   type: multiple
   requests:
@@ -121,9 +121,11 @@ execute:
         - failure: exit
     - req:
         - modify_query_param:
-            csv_key: https://github.com/akto-api-security/tests-library/raw/akto_resources/resources/heavy%20files/file.csv
+            ${csv_key}: https://github.com/akto-api-security/tests-library/raw/akto_resources/resources/heavy%20files/file.csv
+          for_each_combination: true
         - modify_body_param:
-            csv_key: https://github.com/akto-api-security/tests-library/raw/akto_resources/resources/heavy%20files/file.csv
+            ${csv_key}: https://github.com/akto-api-security/tests-library/raw/akto_resources/resources/heavy%20files/file.csv
+          for_each_combination: true
         - validate:
             response_code:
               gt: 505
