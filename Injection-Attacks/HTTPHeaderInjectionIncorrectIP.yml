@@ -74,7 +74,7 @@ api_selection_filters:
     for_one:
       key:
         regex: "^X-Forwarded-For$|^X-Real-IP$|^X-Forwarded-Host$|^X-Cluster-Client-IP$|^Forwarded$|^CF-Connecting-IP$|^True-Client-IP$|^X-Original-Forwarded-For$|^X-Client-IP$|^Client-IP$|^X-Azure-Client-IP$|^X-Azure-ClientIP$|^X-Akamai-Client-IP$|^X-Originating-IP$|^X-Remote-IP$|^X-Appengine-User-IP$|^Via$|^X-Host$|^X-ProxyUser-Ip$|^X-Forwarded$|^X-Real-IP-From$|^CF-Connecting-IPv6$|^Remote-Addr$|^X-Client-Public-IP$|^X-Forwarded-For-IP$|^X-Cloudflare-CDN-Loop$|^X-Coming-From$|^X-Originating-URL$|^X-Client-Connection-IP$"
-        extract: userKey
+        extractMultiple: userKey
       value:
         regex: "\b(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b"
         extract: userVal
@@ -95,8 +95,9 @@ execute:
   requests:
     - req:
         - modify_header:
-            userKey: ${IPPayloads}
+            ${userKey}: ${IPPayloads}
 
+          for_each_combination: true
 validate:
   or:
     - response_payload:

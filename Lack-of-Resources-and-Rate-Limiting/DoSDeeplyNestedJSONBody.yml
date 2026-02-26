@@ -68,7 +68,7 @@ api_selection_filters:
     for_one:
       key:
         regex: ".*"
-        extract: userKey
+        extractMultiple: userKey
       value:
         extract: userVal
 execute:
@@ -113,7 +113,8 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            userKey: "{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":\"${userVal}\"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}"
+            ${userKey}: "{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":{\"${userKey}\":\"${userVal}\"}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}"
+          for_each_combination: true
         - validate:
             response_code:
               gt: 505

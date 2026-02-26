@@ -74,21 +74,21 @@ api_selection_filters:
         for_one:
           key:
             regex: "${probableInputParameters}"
-            extract: userKey1
+            extractMultiple: userKey1
           value:
             regex: "\b\\d{4}-\\d{2}-\\d{2}\b"
     - request_payload:
         for_one:
           key:
             regex: "${probableInputParameters}"
-            extract: userKey2
+            extractMultiple: userKey2
           value:
             datatype: number
     - request_payload:
         for_one:
           key:
             regex: "${probableInputParameters}"
-            extract: userKey3
+            extractMultiple: userKey3
           value:
             regex: "\b\\d{10}\b"
 
@@ -188,11 +188,14 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            userKey2: "1*${attemptValues4}"
+            ${userKey2}: "1*${attemptValues4}"
+          for_each_combination: true
         - modify_body_param:
-            userKey3: "${attemptValues4}"
+            ${userKey3}: "${attemptValues4}"
+          for_each_combination: true
         - modify_body_param:
-            userKey1: ${attemptValues3}
+            ${userKey1}: ${attemptValues3}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -235,11 +238,14 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            userKey2: "1*${attemptValues2}"
+            ${userKey2}: "1*${attemptValues2}"
+          for_each_combination: true
         - modify_body_param:
-            userKey3: "${attemptValues2}"
+            ${userKey3}: "${attemptValues2}"
+          for_each_combination: true
         - modify_body_param:
-            userKey1: ${attemptValues1}
+            ${userKey1}: ${attemptValues1}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
