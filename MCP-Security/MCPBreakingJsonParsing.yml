@@ -6,9 +6,9 @@ info:
   details: "The test sends API requests with JSON payloads that prepend various special characters — such as null bytes ('\\0'), invalid Unicode sequences, or control characters — to valid JSON content (`userBody`). This helps detect whether the application’s JSON parser or request preprocessing logic is vulnerable to input parsing issues or can be tricked into misinterpreting the payload. The test does not use malformed JSON structures, but focuses on injecting control data that could exploit weak parsers or insufficient input sanitization."
   impact: "Failure to handle special or unexpected characters in JSON payloads can lead to parsing anomalies, denial of service, or bypass of validation logic. An attacker may exploit these weaknesses to disrupt normal operation, trigger unhandled exceptions, or evade input validation. Ensuring strict and predictable JSON parsing is critical to maintaining application stability and security."
   category:
-    name: MCP_INPUT_VALIDATION
-    shortName: MCP_INPUT_VALIDATION
-    displayName: Model Context Protocol (MCP) Security - Input Validation
+    name: MCP05
+    shortName: MCP05
+    displayName: MCP05 - Command Injection & Execution
   subCategory: MCP_BREAKING_JSON_PARSING
   severity: LOW
   tags:
