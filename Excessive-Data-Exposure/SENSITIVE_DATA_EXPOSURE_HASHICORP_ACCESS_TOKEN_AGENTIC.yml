@@ -1,0 +1,72 @@
+id: SENSITIVE_DATA_EXPOSURE_HASHICORP_ACCESS_TOKEN_AGENTIC
+info:
+  name: Sensitive data exposure for HASHICORP ACCESS TOKEN
+  description: 'This issue detects the exposure of sensitive data of type HASHICORP ACCESS TOKEN within the API.
+
+    '
+  details: 'The API endpoint exposes HASHICORP ACCESS TOKEN. Such exposure can lead to unauthorized access or misuse of sensitive
+    data, resulting in data breaches or violations of compliance policies.
+
+    '
+  impact: 'The exposure of HASHICORP ACCESS TOKEN can lead to privacy violations, data theft, and potential exploitation.
+    It can compromise user data security and may result in financial losses, reputation damage, or legal and compliance issues
+    for the organization.
+
+    '
+  category:
+    name: EDE_AGENTIC
+    shortName: Sensitive Data Exposure
+    displayName: Excessive Data Exposure (EDE)
+  subCategory: SENSITIVE_DATA_EXPOSURE_HASHICORP_ACCESS_TOKEN
+  severity: dynamic_severity
+  tags:
+  - Business logic
+  - OWASP top 10
+  - HackerOne top 10
+  references:
+  - https://owasp.org/API-Security/editions/2019/en/0xa3-excessive-data-exposure/
+  - https://owasp.org/API-Security/editions/2023/en/0xa3-broken-object-property-level-authorization/
+  - https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure
+  - https://cwe.mitre.org/data/definitions/213.html
+  cwe:
+  - CWE-213
+  - CWE-319
+  cve:
+  - CVE-2022-0235
+settings:
+  plan: PRO
+  nature: NON_INTRUSIVE
+  duration: FAST
+dynamic_severity:
+- check:
+    api_access_type:
+      eq: private
+  return: LOW
+- check:
+    api_access_type:
+      eq: public
+  return: HIGH
+- return: MEDIUM
+api_selection_filters:
+  method:
+    eq: POST
+  or:
+  - response_payload:
+      or:
+      - for_one:
+          value:
+            datatype: HASHICORP_ACCESS_TOKEN.value
+  - response_headers:
+      or:
+      - for_one:
+          value:
+            datatype: HASHICORP_ACCESS_TOKEN.value
+execute:
+  type: passive
+  requests:
+  - req: []
+validate:
+  response_code:
+    gte: 200
+    lt: 400
+inactive: true
