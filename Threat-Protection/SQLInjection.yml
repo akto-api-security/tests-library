@@ -3,13 +3,13 @@ filter:
   or: 
     - request_headers:
         regex:
-          - (?i)(?:\bdrop\s+table\s+\w+\s*;|\b(?:or)\s+(?!more\b|less\b|than\b|below\b)(?![^=]*[<>"])[^\s=]+\s*=\s*[^\s=]+)
+          - (?i)(?:\bdrop\s+table\s+\w+\s*;|\b(?:or)\s+(?!more\b|less\b|than\b|below\b)(?![^=]*[<>"])[^\s^=]+\s*=\s*[^\s^=]+)
     - query_param:
         regex:
-          - (?i)(?:\bdrop\s+table\s+\w+\s*;|\b(?:or)\s+(?!more\b|less\b|than\b|below\b)(?![^=]*[<>"])[^\s=]+\s*=\s*[^\s=]+)
+          - (?i)(?:\bdrop\s+table\s+\w+\s*;|\b(?:or)\s+(?!more\b|less\b|than\b|below\b)(?![^=]*[<>"])[^\s^=]+\s*=\s*[^\s^=]+)
     - request_payload:
         regex:
-          - (?i)(?:\bdrop\s+table\s+\w+\s*;|\b(?:or)\s+(?!more\b|less\b|than\b|below\b)(?![^=]*[<>"])[^\s=]+\s*=\s*[^\s=]+)
+          - (?i)(?:\bdrop\s+table\s+\w+\s*;|\b(?:or)\s+(?!more\b|less\b|than\b|below\b)(?![^=]*[<>"])[^\s^=]+\s*=\s*[^\s^=]+)
 
 info:
   name: "SQLInjection"
