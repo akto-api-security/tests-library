@@ -1,0 +1,45 @@
+id: MULTIPLE_RATINGS_RACE_CONDITION
+info:
+  name: "Multiple Ratings Submission via Race Condition"
+  description: "Checks if an attacker can rate a product or video multiple times by exploiting a race condition vulnerability."
+  details: "Attackers can send multiple requests simultaneously to rate or like an item. If the backend fails to handle concurrency properly, multiple ratings from the same user can be recorded."
+  impact: "High"
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Business Logic
+  subCategory: MULTIPLE_RATINGS
+  severity: HIGH
+  tags:
+    - Business Logic
+    - OWASP API3
+    - Race Condition
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "GET"
+  url:
+    contains_either:
+      - "rating"
+      - "like"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - add_header:
+            "X-Akto-Race-Test": "ratings"
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    percentage_match:
+      gte: 90
