@@ -1,0 +1,23 @@
+id: LocalFileInclusionLFIRFI
+filter:
+  or:
+    - request_payload:
+        regex:
+          - (?i)(?:^|[^a-zA-Z0-9])(?:(?:\.\.(?:/|\\|%2F|%5C))+\.?|(?:/|\\|%2F|%5C)(?:etc/passwd|proc/self/environ|windows/system\.ini)|php://(?:filter|input)|(?:/|\\|%2F|%5C)\w+\.(?:php|conf|ini|log)(?:%00)?)(?:$|[^a-zA-Z0-9])
+    - request_headers:
+        regex:
+          - (?i)(?:^|[^a-zA-Z0-9])(?:(?:\.\.(?:/|\\|%2F|%5C))+\.?|(?:/|\\|%2F|%5C)(?:etc/passwd|proc/self/environ|windows/system\.ini)|php://(?:filter|input)|(?:/|\\|%2F|%5C)\w+\.(?:php|conf|ini|log)(?:%00)?)(?:$|[^a-zA-Z0-9])
+    - url:
+        regex:
+          - (?i)(?:^|[^a-zA-Z0-9])(?:(?:\.\.(?:/|\\|%2F|%5C))+\.?|(?:/|\\|%2F|%5C)(?:etc/passwd|proc/self/environ|windows/system\.ini)|php://(?:filter|input)|(?:/|\\|%2F|%5C)\w+\.(?:php|conf|ini|log)(?:%00)?)(?:$|[^a-zA-Z0-9])
+
+info:
+  name: "LocalFileInclusionRFI"
+  description: "Local File Inclusion (LFI) and Remote File Inclusion (RFI) are critical API threats that allow attackers to access or execute unauthorized files on a server. LFI exploits occur when APIs improperly handle user input, leading to the inclusion of sensitive local files, such as `/etc/passwd`. RFI extends this risk by allowing external malicious files to be executed, often resulting in remote code execution. Runtime API threat protection involves strict input validation, disabling dynamic file inclusion, and enforcing allowlists to prevent exploitation."
+  details: "LFI and RFI vulnerabilities arise when APIs improperly process user-supplied file paths, allowing attackers to access sensitive local files (LFI) or execute remote malicious scripts (RFI). This can lead to data breaches, privilege escalation, or full server compromise. Effective runtime protection includes input sanitization, restricting file access permissions, and using allowlists to prevent unauthorized file inclusion."
+  impact: "LFI and RFI attacks can lead to unauthorized access to sensitive files, leakage of credentials, and remote code execution. Attackers can exploit these vulnerabilities to escalate privileges, gain control over the server, or deploy malware. This can result in data breaches, system compromise, and severe business disruptions."
+  category:
+    name: "LFI_RFI"
+    displayName: "LFI_RFI"
+  subCategory: "LFI_RFI"
+  severity: HIGH

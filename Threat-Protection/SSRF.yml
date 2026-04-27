@@ -1,0 +1,23 @@
+id: SSRF
+filter:
+  or: 
+    - request_payload:
+        regex:
+          - (?i)\bhttp(s)?://(?:localhost|127\.0\.0\.1|169\.254\.169\.254|attacker\.com|webhook\.site)(?:/admin)?\b
+    - query_param:
+        regex:
+          - (?i)\bhttp(s)?://(?:localhost|127\.0\.0\.1|169\.254\.169\.254|attacker\.com|webhook\.site)(?:/admin)?\b
+    - request_headers:
+        regex:
+          - (?i)\bhttp(s)?://(?:localhost|127\.0\.0\.1|169\.254\.169\.254|attacker\.com|webhook\.site)(?:/admin)?\b
+
+info:
+  name: "SSRF"
+  description: "Server-Side Request Forgery (SSRF) in API threat protection at runtime involves detecting and blocking unauthorized outbound requests from an API to internal services or external endpoints. Attackers exploit SSRF to bypass access controls, access internal systems, or exfiltrate data. Runtime protection mechanisms include allow/deny lists, request validation, and monitoring for unusual outbound traffic patterns."
+  details: "SSRF protection at runtime involves implementing strict outbound request controls, validating URLs against allowlists, and blocking requests to internal resources. Security tools monitor API traffic for anomalous patterns, such as unexpected IP ranges or repeated access attempts. Advanced defenses include contextual analysis, token-based access control, and network segmentation to minimize attack impact."
+  impact: "A successful SSRF attack can expose internal services, leading to data breaches, unauthorized access, or cloud metadata exploitation. Attackers may pivot within the network, access sensitive APIs, or execute remote code. Without runtime protection, SSRF can bypass firewalls and compromise critical infrastructure, leading to financial and reputational damage."
+  category:
+    name: "SSRF"
+    displayName: "SSRF"
+  subCategory: "SSRF"
+  severity: HIGH

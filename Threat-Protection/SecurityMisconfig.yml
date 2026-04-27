@@ -1,0 +1,17 @@
+
+id: SecurityMisconfig 
+filter:
+  or:
+    - response_payload:
+        regex:
+          - (?m)(?:^Exception in thread "[^"]*"\s*$|\b(?:java|javax|jakarta)(?:\.[\w$]+)*\.[A-Z][\w$]*E(?:xception|rror)\b|\b(?:org|com)(?:\.[\w$]+)*\.[A-Z][\w$]*E(?:xception|rror)\b|^\s*at\s+(?:ja(?:vax?|karta)|org|com)\.(?:[\w$]+\.)+[\w$<>]+\([^()\r\n]*\)\s*$|^\s*goroutine\s+\d+\s+\[[^\]]*]:\s*$|^\s*panic:\s+.+$|^\s*Traceback\s+\(most recent call last\):\s*$|^\s*File\s+".+?",\s+line\s+\d+,\s+in\s+\w+\s*$)
+info:
+  name: "SecurityMisconfig"
+  description: "Security misconfigurations occur when systems, applications, or APIs are not securely configured, exposing vulnerabilities that attackers can exploit. This includes improper settings, default configurations, unnecessary features enabled, or misconfigured permissions, leading to unauthorized access or data exposure."
+  details: "Security misconfigurations arise from insecure default settings, incomplete configurations, open cloud storage, misconfigured HTTP headers, or verbose error messages exposing sensitive information. Examples include unpatched systems, exposed admin interfaces, or unnecessary services running. Mitigation involves secure configuration baselines, regular audits, and minimizing attack surfaces."
+  impact: "Exploiting security misconfigurations can lead to unauthorized access, data breaches, or full system compromise. Attackers may gain access to sensitive data, escalate privileges, or disrupt operations, causing financial loss, reputational damage, or regulatory penalties."
+  category:
+    name: "SecurityMisconfig"
+    displayName: "SecurityMisconfig"
+  subCategory: "SecurityMisconfig"
+  severity: MEDIUM

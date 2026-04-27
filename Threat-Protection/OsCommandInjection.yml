@@ -1,0 +1,27 @@
+id: OSCommandInjection
+filter:
+  or:
+    - request_payload:
+        regex:
+          - (?i)(\b(cat|ls|id|whoami|uname|sleep|ping|netstat|wget|curl|nc|bash|sh|system)\b.*)|([;&|`$()<>{}])|(\|\|)|(\n)
+
+    - query_param:
+        regex:
+          - (?i)(\b(cat|ls|id|whoami|uname|sleep|ping|netstat|wget|curl|nc|bash|sh|system)\b.*)|([;&|`$()<>{}])|(\|\|)|(\n)
+
+    - request_headers:
+        regex:
+          - (?i)(\b(cat|ls|id|whoami|uname|sleep|ping|netstat|wget|curl|nc|bash|sh|system)\b.*)|([;&|`$()<>{}])|(\|\|)|(\n)
+
+info:
+  name: "OSCommandInjection"
+  description: "OS Command Injection in API threat protection at runtime involves identifying and blocking attempts to execute unauthorized system-level commands through user input. Attackers exploit API parameters to inject shell commands, which can compromise server integrity or allow remote code execution. Runtime defenses rely on input sanitization, strict validation, command pattern detection, and behavior-based blocking to mitigate such threats."
+  details: "OS Command Injection occurs when attackers inject malicious shell commands into API inputs that are improperly handled and passed to system-level functions. Runtime protection detects such attacks using a combination of regex pattern matching, context-aware parsing, and security filters that recognize execution attempts. Commands like `id`, `cat`, `ping`, `curl`, and shell metacharacters (`;`, `&&`, `|`) are common indicators. Mitigation strategies include sanitizing user input, avoiding direct shell execution, and enforcing least privilege execution environments."
+  impact: "OS Command Injection can result in full system compromise, unauthorized file access, data theft, or remote code execution. Attackers may use this to gain shell access, install malware, exfiltrate sensitive files, or pivot into internal networks. The consequences range from operational disruption and data loss to regulatory penalties and reputational damage, especially in production environments."
+  category:
+    name: "OS_COMMAND_INJECTION"
+    displayName: "OS_COMMAND_INJECTION"
+  subCategory: "OS_COMMAND_INJECTION"
+  severity: HIGH
+
+
