@@ -1,0 +1,618 @@
+Broken-Function-Level-Authorization/BFLAInsertAdminURLPaths.yml	[master] Uses non-query/body operations: ['modify_header', 'modify_url'].
+Broken-Function-Level-Authorization/BFLAReplaceAdminURLPaths.yml	[pro] Uses non-query/body operations: ['modify_header', 'modify_url'].
+Broken-Function-Level-Authorization/BFLAwithGETMethod.yml	[master] Uses non-query/body operations: ['modify_header', 'modify_method'].
+Broken-Function-Level-Authorization/BFLAwithPATCHMethod.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_header', 'modify_method'].
+Broken-Function-Level-Authorization/BFLAwithPOSTMethod.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_header', 'modify_method'].
+Broken-Function-Level-Authorization/BFLAwithPUTMethod.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_header', 'modify_method'].
+Broken-Function-Level-Authorization/BasicBFLA.yml	[standard] Uses non-query/body operations: ['modify_header'].
+Broken-Object-Level-Authorization/BOLAAddCustomHeader.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-Object-Level-Authorization/BOLAAddCustomHeaderDELETE.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-Object-Level-Authorization/BOLAAddCustomHeaderIntegerID.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-Object-Level-Authorization/BOLAAddCustomHeaderIntegerIDDELETE.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-Object-Level-Authorization/BOLAAddCustomHeaderIntegerIDPATCH.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-Object-Level-Authorization/BOLAAddCustomHeaderPATCH.yml	[standard] Uses non-query/body operations: ['add_header'].
+Broken-Object-Level-Authorization/BOLAByChangingAuthToken.yaml	[master] Uses non-query/body operations: ['replace_auth_header'].
+Broken-Object-Level-Authorization/BOLAByChangingAuthTokenWithDELETEMethod.yml	[standard] Uses non-query/body operations: ['replace_auth_header'].
+Broken-Object-Level-Authorization/BOLAByChangingAuthTokenWithPATCHMethod.yml	[pro] Uses non-query/body operations: ['modify_method', 'replace_auth_header'].
+Broken-Object-Level-Authorization/BOLAByReplacingParamWithJSONObjectPATCH.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/BOLACookieFuzzing.yml	[pro] Uses non-query/body operations: ['modify_header', 'remove_auth_header'].
+Broken-Object-Level-Authorization/BOLACookieFuzzingDELETE.yml	[pro] Uses non-query/body operations: ['modify_header', 'remove_auth_header'].
+Broken-Object-Level-Authorization/BOLACookieFuzzingPATCH.yml	[pro] Uses non-query/body operations: ['modify_header', 'remove_auth_header'].
+Broken-Object-Level-Authorization/BOLAJSONBodyParamArray.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/BOLAJSONBodyParamArrayDELETE.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/BOLAJSONBodyParamArrayMultiElements.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/BOLAJSONBodyParamArrayMultiElementsDELETE.yml	[standard] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/BOLAJSONBodyParamArrayMultiElementsPATCH.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/BOLAJSONBodyParamArrayMultiElementsWithInteger.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/BOLAJSONBodyParamArrayMultiElementsWithIntegerPATCH.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/BOLAJSONBodyParamArrayPATCH.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/BOLAJSONBodyParamIntegerArray.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/BOLAJSONBodyParamIntegerArrayDELETE.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/BOLAJSONBodyParamIntegerArrayPATCH.yml	[standard] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/BOLAJSONBodyParamMultiElementsWithIntegerDELETE.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/BOLAModifyCustomHeader.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Broken-Object-Level-Authorization/BOLAModifyCustomHeaderDELETE.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Broken-Object-Level-Authorization/BOLAModifyCustomHeaderPATCH.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Broken-Object-Level-Authorization/BOLAModifyCustomHeaderWithInteger.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Broken-Object-Level-Authorization/BOLAModifyCustomHeaderWithIntegerDELETE.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Broken-Object-Level-Authorization/BOLAModifyCustomHeaderWithIntegerPATCH.yml	[standard] Uses non-query/body operations: ['modify_header'].
+Broken-Object-Level-Authorization/BOLASystemResourceAccess.yml	[pro] Uses non-query/body operations: ['replace_auth_header'].
+Broken-Object-Level-Authorization/BOLASystemResourceAccessDELETE.yml	[pro] Uses non-query/body operations: ['replace_auth_header'].
+Broken-Object-Level-Authorization/BOLASystemResourceAccessPATCH.yml	[pro] Uses non-query/body operations: ['replace_auth_header'].
+Broken-Object-Level-Authorization/BOLAURLInsertAPIVersion.yml	[pro] Uses non-query/body operations: ['modify_url', 'replace_auth_header'].
+Broken-Object-Level-Authorization/BOLAURLInsertAPIVersionDELETE.yml	[pro] Uses non-query/body operations: ['modify_url', 'replace_auth_header'].
+Broken-Object-Level-Authorization/BOLAURLInsertAPIVersionPATCH.yml	[standard] Uses non-query/body operations: ['modify_url', 'replace_auth_header'].
+Broken-Object-Level-Authorization/BOLAURLInsertUserID.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/BOLAURLInsertUserIDDELETE.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/BOLAURLInsertUserIDPATCH.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/BOLAURLPathInsertInteger.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/BOLAURLPathInsertIntegerDELETE.yaml	[pro] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/BOLAURLPathInsertIntegerPATCH.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/BOLAURLPathInsertSpecialCharacters.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/BOLAURLPathInsertSpecialCharactersDELETE.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/BOLAURLPathInsertSpecialCharactersPATCH.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/BOLAURLPathReplaceInteger.yml	[pro] Uses non-query/body operations: ['modify_url', 'replace_auth_header'].
+Broken-Object-Level-Authorization/BOLAURLPathReplaceIntegerDELETE.yml	[pro] Uses non-query/body operations: ['modify_url', 'replace_auth_header'].
+Broken-Object-Level-Authorization/BOLAURLPathReplaceIntegerPATCH.yml	[pro] Uses non-query/body operations: ['modify_url', 'replace_auth_header'].
+Broken-Object-Level-Authorization/BOLAURLPathReplaceSpecialCharacters.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/BOLAURLPathReplaceSpecialCharactersDELETE.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/BOLAURLPathReplaceSpecialCharactersPATCH.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/BOLAURLReplaceAPIVersion.yml	[pro] Uses non-query/body operations: ['modify_url', 'replace_auth_header'].
+Broken-Object-Level-Authorization/BOLAURLReplaceAPIVersionDELETE.yml	[standard] Uses non-query/body operations: ['modify_url', 'replace_auth_header'].
+Broken-Object-Level-Authorization/BOLAURLReplaceAPIVersionPATCH.yml	[standard] Uses non-query/body operations: ['modify_url', 'replace_auth_header'].
+Broken-Object-Level-Authorization/BOLAURLReplaceUserID.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/BOLAURLReplaceUserIDDELETE.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/BOLAURLReplaceUserIDPATCH.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/BOLAbyReplacingParamWithJSONObject.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/BOLAbyReplacingParamWithJSONObjectDELETE.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/JWTModifyBody.yml	[standard] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/JWTModifyBodyDELETE.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/JWTModifyBodyPATCH.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-Object-Level-Authorization/OldApiVersion.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Broken-Object-Level-Authorization/OldApiVersionInactive.yml	[master] Uses non-query/body operations: ['modify_url'].
+Broken-User-Authentication/AuthBypassLockedAccountTokenRole.yml	[master] Uses non-query/body operations: ['modify_header'].
+Broken-User-Authentication/AuthBypassPasswordChange.yml	[master] No recognized query/body mutation operations in execute.
+Broken-User-Authentication/AuthBypassPasswordReset.yml	[pro] No recognized query/body mutation operations in execute.
+Broken-User-Authentication/AuthBypassStagingURL.yml	[master] Uses non-query/body operations: ['modify_url'].
+Broken-User-Authentication/BooleanBasedSQLiGET.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-User-Authentication/BooleanBasedSQLiLoginEndpoint.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-User-Authentication/BooleanBasedSQLiPOST.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-User-Authentication/BrokenLogic2FAAuthTokenRoleTest.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Broken-User-Authentication/Bypass2FABruteForceAttack.yml	[master] No recognized query/body mutation operations in execute.
+Broken-User-Authentication/BypassAuthenticationSSLCheck.yml	[standard] Uses non-query/body operations: ['follow_redirect', 'modify_url'].
+Broken-User-Authentication/BypassAuthenticationSSLCheckAuth.yml	[pro] Uses non-query/body operations: ['follow_redirect', 'modify_url'].
+Broken-User-Authentication/CSRFLoginAttack.yaml	[master] Uses non-query/body operations: ['delete_header'].
+Broken-User-Authentication/ExpiresMaxAgeCheck.yml	[master] No recognized query/body mutation operations in execute.
+Broken-User-Authentication/GitlabGraphQLUserEnumeration.yml	[standard] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url'].
+Broken-User-Authentication/GrafanaSnapshotCreation.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Broken-User-Authentication/GraphQLContentTypeCSRF.yaml	[master] Uses non-query/body operations: ['modify_header'].
+Broken-User-Authentication/GraphQLHTTPMethodCSRF.yaml	[pro] Uses non-query/body operations: ['modify_method'].
+Broken-User-Authentication/GraphQLNonJSONQueryCSRF.yml	[pro] Uses non-query/body operations: ['modify_method'].
+Broken-User-Authentication/GraphQLUnauthenticatedMutation.yaml	[pro] Uses non-query/body operations: ['remove_auth_header'].
+Broken-User-Authentication/JWTAppendSQLInjectionMySQL.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Broken-User-Authentication/JWTAppendSQLInjectionPostgreSQL.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Broken-User-Authentication/JWTAppendSQLInjectionSQLite.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Broken-User-Authentication/JWTParamInjectionJWK.yml	[master] No recognized query/body mutation operations in execute.
+Broken-User-Authentication/JWTParamInjectionKeyID.yml	[standard] No recognized query/body mutation operations in execute.
+Broken-User-Authentication/JwtAddJku.yaml	[standard] No recognized query/body mutation operations in execute.
+Broken-User-Authentication/JwtInvalidSignature.yaml	[standard] No recognized query/body mutation operations in execute.
+Broken-User-Authentication/JwtNoneAlgo.yaml	[standard] No recognized query/body mutation operations in execute.
+Broken-User-Authentication/KubePILoginLogsSearchBrokenAccess.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Broken-User-Authentication/KubePiJWTSIGKeyAuthBypass.yml	[pro] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url'].
+Broken-User-Authentication/Log4JHeaderTest.yml	[standard] Uses non-query/body operations: ['modify_header', 'send_ssrf_req'].
+Broken-User-Authentication/Log4jRequestParams.yml	[pro] Uses non-query/body operations: ['send_ssrf_req'].
+Broken-User-Authentication/LogoutAuthTokenRoleTest.yml	[standard] Uses non-query/body operations: ['modify_header'].
+Broken-User-Authentication/NoAuth.yaml	[master] Uses non-query/body operations: ['remove_auth_header'].
+Broken-User-Authentication/NoSQLiErrorBasedReplaceBodyMongo.yml	[master] Uses non-query/body operations: ['modify_url'].
+Broken-User-Authentication/PasswordChangeBruteForceRateLimit.yml	[pro] Uses non-query/body operations: ['add_header', 'remove_auth_header'].
+Broken-User-Authentication/PasswordResetPoisonMiddleware.yml	[standard] Uses non-query/body operations: ['modify_header'].
+Broken-User-Authentication/PyloadFlaskConfigAccess.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Broken-User-Authentication/RemoveCSRF.yaml	[master] Uses non-query/body operations: ['delete_header'].
+Broken-User-Authentication/RemoveXSRFToken.yml	[pro] Uses non-query/body operations: ['delete_header'].
+Broken-User-Authentication/ReplaceCSRF.yaml	[master] Uses non-query/body operations: ['modify_header'].
+Broken-User-Authentication/SQLInjectionCookieHeader.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Broken-User-Authentication/SQLInjectionRefererHeader.yml	[master] Uses non-query/body operations: ['modify_header'].
+Broken-User-Authentication/SQLInjectionUserAgentHeader.yml	[master] Uses non-query/body operations: ['modify_header'].
+Broken-User-Authentication/TimeBasedMySQLi.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-User-Authentication/TimeBasedMySQLiGET.yml	[standard] Uses non-query/body operations: ['add_header'].
+Broken-User-Authentication/TimeBasedMySQLiPOST.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-User-Authentication/TimeBasedPostgreSQLi.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-User-Authentication/TimeBasedPostgreSQLiGET.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-User-Authentication/TimeBasedPostgreSQLiPOST.yml	[standard] Uses non-query/body operations: ['add_header'].
+Broken-User-Authentication/TimeBasedSQLiSQLiteDB.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-User-Authentication/TimeBasedSQLiSQLiteDBGET.yml	[standard] Uses non-query/body operations: ['add_header'].
+Broken-User-Authentication/TimeBasedSQLiSQLiteDBPOST.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-User-Authentication/TimeBasedSQLiXSSGET.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-User-Authentication/TimeBasedSQLiwithXSS.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-User-Authentication/TimeBasedSQLiwithXSSPOST.yml	[pro] Uses non-query/body operations: ['add_header'].
+Broken-User-Authentication/UserAgentCSRF.yml	[pro] Uses non-query/body operations: ['delete_header', 'modify_header'].
+Broken-User-Authentication/UserEnumerationAccountLock.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Broken-User-Authentication/UserEnumerationFolderAccess.yml	[pro] Uses non-query/body operations: ['modify_url', 'replace_auth_header'].
+Broken-User-Authentication/UsernameEnumerationRedirectPageAnalysis.yml	[pro] Uses non-query/body operations: ['follow_redirect', 'modify_url'].
+CORS-Misconfiguration/CORSMisconfigurationAllOrigin.yaml	[master] No recognized query/body mutation operations in execute.
+CORS-Misconfiguration/CORSMisconfigurationInvalidOrigin.yaml	[standard] Uses non-query/body operations: ['add_header'].
+CORS-Misconfiguration/CORSMisconfigurationWhitelistOrigin.yaml	[master] Uses non-query/body operations: ['add_header'].
+CRLF-Injection/ApacheCRLF.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+CRLF-Injection/PyPiServerCRLF.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Command-Injection/ApacheAPISIXRCE.yml	[pro] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url', 'send_ssrf_req'].
+Command-Injection/ApacheAirflowOSCommandInjection.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Command-Injection/ApacheDruidKafkaRCE.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url', 'send_ssrf_req'].
+Command-Injection/ApacheDruidRCE.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Command-Injection/ApacheHugeGraphServerRCE.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url', 'send_ssrf_req'].
+Command-Injection/ApachePathTraversalRCE.yml	[pro] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url'].
+Command-Injection/ApacheStruts2RCE.yml	[master] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url'].
+Command-Injection/ApacheTikaHeaderCommandInjection.yml	[pro] Uses non-query/body operations: ['add_header', 'modify_header', 'modify_method', 'modify_url'].
+Command-Injection/CactiCommandInjection.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url', 'send_ssrf_req'].
+Command-Injection/CommandInjectionCookieHeader.yml	[standard] Uses non-query/body operations: ['modify_header'].
+Command-Injection/CommandInjectionCookieHeaderChained.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Command-Injection/CommandInjectionMultipartFormDataHeader.yml	[standard] Uses non-query/body operations: ['modify_header'].
+Command-Injection/CommandInjectionMultipartFormDataHeaderChained.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Command-Injection/CommandInjectionTimeDelay.yml	[pro] Uses non-query/body operations: ['add_header'].
+Command-Injection/CommandInjectionTimeDelayWithChainedCommands.yml	[pro] Uses non-query/body operations: ['add_header'].
+Command-Injection/CommandInjectionURLPath.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Command-Injection/CommandInjectionURLPathChained.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Command-Injection/CommandInjectionUserAgentHeader.yml	[master] Uses non-query/body operations: ['modify_header'].
+Command-Injection/CommandInjectionUserAgentHeaderChained.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Command-Injection/DrupalRCE.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Command-Injection/ElasticsearchRCE.yml	[pro] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url'].
+Command-Injection/ElasticsearchV1RCE.yml	[master] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url'].
+Command-Injection/F5BigIPRESTAuthBypass.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_header', 'modify_method', 'modify_url'].
+Command-Injection/GeoServerRCE.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url', 'send_ssrf_req'].
+Command-Injection/HTTPFileServerRCE.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Command-Injection/IBMRCE.yml	[pro] Uses non-query/body operations: ['add_header', 'modify_header', 'modify_method', 'modify_url'].
+Command-Injection/MSSQLRCE.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Command-Injection/MongoExpressRCE.yml	[standard] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url', 'send_ssrf_req'].
+Command-Injection/NodeJSSquirrellyRCE.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url', 'send_ssrf_req'].
+Command-Injection/NodeJSSysInfoRCE.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Command-Injection/OllamaRCE.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url', 'send_ssrf_req'].
+Command-Injection/PHPCGIRCE.yml	[pro] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url'].
+Command-Injection/PhpFusionRCE.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Command-Injection/RubyDragonFlyRCE.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Command-Injection/RubyOnRailsRCE.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Command-Injection/RubyOnRailsWebConsoleRCE.yml	[master] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url'].
+Command-Injection/ShellShockRCE.yml	[master] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url'].
+Command-Injection/SpringCloudRCE.yml	[pro] Uses non-query/body operations: ['add_header', 'modify_header', 'modify_method', 'modify_url', 'send_ssrf_req'].
+Command-Injection/SpringDataCommonsRCE.yml	[master] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url'].
+Command-Injection/SpringMVCRCE.yml	[pro] Uses non-query/body operations: ['modify_header', 'modify_method', 'send_ssrf_req'].
+Command-Injection/SpringOAuth2RCE.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Command-Injection/Struts2OGNLRCE.yml	[master] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url'].
+Command-Injection/TomcatRCE.yml	[master] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url'].
+Command-Injection/XMLRPCRCE.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_header', 'modify_method', 'modify_url', 'send_ssrf_req'].
+Command-Injection/XStreamAPIRCE.yml	[pro] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url', 'send_ssrf_req'].
+Cross-Site-Scripting/ApacheHTTPServerXSS.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Cross-Site-Scripting/ApacheOldTomcatXSS.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Cross-Site-Scripting/ApacheTomcatXSS.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Cross-Site-Scripting/CitrixXSS.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Cross-Site-Scripting/DjangoDebugPageXSS.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Cross-Site-Scripting/GrafanaAngularJSXSS.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Cross-Site-Scripting/GrafanaXSS.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Cross-Site-Scripting/JavaMelodyXSS.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Cross-Site-Scripting/JenkinsBuildMetricsXSS.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Cross-Site-Scripting/NPMPackageXSS.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Cross-Site-Scripting/NginxVTSXSS.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Cross-Site-Scripting/PHPModCurlXSS.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Cross-Site-Scripting/PHPMyAdminXSS.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Cross-Site-Scripting/ReflectedXSSTelerik.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Cross-Site-Scripting/TileServerXSS.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Cross-Site-Scripting/XSSInPath.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Improper Inventory Management/IdentifyPublicAccessUnauthenticatedAPI.yml	[pro] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url', 'remove_auth_header'].
+Improper Inventory Management/IdentifyingPubliclyAccessibleAPIs.yaml	[standard] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url'].
+Improper Inventory Management/OldApiVersionDELETE.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Improper Inventory Management/OldApiVersionPATCH.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Injection-Attacks/DjangoSQLi.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Injection-Attacks/DrupalSQLi.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Injection-Attacks/EmbeddedJSTemplateInjection.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url', 'send_ssrf_req'].
+Injection-Attacks/GoGitServiceSQLi.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Injection-Attacks/HTTPHeaderInjectionIPXSS.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/HTTPHeaderInjectionIncorrectIP.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/HTTPHeaderInjectionInternalIP.yml	[master] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/HTTPHeaderInjectionObfuscatedIP.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/LighttpdSQLi.yml	[pro] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url'].
+Injection-Attacks/NoSQLiBooleanBasedJSONBodyParamJS.yml	[pro] Uses non-query/body operations: ['add_header'].
+Injection-Attacks/NoSQLiBooleanBasedQueryParamJS.yml	[pro] Uses non-query/body operations: ['add_header'].
+Injection-Attacks/NoSQLiBooleanBasedQueryParamRegex.yml	[pro] Uses non-query/body operations: ['add_header'].
+Injection-Attacks/NoSQLiBooleanBasedReplaceBodyObject.yml	[pro] Uses non-query/body operations: ['add_header'].
+Injection-Attacks/NoSQLiBooleanBasedReplaceBodyRegexFunction.yml	[pro] Uses non-query/body operations: ['add_header'].
+Injection-Attacks/NoSQLiTimeBasedReplaceBody.yml	[pro] Uses non-query/body operations: ['add_header'].
+Injection-Attacks/NodeJSTemplateInject.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url', 'send_ssrf_req'].
+Injection-Attacks/PyloadLogInjection.yml	[pro] Uses non-query/body operations: ['follow_redirect', 'modify_header', 'modify_method', 'modify_url'].
+Injection-Attacks/SpringCloudGatewayCodeInjection.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url', 'send_ssrf_req'].
+Injection-Attacks/TimeBasedNoSQLiJSONParam.yml	[pro] Uses non-query/body operations: ['add_header'].
+Injection-Attacks/TimeBasedNoSQLiJSONParamDELETE.yml	[pro] Uses non-query/body operations: ['add_header'].
+Injection-Attacks/TimeBasedNoSQLiJSONParamPATCH.yml	[pro] Uses non-query/body operations: ['add_header'].
+Injection-Attacks/TimeBasedNoSQLiQueryParam.yml	[pro] Uses non-query/body operations: ['add_header'].
+Injection-Attacks/WSO2APIManagerXXE.yml	[pro] Uses non-query/body operations: ['modify_header', 'modify_url'].
+Injection-Attacks/XMLExternalXIncludeInjection.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/XMLInternalEntityTest.yml	[master] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/XPathInjection.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Injection-Attacks/XXECustomDocumentTypeDefinition.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/XXEErrorBasedTest.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/XXEInternalFileDisclosure.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/XXELFI.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/XXEParameterEntityFileDisclosure.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/XXEPathTraversal.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/XXEPublicDocumentTypeDefinition.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/XXEQueryParams.yml	[pro] Uses non-query/body operations: ['modify_url'].
+Injection-Attacks/XXESOAPAPIConfigDisclosure.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/XXEServerInformationLeak.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/XXESoapAPICredentialsExposure.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/XXESoapAPIDBConfigDisclosure.yml	[standard] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/XXESoapAPILogFileDisclosure.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/XXEURLEncoded.yml	[pro] Uses non-query/body operations: ['modify_header'].
+Injection-Attacks/XmlInjection.yml	[master] Uses non-query/body operations: ['modify_header'].
+Input-Validation/BreakingJsonParsing.yml	[standard] Uses non-query/body operations: ['add_header'].
+Input-Validation/BufferOverflowViaLargeCookie.yml	[pro] Uses non-query/body operations: ['add_header', 'delete_header', 'modify_header'].
+Input-Validation/BypassAdminRestrictionsViaURLEncoding.yml	[pro] Uses non-query/body operations: ['add_header', 'modify_url', 'remove_auth_header'].
+Input-Validation/BypassBasicAuthUsingWeakPasswords.yaml	[standard] Uses non-query/body operations: ['delete_header', 'modify_header'].
+Input-Validation/BypassCouponExpiryValidation.yml	[standard] Uses non-query/body operations: ['add_header'].
+Input-Validation/BypassEmailVerification.yml	[standard] Uses non-query/body operations: ['add_header'].
+Input-Validation/BypassLimitedTimeValidation.yml	[master] Uses non-query/body operations: ['add_header'].
+Input-Validation/BypassMinimumPasswordRequirements.yml	[standard] Uses non-query/body operations: ['add_header'].
+Input-Validation/BypassPayementDeferenceHandling.yml	[standard] Uses non-query/body operations: ['add_header'].
+Input-Validation/BypassProductReturnValidation.yml	[standard] No recognized query/body mutation operations in execute.
+Input-Validation/BypassRateLimitWithInvalidData.yml	[pro] Uses non-query/body operations: ['add_header'].
+Input-Validation/BypassSubscriptionPauseHandling.yml	[pro] Uses non-query/body operations: ['add_header'].
+Input-Validation/DummyAcceptHeader.yml	[standard] Uses non-query/body operations: ['modify_header'].
+Input-Validation/DummyContentLengthHeader.yml	[master] Uses non-query/body operations: ['modify_header'].
+Input-Validation/DummyContentTypeHeader.yml	[standard] Uses non-query/body operations: ['modify_header'].
+Input-Validation/DummyTransferEncodingHeader.yml	[standard] Uses non-query/body operations: ['modify_header'].
+Input-Validation/DynamicPriceExploitation.yml	[standard] Uses non-query/body operations: ['add_header'].
+Input-Validation/GrpcAuthenticationBypass.yaml	[standard] Uses non-query/body operations: ['delete_header', 'modify_header'].
+Input-Validation/GrpcExcessiveMessageSize.yaml	[standard] Uses non-query/body operations: ['add_header'].
+Input-Validation/GrpcMetadataInjection.yaml	[standard] Uses non-query/body operations: ['add_header'].
+Input-Validation/GrpcReflectionAPIExposed.yaml	[standard] Uses non-query/body operations: ['add_header', 'modify_url'].
+Input-Validation/GrpcStatusCodeManipulation.yaml	[standard] Uses non-query/body operations: ['add_header'].
+Input-Validation/HeaderAllkeysInvalidValues.yml	[master] Uses non-query/body operations: ['modify_header'].
+Input-Validation/HeaderInvalidValues.yml	[pro] Uses non-query/body operations: ['delete_header', 'modify_header'].
+Input-Validation/ImproperCharacterHandling.yml	YAML parse error: could not determine a constructor for the tag 'tag:yaml.org,2002:value'
+  in "<unicode string>", line 101, column 7:
+        - =
+          ^
+Input-Validation/ImproperPageSizeHandling.yml	[pro] Uses non-query/body operations: ['add_header'].
+Input-Validation/LargeXMLHandling.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_header'].
+Input-Validation/ManipulatingTransactionReversal.yml	[master] No recognized query/body mutation operations in execute.
+Input-Validation/ManipulatingXML.yml	[master] Uses non-query/body operations: ['modify_header'].
+Input-Validation/MultipleRefundHandling.yml	[pro] Uses non-query/body operations: ['add_header'].
+Input-Validation/OverrideDefaultPaymentMethods.yml	[master] Uses non-query/body operations: ['remove_auth_header'].
+Input-Validation/OverwritingExistingResourcesByManipulatingIentifiers.yml	[master] Uses non-query/body operations: ['modify_method'].
+Input-Validation/ServiceNowInputValidation.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Input-Validation/UserAgentFuzzing.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_header'].
+Lack-of-Resources-and-Rate-Limiting/BypassCaptchaRemovingCookie.yaml	[master] Uses non-query/body operations: ['delete_header'].
+Lack-of-Resources-and-Rate-Limiting/BypassCaptchaUsingHeader.yaml	[master] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/BypassOTPRateLimitTest.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Lack-of-Resources-and-Rate-Limiting/DateFieldInputDoS.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/DoSAttachFileInBody.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/DoSAttachLargeFile.yml	[pro] No recognized query/body mutation operations in execute.
+Lack-of-Resources-and-Rate-Limiting/DoSDeeplyNestedJSONBody.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/DoSTestCSVFileURL.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/DoSTestHeaderKey.yml	[pro] Uses non-query/body operations: ['add_header', 'delete_header'].
+Lack-of-Resources-and-Rate-Limiting/DoSTestHeaderValue.yml	[pro] Uses non-query/body operations: ['add_header', 'modify_header'].
+Lack-of-Resources-and-Rate-Limiting/DoSTestJPGFileURL.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/DoSTestJSONBodyKey.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/DoSTestLongStringQueryParamJSONBodyValues.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/DoSTestMP4FileURL.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/DoSTestPDFFileURL.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/DoSTestPNGFileURL.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/DoSTestQueryParamKey.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/DoSTestURL.yml	[pro] Uses non-query/body operations: ['add_header', 'modify_url'].
+Lack-of-Resources-and-Rate-Limiting/DoSTestXMLFileURL.yml	[standard] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/DosTestLargeNumbers.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/EmailRegexDOSSmallInput.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/EmailRegexReDOS.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/ExpensiveSearch.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/ExponentialEntityExpansion.yml	[standard] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GrapQLDoSVariableObjectSubKeySpecialCharacters.yaml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLDoSCircularQuery.yaml	[standard] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLDoSDefaultFieldOverloading.yaml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLDoSDefaultFieldOverloadingWithAlias.yaml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLDoSHighAmountOfQueries.yaml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLDoSMultipleVariableKeys.yaml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLDoSMultipleVariableObjects.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLDoSOperationNameOverloading.yaml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLDoSQueryDepthCheck.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLDoSQueryNameLengthTest.yaml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLDoSQueryNameSpecialCharacters.yaml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLDoSRateLimiting.yaml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLDoSVariableKeyLengthCheck.yaml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLDoSVariableValueLengthCheck.yaml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLDoSVariablesValueArrayofSpecialCharacters.yaml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLOperationNameValueArrayDoS.yaml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLOperationNameValueTestDoS.yaml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/GraphQLVariablesKeySubParametersSpecialCharactersDoS.yaml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/HTTPHeaderInjectionDoS.yml	[pro] Uses non-query/body operations: ['add_header', 'modify_header'].
+Lack-of-Resources-and-Rate-Limiting/JSONBodyParameterBombingDoS.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/LDAPLoginDoS.yml	[standard] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/PageDos.yaml	[master] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/QueryParamArrayBombingDoS.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/QueryParameterBombingDoS.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/ReplayCaptcha.yaml	[standard] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/ReportGenerationEndpointDoS.yml	[pro] Uses non-query/body operations: ['add_header'].
+Lack-of-Resources-and-Rate-Limiting/ThirdPartyAPIRequestBombingDoS.yml	[standard] Uses non-query/body operations: ['add_header'].
+Local-File-Inclusion/AIOHTTPLFI.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/CDataAPIServerJavaLFI.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/DrupalLFI.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/ElasticSearchLFI.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/ExpressHandlebarsLFI.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/JavaServerFacesLFI.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/KibanaLFI.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/LFIInHeadersLinux.yml	[master] Uses non-query/body operations: ['modify_header'].
+Local-File-Inclusion/LFIInHeadersWindows.yml	[master] Uses non-query/body operations: ['modify_header'].
+Local-File-Inclusion/LFIInPath.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Local-File-Inclusion/LFIInPathWindows.yml	[master] Uses non-query/body operations: ['modify_url'].
+Local-File-Inclusion/MLFlowLFI.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/NextJSLFI.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/NodeJSDirectoryTraversal.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/NodeJsSTModuleDirectoryTraversal.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/NodeSrvLFI.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/PuppeteerRendererLFI.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/RayAILFI.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/ReposiliteLFI.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/RubyOnRailsLFI.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/SAPNetweaverServerLFI.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/SpringMVCLFI.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Local-File-Inclusion/VertaAIModelDBLFI.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Mass-Assignment/GraphQLTestforMassAssignment.yaml	[standard] No recognized query/body mutation operations in execute.
+Mass-Assignment/MassAssignmentCouponExpiry.yaml	[standard] Uses non-query/body operations: ['add_header'].
+Misconfigured-HTTP-Headers/ContentTypeHeaderMissing.yaml	[master] No recognized query/body mutation operations in execute.
+Misconfigured-HTTP-Headers/MisconfiguredCSPPolicy.yml	[master] No recognized query/body mutation operations in execute.
+Misconfigured-HTTP-Headers/MisconfiguredHSTSHeader.yml	[master] No recognized query/body mutation operations in execute.
+Misconfigured-HTTP-Headers/MisconfiguredXFrameOptionsHeader.yaml	[master] No recognized query/body mutation operations in execute.
+Misconfigured-HTTP-Headers/MustContainRequestHeaders.yaml	[standard] No recognized query/body mutation operations in execute.
+Misconfigured-HTTP-Headers/MustContainResponseHeaders.yaml	[standard] No recognized query/body mutation operations in execute.
+Misconfigured-HTTP-Headers/RefererExposesSessionId.yml	[master] No recognized query/body mutation operations in execute.
+Misconfigured-HTTP-Headers/TimestampDisclousureUnix.yml	[master] No recognized query/body mutation operations in execute.
+Misconfigured-HTTP-Headers/UnwantedResponseHeaders.yaml	[master] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/AWSCDNCachePoisoning.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/AWSContainerMetadataExposure.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/AWSOpenSearchLoginPageExposure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/ActiveMQDefaultLogin.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/ActiveMQServerVersionDisclosed.yaml	[master] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/AirflowConfigurationExposure.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/AmazonDockerConfig.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/AmazonMQExposed.yaml	[standard] Uses non-query/body operations: ['delete_header', 'modify_method', 'modify_url', 'remove_auth_header'].
+Security-Misconfiguration/AmazonS3Disclosure.yaml	[standard] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/AnsibleConfigExposure.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/ApacheApolloDefaultLogin.yml	[standard] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/ApacheAxis2DefaultLogin.yml	[standard] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/ApacheCloudStackSAMLExclusion.yml	[pro] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/ApacheConfig.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/ApacheFileNameEnumeration.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/ApacheHTTPServerACLBypass.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/ApacheHTTPServerOpenRedirect.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url', 'send_ssrf_req'].
+Security-Misconfiguration/ApacheKafkaCenterDefaultLogin.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/ApachePulsarExposed.yaml	[master] Uses non-query/body operations: ['modify_method', 'modify_url', 'remove_auth_header'].
+Security-Misconfiguration/ApacheServerFilesExposed.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/ApacheServerStatus.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/ApacheServerStatusLocalhost.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/ApacheServerVersionDisclosed.yaml	[master] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/ApacheStrutsShowcaseExposure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/ApacheSuperSetAuthBypass.yml	[pro] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/ApacheTomcatInstanceExposure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/ApacheTomcatManagerDefaultLogin.yml	[master] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/ApacheTomcatOpenRedirect.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url', 'send_ssrf_req'].
+Security-Misconfiguration/ApacheYarnResourceManagerExpose.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/ApachelighttpdFileUpload.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/ApigeeNginxLogExposed.yml	[standard] Uses non-query/body operations: ['remove_auth_header'].
+Security-Misconfiguration/AppspecYmlDisclosure.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/ArangoDBInterfaceExposure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/AuthenticationASMXFileExposure.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/BigRedirectsScan.yml	[master] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/CaddyAdminExposed.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/CaddyfileExposed.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/CgiPrintEnv.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/CircleciConfig.yaml	[master] Uses non-query/body operations: ['follow_redirect', 'modify_url'].
+Security-Misconfiguration/ConfigJson.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/ConfigRuby.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/ConfigurationListing.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/CookieMisconfiguration.yaml	[standard] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/DatadogPortExposed.yaml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url', 'remove_auth_header'].
+Security-Misconfiguration/DebugVars.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/DirectoryListingEnabled.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/DjangoAdminPanelDetection.yml	[pro] Uses non-query/body operations: ['follow_redirect', 'modify_method', 'modify_url'].
+Security-Misconfiguration/DjangoDefaultHomepageEnabled.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/DjangoOpenRedirect.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url', 'send_ssrf_req'].
+Security-Misconfiguration/DockerComposeConfig.yaml	[standard] Uses non-query/body operations: ['follow_redirect', 'modify_url'].
+Security-Misconfiguration/DockerExposed.yml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/DockerfileHiddenDisclosure.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/DrupalAPIUserListExposure.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/DrupalFullPathDisclosure.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/DrupalUserEnumerationRedirect.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/EclipseBIRTPanelExposure.yml	[master] Uses non-query/body operations: ['follow_redirect', 'modify_method', 'modify_url'].
+Security-Misconfiguration/EclipseJettyConcatServletInfoDisclosure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/EclipseJettyInfoDisclosure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/ElasticSearchDefaultLogin.yml	[master] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/ElasticsearchInfoDisclosure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/EnvoyExposed.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/EsmtprcConfig.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/ExpressDefaultHomepageEnabled.yaml	[master] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/ExpressStackTraceEnabled.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/F5AdminPanelExposure.yml	[master] Uses non-query/body operations: ['follow_redirect', 'modify_method', 'modify_url'].
+Security-Misconfiguration/FastifySwaggerExposure.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/FirebaseConfigExposure.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/FirebaseUnauthenticated.yaml	[standard] Uses non-query/body operations: ['modify_url', 'remove_auth_header'].
+Security-Misconfiguration/FlaskDebugModeEnabled.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/FlowiseAuthBypass.yml	[pro] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/FlowiseCredentialsExposure.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/FluentdAPIExposedViaDebugPort.yaml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url', 'remove_auth_header'].
+Security-Misconfiguration/FtpCredentialsExposure.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/GitConfig.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/GitConfigNginxoffbyslash.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/GitCredentialsDisclosure.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/GithubWorkflowsDisclosure.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/GitlabCEInfoDisclosure.yml	[standard] Uses non-query/body operations: ['follow_redirect', 'modify_url'].
+Security-Misconfiguration/GoogleApiKeyDisclosure.yaml	[master] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/GradleLibraryVersionDisclosure.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/GrafanaExposed.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/GrafanaFileRead.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/GrafanaLoginPanelExposure.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/GrafanaMetrics.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/GraphqlDebugModeEnabled.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/GraphqlDevelopmentConsoleExposed.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/GraphqlFieldSuggestionEnabled.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/GraphqlIntrospectionEnabled.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/GraphqlTypeIntrospectionAllowed.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/HTTPVerbTunneling.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_method'].
+Security-Misconfiguration/HashDisclosure.yml	[master] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/HeaderReflectedInInvalidUrl.yaml	[standard] Uses non-query/body operations: ['add_header', 'modify_url'].
+Security-Misconfiguration/HtaccessInfoLeak.yml	[standard] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/HtpasswdInfoLeak.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/JMXConsoleExposed.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/JSEnvConfigDetectionTest.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/JWTSigningInClientSide.yaml	[master] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/JavaMelodyMonitoringExposure.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/JavaSpringDetection.yml	[pro] Uses non-query/body operations: ['follow_redirect', 'modify_method', 'modify_url'].
+Security-Misconfiguration/JenkinsAccessAPIExposed.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/JenkinsCookieExposure.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/JettyConfigExposed.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/JettyOldInfoLeakage.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/JettyStatsExposed.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/JupyterIPythonUnAuthAccess.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/KafkaBrokerConfigExposed.yml	[standard] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/KafkaMetrics.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/KeyCloakOpenRedirect.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/KibanaAPIExposed.yaml	[standard] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url', 'remove_auth_header'].
+Security-Misconfiguration/KibanaLoginPanelExposure.yml	[standard] Uses non-query/body operations: ['follow_redirect', 'modify_method', 'modify_url'].
+Security-Misconfiguration/KubeOperatorFileDownload.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/KubeViewInfoDisclosure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/KubeletDebugExposure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/KubernetesDashboardExposure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/KubernetesExposed.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/KubernetesKustomizationDisclosure.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/LaravelDebugModeEnabled.yaml	[standard] Uses non-query/body operations: ['modify_method'].
+Security-Misconfiguration/LaravelDefaultHomepageEnabled.yaml	[standard] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/LaravelEnv.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/LaravelTelescopeEnabled.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/LighthttpdConfigExposed.yml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/LogStashAPIExposed.yaml	[standard] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url', 'remove_auth_header'].
+Security-Misconfiguration/LogStashConfigExposed.yaml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url', 'remove_auth_header'].
+Security-Misconfiguration/MisconfiguredDocker.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/MsmtpConfig.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/NGINXPlusRESTAPIExposure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/NPMShrinkwrapExposure.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/NextJSCachePoisoning.yml	[pro] Uses non-query/body operations: ['add_header', 'modify_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/NginxAccelExposed.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/NginxConfig.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/NginxDefaultPageEnabled.yaml	[standard] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/NginxLogExposed.yml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/NginxProxyManagerDefaultLogin.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/NginxServerVersionDisclosed.yaml	[master] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/NginxStatusVisible.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/NodeJSEcstaticPackageDirectoryListing.yml	[pro] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/NodeJSEcstaticPackagePathExposure.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/NodeJSExpressDevelopmentModeTest.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/OAuth2Detect.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/OpenAPIExposure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/OpenRedirect.yaml	[standard] Uses non-query/body operations: ['follow_redirect', 'modify_header'].
+Security-Misconfiguration/OpenRedirectHostHeaderInjection.yaml	[master] Uses non-query/body operations: ['add_header', 'follow_redirect'].
+Security-Misconfiguration/OpenRedirectInPath.yaml	[master] Uses non-query/body operations: ['follow_redirect', 'modify_url'].
+Security-Misconfiguration/OpenRedirectSubdomainWhitelist.yaml	[master] Uses non-query/body operations: ['follow_redirect', 'modify_header'].
+Security-Misconfiguration/OracleEbsCredentials.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/PGAdmin4AuthBypass.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/PHPFastCachePHPInfoResourceExposure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/PHPMyAdminPanelExposure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/ParametersConfig.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/PrometheusConfigAPIExposure.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/PrometheusDebugExposed.yml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/PrometheusMetrics.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/PrometheusOpenRedirect.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/PrometheusPanelExposure.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/PythonExposedMetrics.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/PythonFlaskSecurityOpenRedirect.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/RabbitMQDefaultLogin.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/RabbitMQExposed.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/RailsDebugModeEnabled.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/RailsDefaultHomepageEnabled.yaml	[master] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/RailsFileContentDisclosure.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/RedisConfig.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/RedisExposed.yaml	[standard] Uses non-query/body operations: ['delete_header', 'modify_method', 'modify_url', 'remove_auth_header'].
+Security-Misconfiguration/RobomongoCredential.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/SeleniumNodeExposure.yml	[pro] Uses non-query/body operations: ['follow_redirect', 'modify_method', 'modify_url'].
+Security-Misconfiguration/ServerPrivateKeys.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/ServiceNowLoginPanelExposure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/SessionFixation.yaml	[standard] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/SftpConfigExposure.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/SonarqubePublicProjects.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/SourceCodeDisclosure.yml	[master] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/SourceCodeDisclosureGit.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/SourceCodeDisclosureSvn.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/SourceCodeDisclosureUsingFileExtensions.yml	[standard] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/SourceCodeDisclosureWebInf.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/SplunkInfoDisclosure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/SpringBootActuatorLogViewerTraversal.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/SpringBootAuditeventsActuatorPanelExposure.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/SpringBootBeansActuatorExposed.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/SpringBootConfigPropsActuatorExposed.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/SpringBootEnvActuatorExposed.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/SpringBootHttpTraceActuatorExposed.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/SpringBootThreadDumpActuatorExposed.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/SquidProxyConfigExposed.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/SquidProxyLogExposed.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/SshAuthorizedKeys.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/SshKnownHosts.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/StackTraceExposedChangeAuth.yml	[pro] Uses non-query/body operations: ['replace_auth_header'].
+Security-Misconfiguration/StrutsDebugModeEnabled.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/StrutsOgnlConsoleEnabled.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/StrutsOldVersionOpenRedirect.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url', 'send_ssrf_req'].
+Security-Misconfiguration/SwaggerAPIExposure.yml	[standard] Uses non-query/body operations: ['add_header', 'modify_method', 'modify_url'].
+Security-Misconfiguration/TextInjectionViaInvalidUrls.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/TomcatManagerPathNormalizationExposure.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/TomcatServerVersionDisclosed.yaml	[standard] No recognized query/body mutation operations in execute.
+Security-Misconfiguration/TraefikConfigExposed.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/TraefikLogExposed.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/TykHealthCheckExposed.yaml	[standard] Uses non-query/body operations: ['remove_auth_header'].
+Security-Misconfiguration/UnauthSparkDetection.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/UnauthenticatedMongoExpress.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/UnauthorizedWebsocketUpgrade.yml	[master] Uses non-query/body operations: ['add_header', 'modify_url'].
+Security-Misconfiguration/VarnishConfigExposed.yml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/WADLExposure.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/WSDLDetect.yml	[master] Uses non-query/body operations: ['modify_method', 'modify_url'].
+Security-Misconfiguration/WgetrcConfig.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/WpconfigAwsKeys.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Security-Misconfiguration/ZookeeperExposed.yml	[master] Uses non-query/body operations: ['remove_auth_header'].
+Security-Misconfiguration/kafkaMetadataAPIExposed.yaml	[standard] Uses non-query/body operations: ['modify_url', 'remove_auth_header'].
+Server-Side-Request-Forgery/ApacheModProxySSRF.yml	[standard] Uses non-query/body operations: ['follow_redirect', 'modify_method', 'modify_url', 'send_ssrf_req'].
+Server-Side-Request-Forgery/ApacheSolrSSRF.yml	[standard] Uses non-query/body operations: ['modify_method', 'modify_url', 'send_ssrf_req'].
+Server-Side-Request-Forgery/Auth0RedirectURISSRF.yml	[pro] Uses non-query/body operations: ['send_ssrf_req'].
+Server-Side-Request-Forgery/Auth0RedirectURIStateSSRF.yml	[pro] Uses non-query/body operations: ['send_ssrf_req'].
+Server-Side-Request-Forgery/NetMaskSSRF.yml	[master] Uses non-query/body operations: ['modify_method'].
+Server-Side-Request-Forgery/NextJSSSRF.yml	[pro] Uses non-query/body operations: ['modify_method', 'modify_url', 'send_ssrf_req'].
+Server-Side-Request-Forgery/PyTorchSSRF.yml	[pro] Uses non-query/body operations: ['modify_header', 'modify_method', 'modify_url', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFScriptTagAWSRedirect.yml	[master] Uses non-query/body operations: ['follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFScriptTagAzureRedirect.yml	[master] Uses non-query/body operations: ['add_header', 'follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFScriptTagBasic.yml	[standard] Uses non-query/body operations: ['send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFScriptTagGCPRedirect.yml	[standard] Uses non-query/body operations: ['add_header', 'follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFScriptTagLocalhostRedirect.yml	[master] Uses non-query/body operations: ['follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFTestForHTTPCall.yml	[standard] Uses non-query/body operations: ['send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonCSVUploadAWSRedirection.yml	[standard] Uses non-query/body operations: ['follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonCSVUploadAzureRedirection.yml	[master] Uses non-query/body operations: ['add_header', 'follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonCSVUploadGCPRedirection.yml	[standard] Uses non-query/body operations: ['add_header', 'follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonCSVUploadLocalhostRedirection.yml	[standard] Uses non-query/body operations: ['follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonImageUploadAWSRedirection.yml	[standard] Uses non-query/body operations: ['follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonImageUploadAzureRedirection.yml	[standard] Uses non-query/body operations: ['add_header', 'follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonImageUploadGCPRedirection.yml	[standard] Uses non-query/body operations: ['add_header', 'follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonImageUploadLocalhostRedirection.yml	[standard] Uses non-query/body operations: ['follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonPDFUploadAWSRedirection.yml	[standard] Uses non-query/body operations: ['follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonPDFUploadAzureRedirection.yml	[standard] Uses non-query/body operations: ['add_header', 'follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonPDFUploadGCPRedirection.yml	[master] Uses non-query/body operations: ['add_header', 'follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonPDFUploadLocalhostRedirection.yml	[standard] Uses non-query/body operations: ['follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonXMLUploadAWSRedirection.yml	[master] Uses non-query/body operations: ['follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonXMLUploadAzureRedirection.yml	[standard] Uses non-query/body operations: ['add_header', 'follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonXMLUploadGCPRedirection.yml	[standard] Uses non-query/body operations: ['add_header', 'follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/SSRFonXMLUploadLocalhostRedirection.yml	[master] Uses non-query/body operations: ['follow_redirect', 'send_ssrf_req'].
+Server-Side-Request-Forgery/StandardSSRF.yml	[pro] Uses non-query/body operations: ['follow_redirect', 'send_ssrf_req'].
+Server-Version-Disclosure/ServerVersionExposedInvalid.yaml	[master] Uses non-query/body operations: ['modify_url'].
+Server-Version-Disclosure/ServerVersionExposedValid.yaml	[standard] No recognized query/body mutation operations in execute.
+Threat-Protection/LocalFileInclusion.yml	[master] No execute block.
+Threat-Protection/NoSqlInjection.yml	[master] No execute block.
+Threat-Protection/OsCommandInjection.yml	[master] No execute block.
+Threat-Protection/SQLInjection.yml	[master] No execute block.
+Threat-Protection/SSRF.yml	[master] No execute block.
+Threat-Protection/SecurityMisconfig.yml	[master] No execute block.
+Threat-Protection/WindowsCommandInjection.yml	[master] No execute block.
+Threat-Protection/XSS.yml	[master] No execute block.
+Unnecessary-HTTP-Methods/HeadMethodTest.yaml	[standard] Uses non-query/body operations: ['modify_method', 'remove_auth_header'].
+Unnecessary-HTTP-Methods/RandomMethodTest.yaml	[standard] Uses non-query/body operations: ['modify_method', 'remove_auth_header'].
+Unnecessary-HTTP-Methods/TraceMethodTest.yaml	[master] Uses non-query/body operations: ['add_header', 'modify_method'].
+Unnecessary-HTTP-Methods/TrackMethodTest.yaml	[master] Uses non-query/body operations: ['add_header', 'modify_method'].
+Verbose-Error-Messages/DjangoUrlExposed.yaml	[standard] Uses non-query/body operations: ['modify_url'].
+Verbose-Error-Messages/SQLInjectionURLPath.yml	[master] Uses non-query/body operations: ['modify_url'].
