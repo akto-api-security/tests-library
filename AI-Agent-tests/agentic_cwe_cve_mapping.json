@@ -1,40 +1,49 @@
 {
-  "_comment": "Source of truth for OWASP Agentic CWE/CVE mapping used by AI-Agent-tests/generated_tests/*.yml. Resolution order is by_template > by_family (longest-prefix match) > unexpected_code_execution > by_category. Categories are OWASP Agentic Top-10 buckets.",
+  "_comment": "Source of truth for OWASP Agentic CWE/CVE/severity mapping used by AI-Agent-tests/generated_tests/*.yml. Resolution order is by_template > by_family (longest-prefix match) > unexpected_code_execution > by_category. Each layer overrides individual fields (category, cwe, cve, severity). Severity is impact-based (CRITICAL=direct compromise, HIGH=concrete security boundary breach, MEDIUM=policy/business/quality breach with limited blast radius, LOW=quality only).",
 
   "by_category": {
     "AGENT_GOAL_HIJACK": {
+      "severity": "HIGH",
       "cwe": ["CWE-74", "CWE-94"],
       "cve": ["CVE-2024-5184"]
     },
     "HUMAN_AGENT_TRUST_EXPLOITATION": {
+      "severity": "HIGH",
       "cwe": ["CWE-74", "CWE-345"],
       "cve": ["CVE-2024-5184"]
     },
     "MEMORY_AND_CONTEXT_POISONING": {
+      "severity": "MEDIUM",
       "cwe": ["CWE-74", "CWE-200"],
       "cve": ["CVE-2024-5184"]
     },
     "TOOL_MISUSE_AND_EXPLOITATION": {
+      "severity": "HIGH",
       "cwe": ["CWE-78", "CWE-94"],
       "cve": ["CVE-2024-4577"]
     },
     "IDENTITY_AND_PRIVILEGE_ABUSE": {
+      "severity": "HIGH",
       "cwe": ["CWE-287", "CWE-285"],
       "cve": ["CVE-2023-22501"]
     },
     "ROGUE_AGENTS": {
+      "severity": "HIGH",
       "cwe": ["CWE-441", "CWE-862"],
       "cve": ["CVE-2024-5184"]
     },
     "AGENTIC_SUPPLY_CHAIN": {
+      "severity": "CRITICAL",
       "cwe": ["CWE-494", "CWE-829"],
       "cve": ["CVE-2021-44228"]
     },
     "CASCADING_FAILURES": {
+      "severity": "MEDIUM",
       "cwe": ["CWE-754", "CWE-691"],
       "cve": ["CVE-2024-5184"]
     },
     "INSECURE_INTER_AGENT_COMMUNICATION": {
+      "severity": "HIGH",
       "cwe": ["CWE-923", "CWE-941"],
       "cve": ["CVE-2024-5184"]
     }
@@ -42,10 +51,12 @@
 
   "unexpected_code_execution": {
     "SECURITY_XSS": {
+      "severity": "HIGH",
       "cwe": ["CWE-79", "CWE-83"],
       "cve": ["CVE-2019-0221"]
     },
     "CODE_EXECUTION_OR_RCE": {
+      "severity": "CRITICAL",
       "cwe": ["CWE-94", "CWE-78"],
       "cve": ["CVE-2024-4577"]
     }
@@ -53,214 +64,317 @@
 
   "by_family": {
     "SECURITY_DATA_EXFILTRATION_": {
+      "severity": "CRITICAL",
       "category": "IDENTITY_AND_PRIVILEGE_ABUSE",
       "cwe": ["CWE-200", "CWE-359", "CWE-285"],
       "cve": []
     },
-    "SECURITY_SENSITIVE_INFORMATION_DISCLOSURE_": {
-      "category": "IDENTITY_AND_PRIVILEGE_ABUSE",
-      "cwe": ["CWE-200", "CWE-359", "CWE-922"],
-      "cve": []
-    },
     "SECURITY_API_CREDENTIAL_AND_CONFIGURATION_EXPOSURE_": {
+      "severity": "CRITICAL",
       "category": "IDENTITY_AND_PRIVILEGE_ABUSE",
       "cwe": ["CWE-522", "CWE-200", "CWE-732"],
       "cve": []
     },
+    "SECURITY_CODE_EXECUTION_": {
+      "severity": "CRITICAL"
+    },
+    "SECURITY_UNEXPECTED_CODE_EXECUTION_RCE_": {
+      "severity": "CRITICAL"
+    },
+    "SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES_": {
+      "severity": "CRITICAL"
+    },
+    "SECURITY_TRAINING_DATA_POISONING_": {
+      "severity": "CRITICAL"
+    },
+
+    "SECURITY_SENSITIVE_INFORMATION_DISCLOSURE_": {
+      "severity": "HIGH",
+      "category": "IDENTITY_AND_PRIVILEGE_ABUSE",
+      "cwe": ["CWE-200", "CWE-359", "CWE-922"],
+      "cve": []
+    },
     "SECURITY_CONTEXT_LEAKAGE_": {
+      "severity": "HIGH",
       "category": "IDENTITY_AND_PRIVILEGE_ABUSE",
       "cwe": ["CWE-200", "CWE-359", "CWE-285"],
       "cve": []
     },
     "SAFETY_PII_": {
+      "severity": "HIGH",
       "category": "IDENTITY_AND_PRIVILEGE_ABUSE",
       "cwe": ["CWE-359", "CWE-200", "CWE-285"],
       "cve": []
     },
     "SAFETY_PRIVACY_VIOLATION_": {
+      "severity": "HIGH",
       "category": "IDENTITY_AND_PRIVILEGE_ABUSE",
       "cwe": ["CWE-359", "CWE-200", "CWE-285"],
       "cve": []
     },
     "SECURITY_CROSS_SESSION_LEAKS_": {
+      "severity": "HIGH",
       "category": "IDENTITY_AND_PRIVILEGE_ABUSE",
       "cwe": ["CWE-200", "CWE-285", "CWE-359"],
       "cve": []
     },
     "SECURITY_CROSS_USER_DATA_BLEEDING_": {
+      "severity": "HIGH",
       "category": "IDENTITY_AND_PRIVILEGE_ABUSE",
       "cwe": ["CWE-200", "CWE-285", "CWE-359"],
       "cve": []
     },
 
     "SECURITY_MALICIOUS_RESOURCE_FETCHING_": {
+      "severity": "HIGH",
       "category": "TOOL_MISUSE_AND_EXPLOITATION",
       "cwe": ["CWE-918", "CWE-601", "CWE-94"],
       "cve": []
     },
     "SECURITY_WEB_INJECTION_": {
+      "severity": "HIGH",
       "category": "TOOL_MISUSE_AND_EXPLOITATION",
       "cwe": ["CWE-89", "CWE-79", "CWE-78", "CWE-94"],
       "cve": []
     },
     "SECURITY_EXCESSIVE_AGENCY_": {
+      "severity": "HIGH",
       "category": "TOOL_MISUSE_AND_EXPLOITATION",
       "cwe": ["CWE-269", "CWE-862", "CWE-732"],
       "cve": []
     },
     "SECURITY_TOOL_DISCOVERY_": {
+      "severity": "MEDIUM",
       "category": "TOOL_MISUSE_AND_EXPLOITATION",
       "cwe": ["CWE-200", "CWE-497", "CWE-749"],
       "cve": []
     },
+    "SECURITY_TOOL_MISUSE_AND_EXPLOITATION_": { "severity": "HIGH" },
+    "SECURITY_INSECURE_PLUGIN_USE_": { "severity": "HIGH" },
+    "SAFETY_TOOL_AND_FUNCTION_CALLING_MANIPULATION_": { "severity": "HIGH" },
+    "BUSINESS_ALIGNMENT_INTENTIONAL_MISUSE_": { "severity": "HIGH" },
+
+    "SECURITY_PROMPT_INJECTION_": { "severity": "HIGH" },
+    "SECURITY_INDIRECT_PROMPT_INJECTION_": { "severity": "HIGH" },
+    "SECURITY_DOCUMENT_BASED_INDIRECT_PROMPT_INJECTION_": { "severity": "HIGH" },
+    "SECURITY_SINGLE_TURN_DIRECT_PROMPT_INJECTION_": { "severity": "HIGH" },
+    "SECURITY_MULTI_TURN_JAILBREAK_SEQUENCES_": { "severity": "HIGH" },
+    "SECURITY_SYSTEM_PROMPT_OVERRIDE_": { "severity": "HIGH" },
+    "SECURITY_JAILBREAK_": { "severity": "HIGH" },
+    "SECURITY_AGENT_BEHAVIOR_HIJACK_AND_GOAL_MANIPULATION_": { "severity": "HIGH" },
+
+    "SECURITY_IDENTITY_SPOOFING_": { "severity": "HIGH" },
+    "SECURITY_INSECURE_INTER_AGENT_COMMUNICATION_": { "severity": "HIGH" },
+    "SECURITY_RAG_POISONING_": { "severity": "HIGH" },
+    "SECURITY_CONTEXT_POISONING_": { "severity": "HIGH" },
+    "SECURITY_PHISHING_": { "severity": "HIGH" },
+    "SECURITY_MODEL_THEFT_": {
+      "severity": "HIGH",
+      "category": "AGENTIC_SUPPLY_CHAIN",
+      "cwe": ["CWE-200", "CWE-1059", "CWE-285"],
+      "cve": []
+    },
+    "BUSINESS_ALIGNMENT_HUMAN_AGENT_TRUST_EXPLOITATION_": { "severity": "HIGH" },
+    "BUSINESS_ALIGNMENT_ROGUE_AGENTS_": { "severity": "HIGH" },
 
     "SECURITY_REPUDIATION_UNTRACEABILITY_": {
+      "severity": "MEDIUM",
       "category": "ROGUE_AGENTS",
       "cwe": ["CWE-778", "CWE-223", "CWE-117"],
       "cve": []
     },
 
-    "SECURITY_MODEL_THEFT_": {
-      "category": "AGENTIC_SUPPLY_CHAIN",
-      "cwe": ["CWE-200", "CWE-1059", "CWE-285"],
-      "cve": []
-    },
-
-    "SAFETY_BIAS_": {
-      "category": "AGENT_GOAL_HIJACK",
-      "cwe": ["CWE-1039", "CWE-693"],
-      "cve": []
-    },
-    "SAFETY_AUTOMATED_BIAS_TESTING_": {
-      "category": "AGENT_GOAL_HIJACK",
-      "cwe": ["CWE-1039", "CWE-693"],
-      "cve": []
-    },
-    "SAFETY_STEREOTYPE_REINFORCEMENT_DETECTION_": {
-      "category": "AGENT_GOAL_HIJACK",
-      "cwe": ["CWE-1039", "CWE-693"],
-      "cve": []
-    },
-    "SAFETY_FAIRNESS_METRIC_GENERATION_": {
-      "category": "AGENT_GOAL_HIJACK",
-      "cwe": ["CWE-1039", "CWE-693"],
-      "cve": []
-    },
-    "SAFETY_CULTURAL_REPRESENTATION_TESTING_": {
-      "category": "AGENT_GOAL_HIJACK",
-      "cwe": ["CWE-1039", "CWE-693"],
-      "cve": []
-    },
+    "SECURITY_OVERRELIANCE_": { "severity": "MEDIUM" },
+    "SECURITY_INSTRUCTION_HIERARCHY_ATTACK_": { "severity": "MEDIUM" },
+    "SECURITY_MANIPULATION_": { "severity": "MEDIUM" },
+    "SECURITY_ADVERSARIAL_SUFFIX_ATTACK_": { "severity": "MEDIUM" },
+    "SECURITY_TOKEN_LEVEL_PERTURBATIONS_": { "severity": "MEDIUM" },
+    "SECURITY_UNICODE_AND_HOMOGLYPH_ATTACKS_": { "severity": "MEDIUM" },
+    "SECURITY_SYSTEM_PROMPT_AND_TEMPLATE_EXTRACTION_": { "severity": "MEDIUM" },
+    "SECURITY_CANARY_TOKEN_DETECTION_": { "severity": "MEDIUM" },
+    "SECURITY_MODEL_DENIAL_OF_SERVICE_": { "severity": "MEDIUM" },
 
     "SAFETY_HARMFUL_CONTENT_": {
+      "severity": "MEDIUM",
       "category": "AGENT_GOAL_HIJACK",
       "cwe": ["CWE-74", "CWE-693"],
       "cve": []
     },
     "SAFETY_HARMFUL_CONTENT_GENERATION_NIST_AI_RMF_": {
+      "severity": "MEDIUM",
       "category": "AGENT_GOAL_HIJACK",
       "cwe": ["CWE-74", "CWE-693"],
       "cve": []
     },
     "SAFETY_ILLEGAL_ACTIVITIES_": {
+      "severity": "MEDIUM",
       "category": "AGENT_GOAL_HIJACK",
       "cwe": ["CWE-74", "CWE-693"],
       "cve": []
     },
     "SAFETY_BOUNDARY_TESTING_": {
+      "severity": "MEDIUM",
       "category": "AGENT_GOAL_HIJACK",
       "cwe": ["CWE-74", "CWE-693"],
       "cve": []
     },
     "SAFETY_CONTENT_GENERATION_VS_INFORMATION_PROVISION_": {
+      "severity": "MEDIUM",
       "category": "AGENT_GOAL_HIJACK",
       "cwe": ["CWE-74", "CWE-693"],
       "cve": []
     },
     "SAFETY_REFUSAL_MECHANISM_VALIDATION_": {
+      "severity": "MEDIUM",
       "category": "AGENT_GOAL_HIJACK",
       "cwe": ["CWE-693", "CWE-74"],
       "cve": []
     },
+
+    "SAFETY_BIAS_": {
+      "severity": "MEDIUM",
+      "category": "AGENT_GOAL_HIJACK",
+      "cwe": ["CWE-1039", "CWE-693"],
+      "cve": []
+    },
+    "SAFETY_AUTOMATED_BIAS_TESTING_": {
+      "severity": "MEDIUM",
+      "category": "AGENT_GOAL_HIJACK",
+      "cwe": ["CWE-1039", "CWE-693"],
+      "cve": []
+    },
+    "SAFETY_STEREOTYPE_REINFORCEMENT_DETECTION_": {
+      "severity": "MEDIUM",
+      "category": "AGENT_GOAL_HIJACK",
+      "cwe": ["CWE-1039", "CWE-693"],
+      "cve": []
+    },
+    "SAFETY_FAIRNESS_METRIC_GENERATION_": {
+      "severity": "MEDIUM",
+      "category": "AGENT_GOAL_HIJACK",
+      "cwe": ["CWE-1039", "CWE-693"],
+      "cve": []
+    },
+    "SAFETY_CULTURAL_REPRESENTATION_TESTING_": {
+      "severity": "MEDIUM",
+      "category": "AGENT_GOAL_HIJACK",
+      "cwe": ["CWE-1039", "CWE-693"],
+      "cve": []
+    },
+
+    "SAFETY_FEW_SHOT_LEARNING_EXPLOITATION_": { "severity": "MEDIUM" },
+
+    "BUSINESS_ALIGNMENT_OVERWHELMING_HUMAN_IN_THE_LOOP_": { "severity": "MEDIUM" },
+    "BUSINESS_ALIGNMENT_COMPETITOR_CHECK_": { "severity": "MEDIUM" },
+    "BUSINESS_ALIGNMENT_LEGALLY_BINDING_": { "severity": "MEDIUM" },
+    "BUSINESS_ALIGNMENT_MISALIGNED_AND_DECEPTIVE_BEHAVIORS_": { "severity": "MEDIUM" },
+
+    "HALLUCINATION_AND_TRUSTWORTHINESS_HALLUCINATION_PROPAGATION_": { "severity": "MEDIUM" },
+    "HALLUCINATION_AND_TRUSTWORTHINESS_RAG_PRECISION_": { "severity": "MEDIUM" },
+    "HALLUCINATION_AND_TRUSTWORTHINESS_CITATION_AND_SOURCE_VERIFICATION_": { "severity": "MEDIUM" },
+    "HALLUCINATION_AND_TRUSTWORTHINESS_FACTUAL_ACCURACY_BENCHMARKING_": { "severity": "MEDIUM" },
+    "HALLUCINATION_AND_TRUSTWORTHINESS_CONFIDENCE_CALIBRATION_": { "severity": "MEDIUM" },
+    "HALLUCINATION_AND_TRUSTWORTHINESS_Q_A_": { "severity": "MEDIUM" },
+    "HALLUCINATION_AND_TRUSTWORTHINESS_URL_CHECK_": { "severity": "MEDIUM" },
+
     "SAFETY_PROFANITY_": {
+      "severity": "LOW",
       "category": "AGENT_GOAL_HIJACK",
       "cwe": ["CWE-74", "CWE-915", "CWE-20"],
       "cve": []
-    }
+    },
+    "HALLUCINATION_AND_TRUSTWORTHINESS_KNOWLEDGE_CUTOFF_BOUNDARY_TESTING_": { "severity": "LOW" },
+    "HALLUCINATION_AND_TRUSTWORTHINESS_PARANOID_PROTECTION_": { "severity": "LOW" },
+    "BUSINESS_ALIGNMENT_OFF_TOPIC_": { "severity": "LOW" }
   },
 
   "by_template": {
     "SECURITY_XSS_MATH_PROBLEM": {
+      "severity": "HIGH",
       "category": "UNEXPECTED_CODE_EXECUTION",
       "cwe": ["CWE-79", "CWE-83", "CWE-94"],
       "cve": ["CVE-2019-0221"]
     },
     "SECURITY_XSS_LEETSPEAK": {
+      "severity": "HIGH",
       "category": "UNEXPECTED_CODE_EXECUTION",
       "cwe": ["CWE-79", "CWE-83"],
       "cve": ["CVE-2019-0221"]
     },
     "SECURITY_CROSS_SESSION_LEAKS_SEMANTIC_MANIPULATION": {
+      "severity": "HIGH",
       "category": "IDENTITY_AND_PRIVILEGE_ABUSE",
       "cwe": ["CWE-200", "CWE-285", "CWE-359"],
       "cve": []
     },
     "HALLUCINATION_AND_TRUSTWORTHINESS_PARANOID_PROTECTION_INPUT_BYPASS": {
+      "severity": "LOW",
       "category": "MEMORY_AND_CONTEXT_POISONING",
       "cwe": ["CWE-20", "CWE-74", "CWE-693"],
       "cve": []
     },
     "SECURITY_REPUDIATION_UNTRACEABILITY_PROMPT_INJECTION": {
+      "severity": "HIGH",
       "category": "ROGUE_AGENTS",
       "cwe": ["CWE-778", "CWE-223", "CWE-74"],
       "cve": ["CVE-2024-5184"]
     },
     "SECURITY_REPUDIATION_UNTRACEABILITY_PERMISSION_ESCALATION": {
+      "severity": "HIGH",
       "category": "ROGUE_AGENTS",
       "cwe": ["CWE-778", "CWE-269", "CWE-862"],
       "cve": []
     },
     "SECURITY_REPUDIATION_UNTRACEABILITY_MULTILINGUAL": {
+      "severity": "MEDIUM",
       "category": "ROGUE_AGENTS",
       "cwe": ["CWE-778", "CWE-223", "CWE-20"],
       "cve": []
     },
     "SECURITY_WEB_INJECTION_CONTEXT_POISONING": {
+      "severity": "HIGH",
       "category": "TOOL_MISUSE_AND_EXPLOITATION",
       "cwe": ["CWE-89", "CWE-79", "CWE-78", "CWE-94"],
       "cve": []
     },
     "SECURITY_TOOL_DISCOVERY_SEMANTIC_MANIPULATION": {
+      "severity": "MEDIUM",
       "category": "TOOL_MISUSE_AND_EXPLOITATION",
       "cwe": ["CWE-200", "CWE-497", "CWE-749"],
       "cve": []
     },
     "SECURITY_TOOL_DISCOVERY_SYSTEM_OVERRIDE": {
+      "severity": "MEDIUM",
       "category": "TOOL_MISUSE_AND_EXPLOITATION",
       "cwe": ["CWE-200", "CWE-497", "CWE-749"],
       "cve": []
     },
     "SECURITY_TOOL_DISCOVERY_GOAL_REDIRECTION": {
+      "severity": "MEDIUM",
       "category": "TOOL_MISUSE_AND_EXPLOITATION",
       "cwe": ["CWE-200", "CWE-497", "CWE-749"],
       "cve": []
     },
     "SECURITY_TOOL_DISCOVERY_MULTILINGUAL": {
+      "severity": "MEDIUM",
       "category": "TOOL_MISUSE_AND_EXPLOITATION",
       "cwe": ["CWE-200", "CWE-497", "CWE-749"],
       "cve": []
     },
     "SECURITY_TOOL_DISCOVERY_CONTEXT_POISONING": {
+      "severity": "MEDIUM",
       "category": "TOOL_MISUSE_AND_EXPLOITATION",
       "cwe": ["CWE-200", "CWE-497", "CWE-749"],
       "cve": []
     },
     "SAFETY_PROFANITY_CONTEXT_POISONING": {
+      "severity": "MEDIUM",
       "category": "AGENT_GOAL_HIJACK",
       "cwe": ["CWE-74", "CWE-915", "CWE-20"],
       "cve": []
     },
     "BUSINESS_ALIGNMENT_COMPETITOR_CHECK_INPUT_BYPASS": {
+      "severity": "MEDIUM",
       "category": "AGENT_GOAL_HIJACK",
       "cwe": ["CWE-74", "CWE-20"],
       "cve": ["CVE-2024-5184"]
