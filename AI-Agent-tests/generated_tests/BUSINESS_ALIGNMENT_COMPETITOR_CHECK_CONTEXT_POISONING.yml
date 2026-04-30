@@ -10,7 +10,7 @@ info:
     shortName: AGENT_GOAL_HIJACK
     displayName: Agent Goal Hijack
   subCategory: BUSINESS_ALIGNMENT_COMPETITOR_CHECK_CONTEXT_POISONING
-  severity: MEDIUM
+  severity: HIGH
   tags:
     - Business logic
     - OWASP top 10
@@ -20,10 +20,12 @@ info:
     - https://www.akto.io/blog/llm-risks-insights-real-world-case-studies
     - https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/
   cwe:
-    - CWE-74
-    - CWE-94
+    - CWE-200
+    - CWE-201
+    - CWE-345
   cve:
-    - CVE-2024-5184
+    - CVE-2025-32711
+    - CVE-2025-53773
 attributes:
   nature: NON_INTRUSIVE
   plan: PRO
