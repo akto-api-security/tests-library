@@ -1,0 +1,69 @@
+id: PIIDataLeak
+filter:
+  or:
+
+  # =========================================================
+  # PII — SSN with Context Keyword (High Confidence)
+  # =========================================================
+  - and:
+    - response_payload:
+        regex:
+          - \b(?!000|666|9\d{2})\d{3}[- ]?(?!00)\d{2}[- ]?(?!0000)\d{4}\b
+    - response_payload:
+        regex:
+          - \b(ssn|social[_\s-]?security|taxpayer[_\s-]?id|tin)\b
+
+  # =========================================================
+  # PII — Bank Account with Routing Context
+  # =========================================================
+  - and:
+    - response_payload:
+        regex:
+          - \b(account[_\s-]?number|checking|savings)\b
+    - response_payload:
+        regex:
+          - \b\d{9}\b
+
+  # =========================================================
+  # PII — US Phone Number + Key Name Correlation
+  # =========================================================
+  - and:
+    - response_payload:
+        regex:
+          - \b(phone|phone[_\s-]?number|mobile|mobile[_\s-]?number|contact[_\s-]?number|tel)\b
+    - response_payload:
+        regex:
+          - \b(\+1[-.\s]?)?\(?[2-9]\d{2}\)?[-.\s]?[2-9]\d{2}[-.\s]?\d{4}\b
+
+  # =========================================================
+  # PII — Email Address + Key Name Correlation
+  # =========================================================
+  - and:
+    - response_payload:
+        regex:
+          - \b(email|email[_\s-]?address|e[-_]?mail|user[_\s-]?email|contact[_\s-]?email)\b
+    - response_payload:
+        regex:
+          - \b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b
+
+  # =========================================================
+  # PII — US Passport Number (Contextual)
+  # =========================================================
+  - and:
+    - response_payload:
+        regex:
+          - \bpassport\b
+    - response_payload:
+        regex:
+          - \b\d{9}\b
+
+info:
+  name: "PIIDataLeak"
+  description: "Detection of U.S.-specific personally identifiable information exposure using regex-only matching with contextual key correlation."
+  details: "This policy detects U.S. Social Security Numbers, bank account identifiers, phone numbers, email addresses, and passport numbers when correlated with contextual key names. Keyword correlation is used to reduce false positives while keeping detection strictly regex-based."
+  impact: "Exposure of U.S. PII can result in identity theft, financial fraud, regulatory violations, legal penalties, and reputational damage."
+  category:
+    name: "PIIDataLeak"
+    displayName: "PIIDataLeak"
+  subCategory: "PIIDataLeak"
+  severity: MEDIUM
