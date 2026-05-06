@@ -45,18 +45,26 @@ api_selection_filters:
   method:
     eq: POST
   request_payload:
-    for_one:
-      key:
-        regex: query|prompt|goal
-        extract: changed_key
-
+    contains_all:
+    - id
+    - jsonrpc
+    - method
+    and:
+    - for_one:
+        key:
+          eq: method
+        value:
+          eq: tools/call
+    - for_one:
+        key:
+          regex: query|goal|user_query|prompt
+          extract: promptKey
 execute:
   type: single
   requests:
-    - req:
-        - modify_body_param:
-            ${changed_key}: "${prompts}"
-
+  - req:
+    - modify_body_param:
+        promptKey: ${prompts}
 validate:
   response_code:
     gte: 200
