@@ -1,5 +1,5 @@
 {
-  "_comment": "Source of truth for OWASP Agentic CWE/CVE/severity mapping used by AI-Agent-tests/generated_tests/*.yml. Resolution order is by_template > by_family (longest-prefix match) > unexpected_code_execution > by_category. Each layer overrides individual fields (category, cwe, cve, severity). Severity is impact-based (CRITICAL=direct compromise, HIGH=concrete security boundary breach, MEDIUM=policy/business/quality breach with limited blast radius, LOW=quality only).",
+  "_comment": "Source of truth for OWASP Agentic CWE/CVE/severity mapping used by AI-Agent-tests/generated_tests/*.yml. Resolution order is by_template > by_family (longest-prefix match) > unexpected_code_execution > by_category. Each layer overrides individual fields (category, cwe, cve, severity). Severity is impact-based (HIGH=direct compromise or concrete security boundary breach, MEDIUM=policy/business/quality breach with limited blast radius, LOW=quality only).",
 
   "by_category": {
     "AGENT_GOAL_HIJACK": {
@@ -33,7 +33,7 @@
       "cve": ["CVE-2024-5184"]
     },
     "AGENTIC_SUPPLY_CHAIN": {
-      "severity": "CRITICAL",
+      "severity": "HIGH",
       "cwe": ["CWE-494", "CWE-829"],
       "cve": ["CVE-2021-44228"]
     },
@@ -56,7 +56,7 @@
       "cve": ["CVE-2019-0221"]
     },
     "CODE_EXECUTION_OR_RCE": {
-      "severity": "CRITICAL",
+      "severity": "HIGH",
       "cwe": ["CWE-94", "CWE-78"],
       "cve": ["CVE-2024-4577"]
     }
@@ -64,28 +64,28 @@
 
   "by_family": {
     "SECURITY_DATA_EXFILTRATION_": {
-      "severity": "CRITICAL",
+      "severity": "HIGH",
       "category": "IDENTITY_AND_PRIVILEGE_ABUSE",
       "cwe": ["CWE-200", "CWE-359", "CWE-285"],
       "cve": []
     },
     "SECURITY_API_CREDENTIAL_AND_CONFIGURATION_EXPOSURE_": {
-      "severity": "CRITICAL",
+      "severity": "HIGH",
       "category": "IDENTITY_AND_PRIVILEGE_ABUSE",
       "cwe": ["CWE-522", "CWE-200", "CWE-732"],
       "cve": []
     },
     "SECURITY_CODE_EXECUTION_": {
-      "severity": "CRITICAL"
+      "severity": "HIGH"
     },
     "SECURITY_UNEXPECTED_CODE_EXECUTION_RCE_": {
-      "severity": "CRITICAL"
+      "severity": "HIGH"
     },
     "SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES_": {
-      "severity": "CRITICAL"
+      "severity": "HIGH"
     },
     "SECURITY_TRAINING_DATA_POISONING_": {
-      "severity": "CRITICAL"
+      "severity": "HIGH"
     },
 
     "SECURITY_SENSITIVE_INFORMATION_DISCLOSURE_": {
