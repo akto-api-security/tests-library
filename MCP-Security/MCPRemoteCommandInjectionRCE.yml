@@ -76,7 +76,6 @@ attributes:
   duration: FAST
 wordLists:
   commandInjectionPayloads:
-    - "file:/c:/windows/system32/calc.exe"
     - "file:///bin/sh"
     - "file:///usr/bin/id"
     - "file:///bin/cat /etc/passwd"
@@ -109,40 +108,8 @@ execute:
             params.url: "${commandInjectionPayloads}"
         - add_body_param:
             params.authorization_url: "${commandInjectionPayloads}"
-validate:
-  response_payload:
-    - contains_either:
-      - "calc.exe"
-      - "calculator"
-      - "id"
-      - "uid="
-      - "gid="
-      - "groups="
-      - "root"
-      - "admin"
-      - "user"
-      - "whoami"
-      - "Linux"
-      - "Darwin"
-      - "Windows"
-      - "localhost"
-      - "127.0.0.1"
-      - "bin"
-      - "sbin"
-      - "etc"
-      - "var"
-      - "usr"
-      - "home"
-      - "proc"
-      - "sys"
-      - "dev"
-      - "tmp"
-      - "opt"
-      - "lib"
-      - "boot"
-      - "mnt"
-      - "media"
-      - "srv"
-      - "run"
-      - "lost+found"
-    - magic_validate: "Verify remote command execution via authorization parameter injection: Evidence of calculator/calc.exe execution (Windows GUI calculator indicators), System information from 'id', 'whoami' commands (uid=, gid=, username), OS identification (Linux, Darwin, Windows), Network indicators (localhost, 127.0.0.1), File system paths (bin, sbin, etc, var, usr) indicating directory traversal or command execution, Process information suggesting command execution occurred on remote system"
+        - validate:
+            response_payload:
+              magic_validate: "Verify remote command execution of command ${commandInjectionPayloads}"
+        - success: vulnerable
+        - failure: exit

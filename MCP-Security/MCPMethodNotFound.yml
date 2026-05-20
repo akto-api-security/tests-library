@@ -57,11 +57,6 @@ wordLists:
     - "resources/missingCall"
   methodNotFoundCode:
     - '-32601'
-  errorIndicators:
-    - "Traceback"
-    - "Exception"
-    - "RuntimeError"
-    - "StackTrace"
 execute:
   type: single
   requests:
@@ -72,9 +67,4 @@ execute:
             changed_method: ${invalidMethodNames}
 validate:
   response_payload:
-    magic_validate: |
-        VULNERABLE = TRUE only when:
-        - the response succeeded without any error traces related to invalid request or invalid parameters or invalid method or method not found
-
-        VULNERABLE = FALSE if ANY of the following are true:
-        - The response clearly says invalid request, invalid parameters, invalid method, method not found, etc.
+    contains_either: ${methodNotFoundCode}
