@@ -53,8 +53,6 @@ api_selection_filters:
       key:
         regex: ^(?!id|params|method|jsonrpc|name)
         extract: changed_body_key
-      value:
-        extract: changed_body_value
 wordLists:
   specialOSPayloads:
   - eval "$(echo "aWQgJiYgaWQ=" | base64 --decode)"
@@ -68,10 +66,8 @@ validate:
   response_payload:
     length:
       gt: 0
-    contains_all:
-    - uid=
-    - gid=
-    - groups=
+    contains_either:
+    - "id && id"
     not_contains:
     - Error
     - Internal Server

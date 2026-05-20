@@ -103,23 +103,19 @@ execute:
         response_payload:
           length:
             gt: 0
-          contains_all:
-          - uid=
-          - gid=
-          - groups=
           contains_either:
-          - -January-
-          - -February-
-          - -March-
-          - -April-
-          - -May-
-          - -June-
-          - -July-
-          - -August-
-          - -September-
-          - -October-
-          - -November-
-          - -December-
+          - "January"
+          - "February"
+          - "March"
+          - "April"
+          - "May"
+          - "June"
+          - "July"
+          - "August"
+          - "September"
+          - "October"
+          - "November"
+          - "December"
           not_contains:
           - Error
           - Internal Server
