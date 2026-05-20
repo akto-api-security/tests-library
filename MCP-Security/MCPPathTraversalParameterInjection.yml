@@ -219,4 +219,32 @@ validate:
       - "session:"
       - "account:"
       - "noninteractive:"
-    - magic_validate: "Confirm that path traversal successfully accessed the specific targeted files: For '../../../etc/passwd': Unix password file with format 'username:x:uid:gid:comment:home:shell' and entries like 'root:x:0:0:root:/root:/bin/bash', 'daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin', For '../../../etc/shadow': Encrypted password hashes with formats like '$6$salt$hash' or '$y$salt$hash', For Windows 'system32\\config\\sam': Windows SAM database binary structure or user account information, For '../../../etc/hosts': Host-to-IP mappings like '127.0.0.1 localhost', '::1 localhost', For '../../../etc/ssh/sshd_config': SSH config directives (Port, PermitRootLogin, PasswordAuthentication, PubkeyAuthentication), For '../../../etc/mysql/my.cnf': MySQL config with sections ([mysqld]), directives (port, socket, datadir, bind-address), For '../../../etc/nginx/nginx.conf': Nginx config with directives (server, location, root, index, proxy_pass), For '../../../var/log/auth.log': Authentication logs with timestamps, process names (sshd, sudo), login attempts, For '../../../etc/sudoers': Sudoers file with permission rules, user specifications, Defaults settings, For '../../../.git/config': Git config with [core], [remote], repositoryformatversion, URL"
+    - magic_validate: |
+        Verify whether the path traversal payload successfully read the targeted file from the server filesystem.
+
+        Mark VULNERABLE only when the response contains direct evidence that the traversed path was actually read server-side and file contents were returned.
+
+        Important distinction:
+          The traversal path appearing in the response is NOT proof.
+          A claim that path traversal is possible is NOT proof.
+          File path strings without actual file contents are NOT proof.
+          A generic success-only response without attack proof is NOT proof.
+          Generic file-related keywords without real file content are NOT proof.
+
+        Valid proof includes only:
+          1. For ../../../etc/passwd: Unix passwd entries in username:x:uid:gid:comment:home:shell format (e.g., root:x:0:0:root:/root:/bin/bash).
+          2. For ../../../etc/shadow: encrypted password hash lines ($6$..., $y$..., etc.).
+          3. For Windows system32\\config\\sam: SAM database or Windows account data.
+          4. For ../../../etc/hosts: host-to-IP mappings (127.0.0.1 localhost, ::1 localhost).
+          5. For ../../../etc/ssh/sshd_config: SSH directives (Port, PermitRootLogin, PasswordAuthentication).
+          6. For ../../../etc/mysql/my.cnf or nginx.conf: real config sections and directives.
+          7. For ../../../var/log/auth.log: timestamped authentication log lines.
+          8. For ../../../etc/sudoers: sudo permission rules and Defaults.
+          9. For ../../../.git/config: Git config with [core], [remote], repositoryformatversion, URL.
+
+        Do NOT mark as vulnerable if:
+          1. The response only echoes the traversal path.
+          2. The response only mentions file names without actual file contents.
+          3. The response appears successful in the payload but has no file content proof.
+          4. The result is ambiguous or based on assumption.
+          5. The response contains unrelated security or diagnostic text.

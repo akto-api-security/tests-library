@@ -84,11 +84,23 @@ validate:
       - Error
       - error
     - magic_validate: |
-          VULNERABLE = TRUE only when:
-          - the response succeeded without any error traces related to invalid request or invalid parameters or invalid method or method not found
+        Verify whether ping parameter injection was accepted without proper validation.
 
-          VULNERABLE = FALSE if ANY of the following are true:
-          - The response clearly says invalid request, invalid parameters, invalid method, method not found, etc.
+        Mark VULNERABLE only when the response succeeded without validation errors for the injected parameters.
+
+        Important distinction:
+          A generic successful JSON-RPC result in the payload alone is NOT sufficient.
+          The injected parameter appearing only as echoed text is NOT proof.
+
+        Valid proof (mark VULNERABLE) includes only:
+          1. Successful JSON-RPC result with no invalid request/parameter/method errors.
+          2. Server processed injected ping parameters as valid.
+
+        Do NOT mark as vulnerable if:
+          1. invalid request, invalid parameters, invalid method, or method not found errors.
+          2. JSON-RPC error codes (-32600, -32601, -32602).
+          3. Empty or rejected response.
+          4. The result is ambiguous.
 
 strategy:
   run_once: /

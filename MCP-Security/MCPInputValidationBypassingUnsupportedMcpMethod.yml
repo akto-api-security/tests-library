@@ -64,12 +64,20 @@ validate:
         - jsonrpc
         - result
       - magic_validate: |
-              VULNERABLE = TRUE only when:
-              - The request is successful and the system performs the action.
-              - The response contains no errors of any kind.
+          Verify whether the server accepted an unsupported MCP method (tools/attack) without proper rejection.
 
-              VULNERABLE = FALSE if ANY of the following are true:
-              - the response is empty or does not have any sign of successful response.
-              - The response fails due to an Invalid Method or Method not found error.
-              - The response contains the error code -32601.
-              - The response contains any other error message (e.g., Timeout, 404, 500, or Access Denied).
+          Mark VULNERABLE only when the unsupported method returned a fully successful response with no errors.
+
+          Important distinction:
+            A generic successful JSON-RPC result in the payload alone is NOT sufficient.
+            Generic jsonrpc/result without executing the unsupported method is weak evidence — prefer proof the action ran.
+
+          Valid proof (mark VULNERABLE) includes only:
+            1. Successful JSON-RPC result with jsonrpc and result fields, no errors.
+            2. System performed or acknowledged the unsupported method action.
+
+          Do NOT mark as vulnerable if:
+            1. Empty response or no successful JSON-RPC sign.
+            2. Invalid Method or Method not found (-32601).
+            3. Timeout, 404, 500, Access Denied, or other errors.
+            4. The result is ambiguous.

@@ -63,4 +63,21 @@ validate:
   response_payload:
     length:
       gt: 0
-    magic_validate: if the response failed with validation errors like Invalid JSON-RPC version or contains error codes like 32xxx then it is not vulnearable.
+    magic_validate: |
+      Verify whether the server properly rejected an unsupported JSON-RPC version.
+
+      Mark VULNERABLE only when the server accepted the invalid version and returned a successful response without version validation errors.
+
+      Important distinction:
+        A generic successful JSON-RPC result in the payload alone is NOT sufficient.
+        Generic success without processing the invalid version is NOT proof.
+
+      Valid proof (mark VULNERABLE) includes only:
+        1. Successful JSON-RPC result with no Invalid JSON-RPC version error.
+        2. Request processed despite unsupported version value.
+
+      Do NOT mark as vulnerable if:
+        1. Invalid JSON-RPC version validation errors.
+        2. Error codes in 32xxx range or JSON-RPC rejection.
+        3. Empty or non-successful response.
+        4. The result is ambiguous.

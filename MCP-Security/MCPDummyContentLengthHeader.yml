@@ -60,4 +60,20 @@ validate:
   response_payload:
     length:
       gt: 0
-    magic_validate: "the response must fail with errors related to content length headers or a 4xx error code. if there is no error then it is VULNERABLE. Successful responses are VULNERABLE where as failed responses are not VULNERABLE"
+    magic_validate: |
+      Verify whether the server properly rejected invalid Content-Length header values.
+
+      Mark VULNERABLE only when the server accepted the invalid Content-Length and returned a successful response without errors.
+
+      Important distinction:
+        A generic successful JSON-RPC result in the payload alone is NOT sufficient — the invalid header must appear processed as valid.
+
+      Valid proof (mark VULNERABLE) includes only:
+        1. Successful JSON-RPC result with no content-length validation errors.
+        2. Request processed despite non-numeric or invalid Content-Length (e.g., 'cats').
+
+      Do NOT mark as vulnerable if:
+        1. content-length validation errors in the response payload.
+        2. JSON-RPC errors for malformed request.
+        3. Empty or rejected response.
+        4. The result is ambiguous.

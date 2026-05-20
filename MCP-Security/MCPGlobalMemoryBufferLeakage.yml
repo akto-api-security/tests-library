@@ -114,4 +114,24 @@ validate:
       - "global context"
       - "global data"
       - "global store"
-    - magic_validate: "Verify if actual global memory buffer data was leaked: Memory addresses and buffer pointers (0x7fff5fbfe000, buffer address: 0x...), Cached data from other users' operations (previous query results, stored API responses, cached user data), Remnants of previous executions from other sessions (leftover variables, temporary data, execution artifacts), Shared buffer contents with sensitive information (API keys, tokens, credentials from global store), Data structures from global memory (buffer contents, memory dumps, persistent store data), NOT just the words 'global' or 'buffer' but actual memory content, addresses, or cached data from global buffers that was improperly accessed"
+    - magic_validate: |
+        Verify whether actual global memory buffer data was leaked in the response.
+
+        Mark VULNERABLE only when the response contains direct evidence of real memory addresses, cached data, or buffer contents from global stores.
+
+        Important distinction:
+          Words 'global' or 'buffer' alone are NOT proof.
+          A generic success-only response without memory content is NOT proof.
+
+        Valid proof includes only:
+          1. Memory addresses or buffer pointers (0x7fff5fbfe000).
+          2. Cached data from other users' operations.
+          3. Remnants from previous sessions (variables, execution artifacts).
+          4. Sensitive global buffer contents (API keys, tokens, credentials).
+          5. Memory dumps or persistent store data structures.
+
+        Do NOT mark as vulnerable if:
+          1. Only generic global/buffer keywords.
+          2. Payload echo only.
+          3. Success-only response without addresses, cached data, or dumps.
+          4. The result is ambiguous or based on assumption.

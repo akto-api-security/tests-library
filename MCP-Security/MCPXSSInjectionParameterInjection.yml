@@ -172,18 +172,26 @@ validate:
       - "onvolumechange="
       - "onwaiting="
     - magic_validate: |
-        Mark the response as VULNERABLE only if it contains unescaped, browser-executable HTML or JavaScript introduced via injected parameters.
+        Verify whether XSS payloads injected via MCP parameters appear as unescaped, browser-executable HTML or JavaScript in the response.
 
-        Vulnerable = TRUE when:
-        - There is presence of real HTML tags capable of script execution (<script>, <img>, <svg>, <iframe>, etc.)
-        - There is presence of active event handler attributes (onerror=, onload=, onfocus=, ontoggle=, etc.)
-        - There is presence of a javascript: URL used in an executable attribute (href, src, action, etc.)
-        - The injected content would execute automatically or with normal user interaction in a browser
+        Mark VULNERABLE only when the response contains direct evidence that injected markup would execute in a browser context.
 
-        Vulnerable = FALSE when:
-        - The content is HTML-encoded, escaped, sanitized, or commented out
-        - The content appears only in logs, errors, documentation, examples, or JSON string values
-        - The response discusses or demonstrates XSS without enabling execution
-        - Dummy or illustrative values are returned
+        Important distinction:
+          HTML-encoded or escaped payloads (&lt;script&gt;) are NOT proof.
+          The payload appearing only inside JSON string values, logs, errors, or documentation is NOT proof.
+          Discussion or demonstration of XSS without executable markup is NOT proof.
+          A generic success-only response without attack proof is NOT proof.
+          Dummy or illustrative example values are NOT proof.
 
-        Only real, executable client-side script execution qualifies as a successful attack.
+        Valid proof includes only:
+          1. Unescaped executable HTML tags (<script>, <img>, <svg>, <iframe>, etc.) from the injection.
+          2. Active event handler attributes (onerror=, onload=, onfocus=, ontoggle=, etc.) in executable context.
+          3. javascript: URLs in executable attributes (href, src, action).
+          4. Markup that would auto-execute or execute on normal user interaction in a browser.
+
+        Do NOT mark as vulnerable if:
+          1. Content is sanitized, encoded, escaped, or commented out.
+          2. The payload is only reflected safely inside non-executable contexts.
+          3. The response appears successful in the payload but has no executable markup proof.
+          4. The result is ambiguous or based on assumption.
+          5. The response contains unrelated security or diagnostic text.

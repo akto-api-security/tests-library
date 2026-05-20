@@ -51,4 +51,23 @@ validate:
   response_payload:
     and:
     - not_magic_validate: "Analyze the response and check whether the response indicates that the request failed due to isError: true or any other error (like requested data nbot found, error processing request, server error, not accessible, etc)."
-    - magic_validate: "Check the response for sensitive data related to username and password, api-keys, api tokens, access keys, jwt tokens, ssh keys, keys corresponding to username, secrets or credentials. Any secrets that was not supposed to be exposed. DO NOT consider json param keys. ONLY consider their values."
+    - magic_validate: |
+        Verify whether the response disclosed sensitive credential values that should not be exposed.
+
+        Mark VULNERABLE only when response values (not JSON keys) contain real secrets — not placeholders, not key names alone.
+
+        Important distinction:
+          JSON parameter key names (password, api_key, token) are NOT proof — only values matter.
+          Masked, redacted, or example values are NOT proof.
+          A generic success-only response without secret values is NOT proof.
+
+        Valid proof includes only:
+          1. Real username/password values in responses.
+          2. API keys, tokens, access keys, JWTs, SSH keys with non-placeholder values.
+          3. Secrets or credentials in value fields that were not supposed to be exposed.
+
+        Do NOT mark as vulnerable if:
+          1. Only key names without sensitive values.
+          2. Masked/redacted/placeholder values (*** , example_, test_).
+          3. Success-only response without actual secret values in response body.
+          4. The result is ambiguous or based on assumption.

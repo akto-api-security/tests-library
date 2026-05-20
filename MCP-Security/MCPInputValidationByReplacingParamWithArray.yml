@@ -55,7 +55,24 @@ execute:
     - delete_body_param: "${userKey}"
     - validate:
         response_payload:
-          magic_validate: "the response must fail with errors. if there is no error then it is VULNERABLE. Successful responses are VULNERABLE where as failed responses are not VULNERABLE"
+          magic_validate: |
+            Verify whether input validation properly rejected array substitution for scalar parameters.
+
+            Mark VULNERABLE only when the server accepted the array value without validation errors and returned a successful response.
+
+            Important distinction:
+              A generic successful JSON-RPC result in the payload alone is NOT sufficient.
+              The array appearing only as echoed text is NOT proof.
+
+            Valid proof (mark VULNERABLE) includes only:
+              1. Successful JSON-RPC result with no type/validation errors.
+              2. Server processed array as valid for the parameter.
+
+            Do NOT mark as vulnerable if:
+              1. Validation or type errors present.
+              2. JSON-RPC error codes or rejection messages.
+              3. Empty or non-successful response.
+              4. The result is ambiguous.
     - success: exit
     - failure: x2
   - req:
@@ -64,5 +81,22 @@ execute:
         - "${userVal}"
     - validate:
         response_payload:
-          magic_validate: "the response must fail with errors. if there is no error then it is VULNERABLE. Successful responses are VULNERABLE where as failed responses are not VULNERABLE"
+          magic_validate: |
+            Verify whether input validation properly rejected array substitution for scalar parameters.
+
+            Mark VULNERABLE only when the server accepted the array value without validation errors and returned a successful response.
+
+            Important distinction:
+              A generic successful JSON-RPC result in the payload alone is NOT sufficient.
+              The array appearing only as echoed text is NOT proof.
+
+            Valid proof (mark VULNERABLE) includes only:
+              1. Successful JSON-RPC result with no type/validation errors.
+              2. Server processed array as valid for the parameter.
+
+            Do NOT mark as vulnerable if:
+              1. Validation or type errors present.
+              2. JSON-RPC error codes or rejection messages.
+              3. Empty or non-successful response.
+              4. The result is ambiguous.
     - success: vulnerable

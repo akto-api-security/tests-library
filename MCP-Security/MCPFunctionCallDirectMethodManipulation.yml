@@ -115,19 +115,28 @@ validate:
     - restricted
     - Method not allowed
   - magic_validate: |
-      Identify if the response proves a successful exploit of the ${unauthorizedMethods} call.
-      Criteria for SUCCESS:
+      Verify whether the unauthorized method `${unauthorizedMethods}` was successfully invoked and returned real privileged data or effects.
 
-      * Data Leakage: The response contains actual sensitive data related to the specific method called such as real API keys, database rows, system secrets, or user lists.
-      * Execution Confirmation: The response confirms a privileged action was performed such as database wiped, permissions updated, or command output results.
-      * Internal Exposure: The response returns raw system information, environment variables, or internal stack traces that reveal server internals.
+      Mark VULNERABLE only when the response contains direct evidence that the unauthorized method call succeeded.
 
-      Criteria for FAILURE (Do not flag):
+      Important distinction:
+        Reflection of the method name or request parameters is NOT proof.
+        A generic result ok or empty success is NOT proof.
+        Placeholder or dummy data (test_user, example_secret) is NOT proof.
+        A generic success-only response without attack proof is NOT proof.
+        Hidden errors (unknown method, restricted, invalid) mean NOT_VULNERABLE even if the response appears successful.
 
-      * Reflections: The response only repeats the method name or the request parameters.
-      * Empty Success: A generic status success or result ok with no actual data returned.
-      * Placeholders: The presence of dummy data like test_user, example_secret, or 12345.
-      * Hidden Errors: Any text  indicating the method is unknown, restricted, or invalid, regardless of the 200 OK status.
+      Valid proof includes only:
+        1. Data leakage: real API keys, database rows, system secrets, or user lists from the invoked method.
+        2. Execution confirmation: privileged action performed (permissions updated, command output, wipe confirmation).
+        3. Internal exposure: raw environment variables, stack traces, or server internals from the method.
+
+      Do NOT mark as vulnerable if:
+        1. The response only repeats the method name or parameters.
+        2. Success-only response with no actual privileged data or effect.
+        3. Placeholder or example values only.
+        4. Any indication the method is unknown, restricted, or invalid.
+        5. The result is ambiguous or based on assumption.
 strategy:
   run_once: /
 

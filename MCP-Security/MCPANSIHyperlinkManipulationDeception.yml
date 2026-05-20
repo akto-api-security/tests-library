@@ -122,4 +122,24 @@ validate:
       - "settings-hijacker.com"
       - "phishing"
       - "malware"
-    - magic_validate: "Determine if ANSI escape sequences were processed and malicious hyperlinks were accepted: For hyperlink manipulation: Malicious URLs (phishing-site.example.com, malware-distribution.com, fake-login.com, credential-stealer.com) embedded via ANSI hyperlink codes (\x1B]8;;URL\x1B\\), Evidence that displayed text showed legitimate URLs (legitimate-service.example.com, official-software.com) while linking to malicious sites, URL spoofing where link display text differs from actual destination, System accepting hyperlinks with escape sequences that create deceptive links, NOT just mentions of 'hyperlink' or 'phishing' but actual evidence that ANSI hyperlink codes were interpreted and malicious URLs were embedded in benign-looking links"
+    - magic_validate: |
+        Verify whether ANSI hyperlink escape sequences were processed and deceptive malicious links were accepted.
+
+        Mark VULNERABLE only when the response shows hyperlink codes were interpreted with URL spoofing — not keyword mentions alone.
+
+        Important distinction:
+          'hyperlink' or 'phishing' keywords alone are NOT proof.
+          Malicious URLs only in request echo are NOT proof.
+          A generic success-only response without deceptive link processing is NOT proof.
+
+        Valid proof includes only:
+          1. Malicious URLs embedded via ANSI hyperlink codes (\x1B]8;;URL\x1B\\).
+          2. Display text showing legitimate URLs while linking to malicious destinations.
+          3. URL spoofing where display differs from actual destination.
+          4. System accepting deceptive hyperlinks with escape sequences.
+
+        Do NOT mark as vulnerable if:
+          1. Only hyperlink/phishing keywords.
+          2. Payload echo without link processing.
+          3. Success-only response without spoofing/processing proof.
+          4. The result is ambiguous or based on assumption.

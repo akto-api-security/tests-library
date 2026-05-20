@@ -132,17 +132,26 @@ validate:
       - unauthorized
       - forbidden
     - magic_validate: |
-            Identify if the response proves a successful exploit of the ${injectionPayloads} or injected parameters like admin, bypass_auth, or shell.
+        Verify whether the injection payload `${injectionPayloads}` or injected parameters (admin, bypass_auth, shell) caused a real server-side exploit.
 
-            Criteria for SUCCESS:
-            - System File Access: Response contains sensitive file content (e.g., "root:x:0:0", "bin/bash", or "/etc/shadow" content).
-            - Command Output: Response displays results of injected commands like whoami (returning "root", "www-data"), ls file listings, or id output.
-            - Database/SQL Leakage: Response shows data from unauthorized tables or confirmations of structural changes (e.g., "Table users dropped").
-            - Auth/Logic Bypass: Response provides administrative data or access tokens specifically because "admin: true" or "bypass_auth" was injected.
-            - Expression/SSTI Results: Response shows the result of math or code evaluation (e.g., "49" appearing in response to "{{7*7}}").
+        Mark VULNERABLE only when the response contains direct evidence of successful exploitation — not reflection, not claims, and not generic success.
 
-            Criteria for FAILURE:
-            - Literal Reflection: Response simply repeats the attack string back to the user as a "received" value.
-            - Safe Handling: Response treats the payload as a literal name or search term and returns "No results found."
-            - Empty/Generic Success: A 200 OK with no actual data or a message like "parameters accepted" without execution evidence.
-            - Error/Validation: Any text indicating the input was blocked, even if the status code is 200.
+        Important distinction:
+          Reflection of the payload is NOT proof.
+          A generic success-only response without attack proof is NOT proof.
+          "Parameters accepted" or similar without execution evidence is NOT proof.
+          Claims that exploitation is possible are NOT proof.
+
+        Valid proof includes only:
+          1. System file access: sensitive file content (root:x:0:0, /etc/shadow content, bin/bash paths).
+          2. Command output: results of whoami, id, ls, or similar injected commands.
+          3. Database/SQL leakage: unauthorized table data or confirmed structural changes.
+          4. Auth/logic bypass: administrative data or tokens granted because admin/bypass_auth was injected.
+          5. Expression/SSTI: evaluated result (e.g., 49 from {{7*7}}), not the template literal alone.
+
+        Do NOT mark as vulnerable if:
+          1. The response only echoes the attack string.
+          2. The payload is treated as a literal search term with no results or no side effect.
+          3. Success-only response with no execution or data-leak proof.
+          4. Input was blocked or validation errors are present.
+          5. The result is ambiguous or based on assumption.
