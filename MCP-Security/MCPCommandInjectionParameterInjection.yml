@@ -108,7 +108,36 @@ execute:
             params.arguments.${payloadKeys}: "${commandInjectionPayloads}"
         - validate:
             response_payload:
-              magic_validate: "Verify command execution of command ${commandInjectionPayloads} in the response"
+              magic_validate: |
+                Verify whether the command injection payload `${commandInjectionPayloads}` caused real OS command execution on the server.
+
+                Mark the result as VULNERABLE only when the response contains direct evidence that the payload was actually executed or processed by the server.
+
+                Important distinction:
+                  A claim that something is vulnerable is NOT proof.
+                  A warning that command execution is possible is NOT proof.
+                  A list of possible attack vectors is NOT proof.
+                  The payload appearing anywhere in the response is NOT proof.
+                  A normal response containing the payload as text is NOT proof.
+                  A generic success-only response without attack proof is NOT proof.
+                  A status such as processed, printed, accepted, completed, or success is NOT proof by itself.
+
+                Valid proof includes only:
+                  1. The response contains actual output produced by the injected command.
+                  2. The response contains known OS command output caused by the payload, such as uid/gid output, current username, environment variables, kernel/system information, directory listing output, or file contents (e.g., /etc/passwd entries).
+                  3. The response contains a known canary value that could only appear if the injected command was executed server-side.
+                  4. The response shows a confirmed server-side side effect caused by the payload.
+                  5. For time-based command payloads, explicit timing evidence matching the injected delay.
+
+                Do NOT mark as vulnerable if:
+                  1. The response only says that arbitrary command execution is possible.
+                  2. The response only contains vulnerability labels, warnings, explanations, or suggested attack vectors.
+                  3. The response only echoes the payload.
+                  4. The response only contains generated text describing what the payload could do.
+                  5. The response only contains a command string or shell syntax without execution output.
+                  6. The response appears successful in the payload but has no execution proof.
+                  7. The result is ambiguous or based on assumption.
+                  8. The response contains unrelated security, compliance, or diagnostic text.
         - success: vulnerable
         - failure: x2
     - req:
@@ -122,6 +151,35 @@ execute:
             params.arguments.exec: "${commandInjectionPayloads}"
         - validate:
             response_payload:
-              magic_validate: "Verify command execution of command ${commandInjectionPayloads} in the response"
+              magic_validate: |
+                Verify whether the command injection payload `${commandInjectionPayloads}` caused real OS command execution on the server.
+
+                Mark the result as VULNERABLE only when the response contains direct evidence that the payload was actually executed or processed by the server.
+
+                Important distinction:
+                  A claim that something is vulnerable is NOT proof.
+                  A warning that command execution is possible is NOT proof.
+                  A list of possible attack vectors is NOT proof.
+                  The payload appearing anywhere in the response is NOT proof.
+                  A normal response containing the payload as text is NOT proof.
+                  A generic success-only response without attack proof is NOT proof.
+                  A status such as processed, printed, accepted, completed, or success is NOT proof by itself.
+
+                Valid proof includes only:
+                  1. The response contains actual output produced by the injected command.
+                  2. The response contains known OS command output caused by the payload, such as uid/gid output, current username, environment variables, kernel/system information, directory listing output, or file contents (e.g., /etc/passwd entries).
+                  3. The response contains a known canary value that could only appear if the injected command was executed server-side.
+                  4. The response shows a confirmed server-side side effect caused by the payload.
+                  5. For time-based command payloads, explicit timing evidence matching the injected delay.
+
+                Do NOT mark as vulnerable if:
+                  1. The response only says that arbitrary command execution is possible.
+                  2. The response only contains vulnerability labels, warnings, explanations, or suggested attack vectors.
+                  3. The response only echoes the payload.
+                  4. The response only contains generated text describing what the payload could do.
+                  5. The response only contains a command string or shell syntax without execution output.
+                  6. The response appears successful in the payload but has no execution proof.
+                  7. The result is ambiguous or based on assumption.
+                  8. The response contains unrelated security, compliance, or diagnostic text.
         - success: vulnerable
         - failure: exit

@@ -113,7 +113,40 @@ execute:
             params.arguments.${payloadKeys}: "${sqlInjectionPayloads}"
         - validate:
             response_payload:
-              magic_validate: "Verify command execution of command ${sqlInjectionPayloads} in the response"
+              magic_validate: |
+                Verify whether the SQL injection payload `${sqlInjectionPayloads}` was successfully executed by the database.
+
+                The result must be VULNERABLE only when there is direct proof that the injected SQL was executed by the database engine.
+
+                Important distinction:
+                  Reflection of the payload is NOT execution.
+                  Seeing the exact payload string anywhere in the response is NOT proof of SQL injection.
+                  A normal response containing the payload as a returned value is NOT proof of SQL injection.
+                  A generic success-only response is NOT proof of SQL injection.
+
+                For time-based SQL injection payloads:
+                  If the payload contains delay functions such as WAITFOR DELAY, SLEEP, pg_sleep, DBMS_LOCK.SLEEP, or BENCHMARK, mark VULNERABLE only if the response includes timing evidence proving that the server response time increased by approximately the requested delay.
+                  Timing evidence must be explicit, such as response_time_ms, latency_ms, duration_ms, elapsed_time_ms, total_time_ms, or a similar measured timing field.
+                  If no timing measurement is present in the response, do NOT infer delay from the payload text.
+
+                Valid proof of successful SQL injection includes only:
+                  1. The response contains database-generated output caused by the injected SQL, such as UNION SELECT output, database version, table data, user data, current_user, database name, or a known canary value selected by SQL.
+                  2. A boolean-based payload changes the response meaningfully compared to the expected normal response, such as returning extra records, bypassing authentication, changing authorization behavior, or changing the result set.
+                  3. A time-based payload causes a measured response delay matching the injected SQL delay function.
+                  4. The injected SQL causes a confirmed database-side state change, such as inserted, updated, deleted, or created data.
+
+                Do NOT mark as vulnerable if:
+                  1. The payload is only reflected anywhere in the response.
+                  2. The payload appears as a normal returned value, request echo, debug echo, log echo, validation message, or generated text.
+                  3. The response only contains a SQL error.
+                  4. The response appears successful in the payload but has no database-side proof.
+                  5. The response says the command was accepted, processed, validated, or stored, but no execution proof is visible.
+                  6. The result is ambiguous or based on assumption.
+                  7. The response contains security, compliance, or explanatory text unrelated to SQL execution.
+                  8. A time-based payload is present but no measured timing evidence is available.
+
+                If the response merely includes the SQL payload string as text or data, mark it NOT_VULNERABLE unless there is separate proof of timing delay, database-generated output, meaningful behavior change, or database state change.
+
         - success: vulnerable
         - failure: x2
     - req:
@@ -127,6 +160,39 @@ execute:
             params.arguments.where: "${sqlInjectionPayloads}"
         - validate:
             response_payload:
-              magic_validate: "Verify command execution of command ${sqlInjectionPayloads} in the response"
+              magic_validate: |
+                Verify whether the SQL injection payload `${sqlInjectionPayloads}` was successfully executed by the database.
+
+                The result must be VULNERABLE only when there is direct proof that the injected SQL was executed by the database engine.
+
+                Important distinction:
+                  Reflection of the payload is NOT execution.
+                  Seeing the exact payload string anywhere in the response is NOT proof of SQL injection.
+                  A normal response containing the payload as a returned value is NOT proof of SQL injection.
+                  A generic success-only response is NOT proof of SQL injection.
+
+                For time-based SQL injection payloads:
+                  If the payload contains delay functions such as WAITFOR DELAY, SLEEP, pg_sleep, DBMS_LOCK.SLEEP, or BENCHMARK, mark VULNERABLE only if the response includes timing evidence proving that the server response time increased by approximately the requested delay.
+                  Timing evidence must be explicit, such as response_time_ms, latency_ms, duration_ms, elapsed_time_ms, total_time_ms, or a similar measured timing field.
+                  If no timing measurement is present in the response, do NOT infer delay from the payload text.
+
+                Valid proof of successful SQL injection includes only:
+                  1. The response contains database-generated output caused by the injected SQL, such as UNION SELECT output, database version, table data, user data, current_user, database name, or a known canary value selected by SQL.
+                  2. A boolean-based payload changes the response meaningfully compared to the expected normal response, such as returning extra records, bypassing authentication, changing authorization behavior, or changing the result set.
+                  3. A time-based payload causes a measured response delay matching the injected SQL delay function.
+                  4. The injected SQL causes a confirmed database-side state change, such as inserted, updated, deleted, or created data.
+
+                Do NOT mark as vulnerable if:
+                  1. The payload is only reflected anywhere in the response.
+                  2. The payload appears as a normal returned value, request echo, debug echo, log echo, validation message, or generated text.
+                  3. The response only contains a SQL error.
+                  4. The response appears successful in the payload but has no database-side proof.
+                  5. The response says the command was accepted, processed, validated, or stored, but no execution proof is visible.
+                  6. The result is ambiguous or based on assumption.
+                  7. The response contains security, compliance, or explanatory text unrelated to SQL execution.
+                  8. A time-based payload is present but no measured timing evidence is available.
+
+                If the response merely includes the SQL payload string as text or data, mark it NOT_VULNERABLE unless there is separate proof of timing delay, database-generated output, meaningful behavior change, or database state change.
+
         - success: vulnerable
         - failure: exit

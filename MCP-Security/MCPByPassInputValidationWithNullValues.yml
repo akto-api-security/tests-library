@@ -76,7 +76,24 @@ execute:
         response_payload:
           length:
             gt: 0
-          magic_validate: "the response must fail with errors related to invalid input or paramters. if there is no error then it is VULNERABLE. Successful responses are VULNERABLE where as failed responses are not VULNERABLE"
+          magic_validate: |
+            Verify whether input validation properly rejected null/invalid values.
+
+            Mark VULNERABLE only when the server accepted null or invalid input without validation errors and returned a successful response.
+
+            Important distinction:
+              A generic successful JSON-RPC result in the payload alone is NOT sufficient.
+              The null value appearing only as echoed text is NOT proof the bypass succeeded.
+
+            Valid proof (mark VULNERABLE) includes only:
+              1. Successful JSON-RPC result with no invalid-input errors.
+              2. Server processed null/invalid value as valid.
+
+            Do NOT mark as vulnerable if:
+              1. Validation errors for invalid input or parameters.
+              2. JSON-RPC error codes or rejection errors in the response payload.
+              3. Empty response or no successful processing.
+              4. The result is ambiguous.
           
     - success: exit
     - failure: x2
@@ -90,5 +107,22 @@ execute:
         response_payload:
           length:
             gt: 0
-          magic_validate: "the response must fail with errors related to invalid input or paramters. if there is no error then it is VULNERABLE. Successful responses are VULNERABLE where as failed responses are not VULNERABLE"
+          magic_validate: |
+            Verify whether input validation properly rejected null/invalid values.
+
+            Mark VULNERABLE only when the server accepted null or invalid input without validation errors and returned a successful response.
+
+            Important distinction:
+              A generic successful JSON-RPC result in the payload alone is NOT sufficient.
+              The null value appearing only as echoed text is NOT proof the bypass succeeded.
+
+            Valid proof (mark VULNERABLE) includes only:
+              1. Successful JSON-RPC result with no invalid-input errors.
+              2. Server processed null/invalid value as valid.
+
+            Do NOT mark as vulnerable if:
+              1. Validation errors for invalid input or parameters.
+              2. JSON-RPC error codes or rejection errors in the response payload.
+              3. Empty response or no successful processing.
+              4. The result is ambiguous.
     - success: vulnerable

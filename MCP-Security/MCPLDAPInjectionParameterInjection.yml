@@ -118,4 +118,29 @@ execute:
             params.arguments.user: "${ldapInjectionPayloads}"
 validate:
   response_payload:
-    - magic_validate: "Assess if LDAP filter injection manipulated the query successfully: For 'admin)(&(password=*))' AND injection: Admin entry returned with any password accepted, authentication bypassed, For 'admin)(|(password=*))' OR injection: Multiple user records returned beyond just 'admin' user, For 'admin)(!(password=*))' NOT injection: Users without password field, or inverted filter results, For '(&(objectClass=*))' wildcard injection: All objects in directory returned regardless of filter, For '(cn=*)' or '(uid=*)' wildcards: All common names or user IDs exposed, not just searched user, For '(mail=*)' wildcard: All email addresses from directory leaked, LDAP attribute disclosure: Responses containing 'cn=username', 'uid=userid', 'mail=email@domain', 'objectClass=person', 'dn: cn=user,ou=people,dc=example,dc=com', LDAP errors indicating injection: 'invalid filter syntax', 'malformed filter', 'unexpected token', Authentication bypass: Login successful with manipulated filter without valid credentials"
+    - magic_validate: |
+        Verify whether the LDAP injection payload `${ldapInjectionPayloads}` successfully manipulated the LDAP query or directory access.
+
+        Mark VULNERABLE only when the response contains direct evidence that the injected LDAP filter was evaluated by the directory server and changed query results.
+
+        Important distinction:
+          Reflection of the payload is NOT proof of successful LDAP injection.
+          Seeing the exact payload string anywhere in the response is NOT proof.
+          A LDAP syntax error alone is NOT proof of successful injection.
+          A generic success-only response without attack proof is NOT proof.
+          Generic mentions of LDAP, directory, or authentication are NOT proof.
+
+        Valid proof includes only:
+          1. Authentication bypass: login or access granted with manipulated filter without valid credentials (e.g., admin entry returned with any password via AND/OR injection).
+          2. Expanded result set: more records than expected (e.g., OR injection returning multiple users, wildcard `(cn=*)` or `(&(objectClass=*))` returning all directory objects).
+          3. LDAP attribute disclosure: real directory entries with cn, uid, mail, objectClass, dn values from the directory (not placeholders).
+          4. Inverted or unexpected filter behavior matching NOT/AND/OR injection semantics.
+          5. Confirmed directory-side state change caused by the payload.
+
+        Do NOT mark as vulnerable if:
+          1. The payload is only reflected in the response.
+          2. The response only contains LDAP syntax or filter errors without unauthorized data access.
+          3. The response appears successful in the payload but has no directory-side proof.
+          4. The response says the request was accepted without showing changed LDAP results.
+          5. The result is ambiguous or based on assumption.
+          6. The response contains unrelated security or diagnostic text.

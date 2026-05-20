@@ -117,4 +117,26 @@ validate:
       - "database"
       - "service"
       - "internal structure"
-    - magic_validate: "Verify if actual internal system details were exposed: Server versions and framework info (Node.js v16.14.2, Express 4.18.1, Python 3.9.7/Django 4.0), Internal component names and services (auth-service, payment-processor, user-management-api), Database schema details (tables: users, orders, payments; columns: user_id, email, password_hash), Service topology and architecture (microservices running on Kubernetes cluster, nginx reverse proxy, Redis cache layer), Internal API structures and endpoints (/internal/v1/admin, private API routes), Infrastructure details (AWS region us-east-1, Docker containers, load balancer config), NOT just words 'architecture' or 'infrastructure' but actual version numbers, component names, or technical specifications"
+    - magic_validate: |
+        Verify whether actual internal system details were disclosed in the response.
+
+        Mark VULNERABLE only when the response contains direct evidence of real internal technical specifications — not keyword mentions.
+
+        Important distinction:
+          Words like 'architecture' or 'infrastructure' alone are NOT proof.
+          Generic technology names without versions or specifics are NOT proof.
+          A generic success-only response without internal details is NOT proof.
+
+        Valid proof includes only:
+          1. Server versions and framework info (Node.js v16.14.2, Express 4.18.1, Python 3.9.7/Django 4.0).
+          2. Internal component/service names (auth-service, payment-processor).
+          3. Database schema details (tables, columns with real names).
+          4. Service topology (Kubernetes, nginx, Redis with specifics).
+          5. Internal API endpoints (/internal/v1/admin).
+          6. Infrastructure details (AWS region, Docker, load balancer config).
+
+        Do NOT mark as vulnerable if:
+          1. Only generic architecture/infrastructure keywords.
+          2. Payload echo only.
+          3. Success-only response without version numbers, component names, or specs.
+          4. The result is ambiguous or based on assumption.

@@ -110,6 +110,41 @@ execute:
             params.authorization_url: "${commandInjectionPayloads}"
         - validate:
             response_payload:
-              magic_validate: "Verify remote command execution of command ${commandInjectionPayloads}"
+              magic_validate: |
+                Verify whether the payload `${commandInjectionPayloads}` caused real remote command execution or real server-side file access.
+
+                Mark the result as VULNERABLE only when the response contains direct evidence that the payload was actually executed, evaluated, fetched, or processed by the server.
+
+                Important distinction:
+                  A claim that something is vulnerable is NOT proof.
+                  A warning that command execution is possible is NOT proof.
+                  A list of possible attack vectors is NOT proof.
+                  The payload appearing anywhere in the response is NOT proof.
+                  A normal response containing the payload as text is NOT proof.
+                  A generic success-only response without attack proof is NOT proof.
+                  A status such as processed, printed, accepted, completed, or success is NOT proof by itself.
+
+                Valid proof includes only:
+                  1. The response contains actual output produced by the injected command or fetched resource.
+                  2. The response contains known OS command output caused by the payload, such as uid/gid output, current username, environment variables, kernel/system information, directory listing output, or file contents.
+                  3. The response contains a known canary value that could only appear if the injected command or fetched resource was executed or read server-side.
+                  4. The response shows a confirmed server-side side effect caused by the payload, such as a created file, modified data, outbound callback confirmation, or another verifiable state change.
+                  5. For time-based command payloads, the response includes explicit timing evidence showing a measured delay matching the injected command delay.
+
+                Do NOT mark as vulnerable if:
+                  1. The response only says that arbitrary command execution is possible.
+                  2. The response only contains vulnerability labels, warnings, explanations, or suggested attack vectors.
+                  3. The response only echoes the payload.
+                  4. The response only contains generated text describing what the payload could do.
+                  5. The response only contains a command string, URL string, file URI, or shell syntax.
+                  6. The response appears successful in the payload but has no execution proof.
+                  7. The result is ambiguous or based on assumption.
+                  8. The response contains unrelated security, compliance, or diagnostic text.
+                  9. The payload is a file URI but the response does not contain fetched file contents or other proof that the file URI was accessed server-side.
+
+                For payloads like file:///bin/sh, file:///usr/bin/id, file:///usr/bin/whoami, file:///usr/bin/env, file:///bin/ls, or file:///bin/uname:
+                  Mark VULNERABLE only if the response contains concrete output proving server-side execution or file access.
+                  Do not treat the presence of the file URI itself as proof.
+                  Do not treat explanatory text about command execution as proof.
         - success: vulnerable
         - failure: exit

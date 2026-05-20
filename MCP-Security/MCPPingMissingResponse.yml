@@ -62,15 +62,23 @@ validate:
       - jsonrpc
       - result
     - magic_validate: |
-            VULNERABLE = TRUE only when:
-            - The request is successful and the system performs the action.
-            - The response contains no errors of any kind.
+        Verify whether the server improperly accepted a ping request that should have been rejected or handled with errors.
 
-            VULNERABLE = FALSE if ANY of the following are true:
-            - the response is empty or does not have any sign of successful response.
-            - The response fails due to an Invalid Method or Method not found error.
-            - The response contains the error code -32601.
-            - The response contains any other error message (e.g., Timeout, 404, 500, or Access Denied).
+        Mark VULNERABLE only when the ping returned a fully successful response with no errors — indicating missing/improper validation.
+
+        Important distinction:
+          A generic successful JSON-RPC result in the payload alone is NOT sufficient — the payload must show jsonrpc/result with no errors.
+          Partial or malformed success is NOT proof.
+
+        Valid proof (mark VULNERABLE) includes only:
+          1. Successful JSON-RPC result (jsonrpc, result) with no errors.
+          2. System performed ping action without rejection.
+
+        Do NOT mark as vulnerable if:
+          1. Empty response or no sign of successful JSON-RPC.
+          2. Invalid Method or Method not found errors.
+          3. Error code -32601 or other errors (Timeout, 404, 500, Access Denied).
+          4. The result is ambiguous.
 strategy:
   run_once: /
 

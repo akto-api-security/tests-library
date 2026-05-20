@@ -61,7 +61,24 @@ execute:
         response_payload:
           length:
             gt: 0
-          magic_validate: "the response must fail with errors. if there is no error then it is VULNERABLE. Successful responses are VULNERABLE where as failed responses are not VULNERABLE"
+          magic_validate: |
+            Verify whether input validation properly rejected non-boolean values for boolean fields.
+
+            Mark VULNERABLE only when the server accepted invalid boolean input and returned a successful response without validation errors.
+
+            Important distinction:
+              A generic successful JSON-RPC result in the payload alone is NOT sufficient — the invalid value must appear processed as valid.
+              Generic success without processing the invalid input is NOT proof.
+
+            Valid proof (mark VULNERABLE) includes only:
+              1. Successful JSON-RPC result with no type/validation errors for non-boolean input.
+              2. Server processed string or other invalid value as if it were a valid boolean.
+
+            Do NOT mark as vulnerable if:
+              1. Response contains validation errors (invalid type, invalid parameter, malformed).
+              2. JSON-RPC error codes present (-32600, -32602, etc.).
+              3. Response is empty or lacks successful processing.
+              4. The result is ambiguous.
 
 wordLists:
   attemptValues:

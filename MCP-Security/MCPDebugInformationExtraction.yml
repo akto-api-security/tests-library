@@ -117,4 +117,25 @@ validate:
       - "/opt/"
       - "/home/"
       - "Traceback"
-    - magic_validate: "Verify if actual debug information was leaked: Stack traces with file paths and line numbers (File \"/app/server.py\", line 42, in function_name), Exception details with internal errors (ValueError: invalid literal, TypeError: cannot concatenate 'str' and 'int'), Internal file system paths (/var/www/app/src/handler.py, /usr/local/lib/python3.9/site-packages/), Variable dumps with actual values (DEBUG: user_id=12345, token=xyz), Traceback information (Traceback (most recent call last):, at Object.<anonymous>), NOT just the word 'debug' or 'error' but actual stack traces, file paths, or exception details"
+    - magic_validate: |
+        Verify whether actual debug information was disclosed in the response.
+
+        Mark VULNERABLE only when the response contains direct evidence of real debug/stack trace leakage.
+
+        Important distinction:
+          The words 'debug' or 'error' alone are NOT proof.
+          Generic error messages without stack traces are NOT proof.
+          A generic success-only response without debug content is NOT proof.
+
+        Valid proof includes only:
+          1. Stack traces with file paths and line numbers (File "/app/server.py", line 42).
+          2. Exception details (ValueError, TypeError with internal messages).
+          3. Internal filesystem paths (/var/www/app/src/handler.py).
+          4. Variable dumps with actual values (DEBUG: user_id=12345, token=xyz).
+          5. Full traceback (Traceback (most recent call last):).
+
+        Do NOT mark as vulnerable if:
+          1. Only generic error or debug keywords.
+          2. Payload echo only.
+          3. Success-only response without stack trace or path proof.
+          4. The result is ambiguous or based on assumption.
