@@ -76,18 +76,32 @@ validate:
   response_payload:
     length:
       gt: 0
-    contains_either:
-    - 'System Software Overview:'
-    - 'Software:'
-    - 'System Version: macOS'
-    - 'Kernel Version: Darwin'
-    - 'Boot Volume: Macintosh'
-    - 'en0: flags='
-    - "<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST>"
-    - "prefixlen"
-    - 'ProductName:'
-    - 'ProductVersion:'
-    - 'BuildVersion:'
+    magic_validate: |
+      Verify whether the macOS command injection payload `${specialOSPayloads}` caused real OS command execution on the server.
+
+      Mark the result as VULNERABLE only when the response contains direct evidence that the payload was actually executed and produced macOS-specific command output.
+
+      Important distinction:
+        A claim that something is vulnerable is NOT proof.
+        A warning that command execution is possible is NOT proof.
+        The payload appearing anywhere in the response is NOT proof.
+        A normal response containing the payload as text is NOT proof.
+        A generic success-only response without attack proof is NOT proof.
+        A status such as processed, printed, accepted, completed, or success is NOT proof by itself.
+        Mentioning macOS, Darwin, or system_profiler in explanatory text is NOT proof.
+
+      Valid proof includes only:
+        1. Output from system_profiler SPSoftwareDataType: System Software Overview, Software, System Version macOS, Kernel Version Darwin, Boot Volume Macintosh, ProductName, ProductVersion, BuildVersion.
+        2. Output from sw_vers: ProductName, ProductVersion, BuildVersion lines with real version values.
+        3. Output from ifconfig -a: interface blocks such as en0 with flags=, prefixlen, or UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST.
+        4. Other macOS-specific command output that could only appear if the injected command ran server-side.
+
+      Do NOT mark as vulnerable if:
+        1. The response only echoes the payload (system_profiler, sw_vers, ifconfig -a) without command output.
+        2. The response only contains generated text describing what the command could return.
+        3. The response appears successful in the payload but has no macOS command output proof.
+        4. The result is ambiguous or based on assumption.
+        5. The response contains unrelated security, compliance, or diagnostic text.
     not_contains:
     - Error
     - Internal Server
