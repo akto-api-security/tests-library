@@ -68,7 +68,7 @@ api_selection_filters:
     for_one:
       key:
         regex: ".*"
-        extract: headerKey
+        extractMultiple: headerKey
       value:
         extract: headerValue
 wordLists:
@@ -121,9 +121,10 @@ execute:
         - success: x2
         - failure: exit
     - req:
-        - delete_header: headerKey
+        - delete_header: ${headerKey}
         - add_header:
             ${headerParamKeys}: headerValue
+          for_each_combination: true
         - validate:
             response_code:
               gt: 505

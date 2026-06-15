@@ -76,12 +76,12 @@ api_selection_filters:
         for_one:
           key:
             regex: .*
-            extract: changed_body_key
+            extractMultiple: changed_body_key
     - query_param:
         for_one:
           key:
             regex: .*
-            extract: changed_query_key
+            extractMultiple: changed_query_key
 wordLists:
   payloads:
     - "%3C%21DOCTYPE%20test%20%5B%3C%21ENTITY%20%25%20custom%20SYSTEM%20%5C%22file%3A%2F%2F%2Fetc%2Fnetwork%2Finterfaces%5C%22%3E%20%25custom%3B%5D%3E"
@@ -91,9 +91,11 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            changed_body_key: ${payloads}
+            ${changed_body_key}: ${payloads}
+          for_each_combination: true
         - modify_query_param:
-            changed_query_key: ${payloads}
+            ${changed_query_key}: ${payloads}
+          for_each_combination: true
 validate:
   response_payload:
     contains_all:

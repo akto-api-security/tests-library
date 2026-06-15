@@ -75,7 +75,7 @@ api_selection_filters:
     for_one:
       key:
         regex: "(?i)(page[_-]?size|per[_-]?page|limit|items[_-]?per[_-]?page|max[_-]?results|page[_-]?limit)"
-        extract: limitKey
+        extractMultiple: limitKey
       value:
         extract: limitValue
         regex: "^\\d+$"
@@ -136,7 +136,8 @@ execute:
         - failure: exit
     - req:
         - modify_query_param:
-            limitKey: ${attemptValues}
+            ${limitKey}: ${attemptValues}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200

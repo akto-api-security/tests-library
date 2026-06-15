@@ -69,14 +69,14 @@ api_selection_filters:
             contains_either:
               - .jpg
           key:
-            extract: jpg_key
+            extractMultiple: jpg_key
     - query_param:
         for_one:
           value:
             contains_either:
               - .jpg
           key:
-            extract: jpg_key
+            extractMultiple: jpg_key
 execute:
   type: multiple
   requests:
@@ -119,9 +119,11 @@ execute:
         - failure: exit
     - req:
         - modify_query_param:
-            jpg_key: https://raw.githubusercontent.com/akto-api-security/tests-library/akto_resources/resources/heavy%20files/photo.jpeg
+            ${jpg_key}: https://raw.githubusercontent.com/akto-api-security/tests-library/akto_resources/resources/heavy%20files/photo.jpeg
+          for_each_combination: true
         - modify_body_param:
-            jpg_key: https://raw.githubusercontent.com/akto-api-security/tests-library/akto_resources/resources/heavy%20files/photo.jpeg
+            ${jpg_key}: https://raw.githubusercontent.com/akto-api-security/tests-library/akto_resources/resources/heavy%20files/photo.jpeg
+          for_each_combination: true
         - validate:
             response_code:
               gt: 505

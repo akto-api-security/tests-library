@@ -73,7 +73,7 @@ api_selection_filters:
     for_one:
       key:
         regex: "${probableInputParameters}"
-        extract: userKey
+        extractMultiple: userKey
 
 wordLists:
   probableInputParameters:
@@ -170,7 +170,8 @@ execute:
   # attack attempts -1
     - req:
         - modify_body_param:
-            userKey: ${attemptValues}
+            ${userKey}: ${attemptValues}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -183,7 +184,8 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            userKey: ${attemptValues}
+            ${userKey}: ${attemptValues}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -196,7 +198,8 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            userKey: ${attemptValues}
+            ${userKey}: ${attemptValues}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -209,7 +212,8 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            userKey: ${attemptValues}
+            ${userKey}: ${attemptValues}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -222,7 +226,8 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            userKey: ${attemptValues}
+            ${userKey}: ${attemptValues}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -251,7 +256,8 @@ execute:
   # attack attempts -2
     - req:
         - modify_body_param:
-            userKey: ${attemptValues}
+            ${userKey}: ${attemptValues}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -264,7 +270,8 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            userKey: ${attemptValues}
+            ${userKey}: ${attemptValues}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -277,7 +284,8 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            userKey: ${attemptValues}
+            ${userKey}: ${attemptValues}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -290,7 +298,8 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            userKey: ${attemptValues}
+            ${userKey}: ${attemptValues}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -303,7 +312,8 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            userKey: ${attemptValues}
+            ${userKey}: ${attemptValues}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200

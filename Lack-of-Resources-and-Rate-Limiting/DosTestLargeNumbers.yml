@@ -72,7 +72,7 @@ api_selection_filters:
     for_one:
       key:
         regex: .*
-        extract: userKey
+        extractMultiple: userKey
       value:
         datatype: number
         extract: userVal
@@ -102,7 +102,8 @@ execute:
         - failure: exit
     - req:
         - modify_body_param:
-            userKey: ${attemptValues}
+            ${userKey}: ${attemptValues}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
