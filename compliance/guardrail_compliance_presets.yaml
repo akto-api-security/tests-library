@@ -1,0 +1,349 @@
+# Guardrail Compliance Presets
+version: "1.0"
+
+presets:
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # GDPR — seeded from the production-created policy (ground truth)
+  # ───────────────────────────────────────────────────────────────────────────
+  GDPR:
+    name: "GDPR Compliance"
+    description: >
+      Detects personal and sensitive data defined under GDPR within AI prompts
+      and responses, helping identify privacy risks and prevent unintended data
+      exposure.
+    severity: HIGH
+    behaviour: block
+    blockedMessage: "This action has been blocked by Akto Policy for GDPR compliance."
+    active: true
+    applyOnRequest: true
+    applyOnResponse: true
+    applyToAllServers: true
+    blockPersonalAccounts: false
+    blockedHosts: []
+    complianceTags:
+      GDPR: ["Art. 5(1)(f)", "Art. 9", "Art. 25", "Art. 32"]
+
+    piiTypes:
+      - { type: email,        behavior: block, minMatchCount: 1 }
+      - { type: address,      behavior: block, minMatchCount: 1 }
+      - { type: credit_card,  behavior: block, minMatchCount: 1 }
+      - { type: uuid,         behavior: block, minMatchCount: 1 }
+      - { type: ip_address,   behavior: block, minMatchCount: 1 }
+      - { type: phone_number, behavior: block, minMatchCount: 1 }
+      - { type: ssn,          behavior: block, minMatchCount: 1 }
+      - { type: userid,       behavior: block, minMatchCount: 1 }
+
+    anonymizeDetection: { enabled: true, confidenceScore: 0.6 }
+    secretsDetection:   { enabled: true, confidenceScore: 0.7 }
+
+    contentFiltering:
+      promptAttacks: { level: HIGH }
+
+    deniedTopics:
+      - topic: "Special Category Personal Data"
+        description: >
+          GDPR Art. 9 special categories — highly sensitive PII whose processing
+          is prohibited unless a specific legal exception applies, due to the
+          significant risk of discrimination and harm.
+        samplePhrases:
+          - "political affiliation and voting preferences"
+          - "religious beliefs and faith background"
+          - "racial or ethnic background"
+          - "trade union membership and activities"
+          - "personal relationships"
+      - topic: "Medical Information"
+        description: >
+          Health records, diagnoses, treatments, prescriptions, medical
+          conditions, or healthcare-related personal information.
+        samplePhrases:
+          - "Diagnose my symptoms"
+          - "Medical report"
+          - "Patient history"
+          - "Prescription records"
+          - "Healthcare data"
+      - topic: "Financial Information"
+        description: >
+          Financial records, salary information, investments, transactions,
+          banking details, or economic status information.
+        samplePhrases:
+          - "salary information"
+          - "bank statement"
+          - "investment portfolio"
+          - "financial transaction"
+          - "account balance"
+      - topic: "Geolocation Information"
+        description: >
+          Exact location, GPS coordinates, travel history, residence or
+          workplace locations, or real-time location data.
+        samplePhrases:
+          - "GPS coordinates"
+          - "current location"
+          - "travel history"
+          - "home location"
+          - "location tracking"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # EU AI Act — safety, robustness, non-discrimination, prohibited uses
+  # ───────────────────────────────────────────────────────────────────────────
+  EU_AI_ACT:
+    name: "EU AI Act Compliance"
+    description: >
+      Enforces EU AI Act obligations for AI systems: robustness against
+      adversarial manipulation (Art. 15), prohibited manipulative/harmful uses
+      (Art. 5), non-discrimination (Art. 10), and data governance over personal
+      data used in prompts and responses.
+    severity: HIGH
+    behaviour: block
+    blockedMessage: "This action has been blocked by Akto Policy for EU AI Act compliance."
+    active: true
+    applyOnRequest: true
+    applyOnResponse: true
+    applyToAllServers: true
+    blockPersonalAccounts: false
+    blockedHosts: []
+    complianceTags:
+      EU_AI_ACT: ["Art. 5", "Art. 9", "Art. 10", "Art. 13", "Art. 15"]
+
+    piiTypes:
+      - { type: email,        behavior: block, minMatchCount: 1 }
+      - { type: address,      behavior: block, minMatchCount: 1 }
+      - { type: phone_number, behavior: block, minMatchCount: 1 }
+      - { type: ssn,          behavior: block, minMatchCount: 1 }
+
+    anonymizeDetection: { enabled: true, confidenceScore: 0.6 }
+    sentimentDetection: { enabled: true, confidenceScore: 0.7 }
+
+    # Custom LLM judge for bias / discriminatory output (Art. 10, Recital 71)
+    llmRule:
+      enabled: true
+      confidenceScore: 0.6
+      userPrompt: >
+        Determine whether the content expresses or reinforces discrimination,
+        bias, or stereotyping based on protected characteristics (race, gender,
+        religion, ethnicity, disability, sexual orientation, or age). Flag if so.
+
+    contentFiltering:
+      promptAttacks: { level: HIGH }
+      harmfulCategories:
+        hate: HIGH
+        insults: HIGH
+        sexual: HIGH
+        violence: HIGH
+        misconduct: HIGH
+        useForResponses: true
+
+    deniedTopics:
+      - topic: "Prohibited Manipulation & Social Scoring"
+        description: >
+          EU AI Act Art. 5 prohibited practices — subliminal/manipulative
+          techniques, exploitation of vulnerabilities, and social scoring.
+        samplePhrases:
+          - "social credit score"
+          - "manipulate the user into"
+          - "exploit their vulnerability"
+          - "subliminal persuasion technique"
+          - "rank citizens by trustworthiness"
+      - topic: "Biometric Categorization"
+        description: >
+          Inferring sensitive attributes from biometric data, prohibited under
+          Art. 5.
+        samplePhrases:
+          - "infer ethnicity from face"
+          - "detect sexual orientation from photo"
+          - "categorize by religious belief"
+          - "emotion recognition at workplace"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # HIPAA — Protected Health Information (PHI)
+  # ───────────────────────────────────────────────────────────────────────────
+  HIPAA:
+    name: "HIPAA Compliance"
+    description: >
+      Protects Protected Health Information (PHI) in AI prompts and responses,
+      enforcing the HIPAA Privacy and Security Rules over health identifiers,
+      diagnoses, and treatment data.
+    severity: HIGH
+    behaviour: block
+    blockedMessage: "This action has been blocked by Akto Policy for HIPAA compliance."
+    active: true
+    applyOnRequest: true
+    applyOnResponse: true
+    applyToAllServers: true
+    blockPersonalAccounts: false
+    blockedHosts: []
+    complianceTags:
+      HIPAA: ["45 CFR 164.312(a)(2)(iv)", "45 CFR 164.312(e)(2)(ii)", "45 CFR 164.514"]
+
+    piiTypes:
+      - { type: email,        behavior: block, minMatchCount: 1 }
+      - { type: address,      behavior: block, minMatchCount: 1 }
+      - { type: phone_number, behavior: block, minMatchCount: 1 }
+      - { type: ssn,          behavior: block, minMatchCount: 1 }
+      - { type: ip_address,   behavior: block, minMatchCount: 1 }
+
+    anonymizeDetection: { enabled: true, confidenceScore: 0.6 }
+    secretsDetection:   { enabled: true, confidenceScore: 0.7 }
+
+    # Medical Record Number pattern (e.g. MRN-12345678)
+    regexPatternsV2:
+      - { pattern: "\\bMRN[-:\\s]?\\d{6,10}\\b", behavior: block }
+
+    contentFiltering:
+      promptAttacks: { level: HIGH }
+
+    deniedTopics:
+      - topic: "Protected Health Information"
+        description: >
+          Health records, diagnoses, treatments, prescriptions, and the 18 HIPAA
+          identifiers tied to an individual's health status.
+        samplePhrases:
+          - "patient medical record"
+          - "diagnosis and treatment plan"
+          - "prescription history"
+          - "health insurance claim"
+          - "lab test results"
+      - topic: "Mental Health & Genetic Data"
+        description: >
+          Psychotherapy notes, mental health conditions, and genetic information
+          carrying heightened HIPAA protections.
+        samplePhrases:
+          - "mental health diagnosis"
+          - "psychotherapy notes"
+          - "genetic test results"
+          - "substance abuse treatment"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # PCI DSS — cardholder data (CHD) and authentication data
+  # ───────────────────────────────────────────────────────────────────────────
+  PCI_DSS:
+    name: "PCI DSS Compliance"
+    description: >
+      Prevents exposure of cardholder data (PAN, CVV) and sensitive
+      authentication data in AI prompts and responses, per PCI DSS v4.0
+      Requirements 3, 4, and 6.
+    severity: CRITICAL
+    behaviour: block
+    blockedMessage: "This action has been blocked by Akto Policy for PCI DSS compliance."
+    active: true
+    applyOnRequest: true
+    applyOnResponse: true
+    applyToAllServers: true
+    blockPersonalAccounts: false
+    blockedHosts: []
+    complianceTags:
+      PCI_DSS: ["Req. 3", "Req. 4", "Req. 6.2.4"]
+
+    piiTypes:
+      - { type: credit_card, behavior: block, minMatchCount: 1 }
+
+    # PAN (13-19 digits) and CVV patterns
+    regexPatternsV2:
+      - { pattern: "\\b(?:\\d[ -]*?){13,19}\\b", behavior: block }
+      - { pattern: "\\bCVV[-:\\s]?\\d{3,4}\\b",  behavior: block }
+
+    anonymizeDetection: { enabled: true, confidenceScore: 0.5 }
+    secretsDetection:   { enabled: true, confidenceScore: 0.7 }
+
+    contentFiltering:
+      promptAttacks: { level: HIGH }
+
+    deniedTopics:
+      - topic: "Cardholder Data"
+        description: >
+          Primary Account Number (PAN), cardholder name, expiration date, and
+          service code — must never be stored or echoed in clear text.
+        samplePhrases:
+          - "full credit card number"
+          - "card expiration date"
+          - "primary account number"
+          - "cardholder name and PAN"
+      - topic: "Sensitive Authentication Data"
+        description: >
+          CVV/CVC, PIN, and full magnetic-stripe data — prohibited from storage
+          after authorization.
+        samplePhrases:
+          - "CVV code"
+          - "card PIN number"
+          - "magnetic stripe data"
+          - "card verification value"
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # SOC 2 — security, confidentiality, availability
+  # ───────────────────────────────────────────────────────────────────────────
+  SOC2:
+    name: "SOC 2 Compliance"
+    description: >
+      Enforces SOC 2 Trust Services Criteria over AI systems: confidentiality of
+      sensitive data (CC6), resilience to injection (CC6.8/CC7.2), and
+      availability against resource exhaustion (A1).
+    severity: HIGH
+    behaviour: block
+    blockedMessage: "This action has been blocked by Akto Policy for SOC 2 compliance."
+    active: true
+    applyOnRequest: true
+    applyOnResponse: true
+    applyToAllServers: true
+    blockPersonalAccounts: false
+    blockedHosts: []
+    complianceTags:
+      SOC2: ["CC6.1", "CC6.7", "CC6.8", "CC7.2", "A1.1"]
+
+    piiTypes:
+      - { type: email,        behavior: block, minMatchCount: 1 }
+      - { type: ssn,          behavior: block, minMatchCount: 1 }
+      - { type: credit_card,  behavior: block, minMatchCount: 1 }
+      - { type: address,      behavior: block, minMatchCount: 1 }
+      - { type: phone_number, behavior: block, minMatchCount: 1 }
+
+    secretsDetection:    { enabled: true, confidenceScore: 0.7 }
+    tokenLimitDetection: { enabled: true, confidenceScore: 0.7 }
+
+    contentFiltering:
+      promptAttacks: { level: HIGH }
+      code: { level: MEDIUM }
+      harmfulCategories:
+        hate: HIGH
+        insults: HIGH
+        sexual: HIGH
+        violence: HIGH
+        misconduct: HIGH
+        useForResponses: true
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # OWASP LLM Top 10 (2025) — comprehensive LLM application security
+  # ───────────────────────────────────────────────────────────────────────────
+  OWASP_LLM:
+    name: "OWASP LLM Top 10 Compliance"
+    description: >
+      Covers the OWASP Top 10 for LLM Applications (2025): prompt injection
+      (LLM01), sensitive disclosure (LLM02), data/model poisoning (LLM04),
+      improper output (LLM05), system prompt leakage (LLM07), and unbounded
+      consumption (LLM10).
+    severity: HIGH
+    behaviour: block
+    blockedMessage: "This action has been blocked by Akto Policy for OWASP LLM Top 10 compliance."
+    active: true
+    applyOnRequest: true
+    applyOnResponse: true
+    applyToAllServers: true
+    blockPersonalAccounts: false
+    blockedHosts: []
+    complianceTags:
+      OWASP_LLM: ["LLM01:2025", "LLM02:2025", "LLM04:2025", "LLM05:2025", "LLM07:2025", "LLM10:2025"]
+
+    piiTypes:
+      - { type: email,       behavior: block, minMatchCount: 1 }
+      - { type: ssn,         behavior: block, minMatchCount: 1 }
+      - { type: credit_card, behavior: block, minMatchCount: 1 }
+
+    anonymizeDetection:  { enabled: true, confidenceScore: 0.6 }   # LLM02
+    secretsDetection:    { enabled: true, confidenceScore: 0.7 }   # LLM02 / LLM07
+    banCodeDetection:    { enabled: true, confidenceScore: 0.7 }   # LLM05
+    gibberishDetection:  { enabled: true, confidenceScore: 0.7 }   # LLM01 adversarial
+    tokenLimitDetection: { enabled: true, confidenceScore: 0.7 }   # LLM10
+    basePromptRule:      { enabled: true, confidenceScore: 0.5 }   # LLM04 intent
+
+    contentFiltering:
+      promptAttacks: { level: HIGH }   # LLM01
+      code: { level: HIGH }            # LLM05
