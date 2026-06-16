@@ -1,0 +1,1255 @@
+# Guardrails Compliance Mapping
+# Maps AI compliance frameworks to guardrail test category prefixes.
+# When a customer selects a compliance, enable all tests whose IDs start with
+# any of the listed category prefixes.
+#
+# Category prefix semantics: a prefix like "SAFETY_PII" matches every test
+# named SAFETY_PII_BASE64, SAFETY_PII_CONTEXT_POISONING_*, etc.
+
+version: "1.0"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PRIVACY & DATA PROTECTION
+# ─────────────────────────────────────────────────────────────────────────────
+
+GDPR:
+  name: General Data Protection Regulation
+  full_name: EU General Data Protection Regulation (2016/679) + AI Processing
+  description: >
+    EU law governing collection, processing, and storage of personal data.
+    Includes obligations for automated decision-making (Art. 22), privacy by
+    design (Art. 25), and breach notification (Art. 33).
+  region: EU
+  type: [privacy, data-protection, ai-governance]
+  reference_url: https://gdpr-info.eu
+  guardrails:
+    SAFETY_PII:
+      references: ["Art. 5(1)(f)", "Art. 25", "Art. 32"]
+      rationale: Prevents AI from generating or surfacing personal identifiers in responses.
+    SAFETY_PRIVACY_VIOLATION:
+      references: ["Art. 5(1)(b)", "Art. 6", "Art. 9"]
+      rationale: Detects AI processing personal data beyond declared purpose.
+    SECURITY_DATA_EXFILTRATION:
+      references: ["Art. 32", "Art. 33", "Art. 34"]
+      rationale: Catches prompt-based attacks that exfiltrate personal data.
+    SECURITY_SENSITIVE_INFORMATION_DISCLOSURE:
+      references: ["Art. 32", "Recital 83"]
+      rationale: Prevents inadvertent disclosure of sensitive personal categories.
+    SystemPromptLeakage:
+      references: ["Art. 5(1)(f)", "Art. 32"]
+      rationale: System prompts may embed personal data or processing instructions.
+    SAFETY_BIAS:
+      references: ["Art. 22", "Recital 71"]
+      rationale: Automated decisions must not discriminate on protected characteristics.
+    SAFETY_AUTOMATED_BIAS_TESTING:
+      references: ["Art. 22", "Recital 71"]
+      rationale: Systematic bias evaluation required for automated decision-making.
+    SAFETY_STEREOTYPE_REINFORCEMENT_DETECTION:
+      references: ["Art. 22", "Recital 71"]
+      rationale: Stereotype reinforcement can constitute unlawful profiling.
+    SECURITY_PROMPT_INJECTION:
+      references: ["Art. 25", "Art. 32"]
+      rationale: Prompt injection can redirect AI to process personal data unlawfully.
+    SECURITY_INDIRECT_PROMPT_INJECTION:
+      references: ["Art. 25", "Art. 32"]
+      rationale: Indirect injection via documents/tools can cause unauthorized data access.
+    SECURITY_OVERRELIANCE:
+      references: ["Art. 22"]
+      rationale: Decisions with legal effect require human review; overreliance undermines that.
+    SECURITY_CROSS_SESSION:
+      references: ["Art. 5(1)(e)", "Art. 17"]
+      rationale: Personal data must not leak across user sessions (data minimisation, erasure).
+    SECURITY_CROSS_USER:
+      references: ["Art. 5(1)(e)", "Art. 32"]
+      rationale: Prevents one user's personal data from contaminating another user's context.
+
+CCPA:
+  name: California Consumer Privacy Act
+  full_name: California Consumer Privacy Act (CCPA) + CPRA Amendments
+  description: >
+    California law granting consumers rights over personal information and
+    imposing disclosure, deletion, and opt-out obligations on businesses that
+    collect or sell personal data.
+  region: USA - California
+  type: [privacy, data-protection]
+  reference_url: https://oag.ca.gov/privacy/ccpa
+  guardrails:
+    SAFETY_PII:
+      references: ["§ 1798.100", "§ 1798.121"]
+      rationale: AI must not expose consumers' personal information without consent.
+    SAFETY_PRIVACY_VIOLATION:
+      references: ["§ 1798.100(b)", "§ 1798.105"]
+      rationale: AI must honour deletion requests and purpose-limitation obligations.
+    SECURITY_DATA_EXFILTRATION:
+      references: ["§ 1798.150"]
+      rationale: Exfiltration via AI prompts constitutes a data breach under CCPA.
+    SECURITY_SENSITIVE_INFORMATION_DISCLOSURE:
+      references: ["§ 1798.121", "§ 1798.135"]
+      rationale: Sensitive personal information (SPI) has heightened protections.
+    SECURITY_CROSS_SESSION:
+      references: ["§ 1798.100(d)"]
+      rationale: Consumers have the right to data that does not persist across sessions.
+    SystemPromptLeakage:
+      references: ["§ 1798.100", "§ 1798.110"]
+      rationale: System prompts may expose personal data collected from consumers.
+
+HIPAA:
+  name: Health Insurance Portability and Accountability Act
+  full_name: HIPAA Privacy Rule + Security Rule + HITECH Act
+  description: >
+    US law protecting Protected Health Information (PHI). Applies to covered
+    entities and business associates using AI to process health data.
+  region: USA
+  type: [privacy, healthcare, data-protection]
+  reference_url: https://www.hhs.gov/hipaa
+  guardrails:
+    SAFETY_PII:
+      references: ["45 CFR § 164.514", "45 CFR § 164.502"]
+      rationale: AI must not generate or expose PHI including 18 HIPAA identifiers.
+    SAFETY_PRIVACY_VIOLATION:
+      references: ["45 CFR § 164.502", "45 CFR § 164.506"]
+      rationale: AI processing PHI must be limited to authorised purposes of use.
+    SECURITY_DATA_EXFILTRATION:
+      references: ["45 CFR § 164.308(a)(1)", "45 CFR § 164.312(a)(2)(iv)"]
+      rationale: PHI exfiltration via prompt attacks constitutes a reportable breach.
+    SECURITY_SENSITIVE_INFORMATION_DISCLOSURE:
+      references: ["45 CFR § 164.312(e)(2)(ii)", "45 CFR § 164.514"]
+      rationale: Health data in AI responses must be de-identified or access-controlled.
+    SystemPromptLeakage:
+      references: ["45 CFR § 164.312(a)(2)(iv)"]
+      rationale: System prompts in health AI may contain PHI or treatment protocols.
+    SECURITY_CROSS_SESSION:
+      references: ["45 CFR § 164.312(a)(2)(i)"]
+      rationale: Unique user identification prevents cross-patient PHI contamination.
+    SECURITY_CROSS_USER:
+      references: ["45 CFR § 164.502(b)"]
+      rationale: Minimum necessary standard requires strict user-to-data isolation.
+    HALLUCINATION_AND_TRUSTWORTHINESS:
+      references: ["45 CFR § 164.306(a)(1)"]
+      rationale: AI hallucinations in clinical contexts can cause patient harm.
+    SECURITY_OVERRELIANCE:
+      references: ["45 CFR § 164.306(a)(2)"]
+      rationale: Clinical AI decisions require human physician oversight.
+    OverconfidentResponseInHighRiskDomain:
+      references: ["45 CFR § 164.306(a)(2)"]
+      rationale: AI overconfidence in medical domains poses direct patient safety risk.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# AI GOVERNANCE & SAFETY
+# ─────────────────────────────────────────────────────────────────────────────
+
+EU_AI_ACT:
+  name: EU AI Act
+  full_name: EU Artificial Intelligence Act (Regulation EU 2024/1689)
+  description: >
+    Comprehensive EU regulation classifying AI systems by risk (unacceptable,
+    high, limited, minimal) and imposing conformity, transparency, and
+    human-oversight requirements for each tier.
+  region: EU
+  type: [ai-governance, safety, transparency, accountability]
+  reference_url: https://artificialintelligenceact.eu
+  guardrails:
+    SAFETY_BIAS:
+      references: ["Art. 9", "Art. 10", "Art. 13"]
+      rationale: High-risk AI must demonstrate non-discrimination and absence of bias.
+    SAFETY_AUTOMATED_BIAS_TESTING:
+      references: ["Art. 9(7)", "Art. 10(2)(f)"]
+      rationale: Continuous bias testing is part of the risk management system requirement.
+    SAFETY_STEREOTYPE_REINFORCEMENT_DETECTION:
+      references: ["Art. 10(2)(f)", "Art. 13"]
+      rationale: Stereotyping undermines EU non-discrimination principles.
+    SAFETY_FAIRNESS_METRIC_GENERATION:
+      references: ["Art. 9(7)", "Art. 10(2)(f)"]
+      rationale: Quantitative fairness metrics support conformity assessment.
+    SAFETY_CULTURAL_REPRESENTATION_TESTING:
+      references: ["Art. 10(2)(f)", "Art. 13"]
+      rationale: Cultural representation ensures inclusive AI performance.
+    HALLUCINATION_AND_TRUSTWORTHINESS:
+      references: ["Art. 9", "Art. 13", "Art. 15"]
+      rationale: Accuracy requirements mandate testing for hallucination and fabrication.
+    MisinformationOverconfidentTaxAdvice:
+      references: ["Art. 9", "Art. 13"]
+      rationale: AI providing false high-stakes advice violates accuracy requirements.
+    FabricatedFeatureBehavior:
+      references: ["Art. 13"]
+      rationale: Fabricated capability descriptions undermine transparency obligations.
+    OverconfidentResponseInHighRiskDomain:
+      references: ["Art. 9", "Art. 13", "Art. 15"]
+      rationale: Overconfidence in high-risk decisions (legal, medical) breaches accuracy duty.
+    ExcessiveAgency:
+      references: ["Art. 9", "Art. 14", "Art. 25"]
+      rationale: AI agents must not take high-impact actions without human verification.
+    SAFETY_HARMFUL_CONTENT:
+      references: ["Art. 5", "Art. 9"]
+      rationale: Prohibited AI applications include manipulation and harm-generation.
+    SAFETY_HARMFUL_CONTENT_GENERATION_NIST_AI_RMF:
+      references: ["Art. 5", "Art. 9"]
+      rationale: Content generation risks are explicitly addressed in the prohibited uses list.
+    SAFETY_ILLEGAL_ACTIVITIES:
+      references: ["Art. 5(1)(a)", "Art. 9"]
+      rationale: AI must not facilitate illegal activities or circumvent legal prohibitions.
+    SECURITY_PROMPT_INJECTION:
+      references: ["Art. 9", "Art. 15", "Art. 25"]
+      rationale: Resilience against adversarial manipulation is a mandatory requirement.
+    SECURITY_INDIRECT_PROMPT_INJECTION:
+      references: ["Art. 9", "Art. 15"]
+      rationale: Indirect injection via RAG/documents attacks system robustness.
+    SECURITY_JAILBREAK:
+      references: ["Art. 9", "Art. 15"]
+      rationale: Jailbreaks bypass safety measures required under the Act.
+    SECURITY_ADVERSARIAL_SUFFIX_ATTACK:
+      references: ["Art. 15"]
+      rationale: Adversarial robustness is an explicit technical requirement for high-risk AI.
+    DataPoisoning:
+      references: ["Art. 9", "Art. 10", "Art. 15"]
+      rationale: Training and RAG data integrity is a precondition for reliable AI.
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES:
+      references: ["Art. 9", "Art. 17", "Art. 28"]
+      rationale: Third-party components used in AI systems must meet security standards.
+    SystemPromptLeakage:
+      references: ["Art. 13"]
+      rationale: Transparency requires disclosing AI nature without leaking system internals.
+    SAFETY_REFUSAL_MECHANISM_VALIDATION:
+      references: ["Art. 5", "Art. 9"]
+      rationale: Refusal mechanisms are a core safety control for prohibited outputs.
+    SECURITY_OVERRELIANCE:
+      references: ["Art. 14"]
+      rationale: Human oversight requires AI that doesn't suppress user critical thinking.
+    BUSINESS_ALIGNMENT:
+      references: ["Art. 9", "Art. 25"]
+      rationale: AI agents must operate within declared scope and not manipulate operators.
+    SAFETY_PII:
+      references: ["Art. 10", "Art. 25"]
+      rationale: Training data and outputs must protect personal data throughout processing.
+
+NIST_AI_RMF:
+  name: NIST AI Risk Management Framework
+  full_name: NIST AI Risk Management Framework (NIST AI 100-1)
+  description: >
+    Voluntary framework providing a structured approach to managing AI risks
+    across four core functions: Govern, Map, Measure, and Manage.
+  region: USA (global adoption)
+  type: [ai-governance, risk-management]
+  reference_url: https://airc.nist.gov/RMF
+  guardrails:
+    SAFETY_BIAS:
+      references: ["MAP 1.5", "MEASURE 2.5", "MEASURE 2.6"]
+      rationale: Bias measurement and mitigation are explicit MEASURE subcategory requirements.
+    SAFETY_AUTOMATED_BIAS_TESTING:
+      references: ["MEASURE 2.5", "MEASURE 2.6", "MANAGE 2.2"]
+      rationale: Automated bias testing operationalises continuous MEASURE requirements.
+    SAFETY_FAIRNESS_METRIC_GENERATION:
+      references: ["MEASURE 2.5", "MEASURE 2.6"]
+      rationale: Quantitative fairness metrics required by MEASURE for trustworthy AI.
+    SAFETY_HARMFUL_CONTENT:
+      references: ["MAP 1.5", "MEASURE 2.1", "MANAGE 2.4"]
+      rationale: Harmful content risk is a core AI safety dimension in the RMF.
+    HALLUCINATION_AND_TRUSTWORTHINESS:
+      references: ["MEASURE 2.1", "MEASURE 2.7", "GOVERN 6.2"]
+      rationale: Accuracy and reliability fall under the RMF Trustworthy AI characteristics.
+    ExcessiveAgency:
+      references: ["MAP 2.3", "MEASURE 2.8", "MANAGE 2.2"]
+      rationale: Excessive autonomy without human oversight is a core agentic AI risk.
+    DataPoisoning:
+      references: ["MAP 2.2", "MEASURE 2.2", "MANAGE 2.4"]
+      rationale: Data integrity risks are mapped under RMF training data evaluation.
+    SECURITY_PROMPT_INJECTION:
+      references: ["MAP 1.6", "MEASURE 2.7", "MANAGE 2.4"]
+      rationale: Adversarial manipulation is a security risk dimension in the RMF.
+    SAFETY_PRIVACY_VIOLATION:
+      references: ["MAP 1.5", "MEASURE 2.5", "GOVERN 6.1"]
+      rationale: Privacy is a named trustworthy AI characteristic in NIST AI 100-1.
+    SAFETY_PII:
+      references: ["MEASURE 2.5", "GOVERN 6.1"]
+      rationale: PII protection is part of the privacy dimension in AI RMF.
+    UnboundedConsumption:
+      references: ["MAP 2.3", "MEASURE 2.7", "MANAGE 3.2"]
+      rationale: Resource abuse risks require detection under RMF resilience controls.
+    SECURITY_MODEL_DENIAL_OF_SERVICE:
+      references: ["MAP 2.3", "MEASURE 2.7"]
+      rationale: Availability attacks are part of the security risk dimension.
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES:
+      references: ["MAP 2.2", "GOVERN 6.2"]
+      rationale: Third-party component risks are explicitly addressed in supply chain governance.
+    SAFETY_ILLEGAL_ACTIVITIES:
+      references: ["MAP 1.5", "MANAGE 2.4"]
+      rationale: Facilitating illegal activities is a core harm category in RMF risk mapping.
+    VectorEmbedding:
+      references: ["MAP 2.2", "MEASURE 2.2"]
+      rationale: Embedding integrity issues affect AI accuracy and reliability dimensions.
+
+ISO_42001:
+  name: ISO/IEC 42001
+  full_name: ISO/IEC 42001:2023 — Artificial Intelligence Management System
+  description: >
+    International standard specifying requirements for establishing, implementing,
+    maintaining, and continually improving an AI management system (AIMS).
+  region: Global
+  type: [ai-governance, management-system]
+  reference_url: https://www.iso.org/standard/81230.html
+  guardrails:
+    SAFETY_BIAS:
+      references: ["§ 6.1.2", "§ 8.4", "Annex A A.6.2.3"]
+      rationale: Risk assessment requires bias identification and mitigation controls.
+    SAFETY_AUTOMATED_BIAS_TESTING:
+      references: ["§ 9.1", "§ 8.4", "Annex B B.5.6"]
+      rationale: Monitoring and measurement requires systematic bias test procedures.
+    HALLUCINATION_AND_TRUSTWORTHINESS:
+      references: ["§ 8.4", "Annex A A.6.1.4"]
+      rationale: Accuracy and reliability are explicit AI system performance requirements.
+    ExcessiveAgency:
+      references: ["§ 6.1.2", "Annex A A.6.1.6", "A.10.3"]
+      rationale: Intended purpose boundary controls limit autonomous AI actions.
+    DataPoisoning:
+      references: ["§ 8.3", "Annex A A.8.4"]
+      rationale: Data for AI must be validated and protected against contamination.
+    SAFETY_HARMFUL_CONTENT:
+      references: ["§ 6.1.2", "Annex A A.6.1.2"]
+      rationale: Harmful outputs are a named risk category in AIMS risk assessment.
+    SAFETY_PRIVACY_VIOLATION:
+      references: ["§ 6.1.2", "Annex A A.6.2.4"]
+      rationale: Privacy is a named impact dimension in ISO 42001 risk framework.
+    SAFETY_PII:
+      references: ["Annex A A.6.2.4", "§ 8.4"]
+      rationale: PII protection in AI outputs is part of impact assessment.
+    SECURITY_PROMPT_INJECTION:
+      references: ["§ 6.1.2", "Annex A A.9.3"]
+      rationale: Adversarial robustness is a security control within AIMS.
+    SAFETY_FAIRNESS_METRIC_GENERATION:
+      references: ["§ 9.1", "Annex B B.5.6"]
+      rationale: Fairness monitoring supports continual improvement under clause 10.
+    SECURITY_OVERRELIANCE:
+      references: ["Annex A A.6.1.5", "A.10.3"]
+      rationale: Human oversight mechanisms prevent over-reliance on AI decisions.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SECURITY CERTIFICATIONS
+# ─────────────────────────────────────────────────────────────────────────────
+
+SOC2:
+  name: SOC 2 (AI Controls)
+  full_name: AICPA SOC 2 Type II — Security, Availability, Confidentiality for AI Systems
+  description: >
+    Trust Services Criteria report covering security (CC6-CC9), availability
+    (A-series), and confidentiality controls applied to AI-enabled SaaS platforms.
+  region: USA (global acceptance)
+  type: [security, availability, confidentiality, audit]
+  reference_url: https://www.aicpa-cima.com/resources/article/soc-2
+  guardrails:
+    SECURITY_DATA_EXFILTRATION:
+      references: ["CC6.1", "CC6.2", "CC7.2"]
+      rationale: Logical access controls (CC6) must prevent unauthorised data extraction.
+    SECURITY_SENSITIVE_INFORMATION_DISCLOSURE:
+      references: ["CC6.1", "CC6.7"]
+      rationale: Confidentiality controls must prevent disclosure of restricted information.
+    SAFETY_PII:
+      references: ["P5.1", "P5.2", "CC6.7"]
+      rationale: Privacy criteria require controls on PII collection, use, and disclosure.
+    SystemPromptLeakage:
+      references: ["CC6.1", "CC7.2"]
+      rationale: System prompt exposure can reveal confidential business logic or data.
+    SECURITY_PROMPT_INJECTION:
+      references: ["CC6.8", "CC7.2", "CC9.2"]
+      rationale: Prompt injection bypasses CC6 logical access controls on AI systems.
+    ExcessiveAgency:
+      references: ["CC6.3", "CC9.1", "A1.1"]
+      rationale: Unauthorised actions by AI agents violate change management controls.
+    DataPoisoning:
+      references: ["CC7.2", "CC9.1"]
+      rationale: Data integrity controls must detect contamination of AI training/RAG data.
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES:
+      references: ["CC9.2"]
+      rationale: Vendor/supplier risk management (CC9.2) covers third-party AI components.
+    UnboundedConsumption:
+      references: ["A1.1", "A1.2"]
+      rationale: Availability controls must protect against resource exhaustion attacks.
+    SECURITY_MODEL_DENIAL_OF_SERVICE:
+      references: ["A1.1", "A1.2"]
+      rationale: DoS against AI inference endpoints violates availability trust criteria.
+    HALLUCINATION_AND_TRUSTWORTHINESS:
+      references: ["CC9.1", "CC7.4"]
+      rationale: Inaccurate AI outputs affecting business processes violate processing integrity.
+    SAFETY_HARMFUL_CONTENT:
+      references: ["CC6.8"]
+      rationale: Harmful content generation violates logical and physical access controls.
+    MCP:
+      references: ["CC6.3", "CC6.8"]
+      rationale: MCP tool access must be controlled and monitored under CC6 access criteria.
+    SECURITY_TOOL_MISUSE_AND_EXPLOITATION:
+      references: ["CC6.8", "CC7.2"]
+      rationale: Tool misuse by AI agents represents an insider threat under CC6.8.
+
+ISO_27001:
+  name: ISO/IEC 27001:2022
+  full_name: ISO/IEC 27001:2022 — Information Security Management System
+  description: >
+    International ISMS standard with 93 controls (Annex A) including new
+    controls for cloud security, threat intelligence, and ICT supply chain.
+    Applied to AI systems as information processing assets.
+  region: Global
+  type: [security, isms, management-system]
+  reference_url: https://www.iso.org/standard/27001
+  guardrails:
+    SECURITY_PROMPT_INJECTION:
+      references: ["A.8.28", "A.5.15"]
+      rationale: Secure coding and access control apply to AI input handling.
+    SECURITY_DATA_EXFILTRATION:
+      references: ["A.5.16", "A.8.12", "A.8.20"]
+      rationale: Data leakage prevention controls cover AI-mediated exfiltration.
+    SAFETY_PII:
+      references: ["A.5.34", "A.8.11"]
+      rationale: Privacy and PII protection are explicit Annex A controls (2022 edition).
+    SystemPromptLeakage:
+      references: ["A.5.15", "A.8.4"]
+      rationale: Access control and information access restriction cover system prompt exposure.
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES:
+      references: ["A.5.19", "A.5.20", "A.5.21"]
+      rationale: ICT supply chain security is a new 2022 control domain (A.5.19–5.21).
+    DataPoisoning:
+      references: ["A.8.28", "A.5.36"]
+      rationale: Data integrity is protected under software development and operations controls.
+    ExcessiveAgency:
+      references: ["A.5.15", "A.5.18", "A.8.18"]
+      rationale: Privileged access management controls limit autonomous system actions.
+    SECURITY_ADVERSARIAL_SUFFIX_ATTACK:
+      references: ["A.8.28", "A.8.29"]
+      rationale: Security testing in development (A.8.29) requires adversarial input testing.
+    UnboundedConsumption:
+      references: ["A.8.6", "A.5.29"]
+      rationale: Capacity management and business continuity address resource exhaustion.
+    SECURITY_MODEL_DENIAL_OF_SERVICE:
+      references: ["A.5.29", "A.8.6"]
+      rationale: Availability controls include protection against DoS targeting AI endpoints.
+    ImproperOutput:
+      references: ["A.8.28", "A.8.20"]
+      rationale: Output validation is part of secure application design requirements.
+    MCP:
+      references: ["A.5.15", "A.8.18", "A.8.20"]
+      rationale: MCP tool interfaces are privileged access points requiring A.5.15 controls.
+    SECURITY_IDENTITY_SPOOFING:
+      references: ["A.5.16", "A.8.5"]
+      rationale: Identity management and authentication controls prevent AI identity spoofing.
+
+PCI_DSS:
+  name: PCI DSS v4.0
+  full_name: Payment Card Industry Data Security Standard v4.0
+  description: >
+    Security standard for organisations that handle payment card data.
+    AI systems processing cardholder data (CHD) or used in payment workflows
+    fall within scope.
+  region: Global
+  type: [payment-security, data-protection]
+  reference_url: https://www.pcisecuritystandards.org
+  guardrails:
+    SAFETY_PII:
+      references: ["Req. 3", "Req. 4"]
+      rationale: AI must not expose Primary Account Numbers (PAN) or cardholder data.
+    SECURITY_DATA_EXFILTRATION:
+      references: ["Req. 3.5", "Req. 10.7"]
+      rationale: Exfiltration of CHD via AI prompt attacks is a Requirement 3/10 violation.
+    SECURITY_SENSITIVE_INFORMATION_DISCLOSURE:
+      references: ["Req. 3", "Req. 6.2"]
+      rationale: Sensitive authentication data must never be exposed in AI responses.
+    SECURITY_PROMPT_INJECTION:
+      references: ["Req. 6.2.4", "Req. 6.3"]
+      rationale: Injection attacks against AI in payment scope violate Req. 6 (secure development).
+    ImproperOutput:
+      references: ["Req. 6.2.4"]
+      rationale: AI output sanitisation prevents XSS and injection in payment contexts.
+    SECURITY_XSS:
+      references: ["Req. 6.2.4"]
+      rationale: AI-generated XSS payloads in payment pages violate Req. 6.2.4.
+    SystemPromptLeakage:
+      references: ["Req. 3", "Req. 8"]
+      rationale: System prompts in payment AI may contain credentials or CHD.
+    ExcessiveAgency:
+      references: ["Req. 7", "Req. 8"]
+      rationale: AI agents with excessive permissions violate least-privilege access controls.
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES:
+      references: ["Req. 6.3", "Req. 12.8"]
+      rationale: Third-party AI components in payment scope require supply chain controls.
+    UnboundedConsumption:
+      references: ["Req. 6.3.1"]
+      rationale: Resource exhaustion attacks can impair payment processing availability.
+
+FEDRAMP:
+  name: FedRAMP
+  full_name: Federal Risk and Authorization Management Program
+  description: >
+    US government cloud security programme. AI SaaS used by federal agencies
+    must achieve FedRAMP authorisation, which requires NIST 800-53 control
+    implementation.
+  region: USA Federal
+  type: [security, government, cloud]
+  reference_url: https://www.fedramp.gov
+  guardrails:
+    SECURITY_PROMPT_INJECTION:
+      references: ["SI-10", "AC-3", "CM-7"]
+      rationale: Input validation (SI-10) and least privilege (AC-3) apply to AI prompt handling.
+    SECURITY_DATA_EXFILTRATION:
+      references: ["AC-4", "SI-4", "AU-12"]
+      rationale: Information flow enforcement (AC-4) and monitoring (SI-4) prevent exfiltration.
+    SAFETY_PII:
+      references: ["AP-1", "AP-2", "UL-1"]
+      rationale: Privacy Appendix controls mandate PII authority, purpose, and use limitation.
+    SystemPromptLeakage:
+      references: ["AC-3", "SC-8"]
+      rationale: Access enforcement and transmission confidentiality cover prompt exposure.
+    ExcessiveAgency:
+      references: ["AC-6", "CM-5", "AU-9"]
+      rationale: Least privilege (AC-6) and separation of duties (AC-5) constrain AI autonomy.
+    DataPoisoning:
+      references: ["SI-7", "SA-11"]
+      rationale: Software/firmware integrity (SI-7) and developer testing (SA-11) address poisoning.
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES:
+      references: ["SA-12", "SR-3", "SR-6"]
+      rationale: Supply chain risk management controls (SA-12, SR-series) cover AI components.
+    UnboundedConsumption:
+      references: ["SC-5", "CP-7", "SC-6"]
+      rationale: Denial-of-service protection (SC-5) and resource availability controls.
+    HALLUCINATION_AND_TRUSTWORTHINESS:
+      references: ["SA-11", "SI-2"]
+      rationale: Testing and flaw remediation controls apply to AI accuracy defects.
+    SECURITY_ADVERSARIAL_SUFFIX_ATTACK:
+      references: ["SA-11(6)", "RA-5"]
+      rationale: Penetration testing (SA-11(6)) and vulnerability scanning (RA-5) include AI.
+    SAFETY_BIAS:
+      references: ["SA-11", "PM-25"]
+      rationale: Privacy risk assessments (PM-25) include algorithmic bias considerations.
+
+CMMC:
+  name: CMMC 2.0
+  full_name: Cybersecurity Maturity Model Certification (Level 2 & 3)
+  description: >
+    DoD framework requiring defence contractors to implement NIST 800-171 (Level 2)
+    and NIST 800-172 (Level 3) controls. AI systems processing CUI fall in scope.
+  region: USA Defense
+  type: [security, government, defense]
+  reference_url: https://dodcio.defense.gov/CMMC
+  guardrails:
+    SECURITY_PROMPT_INJECTION:
+      references: ["AC.2.007", "SI.2.216"]
+      rationale: Least privilege and malicious code controls apply to AI input handling.
+    SECURITY_DATA_EXFILTRATION:
+      references: ["AC.2.007", "AU.2.042"]
+      rationale: Access control and audit logging must detect CUI exfiltration via AI.
+    SAFETY_PII:
+      references: ["AC.1.001", "SC.3.177"]
+      rationale: Authorised access and encryption controls cover CUI including PII.
+    SystemPromptLeakage:
+      references: ["AC.2.007", "SC.3.187"]
+      rationale: CUI handling requirements extend to AI system prompts embedding sensitive data.
+    ExcessiveAgency:
+      references: ["AC.1.002", "AC.2.007"]
+      rationale: Authorised users and least privilege controls limit AI agent autonomy.
+    DataPoisoning:
+      references: ["SI.2.214", "CM.2.062"]
+      rationale: Malicious code protection and configuration baselines address data poisoning.
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES:
+      references: ["CM.2.062", "SR.3.169"]
+      rationale: Supply chain risk management practices (NIST 800-161) cover AI components.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# AI / LLM SECURITY FRAMEWORKS
+# ─────────────────────────────────────────────────────────────────────────────
+
+OWASP_LLM_TOP10:
+  name: OWASP LLM Top 10 (2025)
+  full_name: OWASP Top 10 for Large Language Model Applications (2025 Edition)
+  description: >
+    The ten most critical security risks in LLM-powered applications, covering
+    prompt injection, sensitive data disclosure, supply chain, data poisoning,
+    improper output, excessive agency, system prompt leakage, vector weaknesses,
+    misinformation, and unbounded consumption.
+  region: Global
+  type: [ai-security, owasp]
+  reference_url: https://genai.owasp.org/llm-top-10/
+  guardrails:
+    SECURITY_PROMPT_INJECTION:                    # LLM01
+      references: ["LLM01:2025"]
+      rationale: Direct prompt injection manipulates LLM to ignore system instructions.
+    SECURITY_INDIRECT_PROMPT_INJECTION:           # LLM01
+      references: ["LLM01:2025"]
+      rationale: Indirect injection via external data sources hijacks LLM context.
+    SECURITY_JAILBREAK:                           # LLM01
+      references: ["LLM01:2025"]
+      rationale: Jailbreaks are a class of prompt injection bypassing safety guardrails.
+    SECURITY_ADVERSARIAL_SUFFIX_ATTACK:           # LLM01
+      references: ["LLM01:2025"]
+      rationale: Adversarial suffix attacks are an advanced prompt injection vector.
+    SECURITY_SENSITIVE_INFORMATION_DISCLOSURE:    # LLM02
+      references: ["LLM02:2025"]
+      rationale: LLMs may reveal confidential data from training or context.
+    SAFETY_PII:                                   # LLM02
+      references: ["LLM02:2025"]
+      rationale: PII in LLM responses constitutes sensitive information disclosure.
+    SystemPromptLeakage:                          # LLM02, LLM07
+      references: ["LLM02:2025", "LLM07:2025"]
+      rationale: System prompt exposure is a distinct LLM disclosure risk (LLM07).
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES: # LLM03
+      references: ["LLM03:2025"]
+      rationale: Compromised plugins, models, or datasets in the LLM supply chain.
+    DataPoisoning:                                # LLM04
+      references: ["LLM04:2025"]
+      rationale: Training data and RAG corpus poisoning corrupts model behaviour.
+    SECURITY_RAG_POISONING:                       # LLM04
+      references: ["LLM04:2025"]
+      rationale: RAG poisoning is a runtime form of data and model poisoning.
+    SECURITY_TRAINING_DATA:                       # LLM04
+      references: ["LLM04:2025"]
+      rationale: Training data extraction enables model inversion and memorisation attacks.
+    ImproperOutput:                               # LLM05
+      references: ["LLM05:2025"]
+      rationale: Unsanitised LLM output can cause XSS, code injection, and SSRF.
+    ImproperOutputHandling:                       # LLM05
+      references: ["LLM05:2025"]
+      rationale: Improper output handling in downstream components enables exploitation.
+    ExcessiveAgency:                              # LLM06
+      references: ["LLM06:2025"]
+      rationale: Over-privileged LLM agents take unintended high-impact actions.
+    SECURITY_EXCESSIVE_AGENCY:                    # LLM06
+      references: ["LLM06:2025"]
+      rationale: Excessive agency in LLMs can cause irreversible real-world harm.
+    VectorEmbedding:                              # LLM08
+      references: ["LLM08:2025"]
+      rationale: Vector and embedding weaknesses enable semantic manipulation attacks.
+    EmbeddingCollision:                           # LLM08
+      references: ["LLM08:2025"]
+      rationale: Embedding collisions cause retrieval confusion in RAG systems.
+    HALLUCINATION_AND_TRUSTWORTHINESS:            # LLM09
+      references: ["LLM09:2025"]
+      rationale: Hallucinated facts and citations constitute misinformation.
+    MisinformationOverconfidentTaxAdvice:         # LLM09
+      references: ["LLM09:2025"]
+      rationale: Overconfident misinformation in high-stakes domains (legal, financial).
+    FabricatedFeatureBehavior:                    # LLM09
+      references: ["LLM09:2025"]
+      rationale: Fabricated capabilities are a form of AI-generated misinformation.
+    OverconfidentResponseInHighRiskDomain:        # LLM09
+      references: ["LLM09:2025"]
+      rationale: Overconfidence without uncertainty disclosure causes overreliance.
+    UnboundedConsumption:                         # LLM10
+      references: ["LLM10:2025"]
+      rationale: Recursive, reflected, and streaming attacks exhaust compute resources.
+    SECURITY_MODEL_DENIAL_OF_SERVICE:            # LLM10
+      references: ["LLM10:2025"]
+      rationale: DoS via resource-intensive prompts disrupts LLM service availability.
+    SECURITY_MODEL_THEFT:                         # LLM10 (extraction)
+      references: ["LLM10:2025"]
+      rationale: Model extraction via queries can constitute IP theft and API abuse.
+    SECURITY_OVERRELIANCE:
+      references: ["LLM09:2025"]
+      rationale: Users over-trusting LLM outputs without verification creates harm.
+
+OWASP_AGENTIC_TOP10:
+  name: OWASP Agentic Top 10 (ASI)
+  full_name: OWASP Top 10 for Agentic AI Systems
+  description: >
+    Top 10 security risks specific to AI agents: prompt injection, authorisation
+    bypass, agent session hijacking, resource exhaustion, supply chain, data
+    exfiltration, multi-agent trust, contextual integrity, and governance failures.
+  region: Global
+  type: [ai-security, agentic-ai, owasp]
+  reference_url: https://owasp.org/www-project-top-10-for-agentic-ai-systems/
+  guardrails:
+    SECURITY_PROMPT_INJECTION:                    # ASI01
+      references: ["ASI01"]
+      rationale: Prompt injection is the primary attack vector for agentic AI systems.
+    SECURITY_INDIRECT_PROMPT_INJECTION:           # ASI01
+      references: ["ASI01"]
+      rationale: Indirect injection via tool outputs is especially dangerous in agentic contexts.
+    SECURITY_JAILBREAK:                           # ASI01
+      references: ["ASI01"]
+      rationale: Jailbreaks compromise the instruction hierarchy of multi-step agents.
+    BUSINESS_ALIGNMENT_ROGUE_AGENTS_PERMISSION_ESCALATION: # ASI02 / ASI03
+      references: ["ASI02", "ASI03"]
+      rationale: Rogue agent behaviour and unauthorised privilege escalation.
+    SECURITY_EXCESSIVE_AGENCY:                    # ASI03
+      references: ["ASI03"]
+      rationale: Agents operating beyond intended permissions cause real-world harm.
+    ExcessiveAgency:                              # ASI03
+      references: ["ASI03"]
+      rationale: Unauthorised financial, account, or infrastructure actions by agents.
+    SAFETY_TOOL_AND_FUNCTION_CALLING_MANIPULATION: # ASI03
+      references: ["ASI03"]
+      rationale: Manipulated tool calls allow agents to act beyond intended scope.
+    MCP:                                          # ASI03, ASI04
+      references: ["ASI03", "ASI04"]
+      rationale: MCP tool poisoning, unauthorised access, and context bleed in agent tooling.
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES: # ASI05
+      references: ["ASI05"]
+      rationale: Compromised third-party tools and plugins in the agent ecosystem.
+    DataPoisoning:                                # ASI05
+      references: ["ASI05"]
+      rationale: Poisoned knowledge sources manipulate agent decisions.
+    SECURITY_DATA_EXFILTRATION:                   # ASI06
+      references: ["ASI06"]
+      rationale: Agents with broad tool access can exfiltrate data at scale.
+    SystemPromptLeakage:                          # ASI06
+      references: ["ASI06"]
+      rationale: System prompt exposure in multi-agent systems leaks orchestration logic.
+    SECURITY_MULTI_TURN:                          # ASI07 (multi-turn manipulation)
+      references: ["ASI07"]
+      rationale: Multi-turn attacks gradually redirect agent goals across conversation steps.
+    BUSINESS_ALIGNMENT_COMPETITOR_CHECK:          # ASI08
+      references: ["ASI08"]
+      rationale: Agents manipulated to perform competitor-benefiting actions.
+    BUSINESS_ALIGNMENT_HUMAN_AGENT_TRUST_EXPLOITATION: # ASI09
+      references: ["ASI09"]
+      rationale: Trust exploitation between human operators and AI agents.
+    SECURITY_IDENTITY_SPOOFING:                   # ASI09
+      references: ["ASI09"]
+      rationale: Agent identity spoofing allows impersonation in multi-agent pipelines.
+    UnboundedConsumption:                         # ASI10
+      references: ["ASI10"]
+      rationale: Recursive agent loops and resource amplification attacks.
+    SECURITY_AGENT_BEHAVIOR_HIJACK_AND_GOAL_MANIPULATION: # ASI02
+      references: ["ASI02"]
+      rationale: Goal hijacking causes agents to pursue attacker-defined objectives.
+    SECURITY_CONTEXT_LEAKAGE:
+      references: ["ASI06"]
+      rationale: Context leakage across agent boundaries exposes confidential task data.
+    SECURITY_CROSS_SESSION:
+      references: ["ASI06", "ASI09"]
+      rationale: Cross-session data leakage allows agents to access other users' contexts.
+    SECURITY_REPUDIATION_UNTRACEABILITY:
+      references: ["ASI10"]
+      rationale: Lack of audit trails enables agent action deniability.
+
+OWASP_AST_TOP10:
+  name: OWASP Agentic Skills Top 10 (AST)
+  full_name: OWASP Top 10 for Agentic Skills / Plugins
+  description: >
+    Top 10 security risks for skills (plugins/tools) installed and executed by
+    AI agents: malicious skills, supply chain, over-privilege, insecure metadata,
+    unsafe deserialization, weak isolation, update drift, poor scanning, no
+    governance, and cross-platform reuse.
+  region: Global
+  type: [ai-security, agentic-ai, mcp, plugins, owasp]
+  reference_url: https://owasp.org/www-project-agentic-skills-top-10/
+  guardrails:
+    MCP_TOOL_POISONING_TOOL_DESC:                 # AST01 Malicious Skills
+      references: ["AST01"]
+      rationale: Tool description poisoning is a direct malicious skill injection vector.
+    MCP_TPA_TOOL_METADATA_INJECTION:              # AST01, AST04
+      references: ["AST01", "AST04"]
+      rationale: Metadata injection can embed malicious instructions in skill manifests.
+    MCP_TPA_OVERRIDE_SAFETY_CHECKS:               # AST01
+      references: ["AST01"]
+      rationale: Skills that override safety checks are malicious by design.
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES: # AST02 Supply Chain
+      references: ["AST02"]
+      rationale: Compromised skill registries and unsigned packages are supply chain risks.
+    DataPoisoning_Leaked_External_Reference_Injection: # AST02
+      references: ["AST02"]
+      rationale: Injected external references can introduce supply chain compromise.
+    SAFETY_TOOL_AND_FUNCTION_CALLING_MANIPULATION: # AST03 Over-Privileged
+      references: ["AST03"]
+      rationale: Manipulated function calls exploit over-privileged skill permissions.
+    ExcessiveAgency:                              # AST03
+      references: ["AST03"]
+      rationale: Over-privileged skills enable agents to act beyond intended boundaries.
+    MCP_TPA_OBFUSCATED_OUTPUT_PAYLOADS:           # AST04 Insecure Metadata
+      references: ["AST04"]
+      rationale: Obfuscated outputs in skill metadata hide malicious payloads.
+    ImproperOutput_EmbeddedExecutableScript:      # AST05 Unsafe Deserialization
+      references: ["AST05"]
+      rationale: Embedded executable content in skill outputs triggers unsafe execution.
+    ImproperOutput_BrokenJSONInjection:           # AST05
+      references: ["AST05"]
+      rationale: Broken JSON from skills can trigger unsafe parser behaviour.
+    MCP_BREAKING_JSON_PARSING:                    # AST05
+      references: ["AST05"]
+      rationale: Malformed JSON from MCP skills can cause unsafe deserialization.
+    MCP_UNAUTHORIZED_TOOL_ACCESS:                 # AST06 Weak Isolation
+      references: ["AST06"]
+      rationale: Unauthorised cross-skill tool access indicates sandbox escape.
+    MCP_CONTEXT_BLEED:                            # AST06
+      references: ["AST06"]
+      rationale: Context bleed between skills violates namespace isolation requirements.
+    SECURITY_TOOL_MISUSE_AND_EXPLOITATION:        # AST06, AST03
+      references: ["AST06", "AST03"]
+      rationale: Tool misuse exploits weak isolation and over-privilege simultaneously.
+    MCP_PARAM_OVERLOAD:                           # AST08 Poor Scanning
+      references: ["AST08"]
+      rationale: Parameter overloading is a skill attack vector missed by pattern-only scans.
+    MCP_REMOVE_TOKENS:                            # AST01, AST04
+      references: ["AST01", "AST04"]
+      rationale: Token removal/stripping in skill metadata alters authorised behaviour.
+    MCP_RESPONSE_DATA_LEAK_CHECK:                 # AST06
+      references: ["AST06"]
+      rationale: Response data leaks confirm insufficient skill output isolation.
+    SECURITY_INSECURE_PLUGIN:                     # AST03, AST06
+      references: ["AST03", "AST06"]
+      rationale: Insecure plugin design combines over-privilege with weak isolation.
+
+MITRE_ATLAS:
+  name: MITRE ATLAS
+  full_name: MITRE ATLAS — Adversarial Threat Landscape for AI Systems
+  description: >
+    Knowledge base of adversarial tactics, techniques, and case studies for
+    attacking ML systems. Organised by ATLAS Tactics (Reconnaissance through
+    Impact) with AI-specific technique IDs (AML.Txxx).
+    Technique IDs verified against conf files and STIX atlas data.
+  region: Global
+  type: [ai-security, threat-intelligence, adversarial-ml]
+  reference_url: https://atlas.mitre.org
+  # Verified technique names (from STIX atlas data):
+  # AML.T0051 — LLM Prompt Injection
+  # AML.T0046 — Spamming AI System with Chaff Data
+  # AML.T0043 — Craft Adversarial Data
+  # AML.T0040 — AI Model Inference API Access
+  # AML.T0035 — AI Artifact Collection
+  # AML.T0034 — Cost Harvesting
+  # AML.T0029 — Denial of AI Service
+  # AML.T0027 — Publish Poisoned Models
+  # AML.T0026 — Publish Poisoned Datasets
+  # AML.T0021 — Establish Accounts
+  # AML.T0018 — Manipulate AI Model
+  # AML.T0015 — Evade AI Model
+  # AML.T0013 — Discover AI Model Ontology
+  # AML.T0011 — Unsafe AI Artifacts
+  # AML.T0005 — Create Proxy AI Model
+  guardrails:
+    DataPoisoning:
+      references: ["AML.T0026", "AML.T0027"]
+      rationale: Publish Poisoned Datasets/Models — data poisoning at the supply chain level.
+    SECURITY_RAG_POISONING:
+      references: ["AML.T0018", "AML.T0026"]
+      rationale: Manipulate AI Model (T0018) + Publish Poisoned Datasets (T0026) cover RAG corpus attacks.
+    SECURITY_CONTEXT_POISONING:
+      references: ["AML.T0018"]
+      rationale: Manipulate AI Model covers runtime context manipulation attacks.
+    SECURITY_ADVERSARIAL_SUFFIX_ATTACK:
+      references: ["AML.T0043"]
+      rationale: Craft Adversarial Data — adversarial examples crafted to fool NLP model inference.
+    SECURITY_JAILBREAK:
+      references: ["AML.T0051", "AML.T0046", "AML.T0015"]
+      rationale: LLM Prompt Injection (T0051) + Spamming with Chaff (T0046) + Evade AI Model (T0015).
+    SECURITY_PROMPT_INJECTION:
+      references: ["AML.T0051"]
+      rationale: LLM Prompt Injection — the primary ATLAS technique for hijacking LLM instructions.
+    SECURITY_INDIRECT_PROMPT_INJECTION:
+      references: ["AML.T0051"]
+      rationale: LLM Prompt Injection applied indirectly via external data sources.
+    BUSINESS_ALIGNMENT_COMPETITOR_CHECK:
+      references: ["AML.T0051", "AML.T0046"]
+      rationale: LLM Prompt Injection + Spamming AI with Chaff Data to manipulate business intent.
+    BUSINESS_ALIGNMENT_INTENTIONAL_MISUSE:
+      references: ["AML.T0035", "AML.T0029"]
+      rationale: AI Artifact Collection (reconnaissance) + Denial of AI Service (impact).
+    BUSINESS_ALIGNMENT_HUMAN_AGENT_TRUST_EXPLOITATION:
+      references: ["AML.T0021", "AML.T0015"]
+      rationale: Establish Accounts (social engineering) + Evade AI Model (safety bypass).
+    SECURITY_MODEL_THEFT:
+      references: ["AML.T0005", "AML.T0040", "AML.T0013"]
+      rationale: Create Proxy AI Model (T0005) via repeated Inference API Access (T0040) + Model Ontology Discovery (T0013).
+    SECURITY_TRAINING_DATA:
+      references: ["AML.T0035", "AML.T0036", "AML.T0037"]
+      rationale: AI Artifact Collection + Data from Information Repositories + Data from Local System.
+    HALLUCINATION_AND_TRUSTWORTHINESS:
+      references: ["AML.T0018", "AML.T0034"]
+      rationale: Manipulate AI Model (T0018) causes false outputs; Cost Harvesting (T0034) via hallucination loops.
+    SECURITY_MODEL_DENIAL_OF_SERVICE:
+      references: ["AML.T0029", "AML.T0034"]
+      rationale: Denial of AI Service (T0029) + Cost Harvesting (T0034) both target availability.
+    UnboundedConsumption:
+      references: ["AML.T0034"]
+      rationale: Cost Harvesting — unbounded token consumption exhausts resources and inflates costs.
+    VectorEmbedding:
+      references: ["AML.T0043", "AML.T0018"]
+      rationale: Craft Adversarial Data (T0043) in embedding space + Manipulate AI Model (T0018).
+    EmbeddingCollision:
+      references: ["AML.T0043"]
+      rationale: Craft Adversarial Data to cause semantic collisions in vector retrieval.
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES:
+      references: ["AML.T0011", "AML.T0027"]
+      rationale: Unsafe AI Artifacts (T0011) + Publish Poisoned Models (T0027) in agent supply chain.
+    SECURITY_CODE_EXECUTION:
+      references: ["AML.T0053", "AML.T0040"]
+      rationale: AI Agent Tool Invocation (T0053) + AI Model Inference API Access (T0040) enabling RCE.
+    SECURITY_IDENTITY_SPOOFING:
+      references: ["AML.T0021", "AML.T0005"]
+      rationale: Establish Accounts (T0021) for impersonation + Create Proxy AI Model (T0005) to mimic legitimate systems.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# INDUSTRY-SPECIFIC AI REGULATIONS
+# ─────────────────────────────────────────────────────────────────────────────
+
+NIST_800_53:
+  name: NIST SP 800-53 Rev 5
+  full_name: NIST Special Publication 800-53 Rev 5 — Security and Privacy Controls
+  description: >
+    Comprehensive catalogue of security and privacy controls for federal
+    information systems. AI systems are addressed under the new PT (Privacy)
+    and SA (System Acquisition) control families.
+  region: USA Federal (global reference)
+  type: [security, privacy, government]
+  reference_url: https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final
+  guardrails:
+    SECURITY_PROMPT_INJECTION:
+      references: ["SI-10", "SI-3", "CM-7"]
+      rationale: Input validation (SI-10) and malicious code protection (SI-3) cover prompt attacks.
+    SECURITY_DATA_EXFILTRATION:
+      references: ["AC-4", "SI-4", "SC-7"]
+      rationale: Information flow (AC-4), monitoring (SI-4), and boundary controls (SC-7).
+    SAFETY_PII:
+      references: ["PT-2", "PT-3", "PT-6"]
+      rationale: Privacy Authority (PT-2), Purpose Specification (PT-3), Privacy Report (PT-6).
+    SystemPromptLeakage:
+      references: ["AC-3", "SC-8"]
+      rationale: Access enforcement (AC-3) and transmission protection (SC-8).
+    ExcessiveAgency:
+      references: ["AC-6", "AC-5", "CM-5"]
+      rationale: Least privilege, separation of duties, and access restrictions.
+    DataPoisoning:
+      references: ["SI-7", "SA-11", "RA-5"]
+      rationale: Integrity verification (SI-7), developer testing (SA-11), and vuln scanning.
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES:
+      references: ["SA-12", "SR-3", "SR-6"]
+      rationale: Supply chain controls (SR-series, SA-12) for AI component integrity.
+    UnboundedConsumption:
+      references: ["SC-5", "CP-7"]
+      rationale: DoS protection (SC-5) and contingency controls for AI availability.
+    HALLUCINATION_AND_TRUSTWORTHINESS:
+      references: ["SA-11", "SI-2"]
+      rationale: Developer testing and flaw remediation apply to AI accuracy issues.
+    SAFETY_BIAS:
+      references: ["PT-5", "PM-25"]
+      rationale: Privacy assessments (PT-5) and privacy reports (PM-25) cover algorithmic bias.
+    SECURITY_ADVERSARIAL_SUFFIX_ATTACK:
+      references: ["SA-11(6)", "RA-5"]
+      rationale: Penetration testing (SA-11(6)) must include adversarial ML attack scenarios.
+
+CSA_CCM:
+  name: CSA Cloud Controls Matrix v4
+  full_name: Cloud Security Alliance Cloud Controls Matrix v4.0
+  description: >
+    CCM is a cyber security control framework for cloud computing. AI SaaS
+    providers use it to demonstrate cloud-specific security posture.
+    Relevant domains include AIS (Application & Interface Security), DSI (Data
+    Security & Information Lifecycle), IVS (Infrastructure & Virtualisation),
+    and SEF (Security Incident Management).
+  region: Global (Cloud)
+  type: [cloud-security, security]
+  reference_url: https://cloudsecurityalliance.org/research/cloud-controls-matrix
+  guardrails:
+    SECURITY_PROMPT_INJECTION:
+      references: ["AIS-01", "AIS-04"]
+      rationale: Application security requirements cover AI input handling and validation.
+    SECURITY_DATA_EXFILTRATION:
+      references: ["DSI-01", "DSI-04", "IVS-01"]
+      rationale: Data security and information flow controls prevent AI-mediated exfiltration.
+    SAFETY_PII:
+      references: ["DSI-01", "DSI-07"]
+      rationale: Data classification and handling requirements cover PII in AI outputs.
+    SystemPromptLeakage:
+      references: ["AIS-01", "DSI-04"]
+      rationale: Application security and data confidentiality cover prompt exposure.
+    ExcessiveAgency:
+      references: ["IAM-01", "IAM-02", "IAM-08"]
+      rationale: IAM controls restrict AI agent permissions to declared scope.
+    DataPoisoning:
+      references: ["AIS-04", "DSI-04"]
+      rationale: Application integrity and data security controls prevent poisoning.
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES:
+      references: ["STA-01", "STA-02", "STA-09"]
+      rationale: Supply chain management controls (STA domain) cover AI component risks.
+    UnboundedConsumption:
+      references: ["IVS-09", "SEF-01"]
+      rationale: Network security and incident management address resource exhaustion.
+    HALLUCINATION_AND_TRUSTWORTHINESS:
+      references: ["AIS-04", "SEF-01"]
+      rationale: Application testing and security incident controls address accuracy failures.
+    MCP:
+      references: ["AIS-01", "IAM-08"]
+      rationale: MCP interfaces are API endpoints requiring AIS and IAM domain controls.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# FRAMEWORKS CONFIRMED IN EXISTING CONF FILES (previously missing)
+# ─────────────────────────────────────────────────────────────────────────────
+
+NIST_800_171:
+  name: NIST SP 800-171 Rev 2
+  full_name: NIST Special Publication 800-171 — Protecting CUI in Nonfederal Systems
+  description: >
+    Specifies security requirements for protecting Controlled Unclassified
+    Information (CUI) in nonfederal information systems. Required for DoD
+    contractors and federal supply chain. Widely referenced in AI test conf files.
+    Controls are a subset of NIST 800-53 mapped to CUI protection scenarios.
+  region: USA Federal / Defense Supply Chain
+  type: [security, government, cui-protection]
+  reference_url: https://csrc.nist.gov/publications/detail/sp/800-171/rev-2/final
+  guardrails:
+    SECURITY_PROMPT_INJECTION:
+      references: ["3.1.1", "3.14.2"]
+      rationale: Authorised access (3.1.1) and malicious code protection (3.14.2) cover prompt attacks.
+    SECURITY_DATA_EXFILTRATION:
+      references: ["3.1.1", "3.13.1"]
+      rationale: Limit system access (3.1.1) and employ boundary protections (3.13.1).
+    SAFETY_PII:
+      references: ["3.1.9", "3.1.21"]
+      rationale: Limit use of portable storage and control CUI on public systems.
+    SystemPromptLeakage:
+      references: ["3.1.1", "3.14.2"]
+      rationale: Authorised access controls prevent leakage of CUI embedded in system prompts.
+    ExcessiveAgency:
+      references: ["3.1.1", "3.1.3"]
+      rationale: Enforce least privilege (3.1.3) to limit AI agent autonomy over CUI systems.
+    DataPoisoning:
+      references: ["3.14.2", "3.14.3", "3.13.5"]
+      rationale: Malicious code protection (3.14.2) and security alerts (3.14.3) address poisoning.
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES:
+      references: ["3.14.1", "3.13.5"]
+      rationale: Identify and remediate flaws in AI components; manage third-party risk.
+    UnboundedConsumption:
+      references: ["3.6.1"]
+      rationale: Incident response capability (3.6.1) covers DoS and resource exhaustion events.
+    HALLUCINATION_AND_TRUSTWORTHINESS:
+      references: ["3.14.2", "3.14.6"]
+      rationale: System security monitoring (3.14.6) detects anomalous AI output behaviour.
+    SECURITY_CROSS_SESSION:
+      references: ["3.1.1", "3.5.1", "3.5.2"]
+      rationale: User identification (3.5.1) and authentication (3.5.2) prevent cross-session data bleed.
+    SAFETY_HARMFUL_CONTENT:
+      references: ["3.1.1", "3.4.1"]
+      rationale: Access controls and baseline configurations limit AI to authorised uses.
+    MCP:
+      references: ["3.1.3", "3.4.1"]
+      rationale: Least privilege (3.1.3) and baseline config (3.4.1) apply to MCP tool interfaces.
+
+FISMA:
+  name: FISMA
+  full_name: Federal Information Security Modernization Act (FISMA 2014)
+  description: >
+    US law requiring federal agencies to develop, document, and implement
+    information security programs. AI systems deployed in or for federal agencies
+    must comply. FISMA mandates use of NIST 800-53 controls and continuous
+    monitoring. Heavily referenced across all guardrail conf files.
+  region: USA Federal
+  type: [security, government, compliance-law]
+  reference_url: https://www.cisa.gov/federal-information-security-modernization-act
+  guardrails:
+    SECURITY_PROMPT_INJECTION:
+      references: ["SI-10", "SI-3", "AC-3"]
+      rationale: Input validation (SI-10), malicious code protection (SI-3), and access control (AC-3).
+    SECURITY_DATA_EXFILTRATION:
+      references: ["AC-4", "SI-4"]
+      rationale: Information flow enforcement (AC-4) and system monitoring (SI-4).
+    SAFETY_PII:
+      references: ["AP-1", "AP-2"]
+      rationale: Privacy Act compliance requires authority and purpose for all data processing.
+    SystemPromptLeakage:
+      references: ["AC-3", "SC-8"]
+      rationale: Access enforcement (AC-3) and transmission confidentiality (SC-8).
+    ExcessiveAgency:
+      references: ["AC-6", "AC-5"]
+      rationale: Least privilege (AC-6) and separation of duties (AC-5) constrain AI autonomy.
+    DataPoisoning:
+      references: ["SI-7", "SA-11"]
+      rationale: Software integrity (SI-7) and developer security testing (SA-11).
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES:
+      references: ["SA-12", "SR-3"]
+      rationale: Supply chain protection (SA-12) and acquisition strategies (SR-3).
+    UnboundedConsumption:
+      references: ["SC-5", "CP-2"]
+      rationale: DoS protection (SC-5) and contingency planning (CP-2).
+    HALLUCINATION_AND_TRUSTWORTHINESS:
+      references: ["SA-11", "SI-2"]
+      rationale: Developer testing (SA-11) and flaw remediation (SI-2) apply to AI accuracy.
+    SECURITY_CODE_EXECUTION:
+      references: ["SI-10", "SC-18"]
+      rationale: Input validation (SI-10) and mobile code restrictions (SC-18) cover AI RCE.
+    BUSINESS_ALIGNMENT_INTENTIONAL_MISUSE:
+      references: ["CM-7", "SI-4"]
+      rationale: Least functionality (CM-7) and monitoring (SI-4) detect AI misuse.
+    SAFETY_HARMFUL_CONTENT:
+      references: ["AC-3", "SI-4"]
+      rationale: Access control (AC-3) and monitoring (SI-4) enforce AI use boundaries.
+    MCP:
+      references: ["AC-6", "CM-7"]
+      rationale: Least privilege (AC-6) and least functionality (CM-7) apply to MCP tool access.
+
+CIS_CONTROLS:
+  name: CIS Controls v8
+  full_name: CIS Critical Security Controls Version 8 (Implementation Groups 1-3)
+  description: >
+    Prioritised set of actions for defending against cyber attacks. Organised
+    into 18 control groups with Implementation Groups (IG1 basic, IG2 foundational,
+    IG3 organisational). Widely referenced in AI guardrail conf files via
+    IG1 Safeguard identifiers. Mapped to AI guardrail tests below.
+  region: Global
+  type: [security, controls-framework]
+  reference_url: https://www.cisecurity.org/controls/v8
+  guardrails:
+    SECURITY_PROMPT_INJECTION:
+      references: ["IG1 Safeguard 4.2", "IG1 Safeguard 16.8"]
+      rationale: Establish/maintain safe configuration (4.2) and application layer filtering (16.8).
+    SECURITY_DATA_EXFILTRATION:
+      references: ["IG1 Safeguard 16.8", "IG1 Safeguard 4.2"]
+      rationale: Application security and safe configurations prevent AI-mediated data theft.
+    SAFETY_PII:
+      references: ["IG1 Safeguard 3.1", "IG1 Safeguard 3.2", "IG1 Safeguard 5.4"]
+      rationale: Data management processes (3.1, 3.2) and password/credential controls (5.4) protect PII contexts.
+    SystemPromptLeakage:
+      references: ["IG1 Safeguard 5.2", "IG1 Safeguard 4.2"]
+      rationale: Access control (5.2) and secure configuration (4.2) limit prompt exposure.
+    ExcessiveAgency:
+      references: ["IG1 Safeguard 5.2", "IG1 Safeguard 6.7"]
+      rationale: Use of unique accounts (5.2) and access control (6.7) limit AI agent scope.
+    DataPoisoning:
+      references: ["IG1 Safeguard 16.8", "IG1 Safeguard 4.2"]
+      rationale: Application security testing (16.8) and safe configurations address poisoning.
+    SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES:
+      references: ["IG1 Safeguard 2.1", "IG1 Safeguard 2.2"]
+      rationale: Maintain authorised software inventory and allow-list for AI components.
+    UnboundedConsumption:
+      references: ["IG1 Safeguard 11.3", "IG1 Safeguard 17.6"]
+      rationale: Data recovery (11.3) and security awareness (17.6) for DoS/cost incidents.
+    HALLUCINATION_AND_TRUSTWORTHINESS:
+      references: ["IG1 Safeguard 17.6", "IG1 Safeguard 16.8"]
+      rationale: Security skill training (17.6) and application security testing (16.8).
+    SECURITY_CODE_EXECUTION:
+      references: ["IG1 Safeguard 10.1", "IG1 Safeguard 10.2"]
+      rationale: Deploy and maintain anti-malware (10.1, 10.2) to detect AI-triggered code execution.
+    BUSINESS_ALIGNMENT_INTENTIONAL_MISUSE:
+      references: ["IG1 Safeguard 4.8", "IG1 Safeguard 6.7"]
+      rationale: Uninstall/disable unnecessary services (4.8) and manage access control (6.7).
+    SAFETY_BIAS:
+      references: ["IG1 Safeguard 17.7", "IG1 Safeguard 17.8"]
+      rationale: Security awareness training includes AI ethics and non-discrimination principles.
+    SAFETY_HARMFUL_CONTENT:
+      references: ["IG1 Safeguard 4.2", "IG1 Safeguard 16.8"]
+      rationale: Secure configurations and application security testing prevent harmful outputs.
+    MCP:
+      references: ["IG1 Safeguard 5.2", "IG1 Safeguard 4.8"]
+      rationale: Unique account use (5.2) and disabling unnecessary services (4.8) apply to MCP.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# CROSS-REFERENCE INDEX
+# Maps each guardrail category prefix to all compliance frameworks that require it
+# ─────────────────────────────────────────────────────────────────────────────
+
+guardrail_to_compliance_index:
+  SAFETY_PII:
+    - GDPR: ["Art. 5(1)(f)", "Art. 25", "Art. 32"]
+    - CCPA: ["§ 1798.100", "§ 1798.121"]
+    - HIPAA: ["45 CFR § 164.514"]
+    - EU_AI_ACT: ["Art. 10", "Art. 25"]
+    - NIST_AI_RMF: ["MEASURE 2.5", "GOVERN 6.1"]
+    - SOC2: ["P5.1", "P5.2", "CC6.7"]
+    - PCI_DSS: ["Req. 3", "Req. 4"]
+    - FEDRAMP: ["AP-1", "AP-2", "UL-1"]
+    - NIST_800_53: ["PT-2", "PT-3"]
+
+  SAFETY_BIAS:
+    - GDPR: ["Art. 22", "Recital 71"]
+    - EU_AI_ACT: ["Art. 9", "Art. 10", "Art. 13"]
+    - NIST_AI_RMF: ["MAP 1.5", "MEASURE 2.5", "MEASURE 2.6"]
+    - ISO_42001: ["§ 6.1.2", "§ 8.4", "Annex A A.6.2.3"]
+    - MITRE_ATLAS: ["AML.T0045"]
+    - NIST_800_53: ["PT-5", "PM-25"]
+
+  SECURITY_PROMPT_INJECTION:
+    - GDPR: ["Art. 25", "Art. 32"]
+    - EU_AI_ACT: ["Art. 9", "Art. 15", "Art. 25"]
+    - OWASP_LLM_TOP10: ["LLM01:2025"]
+    - OWASP_AGENTIC_TOP10: ["ASI01"]
+    - MITRE_ATLAS: ["AML.T0051", "AML.T0054"]
+    - SOC2: ["CC6.8", "CC7.2", "CC9.2"]
+    - ISO_27001: ["A.8.28", "A.5.15"]
+    - FEDRAMP: ["SI-10", "AC-3", "CM-7"]
+    - CMMC: ["AC.2.007", "SI.2.216"]
+    - NIST_800_53: ["SI-10", "SI-3", "CM-7"]
+    - CSA_CCM: ["AIS-01", "AIS-04"]
+
+  ExcessiveAgency:
+    - EU_AI_ACT: ["Art. 9", "Art. 14", "Art. 25"]
+    - NIST_AI_RMF: ["MAP 2.3", "MEASURE 2.8", "MANAGE 2.2"]
+    - ISO_42001: ["§ 6.1.2", "Annex A A.6.1.6", "A.10.3"]
+    - OWASP_LLM_TOP10: ["LLM06:2025"]
+    - OWASP_AGENTIC_TOP10: ["ASI03"]
+    - OWASP_AST_TOP10: ["AST03"]
+    - SOC2: ["CC6.3", "CC9.1", "A1.1"]
+    - ISO_27001: ["A.5.15", "A.5.18", "A.8.18"]
+    - FEDRAMP: ["AC-6", "CM-5", "AU-9"]
+    - PCI_DSS: ["Req. 7", "Req. 8"]
+    - CSA_CCM: ["IAM-01", "IAM-02", "IAM-08"]
+
+  DataPoisoning:
+    - EU_AI_ACT: ["Art. 9", "Art. 10", "Art. 15"]
+    - NIST_AI_RMF: ["MAP 2.2", "MEASURE 2.2", "MANAGE 2.4"]
+    - ISO_42001: ["§ 8.3", "Annex A A.8.4"]
+    - OWASP_LLM_TOP10: ["LLM04:2025"]
+    - OWASP_AGENTIC_TOP10: ["ASI05"]
+    - OWASP_AST_TOP10: ["AST02"]
+    - MITRE_ATLAS: ["AML.T0020"]
+    - SOC2: ["CC7.2", "CC9.1"]
+    - ISO_27001: ["A.8.28", "A.5.36"]
+    - FEDRAMP: ["SI-7", "SA-11"]
+    - NIST_800_53: ["SI-7", "SA-11", "RA-5"]
+    - CSA_CCM: ["AIS-04", "DSI-04"]
+
+  SystemPromptLeakage:
+    - GDPR: ["Art. 5(1)(f)", "Art. 32"]
+    - CCPA: ["§ 1798.100", "§ 1798.110"]
+    - HIPAA: ["45 CFR § 164.312(a)(2)(iv)"]
+    - EU_AI_ACT: ["Art. 13"]
+    - OWASP_LLM_TOP10: ["LLM02:2025", "LLM07:2025"]
+    - OWASP_AGENTIC_TOP10: ["ASI06"]
+    - SOC2: ["CC6.1", "CC7.2"]
+    - ISO_27001: ["A.5.15", "A.8.4"]
+    - FEDRAMP: ["AC-3", "SC-8"]
+    - PCI_DSS: ["Req. 3", "Req. 8"]
+    - CMMC: ["AC.2.007", "SC.3.187"]
+
+  UnboundedConsumption:
+    - NIST_AI_RMF: ["MAP 2.3", "MEASURE 2.7", "MANAGE 3.2"]
+    - OWASP_LLM_TOP10: ["LLM10:2025"]
+    - OWASP_AGENTIC_TOP10: ["ASI10"]
+    - MITRE_ATLAS: ["AML.T0034"]
+    - SOC2: ["A1.1", "A1.2"]
+    - ISO_27001: ["A.8.6", "A.5.29"]
+    - FEDRAMP: ["SC-5", "CP-7", "SC-6"]
+    - NIST_800_53: ["SC-5", "CP-7"]
+    - CSA_CCM: ["IVS-09", "SEF-01"]
+
+  HALLUCINATION_AND_TRUSTWORTHINESS:
+    - HIPAA: ["45 CFR § 164.306(a)(1)"]
+    - EU_AI_ACT: ["Art. 9", "Art. 13", "Art. 15"]
+    - NIST_AI_RMF: ["MEASURE 2.1", "MEASURE 2.7", "GOVERN 6.2"]
+    - ISO_42001: ["§ 8.4", "Annex A A.6.1.4"]
+    - OWASP_LLM_TOP10: ["LLM09:2025"]
+    - MITRE_ATLAS: ["AML.T0048", "AML.T0034"]
+    - SOC2: ["CC9.1", "CC7.4"]
+    - FEDRAMP: ["SA-11", "SI-2"]
+    - NIST_800_53: ["SA-11", "SI-2"]
+
+  MCP:
+    - OWASP_AGENTIC_TOP10: ["ASI03", "ASI04"]
+    - OWASP_AST_TOP10: ["AST01", "AST03", "AST04", "AST05", "AST06"]
+    - SOC2: ["CC6.3", "CC6.8"]
+    - ISO_27001: ["A.5.15", "A.8.18", "A.8.20"]
+    - CSA_CCM: ["AIS-01", "IAM-08"]
+
+  SECURITY_AGENTIC_SUPPLY_CHAIN_VULNERABILITIES:
+    - EU_AI_ACT: ["Art. 9", "Art. 17", "Art. 28"]
+    - NIST_AI_RMF: ["MAP 2.2", "GOVERN 6.2"]
+    - OWASP_LLM_TOP10: ["LLM03:2025"]
+    - OWASP_AGENTIC_TOP10: ["ASI05"]
+    - OWASP_AST_TOP10: ["AST02"]
+    - MITRE_ATLAS: ["AML.T0010"]
+    - SOC2: ["CC9.2"]
+    - ISO_27001: ["A.5.19", "A.5.20", "A.5.21"]
+    - FEDRAMP: ["SA-12", "SR-3", "SR-6"]
+    - PCI_DSS: ["Req. 6.3", "Req. 12.8"]
+    - CMMC: ["CM.2.062", "SR.3.169"]
+    - NIST_800_53: ["SA-12", "SR-3", "SR-6"]
+    - CSA_CCM: ["STA-01", "STA-02", "STA-09"]
+
+  SAFETY_HARMFUL_CONTENT:
+    - EU_AI_ACT: ["Art. 5", "Art. 9"]
+    - NIST_AI_RMF: ["MAP 1.5", "MEASURE 2.1", "MANAGE 2.4"]
+    - ISO_42001: ["§ 6.1.2", "Annex A A.6.1.2"]
+    - OWASP_LLM_TOP10: ["LLM01:2025"]
+    - SOC2: ["CC6.8"]
