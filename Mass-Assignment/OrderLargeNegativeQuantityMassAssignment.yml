@@ -1,0 +1,169 @@
+id: ORDER_LARGE_NEGATIVE_QUANTITY_MASS_ASSIGNMENT
+info:
+  name: "Account Balance Inflation via Large Negative Order Quantity"
+  description: "Detects mass assignment abuse where order endpoints accept large negative quantity values, allowing attackers to inflate account balance or store credit by multiples of the item price. This is an escalation of negative quantity manipulation where values such as -100 are used to generate refunds or credits far exceeding normal transaction limits."
+  details: "When quantity is writable on order creation or update endpoints without upper or lower bound validation, an attacker can submit an extremely negative quantity (for example -100). If billing logic multiplies item price by quantity without sanity checks, the resulting credit or balance adjustment scales linearly with the manipulated value. A single request can therefore add hundreds or thousands in unauthorized funds."
+  impact: "Large-scale balance inflation enables significant financial fraud in a single API call. Attackers can accumulate substantial store credit or wallet balance without payment, purchase high-value items using inflated funds, or automate the attack across accounts. This causes direct revenue loss, accounting discrepancies, and potential regulatory exposure for payment-handling applications."
+  remediation: "Apply strict lower and upper bounds on order quantity (for example, minimum of 1 and a reasonable maximum per transaction). Validate quantity on the server for all order mutation endpoints and ignore client attempts to supply negative or extreme values. Ensure balance and credit adjustments are derived from trusted server-side calculations and require additional approval for large refunds."
+  category:
+    name: MA
+    shortName: Mass Assignment
+    displayName: Mass Assignment (MA)
+  subCategory: ORDER_LARGE_NEGATIVE_QUANTITY_MASS_ASSIGNMENT
+  severity: CRITICAL
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa3-broken-object-property-level-authorization.md"
+    - "https://owasp.org/API-Security/editions/2023/en/0xa3-broken-object-property-level-authorization/"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Mass_Assignment_Cheat_Sheet.html"
+  cwe:
+    - CWE-915
+    - CWE-770
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    contains_either:
+      - PUT
+      - PATCH
+      - POST
+  url:
+    contains_either:
+      - orders
+      - order
+  request_payload:
+    for_one:
+      key:
+        regex: "^quantity$|^qty$|^product_quantity$|^order_quantity$"
+        extract: quantityKey
+      value:
+        datatype: number
+        gt: 0
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+  or:
+    - response_payload:
+        for_one:
+          key:
+            regex: "${probableOutputParameters}"
+            extract: outputUserKey
+          value:
+            extract: outputUserValue
+    - response_payload:
+        contains_either:
+          - quantity
+          - qty
+
+wordLists:
+  probableOutputParameters:
+    - credit
+    - balance
+    - availableCredit
+    - available_balance
+    - walletBalance
+    - accountBalance
+    - remainingBalance
+    - storeCredit
+    - amountLeft
+    - totalAmount
+
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            quantityKey: -100
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${responseErrorList}
+            or:
+              - response_payload:
+                  contains_either:
+                    - '"quantity": -100'
+                    - '"quantity":-100'
+                    - '"qty": -100'
+                    - '"qty":-100'
+              - response_payload:
+                  for_one:
+                    key:
+                      eq: "${outputUserKey}"
+                    value:
+                      gt: "${outputUserValue}"
+        - success: vulnerable

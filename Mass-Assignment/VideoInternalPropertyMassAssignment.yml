@@ -1,0 +1,125 @@
+id: VIDEO_INTERNAL_PROPERTY_MASS_ASSIGNMENT
+info:
+  name: "Media Processing Parameters Mass Assignment on Resource Update"
+  description: "Detects mass assignment on media or video update endpoints where backend transcoding or encoding configuration can be written through the request body. Clients should only be allowed to change presentation fields such as title or thumbnail, not pipeline command strings or encoder flags."
+  details: "Resource update APIs (PUT or PATCH) should bind only an allowlisted set of user-editable attributes. When undisclosed processing parameters are also mapped from the request body, an attacker can inject shell-style codec flags or encoder options discovered from prior excessive data exposure in other API responses. The server may persist and echo these values in subsequent responses."
+  impact: "Writable processing parameters can alter server-side transcoding behavior, enable command injection when values are passed to shell utilities, or corrupt media pipelines. Attackers may change encoder settings to trigger unintended conversions, worker denial of service, or further exploitation depending on how the property is consumed."
+  remediation: "Use a strict writable-field allowlist on media update endpoints and never bind processing or pipeline parameters from client input. Keep encoder and transcoding configuration server-managed. If configuration must be adjustable, expose validated presets through authorized admin interfaces only."
+  category:
+    name: MA
+    shortName: Mass Assignment
+    displayName: Mass Assignment (MA)
+  subCategory: VIDEO_INTERNAL_PROPERTY_MASS_ASSIGNMENT
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa3-broken-object-property-level-authorization.md"
+    - "https://owasp.org/API-Security/editions/2023/en/0xa3-broken-object-property-level-authorization/"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Mass_Assignment_Cheat_Sheet.html"
+  cwe:
+    - CWE-915
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    contains_either:
+      - PUT
+      - PATCH
+  url:
+    contains_either:
+      - /videos/
+      - /video/
+      - /media/
+      - /assets/
+  and:
+    - request_payload:
+        length:
+          gt: 0
+    - or:
+        - response_payload:
+            for_one:
+              key:
+                regex: conversion_params|processing_params|encoding_params|transcoding_params|transcode_options|media_params
+                extract: processingFieldKey
+        - request_payload:
+            for_one:
+              key:
+                regex: conversion_params|processing_params|encoding_params|transcoding_params|transcode_options|media_params
+                extract: processingFieldKey
+    - response_payload:
+        length:
+          gt: 0
+        not_contains:
+          - Error
+          - Internal Server
+          - Failed
+          - Unauthorized
+          - access denied
+          - Forbidden
+          - not found
+
+wordLists:
+  leakedProcessingCommands:
+    source: sample_data
+    key:
+      regex: conversion_params|processing_params|encoding_params|transcoding_params|transcode_options|media_params
+    location: response
+    all_apis: true
+  probeProcessingValue: "-v codec akto_probe"
+  userFacingMediaProperties:
+    - video_name
+    - videoName
+    - name
+    - title
+    - profileVideo
+    - thumbnail
+    - thumbnailUrl
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - not found
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - add_body_param:
+            ${processingFieldKey}: ${probeProcessingValue}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  and:
+    - response_payload:
+        contains_either: ${userFacingMediaProperties}
+        length:
+          gt: 0
+        not_contains: ${responseErrorList}
+    - or:
+        - response_payload:
+            contains_either:
+              - "${probeProcessingValue}"
+              - akto_probe
+        - response_payload:
+            contains_either: ${leakedProcessingCommands}

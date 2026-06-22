@@ -1,0 +1,100 @@
+id: VIDEO_INTERNAL_PROPERTY_EXPOSURE
+info:
+  name: "Excessive Data Exposure of Media Processing Commands"
+  description: "Detects when a media or video resource API returns internal server-side processing metadata that should not be exposed to clients. Responses are expected to include user-facing attributes such as identifiers, titles, and thumbnails, but must not include shell-style transcoding flags or encoder command strings."
+  details: "Some applications embed video or media processing configuration directly in API responses as command-line style strings (for example codec flags or ffmpeg-style arguments). When an endpoint returns these values alongside normal resource properties, attackers learn how content is processed server-side. This excessive data exposure can enable follow-on mass assignment or command injection against the media pipeline."
+  impact: "Exposure of internal video processing commands leaks implementation details about the media pipeline and may provide attackers with parameters needed to exploit mass assignment or command injection vulnerabilities elsewhere in the application. Even when access to the video object itself is authorized, returning undisclosed processing data violates the principle of least privilege and increases the attack surface."
+  remediation: "Apply a strict response allowlist so only client-facing video fields (identifier, name, thumbnail URL) are serialized in API responses. Strip internal processing command strings and backend-only properties at the DTO or serializer layer before returning data. Audit all GET and POST video endpoints to ensure transcoding configuration is never mapped to public response schemas."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: VIDEO_INTERNAL_PROPERTY_EXPOSURE
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa3-broken-object-property-level-authorization.md"
+    - "https://owasp.org/API-Security/editions/2023/en/0xa3-broken-object-property-level-authorization/"
+  cwe:
+    - CWE-200
+    - CWE-213
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+api_selection_filters:
+  method:
+    contains_either:
+      - GET
+      - POST
+  response_code:
+    gte: 200
+    lt: 300
+  url:
+    contains_either:
+      - /videos/
+      - /video/
+      - /media/
+      - /assets/
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - not found
+
+wordLists:
+  internalProcessingIndicators:
+    - "-v codec"
+    - "-codec"
+    - "codec h264"
+    - "codec h265"
+    - "ffmpeg"
+    - "transcode"
+
+execute:
+  type: single
+  requests:
+    - req: []
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    contains_either: ${internalProcessingIndicators}
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Unauthorized
+      - Forbidden
+      - not found

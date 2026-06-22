@@ -1,0 +1,127 @@
+id: COUPON_REDEMPTION_SQL_INJECTION
+info:
+  name: "SQL Injection on Coupon Redemption Endpoint"
+  description: "Detects SQL injection vulnerabilities on coupon apply or redeem endpoints where the coupon code parameter is concatenated into a SQL query. Boolean and error-based payloads can bypass one-time-use restrictions or extract database metadata from the response."
+  details: "Coupon redemption flows often check whether a code exists, has been claimed, and matches the requesting user. When the coupon code is interpolated into raw SQL, attackers can inject tautologies such as 0' or '0'='0 to satisfy lookup conditions. Error-based payloads like select version() may reflect database version strings in the response body, confirming injection."
+  impact: "SQL injection on coupon endpoints allows reuse of already-claimed coupons, unauthorized balance credits, and potential full database compromise through stacked or union-based queries. Financial and loyalty programs are directly impacted."
+  remediation: "Use parameterized queries or prepared statements for all coupon lookup and redemption database operations. Never concatenate user-supplied coupon codes into SQL strings. Enforce strict input validation on coupon code format, use an ORM with bound parameters, and apply least-privilege database permissions for the application account."
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: COUPON_REDEMPTION_SQL_INJECTION
+  severity: HIGH
+  tags:
+    - Injection Attack
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-community/attacks/SQL_Injection"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html"
+  cwe:
+    - CWE-89
+    - CWE-943
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    contains_either:
+      - POST
+      - PUT
+  and:
+    - url:
+        contains_either:
+          - coupon
+          - promo
+          - discount
+    - url:
+        contains_either:
+          - redeem
+          - apply
+          - apply_coupon
+          - claim
+          - use
+  request_payload:
+    for_one:
+      key:
+        regex: coupon_code|couponCode|promo_code|promoCode|^code$|voucher
+        extract: couponKey
+      value:
+        extract: originalCouponValue
+  response_payload:
+    length:
+      gt: 0
+
+wordLists:
+  booleanSqliPayload: "0' or '0' = '0"
+  knownCouponCodes:
+    source: sample_data
+    key:
+      regex: coupon_code|couponCode|promo_code|promoCode|discount_code|voucher_code|code
+    location: response
+    all_apis: true
+  versionIndicators:
+    - PostgreSQL
+    - MySQL
+    - MariaDB
+    - SQLite
+    - Microsoft SQL Server
+    - 5.
+    - 8.
+    - 10.
+    - 11.
+    - 12.
+    - 13.
+    - 14.
+    - 15.
+    - 16.
+  responseErrorList:
+    - Error
+    - syntax error
+    - SQL
+    - Unauthorized
+    - invalid coupon
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            couponKey: ${booleanSqliPayload}
+        - validate:
+            or:
+              - response_payload:
+                  contains_either: ${versionIndicators}
+              - and:
+                  - response_code:
+                      gte: 200
+                      lt: 300
+                  - response_payload:
+                      length:
+                        gt: 0
+                      not_contains: ${responseErrorList}
+                      contains_either:
+                        - already claimed
+                        - already used
+                        - claimed
+                        - success
+                        - credited
+                        - balance
+                        - credit
+              - and:
+                  - response_code:
+                      gte: 200
+                      lt: 300
+                  - response_payload:
+                      contains_either: ${knownCouponCodes}
+        - success: vulnerable

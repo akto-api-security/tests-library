@@ -1,0 +1,85 @@
+id: ORDER_RETURN_STATUS_MASS_ASSIGNMENT
+info:
+  name: "Order Return Status Mass Assignment"
+  description: "Detects mass assignment vulnerabilities on order update endpoints where the return or fulfillment status field is writable by clients. Attackers can set statuses such as returned or refunded without completing the required return workflow, triggering unauthorized account credits."
+  details: "Order update APIs may expose shadow PUT or PATCH endpoints that bind client-supplied status values directly to internal order state machines. When statuses like returned, refunded, or cancelled are accepted without verifying the physical return or approval workflow, attackers can mark orders as returned and receive refunds while retaining the purchased items."
+  impact: "Unauthorized status manipulation enables refund fraud, inventory discrepancies, and direct financial loss. A single status change can credit the user's balance without any item being returned."
+  remediation: "Restrict writable fields on order update endpoints to client-safe attributes only. Manage fulfillment and return status transitions through server-side state machines that require verified workflow steps (such as carrier scan or warehouse confirmation) before marking an order as returned or refunded. Reject direct client writes to internal status fields."
+  category:
+    name: MA
+    shortName: Mass Assignment
+    displayName: Mass Assignment (MA)
+  subCategory: ORDER_RETURN_STATUS_MASS_ASSIGNMENT
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa3-broken-object-property-level-authorization.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Mass_Assignment_Cheat_Sheet.html"
+  cwe:
+    - CWE-915
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    contains_either:
+      - PUT
+      - PATCH
+  url:
+    contains_either:
+      - orders
+      - order
+  request_payload:
+    length:
+      gt: 0
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Unauthorized
+      - Forbidden
+      - not found
+
+wordLists:
+  returnStatus: returned
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Unauthorized
+    - Forbidden
+    - invalid status
+    - not allowed
+    - not found
+
+execute:
+  type: single
+  requests:
+    - req:
+        - add_body_param:
+            status: ${returnStatus}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${responseErrorList}
+              contains_either:
+                - '"status": "returned"'
+                - '"status":"returned"'
+        - success: vulnerable

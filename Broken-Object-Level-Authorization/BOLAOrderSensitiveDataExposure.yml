@@ -1,0 +1,118 @@
+id: BOLA_ORDER_SENSITIVE_DATA_EXPOSURE
+info:
+  name: "Excessive Data Exposure of Order Details via Object ID"
+  description: "Detects broken object-level authorization combined with excessive data exposure on order retrieval endpoints. Substituting another customer's order identifier in the URL can return contact details, payment metadata, or other fields that should be scoped to the resource owner."
+  details: "Predictable or enumerable resource identifiers in GET endpoints allow authenticated users to substitute foreign IDs harvested from other API responses in the same application traffic. When the API returns a 200 response with another customer's contact information or transaction details, both BOLA and excessive data exposure are present."
+  impact: "Leakage of order records exposes customer PII, purchase history, and transaction identifiers. Attackers can correlate orders across users, facilitate fraud, or use contact details for phishing and social engineering."
+  remediation: "Implement object-level authorization on order retrieval endpoints so users can only access orders belonging to their account. Validate the order ID against the authenticated user's identity on every request. Return only fields necessary for the requesting user and avoid including other customers' contact or payment details in responses."
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: BOLA_ORDER_SENSITIVE_DATA_EXPOSURE
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa3-broken-object-property-level-authorization.md"
+  cwe:
+    - CWE-284
+    - CWE-200
+    - CWE-639
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: GET
+  url:
+    contains_either:
+      - orders
+      - order
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "{"
+      - "}"
+    not_contains:
+      - Error
+      - Internal Server
+      - Unauthorized
+      - Forbidden
+      - not found
+      - access denied
+
+wordLists:
+  foreignResourceIds:
+    source: sample_data
+    key:
+      regex: order_id|orderId|OrderId|orderID|purchase_id|purchaseId|transaction_id|transactionId|report_id|reportId|invoice_id|invoiceId
+    all_apis: true
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_url:
+            token_replace:
+              location: 1
+              replace_with: ${foreignResourceIds}
+        - success: vulnerable
+        - failure: x2
+    - req:
+        - modify_url:
+            token_replace:
+              location: 2
+              replace_with: ${foreignResourceIds}
+        - success: vulnerable
+        - failure: x3
+    - req:
+        - modify_url:
+            token_replace:
+              location: 3
+              replace_with: ${foreignResourceIds}
+        - success: vulnerable
+        - failure: x4
+    - req:
+        - modify_url:
+            token_replace:
+              location: 4
+              replace_with: ${foreignResourceIds}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      lt: 10
+    contains_either:
+      - email
+      - phone
+      - number
+      - address
+      - user
+      - customer
+      - shipping
+    not_contains:
+      - Error
+      - Internal Server
+      - Unauthorized
+      - Forbidden
+      - not found
+      - access denied

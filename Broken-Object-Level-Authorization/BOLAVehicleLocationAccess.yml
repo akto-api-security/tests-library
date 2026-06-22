@@ -1,0 +1,124 @@
+id: BOLA_VEHICLE_LOCATION_ACCESS
+info:
+  name: "BOLA - Unauthorized Access to Asset Location Data"
+  description: "Detects broken object-level authorization on location endpoints for vehicles, assets, or tracked resources. Substituting a foreign resource identifier in the URL path can return geolocation coordinates or owner metadata belonging to another user."
+  details: "Attackers often harvest foreign resource identifiers from public or semi-public endpoints such as community posts, listings, or shared feeds. When those identifiers are replayed against a location API (for example GET /vehicle/{id}/location), missing authorization allows retrieval of latitude, longitude, and associated owner metadata for vehicles the attacker does not own."
+  impact: "Exposure of live or historical vehicle location data enables physical tracking, stalking, and theft planning. Combined with leaked owner identity fields, it can lead to targeted harassment, privacy violations, and regulatory non-compliance for applications handling geolocation data."
+  remediation: "Enforce object-level authorization on every location endpoint by verifying the authenticated user owns or is authorized to access the requested vehicle or asset ID. Use non-guessable identifiers and avoid exposing foreign resource IDs in public feeds without access controls. Return only the minimum location data required for the authenticated user's use case."
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: BOLA_VEHICLE_LOCATION_ACCESS
+  severity: CRITICAL
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md"
+    - "https://www.akto.io/blog/bola-exploitation-using-unauthorized-uuid-on-api-endpoint"
+  cwe:
+    - CWE-284
+    - CWE-639
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: GET
+  and:
+    - url:
+        contains_either:
+          - vehicle
+          - vehicles
+          - asset
+          - assets
+          - fleet
+    - url:
+        contains_either:
+          - location
+          - position
+          - geo
+          - tracking
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Unauthorized
+      - Forbidden
+      - not found
+      - access denied
+
+wordLists:
+  foreignResourceIds:
+    source: sample_data
+    key:
+      regex: vehicleid|vehicle_id|vehicleId|VehicleId|VehicleID|asset_id|assetId|resource_id|resourceId|entity_id|entityId|fleet_id|fleetId
+    all_apis: true
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_url:
+            token_replace:
+              location: 1
+              replace_with: ${foreignResourceIds}
+        - success: vulnerable
+        - failure: x2
+    - req:
+        - modify_url:
+            token_replace:
+              location: 2
+              replace_with: ${foreignResourceIds}
+        - success: vulnerable
+        - failure: x3
+    - req:
+        - modify_url:
+            token_replace:
+              location: 3
+              replace_with: ${foreignResourceIds}
+        - success: vulnerable
+        - failure: x4
+    - req:
+        - modify_url:
+            token_replace:
+              location: 4
+              replace_with: ${foreignResourceIds}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      lt: 10
+    contains_either:
+      - latitude
+      - longitude
+      - lat
+      - lng
+      - coordinates
+      - fullName
+      - full_name
+    not_contains:
+      - Error
+      - Internal Server
+      - Unauthorized
+      - Forbidden
+      - not found
+      - access denied

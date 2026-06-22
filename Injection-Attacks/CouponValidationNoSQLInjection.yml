@@ -1,0 +1,111 @@
+id: COUPON_VALIDATION_NOSQL_INJECTION
+info:
+  name: "NoSQL Injection on Coupon Validation Endpoint"
+  description: "Detects NoSQL injection vulnerabilities on coupon or promo code validation APIs where MongoDB-style operators in the request body bypass code lookup logic. Attackers can supply comparison operators instead of literal coupon strings to match arbitrary or all coupon records."
+  details: "Coupon validation endpoints typically query a document store for a matching code and discount amount. When user input is embedded directly into the query object, replacing the coupon code string with an operator object such as {\"$ne\": null}, {\"$gt\": \"\"}, or {\"$regex\": \".*\"} can cause the database to return the first available coupon. This allows redemption of discounts without knowing a valid code."
+  impact: "Successful NoSQL injection on coupon validation enables unauthorized discounts, balance inflation, and financial fraud. Attackers may automate exploitation to drain promotional budgets or apply maximum-value coupons across accounts."
+  remediation: "Treat coupon code input as untrusted data and never pass raw request objects directly into database queries. Use parameterized queries or ODM methods with typed string values. Reject objects and operator keys in coupon code fields, validate input type and format, and apply schema validation on all request bodies."
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: COUPON_VALIDATION_NOSQL_INJECTION
+  severity: HIGH
+  tags:
+    - Injection Attack
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-community/attacks/Testing_for_NoSQL_injection"
+    - "https://github.com/Charlie-belmer/nosqli"
+  cwe:
+    - CWE-943
+    - CWE-74
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    contains_either:
+      - POST
+      - PUT
+  and:
+    - url:
+        contains_either:
+          - coupon
+          - promo
+          - discount
+    - url:
+        contains_either:
+          - validate
+          - validation
+          - verification
+          - verify
+          - check
+  request_payload:
+    for_one:
+      key:
+        regex: coupon_code|couponCode|promo_code|promoCode|^code$|voucher
+        extract: couponKey
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Unauthorized
+      - invalid coupon
+      - not found
+
+wordLists:
+  noSqlObjectBody: '{"coupon_code": {"$ne": null}}'
+  discoveredCouponCodes:
+    source: sample_data
+    key:
+      regex: coupon_code|couponCode|promo_code|promoCode|discount_code|voucher_code
+    location: response
+    all_apis: true
+  responseErrorList:
+    - Error
+    - fail
+    - invalid
+    - expired
+    - not found
+    - rejected
+    - unauthorized
+
+execute:
+  type: single
+  requests:
+    - req:
+        - replace_body: ${noSqlObjectBody}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${responseErrorList}
+            or:
+              - response_payload:
+                  contains_either:
+                    - coupon_code
+                    - coupon
+                    - valid
+                    - discount
+                    - amount
+                    - success
+                    - applied
+              - response_payload:
+                  contains_either: ${discoveredCouponCodes}
+        - success: vulnerable

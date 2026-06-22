@@ -1,0 +1,136 @@
+id: ORDER_QUANTITY_MASS_ASSIGNMENT
+info:
+  name: "Order Quantity Mass Assignment via Negative Value"
+  description: "Detects mass assignment vulnerabilities on order mutation endpoints where client-supplied quantity values are bound directly to the order model without proper validation. Applications may expose shadow update endpoints (PUT or PATCH) or accept writable quantity fields on order creation (POST) that allow attackers to supply negative quantities."
+  details: "Order APIs are expected to accept only positive quantity values when placing or updating purchases. When the server blindly maps request body fields to internal order properties, an attacker can set quantity to a negative number. This can invert billing logic—crediting the user's balance or issuing a refund—without returning the purchased item, effectively obtaining goods or store credit for free."
+  impact: "Successful exploitation allows financial fraud by manipulating order quantities to generate unauthorized refunds or account credits. Attackers can repeat the attack to drain inventory accounting integrity or inflate balances. This undermines payment controls, causes direct revenue loss, and may enable larger-scale abuse when combined with automated order placement."
+  remediation: "Enforce server-side validation that order quantity must be a positive integer within defined bounds on every create and update endpoint. Use an explicit allowlist of writable fields and reject unexpected body parameters. Recalculate pricing and credits on the server from trusted catalog data rather than trusting client-supplied quantity values for billing logic."
+  category:
+    name: MA
+    shortName: Mass Assignment
+    displayName: Mass Assignment (MA)
+  subCategory: ORDER_QUANTITY_MASS_ASSIGNMENT
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa3-broken-object-property-level-authorization.md"
+    - "https://owasp.org/API-Security/editions/2023/en/0xa3-broken-object-property-level-authorization/"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Mass_Assignment_Cheat_Sheet.html"
+  cwe:
+    - CWE-915
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    contains_either:
+      - PUT
+      - PATCH
+      - POST
+  url:
+    contains_either:
+      - orders
+      - order
+  request_payload:
+    for_one:
+      key:
+        regex: "^quantity$|^qty$|^product_quantity$|^order_quantity$"
+        extract: quantityKey
+      value:
+        datatype: number
+        gt: 0
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+
+wordLists:
+  responseErrorList:
+    - Error
+    - Internal Server
+    - Failed
+    - Unauthorized
+    - access denied
+    - Forbidden
+    - Method Not allowed
+    - Gateway timeout
+    - request timeout
+    - server error
+    - server busy
+    - authentication error
+    - authorization error
+    - validation error
+    - Permission Denied
+    - invalid token
+    - token expired
+    - session expired
+    - session timeout
+    - unexpected error
+    - unable to process request
+    - bad request
+    - service unavailable
+    - account is locked
+    - account is blocked
+    - multiple failed attempts
+    - Attention Required!
+    - CloudFlare
+    - "Sorry, you have been blocked"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            quantityKey: -1
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${responseErrorList}
+              contains_either:
+                - '"quantity": -'
+                - '"quantity":-'
+                - '"qty": -'
+                - '"qty":-'
+        - success: vulnerable
