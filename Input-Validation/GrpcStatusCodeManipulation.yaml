@@ -32,6 +32,7 @@ info:
     - CWE-252
   cve:
     - CVE-2023-32732
+    - CVE-2023-32731
 
 attributes:
   nature: INTRUSIVE
@@ -62,8 +63,6 @@ wordLists:
   maliciousStatusCodes:
     - "999"
     - "-1"
-    - "0"
-    - "16"
     - "100"
     - "9999"
     - "2147483647"
@@ -81,17 +80,35 @@ execute:
             x-grpc-test: "status_manipulation_test"
 
 validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    not_contains:
-      - Error
-      - "invalid status code"
-      - "malformed status"
-      - "rejected"
-      - "blocked"
-      - "invalid request"
-      - "bad status"
+  or:
+    - response_payload:
+        contains_either:
+          - "injected_error_message"
+    - response_headers:
+        for_one:
+          key:
+            eq: "grpc-message"
+          value:
+            contains_either:
+              - "injected_error_message"
+    - and:
+        - response_code:
+            gte: 200
+            lt: 300
+        - response_headers:
+            for_one:
+              key:
+                eq: "grpc-status"
+              value:
+                eq: ${maliciousStatusCodes}
+        - response_payload:
+            length:
+              gt: 0
+            not_contains:
+              - Error
+              - "invalid status code"
+              - "malformed status"
+              - "rejected"
+              - "blocked"
+              - "invalid request"
+              - "bad status"

@@ -31,7 +31,7 @@ info:
     - CWE-215
     - CWE-16
   cve:
-    - CVE-2023-29383
+    - CVE-2023-32731
 
 attributes:
   nature: NON_INTRUSIVE
@@ -40,6 +40,9 @@ attributes:
 
 
 api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
   method:
     neq: "OPTIONS"
   request_headers:
@@ -51,8 +54,70 @@ api_selection_filters:
           - "application/grpc"
 
 execute:
-  type: single
+  type: multiple
   requests:
+    - req:
+        - modify_url:
+            regex_replace:
+              regex: "(/[^/]+)$"
+              replace_with: "/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo"
+        - replace_body: "\x00\x00\x00\x00\x02\x3a\x00"
+        - add_header:
+            content-type: "application/grpc"
+        - add_header:
+            te: "trailers"
+        - validate:
+            and:
+              - response_code:
+                  gte: 200
+                  lt: 300
+              - response_headers:
+                  for_one:
+                    key:
+                      eq: "grpc-status"
+                    value:
+                      eq: "0"
+              - response_payload:
+                  contains_either:
+                    - "file_descriptor_response"
+                    - "ServerReflectionResponse"
+                    - "list_services_response"
+                    - "file_descriptor_proto"
+                    - "service_response"
+                    - "FileDescriptorProto"
+        - success: vulnerable
+        - failure: x2
+    - req:
+        - modify_url:
+            regex_replace:
+              regex: "(/[^/]+)$"
+              replace_with: "/grpc.reflection.v1.ServerReflection/ServerReflectionInfo"
+        - replace_body: "\x00\x00\x00\x00\x02\x3a\x00"
+        - add_header:
+            content-type: "application/grpc"
+        - add_header:
+            te: "trailers"
+        - validate:
+            and:
+              - response_code:
+                  gte: 200
+                  lt: 300
+              - response_headers:
+                  for_one:
+                    key:
+                      eq: "grpc-status"
+                    value:
+                      eq: "0"
+              - response_payload:
+                  contains_either:
+                    - "file_descriptor_response"
+                    - "ServerReflectionResponse"
+                    - "list_services_response"
+                    - "file_descriptor_proto"
+                    - "service_response"
+                    - "FileDescriptorProto"
+        - success: vulnerable
+        - failure: x3
     - req:
         - modify_url:
             regex_replace:
@@ -63,27 +128,26 @@ execute:
             content-type: "application/grpc"
         - add_header:
             te: "trailers"
-
-validate:
-  or:
-    - response_code:
-        gte: 200
-        lt: 300
-    - response_payload:
-        contains_either:
-          - "file_descriptor_response"
-          - "ServerReflectionResponse"
-          - "list_services"
-          - "file_descriptor_proto"
-          - "service_response"
-          - "name"
-          - "FileDescriptorProto"
-    - response_headers:
-        for_one:
-          key:
-            eq: "grpc-status"
-          value:
-            eq: "0"
+        - validate:
+            and:
+              - response_code:
+                  gte: 200
+                  lt: 300
+              - response_headers:
+                  for_one:
+                    key:
+                      eq: "grpc-status"
+                    value:
+                      eq: "0"
+              - response_payload:
+                  contains_either:
+                    - "file_descriptor_response"
+                    - "ServerReflectionResponse"
+                    - "list_services_response"
+                    - "file_descriptor_proto"
+                    - "service_response"
+                    - "FileDescriptorProto"
+        - success: vulnerable
 
 strategy:
   run_once: /
