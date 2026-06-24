@@ -48,6 +48,16 @@ api_selection_filters:
     not_contains:
       - GET
       - OPTIONS
+
+  or:
+    - url:
+        not_contains: graphql
+    - and:
+        - url:
+            contains_either: graphql
+        - request_payload:
+            not_contains: "query"
+
   request_payload:
     for_one:
       key:

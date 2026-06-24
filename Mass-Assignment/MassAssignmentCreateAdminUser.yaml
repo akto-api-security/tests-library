@@ -45,6 +45,16 @@ api_selection_filters:
       - "PUT"
       - "POST"
       - "PATCH"
+
+  or:
+    - url:
+        not_contains: graphql
+    - and:
+        - url:
+            contains_either: graphql
+        - request_payload:
+            not_contains: "query"
+
   url:
     contains_all:
       - user
