@@ -1,0 +1,65 @@
+id: SMART_REPLACE_AUTH_TOKEN
+info:
+  name: "BOLA by changing auth token - Smart Testing"
+  description: "Smart testing for BOLA vulnerabilities by changing the auth token. This involves manipulating an API request to replace the authorization token, identifying whether the API lacks proper checks for unauthorized data access."
+  details: "Smart detection of BOLA attack by replacing auth tokens to access unauthorized resources. If the API doesn't validate user ownership of resources, unauthorized modifications may be accepted, indicating a BOLA vulnerability."
+  impact: "The impact can be severe, as it allows unauthorized users to modify or manipulate sensitive data belonging to other users. This can lead to data breaches, unauthorized changes to critical records, and potential escalation of privileges."
+
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: SMART_REPLACE_AUTH_TOKEN
+  severity: CRITICAL
+  agenticTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+  references:
+    - "https://www.akto.io/blog/bola-exploitation-using-unauthorized-uuid-on-api-endpoint"
+    - "https://www.akto.io/blog/what-is-broken-object-level-authorization-bola"
+  cwe:
+    - CWE-284
+    - CWE-285
+  cve:
+    - CVE-2023-39349
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      eq: 0
+    not_contains:
+      - Error
+      - Unauthorized
+      - access denied
+      - Forbidden
+
+execute:
+  type: single
+  requests:
+    - req:
+        - replace_body: '{}'
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                eq: 0
+              not_contains:
+                - Error
+                - Unauthorized
+                - access denied
+                - Forbidden
+
