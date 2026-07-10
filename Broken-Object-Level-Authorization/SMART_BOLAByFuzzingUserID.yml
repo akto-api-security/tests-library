@@ -1,0 +1,92 @@
+id: SMART_FUZZ_USER_ID
+info:
+  name: "BOLA by Accessing Existing User Data Through User ID Fuzzing - Smart Testing"
+  description: >
+    "Smart testing for BOLA vulnerabilities by fuzzing user IDs. This test involves accessing existing user data through user ID fuzzing, where attackers manipulate identifiers like UUIDs, string IDs, and integers to exploit vulnerabilities and gain unauthorized access."
+  details: >
+    "Smart detection of BOLA vulnerability by fuzzing user IDs with variations such as UUIDs, string IDs, and integer IDs. This manipulation allows detection of unauthorized access to existing user data, identifying privacy breaches and BOLA abuse risks."
+  impact: >
+    "The impact can be severe, potentially leading to unauthorized access to sensitive user information. Exploiting business logic vulnerabilities may result in privacy breaches, unauthorized disclosures, and compromise the integrity of user data."
+
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: SMART_FUZZ_USER_ID
+  severity: CRITICAL
+  agenticTestingAllowed: true
+  onlySmartTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+  references:
+    - "https://www.akto.io/blog/bola-exploitation-using-unauthorized-uuid-on-api-endpoint"
+    - "https://www.akto.io/blog/what-is-broken-object-level-authorization-bola"
+  cwe:
+    - CWE-284
+    - CWE-285
+  cve:
+    - CVE-2023-39349
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      eq: 0
+    not_contains:
+      - Error
+      - Unauthorized
+      - access denied
+      - Forbidden
+
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: "^UserId$|^UserID$|^user_id$|^userid$|username|^Username$|^member_id$|^MemberId$|^profile_id$|^ProfileId$|^account_id$|^AccountID$|^customer_id$|^CustomerID$"
+            extract: userKey
+    - query_param:
+        for_one:
+          key:
+            regex: "^UserId$|^UserID$|^user_id$|^userid$|^username$|^Username$|^member_id$|^MemberId$|^profile_id$|^ProfileId$|^account_id$|^AccountID$|^customer_id$|^CustomerID$"
+            extract: userKey
+
+wordLists:
+  random_ids:
+    source: sample_data
+    key:
+      regex: "^UserId$|^UserID$|^user_id$|^userid$|username|^Username$|^member_id$|^MemberId$|^profile_id$|^ProfileId$|^account_id$|^AccountID$|^customer_id$|^CustomerID$"
+    all_apis: true
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            userKey: ${random_ids}
+        - modify_query_param:
+            userKey: ${random_ids}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      eq: 0
+    not_contains:
+      - Error
+      - Unauthorized
+      - access denied
+      - Forbidden
+

