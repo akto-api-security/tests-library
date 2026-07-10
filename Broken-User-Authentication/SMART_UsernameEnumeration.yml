@@ -1,0 +1,108 @@
+id: SMART_USERNAME_ENUMERATION
+info:
+  name: Username Enumeration via Different Response Content - Smart Testing
+  description: Smart testing for username enumeration vulnerabilities. Detects when applications leak username information through different response codes, content, or timing differences.
+  details: Tests for username enumeration by intelligently analyzing authentication endpoint responses to valid and invalid usernames. The system detects vulnerabilities through response code variations, response content differences, and timing analysis across different authentication touchpoints.
+  impact: Exposure of valid usernames enabling targeted attacks, account enumeration facilitating brute force attacks, and compromise of authentication security.
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: SMART_USERNAME_ENUMERATION
+  severity: MEDIUM
+  agenticTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md
+  cwe:
+    - CWE-287
+    - CWE-203
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Unauthorized
+      - access denied
+      - Forbidden
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: "username|^user$|^userid$|^user_id$|^login$|email|^account$"
+            extract: userKey
+    - query_param:
+        for_one:
+          key:
+            regex: "username|^user$|^userid$|^user_id$|^login$|email|^account$"
+            extract: userKey
+
+wordLists:
+  validUsernames:
+    - "admin"
+    - "test"
+    - "user"
+    - "guest"
+  invalidUsernames:
+    - "nonexistentuser12345"
+    - "fakeuserxyz789"
+    - "dummyaccount999"
+  defaultPasswords:
+    - "Default1!"
+    - "Password123"
+    - "Test@123"
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            userKey: ${validUsernames}
+            password: ${defaultPasswords}
+        - modify_query_param:
+            userKey: ${validUsernames}
+            password: ${defaultPasswords}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+        - success: x1
+        - failure: continue
+    - req:
+        - modify_body_param:
+            userKey: ${invalidUsernames}
+            password: ${defaultPasswords}
+        - modify_query_param:
+            userKey: ${invalidUsernames}
+            password: ${defaultPasswords}
+        - validate:
+            response_code:
+              gte: 400
+              lt: 410
+        - success: x2
+        - failure: continue
+    - req:
+        - validate:
+            response_code:
+              neq: "${x1.response.status_code}"
+        - success: vulnerable
