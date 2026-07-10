@@ -1,0 +1,173 @@
+id: SMART_MASS_ASSIGNMENT
+info:
+  name: Mass Assignment vulnerability test using Boolean values - Smart Testing
+  description: Smart testing for Mass Assignment vulnerabilities. Detects when applications fail to properly validate and restrict parameter assignment, allowing unauthorized modification of sensitive data through boolean, string, and integer values.
+  details: Tests for Mass Assignment by intelligently injecting unexpected parameters with various data types into API requests. The system detects vulnerabilities by checking if unauthorized parameters are accepted and reflected in responses, enabling privilege escalation and data manipulation.
+  impact: Unauthorized data manipulation, privilege escalation, account takeover, financial fraud, data corruption, and complete application compromise through unauthorized parameter assignment.
+  category:
+    name: MA
+    shortName: Mass Assignment
+    displayName: Mass Assignment (MA)
+  subCategory: SMART_MASS_ASSIGNMENT
+  severity: HIGH
+  agenticTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa3-broken-object-property-level-authorization.md
+  cwe:
+    - CWE-915
+  cve:
+    - CVE-2023-32079
+    - CVE-2023-42768
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+    extract: resp_code
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extractMultiple: payloadKeys
+  response_payload:
+    for_one:
+      key:
+        not_contains: "${payloadKeys}"
+        extractMultiple: extraKeys
+
+wordLists:
+  booleanValues:
+    - true
+    - false
+  stringValues:
+    - "admin"
+    - "superuser"
+    - "customer"
+    - "moderator"
+    - "privileged"
+    - "root"
+    - "operator"
+  integerValues:
+    - 0
+    - 1
+    - 99
+    - 999
+    - 1000
+    - -1
+  suspiciousKeys:
+    - "role"
+    - "isAdmin"
+    - "isPremium"
+    - "privilege"
+    - "level"
+    - "is_active"
+    - "is_verified"
+    - "is_superuser"
+    - "account_type"
+    - "user_type"
+    - "permission"
+    - "permissions"
+  dynamicIntegerValues:
+    for_all:
+      ${iteratorKey}.wordList:
+        all_apis: true
+        sample_data: true
+        key: "${iteratorKey}"
+        datatype: number
+  dynamicStringValues:
+    for_all:
+      ${iteratorKey}.wordList:
+        all_apis: true
+        sample_data: true
+        key: "${iteratorKey}"
+        datatype: string
+  dynamicBooleanValues:
+    for_all:
+      ${iteratorKey}.wordList:
+        all_apis: true
+        sample_data: true
+        key: "${iteratorKey}"
+        datatype: boolean
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - add_body_param:
+            ${extraKeys}: "${booleanValues}"
+        - validate:
+            response_code:
+              eq: ${resp_code}
+            response_payload:
+              for_one:
+                key:
+                  contains_either: ${extraKeys}
+                value:
+                  contains_either: ${booleanValues}
+        - success: x1
+        - failure: continue
+    - req:
+        - add_body_param:
+            ${extraKeys}: "${stringValues}"
+        - validate:
+            response_code:
+              eq: ${resp_code}
+            response_payload:
+              for_one:
+                key:
+                  contains_either: ${extraKeys}
+                value:
+                  contains_either: ${stringValues}
+        - success: x2
+        - failure: continue
+    - req:
+        - add_body_param:
+            ${extraKeys}: "${integerValues}"
+        - validate:
+            response_code:
+              eq: ${resp_code}
+            response_payload:
+              for_one:
+                key:
+                  contains_either: ${extraKeys}
+                value:
+                  contains_either: ${integerValues}
+        - success: x3
+        - failure: continue
+    - req:
+        - ${extraKeys}:
+            for_all:
+              - add_body_param:
+                  ${iteratorKey}: "${iteratorKey}.wordList"
+        - validate:
+            response_code:
+              eq: ${resp_code}
+            response_payload:
+              for_one:
+                key:
+                  contains_either: ${extraKeys}
+        - success: x4
+        - failure: continue
+    - req:
+        - add_body_param:
+            ${suspiciousKeys}: "${booleanValues}"
+        - validate:
+            response_code:
+              eq: ${resp_code}
+            response_payload:
+              for_one:
+                key:
+                  contains_either: ${suspiciousKeys}
+                value:
+                  contains_either: ${booleanValues}
+        - success: vulnerable
+
