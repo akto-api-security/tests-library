@@ -35,29 +35,54 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  method:
+    neq: "OPTIONS"
   response_payload:
     length:
       gt: 0
-    not_contains:
+    not_contains_either:
       - Error
+      - Internal Server
+      - Failed
       - Unauthorized
       - access denied
       - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   or:
     - request_payload:
         for_one:
           key:
             regex: .*
-            extract: injection_key
+            extract: changed_body_key
           value:
-            extract: injection_value
+            extract: changed_body_value
     - query_param:
         for_one:
           key:
             regex: .*
-            extract: injection_key
+            extract: changed_query_key
           value:
-            extract: injection_value
+            regex: .*
+            extract: changed_query_value
 
 wordLists:
   commandPayloads:
@@ -86,23 +111,45 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            injection_key: ${commandPayloads}
+            changed_body_key: ${commandPayloads}
         - modify_query_param:
-            injection_key: ${commandPayloads}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-              contains_any:
-                - "uid="
-                - "gid="
-                - "groups="
-              not_contains:
-                - Error
-                - Unauthorized
-                - access denied
-                - Forbidden
+            changed_query_key: ${commandPayloads}
+
+validate:
+  response_payload:
+    length:
+      gt: 0
+    contains_all:
+      - "uid="
+      - "gid="
+      - "groups="
+    not_contains:
+      - Error
+      - Internal Server
+      - Failed
+      - Unauthorized
+      - access denied
+      - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
+      - "<html>"
+      - "</html>"
 
