@@ -46,15 +46,16 @@ api_selection_filters:
     for_one:
       key:
         regex: .*
-        extract: body_param_key
+        extractMultiple: body_param_key
 
 execute:
   type: single
   requests:
     - req:
         - modify_body_param:
-            body_param_key: '%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E'
+            ${body_param_key}: '%22%3E%3C%2Fscript%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E'
 
+          for_each_combination: true
 validate:
   response_payload:
     contains_all:

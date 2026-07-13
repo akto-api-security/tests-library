@@ -35,14 +35,14 @@ api_selection_filters:
       for_one:
         key:
           regex: .*
-          extract: param_key
+          extractMultiple: param_key
         value:
           regex: http
   - query_param:
       for_one:
         key:
           regex: .*
-          extract: param_key
+          extractMultiple: param_key
         value:
           regex: http
 
@@ -59,9 +59,11 @@ execute:
         redirect_url: "${redirect_urls}"
     - follow_redirect: true
     - modify_query_param:
-        param_key: "https://test-services.akto.io/${random_uuid}"
+        ${param_key}: "https://test-services.akto.io/${random_uuid}"
+      for_each_combination: true
     - modify_body_param:
-        param_key: "https://test-services.akto.io/${random_uuid}"
+        ${param_key}: "https://test-services.akto.io/${random_uuid}"
+      for_each_combination: true
 validate:
   response_code:
     gte: 200

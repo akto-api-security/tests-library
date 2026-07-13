@@ -75,7 +75,7 @@ api_selection_filters:
     for_one:
       key:
         regex: .*
-        extract: changed_query_key
+        extractMultiple: changed_query_key
       value:
         regex: .*
         extract: changed_query_value
@@ -131,7 +131,8 @@ execute:
         - failure: exit
     - req:
         - modify_query_param:
-            changed_query_key: ${changed_query_value}${timeBasedPayloads}
+            ${changed_query_key}: ${changed_query_value}${timeBasedPayloads}
+          for_each_combination: true
         - validate:
             response_code:
               eq: 429

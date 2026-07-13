@@ -74,7 +74,7 @@ api_selection_filters:
     for_one:
       key:
         regex: "^Cookie$|^cookie$"
-        extract: userKey
+        extractMultiple: userKey
       value:
         extract: userVal
 wordLists:
@@ -92,8 +92,9 @@ execute:
   requests:
     - req:
         - modify_header:
-            userKey: ${userVal}${cookieHeaderPayloads}
+            ${userKey}: ${userVal}${cookieHeaderPayloads}
 
+          for_each_combination: true
 validate:
   or:
     - response_payload:
