@@ -1,0 +1,60 @@
+id: APACHE_SERVER_VERSION_DISCLOSED_INVALID_URL
+info:
+  name: Apache Server Version Disclosed using invalid URL
+  description: Detection of Apache server version disclosure misconfiguration, potentially aiding attackers in identifying vulnerable versions.
+  details: >
+    The Apache Server Version Disclosed test identifies a security misconfiguration where the Apache server  version is disclosed in the response headers. The test checks if the response headers contain a version  string matching the regular expression "apache/[0-9.]+". Disclosing the server version can aid attackers in  identifying potentially vulnerable versions and targeting specific exploits. This misconfiguration falls  under the Security Misconfiguration category with a low severity level. Concealing the server version in the
+    response headers enhances security by reducing the exposure of potentially sensitive information.
+  impact: Disclosing Apache server version exposes potentially vulnerable versions, aiding attackers in identifying exploits and targeting specific vulnerabilities.
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: Server Misconfiguration
+  severity: LOW
+  tags:
+    - APACHE
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa8-security-misconfiguration.md"
+    - "https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/01-Information_Gathering/02-Fingerprint_Web_Server"
+  cwe:
+    - CWE-16
+    - CWE-200
+  cve:
+    - CVE-2017-7529
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: FREE
+  duration: FAST
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+
+execute:
+  type: single
+  requests:
+    - req: 
+      - modify_url: invalid_url
+
+validate:
+  response_code:
+    gte: 200
+  response_payload:
+    length:
+      gt: 0
+    or: 
+    - not_contains:
+        - <html>
+        - </html>
+    - regex: Apache/[0-9.]+
+
+
