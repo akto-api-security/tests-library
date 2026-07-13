@@ -165,6 +165,54 @@
 
     "SECURITY_IDENTITY_SPOOFING_": { "severity": "HIGH" },
     "SECURITY_INSECURE_INTER_AGENT_COMMUNICATION_": { "severity": "HIGH" },
+    "SECURITY_INTER_AGENT_": {
+      "severity": "HIGH",
+      "category": "INSECURE_INTER_AGENT_COMMUNICATION",
+      "cwe": ["CWE-923", "CWE-941", "CWE-200"],
+      "cve": ["CVE-2024-5184"]
+    },
+    "SECURITY_HUMAN_AGENT_FALSE_ACTION_CLAIM": {
+      "severity": "HIGH",
+      "category": "HUMAN_AGENT_TRUST_EXPLOITATION",
+      "cwe": ["CWE-345", "CWE-754"],
+      "cve": ["CVE-2024-5184"]
+    },
+    "SECURITY_CASCADING_CROSS_AGENT_DECISION_MISMATCH": {
+      "severity": "MEDIUM",
+      "category": "CASCADING_FAILURES",
+      "cwe": ["CWE-754", "CWE-691"],
+      "cve": ["CVE-2024-5184"]
+    },
+    "SECURITY_IDENTITY_SESSION_ACCOUNT_OVERRIDE": {
+      "severity": "HIGH",
+      "category": "IDENTITY_AND_PRIVILEGE_ABUSE",
+      "cwe": ["CWE-287", "CWE-285"],
+      "cve": ["CVE-2023-22501"]
+    },
+    "SECURITY_TOOL_RAW_BACKEND_RESPONSE_LEAK": {
+      "severity": "HIGH",
+      "category": "IDENTITY_AND_PRIVILEGE_ABUSE",
+      "cwe": ["CWE-200", "CWE-359"],
+      "cve": []
+    },
+    "SECURITY_TOOL_DEEPLINK_EXCESSIVE_AGENCY": {
+      "severity": "HIGH",
+      "category": "TOOL_MISUSE_AND_EXPLOITATION",
+      "cwe": ["CWE-862", "CWE-269"],
+      "cve": []
+    },
+    "SECURITY_INDIRECT_INJECTION_VIA_SUPPORT_DOCUMENT": {
+      "severity": "MEDIUM",
+      "category": "MEMORY_AND_CONTEXT_POISONING",
+      "cwe": ["CWE-74", "CWE-94"],
+      "cve": ["CVE-2024-5184"]
+    },
+    "SECURITY_INDIRECT_INJECTION_VIA_SUPPORT_DOCUMENT_META": {
+      "severity": "HIGH",
+      "category": "AGENT_GOAL_HIJACK",
+      "cwe": ["CWE-74", "CWE-94"],
+      "cve": ["CVE-2024-5184"]
+    },
     "SECURITY_RAG_POISONING_": { "severity": "HIGH" },
     "SECURITY_CONTEXT_POISONING_": { "severity": "HIGH" },
     "SECURITY_PHISHING_": { "severity": "HIGH" },
