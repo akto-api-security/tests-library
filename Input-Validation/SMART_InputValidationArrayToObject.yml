@@ -71,14 +71,14 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
-            regex: "quantity|payment|timestamp|expiry|coupon"
+            regex: .*
             extract: validationKey
           value:
             extract: validationValue
     - query_param:
         for_one:
           key:
-            regex: "quantity|payment|timestamp|expiry|coupon"
+            regex: .*
             extract: validationKey
           value:
             extract: validationValue
