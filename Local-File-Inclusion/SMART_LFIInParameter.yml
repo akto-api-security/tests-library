@@ -71,18 +71,18 @@ api_selection_filters:
   or:
     - request_payload:
         for_one:
-          value:
-            regex: ^.*\..{1,4}$
           key:
+            regex: .*
             extract: file_path
+          value:
+            extract: file_value
     - query_param:
         for_one:
-          value:
-            regex: ^.*\..{1,4}$
           key:
+            regex: .*
             extract: file_path
-    - url:
-        extract: urlVar
+          value:
+            extract: file_value
 
 wordLists:
   basicTraversal:
