@@ -1,0 +1,56 @@
+id: MUST_CONTAIN_PRIVACY_RESPONSE_HEADERS
+info:
+  name: Missing Privacy & Feature Restriction Response Headers
+  description: "The response does not contain Privacy & Feature Restriction security headers."
+  details: >
+    "These headers limit what referrer information is shared when navigating to other sites. They also restrict access to powerful browser APIs like camera, microphone, and geolocation. This reduces the exposure of sensitive user data."
+  impact: "Minimizes data leaks and reduces browser attack surface."
+  category:
+    name: MHH
+    shortName: Misconfigured HTTP Headers
+    displayName: Misconfigured HTTP Headers (MHH)
+  subCategory: MUST_CONTAIN_RESPONSE_HEADERS
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://web.dev/security-headers/"
+    - "https://www.keycdn.com/blog/http-security-headers"
+    - "https://www.invicti.com/white-papers/whitepaper-http-security-headers"
+  cwe:
+    - CWE-693
+  cve:
+    - CVE-2022-41915
+    - CVE-2022-37436
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+execute:
+  type: single
+  requests:
+    - req: []
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_headers:
+    for_one:
+      key:
+        not_contains:
+          - Permissions-Policy
+          - Referrer-Policy
+strategy:
+  run_once: /
