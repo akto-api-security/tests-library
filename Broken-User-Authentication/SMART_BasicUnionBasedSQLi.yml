@@ -35,10 +35,12 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  method:
+    neq: "OPTIONS"
   response_payload:
     length:
       gt: 0
-    not_contains:
+    not_contains_either:
       - Error
       - Internal Server
       - Failed
@@ -68,23 +70,17 @@ api_selection_filters:
       - "<html>"
       - "</html>"
   or:
-    - url:
-        contains_either:
-          - login
-          - signin
-          - authenticate
-          - auth
     - request_payload:
         for_one:
           key:
-            regex: "username|^user$|^userid$|^user_id$|^login$|email|^account$"
+            regex: .*
             extract: authKey
           value:
             extract: authValue
     - query_param:
         for_one:
           key:
-            regex: "username|^user$|^userid$|^user_id$|^login$|email|^account$"
+            regex: .*
             extract: authKey
           value:
             extract: authValue
