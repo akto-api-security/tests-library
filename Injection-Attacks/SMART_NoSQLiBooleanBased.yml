@@ -1,8 +1,8 @@
 id: SMART_NOSQL_INJECTION_BOOLEAN_BASED
 info:
   name: Boolean Based NoSQL Injection - Smart Testing
-  description: Smart testing for boolean-based NoSQL injection vulnerabilities. Detects when NoSQL queries can be manipulated using JavaScript or regex expressions to bypass logic and extract data.
-  details: Tests for boolean-based NoSQL injection by intelligently injecting JavaScript expressions and regex functions into JSON parameters. The system identifies vulnerable input handlers that execute injected code without proper sanitization, testing both positive (true) and negative (false) conditions.
+  description: Smart testing for boolean-based NoSQL injection vulnerabilities. Detects when NoSQL queries can be manipulated using JavaScript boolean expressions to bypass logic and extract data.
+  details: Tests for boolean-based NoSQL injection by appending false then true conditions to extracted parameter values. A vulnerability is confirmed when the false condition and true condition produce different responses.
   impact: Unauthorized database access, data extraction, authentication bypass, data manipulation, and complete application compromise.
   category:
     name: INJECT
@@ -35,14 +35,38 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  method:
+    neq: "OPTIONS"
   response_payload:
     length:
       gt: 0
-    not_contains:
+    not_contains_either:
       - Error
+      - Internal Server
+      - Failed
       - Unauthorized
       - access denied
       - Forbidden
+      - Method Not allowed
+      - Gateway timeout
+      - request timeout
+      - server error
+      - server busy
+      - authentication error
+      - authorization error
+      - validation error
+      - Permission Denied
+      - invalid token
+      - token expired
+      - session expired
+      - session timeout
+      - unexpected error
+      - unable to process request
+      - bad request
+      - service unavailable
+      - account is locked
+      - account is blocked
+      - multiple failed attempts
   or:
     - request_payload:
         for_one:
@@ -60,44 +84,53 @@ api_selection_filters:
             extract: injection_value
 
 wordLists:
-  booleanPayloads:
-    - "${injection_value} && 'a' != 'a'"
-    - "${injection_value} || 'a' == 'a'"
-    - "${injection_value} && true"
-    - "${injection_value} || false"
-    - "/a/ && 'a' != 'a'/"
-    - "/^.*$/ && true/"
-    - "/^.*$/ || false/"
-    - "{$where: \"this.password == '1' || '1' == '1'\"}"
-    - "{$where: \"this.username == 'admin' && '1' == '1'\"}"
+  falsePayloads:
+    - "'a' != 'a'"
+    - "false"
+    - "1 == 0"
+  truePayloads:
+    - "'a' == 'a'"
+    - "true"
+    - "1 == 1"
 
 execute:
   type: multiple
   requests:
     - req:
         - modify_body_param:
-            injection_key: !!str ${injection_value} && 'a' != 'a'
+            injection_key: !!str ${injection_value} && ${falsePayloads}
         - modify_query_param:
-            injection_key: !!str ${injection_value} && 'a' != 'a'
+            injection_key: !!str ${injection_value} && ${falsePayloads}
         - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-              not_contains:
-                - Error
-                - Unauthorized
-                - access denied
-                - Forbidden
+            or:
+              - response_code:
+                  gte: 400
+                  lt: 410
+              - response_payload:
+                  length:
+                    gt: 0
+                  not_contains:
+                    - Error
+                    - fail
+                    - invalid
+                    - expired
+                    - not found
+                    - account is locked
+                    - account is blocked
+                    - rate-limit
+                    - rate_limit
+                    - rate limit
+                    - multiple failed attempt
+                    - cloudflare
+                    - <html>
+                    - </html>
         - success: x1
         - failure: continue
     - req:
         - modify_body_param:
-            injection_key: !!str ${injection_value} || 'a' == 'a'
+            injection_key: !!str ${injection_value} || ${truePayloads}
         - modify_query_param:
-            injection_key: !!str ${injection_value} || 'a' == 'a'
+            injection_key: !!str ${injection_value} || ${truePayloads}
         - validate:
             response_code:
               gte: 200
@@ -105,6 +138,18 @@ execute:
             response_payload:
               length:
                 gt: 0
+              neq_obj: "${x1.response.body}"
+              not_contains:
+                - rate-limit
+                - rate limit
+                - rate_limit
+                - account is locked
+                - account is blocked
+                - multiple failed attempt
+                - cloudflare
+                - invalid
+                - fail
+                - <html>
+                - </html>
         - success: x1
         - failure: continue
-
