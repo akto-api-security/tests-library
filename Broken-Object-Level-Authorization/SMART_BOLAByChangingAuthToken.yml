@@ -1,10 +1,27 @@
 id: SMART_REPLACE_AUTH_TOKEN
 info:
   name: "BOLA by changing auth token - Smart Testing"
-  description: "Smart testing for BOLA vulnerabilities by changing the auth token. This involves manipulating an API request to replace the authorization token, identifying whether the API lacks proper checks for unauthorized data access."
-  details: "Smart detection of BOLA attack by replacing auth tokens to access unauthorized resources. If the API doesn't validate user ownership of resources, unauthorized modifications may be accepted, indicating a BOLA vulnerability."
-  impact: "The impact can be severe, as it allows unauthorized users to modify or manipulate sensitive data belonging to other users. This can lead to data breaches, unauthorized changes to critical records, and potential escalation of privileges."
-
+  description: >
+    Test Broken Object Level Authorization by mutating the Authorization / session
+    credentials on an otherwise identical request to a protected resource. Keep the
+    same method, URL, and body as the baseline; change only auth/session material
+    (Bearer token, cookie session, API key header). Goal: determine whether a token
+    that should not own this object can still read or modify it.
+  details: >
+    Clone the full baseline request. Mutate ONLY auth/session headers across 4-5+
+    probes — do not alter body, query, or path unless the scenario needs it. Probe
+    ideas (escalate across attempts): (1) swap in a different user's valid token if
+    available from context; (2) use a clearly foreign/invalid Bearer or API key;
+    (3) truncate, flip characters, or forge a JWT-shaped token; (4) drop Authorization
+    while keeping cookies, or drop cookies while keeping Authorization; (5) reuse an
+    expired or role-mismatched token. Proof vs baseline: the probe returns the same
+    protected resource data, same success status, or allows the same write as the
+    baseline despite credentials that should deny access. 401/403 with a clear deny
+    is NOT vulnerable. A generic 200 with empty/no-op body and no resource data is
+    NOT enough — need the same sensitive fields or successful mutation as baseline.
+  impact: >
+    Unauthorized users can read or modify objects belonging to other accounts,
+    leading to data breaches, record tampering, and privilege escalation.
   category:
     name: BOLA
     shortName: BOLA
@@ -37,30 +54,21 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+  method:
+    neq: "OPTIONS"
   response_payload:
     length:
-      eq: 0
-    not_contains:
-      - Error
-      - Unauthorized
-      - access denied
-      - Forbidden
+      gt: 0
+
+wordLists:
+  tamperedTokens:
+    - "Bearer invalid.token.here"
+    - "Bearer eyJhbGciOiJub25lIn0.eyJzdWIiOiJhdHRhY2tlciJ9."
+    - "Bearer expired_or_forged_token"
 
 execute:
   type: single
   requests:
     - req:
-        - replace_body: '{}'
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                eq: 0
-              not_contains:
-                - Error
-                - Unauthorized
-                - access denied
-                - Forbidden
-
+        - modify_header:
+            Authorization: ${tamperedTokens}

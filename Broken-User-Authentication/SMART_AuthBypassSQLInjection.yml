@@ -1,9 +1,24 @@
 id: SMART_AUTH_BYPASS_SQL_INJECTION
 info:
   name: Authentication Bypass using SQL Injection - Smart Testing
-  description: Smart testing for authentication bypass through SQL injection vulnerabilities. Detects when authentication queries can be manipulated using SQL injection to gain unauthorized access.
-  details: Tests for SQL injection vulnerabilities in authentication mechanisms by intelligently injecting UNION-based SQL statements into authentication parameters. The system detects both positive (successful data extraction) and negative (WHERE clause manipulation) injection attempts across different parameter types.
-  impact: Unauthorized access to user accounts, data breaches, compromise of sensitive authentication information, and potential full system compromise.
+  description: >
+    Test authentication bypass via SQL injection in login/auth parameters. Keep
+    baseline method, URL, and non-auth headers. Mutate string fields that feed
+    authentication (username, password, email, token, otp, or any body/query
+    string the baseline uses for login). Leave session Authorization alone unless
+    the baseline itself is an unauthenticated login call.
+  details: >
+    Clone the baseline. Across 4–5+ probes append or replace values with classic
+    auth-bypass and boolean SQLi fragments (OR 1=1, admin'--, UNION SELECT, AND
+    1=1 vs AND 1=2). Vary which field you target when multiple auth fields exist.
+    Proof vs baseline: observable impact in THIS response — e.g. authenticated
+    session/token issued, protected user profile returned, or a SQL/DB error that
+    shows the injected query executed. A generic 200 with "invalid credentials"
+    or silent no-op is NOT vulnerable. Payload echoed in the body alone is NOT
+    evidence. Prefer clearer operators and alternate fields after a miss.
+  impact: >
+    Unauthorized account access, credential disclosure, and potential full
+    compromise of the authentication layer.
   category:
     name: NO_AUTH
     shortName: Broken Authentication
@@ -37,36 +52,6 @@ api_selection_filters:
     lt: 300
   method:
     neq: "OPTIONS"
-  response_payload:
-    length:
-      gt: 0
-    not_contains_either:
-      - Error
-      - Internal Server
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
   or:
     - request_payload:
         for_one:
@@ -85,42 +70,16 @@ api_selection_filters:
 
 wordLists:
   sqlInjectionPayloads:
-    - "' UNION SELECT null, null--"
-    - "' UNION SELECT null, null, null--"
-    - "' UNION SELECT null, null, null, null--"
-    - "' UNION SELECT 1, 'admin', 'password' FROM users--"
-    - "' UNION SELECT null, username, password FROM users--"
-    - "' UNION ALL SELECT null, null, null--"
-    - "' UNION ALL SELECT 1, 'admin', 'password'--"
     - "' OR '1'='1"
     - "' OR 1=1--"
     - "admin'--"
-    - "' UNION SELECT null, null WHERE 1=0--"
-    - "' UNION SELECT null, null, null WHERE 1=0--"
-    - "' UNION SELECT 1, 'admin', 'password' FROM users WHERE 1=0--"
-    - "' AND 1=1--"
-    - "' AND 1=2--"
+    - "' UNION SELECT null, null--"
 
 execute:
-  type: multiple
+  type: single
   requests:
     - req:
         - modify_body_param:
             authKey: ${authVal}${sqlInjectionPayloads}
         - modify_query_param:
             authKey: ${authVal}${sqlInjectionPayloads}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-              not_contains:
-                - Error
-                - Unauthorized
-                - access denied
-                - Forbidden
-        - success: x1
-        - failure: continue
-

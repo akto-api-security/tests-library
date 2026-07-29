@@ -1,9 +1,25 @@
 id: SMART_USERNAME_ENUMERATION
 info:
   name: Username Enumeration via Different Response Content - Smart Testing
-  description: Smart testing for username enumeration vulnerabilities. Detects when applications leak username information through different response codes, content, or timing differences.
-  details: Tests for username enumeration by intelligently analyzing authentication endpoint responses to valid and invalid usernames. The system detects vulnerabilities through response code variations, response content differences, and timing analysis across different authentication touchpoints.
-  impact: Exposure of valid usernames enabling targeted attacks, account enumeration facilitating brute force attacks, and compromise of authentication security.
+  description: >
+    Test username enumeration by mutating username/login/email (and related auth
+    identifier) fields on authentication or account-lookup endpoints. Keep method,
+    URL, and other headers as in the baseline; change only the identity field and
+    optionally the password companion field.
+  details: >
+    Clone the baseline request. Across 4–5+ probes, try clearly invalid usernames,
+    likely-valid common usernames (admin, test, user), and slight variants of any
+    username present in the baseline. Use a constant dummy password when the body
+    has one so only the identity signal changes. Proof vs baseline: this single
+    probe's status, body message, error code, or structure differs from the
+    baseline in a way that reveals whether the username exists (e.g. "user not
+    found" vs "invalid password", different error keys, or a distinct success
+    path for known users). Do NOT require comparing two probes to each other —
+    judge each probe against the baseline. Identical generic "invalid credentials"
+    for both valid-looking and nonsense usernames is NOT vulnerable.
+  impact: >
+    Exposure of valid usernames enabling targeted attacks and facilitating
+    credential stuffing or brute force.
   category:
     name: NO_AUTH
     shortName: Broken Authentication
@@ -35,75 +51,32 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
-  response_payload:
-    length:
-      gt: 0
-    not_contains:
-      - Error
-      - Unauthorized
-      - access denied
-      - Forbidden
+  method:
+    neq: "OPTIONS"
   or:
     - request_payload:
         for_one:
           key:
-            regex: "username|^user$|^userid$|^user_id$|^login$|email|^account$"
+            regex: .*
             extract: userKey
     - query_param:
         for_one:
           key:
-            regex: "username|^user$|^userid$|^user_id$|^login$|email|^account$"
+            regex: .*
             extract: userKey
 
 wordLists:
-  validUsernames:
+  candidateUsernames:
     - "admin"
     - "test"
-    - "user"
-    - "guest"
-  invalidUsernames:
     - "nonexistentuser12345"
     - "fakeuserxyz789"
-    - "dummyaccount999"
-  defaultPasswords:
-    - "Default1!"
-    - "Password123"
-    - "Test@123"
 
 execute:
-  type: multiple
+  type: single
   requests:
     - req:
         - modify_body_param:
-            userKey: ${validUsernames}
-            password: ${defaultPasswords}
+            userKey: ${candidateUsernames}
         - modify_query_param:
-            userKey: ${validUsernames}
-            password: ${defaultPasswords}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-        - success: x1
-        - failure: continue
-    - req:
-        - modify_body_param:
-            userKey: ${invalidUsernames}
-            password: ${defaultPasswords}
-        - modify_query_param:
-            userKey: ${invalidUsernames}
-            password: ${defaultPasswords}
-        - validate:
-            response_code:
-              gte: 400
-              lt: 410
-        - success: x2
-        - failure: continue
-    - req:
-        - validate:
-            response_code:
-              neq: "${x1.response.status_code}"
-        - success: vulnerable
+            userKey: ${candidateUsernames}

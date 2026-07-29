@@ -1,9 +1,24 @@
 id: SMART_NOSQL_INJECTION_BOOLEAN_BASED
 info:
   name: Boolean Based NoSQL Injection - Smart Testing
-  description: Smart testing for boolean-based NoSQL injection vulnerabilities. Detects when NoSQL queries can be manipulated using JavaScript boolean expressions to bypass logic and extract data.
-  details: Tests for boolean-based NoSQL injection by appending false then true conditions to extracted parameter values. A vulnerability is confirmed when the false condition and true condition produce different responses.
-  impact: Unauthorized database access, data extraction, authentication bypass, data manipulation, and complete application compromise.
+  description: >
+    Test boolean-based NoSQL injection by appending true or false JavaScript /
+    boolean expressions to injectable string parameters in body or query. Keep
+    baseline method, URL, and auth headers intact; mutate only in-scope values.
+  details: >
+    Clone the baseline. Across 4-5+ probes append false-leaning conditions
+    (&& false, && 'a'!='a') and true-leaning conditions (|| true, || 'a'=='a')
+    to the original parameter value. Also try operator-object style mutations
+    when the API accepts JSON objects. Vary which field is targeted. Proof vs
+    baseline for EACH probe independently: a true-condition probe returns more
+    records / broader results / success where baseline was scoped to one match;
+    a false-condition probe returns empty/no-match where baseline returned data.
+    Do NOT require comparing two probes to each other — judge each response
+    against the baseline. Generic 200 with unchanged body, or payload echoed
+    as stored text, is NOT vulnerable.
+  impact: >
+    Unauthorized database access, data extraction, authentication bypass, and
+    potential application compromise.
   category:
     name: INJECT
     shortName: Injection Attacks
@@ -37,36 +52,6 @@ api_selection_filters:
     lt: 300
   method:
     neq: "OPTIONS"
-  response_payload:
-    length:
-      gt: 0
-    not_contains_either:
-      - Error
-      - Internal Server
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
   or:
     - request_payload:
         for_one:
@@ -87,69 +72,15 @@ wordLists:
   falsePayloads:
     - "'a' != 'a'"
     - "false"
-    - "1 == 0"
   truePayloads:
     - "'a' == 'a'"
     - "true"
-    - "1 == 1"
 
 execute:
-  type: multiple
+  type: single
   requests:
     - req:
         - modify_body_param:
-            injection_key: !!str ${injection_value} && ${falsePayloads}
-        - modify_query_param:
-            injection_key: !!str ${injection_value} && ${falsePayloads}
-        - validate:
-            or:
-              - response_code:
-                  gte: 400
-                  lt: 410
-              - response_payload:
-                  length:
-                    gt: 0
-                  not_contains:
-                    - Error
-                    - fail
-                    - invalid
-                    - expired
-                    - not found
-                    - account is locked
-                    - account is blocked
-                    - rate-limit
-                    - rate_limit
-                    - rate limit
-                    - multiple failed attempt
-                    - cloudflare
-                    - <html>
-                    - </html>
-        - success: x1
-        - failure: continue
-    - req:
-        - modify_body_param:
             injection_key: !!str ${injection_value} || ${truePayloads}
         - modify_query_param:
             injection_key: !!str ${injection_value} || ${truePayloads}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-              neq_obj: "${x1.response.body}"
-              not_contains:
-                - rate-limit
-                - rate limit
-                - rate_limit
-                - account is locked
-                - account is blocked
-                - multiple failed attempt
-                - cloudflare
-                - invalid
-                - fail
-                - <html>
-                - </html>
-        - success: x1
-        - failure: continue
