@@ -1,22 +1,9 @@
 id: SMART_COMMAND_INJECTION_VARIABLE_ASSIGNMENT
 info:
-  name: Command Injection by Variable Assignment - Smart Testing
-  description: >
-    Test OS command injection by appending or replacing string body/query
-    parameters with command-chaining payloads. Keep baseline method, URL, and
-    auth headers intact; mutate only in-scope parameter values.
-  details: >
-    Clone the baseline. Across 4-5+ probes inject command separators and
-    subshells into string parameters (&&, ;, |, backticks, $(), encoded spaces,
-    newlines). Vary target fields and escalate operators after a miss. Proof vs
-    baseline: THIS response shows real command execution impact — e.g. uid=/gid=
-    output, whoami username, or other command stdout not present in baseline.
-    Payload merely echoed as stored text, or generic 200 with unchanged business
-    body, is NOT vulnerable. Prefer clearer operators / alternate fields after
-    a miss rather than stopping early.
-  impact: >
-    Remote code execution, system compromise, unauthorized access, and data
-    exposure.
+  name: "Command Injection by Variable Assignment - Smart Testing"
+  description: "Test OS command injection by appending or replacing string body/query parameters with command-chaining payloads. Keep baseline method, URL, and auth headers intact; mutate only in-scope parameter values."
+  details: "Clone the baseline. Across 4-5+ probes inject command separators and subshells into string parameters (&&, ;, |, backticks, $(), encoded spaces, newlines). Vary target fields and escalate operators after a miss. Proof vs baseline: THIS response shows real command execution impact — e.g. uid=/gid= output, whoami username, or other command stdout not present in baseline. Payload merely echoed as stored text, or generic 200 with unchanged business body, is NOT vulnerable. Prefer clearer operators / alternate fields after a miss rather than stopping early."
+  impact: "Remote code execution, system compromise, unauthorized access, and data exposure."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection

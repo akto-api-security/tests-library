@@ -1,26 +1,9 @@
 id: SMART_VERTICAL_PRIVILEGE_ESCALATION
 info:
-  name: Vertical Privilege Escalation - Smart Testing
-  description: >
-    Test Broken Function Level Authorization by calling an ADMIN-scoped function
-    with lower-privilege (MEMBER) credentials. Keep the same method, URL, and body
-    as the baseline; mutate only auth/session or role-related headers so a MEMBER
-    identity is used against a privileged endpoint.
-  details: >
-    Clone the full baseline request. Across 4-5+ probes escalate lower-priv auth
-    mutations: (1) swap Authorization / cookies to a MEMBER (or other non-admin)
-    token when available from role context; (2) apply MEMBER role-context headers
-    while keeping the rest of the request identical; (3) strip or downgrade
-    privilege claims in JWT/session if present; (4) try role/permission header
-    overrides that claim MEMBER while hitting the same admin URL. Do not invent
-    unrelated attack classes. Proof vs baseline: THIS probe still returns success
-    and the same privileged function data/behavior as the baseline despite
-    credentials that should be denied. 401/403 with a clear deny is NOT
-    vulnerable. Generic empty 200 / no-op without admin function output is NOT
-    enough.
-  impact: >
-    Unauthorized access to privileged functionalities, data breaches, system
-    compromise, and unauthorized actions by non-privileged users.
+  name: "Vertical Privilege Escalation - Smart Testing"
+  description: "Test Broken Function Level Authorization by calling an ADMIN-scoped function with lower-privilege (MEMBER) credentials. Keep the same method, URL, and body as the baseline; mutate only auth/session or role-related headers so a MEMBER identity is used against a privileged endpoint."
+  details: "Clone the full baseline request. Across 4-5+ probes escalate lower-priv auth mutations: (1) swap Authorization / cookies to a MEMBER (or other non-admin) token when available from role context; (2) apply MEMBER role-context headers while keeping the rest of the request identical; (3) strip or downgrade privilege claims in JWT/session if present; (4) try role/permission header overrides that claim MEMBER while hitting the same admin URL. Do not invent unrelated attack classes. Proof vs baseline: THIS probe still returns success and the same privileged function data/behavior as the baseline despite credentials that should be denied. 401/403 with a clear deny is NOT vulnerable. Generic empty 200 / no-op without admin function output is NOT enough."
+  impact: "Unauthorized access to privileged functionalities, data breaches, system compromise, and unauthorized actions by non-privileged users."
   category:
     name: BFLA
     shortName: Broken Function Level Authorization

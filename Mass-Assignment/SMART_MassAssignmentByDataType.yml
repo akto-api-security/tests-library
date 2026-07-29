@@ -1,23 +1,9 @@
 id: SMART_MASS_ASSIGNMENT
 info:
-  name: Mass Assignment vulnerability test using Boolean values - Smart Testing
-  description: >
-    Test Mass Assignment by injecting unexpected privileged properties into the
-    JSON body (role, isAdmin, permissions, etc.) that were not in the baseline
-    request. Keep method, URL, and auth intact; add or overwrite only body
-    properties related to privilege/state.
-  details: >
-    Clone the baseline. Across 4-5+ probes add suspicious keys (role, isAdmin,
-    isPremium, privilege, is_superuser, permissions, account_type) with boolean,
-    string, or integer values. Also try keys present in responses but absent from
-    the request when discoverable. Escalate value types and key names after a
-    miss. Proof vs baseline: THIS response reflects the injected property, or
-    shows a privilege/state change (admin role, premium flag, elevated
-    permissions) that baseline did not grant. Generic 200 with unchanged object
-    and no reflection of the injected field is NOT vulnerable. Do not strip auth.
-  impact: >
-    Unauthorized data manipulation, privilege escalation, account takeover, and
-    financial fraud through unauthorized parameter assignment.
+  name: "Mass Assignment vulnerability test using Boolean values - Smart Testing"
+  description: "Test Mass Assignment by injecting unexpected privileged properties into the JSON body (role, isAdmin, permissions, etc.) that were not in the baseline request. Keep method, URL, and auth intact; add or overwrite only body properties related to privilege/state."
+  details: "Clone the baseline. Across 4-5+ probes add suspicious keys (role, isAdmin, isPremium, privilege, is_superuser, permissions, account_type) with boolean, string, or integer values. Also try keys present in responses but absent from the request when discoverable. Escalate value types and key names after a miss. Proof vs baseline: THIS response reflects the injected property, or shows a privilege/state change (admin role, premium flag, elevated permissions) that baseline did not grant. Generic 200 with unchanged object and no reflection of the injected field is NOT vulnerable. Do not strip auth."
+  impact: "Unauthorized data manipulation, privilege escalation, account takeover, and financial fraud through unauthorized parameter assignment."
   category:
     name: MA
     shortName: Mass Assignment

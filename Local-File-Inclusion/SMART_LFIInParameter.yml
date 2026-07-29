@@ -1,22 +1,9 @@
 id: SMART_LFI_IN_PARAMETER
 info:
-  name: LFI in Parameter - Smart Testing
-  description: >
-    Test Local File Inclusion by replacing path-like body or query parameters
-    with path-traversal and sensitive-file payloads. Keep baseline method, URL,
-    and auth headers intact; mutate only in-scope parameter values.
-  details: >
-    Clone the baseline. Across 4-5+ probes escalate path traversal into string
-    parameters that look path-related or accept file names: basic ../ sequences
-    toward /etc/passwd, URL-encoded and double-encoded variants, null-byte
-    suffixes, and alternate OS path styles when useful. Vary target fields.
-    Proof vs baseline: THIS response contains file contents absent from baseline
-    (e.g. root:x:0:0:, passwd/shadow markers, config snippets, docker/k8s paths).
-    Generic 200 with unchanged business body, or merely echoing the traversal
-    string, is NOT vulnerable. Prefer deeper traversal / encoding after a miss.
-  impact: >
-    Unauthorized file access, sensitive data disclosure, credential theft, and
-    potential system compromise.
+  name: "LFI in Parameter - Smart Testing"
+  description: "Test Local File Inclusion by replacing path-like body or query parameters with path-traversal and sensitive-file payloads. Keep baseline method, URL, and auth headers intact; mutate only in-scope parameter values."
+  details: "Clone the baseline. Across 4-5+ probes escalate path traversal into string parameters that look path-related or accept file names: basic ../ sequences toward /etc/passwd, URL-encoded and double-encoded variants, null-byte suffixes, and alternate OS path styles when useful. Vary target fields. Proof vs baseline: THIS response contains file contents absent from baseline (e.g. root:x:0:0:, passwd/shadow markers, config snippets, docker/k8s paths). Generic 200 with unchanged business body, or merely echoing the traversal string, is NOT vulnerable. Prefer deeper traversal / encoding after a miss."
+  impact: "Unauthorized file access, sensitive data disclosure, credential theft, and potential system compromise."
   category:
     name: LFI
     shortName: Local File Inclusion

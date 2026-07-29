@@ -1,24 +1,9 @@
 id: SMART_INPUT_VALIDATION_ARRAY_TO_OBJECT
 info:
-  name: Input Validation by Replacing Array with Object - Smart Testing
-  description: >
-    Test input validation / business-logic bypasses by mutating body or query
-    parameters with invalid or unexpected values (quantity, payment, timestamps,
-    coupons, null bytes, type confusion). Keep baseline method, URL, and auth
-    intact; change only in-scope parameter values.
-  details: >
-    Clone the baseline. Across 4-5+ probes escalate mutations on business fields:
-    negative/zero/huge quantities, invalid payment modes, extreme or past
-    timestamps, expired/fake coupon codes, null-byte suffixes, and type confusion
-    (string↔number, array↔object) when the baseline shape allows it. Vary which
-    field you target. Proof vs baseline: THIS response shows the invalid input
-    was accepted with a changed business outcome (e.g. discount applied, negative
-    qty honored, expired coupon accepted, policy bypassed) relative to baseline.
-    Generic 200 with unchanged business result, or mere echo of the payload, is
-    NOT vulnerable. Prefer clearer type/value abuses after a miss.
-  impact: >
-    Unauthorized manipulation of business logic, financial fraud, data
-    corruption, and validation bypass.
+  name: "Input Validation by Replacing Array with Object - Smart Testing"
+  description: "Test input validation / business-logic bypasses by mutating body or query parameters with invalid or unexpected values (quantity, payment, timestamps, coupons, null bytes, type confusion). Keep baseline method, URL, and auth intact; change only in-scope parameter values."
+  details: "Clone the baseline. Across 4-5+ probes escalate mutations on business fields: negative/zero/huge quantities, invalid payment modes, extreme or past timestamps, expired/fake coupon codes, null-byte suffixes, and type confusion (string↔number, array↔object) when the baseline shape allows it. Vary which field you target. Proof vs baseline: THIS response shows the invalid input was accepted with a changed business outcome (e.g. discount applied, negative qty honored, expired coupon accepted, policy bypassed) relative to baseline. Generic 200 with unchanged business result, or mere echo of the payload, is NOT vulnerable. Prefer clearer type/value abuses after a miss."
+  impact: "Unauthorized manipulation of business logic, financial fraud, data corruption, and validation bypass."
   category:
     name: INPUT
     shortName: Input Validation
