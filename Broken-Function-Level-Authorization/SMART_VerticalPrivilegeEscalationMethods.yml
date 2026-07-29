@@ -1,9 +1,26 @@
 id: SMART_VERTICAL_PRIVILEGE_ESCALATION
 info:
   name: Vertical Privilege Escalation - Smart Testing
-  description: Smart testing for vertical privilege escalation vulnerabilities. Detects when users can bypass authorization controls to access higher-level functionalities regardless of HTTP method used.
-  details: Tests for vertical privilege escalation by intelligently attempting to access privileged functionalities with lower-privilege user context. The system detects authorization bypasses across different HTTP methods (GET, POST, PUT, PATCH, DELETE) and parameter manipulation techniques.
-  impact: Unauthorized access to privileged functionalities, data breaches, system compromise, and unauthorized actions by non-privileged users.
+  description: >
+    Test Broken Function Level Authorization by calling an ADMIN-scoped function
+    with lower-privilege (MEMBER) credentials. Keep the same method, URL, and body
+    as the baseline; mutate only auth/session or role-related headers so a MEMBER
+    identity is used against a privileged endpoint.
+  details: >
+    Clone the full baseline request. Across 4-5+ probes escalate lower-priv auth
+    mutations: (1) swap Authorization / cookies to a MEMBER (or other non-admin)
+    token when available from role context; (2) apply MEMBER role-context headers
+    while keeping the rest of the request identical; (3) strip or downgrade
+    privilege claims in JWT/session if present; (4) try role/permission header
+    overrides that claim MEMBER while hitting the same admin URL. Do not invent
+    unrelated attack classes. Proof vs baseline: THIS probe still returns success
+    and the same privileged function data/behavior as the baseline despite
+    credentials that should be denied. 401/403 with a clear deny is NOT
+    vulnerable. Generic empty 200 / no-op without admin function output is NOT
+    enough.
+  impact: >
+    Unauthorized access to privileged functionalities, data breaches, system
+    compromise, and unauthorized actions by non-privileged users.
   category:
     name: BFLA
     shortName: Broken Function Level Authorization
@@ -41,49 +58,16 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains_either:
-      - Error
-      - Internal Server
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
   include_roles_access:
     param: ADMIN
   exclude_roles_access:
     param: MEMBER
 
 wordLists:
-  privilegeMethods:
-    - "GET"
-    - "POST"
-    - "PUT"
-    - "PATCH"
-    - "DELETE"
-  testHeaders:
-    - "test_val"
-    - "exploit"
-    - "bypass"
+  lowerPrivHints:
+    - "MEMBER"
+    - "user"
+    - "guest"
 
 execute:
   type: single
@@ -91,21 +75,3 @@ execute:
     - req:
         - modify_header:
             ${roles_access_context.MEMBER}: 1
-        - add_header:
-            new_test_header: ${testHeaders}
-
-validate:
-  response_code:
-    gte: 200
-    lt: 300
-  response_payload:
-    length:
-      gt: 0
-    percentage_match:
-      lt: 10
-    percentage_match_schema:
-      gte: 90
-    not_contains:
-      - "<html>"
-      - "</html>"
-
