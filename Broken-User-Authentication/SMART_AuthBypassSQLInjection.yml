@@ -1,24 +1,9 @@
 id: SMART_AUTH_BYPASS_SQL_INJECTION
 info:
-  name: Authentication Bypass using SQL Injection - Smart Testing
-  description: >
-    Test authentication bypass via SQL injection in login/auth parameters. Keep
-    baseline method, URL, and non-auth headers. Mutate string fields that feed
-    authentication (username, password, email, token, otp, or any body/query
-    string the baseline uses for login). Leave session Authorization alone unless
-    the baseline itself is an unauthenticated login call.
-  details: >
-    Clone the baseline. Across 4–5+ probes append or replace values with classic
-    auth-bypass and boolean SQLi fragments (OR 1=1, admin'--, UNION SELECT, AND
-    1=1 vs AND 1=2). Vary which field you target when multiple auth fields exist.
-    Proof vs baseline: observable impact in THIS response — e.g. authenticated
-    session/token issued, protected user profile returned, or a SQL/DB error that
-    shows the injected query executed. A generic 200 with "invalid credentials"
-    or silent no-op is NOT vulnerable. Payload echoed in the body alone is NOT
-    evidence. Prefer clearer operators and alternate fields after a miss.
-  impact: >
-    Unauthorized account access, credential disclosure, and potential full
-    compromise of the authentication layer.
+  name: "Authentication Bypass using SQL Injection - Smart Testing"
+  description: "Test authentication bypass via SQL injection in login/auth parameters. Keep baseline method, URL, and non-auth headers. Mutate string fields that feed authentication (username, password, email, token, otp, or any body/query string the baseline uses for login). Leave session Authorization alone unless the baseline itself is an unauthenticated login call."
+  details: "Clone the baseline. Across 4-5+ probes append or replace values with classic auth-bypass and boolean SQLi fragments (OR 1=1, admin'--, UNION SELECT, AND 1=1 vs AND 1=2). Vary which field you target when multiple auth fields exist. Proof vs baseline: observable impact in THIS response — e.g. authenticated session/token issued, protected user profile returned, or a SQL/DB error that shows the injected query executed. A generic 200 with invalid credentials or silent no-op is NOT vulnerable. Payload echoed in the body alone is NOT evidence. Prefer clearer operators and alternate fields after a miss."
+  impact: "Unauthorized account access, credential disclosure, and potential full compromise of the authentication layer."
   category:
     name: NO_AUTH
     shortName: Broken Authentication

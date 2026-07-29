@@ -1,23 +1,9 @@
 id: SMART_BASIC_UNION_BASED_SQLI
 info:
-  name: Basic Union based SQL Injection - Smart Testing
-  description: >
-    Test Union-based SQL injection by appending UNION SELECT payloads to
-    injectable string parameters in body or query. Keep baseline method, URL,
-    and auth headers intact; mutate only in-scope parameter values.
-  details: >
-    Clone the baseline. Across 4–5+ probes escalate column-count discovery
-    (UNION SELECT null, null-- then more nulls), then data-oriented UNION
-    SELECT variants, then alternate comment styles (#, /*). Target different
-    string fields when useful. Proof vs baseline: THIS response shows real
-    impact — dumped rows/columns not present in baseline, database/SQL error
-    content proving the query ran, or clear structural data disclosure.
-    Generic 200 with unchanged business payload, or merely echoing UNION/SELECT
-    text, is NOT vulnerable. Prefer stronger column counts / different fields
-    after a miss rather than stopping early.
-  impact: >
-    Unauthorized database access, sensitive data extraction, credential theft,
-    and potential full compromise.
+  name: "Basic Union based SQL Injection - Smart Testing"
+  description: "Test Union-based SQL injection by appending UNION SELECT payloads to injectable string parameters in body or query. Keep baseline method, URL, and auth headers intact; mutate only in-scope parameter values."
+  details: "Clone the baseline. Across 4-5+ probes escalate column-count discovery (UNION SELECT null, null-- then more nulls), then data-oriented UNION SELECT variants, then alternate comment styles (#, /*). Target different string fields when useful. Proof vs baseline: THIS response shows real impact — dumped rows/columns not present in baseline, database/SQL error content proving the query ran, or clear structural data disclosure. Generic 200 with unchanged business payload, or merely echoing UNION/SELECT text, is NOT vulnerable. Prefer stronger column counts / different fields after a miss rather than stopping early."
+  impact: "Unauthorized database access, sensitive data extraction, credential theft, and potential full compromise."
   category:
     name: NO_AUTH
     shortName: Broken Authentication

@@ -1,24 +1,9 @@
 id: SMART_NOSQL_INJECTION_BOOLEAN_BASED
 info:
-  name: Boolean Based NoSQL Injection - Smart Testing
-  description: >
-    Test boolean-based NoSQL injection by appending true or false JavaScript /
-    boolean expressions to injectable string parameters in body or query. Keep
-    baseline method, URL, and auth headers intact; mutate only in-scope values.
-  details: >
-    Clone the baseline. Across 4-5+ probes append false-leaning conditions
-    (&& false, && 'a'!='a') and true-leaning conditions (|| true, || 'a'=='a')
-    to the original parameter value. Also try operator-object style mutations
-    when the API accepts JSON objects. Vary which field is targeted. Proof vs
-    baseline for EACH probe independently: a true-condition probe returns more
-    records / broader results / success where baseline was scoped to one match;
-    a false-condition probe returns empty/no-match where baseline returned data.
-    Do NOT require comparing two probes to each other — judge each response
-    against the baseline. Generic 200 with unchanged body, or payload echoed
-    as stored text, is NOT vulnerable.
-  impact: >
-    Unauthorized database access, data extraction, authentication bypass, and
-    potential application compromise.
+  name: "Boolean Based NoSQL Injection - Smart Testing"
+  description: "Test boolean-based NoSQL injection by appending true or false JavaScript / boolean expressions to injectable string parameters in body or query. Keep baseline method, URL, and auth headers intact; mutate only in-scope values."
+  details: "Clone the baseline. Across 4-5+ probes append false-leaning conditions (&& false, && 'a'!='a') and true-leaning conditions (|| true, || 'a'=='a') to the original parameter value. Also try operator-object style mutations when the API accepts JSON objects. Vary which field is targeted. Proof vs baseline for EACH probe independently: a true-condition probe returns more records / broader results / success where baseline was scoped to one match; a false-condition probe returns empty/no-match where baseline returned data. Do NOT require comparing two probes to each other — judge each response against the baseline. Generic 200 with unchanged body, or payload echoed as stored text, is NOT vulnerable."
+  impact: "Unauthorized database access, data extraction, authentication bypass, and potential application compromise."
   category:
     name: INJECT
     shortName: Injection Attacks

@@ -1,25 +1,9 @@
 id: SMART_USERNAME_ENUMERATION
 info:
-  name: Username Enumeration via Different Response Content - Smart Testing
-  description: >
-    Test username enumeration by mutating username/login/email (and related auth
-    identifier) fields on authentication or account-lookup endpoints. Keep method,
-    URL, and other headers as in the baseline; change only the identity field and
-    optionally the password companion field.
-  details: >
-    Clone the baseline request. Across 4–5+ probes, try clearly invalid usernames,
-    likely-valid common usernames (admin, test, user), and slight variants of any
-    username present in the baseline. Use a constant dummy password when the body
-    has one so only the identity signal changes. Proof vs baseline: this single
-    probe's status, body message, error code, or structure differs from the
-    baseline in a way that reveals whether the username exists (e.g. "user not
-    found" vs "invalid password", different error keys, or a distinct success
-    path for known users). Do NOT require comparing two probes to each other —
-    judge each probe against the baseline. Identical generic "invalid credentials"
-    for both valid-looking and nonsense usernames is NOT vulnerable.
-  impact: >
-    Exposure of valid usernames enabling targeted attacks and facilitating
-    credential stuffing or brute force.
+  name: "Username Enumeration via Different Response Content - Smart Testing"
+  description: "Test username enumeration by mutating username/login/email (and related auth identifier) fields on authentication or account-lookup endpoints. Keep method, URL, and other headers as in the baseline; change only the identity field and optionally the password companion field."
+  details: "Clone the baseline request. Across 4-5+ probes, try clearly invalid usernames, likely-valid common usernames (admin, test, user), and slight variants of any username present in the baseline. Use a constant dummy password when the body has one so only the identity signal changes. Proof vs baseline: this single probe's status, body message, error code, or structure differs from the baseline in a way that reveals whether the username exists (e.g. user not found vs invalid password, different error keys, or a distinct success path for known users). Do NOT require comparing two probes to each other — judge each probe against the baseline. Identical generic invalid credentials for both valid-looking and nonsense usernames is NOT vulnerable."
+  impact: "Exposure of valid usernames enabling targeted attacks and facilitating credential stuffing or brute force."
   category:
     name: NO_AUTH
     shortName: Broken Authentication

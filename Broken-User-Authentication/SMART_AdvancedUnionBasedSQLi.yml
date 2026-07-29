@@ -1,23 +1,9 @@
 id: SMART_ADVANCED_UNION_BASED_SQLI
 info:
   name: "Advanced Union based SQL Injection test - Smart Testing"
-  description: >
-    Test advanced Union-based SQL injection aimed at schema and data extraction
-    (information_schema, database(), version(), user tables). Keep baseline
-    method, URL, and auth intact; mutate only injectable string parameters in
-    body or query.
-  details: >
-    Clone the baseline. Across 4–5+ probes escalate from column-count UNION
-    SELECT nulls to payloads that request database metadata or user table
-    columns. Vary target fields and comment terminators. Proof vs baseline:
-    THIS response discloses data absent from baseline (table/column names,
-    version strings, usernames/passwords/emails) OR returns SQL/DB errors that
-    prove the injected UNION executed. Generic success with unchanged body, or
-    payload keywords merely reflected, is NOT vulnerable. Escalate to stronger
-    extraction payloads and alternate fields after a miss.
-  impact: >
-    Retrieval of credentials, financial data, or application secrets from the
-    database; unauthorized access and compliance risk.
+  description: "Test advanced Union-based SQL injection aimed at schema and data extraction (information_schema, database(), version(), user tables). Keep baseline method, URL, and auth intact; mutate only injectable string parameters in body or query."
+  details: "Clone the baseline. Across 4-5+ probes escalate from column-count UNION SELECT nulls to payloads that request database metadata or user table columns. Vary target fields and comment terminators. Proof vs baseline: THIS response discloses data absent from baseline (table/column names, version strings, usernames/passwords/emails) OR returns SQL/DB errors that prove the injected UNION executed. Generic success with unchanged body, or payload keywords merely reflected, is NOT vulnerable. Escalate to stronger extraction payloads and alternate fields after a miss."
+  impact: "Retrieval of credentials, financial data, or application secrets from the database; unauthorized access and compliance risk."
   category:
     name: NO_AUTH
     shortName: Broken Authentication
