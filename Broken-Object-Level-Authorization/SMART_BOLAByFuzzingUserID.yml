@@ -1,25 +1,9 @@
 id: SMART_FUZZ_USER_ID
 info:
   name: "BOLA by Accessing Existing User Data Through User ID Fuzzing - Smart Testing"
-  description: >
-    Test Broken Object Level Authorization by fuzzing object/user identifiers in
-    body or query while keeping the baseline caller's auth intact. Mutate only IDs
-    (userId, accountId, customerId, profileId, memberId, username, UUIDs, integers).
-    Do not strip Authorization or cookies.
-  details: >
-    Clone the full baseline request including auth headers. Change ONLY the
-    object/user identifier field(s) across 4-5+ probes. Prefer IDs drawn from
-    sample/other-API traffic when available; otherwise try nearby integers,
-    alternate UUIDs, and common string IDs. Escalate: different ID shapes, IDs
-    that look like other tenants/users, IDs from response samples. Proof vs
-    baseline: this probe returns identifiable data for a different user/object
-    than the baseline's authorized subject (different email, name, balance,
-    order list, profile fields) while still succeeding. 404/403 for foreign IDs
-    is NOT vulnerable. Echoing the mutated ID alone without foreign user data
-    is NOT enough.
-  impact: >
-    Unauthorized access to other users' sensitive information, privacy breaches,
-    and compromise of object-level authorization.
+  description: "Test Broken Object Level Authorization by fuzzing object/user identifiers in body or query while keeping the baseline caller's auth intact. Mutate only IDs (userId, accountId, customerId, profileId, memberId, username, UUIDs, integers). Do not strip Authorization or cookies."
+  details: "Clone the full baseline request including auth headers. Change ONLY the object/user identifier field(s) across 4-5+ probes. Prefer IDs drawn from sample/other-API traffic when available; otherwise try nearby integers, alternate UUIDs, and common string IDs. Escalate: different ID shapes, IDs that look like other tenants/users, IDs from response samples. Proof vs baseline: this probe returns identifiable data for a different user/object than the baseline's authorized subject (different email, name, balance, order list, profile fields) while still succeeding. 404/403 for foreign IDs is NOT vulnerable. Echoing the mutated ID alone without foreign user data is NOT enough."
+  impact: "Unauthorized access to other users' sensitive information, privacy breaches, and compromise of object-level authorization."
   category:
     name: BOLA
     shortName: BOLA

@@ -1,27 +1,9 @@
 id: SMART_REPLACE_AUTH_TOKEN
 info:
   name: "BOLA by changing auth token - Smart Testing"
-  description: >
-    Test Broken Object Level Authorization by mutating the Authorization / session
-    credentials on an otherwise identical request to a protected resource. Keep the
-    same method, URL, and body as the baseline; change only auth/session material
-    (Bearer token, cookie session, API key header). Goal: determine whether a token
-    that should not own this object can still read or modify it.
-  details: >
-    Clone the full baseline request. Mutate ONLY auth/session headers across 4-5+
-    probes — do not alter body, query, or path unless the scenario needs it. Probe
-    ideas (escalate across attempts): (1) swap in a different user's valid token if
-    available from context; (2) use a clearly foreign/invalid Bearer or API key;
-    (3) truncate, flip characters, or forge a JWT-shaped token; (4) drop Authorization
-    while keeping cookies, or drop cookies while keeping Authorization; (5) reuse an
-    expired or role-mismatched token. Proof vs baseline: the probe returns the same
-    protected resource data, same success status, or allows the same write as the
-    baseline despite credentials that should deny access. 401/403 with a clear deny
-    is NOT vulnerable. A generic 200 with empty/no-op body and no resource data is
-    NOT enough — need the same sensitive fields or successful mutation as baseline.
-  impact: >
-    Unauthorized users can read or modify objects belonging to other accounts,
-    leading to data breaches, record tampering, and privilege escalation.
+  description: "Test Broken Object Level Authorization by mutating the Authorization / session credentials on an otherwise identical request to a protected resource. Keep the same method, URL, and body as the baseline; change only auth/session material (Bearer token, cookie session, API key header). Goal: determine whether a token that should not own this object can still read or modify it."
+  details: "Clone the full baseline request. Mutate ONLY auth/session headers across 4-5+ probes — do not alter body, query, or path unless the scenario needs it. Probe ideas (escalate across attempts): (1) swap in a different user's valid token if available from context; (2) use a clearly foreign/invalid Bearer or API key; (3) truncate, flip characters, or forge a JWT-shaped token; (4) drop Authorization while keeping cookies, or drop cookies while keeping Authorization; (5) reuse an expired or role-mismatched token. Proof vs baseline: the probe returns the same protected resource data, same success status, or allows the same write as the baseline despite credentials that should deny access. 401/403 with a clear deny is NOT vulnerable. A generic 200 with empty/no-op body and no resource data is NOT enough — need the same sensitive fields or successful mutation as baseline."
+  impact: "Unauthorized users can read or modify objects belonging to other accounts, leading to data breaches, record tampering, and privilege escalation."
   category:
     name: BOLA
     shortName: BOLA
