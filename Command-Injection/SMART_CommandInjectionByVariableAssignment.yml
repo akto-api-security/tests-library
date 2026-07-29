@@ -1,9 +1,9 @@
 id: SMART_COMMAND_INJECTION_VARIABLE_ASSIGNMENT
 info:
-  name: Command Injection by Variable Assignment - Smart Testing
-  description: Smart testing for command injection vulnerabilities through variable assignment. Detects when user input can be used to execute arbitrary system commands through parameter manipulation and injection.
-  details: Tests for command injection by intelligently attempting to inject and execute system commands through various techniques including encoding manipulation, operator chaining, and special character sequences. The system identifies vulnerable input handlers that accept and execute injected commands.
-  impact: Remote code execution, system compromise, unauthorized access, data exposure, and complete system takeover.
+  name: "Command Injection by Variable Assignment - Smart Testing"
+  description: "Test OS command injection by appending or replacing string body/query parameters with command-chaining payloads. Keep baseline method, URL, and auth headers intact; mutate only in-scope parameter values."
+  details: "Clone the baseline. Across 4-5+ probes inject command separators and subshells into string parameters (&&, ;, |, backticks, $(), encoded spaces, newlines). Vary target fields and escalate operators after a miss. Proof vs baseline: THIS response shows real command execution impact — e.g. uid=/gid= output, whoami username, or other command stdout not present in baseline. Payload merely echoed as stored text, or generic 200 with unchanged business body, is NOT vulnerable. Prefer clearer operators / alternate fields after a miss rather than stopping early."
+  impact: "Remote code execution, system compromise, unauthorized access, and data exposure."
   category:
     name: COMMAND_INJECTION
     shortName: Command Injection
@@ -37,36 +37,6 @@ api_selection_filters:
     lt: 300
   method:
     neq: "OPTIONS"
-  response_payload:
-    length:
-      gt: 0
-    not_contains_either:
-      - Error
-      - Internal Server
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
   or:
     - request_payload:
         for_one:
@@ -81,30 +51,15 @@ api_selection_filters:
             regex: .*
             extract: changed_query_key
           value:
-            regex: .*
             extract: changed_query_value
 
 wordLists:
   commandPayloads:
-    - "id && id"
-    - "id & id"
-    - "id ; id"
-    - "id | id"
-    - "id || id"
-    - "id%20&&%20id"
-    - "id%26%26id"
-    - "id\nid"
-    - "id\rid"
-    - "id\t&&\tid"
-    - "id%00id"
-    - "cat <<< \"$(id)\""
-    - "id && date +\"%d-%B-%Y\""
-    - "id; date +\"%d-%B-%Y\";"
-    - "id && (id && date +\"%d-%B-%Y\")"
-    - "$(id)"
-    - "`id`"
+    - "id"
+    - "; id"
+    - "| id"
     - "$(whoami)"
-    - "`whoami`"
+    - "`id`"
 
 execute:
   type: single
@@ -114,42 +69,3 @@ execute:
             changed_body_key: ${commandPayloads}
         - modify_query_param:
             changed_query_key: ${commandPayloads}
-
-validate:
-  response_payload:
-    length:
-      gt: 0
-    contains_all:
-      - "uid="
-      - "gid="
-      - "groups="
-    not_contains:
-      - Error
-      - Internal Server
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
-      - "<html>"
-      - "</html>"
-

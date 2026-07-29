@@ -1,9 +1,9 @@
 id: SMART_INPUT_VALIDATION_ARRAY_TO_OBJECT
 info:
-  name: Input Validation by Replacing Array with Object - Smart Testing
-  description: Smart testing for input validation vulnerabilities. Detects when applications fail to properly validate different data types and formats in input fields, including quantity, payment mode, timestamp, coupon expiry, and null byte injection attempts.
-  details: Tests for input validation bypasses by intelligently manipulating input parameters with various data types, formats, and values. The system detects vulnerabilities through quantity tampering, payment mode field manipulation, timestamp alterations, coupon expiry date bypasses, and null byte injection techniques.
-  impact: Unauthorized manipulation of critical business logic, financial fraud, data corruption, unauthorized access through validation bypass, and potential system compromise.
+  name: "Input Validation by Replacing Array with Object - Smart Testing"
+  description: "Test input validation / business-logic bypasses by mutating body or query parameters with invalid or unexpected values (quantity, payment, timestamps, coupons, null bytes, type confusion). Keep baseline method, URL, and auth intact; change only in-scope parameter values."
+  details: "Clone the baseline. Across 4-5+ probes escalate mutations on business fields: negative/zero/huge quantities, invalid payment modes, extreme or past timestamps, expired/fake coupon codes, null-byte suffixes, and type confusion (string↔number, array↔object) when the baseline shape allows it. Vary which field you target. Proof vs baseline: THIS response shows the invalid input was accepted with a changed business outcome (e.g. discount applied, negative qty honored, expired coupon accepted, policy bypassed) relative to baseline. Generic 200 with unchanged business result, or mere echo of the payload, is NOT vulnerable. Prefer clearer type/value abuses after a miss."
+  impact: "Unauthorized manipulation of business logic, financial fraud, data corruption, and validation bypass."
   category:
     name: INPUT
     shortName: Input Validation
@@ -37,36 +37,6 @@ api_selection_filters:
     lt: 300
   method:
     neq: "OPTIONS"
-  response_payload:
-    length:
-      gt: 0
-    not_contains_either:
-      - Error
-      - Internal Server
-      - Failed
-      - Unauthorized
-      - access denied
-      - Forbidden
-      - Method Not allowed
-      - Gateway timeout
-      - request timeout
-      - server error
-      - server busy
-      - authentication error
-      - authorization error
-      - validation error
-      - Permission Denied
-      - invalid token
-      - token expired
-      - session expired
-      - session timeout
-      - unexpected error
-      - unable to process request
-      - bad request
-      - service unavailable
-      - account is locked
-      - account is blocked
-      - multiple failed attempts
   or:
     - request_payload:
         for_one:
@@ -84,145 +54,18 @@ api_selection_filters:
             extract: validationValue
 
 wordLists:
-  quantityPayloads:
+  validationBypassPayloads:
     - "0"
     - "-1"
     - "99999999999999"
-  paymentPayloads:
-    - "creditCard"
-    - "debitCard"
-    - "paypal"
-    - "bankTransfer"
-    - "wallet"
-    - "invalid_payment"
-  timestampPayloads:
-    - "1970-01-01T00:00:00Z"
-    - "9999-12-31T23:59:59Z"
-    - "2023-02-28T23:59:59Z"
-    - "1969-12-31T23:59:59Z"
-  couponDatePayloads:
-    - "2026-12-12"
-    - "2027-12-12"
-    - "2028-12-12"
-  couponEpochPayloads:
-    - 1797033600
-    - 1828569600
-    - 1860192000
-  couponCodePayloads:
-    - "SAVE20"
-    - "DISCOUNT10"
-    - "WELCOME5"
-    - "SUMMER23"
-    - "FIRSTTIME"
-    - "LIMITEDUSE"
-    - "ONEPERUSER"
-    - "OLDDEAL"
-    - "BLACKFRIDAY2022"
     - "FAKECODE"
-    - "NOTREAL"
-    - "TEST123"
-    - "MAXUSED"
-    - "EXCEEDED"
-    - "SAVE200"
-    - "DISCOUNT@10"
-    - "SAVE!20"
-    - "SUPERLONGCOUPONCODEWITH100CHARACTERS..."
-    - " SAVE20 "
-    - " SAVE20"
-    - "%S%A%V%E%20"
-  nullBytePayloads:
-    - "%00admin"
-    - "%00root"
-    - "%00superuser"
+    - "%00bypass"
 
 execute:
-  type: multiple
+  type: single
   requests:
     - req:
         - modify_body_param:
-            validationKey: ${quantityPayloads}
+            validationKey: ${validationBypassPayloads}
         - modify_query_param:
-            validationKey: ${quantityPayloads}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-        - success: x1
-        - failure: continue
-    - req:
-        - modify_body_param:
-            validationKey: ${paymentPayloads}
-        - modify_query_param:
-            validationKey: ${paymentPayloads}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-        - success: x2
-        - failure: continue
-    - req:
-        - modify_body_param:
-            validationKey: ${timestampPayloads}
-        - modify_query_param:
-            validationKey: ${timestampPayloads}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-        - success: x3
-        - failure: continue
-    - req:
-        - modify_body_param:
-            validationKey: ${couponCodePayloads}
-        - modify_query_param:
-            validationKey: ${couponCodePayloads}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-        - success: x4
-        - failure: continue
-    - req:
-        - modify_body_param:
-            validationKey: ${couponDatePayloads}
-        - modify_query_param:
-            validationKey: ${couponDatePayloads}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-              not_contains:
-                - expired
-                - invalid coupon
-                - not valid
-        - success: x5
-        - failure: continue
-    - req:
-        - modify_body_param:
-            validationKey: !!str ${validationValue}%00bypass
-        - modify_query_param:
-            validationKey: !!str ${validationValue}%00bypass
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-        - success: vulnerable
-
+            validationKey: ${validationBypassPayloads}
