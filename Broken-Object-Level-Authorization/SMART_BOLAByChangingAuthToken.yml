@@ -1,8 +1,8 @@
 id: SMART_REPLACE_AUTH_TOKEN
 info:
   name: "BOLA by changing auth token - Smart Testing"
-  description: "Test Broken Object Level Authorization by mutating the Authorization / session credentials on an otherwise identical request to a protected resource. Keep the same method, URL, and body as the baseline; change only auth/session material (Bearer token, cookie session, API key header). Goal: determine whether a token that should not own this object can still read or modify it."
-  details: "Clone the full baseline request. Mutate ONLY auth/session headers across 4-5+ probes — do not alter body, query, or path unless the scenario needs it. Probe ideas (escalate across attempts): (1) swap in a different user's valid token if available from context; (2) use a clearly foreign/invalid Bearer or API key; (3) truncate, flip characters, or forge a JWT-shaped token; (4) drop Authorization while keeping cookies, or drop cookies while keeping Authorization; (5) reuse an expired or role-mismatched token. Proof vs baseline: the probe returns the same protected resource data, same success status, or allows the same write as the baseline despite credentials that should deny access. 401/403 with a clear deny is NOT vulnerable. A generic 200 with empty/no-op body and no resource data is NOT enough — need the same sensitive fields or successful mutation as baseline."
+  description: "Test Broken Object Level Authorization by mutating the identity/auth material already present on the baseline request. Do not invent a new Authorization header when the baseline authenticates via another header or cookie. Goal: determine whether a different identity can still read or modify the same protected object."
+  details: "Clone the FULL baseline request (same method, URL, body, and all non-auth headers). First identify where identity actually lives on THIS request — Authorization Bearer/JWT, Cookie/session, or any custom auth/context header (API keys, pre-auth context, account/tenant IDs, x-*-token style headers). Mutate THAT existing field only across 4-5+ probes. CRITICAL: if the baseline has no Authorization header but has another identity header/cookie, mutate that existing value — do NOT add Authorization. execute is illustrative only; invent concrete replacement values from the baseline shape. Escalate gradually — start small, then go bigger: (1) change a SINGLE character in the existing value (e.g. flip one hex digit) while keeping length, prefix, and original casing; (2) change 2-3 characters or swap a small substring, still same length/format/case style; (3) use another user's valid token/context from sample data when available; (4) if multiple auth surfaces exist (header + cookie), mutate one while keeping the other; (5) only later try stronger mutations (truncate, forged Bearer/JWT) — and only invent Authorization when NO auth material exists on the baseline. Do NOT start with aggressive transforms like uppercasing/lowercasing the whole token, bulk rewriting, or randomizing every character — those often just produce parse/format errors instead of testing authorization. If a probe returns a format/validation error, step back to a milder same-length single-char change. Proof vs baseline: THIS probe still returns the same protected resource data or successful write despite credentials that should deny access. 401/403 deny is NOT vulnerable. Format/parse errors and generic empty 200 with no resource data are NOT enough."
   impact: "Unauthorized users can read or modify objects belonging to other accounts, leading to data breaches, record tampering, and privilege escalation."
   category:
     name: BOLA
@@ -42,15 +42,8 @@ api_selection_filters:
     length:
       gt: 0
 
-wordLists:
-  tamperedTokens:
-    - "Bearer invalid.token.here"
-    - "Bearer eyJhbGciOiJub25lIn0.eyJzdWIiOiJhdHRhY2tlciJ9."
-    - "Bearer expired_or_forged_token"
-
 execute:
   type: single
   requests:
     - req:
-        - modify_header:
-            Authorization: ${tamperedTokens}
+        - replace_auth_header: true
