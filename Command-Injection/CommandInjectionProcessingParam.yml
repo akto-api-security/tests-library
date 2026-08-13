@@ -68,11 +68,11 @@ execute:
   requests:
     - req:
         - modify_body_param:
-            cmdKey: ${cmdPayloads}
+            ${cmdKey}: ${cmdPayloads}
         - add_body_param:
             conversion_params: ${cmdPayloads}
         - modify_query_param:
-            cmdKey: ${cmdPayloads}
+            ${cmdKey}: ${cmdPayloads}
 
 validate:
   response_code:

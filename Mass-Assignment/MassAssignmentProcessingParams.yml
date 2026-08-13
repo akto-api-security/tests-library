@@ -48,10 +48,17 @@ api_selection_filters:
       - Forbidden
       - Video not found
       - Didn't get any profile video
-    for_one:
-      key:
-        regex: (?i)(conversion_params|processing_params|encoding_params|transcoding_params|transcode_options|encoder_options|pipeline_config|render_params)
-        extract: processingFieldKey
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: (?i)(conversion_params|processing_params|encoding_params|transcoding_params|transcode_options|encoder_options|pipeline_config|render_params)
+            extract: processingFieldKey
+    - response_payload:
+        for_one:
+          key:
+            regex: (?i)(conversion_params|processing_params|encoding_params|transcoding_params|transcode_options|encoder_options|pipeline_config|render_params)
+            extract: processingFieldKey
 
 wordLists:
   probeProcessingValue: "-v codec akto_probe"
@@ -66,8 +73,12 @@ execute:
   type: single
   requests:
     - req:
+        - modify_body_param:
+            conversion_params: ${probeProcessingValue}
         - add_body_param:
             conversion_params: ${probeProcessingValue}
+        - modify_body_param:
+            ${processingFieldKey}: ${probeProcessingValue}
         - add_body_param:
             ${processingFieldKey}: ${probeProcessingValue}
 

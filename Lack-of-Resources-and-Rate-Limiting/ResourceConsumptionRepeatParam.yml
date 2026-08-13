@@ -62,7 +62,7 @@ execute:
         - add_body_param:
             repeat_request_if_failed: true
         - modify_body_param:
-            repeatKey: ${oversizedRepeats}
+            ${repeatKey}: ${oversizedRepeats}
 
 validate:
   or:

@@ -1,9 +1,9 @@
 id: PRIVILEGED_ENDPOINT_DATA_EXPOSURE
 info:
-  name: "Privileged endpoint data exposure to low-privilege callers"
-  description: "Detects Broken Function Level Authorization / excessive data exposure when management or admin listing endpoints return other users' PII to a normal authenticated caller."
-  details: "User-directory and management listing APIs must enforce admin-only authorization. This test targets GET endpoints under management/admin paths and treats a successful multi-user PII listing as evidence of privilege failure."
-  impact: "Non-admin access to full user directories exposes PII at scale and enables account enumeration and further attacks."
+  name: "Privileged endpoint access with lower-privilege credentials"
+  description: "Detects Broken Function Level Authorization when an ADMIN-scoped management or admin endpoint still succeeds after auth is swapped to a MEMBER (lower-privilege) identity."
+  details: "Privileged listing and management APIs must reject non-admin callers. This test selects endpoints that ADMIN can access and MEMBER cannot (from role-access context), replaces auth/session headers with the MEMBER role context, and checks whether the privileged response is still returned."
+  impact: "Non-admin access to admin/management functions exposes PII and enables privilege escalation."
   category:
     name: BFLA
     shortName: Broken Function Level Authorization
@@ -19,10 +19,9 @@ info:
     - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa5-broken-function-level-authorization.md"
   cwe:
     - CWE-285
-    - CWE-200
 
 attributes:
-  nature: NON_INTRUSIVE
+  nature: INTRUSIVE
   plan: PRO
   duration: FAST
 
@@ -35,6 +34,7 @@ api_selection_filters:
   response_code:
     gte: 200
     lt: 300
+    neq: 204
   url:
     contains_either:
       - /management/
@@ -44,30 +44,32 @@ api_selection_filters:
   response_payload:
     length:
       gt: 0
-    not_contains:
-      - Unauthorized
-      - Forbidden
-      - JWT Token required
+  include_roles_access:
+    param: ADMIN
+  exclude_roles_access:
+    param: MEMBER
 
 execute:
   type: single
   requests:
-    - req: []
+    - req:
+        - modify_header:
+            ${roles_access_context.MEMBER}: 1
 
 validate:
   response_code:
     gte: 200
     lt: 300
+    neq: 204
   response_payload:
     length:
       gt: 0
-    contains_either:
-      - "@example.com"
-      - '"email"'
-      - available_credit
-      - '"users"'
+    percentage_match:
+      gte: 90
     not_contains:
       - Unauthorized
       - Forbidden
       - JWT Token required
       - access denied
+      - <html>
+      - </html>

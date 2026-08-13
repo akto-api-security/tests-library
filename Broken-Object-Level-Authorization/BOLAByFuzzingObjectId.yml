@@ -55,7 +55,7 @@ api_selection_filters:
             regex: "^[0-9a-fA-F-]{8,}$|^\\d+$"
             extract: objectValue
     - url:
-        regex: "(?i)/(vehicle|vehicles|order|orders|report|video|videos|user|users)/[^/]+"
+        regex: "(?i)/(vehicle|vehicles|order|orders|report|video|videos)/[^/]+"
 
 wordLists:
   foreignObjectIds:
@@ -69,11 +69,35 @@ execute:
   requests:
     - req:
         - modify_query_param:
-            objectKey: ${foreignObjectIds}
+            ${objectKey}: ${foreignObjectIds}
         - modify_url:
             regex_replace:
-              regex: "(?i)/(vehicle|vehicles|order|orders|report|video|videos)/([^/?#]+)"
-              replace_with: "/$1/${foreignObjectIds}"
+              regex: "(?i)/vehicle/[^/?#]+"
+              replace_with: "/vehicle/${foreignObjectIds}"
+        - modify_url:
+            regex_replace:
+              regex: "(?i)/vehicles/[^/?#]+"
+              replace_with: "/vehicles/${foreignObjectIds}"
+        - modify_url:
+            regex_replace:
+              regex: "(?i)/orders/[^/?#]+"
+              replace_with: "/orders/${foreignObjectIds}"
+        - modify_url:
+            regex_replace:
+              regex: "(?i)/order/[^/?#]+"
+              replace_with: "/order/${foreignObjectIds}"
+        - modify_url:
+            regex_replace:
+              regex: "(?i)/videos/[^/?#]+"
+              replace_with: "/videos/${foreignObjectIds}"
+        - modify_url:
+            regex_replace:
+              regex: "(?i)/video/[^/?#]+"
+              replace_with: "/video/${foreignObjectIds}"
+        - modify_url:
+            regex_replace:
+              regex: "(?i)/report/[^/?#]+"
+              replace_with: "/report/${foreignObjectIds}"
 
 validate:
   response_code:

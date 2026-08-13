@@ -40,11 +40,10 @@ api_selection_filters:
       - verify-otp
       - validate-otp
       - otp/verify
-      - /otp
   request_payload:
     for_one:
       key:
-        regex: (?i)^(otp|code|token|passcode|verification_code)$
+        regex: (?i)^(otp|code|passcode|verification_code)$
         extract: otpKey
 
 wordLists:
@@ -64,7 +63,7 @@ execute:
               regex: "/v([3-9]\\d*|\\d{2,})/"
               replace_with: "/v2/"
         - modify_body_param:
-            otpKey: "999999"
+            ${otpKey}: "999999"
         - validate:
             response_code:
               neq: 404
@@ -76,7 +75,7 @@ execute:
               regex: "/v([3-9]\\d*|\\d{2,})/"
               replace_with: "/v2/"
         - modify_body_param:
-            otpKey: ${testOtps}
+            ${otpKey}: ${testOtps}
         - validate:
             response_payload:
               not_contains:
