@@ -1,8 +1,8 @@
 id: EXCESSIVE_DATA_EXPOSURE_PROCESSING_PARAMS
 info:
   name: "Excessive data exposure of internal processing parameters"
-  description: "Detects API responses that leak internal processing, encoding, or pipeline configuration that clients should never see. User-facing resources may expose identifiers and titles, but not server-side command strings or encoder flags."
-  details: "Some APIs serialize backend processing metadata into client responses (for example codec flags, transcoder options, or shell-style command fragments). Exposure of these fields reveals implementation details and often enables follow-on mass assignment or command injection against the same processing pipeline."
+  description: "Detects API responses that leak internal processing, encoding, or pipeline configuration that clients should never see."
+  details: "Some APIs serialize backend processing metadata into client responses (for example conversion_params, encoder flags, or shell-style command fragments). Exposure of these fields reveals implementation details and often enables follow-on mass assignment or command injection."
   impact: "Leaked processing parameters increase attack surface and can enable privilege escalation via mass assignment or OS command injection."
   category:
     name: SM
@@ -31,6 +31,7 @@ api_selection_filters:
     contains_either:
       - GET
       - POST
+      - PUT
   response_code:
     gte: 200
     lt: 300
@@ -41,21 +42,11 @@ api_selection_filters:
       - Unauthorized
       - Forbidden
       - not found
+      - Video not found
     for_one:
       key:
-        regex: (?i)(conversion_params|processing_params|encoding_params|transcoding_params|transcode_options|encoder_options|ffmpeg|pipeline_config|render_params)
+        regex: (?i)(conversion_params|processing_params|encoding_params|transcoding_params|transcode_options|encoder_options|pipeline_config|render_params)
         extract: processingFieldKey
-
-wordLists:
-  internalProcessingIndicators:
-    - "-v codec"
-    - "-codec"
-    - "codec h264"
-    - "codec h265"
-    - "ffmpeg"
-    - "transcode"
-    - "avconv"
-    - "libx264"
 
 execute:
   type: single
@@ -67,10 +58,16 @@ validate:
     gte: 200
     lt: 300
   response_payload:
-    contains_either: ${internalProcessingIndicators}
     length:
       gt: 0
+    contains_either:
+      - conversion_params
+      - processing_params
+      - encoding_params
+      - "-v codec"
+      - ffmpeg
+      - transcode
     not_contains:
       - Unauthorized
       - Forbidden
-      - not found
+      - Video not found

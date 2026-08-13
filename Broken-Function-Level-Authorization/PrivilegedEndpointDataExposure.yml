@@ -1,0 +1,73 @@
+id: PRIVILEGED_ENDPOINT_DATA_EXPOSURE
+info:
+  name: "Privileged endpoint data exposure to low-privilege callers"
+  description: "Detects Broken Function Level Authorization / excessive data exposure when management or admin listing endpoints return other users' PII to a normal authenticated caller."
+  details: "User-directory and management listing APIs must enforce admin-only authorization. This test targets GET endpoints under management/admin paths and treats a successful multi-user PII listing as evidence of privilege failure."
+  impact: "Non-admin access to full user directories exposes PII at scale and enables account enumeration and further attacks."
+  category:
+    name: BFLA
+    shortName: Broken Function Level Authorization
+    displayName: Broken Function Level Authorization (BFLA)
+  subCategory: PRIVILEGED_ENDPOINT_DATA_EXPOSURE
+  severity: HIGH
+  agenticTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa5-broken-function-level-authorization.md"
+  cwe:
+    - CWE-285
+    - CWE-200
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  method:
+    eq: GET
+  response_code:
+    gte: 200
+    lt: 300
+  url:
+    contains_either:
+      - /management/
+      - /admin/
+      - /users/all
+      - /users/list
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Unauthorized
+      - Forbidden
+      - JWT Token required
+
+execute:
+  type: single
+  requests:
+    - req: []
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - "@example.com"
+      - '"email"'
+      - available_credit
+      - '"users"'
+    not_contains:
+      - Unauthorized
+      - Forbidden
+      - JWT Token required
+      - access denied

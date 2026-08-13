@@ -2,7 +2,7 @@ id: MASS_ASSIGNMENT_PROCESSING_PARAMS
 info:
   name: "Mass assignment of internal processing parameters"
   description: "Detects mass assignment on update APIs where clients can write internal processing, encoding, or pipeline parameters that should be server-managed."
-  details: "Resource update endpoints should allowlist only user-editable presentation fields. When undisclosed processing parameters are also bound from the request body, attackers can inject encoder flags or command fragments discovered from excessive data exposure and persist them for later execution by background workers."
+  details: "Resource update endpoints should allowlist only user-editable presentation fields. When undisclosed processing parameters are also bound from the request body, attackers can inject encoder flags discovered from excessive data exposure and persist them for later execution by background workers."
   impact: "Writable processing parameters can alter server-side pipelines, enable command injection, or cause worker denial of service."
   category:
     name: MA
@@ -40,38 +40,34 @@ api_selection_filters:
   request_payload:
     length:
       gt: 0
-  or:
-    - response_payload:
-        for_one:
-          key:
-            regex: (?i)(conversion_params|processing_params|encoding_params|transcoding_params|transcode_options|encoder_options|pipeline_config|render_params)
-            extract: processingFieldKey
-    - request_payload:
-        for_one:
-          key:
-            regex: (?i)(conversion_params|processing_params|encoding_params|transcoding_params|transcode_options|encoder_options|pipeline_config|render_params)
-            extract: processingFieldKey
   response_payload:
     length:
       gt: 0
     not_contains:
       - Unauthorized
       - Forbidden
-      - not found
+      - Video not found
+      - Didn't get any profile video
+    for_one:
+      key:
+        regex: (?i)(conversion_params|processing_params|encoding_params|transcoding_params|transcode_options|encoder_options|pipeline_config|render_params)
+        extract: processingFieldKey
 
 wordLists:
   probeProcessingValue: "-v codec akto_probe"
   responseErrorList:
     - Unauthorized
     - Forbidden
-    - not found
+    - Video not found
+    - Didn't get any profile video
     - not allowed
-    - Error
 
 execute:
   type: single
   requests:
     - req:
+        - add_body_param:
+            conversion_params: ${probeProcessingValue}
         - add_body_param:
             ${processingFieldKey}: ${probeProcessingValue}
 
@@ -84,5 +80,5 @@ validate:
       gt: 0
     not_contains: ${responseErrorList}
     contains_either:
-      - "${probeProcessingValue}"
       - akto_probe
+      - "-v codec akto_probe"

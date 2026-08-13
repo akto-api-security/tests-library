@@ -1,8 +1,8 @@
 id: MASS_ASSIGNMENT_FULFILLMENT_STATUS
 info:
   name: "Mass assignment of fulfillment or return status"
-  description: "Detects mass assignment where clients can set internal fulfillment, return, or refund status fields on create/update APIs. Status transitions such as returned or refunded must be driven by server-side workflows, not client input."
-  details: "Order and purchase update APIs often expose PUT/PATCH bodies that bind client parameters to internal state machines. When fields such as status, order_status, fulfillment_status, or return_status accept values like returned, refunded, or cancelled without verifying the required workflow, attackers can mark purchases as returned and trigger unauthorized credits or inventory changes."
+  description: "Detects mass assignment where clients can set internal fulfillment, return, or refund status fields on update APIs. Status transitions such as returned or refunded must be driven by server-side workflows, not client input."
+  details: "Order and purchase update APIs often expose PUT/PATCH bodies that bind client parameters to internal state machines. When fields such as status, order_status, fulfillment_status, or return_status accept values like returned or refunded without verifying the required workflow, attackers can mark purchases as returned and trigger unauthorized credits."
   impact: "Unauthorized status manipulation enables refund fraud, inventory corruption, and direct financial loss."
   category:
     name: MA
@@ -39,13 +39,10 @@ api_selection_filters:
       - PATCH
   url:
     contains_either:
-      - order
-      - purchase
-      - cart
-      - checkout
-      - fulfillment
-      - shipment
-      - invoice
+      - /orders
+      - /order/
+      - /purchases
+      - /purchase/
   request_payload:
     length:
       gt: 0
@@ -55,26 +52,20 @@ api_selection_filters:
     not_contains:
       - Unauthorized
       - Forbidden
-      - not found
-    for_one:
-      key:
-        regex: (?i)^(status|order_status|fulfillment_status|return_status|payment_status|shipment_status)$
-        extract: statusKey
+      - JWT Token required
+      - Invalid Token
 
 wordLists:
   privilegedStatuses:
     - returned
     - refunded
-    - cancelled
-    - canceled
-    - completed
-    - shipped
   responseErrorList:
     - Unauthorized
     - Forbidden
     - invalid status
     - not allowed
-    - not found
+    - JWT Token required
+    - Invalid Token
     - Error
 
 execute:
@@ -82,25 +73,18 @@ execute:
   requests:
     - req:
         - add_body_param:
-            statusKey: ${privilegedStatuses}
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-              not_contains: ${responseErrorList}
-              contains_either:
-                - '"status": "returned"'
-                - '"status":"returned"'
-                - '"status": "refunded"'
-                - '"status":"refunded"'
-                - '"status": "cancelled"'
-                - '"status":"cancelled"'
-                - '"status": "canceled"'
-                - '"status":"canceled"'
-                - '"order_status": "returned"'
-                - '"fulfillment_status": "returned"'
-                - '"return_status": "returned"'
-        - success: vulnerable
+            status: ${privilegedStatuses}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains: ${responseErrorList}
+    contains_either:
+      - '"status":"returned"'
+      - '"status": "returned"'
+      - '"status":"refunded"'
+      - '"status": "refunded"'
