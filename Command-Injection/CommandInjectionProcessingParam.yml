@@ -1,0 +1,84 @@
+id: COMMAND_INJECTION_PROCESSING_PARAM
+info:
+  name: "OS command injection via processing or command parameters"
+  description: "Detects command injection when request parameters that control processing, conversion, or shell-style command strings accept metacharacters and cause command output or timing anomalies."
+  details: "APIs that pass client-influenced processing fields into shell utilities (converters, encoders, renderers) are vulnerable if metacharacters are not sanitized. This test injects benign command-injection probes into parameters whose names indicate processing or command handling and looks for evidence the payload was interpreted."
+  impact: "Command injection can lead to remote code execution, data theft, and full host compromise."
+  category:
+    name: COMMAND_INJECTION
+    shortName: Command Injection
+    displayName: Command Injection
+  subCategory: COMMAND_INJECTION_PROCESSING_PARAM
+  severity: CRITICAL
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://owasp.org/www-community/attacks/Command_Injection"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa3-broken-object-property-level-authorization.md"
+  cwe:
+    - CWE-78
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  method:
+    neq: OPTIONS
+  response_code:
+    gte: 200
+    lt: 500
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: (?i)(conversion_params|processing_params|encoding_params|transcoding_params|command|cmd|exec|shell|ffmpeg|render_params)
+            extract: cmdKey
+    - query_param:
+        for_one:
+          key:
+            regex: (?i)(conversion_params|processing_params|encoding_params|transcoding_params|command|cmd|exec|shell|ffmpeg|render_params)
+            extract: cmdKey
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: cmdKey
+          value:
+            regex: (?i)(-v codec|ffmpeg|transcode|avconv)
+
+wordLists:
+  cmdPayloads:
+    - ";id #"
+    - "|id #"
+    - "`id`"
+    - "$(id)"
+    - "-v codec x; id #"
+  evidence:
+    - "uid="
+    - "gid="
+    - "groups="
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            cmdKey: ${cmdPayloads}
+        - modify_query_param:
+            cmdKey: ${cmdPayloads}
+
+validate:
+  response_code:
+    gte: 200
+    lt: 500
+  response_payload:
+    contains_either: ${evidence}
+    length:
+      gt: 0

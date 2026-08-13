@@ -1,0 +1,113 @@
+id: RESOURCE_CONSUMPTION_REPEAT_PARAM
+info:
+  name: "Unrestricted resource consumption via repeat or iteration parameters"
+  description: "Detects APIs that honor client-controlled repeat, retry, or iteration counters without sensible upper bounds, allowing a single request to trigger expensive fan-out work."
+  details: "Some backends accept body or query fields such as number_of_repeats, repeats, retries, iterations, or times and execute the associated operation that many times. When small baseline values can be amplified without caps, attackers can force disproportionate CPU, network, or downstream load from one authenticated call."
+  impact: "Missing bounds on repeat parameters enable denial of service and inflated infrastructure cost from low-effort requests."
+  category:
+    name: RL
+    shortName: Lack of Resources & Rate Limiting
+    displayName: Lack of Resources & Rate Limiting (RL)
+  subCategory: RESOURCE_CONSUMPTION_REPEAT_PARAM
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa4-unrestricted-resource-consumption.md"
+  cwe:
+    - CWE-400
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  method:
+    neq: OPTIONS
+  response_code:
+    gte: 200
+    lt: 300
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: (?i)(number_of_repeats|repeat_count|repeats|retries|iterations|times|loop_count|batch_size|num_retries)
+            extract: repeatKey
+          value:
+            datatype: number
+            extract: repeatValue
+            regex: "^\\d+$"
+    - query_param:
+        for_one:
+          key:
+            regex: (?i)(number_of_repeats|repeat_count|repeats|retries|iterations|times|loop_count|batch_size|num_retries)
+            extract: repeatKey
+          value:
+            datatype: number
+            extract: repeatValue
+            regex: "^\\d+$"
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Unauthorized
+      - Forbidden
+
+wordLists:
+  amplifiedRepeats:
+    - "50"
+    - "100"
+    - "250"
+  responseErrorList:
+    - Unauthorized
+    - Forbidden
+    - too many
+    - exceeds
+    - max
+    - limit
+    - Error
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - add_header:
+            x-akto-ignore: "0"
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${responseErrorList}
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_body_param:
+            repeatKey: ${amplifiedRepeats}
+        - modify_query_param:
+            repeatKey: ${amplifiedRepeats}
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${responseErrorList}
+
+validate:
+  and:
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - 2001
+    - compare_greater:
+        - ${x2.response.stats.median_response_time}
+        - ${x1.response.stats.median_response_time} * 3

@@ -1,0 +1,87 @@
+id: MASS_ASSIGNMENT_NEGATIVE_QUANTITY
+info:
+  name: "Mass assignment using negative quantity values"
+  description: "Detects when create or update APIs accept negative values for quantity-like fields and persist them. Client-supplied quantities must be validated server-side to positive bounds."
+  details: "Purchase and inventory APIs often bind quantity, qty, or count from the request body into internal models. If negative values are accepted and echoed, billing or stock logic can invert and grant unauthorized credits or refunds."
+  impact: "Negative quantity acceptance enables financial fraud, inventory corruption, and unauthorized account credits."
+  category:
+    name: MA
+    shortName: Mass Assignment
+    displayName: Mass Assignment (MA)
+  subCategory: MASS_ASSIGNMENT_NEGATIVE_QUANTITY
+  severity: HIGH
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa3-broken-object-property-level-authorization.md"
+    - "https://cheatsheetseries.owasp.org/cheatsheets/Mass_Assignment_Cheat_Sheet.html"
+  cwe:
+    - CWE-915
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    contains_either:
+      - PUT
+      - PATCH
+      - POST
+  request_payload:
+    for_one:
+      key:
+        regex: (?i)^(quantity|qty|product_quantity|order_quantity|item_quantity|count|amount)$
+        extract: quantityKey
+      value:
+        datatype: number
+        gt: 0
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Unauthorized
+      - Forbidden
+
+wordLists:
+  responseErrorList:
+    - Unauthorized
+    - Forbidden
+    - invalid
+    - must be positive
+    - greater than zero
+    - Error
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            quantityKey: -1
+        - validate:
+            response_code:
+              gte: 200
+              lt: 300
+            response_payload:
+              length:
+                gt: 0
+              not_contains: ${responseErrorList}
+              contains_either:
+                - '"quantity": -'
+                - '"quantity":-'
+                - '"qty": -'
+                - '"qty":-'
+                - '"count": -'
+                - '"count":-'
+                - '"amount": -'
+                - '"amount":-'
+        - success: vulnerable

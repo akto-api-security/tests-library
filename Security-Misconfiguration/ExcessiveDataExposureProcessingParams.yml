@@ -1,0 +1,75 @@
+id: EXCESSIVE_DATA_EXPOSURE_PROCESSING_PARAMS
+info:
+  name: "Excessive data exposure of internal processing parameters"
+  description: "Detects API responses that leak internal processing, encoding, or pipeline configuration that clients should never see. User-facing resources may expose identifiers and titles, but not server-side command strings or encoder flags."
+  details: "Some APIs serialize backend processing metadata into client responses (for example codec flags, transcoder options, or shell-style command fragments). Exposure of these fields reveals implementation details and often enables follow-on mass assignment or command injection against the same processing pipeline."
+  impact: "Leaked processing parameters increase attack surface and can enable privilege escalation via mass assignment or OS command injection."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: EXCESSIVE_DATA_EXPOSURE_PROCESSING_PARAMS
+  severity: MEDIUM
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa3-broken-object-property-level-authorization.md"
+  cwe:
+    - CWE-200
+    - CWE-213
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+api_selection_filters:
+  method:
+    contains_either:
+      - GET
+      - POST
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Unauthorized
+      - Forbidden
+      - not found
+    for_one:
+      key:
+        regex: (?i)(conversion_params|processing_params|encoding_params|transcoding_params|transcode_options|encoder_options|ffmpeg|pipeline_config|render_params)
+        extract: processingFieldKey
+
+wordLists:
+  internalProcessingIndicators:
+    - "-v codec"
+    - "-codec"
+    - "codec h264"
+    - "codec h265"
+    - "ffmpeg"
+    - "transcode"
+    - "avconv"
+    - "libx264"
+
+execute:
+  type: single
+  requests:
+    - req: []
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    contains_either: ${internalProcessingIndicators}
+    length:
+      gt: 0
+    not_contains:
+      - Unauthorized
+      - Forbidden
+      - not found
