@@ -1,8 +1,8 @@
 id: SSRF_URL_PARAM_INTERNAL_FETCH
 info:
-  name: "SSRF via URL parameter fetching internal HTTP resources"
-  description: "Detects Server-Side Request Forgery when a client-controlled URL parameter causes the server to fetch an attacker-chosen internal HTTP resource and reflect evidence of that fetch in the response."
-  details: "APIs that accept callback, webhook, or target URL fields and server-side fetch them are vulnerable to SSRF if destination validation is missing. This test replaces an existing http(s) parameter with an internal URL and checks whether the response includes content obtained from that internal fetch."
+  name: "SSRF via URL parameter fetching attacker-controlled HTTP resources"
+  description: "Detects Server-Side Request Forgery when a client-controlled URL parameter causes the server to fetch an attacker-chosen HTTP resource and reflect evidence of that fetch in the response."
+  details: "APIs that accept callback, webhook, or target URL fields and server-side fetch them are vulnerable to SSRF if destination validation is missing. This test replaces an existing http(s) parameter with a canary URL and checks whether the response includes content obtained from that fetch."
   impact: "SSRF can expose internal services, cloud metadata, and sensitive files, and may enable further pivoting."
   category:
     name: SSRF
@@ -37,37 +37,43 @@ api_selection_filters:
   request_payload:
     for_one:
       key:
-        regex: (?i)(url|uri|callback|webhook|endpoint|target|api|link|mechanic_api|fetch_url|image_url|href)
+        regex: (?i)(url|uri|callback|webhook|endpoint|target|api|link|fetch_url|image_url|href|mechanic_api)
         extract: urlKey
       value:
         regex: (?i)^https?://
         extract: originalUrl
 
 wordLists:
-  internalTargets:
-    - "http://127.0.0.1:8888/workshop/api/shop/return_qr_code"
-    - "http://127.0.0.1:8888/workshop/api/mechanic/receive_report?mechanic_code=TRAC_JHN&problem_details=ssrf&vin=0HEHDH01ABD222000"
-    - "http://localhost:8888/workshop/api/mechanic/receive_report?mechanic_code=TRAC_JHN&problem_details=ssrf&vin=0HEHDH01ABD222000"
+  canaryTargets:
+    - "https://example.com"
+    - "http://example.com"
+    - "http://127.0.0.1/"
+    - "http://169.254.169.254/latest/meta-data/"
   ssrfEvidence:
-    - report_link
-    - mechanic_code
-    - PNG
-    - IHDR
-    - response_from_mechanic_api
-    - "sent\":true"
-    - "sent\": true"
+    - Example Domain
+    - example.com
+    - "<!doctype html"
+    - "<html"
+    - ami-id
+    - meta-data
+    - latest/meta-data
+    - "root:x:"
+    - "nginx"
+    - "Apache"
 
 execute:
   type: single
   requests:
     - req:
         - modify_body_param:
-            urlKey: ${internalTargets}
+            urlKey: ${canaryTargets}
+        - modify_query_param:
+            urlKey: ${canaryTargets}
 
 validate:
   response_code:
     gte: 200
-    lt: 300
+    lt: 400
   response_payload:
     length:
       gt: 0
@@ -78,3 +84,4 @@ validate:
       - No scheme supplied
       - SSRF blocked
       - Access Denied
+      - Connection refused
