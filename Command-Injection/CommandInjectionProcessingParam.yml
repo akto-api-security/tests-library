@@ -1,8 +1,8 @@
 id: COMMAND_INJECTION_PROCESSING_PARAM
 info:
   name: "OS command injection via processing or command parameters"
-  description: "Detects command injection when request parameters that control processing, conversion, or shell-style command strings accept metacharacters and cause command output or timing anomalies."
-  details: "APIs that pass client-influenced processing fields into shell utilities (converters, encoders, renderers) are vulnerable if metacharacters are not sanitized. This test injects benign command-injection probes into parameters whose names indicate processing or command handling and looks for evidence the payload was interpreted."
+  description: "Detects command injection when request parameters that control processing or command strings accept shell metacharacters and cause command output to appear in the response."
+  details: "APIs that pass client-influenced processing fields into shell utilities are vulnerable if metacharacters are not sanitized. This test injects benign command-injection probes into processing-related parameters and looks for OS command output."
   impact: "Command injection can lead to remote code execution, data theft, and full host compromise."
   category:
     name: COMMAND_INJECTION
@@ -17,7 +17,6 @@ info:
     - HackerOne top 10
   references:
     - "https://owasp.org/www-community/attacks/Command_Injection"
-    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa3-broken-object-property-level-authorization.md"
   cwe:
     - CWE-78
 
@@ -39,20 +38,18 @@ api_selection_filters:
     - request_payload:
         for_one:
           key:
-            regex: (?i)(conversion_params|processing_params|encoding_params|transcoding_params|command|cmd|exec|shell|ffmpeg|render_params)
+            regex: (?i)(conversion_params|processing_params|encoding_params|command|cmd|exec|shell)
+            extract: cmdKey
+    - response_payload:
+        for_one:
+          key:
+            regex: (?i)(conversion_params|processing_params|encoding_params)
             extract: cmdKey
     - query_param:
         for_one:
           key:
-            regex: (?i)(conversion_params|processing_params|encoding_params|transcoding_params|command|cmd|exec|shell|ffmpeg|render_params)
+            regex: (?i)(conversion_params|processing_params|command|cmd|exec)
             extract: cmdKey
-    - request_payload:
-        for_one:
-          key:
-            regex: .*
-            extract: cmdKey
-          value:
-            regex: (?i)(-v codec|ffmpeg|transcode|avconv)
 
 wordLists:
   cmdPayloads:
@@ -72,6 +69,8 @@ execute:
     - req:
         - modify_body_param:
             cmdKey: ${cmdPayloads}
+        - add_body_param:
+            conversion_params: ${cmdPayloads}
         - modify_query_param:
             cmdKey: ${cmdPayloads}
 

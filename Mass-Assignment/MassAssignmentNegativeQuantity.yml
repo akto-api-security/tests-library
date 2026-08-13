@@ -37,52 +37,45 @@ api_selection_filters:
     contains_either:
       - PUT
       - PATCH
-      - POST
-  request_payload:
-    for_one:
-      key:
-        regex: (?i)^(quantity|qty|product_quantity|order_quantity|item_quantity|count|amount)$
-        extract: quantityKey
-      value:
-        datatype: number
-        gt: 0
+  url:
+    contains_either:
+      - /orders
+      - /order/
   response_payload:
     length:
       gt: 0
     not_contains:
       - Unauthorized
       - Forbidden
+      - JWT Token required
 
 wordLists:
   responseErrorList:
     - Unauthorized
     - Forbidden
-    - invalid
     - must be positive
     - greater than zero
-    - Error
+    - JWT Token required
+    - Invalid Token
+    - A valid integer is required
 
 execute:
   type: single
   requests:
     - req:
-        - modify_body_param:
-            quantityKey: -1
-        - validate:
-            response_code:
-              gte: 200
-              lt: 300
-            response_payload:
-              length:
-                gt: 0
-              not_contains: ${responseErrorList}
-              contains_either:
-                - '"quantity": -'
-                - '"quantity":-'
-                - '"qty": -'
-                - '"qty":-'
-                - '"count": -'
-                - '"count":-'
-                - '"amount": -'
-                - '"amount":-'
-        - success: vulnerable
+        - add_body_param:
+            quantity: -1
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains: ${responseErrorList}
+    contains_either:
+      - '"quantity":-1'
+      - '"quantity": -1'
+      - '"qty":-1'
+      - '"qty": -1'

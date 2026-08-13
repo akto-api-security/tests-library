@@ -1,0 +1,105 @@
+id: OTP_VERSION_DOWNGRADE_BRUTEFORCE
+info:
+  name: "OTP verification API version downgrade and brute force"
+  description: "Detects weak OTP verification when newer rate-limited API versions can be downgraded to older unrestricted versions, enabling OTP brute force."
+  details: "Applications sometimes ship multiple OTP verification versions where newer paths enforce rate limits but older paths do not. This test rewrites versioned OTP URLs to an older major version and attempts multiple OTP values. A successful verification or continued acceptance without lockout indicates broken authentication controls."
+  impact: "OTP brute force via version downgrade enables account takeover without the victim's credentials."
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: OTP_VERSION_DOWNGRADE_BRUTEFORCE
+  severity: HIGH
+  agenticTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa2-broken-authentication.md"
+  cwe:
+    - CWE-307
+    - CWE-287
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+
+api_selection_filters:
+  method:
+    contains_either:
+      - POST
+      - PUT
+  response_code:
+    gte: 200
+    lt: 600
+  url:
+    contains_either:
+      - check-otp
+      - verify-otp
+      - validate-otp
+      - otp/verify
+      - /otp
+  request_payload:
+    for_one:
+      key:
+        regex: (?i)^(otp|code|token|passcode|verification_code)$
+        extract: otpKey
+
+wordLists:
+  testOtps:
+    - "000000"
+    - "123456"
+    - "111111"
+    - "999999"
+    - "012345"
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - modify_url:
+            regex_replace:
+              regex: "/v([3-9]\\d*|\\d{2,})/"
+              replace_with: "/v2/"
+        - modify_body_param:
+            otpKey: "999999"
+        - validate:
+            response_code:
+              neq: 404
+        - success: x2
+        - failure: exit
+    - req:
+        - modify_url:
+            regex_replace:
+              regex: "/v([3-9]\\d*|\\d{2,})/"
+              replace_with: "/v2/"
+        - modify_body_param:
+            otpKey: ${testOtps}
+        - validate:
+            response_payload:
+              not_contains:
+                - rate limit
+                - too many
+                - locked
+                - try later
+
+validate:
+  or:
+    - response_code:
+        gte: 200
+        lt: 300
+    - and:
+        - response_code:
+            gte: 200
+            lt: 600
+        - response_payload:
+            contains_either:
+              - Invalid OTP
+              - incorrect OTP
+              - wrong OTP
+            not_contains:
+              - rate limit
+              - too many requests
+              - locked

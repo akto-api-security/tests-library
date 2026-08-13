@@ -1,0 +1,95 @@
+id: BOLA_FUZZ_OBJECT_ID
+info:
+  name: "BOLA by fuzzing object identifiers in path or query"
+  description: "Detects Broken Object Level Authorization when replacing resource identifiers (UUIDs, numeric IDs, report/order IDs) with IDs from other users' traffic still returns foreign object data."
+  details: "Object endpoints often authorize the caller but fail to verify ownership of the requested object. This test swaps path or query identifiers with values harvested from other sample traffic and checks for a successful response containing foreign object data."
+  impact: "BOLA enables horizontal privilege escalation and direct access to other users' sensitive objects."
+  category:
+    name: BOLA
+    shortName: Broken Object Level Authorization
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: BOLA_FUZZ_OBJECT_ID
+  severity: HIGH
+  agenticTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md"
+  cwe:
+    - CWE-639
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  method:
+    contains_either:
+      - GET
+      - PUT
+      - PATCH
+      - DELETE
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    not_contains:
+      - Unauthorized
+      - Forbidden
+      - JWT Token required
+  or:
+    - query_param:
+        for_one:
+          key:
+            regex: (?i)(report_id|order_id|video_id|vehicle_id|id|uuid|object_id|resource_id)
+            extract: objectKey
+          value:
+            regex: "^[0-9a-fA-F-]{8,}$|^\\d+$"
+            extract: objectValue
+    - url:
+        regex: "(?i)/(vehicle|vehicles|order|orders|report|video|videos|user|users)/[^/]+"
+
+wordLists:
+  foreignObjectIds:
+    source: sample_data
+    key:
+      regex: (?i)(report_id|order_id|video_id|vehicle_id|uuid|^id$)
+    all_apis: true
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_query_param:
+            objectKey: ${foreignObjectIds}
+        - modify_url:
+            regex_replace:
+              regex: "(?i)/(vehicle|vehicles|order|orders|report|video|videos)/([^/?#]+)"
+              replace_with: "/$1/${foreignObjectIds}"
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+    percentage_match:
+      lt: 100
+    percentage_match_schema:
+      gte: 80
+    not_contains:
+      - Unauthorized
+      - Forbidden
+      - JWT Token required
+      - not found
+      - Invalid Token
+      - access denied
