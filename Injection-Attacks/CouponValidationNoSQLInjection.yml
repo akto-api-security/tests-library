@@ -67,7 +67,8 @@ api_selection_filters:
       - not found
 
 wordLists:
-  noSqlObjectBody: '{"coupon_code": {"$ne": null}}'
+  noSqlObjectBody: 
+  - '{"coupon_code": {"$ne": null}}'
   discoveredCouponCodes:
     source: sample_data
     key:
