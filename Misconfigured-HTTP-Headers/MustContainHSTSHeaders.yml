@@ -1,0 +1,55 @@
+id: MUST_CONTAIN_TRANSPORT_SEC_RESPONSE_HEADERS
+info:
+  name: Missing Transport Security Response Headers
+  description: "The response does not contain Transport Security headers."
+  details: >
+    "This category enforces the use of secure HTTPS connections between the client and server. It ensures that once a user connects securely, all future requests remain encrypted. This protects against downgrade attacks and interception of unencrypted traffic."
+  impact: "Blocks man-in-the-middle attacks over insecure channels."
+  category:
+    name: MHH
+    shortName: Misconfigured HTTP Headers
+    displayName: Misconfigured HTTP Headers (MHH)
+  subCategory: MUST_CONTAIN_RESPONSE_HEADERS
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://web.dev/security-headers/"
+    - "https://www.keycdn.com/blog/http-security-headers"
+    - "https://www.invicti.com/white-papers/whitepaper-http-security-headers"
+  cwe:
+    - CWE-693
+  cve:
+    - CVE-2022-41915
+    - CVE-2022-37436
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+execute:
+  type: single
+  requests:
+    - req: []
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_headers:
+    for_one:
+      key:
+        not_contains:
+          - Strict-Transport-Security
+strategy:
+  run_once: /

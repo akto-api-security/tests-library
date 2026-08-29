@@ -1,0 +1,57 @@
+id: MUST_CONTAIN_CORS_RESPONSE_HEADERS
+info:
+  name: Missing CORS Response Headers
+  description: "The response does not contain some CORS security headers."
+  details: >
+    "These headers control how and when resources can be accessed from other origins. They isolate your pages from other sites unless cross-origin access is explicitly allowed. This creates a secure context required for certain browser features."
+  impact: "Stops cross-origin data leaks and side-channel attacks."
+  category:
+    name: MHH
+    shortName: Misconfigured HTTP Headers
+    displayName: Misconfigured HTTP Headers (MHH)
+  subCategory: MUST_CONTAIN_RESPONSE_HEADERS
+  severity: LOW
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - "https://web.dev/security-headers/"
+    - "https://www.keycdn.com/blog/http-security-headers"
+    - "https://www.invicti.com/white-papers/whitepaper-http-security-headers"
+  cwe:
+    - CWE-693
+  cve:
+    - CVE-2022-41915
+    - CVE-2022-37436
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+execute:
+  type: single
+  requests:
+    - req: []
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_headers:
+    for_one:
+      key:
+        not_contains:
+          - Cross-Origin-Embedder-Policy
+          - Cross-Origin-Opener-Policy
+          - Cross-Origin-Resource-Policy
+strategy:
+  run_once: /
