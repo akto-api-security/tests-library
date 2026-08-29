@@ -3,13 +3,13 @@ filter:
   or:
     - request_payload:
         regex:
-          - (?i)(?:^|[^a-zA-Z0-9])(?:(?:\.\.(?:/|\\|%2F|%5C))+\.?|(?:/|\\|%2F|%5C)(?:etc/passwd|proc/self/environ|windows/system\.ini)|php://(?:filter|input)|(?:/|\\|%2F|%5C)\w+\.(?:php|conf|ini|log)(?:%00)?)(?:$|[^a-zA-Z0-9])
+          - (?:(?:^|[\x5c/;])\.{2,3}[\x5c/;]|[\x5c/;]\.{2,3}[\x5c/;])
     - request_headers:
         regex:
-          - (?i)(?:^|[^a-zA-Z0-9])(?:(?:\.\.(?:/|\\|%2F|%5C))+\.?|(?:/|\\|%2F|%5C)(?:etc/passwd|proc/self/environ|windows/system\.ini)|php://(?:filter|input)|(?:/|\\|%2F|%5C)\w+\.(?:php|conf|ini|log)(?:%00)?)(?:$|[^a-zA-Z0-9])
+          - (?:(?:^|[\x5c/;])\.{2,3}[\x5c/;]|[\x5c/;]\.{2,3}[\x5c/;])
     - url:
         regex:
-          - (?i)(?:^|[^a-zA-Z0-9])(?:(?:\.\.(?:/|\\|%2F|%5C))+\.?|(?:/|\\|%2F|%5C)(?:etc/passwd|proc/self/environ|windows/system\.ini)|php://(?:filter|input)|(?:/|\\|%2F|%5C)\w+\.(?:php|conf|ini|log)(?:%00)?)(?:$|[^a-zA-Z0-9])
+          - (?:(?:^|[\x5c/;])\.{2,3}[\x5c/;]|[\x5c/;]\.{2,3}[\x5c/;])
 
 info:
   name: "LocalFileInclusionRFI"
