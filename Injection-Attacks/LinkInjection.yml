@@ -1,0 +1,53 @@
+id: LINK_INJECTION
+info:
+  name: "Link Injection via Source Parameter"
+  description: "Link Injection occurs when attackers manipulate URL parameters (such as 'src' for images) to inject malicious HTML anchor tags containing links to attacker-controlled domains. This vulnerability arises when applications fail to properly sanitize or encode user-supplied input before rendering it in HTML responses, allowing attackers to inject arbitrary HTML elements that could redirect users to phishing sites or other malicious resources."
+  details: "This test targets the 'src' query parameter commonly used for image sources or similar resources. By injecting HTML that breaks out of the expected context (using '/>-->'), an attacker can insert anchor tags with links to malicious domains. When the application reflects this un-sanitized input back in the response, it creates a vector for phishing attacks, malware distribution, or social engineering. The vulnerability is confirmed when the injected HTML anchor tag appears in the response payload, indicating insufficient input validation and output encoding."
+  impact: "The impact of Link Injection can include phishing attacks where users are redirected to malicious sites, damage to brand reputation, social engineering attacks, and potential credential theft. While less severe than full XSS, it can still be leveraged to trick users into visiting attacker-controlled websites, potentially leading to malware infections or data compromise. This vulnerability can be particularly dangerous when combined with other attack vectors or when exploited in trusted contexts."
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: LINK_INJECTION
+  severity: MEDIUM
+  references:
+    - "https://owasp.org/www-community/attacks/Content_Spoofing"
+    - "https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa3-broken-object-property-level-authorization.md"
+  cwe:
+    - CWE-79
+    - CWE-80
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+api_selection_filters:
+  method:
+    neq: "OPTIONS"
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    length:
+      gt: 0
+  query_param:
+    for_one:
+      key:
+        eq: src
+
+execute:
+  type: single
+  requests:
+    - req:
+      - modify_query_param:
+          src: '/>--><a href=https://evil.com>sdfsf</a>200127/MLv3/2025/11/16/110516/691abb1cdf892571.jpg'
+
+validate:
+  response_code:
+    gte: 200
+  response_payload:
+    length:
+      gt: 0
+    contains_either:
+      - "<a href=https://evil.com>sdfsf</a>200127/MLv3/2025/11/16/110516/691abb1cdf892571.jpg"
