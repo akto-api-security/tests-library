@@ -1,0 +1,48 @@
+id: PCIDataLeak
+filter:
+  or:
+
+  # =========================================================
+  # PCI — Credit Card Number + Expiry (High Confidence)
+  # =========================================================
+  - and:
+    - response_payload:
+        regex:
+          - \b(?:4\d{3}|5[1-5]\d{2}|2[2-7]\d{2}|3[47]\d{2}|6(?:011|5\d{2}))[\s\-]?\d{4}[\s\-]?\d{4}[\s\-]?\d{4}\b
+    - response_payload:
+        regex:
+          - \b(0[1-9]|1[0-2])\/?([0-9]{2}|20[2-4][0-9])\b
+
+  # =========================================================
+  # PCI — Credit Card Number + CVV Keyword (High Confidence)
+  # =========================================================
+  - and:
+    - response_payload:
+        regex:
+          - \b(?:4\d{3}|5[1-5]\d{2}|2[2-7]\d{2}|3[47]\d{2}|6(?:011|5\d{2}))[\s\-]?\d{4}[\s\-]?\d{4}[\s\-]?\d{4}\b
+    - response_payload:
+        regex:
+          - \b(cvv|cvc|security[_\s-]?code)\b
+
+  # =========================================================
+  # PCI — Credit Card Number + Key Name Correlation
+  # (Reduced False Positives)
+  # =========================================================
+  - and:
+    - response_payload:
+        regex:
+          - \b(?:credit[_\s-]?card|card[_\s-]?number|creditcard|cc[_\s-]?number|payment[_\s-]?card|card)\b
+    - response_payload:
+        regex:
+          - \b(?:4\d{3}|5[1-5]\d{2}|2[2-7]\d{2}|3[47]\d{2}|6(?:011|5\d{2}))[\s\-]?\d{4}[\s\-]?\d{4}[\s\-]?\d{4}\b
+
+info:
+  name: "PCIDataLeak"
+  description: "Detection of U.S. payment card data exposure using regex-only matching with contextual key correlation."
+  details: "This policy detects unmasked U.S. credit and debit card numbers when correlated with contextual indicators such as expiry dates, CVV keywords, or payment-related key names (e.g., creditCard, cardNumber). The goal is to reduce false positives while remaining fully regex-based."
+  impact: "Exposure of payment card data can lead to financial fraud, PCI DSS violations, chargebacks, regulatory penalties, and reputational damage."
+  category:
+    name: "PCIDataLeak"
+    displayName: "PCIDataLeak"
+  subCategory: "PCIDataLeak"
+  severity: MEDIUM
