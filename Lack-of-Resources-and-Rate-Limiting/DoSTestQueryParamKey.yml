@@ -69,14 +69,14 @@ api_selection_filters:
         for_one:
           key:
             regex: ".*"
-            extract: userKey
+            extractMultiple: userKey
           value:
             extract: userValue
     - query_param:
         for_one:
           key:
             regex: ".*"
-            extract: userKey
+            extractMultiple: userKey
           value:
             extract: userValue
 wordLists:
@@ -133,6 +133,7 @@ execute:
         - delete_query_param: ${userKey}
         - add_query_param:
             ${queryParamValues}: userValue
+          for_each_combination: true
         - validate:
             response_code:
               gt: 505

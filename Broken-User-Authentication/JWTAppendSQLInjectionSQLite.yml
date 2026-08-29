@@ -78,7 +78,7 @@ api_selection_filters:
           - authorization
           - auth-token
           - access-token
-        extract: headerKey
+        extractMultiple: headerKey
       value:
         contains_jwt: true
 wordLists:
@@ -97,7 +97,8 @@ execute:
   requests:
     - req:
         - modify_header:
-            headerKey: "Bearer ${JWTPayloads}"
+            ${headerKey}: "Bearer ${JWTPayloads}"
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -139,7 +140,8 @@ execute:
         - failure: exit
     - req:
         - modify_header:
-            headerKey: "Bearer ${negativeJWTPayloads}"
+            ${headerKey}: "Bearer ${negativeJWTPayloads}"
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -185,7 +187,8 @@ execute:
         - failure: exit
     - req:
         - modify_header:
-            headerKey: "Bearer ${negativeJWTPayloads}"
+            ${headerKey}: "Bearer ${negativeJWTPayloads}"
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200

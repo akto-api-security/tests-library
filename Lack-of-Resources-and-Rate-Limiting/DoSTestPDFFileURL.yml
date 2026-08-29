@@ -70,14 +70,14 @@ api_selection_filters:
             contains_either:
               - .pdf
           key:
-            extract: pdf_key
+            extractMultiple: pdf_key
     - query_param:
         for_one:
           value:
             contains_either:
               - .pdf
           key:
-            extract: pdf_key
+            extractMultiple: pdf_key
 execute:
   type: multiple
   requests:
@@ -121,9 +121,11 @@ execute:
         - failure: exit
     - req:
         - modify_query_param:
-            pdf_key: https://github.com/akto-api-security/tests-library/raw/akto_resources/resources/heavy%20files/heavy-pdf.pdf
+            ${pdf_key}: https://github.com/akto-api-security/tests-library/raw/akto_resources/resources/heavy%20files/heavy-pdf.pdf
+          for_each_combination: true
         - modify_body_param:
-            pdf_key: https://github.com/akto-api-security/tests-library/raw/akto_resources/resources/heavy%20files/heavy-pdf.pdf
+            ${pdf_key}: https://github.com/akto-api-security/tests-library/raw/akto_resources/resources/heavy%20files/heavy-pdf.pdf
+          for_each_combination: true
         - validate:
             response_code:
               gt: 505

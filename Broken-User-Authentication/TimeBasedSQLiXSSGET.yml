@@ -71,7 +71,7 @@ api_selection_filters:
     for_one:
       key:
         regex: ".*"
-        extract: userKey
+        extractMultiple: userKey
       value:
         extract: userVal
 wordLists:
@@ -131,7 +131,8 @@ execute:
         - failure: exit
     - req:
         - modify_query_param:
-            userKey: ${userVal}${timeBasedPayloads}
+            ${userKey}: ${userVal}${timeBasedPayloads}
+          for_each_combination: true
         - validate:
             response_code:
               eq: 429

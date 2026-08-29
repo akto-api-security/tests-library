@@ -69,7 +69,7 @@ api_selection_filters:
     for_one:
       key:
         regex: "^User-Agent$|^user-agent$"
-        extract: userKey
+        extractMultiple: userKey
       value:
         extract: userVal
 wordLists:
@@ -81,7 +81,8 @@ execute:
   requests:
     - req:
         - modify_header:
-            userKey: ${userVal}${specialOSPayloads}
+            ${userKey}: ${userVal}${specialOSPayloads}
+          for_each_combination: true
 validate:
   response_payload:
     length:

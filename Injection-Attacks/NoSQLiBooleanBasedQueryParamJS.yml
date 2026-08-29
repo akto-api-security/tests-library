@@ -75,7 +75,7 @@ api_selection_filters:
     for_one:
       key:
         regex: .*
-        extract: changed_query_key
+        extractMultiple: changed_query_key
       value:
         regex: .*
         extract: changed_query_value
@@ -86,6 +86,7 @@ execute:
         - delete_query_param: ${changed_query_key}
         - add_query_param:
             ${changed_query_key}: !!str ${changed_query_value};return false;
+          for_each_combination: true
         - validate:
             or:
               - and:
@@ -121,6 +122,7 @@ execute:
         - delete_query_param: ${changed_query_key}
         - add_query_param:
             ${changed_query_key}: !!str ${changed_query_value} || 'a' == 'a' || 'a' == 'a'
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -154,6 +156,7 @@ execute:
         - delete_query_param: ${changed_query_key}
         - add_query_param:
             ${changed_query_key}: !!str ${changed_query_value} || '1' == '1' || '1' == '1'
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200

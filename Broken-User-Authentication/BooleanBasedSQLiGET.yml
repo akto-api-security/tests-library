@@ -73,7 +73,7 @@ api_selection_filters:
     for_one:
       key:
         regex: ".*"
-        extract: userKey
+        extractMultiple: userKey
       value:
         extract: userVal
 wordLists:
@@ -108,7 +108,8 @@ execute:
   requests:
     - req:
         - modify_query_param:
-            userKey: ${userVal}${falseCasePayloads}
+            ${userKey}: ${userVal}${falseCasePayloads}
+          for_each_combination: true
         - validate:
             or:
               - response_code:
@@ -138,7 +139,8 @@ execute:
         - failure: exit
     - req:
         - modify_query_param:
-            userKey: ${userVal}${trueCasePayloads}
+            ${userKey}: ${userVal}${trueCasePayloads}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
@@ -171,7 +173,8 @@ execute:
         - add_header:
             dummyHeader: dummyValue
         - modify_query_param:
-            userKey: ${userVal}${trueCasePayloads}
+            ${userKey}: ${userVal}${trueCasePayloads}
+          for_each_combination: true
         - validate:
             response_code:
               gte: 200
