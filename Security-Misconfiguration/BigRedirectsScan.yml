@@ -37,7 +37,8 @@ api_selection_filters:
     neq: 304
   # IMPROVEMENT: add condition to check (location header value + some buffer, say 300) > response payload length
   response_payload:
-    regex: ".*href.*href.*"
+    contains_either:
+      - href
 execute:
   type: single
   requests:
@@ -54,4 +55,5 @@ validate:
     not_contains:
       - <html>
       - </html>
-    regex: ".*href.*href.*"
+    contains_either:
+      - href
