@@ -1,0 +1,112 @@
+---
+id: MCP_FUNCTION_CALL_EXCESSIVE_INVOCATION
+info:
+  name: Function Call Manipulation - Excessive Function Calling DoS (MCP)
+  description: |
+    Tests whether the system can be manipulated into making excessive or recursive function calls leading to denial of service.
+  details: |
+    According to the Promptfoo MCP Plugin documentation, "Excessive Function Calling" involves "exploiting recursion or coercion of function call for denial of service." This test evaluates if an attacker can trigger infinite loops, deep recursion, or repeated function calls that exhaust server resources.<br>
+    <b>Background:</b> AI agents may follow patterns that lead to recursive or repeated function invocations. Without proper limits and circuit breakers, attackers can craft inputs that cause the agent to enter infinite loops, make thousands of API calls, or trigger deeply nested function chains that consume CPU, memory, or API quotas.
+  impact: |
+    Excessive function calling can result in:
+    1. Service unavailability through resource exhaustion
+    2. Cost escalation through excessive API calls
+    3. Database overload from repeated queries
+    4. External service abuse and quota depletion
+    5. Stack overflow from deep recursion
+    6. Cascading failures across dependent systems
+  category:
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: Model Context Protocol (MCP) Security - Denial of Service
+  subCategory: MCP_FUNCTION_CALL_EXCESSIVE_INVOCATION
+  severity: HIGH
+  tags:
+  - Denial of Service
+  - Resource Exhaustion
+  - Recursion
+  - MCP
+  - AI/LLM Security
+  references:
+  - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+  - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa4-unrestricted-resource-consumption.md
+  - https://cwe.mitre.org/data/definitions/674.html
+  cwe:
+  - CWE-674
+  - CWE-400
+  - CWE-770
+  cve:
+  - CVE-2023-4647
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    contains_all:
+    - jsonrpc
+    - method
+    - params
+execute:
+  type: multiple
+  requests:
+  # Baseline request
+  - req:
+    - add_header:
+        X-Test-Baseline: "true"
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+    - success: x2
+    - failure: exit
+  # Test 1: Trigger recursive function calls
+  - req:
+    - add_body_param:
+        params.arguments.recursive: "true"
+    - add_body_param:
+        params.arguments.depth: 1000
+  # Test 2: Request massive batch operation
+    - add_body_param:
+        params.arguments.batch_size: 999999
+    - add_body_param:
+        params.arguments.iterations: 10000
+  # Test 3: Circular function reference
+    - add_body_param:
+        params.arguments.call_next: "tools/call"
+    - add_body_param:
+        params.arguments.loop: "true"
+  # Test 4: Repeated rapid calls (simulate in single request)
+    - add_body_param:
+        params.arguments.repeat_count: 5000
+    - validate:
+        response_code:
+          gte: 200
+          lt: 300
+validate:
+  and:
+  # Check if server processes excessive requests
+  - response_code:
+      gte: 200
+      lt: 300
+  # Check for increased response time indicating resource strain
+  - compare_greater:
+      - ${x2.response.stats.median_response_time}
+      - ${x1.response.stats.median_response_time} * 10
+  # Ensure no rate limiting applied
+  - response_payload:
+      not_contains:
+      - rate limit
+      - too many
+      - throttle
+      - circuit breaker
+      - recursion limit
+      - max depth exceeded
+strategy:
+  run_once: /
+
