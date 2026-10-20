@@ -1,0 +1,59 @@
+id: SMART_MASS_ASSIGNMENT_NESTED_KEYS
+info:
+  name: "Mass Assignment via Nested Keys, Duplicate Keys and Alternate Encodings - Smart Testing"
+  description: "Test Mass Assignment through nested object paths (profile.role, user.isAdmin), duplicate JSON keys and alternate body encodings, which often bypass allow-lists that only check top-level keys. Keep method, URL and auth intact; change only the body."
+  details: "Across probes: add a privileged property inside a nested object the baseline already sends (or a new nested object), send the same key twice with a benign value first and a privileged value last, and send the body form-encoded instead of JSON with the extra property. Proof vs baseline: THIS response reflects the privileged value, or shows a privilege or state change the baseline does not, and a control with the same property at the top level is rejected or ignored. The value only echoed back without any effect is NOT vulnerable."
+  impact: "Attackers can escalate privileges or change protected state by writing properties the API does not intend to accept."
+  category:
+    name: MA
+    shortName: Mass Assignment
+    displayName: Mass Assignment (MA)
+  subCategory: SMART_MASS_ASSIGNMENT_NESTED_KEYS
+  severity: HIGH
+  agenticTestingAllowed: true
+  onlySmartTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa3-broken-object-property-level-authorization.md
+  cwe:
+    - CWE-915
+  cve:
+    - CVE-2023-32079
+
+attributes:
+  nature: INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  request_payload:
+    for_one:
+      key:
+        regex: .*
+        extract: payloadKey
+
+wordLists:
+  nestedKeys:
+    - "profile.role"
+    - "user.role"
+    - "user.isAdmin"
+    - "account.type"
+    - "settings.permissions"
+  massAssignValues:
+    - true
+    - "admin"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - add_body_param:
+            ${nestedKeys}: "${massAssignValues}"

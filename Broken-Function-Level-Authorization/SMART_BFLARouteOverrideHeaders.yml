@@ -1,0 +1,56 @@
+id: SMART_BFLA_ROUTE_OVERRIDE_HEADERS
+info:
+  name: "Broken Function Level Authorization via Route Override Headers - Smart Testing"
+  description: "Test whether the API honours route override headers (X-Original-URL, X-Rewrite-URL) that make the backend serve a different path than the one a front-end proxy authorized. Keep method, URL, body and auth intact; only add one override header."
+  details: "Add one override header per probe, pointing at an administrative or internal path (or a sibling of the baseline path with an admin segment). Proof vs baseline: THIS response is the content of the overriding path (admin data, a different resource or route listing) rather than the baseline's, and a control pointing the header at a non-existent path returns the baseline response or a not-found. The baseline response unchanged is NOT vulnerable."
+  impact: "Attackers can reach admin or internal functions that a front-end proxy is meant to block."
+  category:
+    name: BFLA
+    shortName: Broken Function Level Authorization
+    displayName: Broken Function Level Authorization (BFLA)
+  subCategory: SMART_BFLA_ROUTE_OVERRIDE_HEADERS
+  severity: MEDIUM
+  agenticTestingAllowed: true
+  onlySmartTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa5-broken-function-level-authorization.md
+    - https://cwe.mitre.org/data/definitions/285.html
+  cwe:
+    - CWE-285
+  cve:
+    - CVE-2022-22947
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+
+wordLists:
+  overridePaths:
+    - "/admin"
+    - "/api/admin"
+    - "/internal"
+    - "/actuator"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - add_header:
+            X-Original-URL: "${overridePaths}"
+        - add_header:
+            X-Rewrite-URL: "${overridePaths}"

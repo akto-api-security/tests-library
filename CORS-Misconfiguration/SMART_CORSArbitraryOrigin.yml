@@ -1,0 +1,50 @@
+id: SMART_CORS_ARBITRARY_ORIGIN
+info:
+  name: "CORS Misconfiguration with Null and Arbitrary Origins - Smart Testing"
+  description: "Test whether the API reflects untrusted Origin values, including the null origin and look-alike domains, in Access-Control-Allow-Origin while allowing credentials. Keep method, URL, body and auth intact; only add or change the Origin header."
+  details: "Send one Origin per probe: null, an external domain, and an external domain that contains the target's own host name. Proof: THIS response returns Access-Control-Allow-Origin equal to the sent Origin (or null) together with Access-Control-Allow-Credentials: true, and a control with the baseline's own origin is the only one allowed otherwise. A wildcard without credentials, or no CORS headers, is NOT vulnerable."
+  impact: "Any website can read authenticated API responses in a victim's browser, exposing user data and tokens."
+  category:
+    name: CORS
+    shortName: CORS Misconfiguration
+    displayName: Cross-Origin Resource Sharing (CORS)
+  subCategory: SMART_CORS_ARBITRARY_ORIGIN
+  severity: MEDIUM
+  agenticTestingAllowed: true
+  onlySmartTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://portswigger.net/web-security/cors
+    - https://cwe.mitre.org/data/definitions/942.html
+  cwe:
+    - CWE-942
+  cve:
+    - CVE-2022-21817
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+
+wordLists:
+  corsOrigins:
+    - "null"
+    - "https://akto-cors-test.com"
+    - "https://trusted.example.akto-cors-test.com"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - add_header:
+            origin: "${corsOrigins}"

@@ -1,0 +1,65 @@
+id: SMART_OPEN_REDIRECT_VARIANTS
+info:
+  name: "Open Redirect via Redirect Parameters and URL Parser Variants - Smart Testing"
+  description: "Test redirect-style parameters (redirect, return, next, url, continue, goto, callback) for Open Redirect, including when the baseline does not redirect yet. Keep method, headers and auth intact; change one redirect parameter at a time."
+  details: "Set the parameter to an external host, then to parser variants that validators often miss: scheme-relative, backslash, userinfo with the trusted host before an @, and the trusted host as a subdomain of an external one. Do not follow redirects. Proof vs baseline: THIS response redirects (Location header) or links (a URL field in the body) to the external host, and a control with the original value stays on the trusted host. The value only echoed in a non-redirect field is NOT vulnerable."
+  impact: "Attackers can send users to malicious sites from a trusted domain and steal tokens passed in redirect URLs."
+  category:
+    name: SM
+    shortName: Misconfiguration
+    displayName: Security Misconfiguration (SM)
+  subCategory: SMART_OPEN_REDIRECT_VARIANTS
+  severity: MEDIUM
+  agenticTestingAllowed: true
+  onlySmartTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html
+    - https://cwe.mitre.org/data/definitions/601.html
+  cwe:
+    - CWE-601
+  cve:
+    - CVE-2021-41773
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: STANDARD
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 400
+  method:
+    neq: "OPTIONS"
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: "(?i)^(redirect|redirect_uri|redirect_url|redirectUrl|return|returnTo|return_to|returnUrl|next|url|continue|goto|dest|destination|callback|target)$"
+            extract: redirectKey
+    - query_param:
+        for_one:
+          key:
+            regex: "(?i)^(redirect|redirect_uri|redirect_url|redirectUrl|return|returnTo|return_to|returnUrl|next|url|continue|goto|dest|destination|callback|target)$"
+            extract: redirectKey
+
+wordLists:
+  redirectTargets:
+    - "https://akto-redirect-test.com"
+    - "//akto-redirect-test.com"
+    - "/\\akto-redirect-test.com"
+    - "https://trusted.example@akto-redirect-test.com"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_query_param:
+            redirectKey: ${redirectTargets}
+        - modify_body_param:
+            redirectKey: ${redirectTargets}
+        - follow_redirect: false
