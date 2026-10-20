@@ -1,0 +1,72 @@
+id: SMART_BOLA_TENANT_ROLE_HEADERS
+info:
+  name: "BOLA by Trusted Tenant, Organization and Role Headers - Smart Testing"
+  description: "Test whether the API trusts client-supplied identity headers (tenant, organization, account, user or role) over the caller's credential. Keep the baseline method, URL, body and credential unchanged; only add or change identity headers."
+  details: "Add one identity header per probe: tenant/org/account/user id headers set to a different id seen in this API's traffic (or a nearby value of the baseline's own id), and role headers set to a privileged role name. Proof vs baseline: THIS response returns another tenant's or user's data, or admin-only fields, that the baseline does not return, and a control with a non-existent id in the same header does not. The same body as the baseline, or a generic error, is NOT vulnerable."
+  impact: "Cross-tenant data access and privilege escalation when a gateway or service trusts identity headers sent by the client."
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: SMART_BOLA_TENANT_ROLE_HEADERS
+  severity: HIGH
+  agenticTestingAllowed: true
+  onlySmartTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md
+    - https://cwe.mitre.org/data/definitions/639.html
+  cwe:
+    - CWE-284
+    - CWE-639
+  cve:
+    - CVE-2022-34770
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  response_payload:
+    length:
+      gt: 0
+
+wordLists:
+  identityIds:
+    source: sample_data
+    key:
+      regex: "(?i)(tenant|org|organization|account|workspace|company|user)[-_]?id"
+    all_apis: true
+  roleValues:
+    - "admin"
+    - "administrator"
+    - "superuser"
+    - "internal"
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - add_header:
+            X-Tenant-ID: "${identityIds}"
+        - add_header:
+            X-Org-ID: "${identityIds}"
+        - add_header:
+            X-Organization-ID: "${identityIds}"
+        - add_header:
+            X-Account-ID: "${identityIds}"
+        - add_header:
+            X-User-ID: "${identityIds}"
+        - add_header:
+            X-Role: "${roleValues}"
+        - add_header:
+            X-User-Role: "${roleValues}"

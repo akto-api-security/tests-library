@@ -1,0 +1,67 @@
+id: SMART_NOSQL_INJECTION_OPERATOR_FIELDS
+info:
+  name: "NoSQL Injection by Replacing Field Values with Query Operators - Smart Testing"
+  description: "Test JSON body and query fields for NoSQL operator injection: a field's string value is replaced with a query operator object (not-equal, greater-than, regex) that the database evaluates instead of comparing literally. Keep the baseline method, URL, headers and credential; change one field at a time."
+  details: "Replace one string field's value with an operator object, e.g. not-equal to a value that cannot match, greater-than an empty string, or a match-anything regex. On login, search and filter endpoints, try the credential or filter fields. Proof vs baseline: THIS response logs in, returns more records, or returns records the baseline value does not, and a control that sends the same operator text as a plain string does not. An operator object rejected with a validation error is NOT vulnerable."
+  impact: "Authentication bypass and unauthorized data access when user input is passed to a NoSQL query as an object."
+  category:
+    name: INJECT
+    shortName: Injection Attacks
+    displayName: Injection Attacks (INJECT)
+  subCategory: SMART_NOSQL_INJECTION_OPERATOR_FIELDS
+  severity: MEDIUM
+  agenticTestingAllowed: true
+  onlySmartTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.6-Testing_for_NoSQL_Injection
+    - https://cwe.mitre.org/data/definitions/943.html
+  cwe:
+    - CWE-943
+  cve:
+    - CVE-2021-22911
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: injection_key
+          value:
+            extract: injection_value
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: injection_key
+          value:
+            extract: injection_value
+
+wordLists:
+  operatorObjects:
+    - "{\"$ne\": \"akto_no_match\"}"
+    - "{\"$gt\": \"\"}"
+    - "{\"$regex\": \".*\"}"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            injection_key: ${operatorObjects}
+        - modify_query_param:
+            injection_key: ${operatorObjects}

@@ -1,0 +1,70 @@
+id: SMART_BOOLEAN_SQLI_NUMERIC
+info:
+  name: "Boolean-Based SQL Injection in Numeric Parameters - Smart Testing"
+  description: "Test numeric body and query parameters (ids, page numbers, amounts) for boolean-based SQL injection with true/false condition pairs. Keep the baseline method, URL, headers and credential; change one numeric field at a time."
+  details: "For one numeric field, send the baseline value followed by an always-true condition, then the same value followed by an always-false condition. Proof: the true variant returns the same result as the baseline, the false variant returns an empty, different or not-found result, and the pair reproduces. A plain non-numeric value (e.g. the baseline value with a letter appended) is the control: it must not behave like the true variant. Same response for both, or a generic validation error for both, is NOT vulnerable."
+  impact: "Database queries built from numeric input can be manipulated to read or change data the caller is not authorized for."
+  category:
+    name: NO_AUTH
+    shortName: Broken Authentication
+    displayName: Broken User Authentication (BUA)
+  subCategory: SMART_BOOLEAN_SQLI_NUMERIC
+  severity: MEDIUM
+  agenticTestingAllowed: true
+  onlySmartTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+    - HackerOne top 10
+  references:
+    - https://owasp.org/www-community/attacks/Blind_SQL_Injection
+    - https://cwe.mitre.org/data/definitions/89.html
+  cwe:
+    - CWE-89
+  cve:
+    - CVE-2020-24008
+
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "OPTIONS"
+  or:
+    - request_payload:
+        for_one:
+          key:
+            regex: .*
+            extract: numKey
+          value:
+            regex: "^[0-9]+$"
+            extract: numVal
+    - query_param:
+        for_one:
+          key:
+            regex: .*
+            extract: numKey
+          value:
+            regex: "^[0-9]+$"
+            extract: numVal
+
+wordLists:
+  booleanPairPayloads:
+    - " AND 1=1"
+    - " AND 1=2"
+    - " AND 2>1"
+    - " AND 2<1"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            numKey: ${numVal}${booleanPairPayloads}
+        - modify_query_param:
+            numKey: ${numVal}${booleanPairPayloads}

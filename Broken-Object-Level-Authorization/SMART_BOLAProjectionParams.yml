@@ -1,0 +1,77 @@
+id: SMART_BOLA_PROJECTION_PARAMS
+info:
+  name: "Excessive Data Exposure via Projection and Hidden Filter Parameters - Smart Testing"
+  description: "Test whether read endpoints honour undocumented projection, expansion or filter parameters that widen what the caller may see. Keep the baseline method, URL, body and credential; only add query parameters."
+  details: "Add one parameter per probe: field projection (fields, select), relation expansion (expand, include, embed), soft-delete or scope filters (include_deleted, all, scope) and owner filters set to a different id seen in this API's traffic. Proof vs baseline: THIS response contains records owned by others, deleted records, or sensitive fields (email, phone, tokens, internal ids) that the baseline response does not, and a control with an unknown parameter name does not. A response identical to the baseline is NOT vulnerable."
+  impact: "Exposure of other users' records and sensitive fields through parameters the API accepts but does not authorize."
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Broken Object Level Authorization (BOLA)
+  subCategory: SMART_BOLA_PROJECTION_PARAMS
+  severity: MEDIUM
+  agenticTestingAllowed: true
+  onlySmartTestingAllowed: true
+  tags:
+    - Business logic
+    - OWASP top 10
+  references:
+    - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa3-broken-object-property-level-authorization.md
+    - https://cwe.mitre.org/data/definitions/213.html
+  cwe:
+    - CWE-213
+    - CWE-639
+  cve:
+    - CVE-2022-34770
+
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    eq: "GET"
+  response_payload:
+    length:
+      gt: 0
+
+wordLists:
+  projectionValues:
+    - "*"
+    - "all"
+  expansionValues:
+    - "all"
+    - "owner"
+    - "user"
+  booleanValues:
+    - "true"
+  ownerIds:
+    source: sample_data
+    key:
+      regex: "(?i)(owner|user|account|created_?by)[-_]?id"
+    all_apis: true
+
+execute:
+  type: multiple
+  requests:
+    - req:
+        - add_query_param:
+            fields: "${projectionValues}"
+        - add_query_param:
+            select: "${projectionValues}"
+        - add_query_param:
+            expand: "${expansionValues}"
+        - add_query_param:
+            include: "${expansionValues}"
+        - add_query_param:
+            include_deleted: "${booleanValues}"
+        - add_query_param:
+            all: "${booleanValues}"
+        - add_query_param:
+            owner_id: "${ownerIds}"
+        - add_query_param:
+            user_id: "${ownerIds}"
