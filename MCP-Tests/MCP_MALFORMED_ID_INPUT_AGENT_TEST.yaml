@@ -1,0 +1,61 @@
+---
+id: MCP_MALFORMED_ID_INPUT_AGENT_TEST
+info:
+  name: "Malformed id handling in MCP tools"
+  description: >
+    Tests whether MCP tools strictly validate id parameters before using them in cache keys, file paths or database queries.
+  details: |
+    Ids are often used to build cache keys, storage paths or database queries. Path traversal sequences,
+    quote-breaking strings, cache key wildcards, oversize values and unicode may cause key injection, traversal
+    or verbose errors when they are not validated.
+
+    Attack flow:
+    1. Call the result and status tools with malformed id values
+    2. Inspect returned data and error messages
+  impact: |
+    Successful exploitation can lead to:
+    - Cache key injection or cross-key reads
+    - Path traversal
+    - Error-based information disclosure
+  remediation: |
+    1. Validate ids against a strict format before any lookup
+    2. Return the same flat error for every invalid id
+  category:
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: MCP - Input Validation
+  subCategory: MCP_MALFORMED_ID_INPUT_AGENT_TEST
+  severity: MEDIUM
+  tags:
+  - Input Validation
+  - Injection
+  - MCP Security
+  references:
+  - https://owasp.org/Top10/A03_2021-Injection/
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://cwe.mitre.org/data/definitions/20.html
+  - https://cwe.mitre.org/data/definitions/22.html
+  cwe:
+  - CWE-20
+  - CWE-22
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tools that take a job, result, message or record id. call each of them separately with these id values: '../../etc/passwd', \"' OR '1'='1\", 'abc:*', '*', 'KEYS *', an empty string, a 5000-character string of the letter a, and '６４ｃ３'. show the raw output or error of each call"
+        - "check whether any malformed id returned data (a result, an answer, a state other than not found, file content) or an error containing stack traces, cache or database error text, file paths or the echoed input value, which would mean ids are not strictly validated. identical flat validation or not-found errors mean not vulnerable. if no tool of this kind exists, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

@@ -1,0 +1,66 @@
+---
+id: MCP_CROSS_TENANT_LISTING_AGENT_TEST
+info:
+  name: "Cross-tenant listing via tenant id tampering"
+  description: >
+    Tests whether an MCP listing tool returns data from workspaces, profiles or tenants the caller does not hold when extra tenant ids are injected.
+  details: |
+    Multi-tenant MCP servers scope listings by a workspace, profile, tenant or account id. These ids are
+    frequently human-readable names that are easy to guess. Each requested id must be intersected with the
+    caller's own tenants.
+
+    Attack flow:
+    1. List the caller's real tenants
+    2. Call the listing tool with the real tenant plus guessed tenant ids
+    3. Compare the tenant of every returned item with the caller's tenants
+  impact: |
+    Successful exploitation can lead to:
+    - Disclosure of other tenants' resource names, dates and files
+    - Bypass of multi-tenant isolation
+    - Competitive intelligence leakage between customers
+  remediation: |
+    1. Intersect requested tenant ids with the caller's live tenants before querying
+    2. Reject multi-tenant requests the caller is not entitled to
+    3. Never treat a tenant name as an authorization token
+  category:
+    name: MCP_PRIVILEGE_ABUSE
+    shortName: MCP_PRIVILEGE_ABUSE
+    displayName: MCP - Privilege Abuse
+  subCategory: MCP_CROSS_TENANT_LISTING_AGENT_TEST
+  severity: HIGH
+  tags:
+  - BOLA
+  - Multi-tenancy
+  - MCP Security
+  - Agent Security
+  references:
+  - https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/
+  - https://owasp.org/API-Security/editions/2023/en/0xa5-broken-function-level-authorization/
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://cwe.mitre.org/data/definitions/639.html
+  - https://cwe.mitre.org/data/definitions/863.html
+  cwe:
+  - CWE-639
+  - CWE-863
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that lists the workspaces, profiles, tenants, projects or accounts available to you and call it. show the raw output"
+        - "find the mcp tool that lists records, resources or files and accepts workspace, profile, tenant, project or account ids. call it with the first id from the previous output plus 'default', 'admin', 'internal', 'demo', 'test', 'production', 'customer1' and 'acme'. show the raw output including the owning tenant of every item"
+        - "check whether the listing returned any item whose workspace, profile, tenant or account is not present in the first listing of the caller's own tenants, which would mean data from tenants the caller does not hold is exposed. an error rejecting the extra ids, or only items from the caller's tenants, means not vulnerable. if no tool accepts tenant ids, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

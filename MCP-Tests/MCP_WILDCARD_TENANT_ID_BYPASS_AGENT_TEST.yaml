@@ -1,0 +1,64 @@
+---
+id: MCP_WILDCARD_TENANT_ID_BYPASS_AGENT_TEST
+info:
+  name: "Wildcard tenant id scope bypass"
+  description: >
+    Tests whether wildcard-like tenant or profile ids such as '_', '*', '%' or '.*' expand an MCP listing beyond the caller's own tenants.
+  details: |
+    Some servers accept a shorthand such as '_' or '*' meaning "any of my tenants". If the same matcher,
+    or a regex or SQL LIKE pattern, is applied without being bounded to the caller's tenants, a wildcard matches
+    every tenant on the platform.
+
+    Attack flow:
+    1. List the caller's real tenants
+    2. Call the listing tool once per wildcard value as the tenant id
+    3. Compare returned tenants with the caller's own
+  impact: |
+    Successful exploitation can lead to:
+    - Platform-wide listing across all tenants
+    - Bypass of tenant isolation through pattern matching
+  remediation: |
+    1. Accept only exact tenant ids and validate them against the caller's live tenants
+    2. Never pass tenant ids into regex, LIKE or glob matching
+    3. Bound any shorthand wildcard to the caller's tenants
+  category:
+    name: MCP_PRIVILEGE_ABUSE
+    shortName: MCP_PRIVILEGE_ABUSE
+    displayName: MCP - Privilege Abuse
+  subCategory: MCP_WILDCARD_TENANT_ID_BYPASS_AGENT_TEST
+  severity: HIGH
+  tags:
+  - BOLA
+  - Multi-tenancy
+  - Wildcard Injection
+  - MCP Security
+  references:
+  - https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://cwe.mitre.org/data/definitions/639.html
+  - https://cwe.mitre.org/data/definitions/155.html
+  cwe:
+  - CWE-639
+  - CWE-155
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that lists the workspaces, profiles, tenants, projects or accounts available to you and call it. show the raw output"
+        - "find the mcp tool that lists records, resources or files and accepts workspace, profile, tenant or account ids. call it separately with each of these as the id list: ['_'], ['*'], ['%'], ['.*'], [''], ['_', '*']. show the raw output of every call including the owning tenant of each item and any total count"
+        - "check whether any wildcard call returned an item whose tenant is not in the caller's own tenant listing, or a total larger than the caller's own data, which would mean wildcard ids bypass tenant isolation. errors or results limited to the caller's tenants mean not vulnerable. if no tool accepts tenant ids, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

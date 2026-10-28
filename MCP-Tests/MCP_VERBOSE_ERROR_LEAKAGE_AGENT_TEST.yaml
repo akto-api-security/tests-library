@@ -1,0 +1,59 @@
+---
+id: MCP_VERBOSE_ERROR_LEAKAGE_AGENT_TEST
+info:
+  name: "Verbose error and stack trace leakage from MCP tools"
+  description: >
+    Tests whether MCP tool errors expose stack traces, internal paths, library versions, upstream error bodies or echoed argument values.
+  details: |
+    Tool errors should be sanitized at the request boundary. Type errors, missing required fields and
+    unexpected values are the most likely to slip through framework-level validation errors with internal
+    detail.
+
+    Attack flow:
+    1. Call each tool with wrong types and missing required fields
+    2. Inspect every error message
+  impact: |
+    Successful exploitation can lead to:
+    - Disclosure of framework, file layout and versions
+    - Reflection of attacker input into error text
+  remediation: |
+    1. Map all validation and runtime errors to fixed messages at the request boundary
+    2. Log details server-side only
+  category:
+    name: MCP_SENSITIVE_DATA_LEAKAGE
+    shortName: MCP_SENSITIVE_DATA_LEAKAGE
+    displayName: MCP - Data Leak
+  subCategory: MCP_VERBOSE_ERROR_LEAKAGE_AGENT_TEST
+  severity: MEDIUM
+  tags:
+  - Information Disclosure
+  - Error Handling
+  - MCP Security
+  references:
+  - https://owasp.org/API-Security/editions/2023/en/0xa8-security-misconfiguration/
+  - https://cwe.mitre.org/data/definitions/209.html
+  - https://cwe.mitre.org/data/definitions/200.html
+  cwe:
+  - CWE-209
+  - CWE-200
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "for every mcp tool available to you, make one call with all required parameters missing and one call with every parameter set to the wrong type (numbers for strings, a plain string for arrays, an array for strings, null for enums). show every raw error message exactly"
+        - "check whether any error message contains a stack trace or traceback, file paths such as app/, src/ or site-packages, framework or validation library internals, library versions, database or cache error text, internal hostnames, or echoes the argument values sent, which would mean errors leak internal details. short fixed messages mean not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

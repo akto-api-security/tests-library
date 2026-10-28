@@ -1,0 +1,62 @@
+---
+id: MCP_IDEMPOTENCY_KEY_REQUEST_CONFUSION_AGENT_TEST
+info:
+  name: "Idempotency key reuse returns stale result for a different request"
+  description: >
+    Tests whether reusing an idempotency key with a different question and scope silently returns the first request's result.
+  details: |
+    An idempotency key should only dedupe identical requests. If the server dedupes on the key alone, a
+    second request with a different question or scope receives the first request's job. The user then gets an
+    answer to a question they did not ask, presented as authoritative.
+
+    Attack flow:
+    1. Start a job with key K, question A and a narrow scope
+    2. Immediately start a job with key K, question B and a different scope
+    3. Compare the returned ids and the echoed question
+  impact: |
+    Successful exploitation can lead to:
+    - Users act on answers to a different question than the one asked
+    - Silent integrity failure in results
+  remediation: |
+    1. Store a fingerprint of the request with the key and reject mismatched reuse with an explicit error
+    2. Echo the original request parameters when returning a deduped result
+  category:
+    name: MCP_FUNCTION_MANIPULATION
+    shortName: MCP_FUNC_MANIP
+    displayName: Model Context Protocol (MCP) Security - Function Call Manipulation
+  subCategory: MCP_IDEMPOTENCY_KEY_REQUEST_CONFUSION_AGENT_TEST
+  severity: MEDIUM
+  tags:
+  - Idempotency
+  - Integrity
+  - MCP Security
+  references:
+  - https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://cwe.mitre.org/data/definitions/694.html
+  - https://cwe.mitre.org/data/definitions/20.html
+  cwe:
+  - CWE-694
+  - CWE-20
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that starts a query, job or analysis and accepts an idempotency, dedupe or request key. call it with key 'akto-redteam-scope-001', a single data type and the question 'What do users like about the current product?'. immediately after, call it with the same key, a different data type and the question 'What pricing concerns are raised?'. show both raw outputs"
+        - "for the second call's returned id, if the previous call returned a job, task, run or message id instead of a final answer, call the status or polling tool with that id again and again until it reports finished, then call the tool that fetches the result. show the complete raw output including the answer, references or citations, conversation or chat id, scope details, sub-task ids and any notices or warnings"
+        - "check whether the second call was reported as deduped or returned the same id as the first even though the question and scope differ, or its result echoes the first question, which would mean idempotency keys silently return results for a different request. an explicit rejection or a new id means not vulnerable. if no tool accepts an idempotency key, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

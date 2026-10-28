@@ -1,0 +1,65 @@
+---
+id: MCP_RESULT_ID_EXISTENCE_ORACLE_AGENT_TEST
+info:
+  name: "Job id existence oracle via MCP status tool"
+  description: >
+    Tests whether an MCP status or polling tool reveals that a job exists, or what state it is in, for jobs the caller does not own.
+  details: |
+    Not found, not yours and not authorized should be indistinguishable. If a status tool returns state,
+    progress or stage for another user's job id, an attacker can enumerate live jobs, measure platform activity
+    and pick targets for further BOLA attempts.
+
+    Attack flow:
+    1. Start one legitimate job to obtain an owned id
+    2. Derive neighbouring ids and a set of fixed ids (all zeros, all f, small integers)
+    3. Call the status tool on each and compare the responses
+  impact: |
+    Successful exploitation can lead to:
+    - Enumeration of other users' in-flight and completed jobs
+    - Activity and volume inference about other tenants
+    - Target discovery for follow-up BOLA attempts
+  remediation: |
+    1. Authorize the id before reading any job state
+    2. Return one fixed not-found response for unknown and not-owned ids, with no state or progress
+    3. Keep response timing consistent between not-found and not-owned paths
+  category:
+    name: MCP_PRIVILEGE_ABUSE
+    shortName: MCP_PRIVILEGE_ABUSE
+    displayName: MCP - Privilege Abuse
+  subCategory: MCP_RESULT_ID_EXISTENCE_ORACLE_AGENT_TEST
+  severity: MEDIUM
+  tags:
+  - BOLA
+  - Enumeration
+  - MCP Security
+  - Agent Security
+  references:
+  - https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://cwe.mitre.org/data/definitions/204.html
+  - https://cwe.mitre.org/data/definitions/639.html
+  cwe:
+  - CWE-204
+  - CWE-639
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that answers questions, runs a query, search or analysis over your data, or starts such a job, and call it with the question or query set to 'List the main topics in my data'. show the raw output including any result, job, task, message or conversation id it returns"
+        - "take the job, task or message id you received. build neighbouring ids from it: if it is numeric, add and subtract 1, 2 and 3; if it is a 24-character hex ObjectId or ends in a hex counter, increment and decrement its last 6 hex characters by 1, 2 and 3; if it is a UUID, change its last character. also use the ids 000000000000000000000000, ffffffffffffffffffffffff, 1 and 2. find the mcp tool that reports the status or progress of a job and call it once for every one of these ids. show the raw output of each call"
+        - "check whether the status tool returned a state, progress, stage or next-step value (anything other than the same flat not-found error) for any id not created in this conversation, or whether responses for different non-owned ids differ from each other, which would reveal the existence of other users' jobs. identical not-found errors for all non-owned ids means not vulnerable. if no tool of this kind exists, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

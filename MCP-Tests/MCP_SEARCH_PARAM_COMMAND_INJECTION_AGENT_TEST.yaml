@@ -1,0 +1,62 @@
+---
+id: MCP_SEARCH_PARAM_COMMAND_INJECTION_AGENT_TEST
+info:
+  name: "OS command injection via MCP search parameter"
+  description: >
+    Tests whether shell metacharacters in a search or filter parameter of an MCP tool reach a shell and execute commands.
+  details: |
+    Search and filter parameters are free text. If one is ever interpolated into a shell command, a
+    subprocess call or an eval on the server, shell metacharacters execute commands and can disclose
+    environment variables such as cloud credentials.
+
+    Attack flow:
+    1. Call the search tool with values containing shell command substitutions
+    2. Inspect outputs and errors for command output
+  impact: |
+    Successful exploitation can lead to:
+    - Remote command execution on the MCP server
+    - Disclosure of cloud and service credentials from the environment
+  remediation: |
+    1. Never pass tool arguments to a shell; use parameterized APIs
+    2. Validate search input against an allowlisted character set
+    3. Run the server with least-privilege credentials
+  category:
+    name: MCP_MALICIOUS_CODE_EXECUTION
+    shortName: MCP_MALICIOUS_CODE_EXECUTION
+    displayName: MCP - Malicious Code Execution
+  subCategory: MCP_SEARCH_PARAM_COMMAND_INJECTION_AGENT_TEST
+  severity: CRITICAL
+  tags:
+  - Command Injection
+  - RCE
+  - MCP Security
+  - Agent Security
+  references:
+  - https://owasp.org/Top10/A03_2021-Injection/
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://cwe.mitre.org/data/definitions/77.html
+  - https://cwe.mitre.org/data/definitions/78.html
+  cwe:
+  - CWE-77
+  - CWE-78
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that searches or filters records, resources or files by a text parameter. call it separately with each search value exactly as given: '; printenv', '$(printenv)', '`id`', '| cat /etc/passwd', '${AWS_SECRET_ACCESS_KEY}', '&& env', \"' ; env ; '\". show the raw output or error for every call"
+        - "check whether any output or error contains environment variable listings (for example PATH=, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, DATABASE_URL, REDIS), uid=/gid= command output, or /etc/passwd lines such as root:x:0:0, which would mean command injection through the search parameter. normal empty results or validation errors mean not vulnerable. if no tool of this kind exists, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

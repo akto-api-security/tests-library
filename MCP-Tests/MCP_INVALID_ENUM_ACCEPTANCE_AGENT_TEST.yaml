@@ -1,0 +1,58 @@
+---
+id: MCP_INVALID_ENUM_ACCEPTANCE_AGENT_TEST
+info:
+  name: "Invalid enum values accepted by MCP tools"
+  description: >
+    Tests whether MCP tools reject values outside the enums declared in their input schemas.
+  details: |
+    Enum parameters (modes, data types, sort orders) should be strictly validated. Silently accepting
+    unknown values may map to unintended defaults, such as every type or the most expensive mode, or pass
+    unvalidated values downstream.
+
+    Attack flow:
+    1. Read enum parameters from the tool schemas
+    2. Call the tools with invalid casing, unknown values and injection-like strings
+    3. Check which are accepted and how they are echoed
+  impact: |
+    Successful exploitation can lead to:
+    - Unexpected scope or cost through default fallbacks
+    - Unvalidated values reaching the backend
+  remediation: |
+    1. Enforce enums strictly in the schema and on the server
+    2. Reject unknown values instead of falling back to defaults
+  category:
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: MCP - Input Validation
+  subCategory: MCP_INVALID_ENUM_ACCEPTANCE_AGENT_TEST
+  severity: LOW
+  tags:
+  - Input Validation
+  - MCP Security
+  references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://cwe.mitre.org/data/definitions/20.html
+  cwe:
+  - CWE-20
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "list every enum parameter of every mcp tool available to you with its allowed values"
+        - "for each enum parameter, call its tool with otherwise valid arguments separately using: the first allowed value in lowercase, the first allowed value in uppercase, 'Admin', 'Unlimited', the first allowed value followed by a single quote, and the first allowed value followed by '; DROP'. show the raw output or error of each call including any echoed value"
+        - "check whether any call with a value outside the declared enum returned a result or job id instead of a validation error, or echoed a value that is not one of the allowed values, which would mean enum validation is missing. validation errors for all calls mean not vulnerable. if no tool has enum parameters, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

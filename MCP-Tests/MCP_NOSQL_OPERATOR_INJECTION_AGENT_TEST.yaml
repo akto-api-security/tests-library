@@ -1,0 +1,61 @@
+---
+id: MCP_NOSQL_OPERATOR_INJECTION_AGENT_TEST
+info:
+  name: "NoSQL operator injection in MCP id and search parameters"
+  description: >
+    Tests whether object-typed arguments containing Mongo operators are accepted by MCP tools that declare string parameters.
+  details: |
+    Tools declare string types, but JSON-RPC clients can send objects. If the server does not enforce the
+    schema, {"$ne": null} as an id matches the first document in the collection, which may belong to anyone.
+
+    Attack flow:
+    1. Call the search tool with an operator object as the search value
+    2. Call the result and status tools with operator objects as the id
+    3. Inspect whether the calls are accepted and return data
+  impact: |
+    Successful exploitation can lead to:
+    - Reading arbitrary users' results
+    - Filter bypass across collections
+  remediation: |
+    1. Enforce the input schema strictly and reject non-string values
+    2. Validate ids with a strict format check before any lookup
+    3. Reject keys starting with '$'
+  category:
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: MCP - Input Validation
+  subCategory: MCP_NOSQL_OPERATOR_INJECTION_AGENT_TEST
+  severity: HIGH
+  tags:
+  - NoSQL Injection
+  - Injection
+  - MCP Security
+  references:
+  - https://owasp.org/Top10/A03_2021-Injection/
+  - https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/
+  - https://cwe.mitre.org/data/definitions/943.html
+  - https://cwe.mitre.org/data/definitions/20.html
+  cwe:
+  - CWE-943
+  - CWE-20
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that searches records and call it with the search value set to the JSON object {\"$ne\": \"\"} (an object, not a string). then find the tool that fetches a result by id and call it with the id set to the object {\"$ne\": null}, and the tool that reports job status with the id set to the object {\"$gt\": \"\"}. show the raw output or error of each call"
+        - "check whether any call accepted an operator object and returned items, a result, an answer, a question or a job state the caller never created, which would mean NoSQL operator injection. schema validation errors for every call mean not vulnerable. if no such tools exist, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

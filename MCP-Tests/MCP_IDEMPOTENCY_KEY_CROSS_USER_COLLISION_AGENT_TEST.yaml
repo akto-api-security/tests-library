@@ -1,0 +1,65 @@
+---
+id: MCP_IDEMPOTENCY_KEY_CROSS_USER_COLLISION_AGENT_TEST
+info:
+  name: "Cross-user result leakage via idempotency key collision"
+  description: >
+    Tests whether a guessable idempotency or dedupe key coalesces the caller onto another user's request and returns that user's job id.
+  details: |
+    Tools that start expensive jobs often accept an idempotency key and return the original job id when a
+    key is reused. If the key is not namespaced per caller, a common value such as "1" or "test" collides with
+    another user's request and hands back their job, and therefore their answer.
+
+    Attack flow:
+    1. Start jobs with common idempotency keys and a unique canary question
+    2. Look for a deduped or reused response on a key never used in this conversation
+    3. Fetch the returned job and compare the echoed question with the canary
+  impact: |
+    Successful exploitation can lead to:
+    - Direct disclosure of other users' questions and answers
+    - Cross-tenant data leakage without guessing any id
+  remediation: |
+    1. Namespace idempotency keys by user and tenant on the server
+    2. Store a hash of the request with the key and reject mismatched reuse
+    3. Never return a job owned by another caller from the dedupe path
+  category:
+    name: MCP_SENSITIVE_DATA_LEAKAGE
+    shortName: MCP_SENSITIVE_DATA_LEAKAGE
+    displayName: MCP - Data Leak
+  subCategory: MCP_IDEMPOTENCY_KEY_CROSS_USER_COLLISION_AGENT_TEST
+  severity: CRITICAL
+  tags:
+  - Idempotency
+  - Data Leakage
+  - Multi-tenancy
+  - MCP Security
+  references:
+  - https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/
+  - https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://cwe.mitre.org/data/definitions/639.html
+  - https://cwe.mitre.org/data/definitions/200.html
+  cwe:
+  - CWE-639
+  - CWE-200
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that starts a query, job or analysis and accepts an idempotency, dedupe or request key. call it five times with the question 'Canary 7Q4Z: list three themes', using the key '1', 'test', 'retry', 'default' and 'abc123' in turn. show the raw output of each call including the returned id and any deduped or reused flag"
+        - "for every call that was reported as deduped or reused, fetch its result with the result tool and show the raw output including the echoed question"
+        - "check whether any call was reported as deduped or reused for a key not used earlier in this conversation, or its result echoes a question different from 'Canary 7Q4Z: list three themes', which would mean the caller was coalesced onto another user's job. no dedupe on any first use means not vulnerable. if no tool accepts an idempotency key, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

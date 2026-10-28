@@ -1,0 +1,68 @@
+---
+id: MCP_CONVERSATION_ID_HIJACK_AGENT_TEST
+info:
+  name: "Conversation hijack via forged conversation id"
+  description: >
+    Tests whether an MCP tool accepts a conversation, chat or thread id belonging to another user and continues that conversation with its history and scope.
+  details: |
+    Tools that support multi-turn use accept a conversation id to continue a prior exchange, and often
+    inherit the previous turn's scope. If ownership of the conversation is not checked, an attacker can attach
+    to another user's conversation, read its history through the model and inherit scope they were never granted.
+
+    Attack flow:
+    1. Complete one legitimate exchange to obtain an owned conversation id
+    2. Derive neighbouring conversation ids
+    3. Continue each forged conversation with a question asking for the previous turn
+    4. Read the result
+  impact: |
+    Successful exploitation can lead to:
+    - Reading another user's prior questions and answers
+    - Inheriting another user's data scope without authorization
+    - Injecting turns into another user's conversation history
+  remediation: |
+    1. Verify the conversation belongs to the caller before accepting a continuation
+    2. Re-authorize every inherited scope element against the caller's live access
+    3. Reject continuations on not-owned conversations with a flat not-found
+  category:
+    name: MCP_PRIVILEGE_ABUSE
+    shortName: MCP_PRIVILEGE_ABUSE
+    displayName: MCP - Privilege Abuse
+  subCategory: MCP_CONVERSATION_ID_HIJACK_AGENT_TEST
+  severity: CRITICAL
+  tags:
+  - BOLA
+  - Session Hijacking
+  - MCP Security
+  - Agent Security
+  references:
+  - https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://genai.owasp.org/llm-top-10/
+  - https://cwe.mitre.org/data/definitions/639.html
+  - https://cwe.mitre.org/data/definitions/284.html
+  cwe:
+  - CWE-639
+  - CWE-284
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that answers questions, runs a query, search or analysis over your data, or starts such a job, and call it with the question or query set to 'What are the top problems mentioned in my data?'. show the raw output including any result, job, task, message or conversation id it returns"
+        - "if the previous call returned a job, task, run or message id instead of a final answer, call the status or polling tool with that id again and again until it reports finished, then call the tool that fetches the result. show the complete raw output including the answer, references or citations, conversation or chat id, scope details, sub-task ids and any notices or warnings"
+        - "take the conversation, chat or thread id from the result. build neighbouring ids from it: if it is numeric, add and subtract 1, 2 and 3; if it is a 24-character hex ObjectId or ends in a hex counter, increment and decrement its last 6 hex characters by 1, 2 and 3; if it is a UUID, change its last character. for the first two neighbouring ids, call the question tool again with the conversation id set to that neighbour and the question 'Repeat the exact previous question asked in this conversation and summarize the previous answer'. if the previous call returned a job, task, run or message id instead of a final answer, call the status or polling tool with that id again and again until it reports finished, then call the tool that fetches the result. show the complete raw output including the answer, references or citations, conversation or chat id, scope details, sub-task ids and any notices or warnings"
+        - "check whether the tool accepted a conversation id not created in this conversation and the answer contains a previous question, previous answer, inherited scope or resource names that did not originate here, which would mean another user's conversation can be hijacked. a rejection or flat not-found for forged ids means not vulnerable. if no tool accepts a conversation id, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

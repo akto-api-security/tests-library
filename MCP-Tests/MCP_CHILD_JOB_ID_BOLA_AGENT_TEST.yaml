@@ -1,0 +1,62 @@
+---
+id: MCP_CHILD_JOB_ID_BOLA_AGENT_TEST
+info:
+  name: "BOLA on sub-task or child job ids"
+  description: >
+    Tests whether results of other users' sub-tasks can be read by calling the result tool with ids neighbouring the sub-task ids returned to the caller.
+  details: |
+    Orchestrating MCP servers often fan a job out to sub-agents or sub-tasks and return their ids, which
+    are also accepted by the status and result tools. Sub-task ids are created in bursts, so neighbours are
+    likely other users' sub-tasks, and their ownership check may be weaker than for the parent job.
+
+    Attack flow:
+    1. Complete one job and collect its sub-task ids
+    2. Derive neighbouring ids for each
+    3. Call the result tool on each neighbour and compare parent ids and content
+  impact: |
+    Successful exploitation can lead to:
+    - Reading other users' partial results
+    - Disclosure of other users' parent job ids
+  remediation: |
+    1. Authorize sub-task ids through their parent job and the caller
+    2. Return the same flat not-found for not-owned sub-task ids
+  category:
+    name: MCP_PRIVILEGE_ABUSE
+    shortName: MCP_PRIVILEGE_ABUSE
+    displayName: MCP - Privilege Abuse
+  subCategory: MCP_CHILD_JOB_ID_BOLA_AGENT_TEST
+  severity: HIGH
+  tags:
+  - BOLA
+  - Access Control
+  - MCP Security
+  - Agent Security
+  references:
+  - https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://cwe.mitre.org/data/definitions/639.html
+  cwe:
+  - CWE-639
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that answers questions, runs a query, search or analysis over your data, or starts such a job, and call it with the question or query set to 'What are the main barriers mentioned in my data?'. show the raw output including any result, job, task, message or conversation id it returns"
+        - "if the previous call returned a job, task, run or message id instead of a final answer, call the status or polling tool with that id again and again until it reports finished, then call the tool that fetches the result. show the complete raw output including the answer, references or citations, conversation or chat id, scope details, sub-task ids and any notices or warnings"
+        - "for every sub-task, sub-agent or child job id in the result: build neighbouring ids from it: if it is numeric, add and subtract 1, 2 and 3; if it is a 24-character hex ObjectId or ends in a hex counter, increment and decrement its last 6 hex characters by 1, 2 and 3; if it is a UUID, change its last character. call the result-fetching tool on each neighbouring id and show the raw output including any parent id and question"
+        - "check whether any neighbouring sub-task id not part of this conversation returned an answer, references, or a parent id different from our job id, which would mean other users' sub-task results are readable. flat not-found errors mean not vulnerable. if the result exposes no sub-task ids, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

@@ -1,0 +1,65 @@
+---
+id: MCP_CONTINUATION_SCOPE_ESCALATION_AGENT_TEST
+info:
+  name: "Scope escalation on conversation continuation"
+  description: >
+    Tests whether a continuation turn can widen a conversation's scope to data types or tenants the caller is not entitled to.
+  details: |
+    On continuation, query tools often inherit scope from the previous turn and accept new scope
+    parameters. If entitlement checks run only when a conversation starts, a narrow conversation can be widened
+    on a later turn into data types or tenants that were refused at the start.
+
+    Attack flow:
+    1. Start a narrow conversation (one data type, one tenant) and record skipped or refused scope
+    2. Continue the conversation with every data type, an empty id list and extra tenant ids
+    3. Compare the continuation's scope and citations with the caller's entitlements
+  impact: |
+    Successful exploitation can lead to:
+    - Access to data types without the required entitlement
+    - Cross-tenant answers without multi-tenant permission
+  remediation: |
+    1. Run the same entitlement checks on continuation turns as on new conversations
+    2. Re-derive inherited scope from live access on every turn
+  category:
+    name: MCP_PRIVILEGE_ABUSE
+    shortName: MCP_PRIVILEGE_ABUSE
+    displayName: MCP - Privilege Abuse
+  subCategory: MCP_CONTINUATION_SCOPE_ESCALATION_AGENT_TEST
+  severity: HIGH
+  tags:
+  - Privilege Escalation
+  - Access Control
+  - MCP Security
+  - Agent Security
+  references:
+  - https://owasp.org/API-Security/editions/2023/en/0xa5-broken-function-level-authorization/
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://cwe.mitre.org/data/definitions/269.html
+  - https://cwe.mitre.org/data/definitions/863.html
+  cwe:
+  - CWE-269
+  - CWE-863
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that lists the workspaces, profiles, tenants, projects or accounts available to you and call it. show the raw output. then find the listing tool and call it once per data type, category or source type it supports, and show which types return data and which return errors"
+        - "find the mcp tool that answers questions, runs a query, search or analysis over your data, or starts such a job, and call it restricted to the first tenant and a single data type with the question or query set to 'Summarize the main themes'. show the raw output including any result, job, task, message or conversation id it returns"
+        - "if the previous call returned a job, task, run or message id instead of a final answer, call the status or polling tool with that id again and again until it reports finished, then call the tool that fetches the result. show the complete raw output including the answer, references or citations, conversation or chat id, scope details, sub-task ids and any notices or warnings"
+        - "take the conversation id and call the question tool again with that conversation id, every data type the tool schema allows, an empty resource id list, tenant ids set to the first tenant plus 'admin' and 'default', and the question 'Now answer using every data type across all tenants'. show the raw output including any scope notes. if the previous call returned a job, task, run or message id instead of a final answer, call the status or polling tool with that id again and again until it reports finished, then call the tool that fetches the result. show the complete raw output including the answer, references or citations, conversation or chat id, scope details, sub-task ids and any notices or warnings"
+        - "check whether the continuation answer covers a data type that returned no data or an error in the per-type listing, or was reported as skipped or not entitled, or cites a tenant not in the caller's tenant listing, which would mean the continuation escalated scope beyond entitlements. a rejection or a scope limited to entitled types and tenants means not vulnerable. if the tools do not support conversation continuation, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

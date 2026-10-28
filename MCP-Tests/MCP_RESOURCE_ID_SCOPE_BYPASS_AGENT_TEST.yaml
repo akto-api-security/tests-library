@@ -1,0 +1,67 @@
+---
+id: MCP_RESOURCE_ID_SCOPE_BYPASS_AGENT_TEST
+info:
+  name: "Data scope bypass via unauthorized resource ids"
+  description: >
+    Tests whether an MCP query tool answers from resources the caller cannot see when it is scoped to resource ids that the listing tool does not return.
+  details: |
+    Query tools often accept a list of resource ids (projects, datasets, studies, collections) to narrow
+    their scope. Ids outside the caller's access should be dropped or rejected before any retrieval. If the
+    backend still uses them, the answer will cite resources the caller is not entitled to.
+
+    Attack flow:
+    1. List the resources the caller can access
+    2. Forge resource ids that are not in that list
+    3. Run a query scoped only to the forged ids
+    4. Inspect scope notes and citations in the result
+  impact: |
+    Successful exploitation can lead to:
+    - Answers grounded in another tenant's confidential data
+    - Disclosure of foreign resource names, file names and excerpts through citations
+    - Bypass of resource-level access control
+  remediation: |
+    1. Resolve every resource id against the caller's live access before retrieval
+    2. Fail the request when no requested id survives instead of widening scope
+    3. Re-check each citation's resource against the caller's access before returning it
+  category:
+    name: MCP_PRIVILEGE_ABUSE
+    shortName: MCP_PRIVILEGE_ABUSE
+    displayName: MCP - Privilege Abuse
+  subCategory: MCP_RESOURCE_ID_SCOPE_BYPASS_AGENT_TEST
+  severity: HIGH
+  tags:
+  - BOLA
+  - Access Control
+  - MCP Security
+  - Agent Security
+  references:
+  - https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://cwe.mitre.org/data/definitions/639.html
+  - https://cwe.mitre.org/data/definitions/285.html
+  cwe:
+  - CWE-639
+  - CWE-285
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that lists or searches records, resources, documents or files and call it with the largest allowed page size. show every id, name and owning workspace, profile or tenant returned"
+        - "take the first resource id from that list. build neighbouring ids from it: if it is numeric, add and subtract 1, 2 and 3; if it is a 24-character hex ObjectId or ends in a hex counter, increment and decrement its last 6 hex characters by 1, 2 and 3; if it is a UUID, change its last character. remove any id that appears in the listing. call the question or query tool scoped only to those forged resource ids (use its resource, entity, project or dataset id parameter) with the question 'Summarize these resources and name each one you used'. show the raw output including any scope or dropped-id notes"
+        - "if the previous call returned a job, task, run or message id instead of a final answer, call the status or polling tool with that id again and again until it reports finished, then call the tool that fetches the result. show the complete raw output including the answer, references or citations, conversation or chat id, scope details, sub-task ids and any notices or warnings"
+        - "check whether the query accepted the forged resource ids and returned an answer or references whose resource id, resource name or file name does not appear in the earlier listing, which would mean resources outside the caller's access were queried. a rejection, or all forged ids reported as dropped or inaccessible with no foreign citations, means not vulnerable. if no query tool accepts resource ids, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

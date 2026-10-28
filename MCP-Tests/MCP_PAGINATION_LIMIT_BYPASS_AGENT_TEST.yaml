@@ -1,0 +1,60 @@
+---
+id: MCP_PAGINATION_LIMIT_BYPASS_AGENT_TEST
+info:
+  name: "Pagination limit bypass in MCP listing tools"
+  description: >
+    Tests whether MCP listing tools enforce their declared page and page size bounds.
+  details: |
+    Listing tools declare a maximum page size and a minimum page number. A missing upper bound allows huge
+    pages. Zero or negative values can mean "no limit" in some databases, returning everything in one call.
+
+    Attack flow:
+    1. Read the declared pagination bounds
+    2. Call the listing tool with boundary and invalid values
+    3. Check which are accepted and how many items are returned
+  impact: |
+    Successful exploitation can lead to:
+    - Unbounded responses and memory pressure
+    - Bypass of pagination controls for bulk enumeration
+  remediation: |
+    1. Validate page and page size ranges in the schema and on the server
+    2. Reject out-of-range values and never treat 0 or negative values as unlimited
+  category:
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: MCP - Input Validation
+  subCategory: MCP_PAGINATION_LIMIT_BYPASS_AGENT_TEST
+  severity: MEDIUM
+  tags:
+  - Input Validation
+  - Resource Consumption
+  - MCP Security
+  references:
+  - https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/
+  - https://cwe.mitre.org/data/definitions/20.html
+  - https://cwe.mitre.org/data/definitions/770.html
+  cwe:
+  - CWE-20
+  - CWE-770
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that lists records, resources or files with pagination parameters and show the declared minimum and maximum for its page and page size parameters"
+        - "call it separately with page size set to the declared maximum plus 1, 1000, 0 and -1, then with page set to 0, -1 and 999999999, then with page size set to the string '50; DROP'. show for each call whether it succeeded, the number of items, the page size echoed and any error text"
+        - "check whether any call with page size above the declared maximum (or above 200 when none is declared), page size 0 or negative, or page 0 or negative was accepted and returned items, or returned more items than the declared maximum, which would mean pagination limits are not enforced. validation errors for these values mean not vulnerable. if no tool is paginated, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

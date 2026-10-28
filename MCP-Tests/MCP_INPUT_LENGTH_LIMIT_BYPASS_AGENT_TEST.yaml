@@ -1,0 +1,61 @@
+---
+id: MCP_INPUT_LENGTH_LIMIT_BYPASS_AGENT_TEST
+info:
+  name: "Tool input length limit bypass"
+  description: >
+    Tests whether an MCP tool enforces the maxLength declared in its input schema for free-text parameters.
+  details: |
+    Free-text parameters forwarded to a backend LLM are usually length-limited in the tool schema. Longer
+    inputs raise cost and give room for larger injection payloads. If the limit is only declared and not
+    enforced on the server, oversize input is accepted.
+
+    Attack flow:
+    1. Read the declared maxLength of the question parameter
+    2. Call the tool with input well above that length
+    3. Check whether it is accepted
+  impact: |
+    Successful exploitation can lead to:
+    - Larger prompt injection payloads
+    - Increased per-request cost and latency
+  remediation: |
+    1. Enforce maxLength in the tool schema and on the server
+    2. Reject oversize input with a validation error instead of truncating silently
+  category:
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: MCP - Input Validation
+  subCategory: MCP_INPUT_LENGTH_LIMIT_BYPASS_AGENT_TEST
+  severity: LOW
+  tags:
+  - Input Validation
+  - MCP Security
+  references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/
+  - https://cwe.mitre.org/data/definitions/20.html
+  - https://cwe.mitre.org/data/definitions/1284.html
+  cwe:
+  - CWE-20
+  - CWE-1284
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that answers questions or runs a query and show the maxLength declared for its question or query parameter in the input schema"
+        - "call that tool with the sentence 'Summarize the main themes across my data. ' repeated so the input is about 1.5 times the declared maxLength (or 750 characters if none is declared). show the raw output. then call it again with the sentence repeated about 110 times (about 5000 characters) and show the raw output"
+        - "check whether either call with input longer than the declared maxLength (or longer than 512 characters when none is declared) was accepted and returned a result or job id instead of a validation error, which would mean the input length limit is not enforced. validation errors for both means not vulnerable. if no tool of this kind exists, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

@@ -1,0 +1,62 @@
+---
+id: MCP_REQUEST_FLOOD_RATE_LIMIT_AGENT_TEST
+info:
+  name: "Request flood and rate limit enforcement on MCP tools"
+  description: >
+    Tests whether an MCP server enforces a per-user rate limit when many expensive tool calls are issued quickly.
+  details: |
+    Tools that start backend jobs are expensive, and the most thorough mode is costlier still. Rotating
+    idempotency keys defeats deduplication. Without an enforced per-user limit, a single account can exhaust
+    capacity for every tenant.
+
+    Attack flow:
+    1. Issue 50 calls quickly to the most expensive tool with unique keys and the most thorough mode
+    2. Count accepted calls versus rate limit responses
+  impact: |
+    Successful exploitation can lead to:
+    - Shared capacity exhausted for all tenants
+    - Large LLM and compute cost amplification
+  remediation: |
+    1. Enforce a per-user rate limit cluster-wide, not per instance
+    2. Cap concurrent in-flight jobs per user
+    3. Apply a stricter budget to expensive modes
+  category:
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: MCP - Denial of Service
+  subCategory: MCP_REQUEST_FLOOD_RATE_LIMIT_AGENT_TEST
+  severity: HIGH
+  tags:
+  - Rate Limiting
+  - Denial of Service
+  - Resource Consumption
+  - MCP Security
+  references:
+  - https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://cwe.mitre.org/data/definitions/770.html
+  - https://cwe.mitre.org/data/definitions/799.html
+  cwe:
+  - CWE-770
+  - CWE-799
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that starts a query, job or analysis. as fast as possible and in parallel where you can, call it 50 times with its most thorough or slowest mode, every data type its schema allows, the question 'Load test question N' with N from 1 to 50, and a unique idempotency key 'akto-flood-N' if the tool accepts one. keep calling until you have made 50 calls. report how many returned a result or job id and how many returned a rate limit or other error"
+        - "check whether all 50 calls made within about one minute returned a result or job id without any rate limit, 429 or throttling error, which would mean no per-user rate limit is enforced. rate limit errors once a threshold is exceeded mean not vulnerable. if no tool of this kind exists, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

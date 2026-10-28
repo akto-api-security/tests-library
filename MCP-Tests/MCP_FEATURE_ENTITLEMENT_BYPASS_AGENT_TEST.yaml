@@ -1,0 +1,63 @@
+---
+id: MCP_FEATURE_ENTITLEMENT_BYPASS_AGENT_TEST
+info:
+  name: "Data type entitlement bypass"
+  description: >
+    Tests whether an MCP query tool answers from data types or sources the caller has no entitlement for when every type is requested at once.
+  details: |
+    Servers often gate data types (reports, tables, notes, transcripts) behind separate features. A
+    request for all types should drop the ones the caller lacks. If the backend still dispatches work for a
+    forbidden type, the answer will contain citations of that type.
+
+    Attack flow:
+    1. List data per type to see which are entitled
+    2. Run a query requesting every type
+    3. Compare refused or skipped types with the types actually present in the answer
+  impact: |
+    Successful exploitation can lead to:
+    - Reading data types without the matching entitlement
+    - Bypass of commercial feature gating
+  remediation: |
+    1. Filter requested types against live entitlements before any retrieval
+    2. Drop citations whose type the caller is not entitled to
+  category:
+    name: MCP_PRIVILEGE_ABUSE
+    shortName: MCP_PRIVILEGE_ABUSE
+    displayName: MCP - Privilege Abuse
+  subCategory: MCP_FEATURE_ENTITLEMENT_BYPASS_AGENT_TEST
+  severity: HIGH
+  tags:
+  - Broken Function Level Authorization
+  - Access Control
+  - MCP Security
+  references:
+  - https://owasp.org/API-Security/editions/2023/en/0xa5-broken-function-level-authorization/
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://cwe.mitre.org/data/definitions/863.html
+  - https://cwe.mitre.org/data/definitions/285.html
+  cwe:
+  - CWE-863
+  - CWE-285
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the listing tool and call it once for each data type, category or source type its schema allows. show which types return data and which return errors or nothing"
+        - "find the mcp tool that answers questions, runs a query, search or analysis over your data, or starts such a job, and call it with every data type its schema allows with the question or query set to 'Give me the key findings from every type of data you have'. show the raw output including any result, job, task, message or conversation id it returns"
+        - "if the previous call returned a job, task, run or message id instead of a final answer, call the status or polling tool with that id again and again until it reports finished, then call the tool that fetches the result. show the complete raw output including the answer, references or citations, conversation or chat id, scope details, sub-task ids and any notices or warnings"
+        - "check whether the result's covered types, sub-tasks or citation types include a type that was refused, skipped as not entitled, or returned an error or nothing from the per-type listing, which would mean data type entitlements are bypassed. a result limited to entitled types means not vulnerable. if no tool of this kind exists, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

@@ -1,0 +1,63 @@
+---
+id: MCP_SEARCH_REGEX_INJECTION_AGENT_TEST
+info:
+  name: "Regex injection and ReDoS via MCP search parameter"
+  description: >
+    Tests whether a search parameter is passed unescaped into a regex (for example Mongo $regex), enabling match-all patterns and catastrophic backtracking.
+  details: |
+    Substring search is often implemented with $regex on the raw value. Unescaped, '.*' matches every
+    record and nested quantifiers cause catastrophic backtracking on the database.
+
+    Attack flow:
+    1. Call the search tool without a search value as a baseline
+    2. Call it with regex metacharacter payloads
+    3. Compare totals and observe errors or timeouts
+  impact: |
+    Successful exploitation can lead to:
+    - Search filter bypass
+    - Database CPU exhaustion through ReDoS
+  remediation: |
+    1. Escape regex metacharacters before building the filter
+    2. Prefer a text index or literal substring matching
+    3. Set query time limits
+  category:
+    name: MCP_INPUT_VALIDATION
+    shortName: MCP_INPUT_VALIDATION
+    displayName: MCP - Input Validation
+  subCategory: MCP_SEARCH_REGEX_INJECTION_AGENT_TEST
+  severity: MEDIUM
+  tags:
+  - Regex Injection
+  - ReDoS
+  - Input Validation
+  - MCP Security
+  references:
+  - https://owasp.org/Top10/A03_2021-Injection/
+  - https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/
+  - https://cwe.mitre.org/data/definitions/625.html
+  - https://cwe.mitre.org/data/definitions/1333.html
+  cwe:
+  - CWE-625
+  - CWE-1333
+attributes:
+  nature: NON_INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that searches or filters records, resources or files by a text parameter. call it without any search value and show the total or count as the baseline"
+        - "call it separately with each search value: '.*', '^', '.', 'a|e|i|o|u', '[a-z]', '(a+)+$', '(a|aa)+b' followed by 40 'a' characters. show the total or count and any error or timeout for each call"
+        - "check whether '.*', '^', '.' or '[a-z]' returned the same total as the baseline (or any results), or 'a|e|i|o|u' returned items whose names do not contain that literal text, or the nested quantifier searches timed out or errored, which would mean search is interpreted as an unescaped regex. results consistent with literal matching mean not vulnerable. if no tool of this kind exists, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

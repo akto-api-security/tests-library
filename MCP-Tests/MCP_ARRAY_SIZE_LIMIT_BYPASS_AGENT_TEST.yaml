@@ -1,0 +1,61 @@
+---
+id: MCP_ARRAY_SIZE_LIMIT_BYPASS_AGENT_TEST
+info:
+  name: "Array size limit bypass in MCP tool arguments"
+  description: >
+    Tests whether MCP tools enforce the maxItems declared for array parameters such as id lists and type lists.
+  details: |
+    Array parameters (tenant ids, resource ids, file ids, data types) are usually capped in the schema.
+    Without server-side caps, a single call fans out to many sub-tasks and large scope resolutions, increasing
+    cost and load.
+
+    Attack flow:
+    1. Read the declared maxItems of each array parameter on the query tool
+    2. Call it with arrays exceeding each limit
+    3. Check which calls are accepted
+  impact: |
+    Successful exploitation can lead to:
+    - Fan-out cost amplification per request
+    - Database load from oversize scope resolution
+  remediation: |
+    1. Enforce maxItems in schemas and on the server
+    2. De-duplicate arrays before processing
+  category:
+    name: MCP_DOS
+    shortName: MCP_DOS
+    displayName: MCP - Denial of Service
+  subCategory: MCP_ARRAY_SIZE_LIMIT_BYPASS_AGENT_TEST
+  severity: MEDIUM
+  tags:
+  - Resource Consumption
+  - Input Validation
+  - MCP Security
+  references:
+  - https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/
+  - https://cwe.mitre.org/data/definitions/770.html
+  - https://cwe.mitre.org/data/definitions/1284.html
+  cwe:
+  - CWE-770
+  - CWE-1284
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that answers questions or starts a query and show every array parameter in its input schema with its declared maxItems. then find the mcp tool that lists or searches records, resources, documents or files and call it with the largest allowed page size. show every id, name and owning workspace, profile or tenant returned"
+        - "for each array parameter, call the tool with the question 'Summarize themes' and that array filled to the declared maxItems plus 10 (or 250 items when none is declared), repeating a valid value from earlier outputs, and duplicating enum values where the parameter is an enum list. show the raw output or error of each call"
+        - "check whether any call with an array larger than its declared maxItems (or larger than 200 when none is declared) returned a result or job id instead of a validation error, which would mean array size limits are not enforced. validation errors for every call mean not vulnerable. if the tool has no array parameters, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /

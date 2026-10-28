@@ -1,0 +1,60 @@
+---
+id: MCP_CONCURRENT_CONTINUATION_RACE_AGENT_TEST
+info:
+  name: "Concurrent continuation race on the same conversation"
+  description: >
+    Tests whether an MCP tool rejects a continuation while the previous turn of the same conversation is still running.
+  details: |
+    Overlapping continuations on one conversation can interleave history, corrupt inherited scope and
+    double-spend backend capacity. A server should require the previous turn to finish before accepting the
+    next.
+
+    Attack flow:
+    1. Complete a first turn to obtain a conversation id
+    2. Issue two continuations on that id back to back without waiting
+    3. Check whether both are accepted
+  impact: |
+    Successful exploitation can lead to:
+    - Corrupted conversation history and inherited scope
+    - Duplicate backend cost
+  remediation: |
+    1. Lock a conversation while a turn is in flight and reject overlapping continuations
+    2. Use an atomic compare-and-set on the conversation's last turn
+  category:
+    name: MCP_FUNCTION_MANIPULATION
+    shortName: MCP_FUNC_MANIP
+    displayName: Model Context Protocol (MCP) Security - Function Call Manipulation
+  subCategory: MCP_CONCURRENT_CONTINUATION_RACE_AGENT_TEST
+  severity: MEDIUM
+  tags:
+  - Race Condition
+  - Integrity
+  - MCP Security
+  references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices
+  - https://cwe.mitre.org/data/definitions/362.html
+  cwe:
+  - CWE-362
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: SLOW
+api_selection_filters:
+  test_type:
+    eq: AGENTIC
+execute:
+  type: single
+  requests:
+  - req:
+    - conversations_list:
+        conversations:
+        - "find the mcp tool that answers questions, runs a query, search or analysis over your data, or starts such a job, and call it with the question or query set to 'What are the main themes?'. show the raw output including any result, job, task, message or conversation id it returns"
+        - "if the previous call returned a job, task, run or message id instead of a final answer, call the status or polling tool with that id again and again until it reports finished, then call the tool that fetches the result. show the complete raw output including the answer, references or citations, conversation or chat id, scope details, sub-task ids and any notices or warnings"
+        - "take the conversation id and, without waiting between calls, call the question tool twice with that conversation id: first with 'Which theme is most frequent?' and immediately second with 'Which theme is least frequent?'. show both raw outputs"
+        - "check whether the second continuation returned a result or job id while the first continuation on the same conversation was still queued or running, instead of being rejected, which would mean concurrent continuations are not prevented. a rejection of the second call means not vulnerable. if the tools do not support conversation continuation or answer synchronously, mark it as not vulnerable"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+strategy:
+  run_once: /
