@@ -1,0 +1,50 @@
+id: COUPON_RACE_CONDITION
+info:
+  name: "Multiple Coupon Code Redemption via Race Condition"
+  description: "Tests if an attacker can redeem the same coupon multiple times by exploiting a race condition vulnerability."
+  details: "Attackers can send multiple requests simultaneously to redeem the same coupon. If the backend fails to process locks efficiently, multiple discounts can be applied."
+  impact: "High"
+  category:
+    name: BOLA
+    shortName: BOLA
+    displayName: Business Logic
+  subCategory: COUPON_RACE_CONDITION
+  severity: HIGH
+  tags:
+    - Business Logic
+    - OWASP API3
+    - E-commerce
+    - Race Condition
+
+auth:
+  authenticated: true
+
+api_selection_filters:
+  response_code:
+    gte: 200
+    lt: 300
+  method:
+    neq: "GET"
+  request_payload:
+    for_one:
+      key:
+        regex: "^(coupon|promo|discount|voucher|code)$"
+        extract: "couponParam"
+
+execute:
+  type: single
+  requests:
+    - req:
+        - modify_body_param:
+            couponParam: "AKTO_FREE_100"
+    - req:
+        - modify_body_param:
+            couponParam: "AKTO_FREE_100"
+
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    percentage_match:
+      gte: 90
