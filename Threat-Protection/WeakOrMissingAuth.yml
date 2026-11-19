@@ -1,0 +1,26 @@
+id: "WeakOrMissingAuth"
+filter:
+  and:
+    - request_headers:
+        regex:
+          - "^(?:(?!.*(?i)authorization).)*$"
+    - request_headers:
+        regex:
+          - "^(?:(?!.*(?i)(apikey|passkey)).)*$"
+    - request_headers:
+        regex:
+          - "^(?:(?!.*(?i)(session[_\\-.]?(id|key|token)?)).)*$"
+    - request_headers:
+        regex:
+          - "^(?:(?!.*(?i)(clientcert|sslcert|clientdn|sslclientsdn|sslclientverify|forwardedclientcert)).)*$"
+
+info:
+  name: "WeakOrMissingAuth"
+  description: "Detects HTTP requests missing all standard authentication headers."
+  details: "Triggers when no Authorization, API key, session token, or client certificate headers are present. Useful for identifying unauthenticated access to protected endpoints."
+  impact: "May allow unauthorized access, data exposure, or abuse of protected APIs if authentication is not enforced."
+  category:
+    name: "AuthMisconfiguration"
+    displayName: "WeakOrMissingAuth"
+  subCategory: "Authentication"
+  severity: HIGH
